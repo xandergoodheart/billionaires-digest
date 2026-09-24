@@ -1,336 +1,377 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>WHO ATE THE NEWS</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billionaires Digest · Follow the money</title>
+<meta name="description" content="The daily brief on the investments and company moves of the world's 100 richest people, read like a trading desk.">
+<meta property="og:title" content="Billionaires Digest">
+<meta property="og:description" content="Follow the money. What the world's 100 richest are buying, selling and building, every morning.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://billionairesdigest.com/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Impact,Arial Narrow,sans-serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
-:root { --ink:#0a0a0a; --paper:#f5f0e8; --red:#c0392b; --gold:#c9a84c; --muted:#5a5248; }
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html { scroll-behavior:smooth; }
-body { background:var(--paper); color:var(--ink); font-family:'DM Mono',monospace; cursor:none; overflow-x:hidden; min-height:100vh; }
-
-#cursor {
-  position:fixed; width:38px; height:38px; border-radius:50%;
-  pointer-events:none; z-index:9999; transform:translate(-50%,-50%);
-  transition:width 0.15s,height 0.15s,border-color 0.15s;
-  display:flex; align-items:center; justify-content:center;
-  font-size:18px; line-height:1; background:var(--ink);
-  border:2px solid var(--paper); overflow:hidden; color:var(--paper);
-  font-family:'Bebas Neue',sans-serif; letter-spacing:0.05em;
+:root{
+  --bg:#F5F0E8; --panel:#EDE6D6; --line:#D6CDB9; --line2:#C4B9A2; --text:#0F100D; --soft:#3A352E; --muted:#6A6152;
+  --accent:#9A5B0B; --accent-ink:#F5F0E8; --up:#1F5F9E; --down:#B4501A; --tape-bg:#0F100D; --tape-text:#EFE8D8; --dot:#8C8574;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
 }
-#cursor.eating {
-  width:68px; height:68px; border-color:var(--red); border-width:3px;
-  animation:chomp 0.22s infinite alternate;
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F100D; --panel:#171814; --line:#2A2B25; --line2:#3A3B33; --text:#EFE8D8; --soft:#C9C0AC; --muted:#A89F8C;
+    --accent:#E3A340; --accent-ink:#0F100D; --up:#74B8F0; --down:#F2904A; --tape-bg:#EFE8D8; --tape-text:#0F100D; --dot:#8C8574;
+  }
 }
-@keyframes chomp {
-  from { border-radius:50%; transform:translate(-50%,-50%); }
-  to   { border-radius:50% 50% 28% 28% / 58% 58% 42% 42%; transform:translate(-50%,-50%) scaleY(0.84); }
+:root[data-theme="dark"]{
+  --bg:#0F100D; --panel:#171814; --line:#2A2B25; --line2:#3A3B33; --text:#EFE8D8; --soft:#C9C0AC; --muted:#A89F8C;
+  --accent:#E3A340; --accent-ink:#0F100D; --up:#74B8F0; --down:#F2904A; --tape-bg:#EFE8D8; --tape-text:#0F100D; --dot:#8C8574;
 }
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Mono',ui-monospace,Menlo,Consolas,monospace;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+img{max-width:100%}
+.wrap{max-width:1360px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
+.serif{font-family:'Playfair Display',Georgia,'Times New Roman',serif}
+.display{font-family:'Bebas Neue',Impact,'Arial Narrow',sans-serif;letter-spacing:.02em}
+.label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 
-.masthead {
-  border-bottom:3px double var(--ink); padding:18px 40px 12px;
-  display:flex; align-items:baseline; justify-content:space-between; gap:16px;
-}
-.site-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.8rem); letter-spacing:0.04em; line-height:1; }
-.site-title span { color:var(--red); }
-.site-meta { font-size:0.62rem; color:var(--muted); text-align:right; line-height:1.7; text-transform:uppercase; letter-spacing:0.08em; }
+.topstrip{border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.topstrip .wrap{display:flex;justify-content:space-between;gap:12px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.mast{border-bottom:3px double var(--text)}
+.mast .wrap{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
+.brand{font-size:clamp(44px,7vw,76px);line-height:.9}
+.brand span{color:var(--accent)}
+.tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.themebtn{min-height:44px;padding:10px 14px;background:transparent;color:var(--text);border:1px solid var(--line2);font:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
 
-.ticker-wrap { background:var(--ink); color:var(--paper); padding:5px 0; overflow:hidden; }
-.ticker-inner { display:flex; gap:60px; white-space:nowrap; animation:ticker 28s linear infinite; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; }
-@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.tape{background:var(--tape-bg);color:var(--tape-text);overflow-x:auto;scrollbar-width:none}
+.tape::-webkit-scrollbar{display:none}
+.tape .wrap{display:flex;gap:32px;white-space:nowrap;padding-top:12px;padding-bottom:12px;font-size:12px;letter-spacing:.06em}
+.tape b{font-weight:500}
 
-.nav-label { font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); padding:10px 40px 4px; border-bottom:1px solid var(--ink); }
-.bil-nav { display:flex; border-bottom:3px solid var(--ink); overflow-x:auto; scrollbar-width:none; }
-.bil-nav::-webkit-scrollbar { display:none; }
+.lede{border-bottom:1px solid var(--line)}
+.lede .wrap{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:40px;padding-top:44px;padding-bottom:40px;align-items:center}
+.lede h1{margin:10px 0 14px;font-size:clamp(38px,6vw,72px);line-height:1.03}
+.lede p{margin:0;font-size:16px;line-height:1.65;color:var(--soft);max-width:760px}
+.portrait{width:min(260px,100%);aspect-ratio:1;border-radius:50%;border:3px solid var(--text);background-color:var(--panel);background-image:radial-gradient(var(--dot) 1.1px,transparent 1.4px);background-size:5px 5px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.portrait span{font-size:clamp(40px,6vw,72px);color:var(--text);background:var(--bg);padding:4px 14px}
 
-.bil-btn {
-  flex:1; min-width:110px; padding:12px 8px 10px; border:none;
-  border-right:1px solid var(--ink); background:var(--paper); cursor:none;
-  display:flex; flex-direction:column; align-items:center; gap:4px;
-  transition:background 0.15s;
-}
-.bil-btn:last-child { border-right:none; }
-.bil-btn:hover { background:var(--ink); }
-.bil-btn:hover .bil-rank,.bil-btn:hover .bil-name,.bil-btn:hover .bil-worth { color:var(--paper); }
-.bil-btn.active { background:var(--red); }
-.bil-btn.active .bil-rank,.bil-btn.active .bil-name,.bil-btn.active .bil-worth { color:var(--paper); }
-.bil-btn.active .bil-photo-wrap { border-color:var(--paper); }
+.topten .wrap{padding-top:14px;padding-bottom:0}
+.tengrid{display:grid;grid-template-columns:repeat(10,minmax(96px,1fr));border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tengrid::-webkit-scrollbar{display:none}
+.person{display:flex;flex-direction:column;align-items:center;gap:5px;padding:14px 6px 12px;border-right:1px solid var(--line);cursor:none;min-height:44px}
+.person:last-child{border-right:none}
+.person:hover{background:var(--panel)}
+.face{width:52px;height:52px;border-radius:50%;border:2px solid var(--text);background-color:var(--panel);background-image:radial-gradient(var(--dot) 1px,transparent 1.3px);background-size:4px 4px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.pname{font-size:16px;text-align:center;line-height:1}
+.pworth{font-size:11px;color:var(--accent)}
+.asof{font-size:10px;color:var(--muted);letter-spacing:.08em;padding:8px 0 14px;border-bottom:1px solid var(--line)}
+#chomp{position:fixed;left:0;top:0;width:64px;height:64px;border-radius:50%;border:3px solid var(--accent);background-color:var(--bg);background-image:radial-gradient(var(--dot) 1px,transparent 1.3px);background-size:4px 4px;display:none;align-items:center;justify-content:center;font-size:24px;pointer-events:none;z-index:50;transform:translate(-50%,-50%)}
+#chomp.on{display:flex;animation:chomp .22s infinite alternate}
+@keyframes chomp{to{border-radius:50% 50% 28% 28%/58% 58% 42% 42%;transform:translate(-50%,-50%) scaleY(.85)}}
+@media (hover:none){.person{cursor:pointer}}
+@media (hover:none){#chomp{display:none!important}}
+@media (prefers-reduced-motion: reduce){#chomp.on{animation:none}*{scroll-behavior:auto!important}}
+:focus-visible,a:focus-visible,button:focus-visible,.chip:focus-visible,.person:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-.bil-photo-wrap {
-  width:50px; height:50px; border-radius:50%; overflow:hidden;
-  border:2px solid var(--ink); background:var(--muted);
-  display:flex; align-items:center; justify-content:center;
-  transition:transform 0.2s,border-color 0.15s; flex-shrink:0;
-}
-.bil-btn:hover .bil-photo-wrap { transform:scale(1.1) rotate(-5deg); border-color:var(--paper); }
-.bil-initials { font-family:'Bebas Neue',sans-serif; font-size:1rem; color:var(--paper); letter-spacing:0.04em; }
-.bil-photo { width:100%; height:100%; object-fit:cover; object-position:center top; display:none; }
+.main .wrap{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:36px;padding-top:32px;padding-bottom:48px;align-items:start}
+.feedhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--text);flex-wrap:wrap}
+.feedhead h2{margin:0;font-style:italic;font-size:34px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:14px 0 4px}
+.chip{min-height:44px;padding:10px 14px;background:transparent;color:var(--text);border:1px solid var(--line2);font:inherit;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
 
-.bil-rank { font-family:'Bebas Neue',sans-serif; font-size:0.65rem; letter-spacing:0.1em; color:var(--muted); }
-.bil-name { font-family:'Bebas Neue',sans-serif; font-size:0.88rem; letter-spacing:0.04em; color:var(--ink); text-align:center; line-height:1.1; }
-.bil-worth { font-size:0.58rem; color:var(--gold); letter-spacing:0.07em; }
+.story{padding:26px 0;border-bottom:1px solid var(--line)}
+.srow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px}
+.who{color:var(--accent)}
+.badge{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line2)}
+.read{margin-left:auto}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--muted)}
+.story h3{margin:12px 0 16px;font-size:clamp(22px,2.4vw,28px);line-height:1.2}
+.quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 32px}
+.quad h4{margin:0 0 6px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.quad p{margin:0;font-size:13px;line-height:1.65;color:var(--soft)}
+.q-why h4{color:var(--accent)} .q-bear h4{color:var(--down)} .q-watch h4{color:var(--up)}
+.src{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-top:14px;font-size:11px;color:var(--muted)}
+.src a{letter-spacing:.06em;text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center}
 
-#load-bar { height:3px; background:var(--red); width:0%; transition:width 0.4s ease; display:none; }
+.side{display:flex;flex-direction:column;gap:24px}
+.box{border:1px solid var(--line);padding:22px}
+.box.strong{border-color:var(--text)}
+.box h3{margin:0 0 12px;font-style:italic;font-size:22px}
+.consensus{background:var(--accent);color:var(--accent-ink);padding:22px}
+.consensus .label{color:var(--accent-ink);opacity:.85}
+.consensus .t{font-size:24px;line-height:1.2;margin:8px 0}
+.consensus p{margin:0 0 10px;font-size:12px;line-height:1.6}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tags span{font-size:11px;padding:4px 8px;border:1px solid currentColor}
+.frow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;font-size:12px;padding:10px 0;border-top:1px solid var(--line)}
+.frow.h{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.list{display:flex;flex-direction:column;gap:10px;font-size:12px;line-height:1.6;color:var(--soft)}
+.flow{display:flex;flex-direction:column;gap:12px}
+.flowrow{display:flex;flex-direction:column;gap:6px;font-size:12px}
+.flowrow .top{display:flex;justify-content:space-between}
+.bar{height:8px;background:var(--line)}
+.bar i{display:block;height:8px;background:var(--accent)}
+.ledger .mark{font-size:30px;line-height:1}
+.ledger .t{font-size:24px;line-height:1.2;margin:10px 0}
+.ledger p{margin:0;font-size:12px;line-height:1.65;color:var(--soft)}
+.note{margin:10px 0 0;font-size:11px;line-height:1.6;color:var(--muted)}
 
-#feed-header { padding:22px 40px 8px; border-bottom:1px solid rgba(10,10,10,0.15); display:none; }
-.feed-name { font-family:'Bebas Neue',sans-serif; font-size:clamp(1.5rem,4vw,2.8rem); letter-spacing:0.04em; line-height:1; }
-.feed-name em { color:var(--red); font-style:italic; font-family:'Playfair Display',serif; }
-.feed-sub { font-size:0.62rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; }
+.empty{padding:60px 0;text-align:center}
+.empty .big{font-size:clamp(40px,8vw,88px);color:var(--line2)}
+.empty p{color:var(--muted);font-size:13px;max-width:520px;margin:10px auto 0}
 
-#feed-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
+footer{border-top:3px double var(--text)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
-.story-card { padding:22px 28px; border-right:1px solid rgba(10,10,10,0.1); border-bottom:1px solid rgba(10,10,10,0.1); animation:fadeUp 0.35s ease both; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-.story-card:hover { background:rgba(10,10,10,0.02); }
-
-.story-type { font-size:0.56rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--paper); padding:2px 8px; display:inline-block; margin-bottom:9px; }
-.story-type.invest   { background:#1a6b3a; }
-.story-type.acquire  { background:#1a3b6b; }
-.story-type.divest   { background:var(--red); }
-.story-type.strategy { background:#6b4e1a; }
-.story-type.ipo      { background:#4b1a6b; }
-
-.story-headline { font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; line-height:1.35; margin-bottom:9px; }
-.story-summary  { font-size:0.72rem; line-height:1.7; color:var(--muted); margin-bottom:12px; }
-.story-meta { display:flex; gap:14px; flex-wrap:wrap; }
-.story-pill { font-size:0.58rem; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); }
-.story-pill strong { color:var(--ink); }
-
-#feed-empty { padding:70px 40px; text-align:center; }
-.empty-big { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,8vw,6rem); letter-spacing:0.04em; color:rgba(10,10,10,0.07); }
-.empty-sub { font-size:0.72rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-top:10px; }
-
-#feed-loading { display:none; padding:60px 40px; text-align:center; }
-.loading-text { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.1em; }
-.loading-dots::after { content:''; animation:dots 1.5s steps(4,end) infinite; }
-@keyframes dots { 0%{content:''} 25%{content:'.'} 50%{content:'..'} 75%{content:'...'} 100%{content:''} }
-
-.err-box { margin:20px 40px; padding:14px 18px; background:#fff0f0; border-left:3px solid var(--red); font-size:0.75rem; color:#7a1a1a; }
-
-footer { border-top:3px double var(--ink); padding:14px 40px; display:flex; justify-content:space-between; align-items:center; font-size:0.58rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-top:40px; }
-
-@media(max-width:680px) {
-  .masthead { padding:14px 20px 10px; flex-direction:column; }
-  .site-meta { text-align:left; }
-  .nav-label,#feed-header,#feed-empty,footer { padding-left:20px; padding-right:20px; }
-  .story-card { padding:16px 20px; }
+@media (max-width:900px){
+  .lede .wrap,.main .wrap{grid-template-columns:minmax(0,1fr)}
+  .portrait{width:180px}
+  .quad{grid-template-columns:minmax(0,1fr)}
+  .read{margin-left:0}
 }
 </style>
 </head>
 <body>
+<div id="chomp" aria-hidden="true"></div>
 
-<div id="cursor">●</div>
+<div class="topstrip"><div class="wrap">
+  <span id="dateline">Loading today's digest…</span>
+  <span id="updated"></span>
+</div></div>
 
-<header class="masthead">
-  <div class="site-title">WHO ATE <span>THE NEWS</span></div>
-  <div class="site-meta">
-    <div id="todays-date"></div>
-    <div>Daily billionaire market intelligence</div>
-    <div>Top 100 wealthiest · AI + web search</div>
+<header class="mast"><div class="wrap">
+  <div>
+    <div class="display brand">BILLIONAIRES <span>DIGEST</span></div>
+    <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
   </div>
-</header>
+  <button class="themebtn" id="themebtn" type="button">Switch theme</button>
+</div></header>
 
-<div class="ticker-wrap">
-  <div class="ticker-inner">
-    <span>🏦 Tracking the top 100 wealthiest humans &nbsp;·&nbsp; 💰 Investments · Acquisitions · Power moves &nbsp;·&nbsp; 📰 Hover a face — click to eat their news &nbsp;·&nbsp; 🌍 Live web search · refreshed daily &nbsp;·&nbsp;</span>
-    <span>🏦 Tracking the top 100 wealthiest humans &nbsp;·&nbsp; 💰 Investments · Acquisitions · Power moves &nbsp;·&nbsp; 📰 Hover a face — click to eat their news &nbsp;·&nbsp; 🌍 Live web search · refreshed daily &nbsp;·&nbsp;</span>
+<div class="tape" id="tape" hidden><div class="wrap" id="tapeinner"></div></div>
+
+<main id="app">
+  <div class="wrap empty" id="empty">
+    <div class="display big">TODAY'S EDITION IS ON THE PRESS</div>
+    <p id="emptymsg">Loading today’s edition…</p>
   </div>
-</div>
-
-<div class="nav-label">▸ today's top 10 · hover to transform cursor · click to devour their market moves</div>
-<nav class="bil-nav" id="bil-nav"></nav>
-<div id="load-bar"></div>
-
-<div id="feed-header">
-  <div class="feed-name" id="feed-name"></div>
-  <div class="feed-sub" id="feed-sub"></div>
-</div>
-
-<div id="err-box" class="err-box" style="display:none"></div>
-
-<main>
-  <div id="feed-empty">
-    <div class="empty-big">PICK A BILLIONAIRE</div>
-    <div class="empty-sub">Click any name above to consume their latest market moves</div>
-  </div>
-  <div id="feed-loading">
-    <div class="loading-text">DEVOURING MARKET DATA<span class="loading-dots"></span></div>
-  </div>
-  <div id="feed-grid"></div>
 </main>
 
-<footer>
-  <span>WHO ATE THE NEWS © <span id="yr"></span></span>
-  <span>AI-powered · not financial advice</span>
-</footer>
+<footer><div class="wrap">
+  <span>Billionaires Digest · billionairesdigest.com</span>
+  <span>For information only · not financial advice</span>
+</div></footer>
 
 <script>
-const BILLIONAIRES = [
-  { rank:1,  name:"Elon Musk",       wiki:"Elon_Musk",       worth:"$839B", companies:"Tesla · SpaceX · xAI" },
-  { rank:2,  name:"Larry Page",      wiki:"Larry_Page",      worth:"$257B", companies:"Alphabet · Google" },
-  { rank:3,  name:"Sergey Brin",     wiki:"Sergey_Brin",     worth:"$237B", companies:"Alphabet · Google" },
-  { rank:4,  name:"Jeff Bezos",      wiki:"Jeff_Bezos",      worth:"$224B", companies:"Amazon · Blue Origin" },
-  { rank:5,  name:"Mark Zuckerberg", wiki:"Mark_Zuckerberg", worth:"$222B", companies:"Meta · Instagram" },
-  { rank:6,  name:"Larry Ellison",   wiki:"Larry_Ellison",   worth:"$190B", companies:"Oracle" },
-  { rank:7,  name:"Bernard Arnault", wiki:"Bernard_Arnault", worth:"$171B", companies:"LVMH · Dior" },
-  { rank:8,  name:"Jensen Huang",    wiki:"Jensen_Huang",    worth:"$154B", companies:"Nvidia" },
-  { rank:9,  name:"Warren Buffett",  wiki:"Warren_Buffett",  worth:"$149B", companies:"Berkshire Hathaway" },
-  { rank:10, name:"Amancio Ortega",  wiki:"Amancio_Ortega",  worth:"$148B", companies:"Zara · Inditex" },
-];
-
-const now = new Date();
-document.getElementById('todays-date').textContent = now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-document.getElementById('yr').textContent = now.getFullYear();
-
-const cursor = document.getElementById('cursor');
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top  = e.clientY + 'px';
-});
-
-async function getWikiPhoto(wiki) {
-  try {
-    const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${wiki}`);
-    const d = await r.json();
-    return d.thumbnail?.source || null;
-  } catch { return null; }
-}
-
-const nav = document.getElementById('bil-nav');
-BILLIONAIRES.forEach(b => {
-  const btn = document.createElement('button');
-  btn.className = 'bil-btn';
-  const initials = b.name.split(' ').map(w=>w[0]).join('').slice(0,2);
-  btn.innerHTML = `
-    <div class="bil-photo-wrap">
-      <div class="bil-initials">${initials}</div>
-      <img class="bil-photo" alt="${b.name}" />
-    </div>
-    <span class="bil-rank">#${b.rank}</span>
-    <span class="bil-name">${b.name}</span>
-    <span class="bil-worth">${b.worth}</span>`;
-
-  getWikiPhoto(b.wiki).then(url => {
-    if (!url) return;
-    b.photoUrl = url;
-    const img = btn.querySelector('.bil-photo');
-    const ini = btn.querySelector('.bil-initials');
-    img.onload = () => { ini.style.display='none'; img.style.display='block'; };
-    img.src = url;
+(function(){
+  // theme toggle
+  var root = document.documentElement;
+  var btn = document.getElementById('themebtn');
+  try { var saved = localStorage.getItem('bd-theme'); if (saved) root.setAttribute('data-theme', saved); } catch(e){}
+  function currentDark(){
+    var t = root.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function labelBtn(){ btn.textContent = currentDark() ? 'Paper mode' : 'Terminal mode'; }
+  labelBtn();
+  btn.addEventListener('click', function(){
+    var next = currentDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('bd-theme', next); } catch(e){}
+    labelBtn();
   });
 
-  btn.addEventListener('mouseenter', () => {
-    cursor.classList.add('eating');
-    cursor.textContent = '';
-    if (b.photoUrl) {
-      cursor.style.backgroundImage = `url(${b.photoUrl})`;
-      cursor.style.backgroundSize = 'cover';
-      cursor.style.backgroundPosition = 'center top';
-    } else {
-      cursor.style.backgroundImage = '';
-      cursor.textContent = initials;
+  // helpers
+  function el(tag, cls, text){ var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+  function safeUrl(u){ return (typeof u === 'string' && /^https?:\/\//i.test(u)) ? u : null; }
+  function dirClass(d){ return d === 'up' ? 'up' : (d === 'down' ? 'down' : 'flat'); }
+  function arrow(d){ return d === 'up' ? '▲ ' : (d === 'down' ? '▼ ' : '— '); }
+  function arr(x){ return Array.isArray(x) ? x : []; }
+
+  var chomp = document.getElementById('chomp');
+  document.addEventListener('mousemove', function(e){ chomp.style.left = e.clientX + 'px'; chomp.style.top = e.clientY + 'px'; });
+
+  var activeSector = 'All';
+  var digest = null;
+
+  function render(){
+    var d = digest;
+    var app = document.getElementById('app');
+    app.textContent = '';
+    document.getElementById('dateline').textContent = d.date || 'Today';
+    document.getElementById('updated').textContent = d.updated ? ('Updated ' + d.updated) : '';
+
+    // tape
+    var top = arr(d.top10);
+    var tape = document.getElementById('tape'), ti = document.getElementById('tapeinner');
+    ti.textContent = '';
+    if (top.length){
+      tape.hidden = false;
+      ti.appendChild(el('b', null, 'NET WORTH'));
+      top.forEach(function(p){ var s = el('span'); s.appendChild(el('b', null, (p.tick || p.name || '').toUpperCase() + ' ')); s.appendChild(document.createTextNode(p.worth || '')); ti.appendChild(s); });
+    } else tape.hidden = true;
+
+    // lede
+    if (d.lede){
+      var ls = el('section', 'lede'), lw = el('div', 'wrap');
+      var left = el('div');
+      left.appendChild(el('div', 'label', d.lede.kicker || 'Lede of the day')).style.color = 'var(--accent)';
+      left.appendChild(el('h1', 'serif', d.lede.headline || ''));
+      left.appendChild(el('p', null, d.lede.dek || ''));
+      var right = el('div');
+      var pr = el('div', 'portrait'); pr.appendChild(el('span', 'display', d.lede.ini || '•')); right.appendChild(pr);
+      lw.appendChild(left); lw.appendChild(right); ls.appendChild(lw); app.appendChild(ls);
     }
-  });
-  btn.addEventListener('mouseleave', () => {
-    cursor.classList.remove('eating');
-    cursor.style.backgroundImage = '';
-    cursor.textContent = '●';
-  });
-  btn.addEventListener('click', () => load(b, btn));
-  nav.appendChild(btn);
-});
 
-const CACHE_PRE = 'watn_', CACHE_D = 'watn_date';
-const todayStr = now.toISOString().split('T')[0];
+    // top 10
+    if (top.length){
+      var ts = el('section', 'topten'), tw = el('div', 'wrap');
+      tw.appendChild(el('div', 'label', 'Top 10 · hover a name')).style.paddingBottom = '10px';
+      var grid = el('div', 'tengrid');
+      top.forEach(function(p, i){
+        var c = el('div', 'person');
+        c.tabIndex = 0;
+        c.setAttribute('aria-label', '#' + (i + 1) + ' ' + (p.name || '') + (p.worth ? ', ' + p.worth : ''));
+        var f = el('div', 'face display', p.ini || ''); c.appendChild(f);
+        c.appendChild(el('span', 'label', '#' + (i + 1)));
+        c.appendChild(el('span', 'pname display', p.name || ''));
+        c.appendChild(el('span', 'pworth', p.worth || ''));
+        c.addEventListener('mouseenter', function(){ chomp.textContent = p.ini || ''; chomp.className = 'on display'; });
+        c.addEventListener('mouseleave', function(){ chomp.className = ''; });
+        grid.appendChild(c);
+      });
+      tw.appendChild(grid);
+      if (d.top10AsOf) tw.appendChild(el('div', 'asof', d.top10AsOf));
+      ts.appendChild(tw); app.appendChild(ts);
+    }
 
-function getCached(name) {
-  if (localStorage.getItem(CACHE_D) !== todayStr) {
-    Object.keys(localStorage).filter(k=>k.startsWith(CACHE_PRE)).forEach(k=>localStorage.removeItem(k));
-    localStorage.setItem(CACHE_D, todayStr);
-    return null;
-  }
-  const r = localStorage.getItem(CACHE_PRE + name);
-  return r ? JSON.parse(r) : null;
-}
-function setCache(name, data) {
-  try { localStorage.setItem(CACHE_PRE + name, JSON.stringify(data)); localStorage.setItem(CACHE_D, todayStr); } catch {}
-}
+    // main
+    var ms = el('section', 'main'), mw = el('div', 'wrap');
+    var feed = el('div');
+    var fh = el('div', 'feedhead');
+    fh.appendChild(el('h2', 'serif', 'Signal feed'));
+    fh.appendChild(el('span', 'label', arr(d.stories).length + ' moves'));
+    feed.appendChild(fh);
 
-async function load(b, btn) {
-  document.querySelectorAll('.bil-btn').forEach(x=>x.classList.remove('active'));
-  btn.classList.add('active');
-
-  const cached = getCached(b.name);
-  if (cached) { render(b, cached); return; }
-
-  document.getElementById('feed-empty').style.display = 'none';
-  document.getElementById('feed-grid').innerHTML = '';
-  document.getElementById('feed-header').style.display = 'none';
-  document.getElementById('err-box').style.display = 'none';
-  document.getElementById('feed-loading').style.display = 'block';
-  const lb = document.getElementById('load-bar');
-  lb.style.display='block'; lb.style.width='0%';
-  setTimeout(()=>lb.style.width='55%',80);
-
-  const dateStr = now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  const prompt = `Today is ${dateStr}. Search the web for the most recent news about investments, acquisitions, company strategy, divestitures, IPOs, and major business moves by or related to ${b.name} (${b.companies}). Focus on the last 48-72 hours. Return a JSON array of 4-8 real stories. Each item: {"headline":"under 12 words","summary":"2-3 sentences of key facts","type":"invest"|"acquire"|"divest"|"strategy"|"ipo","typeLabel":"Investment"|"Acquisition"|"Divestiture"|"Strategy"|"IPO / Markets","dealSize":"$XB or null","sector":"e.g. AI","source":"Publication"}. Real stories only. Return ONLY a JSON array, no markdown.`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
-        messages:[{role:'user',content:prompt}]
-      })
+    var sectors = ['All'];
+    arr(d.stories).forEach(function(s){ if (s.sector && sectors.indexOf(s.sector) < 0) sectors.push(s.sector); });
+    if (sectors.indexOf(activeSector) < 0) activeSector = 'All';
+    var chips = el('div', 'chips');
+    chips.setAttribute('role', 'group'); chips.setAttribute('aria-label', 'Filter by sector');
+    sectors.forEach(function(name){
+      var b = el('button', 'chip', name); b.type = 'button';
+      b.setAttribute('aria-pressed', String(name === activeSector));
+      b.addEventListener('click', function(){ activeSector = name; render(); });
+      chips.appendChild(b);
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error?.message||'API error');
-    const text = (data.content||[]).filter(x=>x.type==='text').map(x=>x.text).join('');
-    const clean = text.replace(/```json|```/g,'').trim();
-    const s=clean.indexOf('['), e=clean.lastIndexOf(']');
-    if(s===-1||e===-1) throw new Error('Could not parse response');
-    const items = JSON.parse(clean.slice(s,e+1));
-    setCache(b.name, items);
-    lb.style.width='100%';
-    setTimeout(()=>{lb.style.display='none';lb.style.width='0%';},400);
-    render(b, items);
-  } catch(err) {
-    lb.style.display='none';
-    document.getElementById('feed-loading').style.display='none';
-    const eb = document.getElementById('err-box');
-    eb.style.display='block';
-    eb.textContent = `Couldn't load news: ${err.message}. This demo version requires the page to be opened via Claude.ai. For the standalone site, follow the deploy instructions.`;
-    document.getElementById('feed-header').style.display='block';
-    document.getElementById('feed-name').innerHTML=`<em>${b.name}</em>`;
-    document.getElementById('feed-sub').textContent='Error loading data.';
-  }
-}
+    feed.appendChild(chips);
 
-function render(b, items) {
-  document.getElementById('feed-loading').style.display='none';
-  document.getElementById('feed-empty').style.display='none';
-  document.getElementById('err-box').style.display='none';
-  document.getElementById('feed-header').style.display='block';
-  document.getElementById('feed-name').innerHTML=`<em>${b.name}</em> — Market Moves`;
-  document.getElementById('feed-sub').textContent=`${b.companies} · ${b.worth} · ${items.length} stories · ${now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}`;
-  document.getElementById('feed-grid').innerHTML = items.map((item,i)=>`
-    <article class="story-card" style="animation-delay:${i*0.06}s">
-      <div class="story-type ${item.type}">${item.typeLabel||item.type}</div>
-      <h2 class="story-headline">${item.headline}</h2>
-      <p class="story-summary">${item.summary}</p>
-      <div class="story-meta">
-        ${item.dealSize?`<span class="story-pill">Deal <strong>${item.dealSize}</strong></span>`:''}
-        ${item.sector?`<span class="story-pill">Sector <strong>${item.sector}</strong></span>`:''}
-        <span class="story-pill">Via <strong>${item.source}</strong></span>
-      </div>
-    </article>`).join('');
-  document.getElementById('feed-header').scrollIntoView({behavior:'smooth',block:'start'});
-}
+    arr(d.stories).filter(function(s){ return activeSector === 'All' || s.sector === activeSector; }).forEach(function(s){
+      var a = el('article', 'story');
+      var r = el('div', 'srow');
+      r.appendChild(el('span', 'who', s.who || ''));
+      if (s.type) r.appendChild(el('span', 'badge', s.type));
+      if (s.sector) r.appendChild(el('span', 'badge', s.sector));
+      if (s.tickers) r.appendChild(el('span', 'label', s.tickers));
+      if (s.read) r.appendChild(el('span', 'read ' + dirClass(s.direction), 'AI read · ' + arrow(s.direction) + s.read));
+      a.appendChild(r);
+      a.appendChild(el('h3', 'serif', s.headline || ''));
+      var q = el('div', 'quad');
+      [['The move', s.move, 'q-move'], ['Why it matters', s.why, 'q-why'], ['The bear case', s.bear, 'q-bear'], ['What to watch', s.watch, 'q-watch']].forEach(function(x){
+        if (!x[1]) return;
+        var cell = el('div', x[2]); cell.appendChild(el('h4', null, x[0])); cell.appendChild(el('p', null, x[1])); q.appendChild(cell);
+      });
+      a.appendChild(q);
+      var src = el('div', 'src');
+      src.appendChild(el('span', null, 'Source · ' + (s.source || 'Unlisted')));
+      var u = safeUrl(s.url);
+      if (u){ var link = el('a', null, 'Read original ↗'); link.href = u; link.target = '_blank'; link.rel = 'noopener noreferrer'; src.appendChild(link); }
+      a.appendChild(src);
+      feed.appendChild(a);
+    });
+    mw.appendChild(feed);
+
+    var side = el('aside', 'side');
+    if (d.ledger && d.ledger.headline){
+      var lg = el('div', 'box strong ledger');
+      lg.appendChild(el('div', 'display mark', 'THE LEDGER'));
+      lg.appendChild(el('div', 't serif', d.ledger.headline));
+      if (d.ledger.teaser) lg.appendChild(el('p', null, d.ledger.teaser));
+      var lu = safeUrl(d.ledger.url);
+      if (lu){ var la = el('a', null, 'Read the column'); la.href = lu; la.style.display='inline-flex'; la.style.minHeight='44px'; la.style.alignItems='center'; la.style.fontSize='12px'; lg.appendChild(la); }
+      side.appendChild(lg);
+    }
+    if (d.consensus && d.consensus.headline){
+      var c = el('div', 'consensus');
+      c.appendChild(el('div', 'label', 'Consensus alert'));
+      c.appendChild(el('div', 't serif', d.consensus.headline));
+      if (d.consensus.body) c.appendChild(el('p', null, d.consensus.body));
+      var tg = el('div', 'tags'); arr(d.consensus.tags).forEach(function(t){ tg.appendChild(el('span', null, t)); }); c.appendChild(tg);
+      side.appendChild(c);
+    }
+    var counts = {};
+    arr(d.stories).forEach(function(s){ if (s.sector) counts[s.sector] = (counts[s.sector] || 0) + 1; });
+    var keys = Object.keys(counts).sort(function(a,b){ return counts[b] - counts[a]; });
+    if (keys.length){
+      var mf = el('div', 'box'); mf.appendChild(el('h3', 'serif', 'Money flow'));
+      var fl = el('div', 'flow'); var max = counts[keys[0]];
+      keys.forEach(function(k){
+        var r = el('div', 'flowrow'); var t = el('div', 'top');
+        t.appendChild(el('span', null, k)); t.appendChild(el('span', 'flat', counts[k] + (counts[k] === 1 ? ' move' : ' moves')));
+        r.appendChild(t); var b = el('div', 'bar'); var i = el('i'); i.style.width = Math.round(counts[k] / max * 100) + '%'; b.appendChild(i); r.appendChild(b);
+        fl.appendChild(r);
+      });
+      mf.appendChild(fl); side.appendChild(mf);
+    }
+    if (arr(d.filings).length){
+      var fb = el('div', 'box'); fb.appendChild(el('h3', 'serif', 'Filings tracker'));
+      var hr = el('div', 'frow h'); ['Filer', 'Form', 'Change'].forEach(function(x){ hr.appendChild(el('span', null, x)); }); fb.appendChild(hr);
+      d.filings.forEach(function(f){
+        var fr = el('div', 'frow');
+        fr.appendChild(el('span', null, f.filer || '')); fr.appendChild(el('span', 'flat', f.form || ''));
+        fr.appendChild(el('span', dirClass(f.direction), arrow(f.direction) + (f.change || '')));
+        fb.appendChild(fr);
+      });
+      fb.appendChild(el('p', 'note', 'Form 4 insider trades post within 2 business days. 13F fund holdings can arrive 45 days after quarter end.'));
+      side.appendChild(fb);
+    }
+    function listBox(title, items, strong){
+      if (!arr(items).length) return;
+      var b = el('div', 'box' + (strong ? ' strong' : '')); b.appendChild(el('h3', 'serif', title));
+      var l = el('div', 'list'); items.forEach(function(t){ l.appendChild(el('span', null, t)); }); b.appendChild(l);
+      side.appendChild(b);
+    }
+    listBox('What to watch', d.watch);
+    listBox('Quick hits', d.quickHits);
+    listBox('If you run a business, not a fund', d.memo, true);
+    mw.appendChild(side);
+    ms.appendChild(mw); app.appendChild(ms);
+  }
+
+  function showEmpty(msg){
+    var app = document.getElementById('app');
+    app.textContent = '';
+    var e = el('div', 'wrap empty');
+    e.appendChild(el('div', 'display big', "TODAY'S EDITION IS ON THE PRESS"));
+    e.appendChild(el('p', null, msg));
+    app.appendChild(e);
+    document.getElementById('dateline').textContent = 'Billionaires Digest';
+  }
+
+  fetch('digest.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function(data){ digest = data || {}; render(); })
+    .catch(function(){ showEmpty("Today's edition couldn't load. Refresh the page in a minute."); });
+})();
 </script>
 </body>
 </html>

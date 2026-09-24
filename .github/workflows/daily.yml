@@ -1,0 +1,40 @@
+name: Morning edition
+
+on:
+  schedule:
+    # 10:00 UTC = 6:00 AM New York (daylight time), 5:00 AM in winter
+    - cron: '0 10 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: morning-edition
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build today's edition
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/build-digest.mjs
+      - name: Publish
+        run: |
+          git config user.name "Billionaires Digest bot"
+          git config user.email "hello@billionairesdigest.com"
+          git add digest.json archive
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Morning edition $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push
