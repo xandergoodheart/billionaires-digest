@@ -50,3 +50,13 @@ ask before spending image credits). The avatar component takes an optional image
 ## Checks per screen
 Tests pass (`node --test scripts/lib/*.test.mjs scripts/lib/**/*.test.mjs`); previewed at 390px and desktop;
 keyboard focus visible; reduced motion respected; no console errors; numbers match the week JSON.
+
+## Phase 2 — whole Fantasy section in v2 (owner request 2026-09-25)
+Owner may keep v2 as the look of the game section only (news side stays v1) — decide after seeing it. Either way the
+Fantasy section is done first. Game pages on the v2 branch are converted IN PLACE (same URLs; v1 stays live on main).
+- Scores: new `scores.html` (your matchup vs S&P 500 / Top 5 richest / Perfect team, day-by-day, season record,
+  online leaderboard). `leaderboard.html` and `fantasy.html` become small v2 pages that forward to the new homes.
+- Leagues, The Book: v2 chrome + v2 page head; v1 scripts (leagues.js, book.js, account.js) unchanged, restyled by
+  `assets/v2/game.css` (v2 versions of the shared g-/gp-/bk- classes; v1 game CSS not loaded).
+- Rules: `play-terms.html` in v2 chrome + "How it works" (moved from v1 fantasy.html How tab), wording unchanged.
+- Draft room gains v1's team code (copy / paste a team between browsers).
