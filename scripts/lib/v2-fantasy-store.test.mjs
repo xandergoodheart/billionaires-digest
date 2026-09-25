@@ -245,7 +245,7 @@ test('team code: export needs a saved team; import replaces weeks and loads the 
   assert.equal(S.captain, 'd');
   const saved = JSON.parse(storage.data['bd-fantasy-v1']);
   assert.equal(saved.teams['2026-W40'].captain, 'd');
-  assert.equal(saved.teams['2026-W40'].savedAt, '2026-09-25T16:00:00.000Z');
+  assert.match(saved.teams['2026-W40'].savedAt, /^2026-09-25T16:00:0\d/); // test clock keeps ticking
   assert.deepEqual(saved.teams['2026-W39'], { picks: ['x'], captain: 'x' });
   assert.equal(F.dirty(), false);
   const ex = plain(F.exportTeams());
