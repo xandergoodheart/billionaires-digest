@@ -5,283 +5,147 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Billionaire Fantasy League · Billionaires Digest</title>
 <meta name="description" content="Draft 5 billionaires under a salary cap and score on their real, disclosed stock portfolios each trading week. A free game: no real money, no prizes, not financial advice.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://billionairesdigest.com/team.html">
 <meta property="og:title" content="Billionaire Fantasy League · Billionaires Digest">
 <meta property="og:description" content="Draft 5 billionaires. Score on their real portfolios. A free weekly game.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://billionairesdigest.com/fantasy.html">
+<meta property="og:url" content="https://billionairesdigest.com/team.html">
 <meta property="og:image" content="https://billionairesdigest.com/og/latest.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://billionairesdigest.com/og/latest.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#13171C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="assets/site.css">
-<link rel="stylesheet" href="assets/tools.css">
-<link rel="stylesheet" href="assets/game-ui.css">
-<link rel="stylesheet" href="assets/fantasy.css">
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/ui.css">
+<style>
+.v2-moved { max-width: 760px; }
+.v2-moved .v2-h1 { margin-bottom: var(--s1); }
+.v2-moved__links { list-style: none; margin: var(--s2) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s1); }
+@media (max-width: 767px) { .v2-moved .v2-h1 { font-size: 40px; } .v2-moved__links .v2-btn { white-space: normal; } }
+</style>
+<script>
+/* v1 fantasy.html tabs now live on their own v2 pages. Forward old links (and v1's tab hashes) to the new homes. */
+(function(){
+  var h = String(location.hash || '').replace(/^#/, '');
+  var map = { lineup: 'draft.html', draft: 'draft.html', team: 'draft.html', matchup: 'scores.html', scoreboard: 'scores.html',
+    season: 'scores.html#season', how: 'play-terms.html#how', rules: 'play-terms.html#how', undraftable: 'play-terms.html#how' };
+  var to = Object.prototype.hasOwnProperty.call(map, h) ? map[h] : 'team.html';
+  var i = to.indexOf('#'), q = /[?&]now=[^&]+/.exec(location.search || '');
+  if (q) to = (i < 0 ? to : to.slice(0, i)) + '?' + q[0].slice(1) + (i < 0 ? '' : to.slice(i));
+  try { location.replace(to); } catch (e) { location.href = to; }
+})();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=team.html"></noscript>
 </head>
-<body>
-<div class="topstrip"><div class="wrap">
-  <span id="dateline">Billionaire Fantasy League</span>
-  <span id="updated"></span>
-</div></div>
-
-<header class="mast"><div class="wrap">
-  <div>
-    <div class="display brand">Billionaires <span>Digest</span></div>
-    <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
-  </div>
-  <button class="themebtn" id="themebtn" type="button">Switch theme</button>
-</div></header>
-
-<!-- nav:start -->
-<nav class="sitenav" aria-label="Site"><div class="wrap">
-  <a href="index.html">Today</a>
-  <a href="people/">People</a>
-  <a href="companies/">Companies</a>
-  <a href="sectors.html">Sectors</a>
-  <a href="calendar.html">Calendar</a>
-  <details class="navmore"><summary aria-current="page">Fantasy</summary><ul>
-    <li><a href="fantasy.html" aria-current="page">My team</a></li>
-    <li><a href="leaderboard.html">Leaderboard</a></li>
-    <li><a href="leagues.html">Leagues</a></li>
-    <li><a href="book.html">The Book</a></li>
-    <li><a href="play-terms.html">Game rules</a></li>
-  </ul></details>
-  <details class="navmore"><summary>Tools</summary><ul>
-    <li><a href="flows.html">Insider flows &amp; leaderboards</a></li>
-    <li><a href="quarterly.html">What their funds bought</a></li>
-    <li><a href="copycat.html">Copycat portfolio</a></li>
-    <li><a href="network.html">Who invests with whom</a></li>
-    <li><a href="compare.html">Compare two billionaires</a></li>
-    <li><a href="property.html">Where they buy</a></li>
-    <li><a href="guides/filings-101/">Filings 101</a></li>
-  </ul></details>
-  <a href="archive.html">Archive</a>
-  <a href="about.html">About</a>
-</div></nav>
-<!-- nav:end -->
-
-<main id="app" class="tools fantasy">
-  <section class="fl-head g-terminal" aria-labelledby="heroh">
-    <div class="wrap">
-      <p class="fl-testclock" id="testclock" hidden></p>
-      <div class="fl-head__top">
-        <div class="fl-head__title">
-          <div class="g-card__kicker">Free weekly game · <span id="weeklabel">Loading…</span></div>
-          <h1 class="display" id="heroh">Billionaire Fantasy League</h1>
-        </div>
-        <div class="fl-head__status">
-          <span class="g-chip g-chip--coins" id="onlinechip" hidden></span>
-          <span id="livepill"></span>
-          <div class="g-countdown" id="countdown" aria-live="off"><span class="g-countdown__label">Lineup locks in</span> <span class="g-countdown__time">…</span></div>
-          <p class="fl-head__lockat" id="lockat"></p>
-        </div>
-      </div>
-      <div class="fl-head__chips" id="recordchips" aria-label="Season record"></div>
-      <p class="fl-dek">Draft five of the world's richest people under a 100-point salary cap and name a captain. Each trading day they score from the stocks they actually hold, plus bonuses for insider buying and news. <strong>Game only:</strong> no real money, no prizes, not financial advice.</p>
+<body class="v2 v2-movedpage">
+<!-- v2topbar:start -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="team.html" aria-current="true">Fantasy</a>
+      <a href="people/">Players</a>
+      <a href="scores.html#leaderboard">Rankings</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="index.html">News</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__search" href="people/">Search</a>
+      <a class="v2-btn v2-btn--primary v2-top__cta" href="team.html">My team</a>
     </div>
-  </section>
-
-  <div class="fl-tabsbar">
-    <div class="wrap">
-      <div class="g-tabs" role="tablist" aria-label="Fantasy league" id="maintabs">
-        <button type="button" class="g-tab" role="tab" id="tab-lineup" aria-controls="panel-lineup" aria-selected="true" data-tab="lineup">Lineup</button>
-        <button type="button" class="g-tab" role="tab" id="tab-matchup" aria-controls="panel-matchup" aria-selected="false" tabindex="-1" data-tab="matchup">Matchup</button>
-        <button type="button" class="g-tab" role="tab" id="tab-season" aria-controls="panel-season" aria-selected="false" tabindex="-1" data-tab="season">Season</button>
-        <button type="button" class="g-tab" role="tab" id="tab-how" aria-controls="panel-how" aria-selected="false" tabindex="-1" data-tab="how">How it works</button>
-      </div>
-    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
+</header>
+<nav class="v2-subtabs" aria-label="Fantasy">
+  <div class="v2-wrap v2-subtabs__in">
+    <ul class="v2-subtabs__list">
+      <li><a href="team.html" aria-current="page">My team</a></li>
+      <li><a href="draft.html">Draft room</a></li>
+      <li><a href="scores.html">Scores</a></li>
+      <li><a href="leagues.html">Leagues</a></li>
+      <li><a href="book.html">The Book</a></li>
+      <li><a href="play-terms.html">Rules</a></li>
+    </ul>
+    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
+  </div>
+</nav>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="team.html" aria-current="true">Fantasy</a>
+        <ul>
+          <li><a href="team.html" aria-current="page">My team</a></li>
+          <li><a href="draft.html">Draft room</a></li>
+          <li><a href="scores.html">Scores</a></li>
+          <li><a href="leagues.html">Leagues</a></li>
+          <li><a href="book.html">The Book</a></li>
+          <li><a href="play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="people/">Players</a></li>
+      <li><a class="v2-menu__top" href="scores.html#leaderboard">Rankings</a></li>
+      <li><a class="v2-menu__top" href="calendar.html">Calendar</a></li>
+      <li><a class="v2-menu__top" href="index.html">News</a></li>
+      <li><a class="v2-menu__top" href="people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+<!-- v2topbar:end -->
 
-  <div class="wrap">
-    <!-- LINEUP -->
-    <section class="fl-panel" id="panel-lineup" role="tabpanel" aria-labelledby="tab-lineup" tabindex="-1">
-      <div class="fl-builder">
-        <div class="fl-poolcol">
-          <div class="fl-poolhead">
-            <h2 class="serif" id="poolh">Player pool</h2>
-            <p class="fl-count" id="draftcount"></p>
-          </div>
-          <div class="fl-filters">
-            <div class="fl-search">
-              <label class="g-sr" for="q">Search players</label>
-              <input class="g-input" id="q" type="search" autocomplete="off" placeholder="Search name or ticker">
-            </div>
-            <label class="fl-check"><input type="checkbox" id="afford"> Fits my budget</label>
-          </div>
-          <div class="g-tabs g-tabs--chips fl-sectors" role="tablist" aria-label="Sector" id="sectortabs"></div>
-          <div class="fl-poolwrap">
-            <table class="g-table fl-pool" id="pooltable" aria-labelledby="poolh" aria-describedby="draftcount">
-              <thead><tr id="poolhead"></tr></thead>
-              <tbody id="pool"><tr><td class="tempty" colspan="7">Loading…</td></tr></tbody>
-            </table>
-          </div>
-          <p class="tnote">Salaries follow Forbes rank and are frozen for the week. Avg = average points per scored day this week (practice days before the first real week). Badges: <strong>Hot</strong> = top 10 on the last scored day or up three days running; <strong>News</strong> = stories in recent editions; <strong>Insider buy</strong> = an open-market Form 4 purchase in the last 14 days of scored data.</p>
-        </div>
-
-        <div class="fl-sheetscrim" id="sheetscrim" hidden></div>
-        <aside class="fl-lineup" id="lineupcard" aria-labelledby="lineuph">
-          <div class="g-card fl-lineup__card" id="lineuppanel">
-            <div class="g-drawer__grip fl-sheetonly" aria-hidden="true"></div>
-            <div class="g-card__head">
-              <h2 class="g-card__title" id="lineuph" tabindex="-1">My lineup</h2>
-              <span class="g-card__kicker" id="lineupstatus"></span>
-              <button type="button" class="g-btn g-btn--icon fl-sheetonly" id="sheetclose" aria-label="Close lineup">&times;</button>
-            </div>
-            <p class="fl-lineup__week" id="lineupweek"></p>
-            <div id="lockbanner"></div>
-            <div class="g-budget-bar" id="budget"></div>
-            <ol class="fl-slots" id="slots"></ol>
-            <div id="capwarn"></div>
-            <div class="fl-proj" id="proj"></div>
-            <div class="fl-lineup__acts">
-              <button type="button" class="g-btn g-btn--primary" id="savebtn">Save lineup</button>
-              <button type="button" class="g-btn" id="clearbtn">Clear</button>
-            </div>
-            <p class="fl-sync" id="syncstatus" hidden></p>
-            <p class="fl-msg" id="teammsg"></p>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- MATCHUP -->
-    <section class="fl-panel" id="panel-matchup" role="tabpanel" aria-labelledby="tab-matchup" tabindex="-1" hidden>
-      <div id="matchbox"><p class="tempty">Loading…</p></div>
-    </section>
-
-    <!-- SEASON -->
-    <section class="fl-panel" id="panel-season" role="tabpanel" aria-labelledby="tab-season" tabindex="-1" hidden>
-      <h2 class="serif fl-h2">Season record</h2>
-      <div id="seasonbox"><p class="tempty">Loading…</p></div>
-      <div class="fl-io g-card">
-        <div class="g-card__head"><h3 class="g-card__title">Take your team with you</h3></div>
-        <p class="tnote">Your lineups live only in this browser. Copy the code and paste it on another device to bring them along.</p>
-        <div class="tcta">
-          <button type="button" class="g-btn" id="exportbtn">Copy my team code</button>
-          <button type="button" class="g-btn" id="sharebtn">Share my week</button>
-        </div>
-        <div class="fl-import">
-          <label for="importcode" class="g-stat__label">Paste a team code</label>
-          <div class="fl-importrow">
-            <input class="g-input" id="importcode" type="text" autocomplete="off" spellcheck="false" placeholder="BFL1.…">
-            <button type="button" class="g-btn g-btn--primary" id="importbtn">Import</button>
-          </div>
-        </div>
-        <p class="fl-msg" id="iomsg"></p>
-      </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="fl-panel" id="panel-how" role="tabpanel" aria-labelledby="tab-how" tabindex="-1" hidden>
-      <h2 class="serif fl-h2">How it works</h2>
-      <div class="fl-rules">
-        <div class="g-card">
-          <h3 class="g-card__title">The game</h3>
-          <ul>
-            <li>Pick <strong>5 billionaires</strong> with salaries adding up to <strong>100 cap points or less</strong>. One is your <strong>captain</strong> and scores <strong>1.5×</strong>.</li>
-            <li>A week is Monday to Friday, US market days. Your lineup <strong>locks Monday at 9:30 AM New York time</strong>. Saving after the lock sets your team for the next week.</li>
-            <li>Starting mid-week? Your first save also enters you in the current week, scoring from the <strong>next trading day</strong> (late entry).</li>
-            <li>Salaries follow Forbes rank among draftable people: ranks 1–5 cost 30, 6–10 cost 26, 11–20 cost 22, 21–35 cost 18, 36–50 cost 14, 51–75 cost 10, 76–100 cost 7. They are frozen when the week opens. After four weeks of results, salaries move up to ±4 by recent form.</li>
-          </ul>
-        </div>
-        <div class="g-card">
-          <h3 class="g-card__title">Scoring, per person, per trading day</h3>
-          <div class="g-table-wrap">
-            <table class="g-table fl-scoretable">
-              <caption>Points for each pick. The captain's total is multiplied by 1.5 and rounded.</caption>
-              <thead><tr><th scope="col">Event</th><th scope="col">Points</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Portfolio return that day</th><td>return % × 100, rounded (+1.23% = <span class="g-up">+123</span>; a down day is negative)</td></tr>
-                <tr><th scope="row">Form 4 open-market purchase (code P) filed that day</th><td class="g-up">+25</td></tr>
-                <tr><th scope="row">Each story about them in that day's Digest</th><td class="g-up">+10</td></tr>
-                <tr><th scope="row">Captain</th><td class="g-gold">× 1.5</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <h3 class="g-card__title fl-subh">Benchmarks</h3>
-          <ul>
-            <li><strong>S&amp;P 500 (SPY)</strong>: SPY's daily return × 100, times 5 so it compares with a five-pick team (no captain).</li>
-            <li><strong>Top 5 richest</strong>: the five highest-ranked draftable people, with the richest as captain. It ignores the cap.</li>
-            <li><strong>Perfect team</strong>: the best possible five under the cap with the best captain, worked out after the week ends.</li>
-          </ul>
-        </div>
-        <div class="g-card">
-          <h3 class="g-card__title">Method notes</h3>
-          <ul>
-            <li>A portfolio is the person's current controlling stakes and holdings on their profile that trade on a US exchange, including US lines of foreign companies (ADRs) used for daily moves only.</li>
-            <li>When every holding has an exact disclosed share count, holdings are weighted by value (<em>value-weighted</em>). Otherwise the companies a person controls together count for 75% and their other stakes for 25%, with each group split by value when every holding in it has a share count and equally when not (<em>controls-weighted, 75/25</em>). Someone with only one group puts 100% in it. Each player card shows the method and the weights.</li>
-            <li>A quote that did not trade that day counts as 0%. Days with no market (weekends and holidays) do not score.</li>
-            <li>Private companies, funds and family holdings have no daily price, so people whose wealth is mostly private cannot be drafted.</li>
-            <li>Lineup projections and the matchup win chance are simple estimates from recent points. They are not forecasts.</li>
-          </ul>
-        </div>
-      </div>
-      <p class="fl-disclaim"><strong>Game only.</strong> No real money, no prizes, not financial advice. Scores use public prices and disclosed holdings and are approximate. Nothing here is a recommendation to buy or sell any security.</p>
-      <details class="tdetails" id="nodraftdetails">
-        <summary id="nodraftsummary">Show people with no daily market price</summary>
-        <ul class="fl-nodraft" id="nodraft"></ul>
-      </details>
-    </section>
-
-    <!-- online play: shown only when BD.game.ready resolves true (then window.BD_GAME_ONLINE === true) -->
-    <section class="g-card fl-online" id="online" aria-labelledby="onlineh" hidden>
-      <div class="g-card__head">
-        <h2 class="g-card__title" id="onlineh">Play online</h2>
-        <span class="g-card__kicker">Free · play money only</span>
-      </div>
-      <p class="tnote" id="onlinedek">Sign in as a guest to put your lineup on the online leaderboard, join leagues with friends and bet play-money coins in The Book. Your lineup still saves in this browser first.</p>
-      <div id="gameaccount" class="g-account"><p class="g-msg">Loading the online game…</p></div>
-      <p class="fl-onlinesync" id="onlinesync" hidden></p>
-      <div class="tcta">
-        <a class="g-btn" href="leaderboard.html">Leaderboard</a>
-        <a class="g-btn" href="leagues.html">Leagues</a>
-        <a class="g-btn" href="book.html">The Book</a>
-      </div>
+<main id="main" class="v2-main" tabindex="-1">
+  <div class="v2-wrap">
+    <section class="v2-card v2-moved" aria-labelledby="movedh">
+      <span class="v2-kicker">Billionaire Fantasy League</span>
+      <h1 class="v2-h1" id="movedh">This page has moved</h1>
+      <p class="v2-lede">The fantasy game has new pages. Your team, the Draft room and your scores each have their own page now. If you are not taken there, pick one below.</p>
+      <ul class="v2-moved__links">
+      <li><a class="v2-btn v2-btn--primary" href="team.html" id="movedto">My team</a></li>
+      <li><a class="v2-btn v2-btn--secondary" href="draft.html">Draft room</a></li>
+      <li><a class="v2-btn v2-btn--secondary" href="scores.html">Scores</a></li>
+      <li><a class="v2-btn v2-btn--secondary" href="scores.html#season">Season record</a></li>
+      <li><a class="v2-btn v2-btn--secondary" href="play-terms.html#how">How it works</a></li>
+      </ul>
     </section>
   </div>
 </main>
 
-<!-- player drawer (side panel on desktop, bottom sheet on phones) -->
-<div class="g-drawer" id="drawer" hidden>
-  <div class="g-drawer__scrim" data-close></div>
-  <div class="g-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawertitle" tabindex="-1" id="drawerpanel">
-    <div class="g-drawer__grip" aria-hidden="true"></div>
-    <div class="g-drawer__head" id="drawerhead"></div>
-    <div class="g-drawer__body" id="drawerbody"></div>
-    <div class="g-drawer__foot" id="drawerfoot"></div>
+<!-- v2tabs:start -->
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="team.html" aria-current="true">Fantasy</a>
+  <a href="people/">Players</a>
+  <a href="scores.html#leaderboard">Rankings</a>
+  <a href="index.html">News</a>
+</nav>
+<!-- v2tabs:end -->
+<!-- v2footer:start -->
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="about.html#corrections">Corrections</a>
+      <a href="play-terms.html">Game rules</a>
+    </nav>
   </div>
-</div>
-
-<!-- phone lineup bar -->
-<div class="g-bottombar" id="bottombar" hidden>
-  <button type="button" class="g-bottombar__sum" id="barsum" aria-controls="lineupcard" aria-expanded="false">
-    <span class="g-bottombar__main" id="barmain">0/5 picked</span>
-    <span class="g-bottombar__sub" id="barsub">Tap to see your lineup</span>
-  </button>
-  <button type="button" class="g-btn g-btn--primary" id="barsave">Save</button>
-</div>
-
-<div class="g-toast-region" id="toasts" role="status" aria-live="polite"></div>
-<div class="g-sr" id="live" aria-live="polite" aria-atomic="true"></div>
-
-<!-- footer:start -->
-<footer><div class="wrap">
-  <span>Billionaires Digest · billionairesdigest.com</span>
-  <span class="footlinks"><a href="about.html">About</a> · <a href="about.html#corrections">Corrections</a> · <a href="about.html#sponsor">Sponsor the brief</a> · <a href="calendar.ics">Calendar feed (calendar.ics)</a></span>
-  <span>For information only · not financial advice</span>
-</div></footer>
-<!-- footer:end -->
+</footer>
+<!-- v2footer:end -->
 
 <script src="assets/common.js"></script>
-<script src="assets/game-client.js"></script>
-<script src="assets/account.js"></script>
-<script src="assets/fantasy-core.js"></script>
-<script src="assets/fantasy.js"></script>
+<script src="assets/v2/chrome.js"></script>
 </body>
 </html>

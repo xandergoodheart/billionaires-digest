@@ -1,4 +1,4 @@
-/* Billionaires Digest v2: fantasy state shared by the v2 game pages (team.html, draft.html). ES5, no DOM.
+/* Billionaires Digest v2: fantasy state shared by the v2 game pages (team.html, draft.html, scores.html). ES5, no DOM.
    Exposes one global: BDFantasyStore. Needs assets/fantasy-core.js (BDFantasyCore); BD (assets/common.js) and
    BDGame / BDAccount (assets/game-client.js, assets/account.js) are optional.
    Ported from the v1 page (assets/fantasy.js), which stays unchanged: same storage key and shape ('bd-fantasy-v1'),
@@ -270,6 +270,69 @@
     return { ok: true, text: text, errors: [], persisted: ok, late: late, sync: sync };
   }
 
+  // ---- team code (v1 format, from BDFantasyCore.exportCode/importCode, so old codes keep working) ----
+  // Pure: decode a pasted code -> { ok, teams, n, text }; merge decoded teams into a teams map (v1 import rule:
+  // each week in the code replaces the saved one and gets a new savedAt). Messages are v1's.
+  function decodeTeams(code){
+    var teams;
+    try { teams = C.importCode(code); } catch (e) { return { ok: false, teams: null, n: 0, text: 'That code did not work. Check that you pasted all of it.' }; }
+    var n = 0; for (var w in teams) if (has(teams, w)) n++;
+    if (!n) return { ok: false, teams: teams, n: 0, text: 'That code has no teams in it.' };
+    return { ok: true, teams: teams, n: n, text: 'Imported ' + n + (n === 1 ? ' week.' : ' weeks.') };
+  }
+  function mergeTeams(target, teams, savedAt){
+    var n = 0;
+    for (var w in teams){ if (!has(teams, w)) continue; target[w] = teams[w]; target[w].savedAt = savedAt; n++; }
+    return n;
+  }
+  // { ok, code, text }: the code for every saved team in this browser (v1: 'Save a lineup first.' when none).
+  function exportTeams(){
+    var n = 0; for (var k in store.teams) if (has(store.teams, k)) n++;
+    if (!n) return { ok: false, code: '', text: 'Save a lineup first.' };
+    return { ok: true, code: C.exportCode(store.teams), text: '' };
+  }
+  // Imports a pasted code into this browser's saved teams; when it has a team for the draft week, that team
+  // becomes the working roster (as v1). Returns { ok, n, text }.
+  function importTeams(code){
+    var d = decodeTeams(code);
+    if (!d.ok) return { ok: false, n: 0, text: d.text };
+    mergeTeams(store.teams, d.teams, new Date(now()).toISOString());
+    persist();
+    var t = store.teams[S.draftWeek];
+    if (t){
+      var sal = salaries();
+      S.picks = t.picks.filter(function(s){ return sal[s] != null; }).slice(0, C.PICKS);
+      S.captain = S.picks.indexOf(t.captain) >= 0 ? t.captain : (S.picks[0] || null);
+      saveDraft();
+    }
+    emit('roster');
+    return { ok: true, n: d.n, text: d.text };
+  }
+
+  // Season record over finished real weeks (v1 renderSeason). entries: [{ wk, team }] (wk = week file).
+  // Returns { played, winsSpy, winsTop5, winsPerfect, best: { week, points } | null, streak, rows (newest first) }.
+  function seasonRecord(entries){
+    var rec = { played: 0, winsSpy: 0, winsTop5: 0, winsPerfect: 0, best: null, streak: 0, rows: [] };
+    arr(entries).forEach(function(x){
+      var wk = x && x.wk, team = x && x.team;
+      if (!wk || !team) return;
+      var bm = wk.benchmarks || {};
+      var mine = teamWeek(wk, team).total;
+      var t5 = bm.top5 ? teamWeek(wk, bm.top5).total : null;
+      var spy = bm.spy, pf = bm.perfect ? bm.perfect.points : null;
+      rec.played++;
+      var beatSpy = typeof spy === 'number' && mine > spy;
+      if (beatSpy) rec.winsSpy++;
+      if (typeof t5 === 'number' && mine > t5) rec.winsTop5++;
+      if (typeof pf === 'number' && mine >= pf) rec.winsPerfect++;
+      if (!rec.best || mine > rec.best.points) rec.best = { week: wk.week, points: mine };
+      rec.rows.push({ week: wk.week, mine: mine, spy: spy, top5: t5, perfect: pf, beatSpy: beatSpy, team: team });
+    });
+    rec.rows.sort(function(a, b){ return a.week < b.week ? 1 : -1; });
+    for (var i = 0; i < rec.rows.length && rec.rows[i].beatSpy; i++) rec.streak++;
+    return rec;
+  }
+
   function projection(picks, captain){ return projectionFrom(S.stats, picks || S.picks, captain === undefined ? S.captain : captain); }
   function teamWeekState(wk, team){ return teamWeek(wk, team); }
   function matchTeam(wk){ return matchTeamFrom(wk, store.teams, S.picks, S.captain); }
@@ -345,9 +408,11 @@
     savedTeam: savedTeam, dirty: dirty, capLine: capLine, blockReason: blockReason,
     addPick: addPick, removePick: removePick, setCaptain: setCaptain, clearPicks: clearPicks, saveDraft: saveDraft, saveTeam: saveTeam,
     teamWeek: teamWeekState, matchTeam: matchTeam, weekOver: weekOver, weekPoints: weekPoints, projection: projection,
+    loadWeek: loadWeek, exportTeams: exportTeams, importTeams: importTeams,
     onlinePlaying: onlinePlaying, me: me, isSynced: isSynced, syncTeam: syncTeam, busy: function(){ return ON.busy; },
     // pure helpers (tested)
-    pure: { teamWeek: teamWeek, weekPoints: weekPoints, projectionFrom: projectionFrom, dayPeople: dayPeople, computeStatsFrom: computeStatsFrom, matchTeamFrom: matchTeamFrom, weekOverAt: weekOverAt, teamSig: teamSig },
+    pure: { teamWeek: teamWeek, weekPoints: weekPoints, projectionFrom: projectionFrom, dayPeople: dayPeople, computeStatsFrom: computeStatsFrom, matchTeamFrom: matchTeamFrom, weekOverAt: weekOverAt, teamSig: teamSig,
+            encodeTeams: function(teams){ return C.exportCode(teams); }, decodeTeams: decodeTeams, mergeTeams: mergeTeams, seasonRecord: seasonRecord },
     fmt: { signed: signed, dayLabel: dayLabel, shortDate: shortDate, weekName: weekName, weekTitle: weekTitle, DAYN: DAYN, MONTHS: MONTHS }
   };
 })(typeof window !== 'undefined' ? window : globalThis);

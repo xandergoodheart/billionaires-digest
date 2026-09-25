@@ -10,8 +10,10 @@ export const NAV = [
   { key: 'sectors', label: 'Sectors', href: 'sectors.html' },
   { key: 'calendar', label: 'Calendar', href: 'calendar.html' },
   { key: 'game', label: 'Fantasy', items: [
-    { key: 'fantasy', label: 'My team', href: 'fantasy.html' },
-    { key: 'leaderboard', label: 'Leaderboard', href: 'leaderboard.html' },
+    { key: 'fantasy', label: 'My team', href: 'team.html' },
+    { key: 'draft', label: 'Draft room', href: 'draft.html' },
+    { key: 'scores', label: 'Scores', href: 'scores.html' },
+    { key: 'leaderboard', label: 'Leaderboard', href: 'scores.html#leaderboard' },
     { key: 'leagues', label: 'Leagues', href: 'leagues.html' },
     { key: 'book', label: 'The Book', href: 'book.html' },
     { key: 'playterms', label: 'Game rules', href: 'play-terms.html' }
@@ -75,7 +77,7 @@ export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navm
 export const NAV_V2 = [
   { key: 'fantasy', label: 'Fantasy', href: 'team.html' },
   { key: 'players', label: 'Players', href: 'people/' },
-  { key: 'rankings', label: 'Rankings', href: 'leaderboard.html' },
+  { key: 'rankings', label: 'Rankings', href: 'scores.html#leaderboard' },   // until the v2 Rankings screen exists
   { key: 'calendar', label: 'Calendar', href: 'calendar.html' },
   { key: 'news', label: 'News', href: 'index.html' }
 ];
@@ -87,7 +89,7 @@ export const SUBNAV_V2 = {
     items: [
       { key: 'team', label: 'My team', href: 'team.html' },
       { key: 'draft', label: 'Draft room', href: 'draft.html' },
-      { key: 'scores', label: 'Scores', href: 'fantasy.html#matchup' },
+      { key: 'scores', label: 'Scores', href: 'scores.html' },
       { key: 'leagues', label: 'Leagues', href: 'leagues.html' },
       { key: 'book', label: 'The Book', href: 'book.html' },
       { key: 'rules', label: 'Rules', href: 'play-terms.html' }

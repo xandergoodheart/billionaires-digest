@@ -10,7 +10,7 @@
   var $ = function(id){ return document.getElementById(id); };
   var mqPhone = window.matchMedia ? window.matchMedia('(max-width: 767px)') : { matches: false };
 
-  var UI = { q: '', sector: '', sort: 'pts', saveMsg: null, syncMsg: null };
+  var UI = { q: '', sector: '', sort: 'pts', saveMsg: null, syncMsg: null, code: '', codeMsg: null };
   try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; } } catch (e) {}
   function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort })); } catch (e) {} }
 
@@ -269,6 +269,51 @@
       box.appendChild(m);
     }
     renderSync(box);
+    renderCode(box, withId ? 'side' : 'sheet');
+  }
+  // team code (v1: copy / paste your saved teams between browsers; same code format and messages)
+  function renderCode(box, key){
+    var sec = el('div', 'dr-code');
+    var h = el('h3', 'dr-code__h', 'Team code'); h.id = 'codeh-' + key;
+    sec.appendChild(h);
+    sec.setAttribute('role', 'group'); sec.setAttribute('aria-labelledby', h.id);
+    sec.appendChild(el('p', 'dr-panel__small', 'Your lineups live only in this browser. Copy the code and paste it on another device to bring them along.'));
+    var cb = btn('dr-mini dr-code__copy', 'Copy team code'); cb.setAttribute('data-code-copy', '1');
+    sec.appendChild(cb);
+    var f = el('form', 'dr-code__form'); f.setAttribute('data-code-form', '1'); f.setAttribute('novalidate', '');
+    var lab = el('label', 'dr-code__lab', 'Paste a team code'); lab.htmlFor = 'codein-' + key;
+    f.appendChild(lab);
+    var row = el('div', 'dr-code__row');
+    var inp = el('input', 'v2-input dr-code__in'); inp.id = 'codein-' + key; inp.type = 'text';
+    inp.autocomplete = 'off'; inp.spellcheck = false; inp.placeholder = 'BFL1.…'; inp.value = UI.code;
+    inp.setAttribute('data-code-in', '1'); inp.setAttribute('autocapitalize', 'off');
+    row.appendChild(inp);
+    var lb = el('button', 'dr-mini dr-code__load', 'Load'); lb.type = 'submit';
+    row.appendChild(lb);
+    f.appendChild(row);
+    sec.appendChild(f);
+    if (UI.codeMsg) sec.appendChild(el('p', 'dr-code__msg' + (UI.codeMsg.bad ? ' is-bad' : ''), UI.codeMsg.text));
+    box.appendChild(sec);
+  }
+  function codeMsg(scope, text, bad, sel){
+    UI.codeMsg = { text: text, bad: !!bad };
+    renderSide();
+    say(text);
+    if (scope && sel) focusSel(scope, sel);
+  }
+  function copyText(text, okMsg, scope){
+    function fallback(){
+      var ta = el('textarea'); ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      if (ok) codeMsg(scope, okMsg, false, '[data-code-copy]');
+      else { UI.codeMsg = { text: 'Copy this: ' + text, bad: false }; renderSide(); say('Copy failed. The text is shown below the buttons.'); focusSel(scope, '[data-code-in]'); }
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ codeMsg(scope, okMsg, false, '[data-code-copy]'); }, fallback);
+    } else fallback();
   }
   function renderSync(box){
     if (!F.onlinePlaying() || !F.savedTeam()) return;
@@ -386,6 +431,13 @@
       return;
     }
     if (b.hasAttribute('data-save')){ doSave(b); return; }
+    if (b.hasAttribute('data-code-copy')){
+      var cs = panelScope(b), ex = F.exportTeams();
+      if (!ex.ok){ codeMsg(cs, ex.text, true, '[data-code-copy]'); return; }
+      UI.code = ex.code;
+      copyText(ex.code, 'Team code copied. It is also in the box below.', cs);
+      return;
+    }
     if (b.hasAttribute('data-sync')){
       var team = F.savedTeam();
       if (team) F.syncTeam(F.state.draftWeek, team).then(function(res){ UI.syncMsg = res; renderSide(); if (res && res.text) say(res.text); });
@@ -394,6 +446,17 @@
     if (b.hasAttribute('data-reset')){
       UI.q = ''; UI.sector = ''; keepFilters(); $('q').value = ''; $('sector').value = ''; renderPool(); $('q').focus();
     }
+  });
+  document.addEventListener('input', function(e){ if (e.target && e.target.hasAttribute && e.target.hasAttribute('data-code-in')) UI.code = e.target.value; });
+  document.addEventListener('submit', function(e){
+    var f = e.target;
+    if (!f || !f.hasAttribute || !f.hasAttribute('data-code-form')) return;
+    e.preventDefault();
+    var scope = panelScope(f), inp = f.querySelector('[data-code-in]');
+    UI.code = inp ? inp.value : UI.code;
+    var r = F.importTeams(UI.code);
+    if (r.ok){ UI.saveMsg = null; UI.syncMsg = null; renderNotices(); }
+    codeMsg(scope, r.text, !r.ok, r.ok ? '.dr-code__load' : '[data-code-in]');
   });
   var qt = null;
   $('q').addEventListener('input', function(){ var v = this.value; clearTimeout(qt); qt = setTimeout(function(){ UI.q = v; keepFilters(); renderPool(); }, 120); });

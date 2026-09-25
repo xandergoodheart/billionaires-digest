@@ -26,7 +26,13 @@ const ACTIVE = {
 const V2_ACTIVE = {
   'team.html': ['fantasy', 'team'],
   'draft.html': ['fantasy', 'draft'],
-  'design.html': ['fantasy', null]
+  'design.html': ['fantasy', null],
+  'scores.html': ['fantasy', 'scores'],
+  'leagues.html': ['fantasy', 'leagues'],
+  'book.html': ['fantasy', 'book'],
+  'play-terms.html': ['fantasy', 'rules'],
+  'fantasy.html': ['fantasy', 'team'],
+  'leaderboard.html': ['fantasy', 'scores']
 };
 
 // v2 blocks are only replaced between existing markers (never inserted)

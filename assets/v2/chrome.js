@@ -1,6 +1,8 @@
 /* Billionaires Digest v2: phone MENU sheet (markup from scripts/lib/nav.mjs renderTopbarV2). ES5, no globals.
    Opens from the MENU button, traps focus inside, closes on Escape / Close / backdrop click / link click,
    and returns focus to the MENU button. */
+// Phone: scroll the sub-tab row so the current page's tab is visible.
+(function(){ var a = document.querySelector('.v2-subtabs [aria-current="page"]'), row = a && a.closest('.v2-subtabs__list'); if (row && row.scrollWidth > row.clientWidth) row.scrollLeft = Math.max(0, a.getBoundingClientRect().left - row.getBoundingClientRect().left + row.scrollLeft - (row.clientWidth - a.offsetWidth) / 2); })();
 (function(){
   var btn = document.querySelector('.v2-menubtn');
   var menu = document.getElementById('v2-menu');

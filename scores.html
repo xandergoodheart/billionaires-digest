@@ -3,10 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Leaderboard · Billionaires Digest</title>
-<meta name="description" content="Online standings for the Billionaires Digest fantasy league and play-money markets: this week, the season, and coins.">
-<meta name="robots" content="noindex, follow">
-<link rel="canonical" href="https://billionairesdigest.com/scores.html">
+<title>Scores · Billionaire Fantasy League · Billionaires Digest</title>
+<meta name="description" content="Your fantasy week head to head against the S&amp;P 500, the Top 5 richest and the perfect team, day by day, plus your season record and the online leaderboard. A free game with play money only.">
 <meta name="theme-color" content="#13171C">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,23 +13,10 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="assets/v2/tokens.css">
 <link rel="stylesheet" href="assets/v2/ui.css">
-<style>
-.v2-moved { max-width: 760px; }
-.v2-moved .v2-h1 { margin-bottom: var(--s1); }
-.v2-moved__links { list-style: none; margin: var(--s2) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s1); }
-@media (max-width: 767px) { .v2-moved .v2-h1 { font-size: 40px; } .v2-moved__links .v2-btn { white-space: normal; } }
-</style>
-<script>
-/* The online leaderboard now lives on the v2 Scores page. Forward old links there (v1 #tab=week|season|coins kept). */
-(function(){
-  var m = /tab=(\w+)/.exec(location.hash || '');
-  var to = 'scores.html' + ((location.search || '').match(/[?&]now=[^&]+/) ? '?' + /[?&](now=[^&]+)/.exec(location.search)[1] : '') + (m ? '#tab=' + m[1] : '#leaderboard');
-  try { location.replace(to); } catch (e) { location.href = to; }
-})();
-</script>
-<noscript><meta http-equiv="refresh" content="0; url=scores.html#leaderboard"></noscript>
+<link rel="stylesheet" href="assets/v2/game.css">
+<link rel="stylesheet" href="assets/v2/scores.css">
 </head>
-<body class="v2 v2-movedpage">
+<body class="v2 v2-scorespage">
 <!-- v2topbar:start -->
 <a class="v2-skip" href="#main">Skip to content</a>
 <header class="v2-top">
@@ -92,18 +77,61 @@
 
 <main id="main" class="v2-main" tabindex="-1">
   <div class="v2-wrap">
-    <section class="v2-card v2-moved" aria-labelledby="movedh">
-      <span class="v2-kicker">Billionaire Fantasy League</span>
-      <h1 class="v2-h1" id="movedh">This page has moved</h1>
-      <p class="v2-lede">The online leaderboard is now part of the Scores page. If you are not taken there, use the link below.</p>
-      <ul class="v2-moved__links">
-      <li><a class="v2-btn v2-btn--primary" href="scores.html#leaderboard" id="movedto">Go to the leaderboard</a></li>
-      <li><a class="v2-btn v2-btn--secondary" href="scores.html">Scores</a></li>
-      <li><a class="v2-btn v2-btn--secondary" href="team.html">My team</a></li>
-      </ul>
+    <p class="v2-banner" id="testclock" hidden></p>
+
+    <header class="sc-head">
+      <h1 class="v2-display sc-head__h">Scores</h1>
+      <p class="sc-head__dek">Your week, head to head.</p>
+      <div class="sc-head__side">
+        <span class="v2-pill" id="weekpill">Loading…</span>
+        <a class="sc-head__rules" href="play-terms.html">Rules</a>
+      </div>
+    </header>
+
+    <section class="v2-hero sc-board" id="board" aria-labelledby="boardh" aria-busy="true">
+      <h2 class="v2-sr" id="boardh">Your matchup</h2>
+      <p class="v2-loading">Loading your matchup…</p>
+      <span class="v2-skel v2-skel--lg"></span>
+    </section>
+
+    <div class="v2-grid sc-grid" id="scgrid">
+      <div class="span-8 v2-stack" id="scmain">
+        <section class="v2-card" id="days" aria-labelledby="daysh">
+          <div class="v2-card__head"><h2 class="v2-h2" id="daysh">Day by day</h2><span class="v2-card__meta" id="daysmeta"></span></div>
+          <div id="daysbody"><span class="v2-skel"></span><span class="v2-skel"></span><span class="v2-skel"></span></div>
+        </section>
+        <section class="v2-card" id="season" aria-labelledby="seasonh">
+          <div class="v2-card__head"><h2 class="v2-h2" id="seasonh">Season record</h2></div>
+          <div id="seasonbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
+        </section>
+      </div>
+      <div class="span-4 v2-stack" id="scside" hidden>
+        <section class="v2-card" id="prev" aria-labelledby="prevh">
+          <div class="v2-card__head"><h2 class="v2-h2" id="prevh">Last week</h2><span class="v2-card__meta" id="prevmeta"></span></div>
+          <div id="prevbody"></div>
+        </section>
+      </div>
+    </div>
+
+    <section class="v2-card sc-lb" id="leaderboard" aria-labelledby="lbh" tabindex="-1">
+      <div class="v2-card__head sc-lb__head">
+        <h2 class="v2-h2" id="lbh">Leaderboard</h2>
+        <div class="sc-lb__status">
+          <span id="statuspill"></span>
+          <div class="g-stat g-stat--sm"><span class="g-stat__label" id="keystatlabel">Your rank</span><span class="g-stat__num g-num" id="keystat">—</span></div>
+        </div>
+      </div>
+      <p class="sc-lb__dek">How online players rank in the fantasy league this week and over the season, and who has the most play-money coins. <a href="play-terms.html">Rules</a>.</p>
+      <div id="gameaccount" class="g-account"><p class="g-msg">Loading the online game…</p></div>
+      <div class="gp-tabsbar"><div class="g-tabs" role="tablist" aria-label="Leaderboards" id="boardtabs"></div></div>
+      <div id="boards" role="tabpanel" tabindex="0"><p class="g-msg">Loading…</p></div>
+      <p class="gp-note">Only nicknames and points are shown. Everyone's picks become visible once a week locks on Monday at 9:30 AM New York time.</p>
     </section>
   </div>
 </main>
+
+<div class="v2-sr" id="live" role="status" aria-live="polite"></div>
+<div class="v2-toasts" id="toasts" aria-live="polite"></div>
 
 <!-- v2tabs:start -->
 <nav class="v2-tabs" aria-label="Sections">
@@ -131,6 +159,12 @@
 <!-- v2footer:end -->
 
 <script src="assets/common.js"></script>
+<script src="assets/game-client.js"></script>
+<script src="assets/account.js"></script>
+<script src="assets/leagues.js"></script>
+<script src="assets/fantasy-core.js"></script>
+<script src="assets/v2/fantasy-store.js"></script>
 <script src="assets/v2/chrome.js"></script>
+<script src="assets/v2/scores.js"></script>
 </body>
 </html>

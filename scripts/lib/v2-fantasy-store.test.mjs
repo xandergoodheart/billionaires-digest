@@ -25,6 +25,7 @@ function load({ search = '', storage = fakeStorage() } = {}) {
   const ctx = vm.createContext({
     localStorage: storage,
     location: { search },
+    btoa, atob,
     BD: { arr: (x) => (Array.isArray(x) ? x : []), MONTHS: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] },
   });
   vm.runInContext(CORE, ctx, { filename: 'fantasy-core.js' });
@@ -196,4 +197,78 @@ test('projectionFrom: recent averages, captain 1.5x (v1 projection)', () => {
   const S = F.state;
   S.stats = stats; S.picks = ['a', 'b']; S.captain = 'b';
   assert.equal(F.projection(), 12); // 6 + 6
+});
+
+test('team code: same format as v1 (BFL1. + base64 JSON, captain index, optional lateFrom), round-trips', () => {
+  const { F } = load();
+  const teams = {
+    '2026-W40': { picks: ['a', 'b', 'c', 'd', 'e'], captain: 'c', savedAt: 'x' },
+    '2026-W41': { picks: ['a', 'b', 'c', 'd', 'f'], captain: 'a', lateFrom: '2026-10-07' },
+  };
+  const expected = 'BFL1.' + Buffer.from(JSON.stringify({
+    '2026-W40': ['a', 'b', 'c', 'd', 'e', 2],
+    '2026-W41': ['a', 'b', 'c', 'd', 'f', 0, '2026-10-07'],
+  }), 'utf8').toString('base64').replace(/=+$/, '');
+  const code = F.pure.encodeTeams(teams);
+  assert.equal(code, expected);
+  const d = plain(F.pure.decodeTeams('  ' + code.slice(0, 20) + '\n' + code.slice(20) + ' '));
+  assert.equal(d.ok, true);
+  assert.equal(d.n, 2);
+  assert.equal(d.text, 'Imported 2 weeks.');
+  assert.deepEqual(d.teams['2026-W40'], { picks: ['a', 'b', 'c', 'd', 'e'], captain: 'c' });
+  assert.deepEqual(d.teams['2026-W41'], { picks: ['a', 'b', 'c', 'd', 'f'], captain: 'a', lateFrom: '2026-10-07' });
+});
+
+test('team code: bad and empty codes get the v1 messages', () => {
+  const { F } = load();
+  assert.equal(F.pure.decodeTeams('hello').text, 'That code did not work. Check that you pasted all of it.');
+  assert.equal(F.pure.decodeTeams('BFL1.%%%').ok, false);
+  const empty = 'BFL1.' + Buffer.from('{}', 'utf8').toString('base64').replace(/=+$/, '');
+  const r = F.pure.decodeTeams(empty);
+  assert.equal(r.ok, false);
+  assert.equal(r.text, 'That code has no teams in it.');
+  const one = F.pure.decodeTeams(F.pure.encodeTeams({ '2026-W40': { picks: ['a', 'b', 'c', 'd', 'e'], captain: 'a' } }));
+  assert.equal(one.text, 'Imported 1 week.');
+});
+
+test('team code: export needs a saved team; import replaces weeks and loads the draft-week roster', () => {
+  const storage = fakeStorage();
+  const { F } = load({ search: '?now=2026-09-25T16:00:00Z', storage });
+  assert.deepEqual(plain(F.exportTeams()), { ok: false, code: '', text: 'Save a lineup first.' });
+  const S = F.state;
+  S.draftWeek = '2026-W40'; S.draftWk = WK;
+  F.store().teams['2026-W39'] = { picks: ['x'], captain: 'x' };
+  const code = F.pure.encodeTeams({ '2026-W40': { picks: ['a', 'c', 'd', 'e', 'f'], captain: 'd' } });
+  const r = plain(F.importTeams(code));
+  assert.deepEqual(r, { ok: true, n: 1, text: 'Imported 1 week.' });
+  assert.deepEqual(plain(S.picks), ['a', 'c', 'd', 'e', 'f']);
+  assert.equal(S.captain, 'd');
+  const saved = JSON.parse(storage.data['bd-fantasy-v1']);
+  assert.equal(saved.teams['2026-W40'].captain, 'd');
+  assert.equal(saved.teams['2026-W40'].savedAt, '2026-09-25T16:00:00.000Z');
+  assert.deepEqual(saved.teams['2026-W39'], { picks: ['x'], captain: 'x' });
+  assert.equal(F.dirty(), false);
+  const ex = plain(F.exportTeams());
+  assert.equal(ex.ok, true);
+  assert.equal(ex.code.indexOf('BFL1.'), 0);
+  assert.equal(F.importTeams('nope').ok, false);
+});
+
+test('seasonRecord: v1 season numbers (wins vs S&P and Top 5, matched perfect, best week, streak)', () => {
+  const { F } = load();
+  const team = { picks: ['a', 'b', 'c', 'd', 'e'], captain: 'a' }; // WK total: 15+8+5 + 4 + 6 + 1 + 4 = 43
+  const mine = F.pure.teamWeek(WK, team).total;
+  const w1 = { ...WK, week: '2026-W40', final: true, benchmarks: { spy: mine - 1, top5: { picks: ['a', 'b', 'c', 'd', 'f'], captain: 'b' }, perfect: { points: mine } } };
+  const w2 = { ...WK, week: '2026-W41', final: true, benchmarks: { spy: mine + 5, top5: null, perfect: null } };
+  const r = plain(F.pure.seasonRecord([{ wk: w1, team }, { wk: w2, team }, { wk: null, team }]));
+  assert.equal(r.played, 2);
+  assert.equal(r.winsSpy, 1);
+  assert.equal(r.winsPerfect, 1);
+  assert.equal(r.best.week, '2026-W40');
+  assert.equal(r.best.points, mine);
+  assert.deepEqual(r.rows.map((x) => x.week), ['2026-W41', '2026-W40']);
+  assert.equal(r.streak, 0); // newest week lost to the S&P 500
+  const t5 = F.pure.teamWeek(w1, w1.benchmarks.top5).total;
+  assert.equal(r.winsTop5, mine > t5 ? 1 : 0);
+  assert.equal(r.rows[0].top5, null);
 });

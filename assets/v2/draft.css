@@ -103,6 +103,21 @@
 .dr-sync.is-bad { color: #FF7B76; }
 .dr-panel .v2-link { color: #fff; }
 
+/* team code (copy / paste a team between browsers) */
+.dr-code { margin-top: var(--s3); padding-top: var(--s2); border-top: 1px solid var(--ink-3); }
+.dr-code__h { font-size: var(--fs-sm); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #fff; margin: 0 0 var(--s0); }
+.dr-code .dr-panel__small { margin: 0 0 var(--s1); }
+.dr-code .dr-mini { min-height: var(--tap); }
+.dr-code__form { margin-top: var(--s1); }
+.dr-code__lab { display: block; font-size: var(--fs-sm); font-weight: 600; color: var(--on-ink-muted); margin-bottom: 6px; }
+.dr-code__row { display: flex; gap: var(--s0); }
+.dr-code__in { flex: 1 1 auto; min-width: 0; background: var(--ink-2); color: #fff; border-color: var(--ink-3); }
+.dr-code__in:hover { border-color: var(--on-ink-muted); }
+.dr-code__in::placeholder { color: var(--on-ink-muted); }
+.dr-code__load { flex: none; color: #fff; }
+.dr-code__msg { margin: var(--s1) 0 0; font-size: var(--fs-sm); color: #9BE3BF; overflow-wrap: anywhere; }
+.dr-code__msg.is-bad { color: #FF7B76; }
+
 /* phone team bar + bottom sheet */
 .dr-bar { display: none; }
 .dr-sheet { position: fixed; inset: 0; z-index: 90; background: rgba(10, 12, 15, .55); }

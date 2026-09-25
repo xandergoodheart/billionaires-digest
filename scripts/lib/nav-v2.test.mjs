@@ -45,7 +45,8 @@ test('renderTopbarV2: relative and absolute links', () => {
   assert.ok(rel.includes('href="team.html"') && rel.includes('href="people/"') && rel.includes('href="index.html"'));
   const abs = renderTopbarV2('fantasy', 'team', { absolute: true });
   assert.ok(abs.includes('href="/team.html"') && abs.includes('href="/people/"') && abs.includes('href="/"'));
-  assert.ok(abs.includes('href="/fantasy.html#matchup"'));
+  assert.ok(abs.includes('href="/scores.html"'));
+  assert.ok(abs.includes('href="/scores.html#leaderboard"'));
   assert.ok(!/href="(?!\/|#)/.test(abs), 'every absolute link starts with / or #');
 });
 
@@ -80,5 +81,21 @@ test('renderFooterV2: disclaimers and links', () => {
 test('v1 renderNav is unchanged by the v2 additions', () => {
   const html = renderNav('fantasy');
   assert.ok(html.startsWith('<nav class="sitenav"'));
-  assert.ok(html.includes('<a href="fantasy.html" aria-current="page">My team</a>'));
+  assert.ok(html.includes('<a href="team.html" aria-current="page">My team</a>'));
+});
+
+test('NAV_V2 links: Scores sub-tab and Rankings point at scores.html', () => {
+  assert.equal(SUBNAV_V2.fantasy.items.find((i) => i.key === 'scores').href, 'scores.html');
+  assert.equal(NAV_V2.find((n) => n.key === 'rankings').href, 'scores.html#leaderboard');
+  assert.deepEqual(SUBNAV_V2.fantasy.items.map((i) => i.key), ['team', 'draft', 'scores', 'leagues', 'book', 'rules']);
+});
+
+test('v1 Fantasy menu links into the v2 section', () => {
+  const html = renderNav('leagues');
+  for (const [href, label] of [['team.html', 'My team'], ['draft.html', 'Draft room'], ['scores.html', 'Scores'],
+    ['scores.html#leaderboard', 'Leaderboard'], ['leagues.html', 'Leagues'], ['book.html', 'The Book'], ['play-terms.html', 'Game rules']]) {
+    assert.ok(html.includes(`<a href="${href}"`) && html.includes(`>${label}</a>`), label);
+  }
+  assert.ok(html.includes('<a href="leagues.html" aria-current="page">Leagues</a>'));
+  assert.ok(!html.includes('href="fantasy.html"') && !html.includes('href="leaderboard.html"'));
 });
