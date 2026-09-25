@@ -1,0 +1,205 @@
+{
+  "rank": 35,
+  "name": "Aliko Dangote",
+  "slug": "aliko-dangote",
+  "worth": "$51.8B",
+  "source": "Cement, Sugar",
+  "asOf": "2026-09-24T21:15-04:00",
+  "aliases": [
+    "Alhaji Aliko Dangote",
+    "Aliko Mohammad Dangote"
+  ],
+  "controls": [
+    {
+      "name": "Dangote Industries Limited (Dangote Group)",
+      "role": "Founder, President/Chief Executive; ultimate owner",
+      "stake": "Ultimate owner (per Dangote Cement FY2024 accounts)",
+      "stakeAsOf": "2024-12-31",
+      "source": "https://cement.dangote.com/wp-content/uploads/2025/03/Dangote-Cement-Full-Year-2024-Account.pdf"
+    },
+    {
+      "name": "Dangote Cement Plc",
+      "ticker": "DANGCEM",
+      "exchange": "Nigerian Exchange (NGX)",
+      "role": "Chairman; ultimate controlling party",
+      "stake": "85.8% via Dangote Industries Limited + 0.16% directly",
+      "stakeAsOf": "2024-12-31",
+      "source": "https://cement.dangote.com/wp-content/uploads/2025/03/Dangote-Cement-Full-Year-2024-Account.pdf"
+    },
+    {
+      "name": "Dangote Petroleum Refinery and Petrochemicals FZE",
+      "exchange": "Nigerian Exchange (NGX) - listing expected November 2026",
+      "role": "Founder; controlling beneficial owner",
+      "stake": "87.27% beneficial pre-IPO (via Dangote Oil Refining Co 65.835%, Dangote Industries Ltd 14.904%, Greenview International Corp 6.496%, plus 60% of Salamad Ventures); ~84.34% post-IPO if base offer fully subscribed",
+      "stakeAsOf": "2026-09-07 (prospectus)",
+      "source": "https://nairametrics.com/2026/09/09/dangote-to-retain-84-34-control-of-refinery-after-planned-n2-15-trillion-ipo-prospectus-shows/"
+    },
+    {
+      "name": "Dangote Sugar Refinery Plc",
+      "ticker": "DANGSUGAR",
+      "exchange": "Nigerian Exchange (NGX)",
+      "role": "Controlled via Dangote Industries Limited; ultimate controlling party Greenview International Corporation (Cayman)",
+      "stake": "68% held by Dangote Industries Limited",
+      "stakeAsOf": "2025-03-31",
+      "source": "https://sugar.dangote.com/wp-content/uploads/2025/05/Dangote-Sugar-Refinery-Plc-Q1-2025-Accounts.pdf"
+    },
+    {
+      "name": "NASCON Allied Industries Plc",
+      "ticker": "NASCON",
+      "exchange": "Nigerian Exchange (NGX)",
+      "role": "Controlled via Dangote Industries Limited; ultimate holding company Greenview International Corp (Cayman)",
+      "stake": "62.19% held by Dangote Industries Limited",
+      "stakeAsOf": "2024-12-31",
+      "source": "https://salt.dangote.com/wp-content/uploads/2025/03/NASCON-NASCON-Allied-Industries-PLc-Full-Year-2024-Audited-Financoal-Statement.pdf"
+    },
+    {
+      "name": "Dangote Fertiliser Limited",
+      "role": "Controlled via Dangote Group; 3m tonnes/yr urea plant at Ibeju-Lekki; IPO targeted for 2028",
+      "source": "https://brandcom.ng/2026/09/22/dangote-unveils-10bn-power-blitz-for-africa-sets-2028-date-for-fertilizer-company-ipo/"
+    },
+    {
+      "name": "Dangote Group Ethiopia urea fertilizer complex (Gode, Somali region)",
+      "role": "Developer; 60:40 JV with Ethiopian Investment Holdings; planned investment raised to >$4bn",
+      "stake": "60% Dangote Group",
+      "stakeAsOf": "2025-08",
+      "source": "https://www.cnbcafrica.com/2026/dangote-raises-planned-investment-in-ethiopia-fertiliser-project-to-over-4-billion"
+    },
+    {
+      "name": "East Africa Oil Refinery (Lamu, Kenya) - planned",
+      "role": "Sponsor/developer; ~$16-17bn, 700k bpd planned; offered Kenya, Ethiopia, Rwanda a combined 30% stake",
+      "stake": "Dangote Group sponsor; up to 30% offered to East African states",
+      "stakeAsOf": "2026-08-24",
+      "source": "https://www.semafor.com/article/08/24/2026/dangote-offers-east-african-countries-a-30-stake-in-new-refinery"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "Dangote Industries Limited",
+      "type": "holding co",
+      "notes": "Parent of Dangote Cement (85.8%), Dangote Sugar (68%), NASCON (62.19%); holds 14.904% of the refinery directly. Not on EDGAR.",
+      "source": "https://cement.dangote.com/wp-content/uploads/2025/03/Dangote-Cement-Full-Year-2024-Account.pdf"
+    },
+    {
+      "name": "Greenview International Corporation (Cayman Islands)",
+      "type": "holding co",
+      "notes": "Named ultimate controlling party in Dangote Sugar and NASCON accounts; holds 6.496% of Dangote refinery pre-IPO.",
+      "source": "https://sugar.dangote.com/wp-content/uploads/2025/05/Dangote-Sugar-Refinery-Plc-Q1-2025-Accounts.pdf"
+    },
+    {
+      "name": "Dangote Oil Refining Company Limited (DORCL)",
+      "type": "holding co",
+      "notes": "Holds 65.835% of Dangote Petroleum Refinery pre-IPO per prospectus.",
+      "source": "https://nairametrics.com/2026/09/09/dangote-to-retain-84-34-control-of-refinery-after-planned-n2-15-trillion-ipo-prospectus-shows/"
+    },
+    {
+      "name": "Salamad Ventures Limited",
+      "type": "holding co",
+      "notes": "Dangote holds 60% interest; counted in his refinery beneficial ownership per prospectus.",
+      "source": "https://nairametrics.com/2026/09/09/dangote-to-retain-84-34-control-of-refinery-after-planned-n2-15-trillion-ipo-prospectus-shows/"
+    }
+  ],
+  "privateDeals": [
+    {
+      "what": "Dangote Petroleum Refinery IPO on NGX: 4.1bn new shares at N525 (~N2.15tn / ~$1.6bn); SEC approval Sept 5, prospectus Sept 7; offer opened Sept 14 and closes Oct 13, 2026; Pan-African Refinery Investment SPV pre-committed $400m",
+      "date": "2026-09-14",
+      "source": "https://nairametrics.com/2026/09/09/dangote-to-retain-84-34-control-of-refinery-after-planned-n2-15-trillion-ipo-prospectus-shows/"
+    },
+    {
+      "what": "Africa Finance Corporation-structured $2.5bn private equity placement into Dangote Petroleum Refinery, reported signed Aug 13, 2026 (reported oversubscribed 3.7x)",
+      "date": "2026-08-13",
+      "source": "https://www.capmad.com/post/dangote-secures-usd-25-billion-private-placement-led-by-afc-for-lagos-refinery"
+    },
+    {
+      "what": "25-year, $4.2bn natural gas supply agreement with China's GCL Group for the Ethiopia fertilizer project",
+      "date": "2026-03-16",
+      "source": "https://www.vanguardngr.com/2026/03/dangote-seals-us4-2bn-gas-deal-with-chinas-gcl-group-to-power-its-ethiopian-fertilizer-megaproject/"
+    },
+    {
+      "what": "$400m construction equipment agreement with XCMG to expand refinery from 650k to 1.4m bpd",
+      "date": "2026-02-17",
+      "source": "https://nairametrics.com/2026/02/17/dangote-signs-400-million-equipment-deal-to-fast-track-refinery-expansion/"
+    },
+    {
+      "what": "Ethiopian Investment Holdings and Dangote Group sign $2.5bn deal for 3m t/yr urea plant in Gode (60/40)",
+      "date": "2025-08-28",
+      "source": "https://allafrica.com/stories/202508280587.html"
+    },
+    {
+      "what": "Engineers India hired on ~$450m contract to manage construction of the Lamu, Kenya refinery",
+      "date": "2026-09-23",
+      "source": "https://www.billionaires.africa/2026/09/23/aliko-dangote-hands-engineers-india-450-million-to-build-his-16-billion-kenya-refinery/"
+    },
+    {
+      "what": "Dangote Group rejected NNPC request to raise its refinery stake (NNPC holds ~6.8% after paying for only part of an original 20%)",
+      "date": "2026-05-14",
+      "source": "https://www.channelstv.com/2026/05/14/dangote-turns-down-nnpc-offer-to-increase-stake-in-refinery/"
+    }
+  ],
+  "realEstate": [
+    {
+      "area": "United States and United Kingdom",
+      "type": "Two US mansions and a UK house - sold (Dangote said he sold all foreign properties when he moved into industry; timing not given)",
+      "date": "reported 2026-05-15",
+      "source": "https://www.premiumtimesng.com/entertainment/naija-fashion/879723-why-i-sold-my-mansions-in-the-us-uk-aliko-dangote.html"
+    }
+  ],
+  "policy": [
+    {
+      "what": "Dangote Petroleum Refinery suit (FHC/L/CS/1174/2026, Federal High Court Lagos, Justice Akintayo Aluko): interim injunction barring NMDPRA from suspending product loading or sealing/shutting the Lekki Free Zone refinery; motion on notice adjourned to Sept 9, 2026",
+      "source": "https://www.thisdaylive.com/2026/08/31/court-bars-nmdpra-from-shutting-down-interfering-with-dangote-refinery/"
+    },
+    {
+      "what": "Refinery sued the Attorney-General (filed May 15, 2026) to void fuel import licences NMDPRA issued to NNPC and marketers, arguing breach of the Petroleum Industry Act and an earlier status-quo order",
+      "source": "https://www.cnbcafrica.com/2026/dangote-files-new-lawsuit-against-nigeria-over-fuel-import-licences"
+    },
+    {
+      "what": "NMDPRA approved 830,000 tonnes of petrol imports amid the Dangote legal battle (Sept 2026)",
+      "source": "https://www.premiumtimesng.com/business/business-news/911759-nmdpra-approves-830000-tonne-petrol-imports-amid-dangote-legal-battle.html"
+    },
+    {
+      "what": "Dangote petitioned ICPC (Dec 16, 2025) alleging corruption by NMDPRA chief Farouk Ahmed, who resigned; Dangote later filed a petition with the EFCC after withdrawing from ICPC (Jan 2026)",
+      "source": "https://saharareporters.com/2026/01/09/dangote-files-fresh-petition-efcc-against-ex-nmdpra-boss-ahmed-after-icpc-withdrawal"
+    },
+    {
+      "what": "PENGASSAN union dispute (Sept-Oct 2025) over ~800 dismissed refinery workers; National Industrial Court restrained the strike; resolved via government-brokered deal to reabsorb staff",
+      "source": "https://www.thecable.ng/court-orders-pengassan-to-halt-strike-directs-nnpc-to-continue-crude-oil-supply-to-dangote-refinery/"
+    }
+  ],
+  "giving": [
+    {
+      "name": "Aliko Dangote Foundation",
+      "source": "https://time.com/collections/time100-philanthropy-2025/7286071/aliko-dangote/"
+    },
+    {
+      "name": "Aliko Dangote Foundation N1 trillion (~$688m) 10-year education commitment; Dangote says he will leave one-third of his fortune to charity",
+      "source": "https://fortune.com/2026/07/30/why-is-aliko-dangote-leaving-one-third-of-35-billion-fortune-to-charity-philanthropy-africa/"
+    }
+  ],
+  "watch": [
+    {
+      "what": "Dangote refinery IPO offer closes",
+      "when": "2026-10-13",
+      "source": "https://www.forbesafrica.com/current-affairs/2026/09/08/nigerias-dangote-refinery-targets-november-listing-after-ipo-closes-october"
+    },
+    {
+      "what": "Dangote refinery shares expected to list on the Nigerian Exchange",
+      "when": "2026-11",
+      "source": "https://www.forbesafrica.com/current-affairs/2026/09/08/nigerias-dangote-refinery-targets-november-listing-after-ipo-closes-october"
+    },
+    {
+      "what": "Groundbreaking of Dangote-backed East Africa Oil Refinery in Lamu, Kenya (President Ruto expected)",
+      "when": "2026-09-30",
+      "source": "https://nairametrics.com/2026/09/23/kenya-to-launch-dangote-backed-17-billion-east-africa-oil-refinery-september-30/"
+    },
+    {
+      "what": "Refinery v. NMDPRA/Attorney-General litigation over import licences and free-zone jurisdiction (Federal High Court Lagos)",
+      "source": "https://www.thisdaylive.com/2026/08/31/court-bars-nmdpra-from-shutting-down-interfering-with-dangote-refinery/"
+    },
+    {
+      "what": "Dangote Cement Q3 2026 results (Q3 2025 results came in October; H1 2026 released July 29, 2026)",
+      "when": "2026-10 (expected, not confirmed)",
+      "source": "https://doclib.ngxgroup.com/Financial_NewsDocs/47629_DANGOTE_CEMENT_PLC-H1_2026_EARNINGS_RELEASE_CORPORATE_ACTIONS_JULY_2026.pdf"
+    }
+  ],
+  "gaps": "No EDGAR presence (no CIK). No verified recent real estate purchases; no verified aircraft/trophy assets. Refinery ticker not yet assigned. AFC $2.5bn placement sourced only to secondary outlet. Dangote Fertiliser ownership % not verified. Aliko Dangote Foundation is Nigerian (no US EIN)."
+}

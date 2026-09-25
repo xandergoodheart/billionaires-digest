@@ -10,10 +10,10 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://billionairesdigest.com/">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Impact,Arial Narrow,sans-serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F5F0E8; --panel:#EDE6D6; --line:#D6CDB9; --line2:#C4B9A2; --text:#0F100D; --soft:#3A352E; --muted:#6A6152;
@@ -34,19 +34,19 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Mono',ui-monospace,Menlo,Consolas,monospace;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-variant-numeric:tabular-nums;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--accent)}
 img{max-width:100%}
 .wrap{max-width:1360px;margin:0 auto;padding:0 clamp(16px,3vw,40px)}
-.serif{font-family:'Playfair Display',Georgia,'Times New Roman',serif}
-.display{font-family:'Bebas Neue',Impact,'Arial Narrow',sans-serif;letter-spacing:.02em}
+.serif{font-family:'Newsreader',Georgia,serif;font-weight:600}
+.display{font-family:'DM Serif Display',Georgia,serif;font-weight:400;letter-spacing:0}
 .label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 
 .topstrip{border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .topstrip .wrap{display:flex;justify-content:space-between;gap:12px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
 .mast{border-bottom:3px double var(--text)}
 .mast .wrap{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-top:22px;padding-bottom:18px;flex-wrap:wrap}
-.brand{font-size:clamp(44px,7vw,76px);line-height:.9}
+.brand{font-size:clamp(40px,6.5vw,68px);line-height:.95;letter-spacing:-0.01em}
 .brand span{color:var(--accent)}
 .tag{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:6px}
 .themebtn{min-height:44px;padding:10px 14px;background:transparent;color:var(--text);border:1px solid var(--line2);font:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
@@ -66,7 +66,7 @@ img{max-width:100%}
 .lede h1{margin:10px 0 14px;font-size:clamp(38px,6vw,72px);line-height:1.03}
 .lede p{margin:0;font-size:16px;line-height:1.65;color:var(--soft);max-width:760px}
 .portrait{width:min(260px,100%);aspect-ratio:1;border-radius:50%;border:3px solid var(--text);background-color:var(--panel);background-image:radial-gradient(var(--dot) 1.1px,transparent 1.4px);background-size:5px 5px;display:flex;align-items:center;justify-content:center;margin:0 auto}
-.portrait span{font-size:clamp(40px,6vw,72px);color:var(--text);background:var(--bg);padding:4px 14px}
+.portrait span{font-size:clamp(40px,6vw,72px);text-transform:uppercase;color:var(--text);background:var(--bg);padding:4px 14px}
 
 .topten .wrap{padding-top:14px;padding-bottom:0}
 .tengrid{display:grid;grid-template-columns:repeat(10,minmax(96px,1fr));border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
@@ -75,12 +75,12 @@ img{max-width:100%}
 .person:last-child{border-right:none}
 .person:hover{background:var(--panel)}
 .person[aria-pressed="true"]{background:var(--panel);box-shadow:inset 0 -2px 0 var(--accent)}
-.face{width:52px;height:52px;border-radius:50%;border:2px solid var(--text);background-color:var(--panel);background-image:radial-gradient(var(--dot) 1px,transparent 1.3px);background-size:4px 4px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.pname{font-size:16px;text-align:center;line-height:1}
+.face{width:52px;height:52px;border-radius:50%;border:2px solid var(--text);background-color:var(--panel);background-image:radial-gradient(var(--dot) 1px,transparent 1.3px);background-size:4px 4px;display:flex;align-items:center;justify-content:center;font-size:20px;text-transform:uppercase}
+.pname{font-size:15px;text-align:center;line-height:1.1;max-width:100%;overflow-wrap:break-word}
 .pworth{font-size:11px;color:var(--accent)}
 .ptoday{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--up)}
 .asof{font-size:10px;color:var(--muted);letter-spacing:.08em;padding:8px 0 14px;border-bottom:1px solid var(--line)}
-#chomp{position:fixed;left:0;top:0;width:64px;height:64px;border-radius:50%;border:3px solid var(--accent);background-color:var(--bg);background-image:radial-gradient(var(--dot) 1px,transparent 1.3px);background-size:4px 4px;display:none;align-items:center;justify-content:center;font-size:24px;pointer-events:none;z-index:50;transform:translate(-50%,-50%)}
+#chomp{position:fixed;left:0;top:0;width:64px;height:64px;border-radius:50%;border:3px solid var(--accent);background-color:var(--bg);background-image:radial-gradient(var(--dot) 1px,transparent 1.3px);background-size:4px 4px;display:none;align-items:center;justify-content:center;font-size:24px;text-transform:uppercase;pointer-events:none;z-index:50;transform:translate(-50%,-50%)}
 #chomp.on{display:flex;animation:chomp .22s infinite alternate}
 @keyframes chomp{to{border-radius:50% 50% 28% 28%/58% 58% 42% 42%;transform:translate(-50%,-50%) scaleY(.85)}}
 @media (hover:none){.person{cursor:pointer}}
@@ -95,7 +95,42 @@ img{max-width:100%}
 .chips{display:flex;gap:6px;flex-wrap:wrap;padding:14px 0 4px}
 .chip{min-height:44px;padding:10px 14px;background:transparent;color:var(--text);border:1px solid var(--line2);font:inherit;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
-.personbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line);font-size:12px}
+.pcard{padding:22px 0 8px;border-bottom:1px solid var(--line)}
+.pchead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px 20px;flex-wrap:wrap}
+.pcwho{min-width:0;flex:1 1 260px}
+.pcrank{font-size:12px;color:var(--muted);letter-spacing:.08em}
+.pcname{margin:4px 0 6px;font-size:34px;line-height:1.1;overflow-wrap:anywhere}
+.pcsrc{font-size:12px;color:var(--muted)}
+.pcside{display:flex;align-items:center;gap:14px}
+.pcface{width:72px;height:72px;flex:none;font-size:26px}
+.pcworth{padding:18px 0 14px;border-bottom:1px solid var(--line);margin-top:16px;border-top:1px solid var(--line)}
+.pcval{font-size:40px;line-height:1.1;margin-top:4px;overflow-wrap:anywhere}
+.pcsub{font-size:11px;color:var(--muted);margin-top:4px}
+.spark{padding:16px 0 14px;border-bottom:1px solid var(--line)}
+.spark svg{display:block;width:100%;height:90px;margin-top:8px;overflow:visible}
+.sparkax{display:flex;justify-content:space-between;gap:12px;font-size:10px;color:var(--muted);letter-spacing:.06em;margin-top:6px}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-top:6px}
+.tab{min-height:44px;padding:10px 16px;background:transparent;color:var(--muted);border:none;border-bottom:2px solid transparent;margin-bottom:-1px;font:inherit;font-size:11px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent)}
+.tab:focus-visible{outline-offset:-2px}
+.tabpanel{padding:4px 0 10px}
+.tabpanel:focus-visible{outline-offset:2px}
+.fpg h4{margin:18px 0 4px;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--accent)}
+.fprow{display:flex;justify-content:space-between;align-items:flex-start;gap:6px 16px;padding:8px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.55}
+.fprow .fpmain{min-width:0;flex:1 1 auto;overflow-wrap:anywhere}
+.fprow .fpdet{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.fprow a{flex:none;font-size:11px;letter-spacing:.06em;min-height:44px;display:inline-flex;align-items:center;margin:-10px 0}
+.fprow .fpsrcs{flex:none;display:inline-flex;flex-wrap:wrap;gap:0 12px}
+.pcnote{margin:14px 0 0;font-size:11px;line-height:1.6;color:var(--muted)}
+a.who{text-decoration:none}
+a.who:hover{text-decoration:underline}
+@media (max-width:600px){
+  .pcname{font-size:28px}
+  .pcval{font-size:32px}
+  .pcside{width:100%;justify-content:space-between}
+  .fprow{flex-direction:column}
+  .fprow a{margin:-8px 0 -10px}
+}
 .earlierh{margin:36px 0 0;padding-bottom:10px;border-bottom:1px solid var(--line);font-style:italic;font-size:26px}
 
 .story{padding:26px 0;border-bottom:1px solid var(--line)}
@@ -108,7 +143,7 @@ img{max-width:100%}
 .up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--muted)}
 .story h3{margin:12px 0 16px;font-size:clamp(22px,2.4vw,28px);line-height:1.2}
 .quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 32px}
-.quad h4{margin:0 0 6px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.quad h4{margin:0 0 6px;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
 .quad p{margin:0;font-size:13px;line-height:1.65;color:var(--soft)}
 .q-why h4{color:var(--accent)} .q-bear h4{color:var(--down)} .q-watch h4{color:var(--up)}
 .src{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-top:14px;font-size:11px;color:var(--muted)}
@@ -143,7 +178,7 @@ img{max-width:100%}
 
 .empty{padding:60px 0;text-align:center}
 .pressart{width:min(520px,100%);height:auto;display:block;margin:0 auto 18px;border:1px solid var(--line2)}
-.empty .big{font-size:clamp(40px,8vw,88px);color:var(--line2)}
+.empty .big{font-size:clamp(32px,6vw,64px);line-height:1.05;letter-spacing:-0.01em;color:var(--line2)}
 .empty p{color:var(--muted);font-size:13px;max-width:520px;margin:10px auto 0}
 
 footer{border-top:3px double var(--text)}
@@ -172,7 +207,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
 <header class="mast"><div class="wrap">
   <div>
-    <div class="display brand">BILLIONAIRES <span>DIGEST</span></div>
+    <div class="display brand">Billionaires <span>Digest</span></div>
     <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
   </div>
   <button class="themebtn" id="themebtn" type="button">Switch theme</button>
@@ -240,28 +275,63 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 
   // person filter helpers
   function norm(x){ return String(x == null ? '' : x).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+  // "Carlos Slim Helu & family" -> "carlos slim helu"
+  function coreName(x){ return norm(String(x == null ? '' : x).replace(/\s*&\s*family\s*$/i, '')); }
   function storyMatches(story, name){
-    var n = norm(name);
-    return !!n && !!story && norm(story.who).indexOf(n) >= 0;
+    var n = coreName(name);
+    if (!n || !story) return false;
+    if (norm(story.who).indexOf(n) >= 0) return true;
+    return arr(story.people).some(function(p){ return coreName(p) === n; });
   }
-  function slug(name){ return String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+  function slug(name){ return norm(name).replace(/ /g, '-'); }
   function reducedMotion(){ return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
   function scrollToFeed(){
     var h = document.getElementById('feedhead');
     if (h) h.scrollIntoView({ block: 'start', behavior: reducedMotion() ? 'auto' : 'smooth' });
   }
-  function personFromHash(){
+  // top-100 people index (data/people/index.json), loaded once
+  var peopleIndex = null;    // resolved index object, or null until loaded
+  var peoplePromise = null;
+  function loadPeople(){
+    if (!peoplePromise){
+      peoplePromise = getJson('data/people/index.json').then(function(ix){
+        peopleIndex = { source: ix && ix.source, sourceUrl: ix && ix.sourceUrl, asOf: ix && ix.asOf, people: arr(ix && ix.people).filter(function(p){ return p && p.name && p.slug; }) };
+        return peopleIndex;
+      });
+      peoplePromise.catch(function(){ peoplePromise = null; });
+    }
+    return peoplePromise;
+  }
+  function indexBySlug(s){
+    var ps = peopleIndex ? peopleIndex.people : [];
+    for (var i = 0; i < ps.length; i++){ if (ps[i].slug === s) return ps[i]; }
+    return null;
+  }
+  function indexByName(name){
+    var n = coreName(name), ps = peopleIndex ? peopleIndex.people : [];
+    if (!n) return null;
+    for (var i = 0; i < ps.length; i++){ if (coreName(ps[i].name) === n) return ps[i]; }
+    return null;
+  }
+  function personSlug(name){ var p = indexByName(name); return p ? p.slug : slug(name); }
+  function hashSlug(){
     var m = /^#person=(.+)$/.exec(location.hash || '');
     if (!m) return null;
     var want = m[1];
     try { want = decodeURIComponent(want); } catch(e){}
+    return want;
+  }
+  function personFromHash(){
+    var want = hashSlug();
+    if (!want) return null;
     var top = arr(digest && digest.top10);
-    for (var i = 0; i < top.length; i++){ if (top[i] && top[i].name && slug(top[i].name) === want) return top[i].name; }
-    return null;
+    for (var i = 0; i < top.length; i++){ if (top[i] && top[i].name && (slug(top[i].name) === want || personSlug(top[i].name) === want)) return top[i].name; }
+    var p = indexBySlug(want);
+    return p ? p.name : null;
   }
   function syncHash(){
     if (activePerson){
-      var target = '#person=' + slug(activePerson);
+      var target = '#person=' + personSlug(activePerson);
       if (location.hash !== target) location.hash = target;
     } else if (location.hash){
       history.pushState(null, '', location.pathname + location.search);
@@ -290,7 +360,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   var archiveIndex = null;   // promise of the editions list
   var editionCache = {};     // date -> promise of the edition object
   function getJson(u){ return fetch(u, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); }
-  function loadArchive(){
+  // resolves to [{ iso: 'YYYY-MM-DD', ed: edition or null }]
+  function loadArchiveDated(){
     if (!archiveIndex){
       archiveIndex = getJson('archive/index.json').then(function(ix){
         return arr(ix && ix.editions).filter(function(x){ return typeof x === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(x); }).slice(0, 30);
@@ -304,8 +375,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
             .catch(function(){ delete editionCache[dt]; return null; });
         }
         return editionCache[dt];
-      }));
+      })).then(function(eds){
+        return eds.map(function(ed, i){ return { iso: dates[i], ed: ed }; });
+      });
     });
+  }
+  function loadArchive(){
+    return loadArchiveDated().then(function(list){ return list.map(function(x){ return x.ed; }); });
   }
   function renderEarlier(name, todayDate, box){
     box.appendChild(el('p', 'note', 'Loading earlier editions…'));
@@ -339,7 +415,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     g.appendChild(a);
     art.appendChild(g);
     var r = el('div', 'srow');
-    r.appendChild(el('span', 'who', s.who || ''));
+    var wp = s.who ? indexByName(s.who) : null;
+    if (wp){
+      var wl = el('a', 'who', s.who); wl.href = '#person=' + encodeURIComponent(wp.slug);
+      r.appendChild(wl);
+    } else r.appendChild(el('span', 'who', s.who || ''));
     if (s.type) r.appendChild(el('span', 'badge', s.type));
     if (s.sector) r.appendChild(el('span', 'badge', s.sector));
     if (s.tickers) r.appendChild(el('span', 'label', s.tickers));
@@ -358,6 +438,285 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     if (u){ var link = el('a', null, 'Read original ↗'); link.href = u; link.target = '_blank'; link.rel = 'noopener noreferrer'; src.appendChild(link); }
     a.appendChild(src);
     return art;
+  }
+
+  // ---- person card ----
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var MONTHS_LONG = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+  var profileCache = {};     // slug -> promise of profile object or null
+  var activeTab = 'footprint';
+  var tabPerson = null;
+  function isoOf(x){ var m = /^(\d{4}-\d{2}-\d{2})/.exec(String(x || '')); return m ? m[1] : null; }
+  function fmtDate(iso){
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    return m ? (MONTHS[+m[2] - 1] + ' ' + (+m[3]) + ', ' + m[1]) : (iso || '');
+  }
+  // "Thursday, September 24, 2026" -> "2026-09-24"
+  function isoFromLong(s){
+    var m = /([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})/.exec(String(s || ''));
+    if (!m) return null;
+    var mi = MONTHS_LONG.indexOf(m[1].toLowerCase());
+    if (mi < 0) return null;
+    return m[3] + '-' + (mi < 9 ? '0' : '') + (mi + 1) + '-' + (+m[2] < 10 ? '0' : '') + (+m[2]);
+  }
+  // "$927.9B" -> 927.9 (billions)
+  function parseWorth(w){
+    var m = /\$?\s*([\d,.]+)\s*([TBM])?/i.exec(String(w || ''));
+    if (!m) return null;
+    var v = parseFloat(m[1].replace(/,/g, ''));
+    if (!isFinite(v)) return null;
+    var u = (m[2] || 'B').toUpperCase();
+    return u === 'T' ? v * 1000 : (u === 'M' ? v / 1000 : v);
+  }
+  function fmtWorth(v){ return v >= 1000 ? '$' + (v / 1000).toFixed(2).replace(/\.?0+$/, '') + 'T' : '$' + (Math.round(v * 10) / 10) + 'B'; }
+  function initials(name){
+    var w = String(name || '').replace(/\s*&\s*family\s*$/i, '').split(/\s+/).filter(function(x){ return /^[A-Za-zÀ-ɏ]/.test(x); });
+    if (!w.length) return '•';
+    return (w[0].charAt(0) + (w.length > 1 ? w[w.length - 1].charAt(0) : '')).toUpperCase();
+  }
+  function topEntry(name){
+    var n = coreName(name), top = arr(digest && digest.top10);
+    for (var i = 0; i < top.length; i++){ if (top[i] && coreName(top[i].name) === n) return top[i]; }
+    return null;
+  }
+  function topOf(ed, name){
+    var n = coreName(name), top = arr(ed && ed.top10);
+    for (var i = 0; i < top.length; i++){ if (top[i] && coreName(top[i].name) === n) return top[i]; }
+    return null;
+  }
+  function loadProfile(s){
+    if (!profileCache[s]){
+      profileCache[s] = fetch('data/people/' + encodeURIComponent(s) + '.json', { cache: 'no-store' }).then(function(r){
+        if (r.status === 404) return null;
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      });
+      profileCache[s].catch(function(){ delete profileCache[s]; });
+    }
+    return profileCache[s];
+  }
+  function svgEl(tag, attrs){
+    var n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (var k in attrs) if (Object.prototype.hasOwnProperty.call(attrs, k)) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+  function srcLink(u){
+    var su = safeUrl(u);
+    if (!su) return null;
+    var a = el('a', null, 'source ↗'); a.href = su; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    return a;
+  }
+  function joinBits(bits){ return bits.filter(function(x){ return x != null && String(x).trim() !== ''; }).join(' · '); }
+  function stakeBit(e){ return e.stake ? (e.stake + (e.stakeAsOf ? ' (as of ' + e.stakeAsOf + ')' : '')) : null; }
+  var GROUPS = [
+    ['controls', 'Companies', function(e){ return [e.name, joinBits([joinBits([e.ticker, e.exchange]), e.role, stakeBit(e)])]; }],
+    ['stakes', 'Stakes', function(e){ return [e.name, joinBits([e.ticker, stakeBit(e)])]; }],
+    ['vehicles', 'Investment vehicles', function(e){ return [e.name, joinBits([e.type, e.cik ? 'CIK ' + e.cik : null, e.files13F === true ? 'Files 13F' : null, e.notes])]; }],
+    ['privateDeals', 'Private deals', function(e){ return [e.what, joinBits([e.date])]; }],
+    ['realEstate', 'Real estate', function(e){ return [e.area, joinBits([e.type, e.price, e.date, e.via ? 'via ' + e.via : null])]; }],
+    ['trophies', 'Trophies', function(e){ return [e.what, '']; }],
+    ['policy', 'Legal & regulatory', function(e){ return [e.what, '']; }],
+    ['giving', 'Giving', function(e){ return [e.name, joinBits([e.ein ? 'EIN ' + e.ein : null])]; }]
+  ];
+  function fpRow(main, detail, source, sources){
+    var row = el('div', 'fprow');
+    var m = el('div', 'fpmain', main || '');
+    if (detail) m.appendChild(el('span', 'fpdet', detail));
+    row.appendChild(m);
+    var list = arr(sources).filter(function(u){ return !!safeUrl(u); });
+    if (list.length > 1){
+      var ls = el('span', 'fpsrcs');
+      list.forEach(function(u, i){ var a = srcLink(u); a.textContent = 'source ' + (i + 1) + ' ↗'; ls.appendChild(a); });
+      row.appendChild(ls);
+    } else {
+      var a = srcLink(list.length ? list[0] : source);
+      if (a) row.appendChild(a);
+    }
+    return row;
+  }
+  function renderFootprint(box, name, prof){
+    box.textContent = '';
+    if (!prof){ box.appendChild(el('p', 'pcnote', 'Footprint research for ' + name + ' is coming soon.')); return; }
+    var any = false;
+    GROUPS.forEach(function(g){
+      var items = arr(prof[g[0]]).filter(function(e){ return e && typeof e === 'object'; });
+      if (!items.length) return;
+      any = true;
+      var sec = el('div', 'fpg');
+      sec.appendChild(el('h4', null, g[1]));
+      items.forEach(function(e){ var x = g[2](e); if (x[0]) sec.appendChild(fpRow(x[0], x[1], e.source, e.sources)); });
+      box.appendChild(sec);
+    });
+    if (!any) box.appendChild(el('p', 'pcnote', 'No sourced footprint entries on file for ' + name + ' yet.'));
+    if (prof.gaps) box.appendChild(el('p', 'pcnote', 'Research gaps: ' + prof.gaps));
+  }
+  function renderWatch(box, name, prof){
+    box.textContent = '';
+    var items = arr(prof && prof.watch).filter(function(e){ return e && e.what; });
+    if (!prof){ box.appendChild(el('p', 'pcnote', 'Watch items for ' + name + ' are coming soon.')); return; }
+    if (!items.length){ box.appendChild(el('p', 'pcnote', 'No watch items on file for ' + name + '.')); return; }
+    var sec = el('div', 'fpg');
+    sec.appendChild(el('h4', null, 'What to watch'));
+    items.forEach(function(e){ sec.appendChild(fpRow(e.what, e.when || '', e.source, e.sources)); });
+    box.appendChild(sec);
+  }
+  function renderSpark(box, name, ip){
+    box.textContent = '';
+    box.appendChild(el('div', 'label', 'Wealth history'));
+    function draw(eds){
+      var byDay = {};
+      eds.forEach(function(x){
+        var t = topOf(x.ed, name), v = t && parseWorth(t.worth);
+        if (x.iso && v != null) byDay[x.iso] = v;
+      });
+      var snapIso = ip && peopleIndex ? isoOf(peopleIndex.asOf) : null;
+      var snapV = ip ? parseWorth(ip.worth) : null;
+      if (snapIso && snapV != null) byDay[snapIso] = snapV;   // same day: prefer index.json
+      var pts = Object.keys(byDay).sort().map(function(k){ return { iso: k, v: byDay[k] }; });
+      var holder = el('div');
+      if (!pts.length){ holder.appendChild(el('p', 'pcnote', 'No net worth history on file yet.')); box.appendChild(holder); return; }
+      var W = 600, H = 90, P = 8;
+      var min = Infinity, max = -Infinity;
+      pts.forEach(function(p){ if (p.v < min) min = p.v; if (p.v > max) max = p.v; });
+      var span = max - min || 1;
+      function X(i){ return pts.length < 2 ? W - P : P + i * (W - 2 * P) / (pts.length - 1); }
+      function Y(v){ return max === min ? H / 2 : P + (1 - (v - min) / span) * (H - 2 * P); }
+      var first = pts[0], last = pts[pts.length - 1];
+      var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, preserveAspectRatio: 'none', role: 'img', focusable: 'false',
+        'aria-label': pts.length < 2
+          ? 'Net worth history: one data point, ' + fmtWorth(first.v) + ' on ' + fmtDate(first.iso) + '.'
+          : 'Net worth history: ' + fmtWorth(first.v) + ' on ' + fmtDate(first.iso) + ' to ' + fmtWorth(last.v) + ' on ' + fmtDate(last.iso) + ', ' + pts.length + ' data points.' });
+      svg.appendChild(svgEl('line', { x1: 0, y1: H - 0.5, x2: W, y2: H - 0.5, stroke: 'var(--line)', 'stroke-width': 1, 'vector-effect': 'non-scaling-stroke' }));
+      if (pts.length > 1){
+        var dpath = pts.map(function(p, i){ return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.v).toFixed(1); }).join(' ');
+        svg.appendChild(svgEl('path', { d: dpath, fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2, 'stroke-linejoin': 'round', 'vector-effect': 'non-scaling-stroke' }));
+      }
+      // last-point dot: zero-length round-capped line stays circular under non-uniform scaling
+      var lx = X(pts.length - 1).toFixed(1), ly = Y(last.v).toFixed(1);
+      svg.appendChild(svgEl('line', { x1: lx, y1: ly, x2: lx, y2: ly, stroke: 'var(--accent)', 'stroke-width': 8, 'stroke-linecap': 'round', 'vector-effect': 'non-scaling-stroke' }));
+      holder.appendChild(svg);
+      var ax = el('div', 'sparkax');
+      ax.setAttribute('aria-hidden', 'true');
+      ax.appendChild(el('span', null, fmtDate(first.iso) + ' · ' + fmtWorth(first.v)));
+      if (pts.length > 1) ax.appendChild(el('span', null, fmtDate(last.iso) + ' · ' + fmtWorth(last.v)));
+      holder.appendChild(ax);
+      if (pts.length < 2) holder.appendChild(el('p', 'pcnote', 'History starts ' + fmtDate(first.iso) + '. The chart fills in as editions publish.'));
+      box.appendChild(holder);
+    }
+    var todayIso = isoFromLong(digest && digest.date);
+    function withToday(list){
+      var out = list.slice();
+      if (todayIso && !out.some(function(x){ return x.iso === todayIso && x.ed; })) out.push({ iso: todayIso, ed: digest });
+      return out;
+    }
+    loadArchiveDated().then(function(list){
+      if (activePerson !== name || !document.body.contains(box)) return;
+      draw(withToday(list));
+    }).catch(function(){
+      if (activePerson !== name || !document.body.contains(box)) return;
+      draw(withToday([]));
+    });
+  }
+  function renderCard(name){
+    var ip = indexByName(name);
+    var te = topEntry(name);
+    var s = ip ? ip.slug : slug(name);
+    if (tabPerson !== name){ tabPerson = name; activeTab = 'footprint'; }
+    var card = el('section', 'pcard');
+    card.setAttribute('aria-label', 'Profile: ' + name);
+
+    // header
+    var head = el('div', 'pchead');
+    var who = el('div', 'pcwho');
+    var rank = ip ? ip.rank : (te ? arr(digest.top10).indexOf(te) + 1 : null);
+    if (rank) who.appendChild(el('div', 'pcrank', '#' + rank));
+    who.appendChild(el('h2', 'pcname serif', ip ? ip.name : name));
+    var srcLine = ip && ip.source;
+    if (srcLine) who.appendChild(el('div', 'pcsrc', srcLine));
+    head.appendChild(who);
+    var side = el('div', 'pcside');
+    var face = el('span', 'face pcface display', (te && te.ini) || initials(name)); face.setAttribute('aria-hidden', 'true');
+    side.appendChild(face);
+    var clr = el('button', 'chip', 'Clear'); clr.type = 'button';
+    clr.setAttribute('aria-label', 'Clear ' + name);
+    clr.addEventListener('click', function(){ var idx = personIndex(activePerson); setPerson(null, idx, false); });
+    side.appendChild(clr);
+    head.appendChild(side);
+    card.appendChild(head);
+
+    // net worth
+    var nw = el('div', 'pcworth');
+    nw.appendChild(el('div', 'label', 'Net worth'));
+    var worth = ip ? ip.worth : (te && te.worth);
+    nw.appendChild(el('div', 'pcval', worth || '—'));
+    if (ip && peopleIndex){
+      var asIso = isoOf(peopleIndex.asOf);
+      nw.appendChild(el('div', 'pcsub', String(peopleIndex.source || 'Source').replace(/\s+Billionaires$/i, '') + (asIso ? ' · as of ' + fmtDate(asIso) : '')));
+    }
+    if (te && te.worth && ip) nw.appendChild(el('div', 'pcsub', "Today's edition: " + te.worth));
+    else if (te && !ip && digest.top10AsOf) nw.appendChild(el('div', 'pcsub', digest.top10AsOf));
+    card.appendChild(nw);
+
+    // wealth history
+    var sp = el('div', 'spark');
+    card.appendChild(sp);
+    renderSpark(sp, name, ip);
+
+    // tabs
+    var TABS = [['footprint', 'Footprint'], ['watch', 'Watch']];
+    var tl = el('div', 'tabs'); tl.setAttribute('role', 'tablist'); tl.setAttribute('aria-label', 'Profile sections');
+    var panel = el('div', 'tabpanel'); panel.setAttribute('role', 'tabpanel'); panel.tabIndex = 0;
+    var btns = [];
+    var prof, profState = 'loading';
+    function paint(){
+      btns.forEach(function(b){
+        var on = b._key === activeTab;
+        b.setAttribute('aria-selected', String(on));
+        b.tabIndex = on ? 0 : -1;
+        if (on) panel.setAttribute('aria-labelledby', b.id);
+      });
+      panel.id = 'pcpanel';
+      if (profState === 'loading'){ panel.textContent = ''; panel.appendChild(el('p', 'pcnote', 'Loading profile…')); return; }
+      if (profState === 'error'){ panel.textContent = ''; panel.appendChild(el('p', 'pcnote', "The profile couldn't load. Refresh the page to try again.")); return; }
+      if (activeTab === 'watch') renderWatch(panel, ip ? ip.name : name, prof);
+      else renderFootprint(panel, ip ? ip.name : name, prof);
+    }
+    TABS.forEach(function(t, i){
+      var b = el('button', 'tab', t[1]); b.type = 'button'; b._key = t[0];
+      b.id = 'pctab-' + t[0];
+      b.setAttribute('role', 'tab'); b.setAttribute('aria-controls', 'pcpanel');
+      b.addEventListener('click', function(){ activeTab = t[0]; paint(); });
+      b.addEventListener('keydown', function(e){
+        var k = e.key, j = -1;
+        if (k === 'ArrowRight') j = (i + 1) % TABS.length;
+        else if (k === 'ArrowLeft') j = (i - 1 + TABS.length) % TABS.length;
+        else if (k === 'Home') j = 0;
+        else if (k === 'End') j = TABS.length - 1;
+        if (j < 0) return;
+        e.preventDefault();
+        activeTab = TABS[j][0]; paint(); btns[j].focus();
+      });
+      btns.push(b); tl.appendChild(b);
+    });
+    card.appendChild(tl);
+    card.appendChild(panel);
+    paint();
+
+    function done(p){
+      if (activePerson !== name || !document.body.contains(panel)) return;
+      prof = p; profState = 'ready'; paint();
+    }
+    // async even when there is nothing to fetch: the card is attached after renderCard returns
+    if (!peopleIndex){
+      // index not loaded (yet or failed): no profile to fetch
+      if (peoplePromise) return card;   // a re-render follows when the index arrives
+      Promise.resolve(null).then(done);
+    } else if (!ip || !ip.hasProfile) Promise.resolve(null).then(done);
+    else loadProfile(s).then(done).catch(function(){
+      if (activePerson !== name || !document.body.contains(panel)) return;
+      profState = 'error'; paint();
+    });
+    return card;
   }
 
   function render(){
@@ -425,14 +784,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
     fh.appendChild(el('span', 'label', plural(todayStories.length, 'move', 'moves')));
     feed.appendChild(fh);
 
-    if (activePerson){
-      var pb = el('div', 'personbar');
-      pb.appendChild(el('span', null, 'Showing moves by ' + activePerson));
-      var clr = el('button', 'chip', 'Clear'); clr.type = 'button';
-      clr.addEventListener('click', function(){ var idx = personIndex(activePerson); setPerson(null, idx, false); });
-      pb.appendChild(clr);
-      feed.appendChild(pb);
-    }
+    if (activePerson) feed.appendChild(renderCard(activePerson));
 
     var sectors = ['All'];
     todayStories.forEach(function(s){ if (s.sector && sectors.indexOf(s.sector) < 0) sectors.push(s.sector); });
@@ -541,6 +893,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
       if (activePerson) scrollToFeed();
     })
     .catch(function(){ showEmpty("Today's edition couldn't load. Refresh the page in a minute."); });
+
+  // people index: enables #person=<any top-100 slug>, story name links and the card's footprint
+  loadPeople().then(function(){
+    if (!digest) return;
+    var had = activePerson;
+    if (!activePerson) activePerson = personFromHash();
+    if (activePerson && !had) activeSector = 'All';
+    render();
+    if (activePerson && !had) scrollToFeed();
+  }, function(){
+    if (digest && activePerson) render();
+  });
 
   window.addEventListener('hashchange', function(){
     if (!digest) return;

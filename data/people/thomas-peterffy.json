@@ -1,0 +1,132 @@
+{
+  "rank": 19,
+  "name": "Thomas Peterffy",
+  "slug": "thomas-peterffy",
+  "worth": "$104.1B",
+  "source": "Discount Brokerage",
+  "asOf": "2026-09-24T21:15-04:00",
+  "aliases": [
+    "Peterffy Thomas (SEC EDGAR)",
+    "Thomas Peterffy"
+  ],
+  "secPersonCik": "0001391405",
+  "controls": [
+    {
+      "name": "Interactive Brokers Group",
+      "ticker": "IBKR",
+      "exchange": "Nasdaq",
+      "role": "Founder and Chairman (CEO until Dec 2019; Milan Galik CEO since)",
+      "stake": "Peterffy and affiliates own ~91.6% of IBG Holdings LLC, which owns ~73.7% of IBG LLC and holds ~73.7% of votes via Class B stock",
+      "stakeAsOf": "2026-02-24",
+      "source": "https://www.sec.gov/Archives/edgar/data/1381197/000138119726000066/ibkr-20260311.htm"
+    },
+    {
+      "name": "IBG Holdings LLC",
+      "role": "Controlling holding company of Interactive Brokers (sole holder of Class B common)",
+      "stake": "~91.6% (Peterffy and affiliates)",
+      "stakeAsOf": "2026-02-24",
+      "source": "https://www.sec.gov/Archives/edgar/data/1381197/000138119726000066/ibkr-20260311.htm"
+    }
+  ],
+  "stakes": [
+    {
+      "name": "Newsmax Inc. Class B common (via Conyers Investments LLC); Peterffy is a director and 10% owner",
+      "ticker": "NMAX",
+      "stake": "25.9% of Class B (23,045,352 shares)",
+      "stakeAsOf": "2025-03-31",
+      "source": "https://www.sec.gov/Archives/edgar/data/1391405/000089706925000721/xslSCHEDULE_13G_X01/primary_doc.xml"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "IBG Holdings LLC",
+      "type": "holding co",
+      "cik": "0001399812",
+      "notes": "Holds IBKR Class B stock / ~73.7% of IBG LLC; historically filed SC 13D/A on IBKR (2007-2022).",
+      "source": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=ibg+holdings&type=&dateb=&owner=include&count=40"
+    },
+    {
+      "name": "Conyers Investments LLC (Connecticut)",
+      "type": "holding co",
+      "notes": "Peterffy is manager; holds his Newsmax Class B shares.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1391405/000089706925000721/xslSCHEDULE_13G_X01/primary_doc.xml"
+    }
+  ],
+  "privateDeals": [
+    {
+      "what": "Became Newsmax director and 10% owner (Form 3) around Newsmax's 2025 public listing; 23.0M Class B shares via Conyers Investments",
+      "date": "2025-03-28",
+      "source": "https://www.sec.gov/Archives/edgar/data/1391405/000089706925000688/xslF345X02/form3.xml"
+    }
+  ],
+  "realEstate": [
+    {
+      "area": "Palm Beach, Florida",
+      "type": "Primary residence",
+      "date": "current",
+      "source": "https://www.forbes.com/profile/thomas-peterffy/"
+    },
+    {
+      "area": "Florida (mostly)",
+      "type": "Land holdings of over 560,000 acres",
+      "date": "current (Forbes)",
+      "source": "https://www.forbes.com/profile/thomas-peterffy/"
+    },
+    {
+      "area": "Greenwich, Connecticut",
+      "type": "80-acre estate (sold)",
+      "price": 21000000,
+      "date": "2020 (sale; first listed at $65M in 2015)",
+      "source": "https://en.wikipedia.org/wiki/Thomas_Peterffy"
+    },
+    {
+      "area": "Aspen, Colorado",
+      "type": "Home",
+      "date": "reported",
+      "source": "https://en.wikipedia.org/wiki/Thomas_Peterffy"
+    }
+  ],
+  "trophies": [
+    {
+      "what": "Media outlet: ~25.9% of Newsmax Class B stock and board seat",
+      "source": "https://www.sec.gov/Archives/edgar/data/1391405/000089706925000721/xslSCHEDULE_13G_X01/primary_doc.xml"
+    }
+  ],
+  "policy": [
+    {
+      "what": "OFAC $11,832,136 settlement with Interactive Brokers LLC over apparent sanctions violations (Iran, Cuba, Syria, Crimea, Chinese military companies, Russia); deemed non-egregious and voluntarily self-disclosed",
+      "source": "https://ofac.treasury.gov/recent-actions/20250715"
+    },
+    {
+      "what": "Past IBKR regulatory settlements: 2020 $38M AML settlement (SEC/FINRA/CFTC); 2023 SEC $35M and CFTC $20M recordkeeping penalties; FINRA $2.25M (Dec 2024)",
+      "source": "https://en.wikipedia.org/wiki/Interactive_Brokers"
+    },
+    {
+      "what": "IBKR runs ForecastEx prediction-market exchange (launched Aug 2024; political contracts from Oct 2024) - CFTC-regulated business line",
+      "source": "https://en.wikipedia.org/wiki/Interactive_Brokers"
+    },
+    {
+      "what": "Dual-class control: Holdings expected to cast ~73.7% of votes at the 2026 annual meeting",
+      "source": "https://www.sec.gov/Archives/edgar/data/1381197/000138119726000066/ibkr-20260311.htm"
+    }
+  ],
+  "watch": [
+    {
+      "what": "Interactive Brokers Q3 2026 earnings (typically mid/late October) and monthly brokerage metrics",
+      "source": "https://data.sec.gov/submissions/CIK0001381197.json"
+    },
+    {
+      "what": "Any IBG Holdings exchanges of IBG LLC interests into Class A stock (reduces Peterffy's economic stake)",
+      "source": "https://www.sec.gov/Archives/edgar/data/1381197/000138119726000066/ibkr-20260311.htm"
+    },
+    {
+      "what": "Newsmax (NMAX) insider filings by Peterffy/Conyers",
+      "source": "https://www.sec.gov/Archives/edgar/data/1391405/000089706925000688/xslF345X02/form3.xml"
+    },
+    {
+      "what": "IBKR stablecoin funding (USDC from Jan 2026) and crypto/prediction market expansion",
+      "source": "https://en.wikipedia.org/wiki/Interactive_Brokers"
+    }
+  ],
+  "gaps": "Session WebSearch budget exhausted; profile built from SEC EDGAR, OFAC, Forbes and Wikipedia. Not verified: Peterffy's Palm Beach purchase prices/dates (2021-2025 reports), Florida land entities, any private foundation/EIN, aircraft, current Newsmax stake after March 2025, 2025-2026 IBKR regulatory matters beyond OFAC. Peterffy Form 4 (Feb 2025) could not be retrieved (EDGAR 503). Political donations intentionally excluded."
+}

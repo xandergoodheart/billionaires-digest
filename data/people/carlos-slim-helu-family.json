@@ -1,0 +1,243 @@
+{
+  "rank": 16,
+  "name": "Carlos Slim Helu & family",
+  "slug": "carlos-slim-helu-family",
+  "worth": "$118B",
+  "source": "Telecom",
+  "asOf": "2026-09-24T21:15-04:00",
+  "aliases": [
+    "Carlos Slim Helú",
+    "Carlos Slim",
+    "HELU CARLOS SLIM (SEC EDGAR)",
+    "Slim Family",
+    "Carlos Slim Helu & family"
+  ],
+  "secPersonCik": "0001080910",
+  "controls": [
+    {
+      "name": "América Móvil",
+      "ticker": "AMX",
+      "exchange": "NYSE / BMV (AMXB)",
+      "role": "Controlling family; Carlos Slim Helú is honorary chairman; son Carlos Slim Domit chairs the board (Apr 2026)",
+      "stake": "Family Trust 29.5% of B shares; Slim family members directly 22.9% of B shares (incl. Carlos Slim Helú individually 8.6%)",
+      "stakeAsOf": "2026-03-31",
+      "source": "https://www.sec.gov/Archives/edgar/data/0001129137/000114036126017486/ef20060642_20f.htm"
+    },
+    {
+      "name": "Grupo Carso (conglomerate: industrial, construction, retail, energy)",
+      "ticker": "GCARSOA1",
+      "exchange": "BMV",
+      "role": "Founder; family controls",
+      "stake": "Family owns 76% (per Forbes)",
+      "stakeAsOf": "2026-09-24",
+      "source": "https://www.forbes.com/profile/carlos-slim-helu/"
+    },
+    {
+      "name": "Grupo Financiero Inbursa (banking, insurance, brokerage)",
+      "ticker": "GFINBURO",
+      "exchange": "BMV",
+      "role": "Founder; family-controlled (Inbursa co-files Slim family 13G reports)",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126013362/xslSCHEDULE_13G_X02/primary_doc.xml"
+    },
+    {
+      "name": "Telekom Austria / A1 Group (via América Móvil)",
+      "ticker": "TKA",
+      "exchange": "Vienna",
+      "role": "Controlled by América Móvil under 10-year syndicate agreement with ÖBAG (signed Feb 6, 2023)",
+      "stake": "América Móvil held 60.9%",
+      "stakeAsOf": "2025-12-31",
+      "source": "https://www.sec.gov/Archives/edgar/data/0001129137/000114036126017486/ef20060642_20f.htm"
+    },
+    {
+      "name": "Zamajal, S.A. de C.V. (Carso upstream oil & gas arm)",
+      "role": "Grupo Carso upstream subsidiary (Carso's 'upstream investment arm'); acquired an additional 30.1% of Talos Energy Mexico 7 in Mar 2026",
+      "source": "https://mexicobusiness.news/oilandgas/news/carso-acquires-totalenergies-30-block-30-kan-discovery"
+    }
+  ],
+  "stakes": [
+    {
+      "name": "Talos Energy Inc. (via Control Empresarial de Capitales)",
+      "ticker": "TALO",
+      "stake": "23.4% (39,079,036 shares); down from 24.5% at Mar 26, 2026",
+      "stakeAsOf": "2026-09-15",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126037026/xslSCHEDULE_13D_X02/primary_doc.xml"
+    },
+    {
+      "name": "PBF Energy Inc. Class A (via Control Empresarial)",
+      "ticker": "PBF",
+      "stake": "14.3% (16,862,128 shares); down from 17.3% at Mar 24, 2026 (switched from 13D to passive 13G) and ~26.5% in Mar 2025",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126030249/xslSCHEDULE_13G_X02/primary_doc.xml"
+    },
+    {
+      "name": "Turkcell Iletisim Hizmetleri (ADSs, via Fundación Carlos Slim, Control Empresarial, Fundación Telmex, Inbursa)",
+      "ticker": "TKC",
+      "stake": "~6.4% aggregate (up from 5.1% at first 13G, event Mar 30, 2026)",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126030250/xslSCHEDULE_13G_X02/primary_doc.xml"
+    },
+    {
+      "name": "Zama oil field, Mexico (via Zamajal's 80% of Talos Energy Mexico 7, which holds 17.4% of Zama)",
+      "stake": "Indirect; Talos Mexico holds 17.4% of Zama",
+      "stakeAsOf": "2026-03-25",
+      "source": "https://mexicobusiness.news/oilandgas/news/carso-acquires-totalenergies-30-block-30-kan-discovery"
+    },
+    {
+      "name": "BT Group (via América Móvil) (2024 reports)",
+      "ticker": "BT.A",
+      "stake": "~3% June 2024, raised to 4.3% Sept 2024 (per Wikipedia summary of press)",
+      "stakeAsOf": "2024-09",
+      "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+    },
+    {
+      "name": "The New York Times Co. (former; held ~17% of Class A at peak, sold half in 2017)",
+      "ticker": "NYT",
+      "stake": "Former holder",
+      "source": "https://www.forbes.com/profile/carlos-slim-helu/"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "Control Empresarial de Capitales, S.A. de C.V. (formerly Inversora Carso / Inmobiliaria Carso)",
+      "type": "holding co",
+      "cik": "0001273693",
+      "files13F": false,
+      "notes": "Family holding company; all voting equity owned by a Mexican trust whose beneficiaries are the Slim Family. Holds Talos, PBF, Turkcell stakes; files Form 4s/13D/13G.",
+      "source": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=control+empresarial&type=&dateb=&owner=include&count=40"
+    },
+    {
+      "name": "Slim Family Mexican trust (Family Trust)",
+      "type": "trust",
+      "notes": "Owns all voting securities of Control Empresarial; holds 29.5% of América Móvil B shares (Mar 31, 2026).",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126037026/xslSCHEDULE_13D_X02/primary_doc.xml"
+    },
+    {
+      "name": "Zamajal, S.A. de C.V. / Mx Delta NRG 1",
+      "type": "holding co",
+      "notes": "Carso upstream investment vehicle for non-operated Mexican oil stakes (Zama, Block 30/Kan).",
+      "source": "https://mexicobusiness.news/oilandgas/news/carso-acquires-totalenergies-30-block-30-kan-discovery"
+    }
+  ],
+  "privateDeals": [
+    {
+      "what": "Grupo Carso (via Zamajal subsidiary Mx Delta NRG 1) signed binding agreement to buy TotalEnergies' 30% non-operated interest in Gulf of Mexico Block 30 (Kan discovery, est. 200-300 MMboe); Harbour Energy keeps 70% as operator; price undisclosed; subject to government approval",
+      "date": "2026-07-16",
+      "source": "https://mexicobusiness.news/oilandgas/news/carso-acquires-totalenergies-30-block-30-kan-discovery"
+    },
+    {
+      "what": "Zamajal bought an additional 30.1% of Talos Energy Mexico 7 (holder of 17.4% of the Zama field); Talos booked ~$49.7M proceeds in Q1 2026 (additional consideration reportedly contingent on first oil)",
+      "date": "2026-03",
+      "source": "https://mexicobusiness.news/oilandgas/news/carso-acquires-totalenergies-30-block-30-kan-discovery"
+    },
+    {
+      "what": "Talos Energy Q1 2026 10-Q: sale of part of its equity-method investment in Talos Energy Mexico 7 with $49.665M proceeds",
+      "date": "2026-Q1",
+      "source": "https://www.sec.gov/Archives/edgar/data/0001724965/000119312526207039/talo-20260331.htm"
+    },
+    {
+      "what": "Grupo Carso signed ~$1.99B contract with Pemex to drill 32 wells at the Ixachi gas/condensate field (Veracruz) over three years; Pemex payments start Jan 2027 from hydrocarbon sales",
+      "date": "2025-09-29",
+      "source": "https://www.worldoil.com/news/2025/9/29/carlos-slim-s-grupo-carso-signs-2-billion-drilling-deal-with-pemex-for-ixachi-field/"
+    },
+    {
+      "what": "Slim said Grupo Carso and América Móvil would invest US$5 billion in Mexico in 2026 under a 'more aggressive' plan",
+      "date": "2026-05",
+      "source": "https://mexicobusiness.news/infrastructure/news/grupo-carso-invest-us5-billion-mexico-carlos-slim"
+    },
+    {
+      "what": "Slim family/Control Empresarial took a stake in Turkcell ADSs (first 13G, event Mar 30, 2026; raised to ~6.4% by June 30, 2026)",
+      "date": "2026-03-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126013362/xslSCHEDULE_13G_X02/primary_doc.xml"
+    }
+  ],
+  "realEstate": [
+    {
+      "area": "Manhattan (Fifth Avenue), New York City",
+      "type": "Beaux-Arts mansion (Duke-Semans mansion)",
+      "price": 44000000,
+      "date": "2010 (old; listed for sale in 2015 at $80M)",
+      "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+    },
+    {
+      "area": "Somers, New York",
+      "type": "Corporate campus (former PepsiCo Americas Beverages HQ)",
+      "price": 87000000,
+      "date": "2015 (old)",
+      "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+    },
+    {
+      "area": "Mexico City (Nuevo Polanco)",
+      "type": "Plaza Carso mixed-use complex (Carso HQ, Museo Soumaya, Inbursa Aquarium)",
+      "date": "developed 2010s",
+      "via": "Carso group companies",
+      "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+    }
+  ],
+  "trophies": [
+    {
+      "what": "Museo Soumaya (Mexico City, opened 2011; run by Fundación Carlos Slim) housing Slim's art collection of ~66,000 pieces, including one of the largest Rodin collections outside France",
+      "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+    },
+    {
+      "what": "Mexican soccer: 30% stakes in Pachuca and León clubs taken via América Móvil in 2012 (old; current status unverified)",
+      "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+    }
+  ],
+  "policy": [
+    {
+      "what": "Grupo Carso's Ixachi drilling contract makes it Pemex's most prominent private partner; Pemex pays from 2027 out of project hydrocarbon revenue (credit exposure to state-owned Pemex)",
+      "source": "https://www.worldoil.com/news/2025/9/29/carlos-slim-s-grupo-carso-signs-2-billion-drilling-deal-with-pemex-for-ixachi-field/"
+    },
+    {
+      "what": "Kan/Block 30 acquisition requires Mexican government approval",
+      "source": "https://mexicobusiness.news/oilandgas/news/carso-acquires-totalenergies-30-block-30-kan-discovery"
+    },
+    {
+      "what": "Talos Energy cooperation (standstill-type) agreement with Control Empresarial extended on Dec 8, 2025 through Dec 16, 2026",
+      "source": "https://www.sec.gov/Archives/edgar/data/0001724965/000119312526170385/d78509ddef14a.htm"
+    },
+    {
+      "what": "Telekom Austria control rests on a 10-year shareholder agreement with Austrian state holding ÖBAG (Feb 2023)",
+      "source": "https://www.sec.gov/Archives/edgar/data/0001129137/000114036126017486/ef20060642_20f.htm"
+    }
+  ],
+  "giving": [
+    {
+      "name": "Fundación Carlos Slim (est. 1986; also holds Turkcell ADSs ~2.7%)",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126030250/xslSCHEDULE_13G_X02/primary_doc.xml"
+    },
+    {
+      "name": "Fundación Telmex (est. 1995)",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126030250/xslSCHEDULE_13G_X02/primary_doc.xml"
+    },
+    {
+      "name": "Fundación del Centro Histórico de la Ciudad de México (chaired by Slim since 2001)",
+      "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+    }
+  ],
+  "watch": [
+    {
+      "what": "Mexican government approval and closing of Carso's purchase of TotalEnergies' 30% of Block 30 (Kan)",
+      "source": "https://mexicobusiness.news/oilandgas/news/carso-acquires-totalenergies-30-block-30-kan-discovery"
+    },
+    {
+      "what": "Further Talos Energy share sales by Control Empresarial (stake cut to 23.4% by Sept 15, 2026) and fate of cooperation agreement expiring Dec 16, 2026",
+      "when": "2026-12-16",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126037026/xslSCHEDULE_13D_X02/primary_doc.xml"
+    },
+    {
+      "what": "Continued PBF Energy selldown (26.5% in 2025 to 14.3% at June 30, 2026)",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126030249/xslSCHEDULE_13G_X02/primary_doc.xml"
+    },
+    {
+      "what": "Turkcell accumulation (5.1% to 6.4% in Q2 2026) - further 13G amendments",
+      "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126030250/xslSCHEDULE_13G_X02/primary_doc.xml"
+    },
+    {
+      "what": "Ixachi drilling progress ahead of Pemex payments starting January 2027 (Carso expects 12 of 32 wells producing by then)",
+      "when": "2027-01",
+      "source": "https://www.worldoil.com/news/2025/9/29/carlos-slim-s-grupo-carso-signs-2-billion-drilling-deal-with-pemex-for-ixachi-field/"
+    }
+  ],
+  "gaps": "WebSearch budget for the session was exhausted early in this person's research, so coverage relies on SEC EDGAR filings and a few fetched pages. Not verified: current Grupo Carso/Inbursa family % from BMV filings (Forbes 76% for Carso used), Mexican IFT/CRT regulatory status of América Móvil (preponderance, 2025 telecom law), current status of Pachuca/León stakes, BT Group stake after 2024, Minera Frisco/Grupo Sanborns/Sitios Latinoamérica stakes, recent real estate (only older reported properties listed). Zamajal ownership split reported differently (90/10 Carso/Control Empresarial per Talos 2023; Carso 80% per Mexico Business News). Mexican foundations have no US EIN. Wikipedia used as fallback for older facts."
+}

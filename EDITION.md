@@ -5,10 +5,13 @@ Build today's Billionaires Digest edition and publish it.
 
 ## Steps
 1. If `node_modules` is missing, run `npm ci`.
-2. If `data/people.json` exists, read it. It maps each of the top-100 billionaires to their companies,
-   major holdings and investment vehicles. Cover moves by the people AND by those entities: earnings,
-   deals, acquisitions, filings, insider trades, IPOs, launches, layoffs, lawsuits, regulatory actions
-   and leadership changes.
+2. Read `data/people/index.json`. It lists the top-100 billionaires (rank, name, slug, net worth) and
+   whether each has a profile (`hasProfile`). For deeper context on a person, read
+   `data/people/<slug>.json`: their companies (`controls`), stakes, investment vehicles, private deals,
+   real estate, trophies, legal and regulatory matters, giving and watch items (upcoming dates to check).
+   Cover moves by the people AND by those entities: earnings, deals, acquisitions, filings, insider
+   trades, IPOs, launches, layoffs, lawsuits, regulatory actions and leadership changes.
+   When you set `people` on a story, use names exactly as written in `data/people/index.json`.
 3. Research with web search. Look at the last 48 hours first. Go back up to 7 days only if needed.
    Look up the current top 10 by net worth (Forbes real-time or Bloomberg Billionaires Index) and
    write the source and date in `top10AsOf`.
@@ -43,8 +46,8 @@ Also:
 ## Optional story fields
 These are new and optional. Older editions without them still work.
 - `via`: the company or vehicle the story is about when it isn't the person directly (e.g. `"Tesla"`).
-- `people`: an array of every top-100 name the story affects. For example, an Alphabet story is
-  `["Larry Page", "Sergey Brin"]`.
+- `people`: an array of every top-100 name the story affects, written exactly as in
+  `data/people/index.json`. For example, an Alphabet story is `["Larry Page", "Sergey Brin"]`.
 - `who` stays the primary person.
 
 ## Schema

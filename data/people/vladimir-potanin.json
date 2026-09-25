@@ -1,0 +1,118 @@
+{
+  "rank": 77,
+  "name": "Vladimir Potanin",
+  "slug": "vladimir-potanin",
+  "worth": "$29.7B",
+  "source": "Metals",
+  "asOf": "2026-09-24T21:15-04:00",
+  "aliases": [
+    "Vladimir Olegovich Potanin"
+  ],
+  "controls": [
+    {
+      "name": "MMC Norilsk Nickel (Nornickel)",
+      "ticker": "GMKN",
+      "exchange": "MOEX",
+      "role": "Largest shareholder via Interros; president/CEO of Nornickel",
+      "stake": "just over a third (per Forbes)",
+      "stakeAsOf": "2026-09",
+      "source": "https://www.forbes.com/profile/vladimir-potanin/"
+    },
+    {
+      "name": "Interros",
+      "role": "Founder/owner of private holding company",
+      "source": "https://www.kommersant.ru/doc/7755346"
+    },
+    {
+      "name": "T-Technologies (T-Bank, formerly TCS Group/Tinkoff)",
+      "ticker": "T",
+      "exchange": "MOEX",
+      "role": "Controlling shareholder via Interros (bought founder Oleg Tinkov's 35% stake in 2022); T-Bank absorbed Rosbank effective 2025-01-01",
+      "source": "https://en.wikipedia.org/wiki/T-Bank"
+    }
+  ],
+  "stakes": [
+    {
+      "name": "Yandex (MOEX: YDEX) — 9.95% held by Katalitik Pipl, JV of T-Technologies (50.01%) and Interros",
+      "ticker": "YDEX",
+      "stake": "9.95% (indirect, via JV)",
+      "stakeAsOf": "2025-05",
+      "source": "https://www.kommersant.ru/doc/7755346"
+    },
+    {
+      "name": "Rosa Khutor ski resort (Sochi; 2014 Olympic venue), retained stake after ~$2.5B development",
+      "source": "https://www.forbes.com/profile/vladimir-potanin/"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "Interros",
+      "type": "holding co",
+      "notes": "Private Russian holding company for Nornickel, T-Technologies and other assets",
+      "source": "https://www.kommersant.ru/doc/7755346"
+    },
+    {
+      "name": "Olderfrey Holdings Ltd",
+      "type": "holding co",
+      "notes": "Held Potanin's 34.59% Nornickel stake (as of March 2021)",
+      "source": "https://en.wikipedia.org/wiki/Norilsk_Nickel"
+    }
+  ],
+  "privateDeals": [
+    {
+      "what": "Katalitik Pipl (T-Technologies 50.01% / Interros JV) acquired 9.95% of Yandex by buying 100% of Meridian-Servis LLC, a member of the consortium that bought Yandex's Russian assets",
+      "date": "2025-05",
+      "source": "https://www.kommersant.ru/doc/7755346"
+    },
+    {
+      "what": "TCS Holding acquired 91.9% of Rosbank (to 99.4%) in Aug 2024; merger completed 2025-01-01 with Rosbank becoming a T-Bank branch",
+      "date": "2025-01-01",
+      "source": "https://en.wikipedia.org/wiki/T-Bank"
+    }
+  ],
+  "trophies": [
+    {
+      "what": "Rosa Khutor ski resort stake (Sochi)",
+      "source": "https://www.forbes.com/profile/vladimir-potanin/"
+    }
+  ],
+  "policy": [
+    {
+      "what": "US sanctions: State Department designated Potanin and OFAC added Rosbank to the SDN list under EO 14024 (Dec 15, 2022)",
+      "source": "https://home.treasury.gov/news/press-releases/jy1163"
+    },
+    {
+      "what": "Also sanctioned by UK (2022), Canada (Apr 2022), Australia, New Zealand and Ukraine; not on EU list (as reported)",
+      "source": "https://en.wikipedia.org/wiki/Vladimir_Potanin"
+    },
+    {
+      "what": "US/UK April 2024 import bans on Russian aluminium, copper and nickel; Nornickel moving some copper smelting to China via JVs",
+      "source": "https://en.wikipedia.org/wiki/Norilsk_Nickel"
+    },
+    {
+      "what": "Ongoing high-profile UK divorce financial-remedy litigation with ex-wife over asset division",
+      "source": "https://www.forbes.com/profile/vladimir-potanin/"
+    }
+  ],
+  "giving": [
+    {
+      "name": "Vladimir Potanin Foundation (founded 1999); Interros began transferring up to 50% of Rosbank shares to its endowment, targeting RUB 100B",
+      "source": "https://fondpotanin.ru/en/"
+    }
+  ],
+  "watch": [
+    {
+      "what": "Any change to US/UK/EU sanctions on Potanin, Nornickel or T-Bank (EU has not listed Potanin)",
+      "source": "https://home.treasury.gov/news/press-releases/jy1163"
+    },
+    {
+      "what": "Nornickel metal sales to China/relocation of copper smelting under Western import bans",
+      "source": "https://en.wikipedia.org/wiki/Norilsk_Nickel"
+    },
+    {
+      "what": "UK divorce litigation developments",
+      "source": "https://www.forbes.com/profile/vladimir-potanin/"
+    }
+  ],
+  "gaps": "Web search budget ran out mid-task (session cap 200), so research relied on direct fetches: current exact Nornickel % (Forbes: just over a third; 34.59% via Olderfrey as of 2021) and Interros' % in T-Technologies (reported 41.4% in Aug 2024, but finam.ru source 403'd) not verified from primary filings. UK sanctions listing date not fetched from gov.uk. No real estate, yacht ownership, or 2026 Nornickel reporting dates verified. Several items rest on Wikipedia."
+}

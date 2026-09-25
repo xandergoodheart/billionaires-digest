@@ -1,0 +1,117 @@
+{
+  "rank": 58,
+  "name": "Paolo Ardoino",
+  "slug": "paolo-ardoino",
+  "worth": "$38B",
+  "source": "Cryptocurrency",
+  "asOf": "2026-09-24T21:15-04:00",
+  "aliases": [
+    "Paolo Ardoino"
+  ],
+  "controls": [
+    {
+      "name": "Tether (stablecoin issuer USDT; group HQ San Salvador, El Salvador)",
+      "role": "CEO",
+      "stake": "~20%",
+      "stakeAsOf": "2026-09-24",
+      "source": "https://www.forbes.com/profile/paolo-ardoino/"
+    }
+  ],
+  "stakes": [
+    {
+      "name": "RUM Group Inc. (formerly Rumble Inc.) — Tether entities beneficially own 261,485,350 shares incl. pre-funded warrants = 50.3%",
+      "ticker": "RUM",
+      "stake": "50.3% (Tether group)",
+      "stakeAsOf": "2026-09-02",
+      "source": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105546/xslSCHEDULE_13D_X02/primary_doc.xml"
+    },
+    {
+      "name": "Gold.com, Inc. — Tether Global Investments Fund group owns 3,670,787 shares = 12.6% (open-market buy of 100,000 sh at $39.30 on 2026-09-03)",
+      "stake": "12.6% (Tether group)",
+      "stakeAsOf": "2026-09-03",
+      "source": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105914/xslSCHEDULE_13D_X02/primary_doc.xml"
+    },
+    {
+      "name": "Metalla Royalty & Streaming Ltd. — Tether entities own 10,266,571 shares = 11.0%",
+      "stake": "11.0% (Tether group)",
+      "stakeAsOf": "2026-05-07",
+      "source": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926058902/xslSCHEDULE_13G_X02/primary_doc.xml"
+    },
+    {
+      "name": "Twenty One Capital, Inc. (bitcoin treasury company; Tether contributed 24,500 BTC and Bitfinex 7,000 BTC at Dec 8, 2025 business combination; 43,514 BTC held at 2026-06-30; Tether took and cancelled SoftBank's 89.1M Class B shares on 2026-05-19)",
+      "ticker": "XXI",
+      "stake": "controlling holder via Tether/Bitfinex (exact % not stated in 10-Q)",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/2070457/000121390026087471/ea0299640-10q_twentyone.htm"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "Tether Global Investments Fund, S.I.C.A.F., S.A. (formerly Tether Holdings Ltd / Tether Holdings, S.A. de C.V.), San Salvador",
+      "type": "fund",
+      "cik": "0002025889",
+      "files13F": false,
+      "notes": "Files 13D/13G and Forms 3/4 as a stake holder; no 13F filings seen. Giancarlo Devasini is the individual reporting person on these filings (not Ardoino or van der Velde).",
+      "source": "https://data.sec.gov/submissions/CIK0002025889.json"
+    },
+    {
+      "name": "Tether Investments, S.A. de C.V. (El Salvador)",
+      "type": "holding co",
+      "cik": "0002049832",
+      "files13F": false,
+      "notes": "Holds Rumble/RUM shares and warrants; ran 2025 tender offer (SC TO-T filed 2025-03-28); Forms 3/4 only.",
+      "source": "https://data.sec.gov/submissions/CIK0002049832.json"
+    }
+  ],
+  "privateDeals": [
+    {
+      "what": "Tether Investments exchanged Northern Data AG shares into RUM Group (Rumble) stock/pre-funded warrants under a Transaction Support Agreement (Top-Up Exchange of 16,744,307 warrant shares)",
+      "date": "2026-09-02",
+      "source": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105546/xslSCHEDULE_13D_X02/primary_doc.xml"
+    },
+    {
+      "what": "Tether & Fasanara Capital launch $400M-anchored 'StableFund' evergreen private-credit vehicle targeting up to $3B third-party capital",
+      "date": "2026-09-09",
+      "source": "https://tether.io/news/tether-and-fasanara-capital-launch-400-million-private-credit-fund-to-expand-stablecoin-enabled-real-economy-lending/"
+    },
+    {
+      "what": "Twenty One Capital business combination closes with Tether/Bitfinex bitcoin contributions",
+      "date": "2025-12-08",
+      "source": "https://www.sec.gov/Archives/edgar/data/2070457/000121390026087471/ea0299640-10q_twentyone.htm"
+    }
+  ],
+  "policy": [
+    {
+      "what": "CFTC order (Oct 15, 2021): Tether fined $41M for misrepresenting USDT reserves (2016-2019); Bitfinex fined $1.5M",
+      "source": "https://www.cftc.gov/PressRoom/PressReleases/8450-21"
+    },
+    {
+      "what": "New York AG settlement (Feb 23, 2021): Bitfinex/Tether pay $18.5M, cease trading with NY residents, quarterly reserve disclosures",
+      "source": "https://ag.ny.gov/press-release/2021/attorney-general-james-ends-virtual-currency-trading-platform-bitfinexs-illegal"
+    },
+    {
+      "what": "DOJ credited Tether's assistance in a $52M enforcement action against a global scam network (Sept 2026)",
+      "source": "https://tether.io/news/doj-credits-tethers-assistance-in-52-million-enforcement-action-against-global-scam-network/"
+    }
+  ],
+  "watch": [
+    {
+      "what": "Further Tether 13D/A amendments on RUM Group (50.3%) and Gold.com (12.6%) — Tether has been an active open-market buyer",
+      "source": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105914/xslSCHEDULE_13D_X02/primary_doc.xml"
+    },
+    {
+      "what": "Twenty One Capital (XXI) Q3 2026 10-Q and bitcoin holdings update",
+      "when": "~Nov 2026",
+      "source": "https://data.sec.gov/submissions/CIK0002070457.json"
+    },
+    {
+      "what": "Integration of Northern Data into RUM Group following the Sept 2026 share exchange",
+      "source": "https://www.sec.gov/Archives/edgar/data/2049832/000110465926105551/xslF345X06/tm2624697-1_4seq1.xml"
+    },
+    {
+      "what": "StableFund (Tether/Fasanara) capital raising toward $3B target",
+      "source": "https://tether.io/news/tether-and-fasanara-capital-launch-400-million-private-credit-fund-to-expand-stablecoin-enabled-real-economy-lending/"
+    }
+  ],
+  "gaps": "Web search budget exhausted and Reuters/Bloomberg blocked; could not verify from an accessible source: Tether's Juventus stake, Adecoagro control deal, earlier Northern Data credit/ownership details, 2025-26 equity raise/valuation talks, USAT/GENIUS Act U.S. product, Tether gold reserves. No SEC person CIK for Ardoino (he is not a reporting person on Tether's 13D filings). No real estate found."
+}

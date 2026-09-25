@@ -17,3 +17,8 @@ Actions tab → Morning edition (API backup) → Run workflow. Needs the `ANTHRO
 
 ## Edit an edition
 Open `digest.json` on GitHub, click the pencil, change the text, and commit. The site updates in about a minute.
+
+## Design
+- Colors: warm paper (light) and terminal black (dark) with an amber accent.
+- Fonts (Google Fonts): DM Serif Display for the masthead and big display text, Newsreader for headlines,
+  Inter for body text, labels and data (tabular numbers).

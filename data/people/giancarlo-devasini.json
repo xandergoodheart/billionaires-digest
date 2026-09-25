@@ -1,0 +1,166 @@
+{
+  "rank": 22,
+  "name": "Giancarlo Devasini",
+  "slug": "giancarlo-devasini",
+  "worth": "$89.3B",
+  "source": "Cryptocurrency",
+  "asOf": "2026-09-24T21:15-04:00",
+  "aliases": [
+    "Devasini Giancarlo"
+  ],
+  "secPersonCik": "0002050373",
+  "controls": [
+    {
+      "name": "Tether Holdings, S.A. de C.V. (issuer of USDT stablecoin; HQ San Salvador, El Salvador)",
+      "role": "Chairman; controlling holder (SEC filings state he holds greater than 50% voting interest in Tether Holdings)",
+      "stake": ">50% voting interest (SEC Form 3); Forbes estimates ~45% economic stake",
+      "stakeAsOf": "2025-02-07 (SEC); 2026-09-24 (Forbes)",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000110465925010615/xslF345X02/tm255553-1_3seq1.xml"
+    },
+    {
+      "name": "Tether Global Investments Fund, S.I.C.A.F., S.A. (Tether investment fund; Devasini holds >50% voting interest per SEC Form 3)",
+      "role": "Controlling holder",
+      "stake": ">50% voting interest",
+      "stakeAsOf": "2026-02-17",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526054687/xslF345X02/ownership.xml"
+    },
+    {
+      "name": "Bitfinex (operated by iFinex Inc.)",
+      "role": "CFO / co-owner",
+      "source": "https://en.wikipedia.org/wiki/Giancarlo_Devasini"
+    }
+  ],
+  "stakes": [
+    {
+      "name": "Rumble Inc. / RUM Group Inc. (video platform) — 141,877,369 Class A shares held via Tether Investments plus ~119.6M pre-funded warrants (9.9% cap); Tether-side reporting owners are directors/10% owners",
+      "ticker": "RUM",
+      "stake": "141,877,369 shares + ~119.6M pre-funded warrants",
+      "stakeAsOf": "2026-09-04",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926105551/xslF345X06/tm2624697-1_4seq1.xml"
+    },
+    {
+      "name": "Adecoagro S.A. (Latin American agribusiness) — Tether Investments tender offer at $12.41/share to reach ~70% of outstanding shares (oversubscribed; results April 25, 2025)",
+      "stake": "target ~70%",
+      "stakeAsOf": "2025-04-25",
+      "source": "https://www.sec.gov/Archives/edgar/data/2049832/000110465925029471/tm2510470-1_sctot.htm"
+    },
+    {
+      "name": "Gold.com, Inc. (precious-metals dealer) — 3,370,787 shares via TPM, S.A. de C.V. plus 300,000 via Tether International; Tether-side reporting owners are directors/10% owners",
+      "ticker": "GOLD",
+      "stake": "3,670,787 shares (indirect)",
+      "stakeAsOf": "2026-09-03",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml"
+    },
+    {
+      "name": "Northern Data AG (AI cloud / bitcoin mining; $610M Tether credit facility in 2023) — Tether's Northern Data shares exchanged for Rumble shares under Nov 10, 2025 Transaction Support Agreement",
+      "stakeAsOf": "2025-11",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926105551/xslF345X06/tm2624697-1_4seq1.xml"
+    },
+    {
+      "name": "Bitdeer (bitcoin miner) — ~$100M Tether strategic investment (May 2024; per Wikipedia summary)",
+      "stakeAsOf": "2024-05",
+      "source": "https://en.wikipedia.org/wiki/Tether_Limited"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "Tether Investments, S.A. de C.V.",
+      "type": "holding co",
+      "cik": "0002049832",
+      "files13F": false,
+      "notes": "San Salvador; wholly owned by Tether Holdings; files Forms 3/4 and SC TO-T (Adecoagro); no 13F seen",
+      "source": "https://data.sec.gov/submissions/CIK0002049832.json"
+    },
+    {
+      "name": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
+      "type": "fund",
+      "cik": "0002025889",
+      "notes": "Reporting owner on Gold.com and RUM Group Forms 3/4; EDGAR filing list returned 503 so 13F status unverified",
+      "source": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=tether&type=&dateb=&owner=include&count=40"
+    },
+    {
+      "name": "TPM, S.A. de C.V.",
+      "type": "holding co",
+      "notes": "Tether-controlled subsidiary that bought Gold.com shares via Feb 2026 PIPE",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526054687/xslF345X02/ownership.xml"
+    }
+  ],
+  "privateDeals": [
+    {
+      "what": "Tether (via TPM) agreed in Feb 4, 2026 PIPE to buy 3,370,787 Gold.com shares at $44.50 (~$150M) in two tranches; first tranche $126.4M closed Feb 6, 2026",
+      "date": "2026-02-04",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526054687/xslF345X02/ownership.xml"
+    },
+    {
+      "what": "Tether bought 100,000 more Gold.com shares at ~$39.30 on open market",
+      "date": "2026-09-03",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml"
+    },
+    {
+      "what": "Tether swapped Northern Data AG shares for RUM Group shares under Transaction Support Agreement",
+      "date": "2025-11-10",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926105551/xslF345X06/tm2624697-1_4seq1.xml"
+    },
+    {
+      "what": "Tether Investments tender offer for Adecoagro at $12.41/share to reach ~70% (67.1M shares tendered vs 49.6M max; ~73.9% proration)",
+      "date": "2025-03-28 to 2025-04-24",
+      "source": "https://www.sec.gov/Archives/edgar/data/2049832/000110465925039093/tm2513181d1_sctota.htm"
+    },
+    {
+      "what": "Tether took 103,333,333 Rumble Class A shares (initial Form 3, event date)",
+      "date": "2025-02-07",
+      "source": "https://www.sec.gov/Archives/edgar/data/2050373/000110465925010615/xslF345X02/tm255553-1_3seq1.xml"
+    },
+    {
+      "what": "Tether and Fasanara Capital launched $400M private credit fund (StableFund)",
+      "date": "2026-09-09",
+      "source": "https://tether.io/news/"
+    },
+    {
+      "what": "Tether reportedly in talks to raise $15-20B for ~3% stake, implying ~$500B valuation (Reuters, via Wikipedia summary)",
+      "date": "2025-09",
+      "source": "https://en.wikipedia.org/wiki/Tether_Limited"
+    }
+  ],
+  "policy": [
+    {
+      "what": "CFTC fined Tether $41M (and Bitfinex $1.5M) for false claims that USDT was fully backed by fiat reserves",
+      "source": "https://www.cftc.gov/PressRoom/PressReleases/8450-21"
+    },
+    {
+      "what": "New York AG settlement: iFinex/Bitfinex and Tether paid $18.5M over concealed ~$850M loss and reserve misstatements; barred from NY trading, required reserve disclosures (Feb 2021)",
+      "source": "https://ag.ny.gov/press-release/2021/attorney-general-james-ends-virtual-currency-trading-platform-bitfinexs-illegal"
+    },
+    {
+      "what": "Tether moved official headquarters from BVI to San Salvador, El Salvador (announced Jan 2025)",
+      "source": "https://en.wikipedia.org/wiki/Tether_Limited"
+    },
+    {
+      "what": "Tether developing US-domiciled regulated stablecoin USAT (disclosed Aug 2025)",
+      "source": "https://en.wikipedia.org/wiki/Tether_Limited"
+    },
+    {
+      "what": "DOJ credited Tether's assistance in a $52M enforcement action against a scam network",
+      "source": "https://tether.io/news/"
+    }
+  ],
+  "watch": [
+    {
+      "what": "Further Form 4 filings by Tether entities in Gold.com (GOLD) and RUM Group (RUM) — Tether has been buying",
+      "source": "https://data.sec.gov/submissions/CIK0002050373.json"
+    },
+    {
+      "what": "Adecoagro under Tether control: strategy/board changes and any further share purchases",
+      "source": "https://www.sec.gov/Archives/edgar/data/2049832/000110465925039093/tm2513181d1_sctota.htm"
+    },
+    {
+      "what": "Tether fundraising at ~$500B valuation and USAT US-stablecoin launch progress",
+      "source": "https://en.wikipedia.org/wiki/Tether_Limited"
+    },
+    {
+      "what": "Deployment of Tether/Fasanara $400M StableFund private credit vehicle",
+      "source": "https://tether.io/news/"
+    }
+  ],
+  "gaps": "Web search quota ran out mid-task, so the Juventus stake, Tether gold/bitcoin reserve figures, quarterly attestations, and US stablecoin (GENIUS Act) details could not be sourced and were left out. Adecoagro final % after the tender and its NYSE ticker are not confirmed. The 13F status of Tether Global Investments Fund is unverified (EDGAR returned 503). No reputable real-estate reporting found. Several Tether facts are sourced only to Wikipedia; they should be upgraded to Reuters/Bloomberg links."
+}
