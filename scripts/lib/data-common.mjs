@@ -130,7 +130,47 @@ export function parseShareCount(text) {
 
 export const METHOD =
   "Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. " +
-  'Covers only disclosed share counts in US-listed holdings; may undercount.';
+  'Covers only disclosed share counts in US-listed holdings; may undercount. ' +
+  "Shown only when these holdings are at least 25% of the person's Forbes net worth.";
+
+// Estimates covering less than this share of the person's net worth are hidden on the site.
+export const MIN_COVERAGE = 0.25;
+
+// Parse a Forbes-style worth string ("$927.9B", "$184B", "$845M") into US dollars. Returns null if unparseable.
+export function parseWorth(text) {
+  if (typeof text !== 'string') return null;
+  const m = text.trim().match(/^\$\s*(\d+(?:\.\d+)?)\s*([BM])$/i);
+  if (!m) return null;
+  const n = Number(m[1]) * (m[2].toUpperCase() === 'B' ? 1e9 : 1e6);
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+
+// slug -> worth in USD (or null) from data/people/index.json.
+export function worthBySlug(index) {
+  const out = {};
+  for (const p of (index && Array.isArray(index.people) ? index.people : [])) {
+    if (p && p.slug) out[p.slug] = parseWorth(p.worth);
+  }
+  return out;
+}
+
+// Adds coveredValue (Σ shares × current price) and coverage (coveredValue / worth, 3 decimals) to each person entry.
+// coverage is null when the worth or a price is missing. Mutates and returns `people`.
+export function addCoverage(people, quotes, worths) {
+  for (const [slug, entry] of Object.entries(people)) {
+    let covered = 0;
+    let ok = true;
+    for (const h of entry.holdings ?? []) {
+      const price = quotes?.[h.ticker]?.price;
+      if (typeof price !== 'number' || !Number.isFinite(price)) { ok = false; continue; }
+      covered += h.shares * price;
+    }
+    const worth = worths?.[slug] ?? null;
+    entry.coveredValue = ok ? Math.round(covered) : null;
+    entry.coverage = ok && worth ? Math.round((covered / worth) * 1000) / 1000 : null;
+  }
+  return people;
+}
 
 // Tickers known to trade in the US as ADSs/ADRs, where a count of ordinary shares would not match the quote.
 export const KNOWN_ADRS = new Set([
@@ -191,7 +231,8 @@ export function personHoldings(profile, quotes, adrs = KNOWN_ADRS) {
 }
 
 // Estimates for everyone. The same (ticker, shares) holding under more than one person is excluded for all of them.
-export function estimateAll(profiles, quotes, adrs = adrSet(profiles)) {
+// With `worths` (slug -> USD), each entry also gets coveredValue and coverage (see addCoverage).
+export function estimateAll(profiles, quotes, adrs = adrSet(profiles), worths = null) {
   const per = new Map();
   const skipped = [];
   const owners = new Map(); // "TICKER|shares" -> [slug]
@@ -217,6 +258,7 @@ export function estimateAll(profiles, quotes, adrs = adrSet(profiles)) {
     if (!kept.length) continue;
     people[slug] = { estDailyChange: kept.reduce((s, h) => s + h.estChange, 0), partial: true, holdings: kept };
   }
+  if (worths) addCoverage(people, quotes, worths);
   return { people, excluded, skipped };
 }
 

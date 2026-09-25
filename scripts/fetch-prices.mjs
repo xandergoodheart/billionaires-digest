@@ -8,7 +8,7 @@
 
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, METHOD, loadProfiles, holdingSymbols, estimateAll, nyDate, readJson, spacer, sleep, writeJson } from './lib/data-common.mjs';
+import { ROOT, METHOD, MIN_COVERAGE, loadProfiles, holdingSymbols, estimateAll, adrSet, worthBySlug, nyDate, readJson, spacer, sleep, writeJson } from './lib/data-common.mjs';
 
 const OUT_DIR = join(ROOT, 'data', 'prices');
 const HISTORY_KEEP = 400;
@@ -98,8 +98,9 @@ async function main() {
 
   await writeJson(join(OUT_DIR, 'latest.json'), { generated, provider: 'Finnhub', quotes, skipped });
 
-  const { people, excluded, skipped: estSkipped } = estimateAll(profiles, quotes);
-  await writeJson(join(OUT_DIR, 'networth-est.json'), { generated, method: METHOD, people, excluded, skipped: estSkipped });
+  const worths = worthBySlug(await readJson(join(ROOT, 'data', 'people', 'index.json'), {}));
+  const { people, excluded, skipped: estSkipped } = estimateAll(profiles, quotes, adrSet(profiles), worths);
+  await writeJson(join(OUT_DIR, 'networth-est.json'), { generated, method: METHOD, minCoverage: MIN_COVERAGE, people, excluded, skipped: estSkipped });
 
   console.log(`Done. Quotes ${quoted}/${symbols.length}; people with estimates ${Object.keys(people).length}.`);
   return 0;

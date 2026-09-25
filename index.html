@@ -559,6 +559,8 @@
       var pe = est && est.people && typeof est.people === 'object' && Object.prototype.hasOwnProperty.call(est.people, s) ? est.people[s] : null;
       var v = pe && pe.estDailyChange;
       if (typeof v !== 'number' || !isFinite(v)) return;
+      var minCov = (typeof est.minCoverage === 'number' && isFinite(est.minCoverage)) ? est.minCoverage : 0.25;
+      if (!(typeof pe.coverage === 'number' && isFinite(pe.coverage) && pe.coverage >= minCov)) return;
       var dir = v > 0 ? 'up' : (v < 0 ? 'down' : 'flat');
       estBox.appendChild(document.createTextNode('Est. today: '));
       estBox.appendChild(el('span', dirClass(dir), arrow(dir) + (BD.fmtUsd(Math.abs(v)) || '$0')));
@@ -566,7 +568,7 @@
       var how = el('details', 'estmore');
       var sm = el('summary', null, '*'); sm.setAttribute('aria-label', 'How this estimate works');
       how.appendChild(sm);
-      how.appendChild(el('span', 'estmethod', str(est.method) || 'Estimated from disclosed share counts in US-listed holdings only. Partial; may undercount.'));
+      how.appendChild(el('span', 'estmethod', (str(est.method) || 'Estimated from disclosed share counts in US-listed holdings only. Partial; may undercount.') + (pe.coverage >= 0.9 ? ' · covers most of their net worth' : ' · covers ~' + Math.round(pe.coverage * 100) + '% of net worth')));
       estBox.appendChild(how);
       estBox.hidden = false;
     });

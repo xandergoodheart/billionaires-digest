@@ -1,6 +1,7 @@
 {
   "generated": "2026-09-25T03:28:44.925Z",
-  "method": "Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount.",
+  "method": "Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are at least 25% of the person's Forbes net worth.",
+  "minCoverage": 0.25,
   "people": {
     "alice-walton": {
       "estDailyChange": -59522476,
@@ -14,7 +15,9 @@
           "shareText": "20,245,740 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1219112/000114036125002729/xslSCHEDULE_13G_X01/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 2178239167,
+      "coverage": 0.018
     },
     "andreas-von-bechtolsheim-family": {
       "estDailyChange": 409873768,
@@ -28,7 +31,9 @@
           "shareText": "183,799,896 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1596532/000119312526158942/d66465ddef14a.htm"
         }
-      ]
+      ],
+      "coveredValue": 37807638607,
+      "coverage": 0.915
     },
     "bill-gates": {
       "estDailyChange": -222206070,
@@ -114,7 +119,9 @@
           "shareText": "647,198 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097179/xslSCHEDULE_13G_X02/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 57375578059,
+      "coverage": 0.502
     },
     "carlos-slim-helu-family": {
       "estDailyChange": 42089200,
@@ -136,7 +143,9 @@
           "shareText": "16,862,128 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126030249/xslSCHEDULE_13G_X02/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 1877512196,
+      "coverage": 0.016
     },
     "changpeng-zhao": {
       "estDailyChange": 1462462,
@@ -150,7 +159,9 @@
           "shareText": "9,749,745 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2098271/000092189526002598/xslSCHEDULE_13D_X02/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 61033404,
+      "coverage": 0.001
     },
     "charles-koch-family": {
       "estDailyChange": -12039262,
@@ -212,7 +223,9 @@
           "shareText": "15,126,917 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/13F2026Q2KOCH.xml"
         }
-      ]
+      ],
+      "coveredValue": 804220888,
+      "coverage": 0.01
     },
     "eduardo-saverin": {
       "estDailyChange": 443419,
@@ -226,7 +239,9 @@
           "shareText": "7,390,311 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1997306/000119312525282898/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 109524409,
+      "coverage": 0.003
     },
     "elon-musk": {
       "estDailyChange": -3643207003,
@@ -248,7 +263,9 @@
           "shareText": "6,418,547,515 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm"
         }
-      ]
+      ],
+      "coveredValue": 1214537187189,
+      "coverage": 1.309
     },
     "eric-schmidt": {
       "estDailyChange": 221102886,
@@ -262,7 +279,9 @@
           "shareText": "48,808,584 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 16710106818,
+      "coverage": 0.439
     },
     "eyal-ofer": {
       "estDailyChange": 372589,
@@ -276,7 +295,9 @@
           "shareText": "42,925 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000017/rcl-20260417.htm"
         }
-      ]
+      ],
+      "coveredValue": 10258217,
+      "coverage": 0
     },
     "german-larrea-mota-velasco-family": {
       "estDailyChange": -145773,
@@ -290,7 +311,9 @@
           "shareText": "404,926 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1223260/000122326026000009/form4-07282026_070758.xml"
         }
-      ]
+      ],
+      "coveredValue": 81624983,
+      "coverage": 0.001
     },
     "giancarlo-devasini": {
       "estDailyChange": 46819532,
@@ -312,7 +335,9 @@
           "shareText": "3,670,787 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml"
         }
-      ]
+      ],
+      "coveredValue": 1379751192,
+      "coverage": 0.015
     },
     "gina-rinehart": {
       "estDailyChange": -1817984,
@@ -342,7 +367,9 @@
           "shareText": "15,885,729 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
         }
-      ]
+      ],
+      "coveredValue": 1838251323,
+      "coverage": 0.073
     },
     "henry-samueli": {
       "estDailyChange": -396140804,
@@ -356,7 +383,9 @@
           "shareText": "85,559,569 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526085691/d49254ddef14a.htm"
         }
-      ]
+      ],
+      "coveredValue": 29976650595,
+      "coverage": 0.903
     },
     "idan-ofer": {
       "estDailyChange": -59795527,
@@ -370,7 +399,9 @@
           "shareText": "32,497,569 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1611005/000117891326001842/zk2634883.htm"
         }
-      ]
+      ],
+      "coveredValue": 2072044999,
+      "coverage": 0.066
     },
     "jeff-bezos": {
       "estDailyChange": 104547804,
@@ -384,7 +415,9 @@
           "shareText": "950,434,581 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm"
         }
-      ]
+      ],
+      "coveredValue": 237019375810,
+      "coverage": 0.642
     },
     "jensen-huang": {
       "estDailyChange": -65193619,
@@ -398,7 +431,9 @@
           "shareText": "70,100,666 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1197649/000119764926000012/wk-form4_1789765856.xml"
         }
-      ]
+      ],
+      "coveredValue": 15743207570,
+      "coverage": 0.081
     },
     "jim-walton-family": {
       "estDailyChange": -92672834,
@@ -412,7 +447,9 @@
           "shareText": "31,521,372 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1219112/000114036125002729/xslSCHEDULE_13G_X01/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 3391384413,
+      "coverage": 0.026
     },
     "lakshmi-mittal": {
       "estDailyChange": -210894589,
@@ -426,7 +463,9 @@
           "shareText": "340,152,563 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1243429/000199937126006457/xslSCHEDULE_13D_X02/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 24252877742,
+      "coverage": 0.731
     },
     "larry-ellison": {
       "estDailyChange": -5787971412,
@@ -440,7 +479,9 @@
           "shareText": "1,152,982,353 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm"
         }
-      ]
+      ],
+      "coveredValue": 160887157538,
+      "coverage": 0.874
     },
     "len-blavatnik": {
       "estDailyChange": 60867506,
@@ -510,7 +551,9 @@
           "shareText": "17,638,714 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1508226/000119312525213929/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 19133288982,
+      "coverage": 0.555
     },
     "li-ka-shing": {
       "estDailyChange": 40856257,
@@ -532,7 +575,9 @@
           "shareText": "14,951,897 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1686621/000149315224002511/formsc13da.htm"
         }
-      ]
+      ],
+      "coveredValue": 7370374270,
+      "coverage": 0.151
     },
     "lyndal-stephens-greth-family": {
       "estDailyChange": 218255678,
@@ -546,7 +591,9 @@
           "shareText": "64,957,047 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126037012/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 12277531453,
+      "coverage": 0.42
     },
     "ma-huateng": {
       "estDailyChange": 9184753,
@@ -560,7 +607,9 @@
           "shareText": "12,411,829 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1293451/000114036125003623/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 1895534525,
+      "coverage": 0.04
     },
     "mark-zuckerberg": {
       "estDailyChange": 11447685023,
@@ -574,7 +623,9 @@
           "shareText": "341,823,978 Class B shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm"
         }
-      ]
+      ],
+      "coveredValue": 265798907053,
+      "coverage": 0.998
     },
     "masayoshi-son": {
       "estDailyChange": 439609971,
@@ -636,7 +687,9 @@
           "shareText": "565,000 ADS",
           "source": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
         }
-      ]
+      ],
+      "coveredValue": 14277310170,
+      "coverage": 0.197
     },
     "melinda-french-gates": {
       "estDailyChange": 875747,
@@ -658,7 +711,9 @@
           "shareText": "16,145,309 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1226523/000095014224002531/xslSCHEDULE_13G_X01/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 2393650363,
+      "coverage": 0.069
     },
     "michael-dell": {
       "estDailyChange": -3668967455,
@@ -672,7 +727,9 @@
           "shareText": "265,674,689 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/908724/000112329226000125/0001123292-26-000125-index.htm"
         }
-      ]
+      ],
+      "coveredValue": 142406946798,
+      "coverage": 0.537
     },
     "peter-thiel": {
       "estDailyChange": 1599984,
@@ -686,7 +743,9 @@
           "shareText": "1,999,980 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1211060/000121106026000007/form4-03042026_090310.xml"
         }
-      ]
+      ],
+      "coveredValue": 385176148,
+      "coverage": 0.01
     },
     "rob-walton-family": {
       "estDailyChange": -20666898,
@@ -700,7 +759,9 @@
           "shareText": "7,029,557 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1219112/000114036125002729/xslSCHEDULE_13G_X01/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 756310038,
+      "coverage": 0.006
     },
     "sergey-brin": {
       "estDailyChange": 3073412545,
@@ -722,7 +783,9 @@
           "shareText": "359,159,912 Class C shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1295032/000119312526345383/ownership.xml"
         }
-      ]
+      ],
+      "coveredValue": 244645492635,
+      "coverage": 0.946
     },
     "stephen-schwarzman": {
       "estDailyChange": 2567694,
@@ -752,7 +815,9 @@
           "shareText": "2,710,374 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526349583/xslF345X06/ownership.xml"
         }
-      ]
+      ],
+      "coveredValue": 672072077,
+      "coverage": 0.016
     },
     "steve-ballmer": {
       "estDailyChange": -19727588,
@@ -766,7 +831,9 @@
           "shareText": "116,044,633 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/902015/000095017025058891/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 964330900,
+      "coverage": 0.006
     },
     "thomas-peterffy": {
       "estDailyChange": 1843628,
@@ -780,7 +847,9 @@
           "shareText": "23,045,352 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1391405/000089706925000721/xslSCHEDULE_13G_X01/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 253037965,
+      "coverage": 0.002
     },
     "warren-buffett": {
       "estDailyChange": -2312,
@@ -794,7 +863,9 @@
           "shareText": "1,162 Class B shares",
           "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
         }
-      ]
+      ],
+      "coveredValue": 587019,
+      "coverage": 0
     }
   },
   "excluded": [
