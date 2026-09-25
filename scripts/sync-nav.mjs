@@ -16,7 +16,7 @@ const ACTIVE = {
   'index.html': 'today', 'sectors.html': 'sectors', 'calendar.html': 'calendar', 'fantasy.html': 'fantasy', 'archive.html': 'archive', 'about.html': 'about',
   'flows.html': 'flows', 'quarterly.html': 'quarterly', 'copycat.html': 'copycat', 'network.html': 'network',
   'compare.html': 'compare', 'property.html': 'property',
-  'leaderboard.html': 'leaderboard', 'leagues.html': 'leagues', 'markets.html': 'markets', 'play-terms.html': 'playterms'
+  'leaderboard.html': 'leaderboard', 'leagues.html': 'leagues', 'markets.html': 'markets', 'book.html': 'book', 'play-terms.html': 'playterms'
 };
 
 function replaceBlock(html, name, openRe, closeTag, block, file) {

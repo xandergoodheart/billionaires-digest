@@ -1,6 +1,6 @@
-// Test helper: a throwaway Postgres (PGlite, in memory) with Supabase-like auth stubs and the game migration.
+// Test helper: a throwaway Postgres (PGlite, in memory) with Supabase-like auth stubs and the game migrations.
 // Dev only; @electric-sql/pglite is a devDependency.
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
@@ -8,7 +8,8 @@ import { PGlite } from '@electric-sql/pglite';
 import { citext } from '@electric-sql/pglite/contrib/citext';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
-export const MIGRATION = join(ROOT, 'supabase', 'migrations', '0001_game.sql');
+export const MIGRATIONS_DIR = join(ROOT, 'supabase', 'migrations');
+export const MIGRATION = join(MIGRATIONS_DIR, '0001_game.sql');
 const STUB = join(ROOT, 'supabase', 'tests', 'auth-stub.sql');
 const DEFAULT_GRANTS = join(ROOT, 'supabase', 'tests', 'default-grants.sql');
 
@@ -24,9 +25,11 @@ export async function makeDb({ mode = 'no-auto-expose' } = {}) {
   const db = new PGlite({ extensions: { citext } });
   await db.exec(await readFile(STUB, 'utf8'));
   if (mode === 'supabase-defaults') await db.exec(await readFile(DEFAULT_GRANTS, 'utf8'));
-  const sql = await readFile(MIGRATION, 'utf8');
-  await db.exec(sql);
-  await db.exec(sql); // run twice: the migration must be safe to re-apply
+  // every migration in order, like the Game sync workflow; then all of them again (each must be safe to re-apply)
+  const files = (await readdir(MIGRATIONS_DIR)).filter(f => f.endsWith('.sql')).sort();
+  const sqls = await Promise.all(files.map(f => readFile(join(MIGRATIONS_DIR, f), 'utf8')));
+  for (const sql of sqls) await db.exec(sql);
+  for (const sql of sqls) await db.exec(sql);
   await db.exec(CLOCK);
   const h = {
     db,

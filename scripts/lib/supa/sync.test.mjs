@@ -108,10 +108,10 @@ function fakeSupabase() {
   return { server, calls, markets };
 }
 
-async function withServer(fn) {
+async function withServer(fn, extraEnv = {}) {
   const f = fakeSupabase();
   await new Promise(r => f.server.listen(0, '127.0.0.1', r));
-  const env = { SUPABASE_URL: `http://127.0.0.1:${f.server.address().port}/`, SUPABASE_SERVICE_KEY: 'test-service-key' };
+  const env = { SUPABASE_URL: `http://127.0.0.1:${f.server.address().port}/`, SUPABASE_SERVICE_KEY: 'test-service-key', ...extraEnv };
   try { return await fn(f, env); } finally { await new Promise(r => f.server.close(r)); }
 }
 const quiet = () => {};
@@ -170,7 +170,19 @@ test('sync without settings exits cleanly and calls nothing', async () => {
   assert.match(cli.stdout, /Game sync skipped/);
 });
 
-test('Monday run uploads, scores live, opens 11 markets; rerun opens none', async () => {
+test('LMSR markets are off by default (The Book replaced them): a Monday run opens none', async () => {
+  await withServer(async (f, env) => {
+    const now = new Date('2026-09-28T14:45:00Z');
+    fakeSupabase.now = now;
+    const s = await sync({ env: { ...env, GAME_FORCE_MARKETS: '1' }, root: dataRoot, now, log: quiet });
+    assert.equal(s.created.length, 0);
+    assert.equal(f.markets.size, 0);
+    assert.ok(!f.calls.some(c => c.path.endsWith('/create_market')));
+    assert.ok(f.calls.some(c => c.path.endsWith('/close_due_markets')), 'existing markets still close');
+  });
+});
+
+test('with GAME_LMSR_MARKETS=1: Monday run uploads, scores live, opens 11 markets; rerun opens none', async () => {
   await withServer(async (f, env) => {
     const now = new Date('2026-09-28T14:45:00Z'); // Monday 10:45 New York, after the lock
     fakeSupabase.now = now;
@@ -219,5 +231,5 @@ test('Monday run uploads, scores live, opens 11 markets; rerun opens none', asyn
     // a second Saturday run resolves nothing new
     const r2 = await sync({ env, root: dataRoot, now: sat, log: quiet });
     assert.equal(r2.resolved.length, 0);
-  });
+  }, { GAME_LMSR_MARKETS: '1' });
 });

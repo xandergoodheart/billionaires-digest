@@ -3,12 +3,22 @@
 //   2. score weeks: live standings, then final            -> settle_week
 //   3. close markets past Friday 4 PM New York            -> close_due_markets
 //   4. on Mondays, open the week's markets if missing     -> create_market (same slugs every run)
+//      OFF by default: The Book replaced the LMSR markets (set GAME_LMSR_MARKETS=1 to open new ones again).
+//      Existing markets still close and resolve (steps 3 and 5).
 //   5. resolve closed markets from our data files         -> resolve_market
+//   6. The Book (data/book/<week>.json):
+//      before the lock, upload the week's odds            -> upsert_book (odds of anything already bet on stay frozen)
+//      at the lock, close the events                      -> close_due_book
+//      once Friday's data is in, settle from our files    -> settle_book (results from lib/book/settle.mjs)
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { makeRest } from './rest.mjs';
 import { nyDate, nyWeekday, addDays } from './time.mjs';
-import { generateMarkets, resolveMarket } from './markets.mjs';
+import { generateMarkets, resolveMarket, weekTotals, isPBuy, GIVE_UP_DAYS } from './markets.mjs';
+import { settleBook } from '../book/settle.mjs';
+
+// The Book replaced the LMSR markets in the UI: no new markets unless this is turned back on.
+export const LMSR_NEW_MARKETS = false;
 
 export const RECENT_DAYS = 21;  // weeks that ended more than this many days ago are not re-uploaded
 const DAY_BATCH = 20;
@@ -35,11 +45,13 @@ export async function loadData(root) {
     .map(d => ({ ...d, people: (Array.isArray(d.people) ? d.people : Object.entries(d.people || {}).map(([slug, p]) => ({ slug, ...p })))
       .filter(p => p && p.slug && Number.isFinite(Number(p.points))) }));
   const filingsDoc = await optionalJson(join(root, 'data', 'filings', 'latest.json'), { filings: [] });
+  // The Book: one file per real (non-practice) week
+  const books = (await readJsonDir(join(root, 'data', 'book'))).filter(b => b && /^\d{4}-W\d{2}$/.test(b.week || '') && b.practice !== true && Array.isArray(b.events));
   const people = {};
   for (const p of await readJsonDir(join(root, 'data', 'people'))) {
     if (p && p.slug && p.name) people[p.slug] = { name: String(p.name).replace(/\s*&\s*family\s*$/i, ''), sector: p.sector || null };
   }
-  return { weeks, days, filingsDoc, people };
+  return { weeks, days, filingsDoc, people, books };
 }
 
 export async function sync({ env = process.env, root, now = new Date(), fetchImpl = fetch, log = console.log } = {}) {
@@ -51,7 +63,7 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
   const api = makeRest({ url, key, fetchImpl });
   const data = await loadData(root);
   const today = nyDate(now);
-  const summary = { weeks: 0, points: 0, settled: [], closed: 0, created: [], resolved: [] };
+  const summary = { weeks: 0, points: 0, settled: [], closed: 0, created: [], resolved: [], book: { uploaded: [], closed: 0, settled: [] } };
 
   // 1. upload
   // practice weeks stay solo: never uploaded, scored or given markets
@@ -92,7 +104,10 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
   // 4. create this week's markets (Mondays, or any day with GAME_FORCE_MARKETS=1)
   const current = live.filter(w => w.start <= today && today <= w.end).sort((a, b) => b.start.localeCompare(a.start))[0];
   const force = env.GAME_FORCE_MARKETS === '1';
-  if (current && (nyWeekday(now) === 1 || force)) {
+  const lmsrOn = LMSR_NEW_MARKETS || env.GAME_LMSR_MARKETS === '1';
+  if (!lmsrOn) {
+    // The Book replaced them; nothing new is opened
+  } else if (current && (nyWeekday(now) === 1 || force)) {
     const prevWeek = data.weeks.filter(w => w.end < current.start).sort((a, b) => b.end.localeCompare(a.end))[0] || null;
     const specs = generateMarkets({ week: current, people: data.people, filings: data.filingsDoc.filings || [], prevWeek,
       prevDays: prevWeek ? data.days.filter(d => d.date >= prevWeek.start && d.date <= prevWeek.end) : [], now });
@@ -115,9 +130,78 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
     if (!res || !res.already) summary.resolved.push(`${m.slug}: ${r.outcome}`);
   }
 
+  // 6. The Book
+  await syncBook({ api, data, now, today, live, summary, log });
+
   log(`Game sync: ${summary.weeks} week(s), ${summary.points} point row(s), settled [${summary.settled.join(', ')}], ` +
-    `closed ${summary.closed}, opened ${summary.created.length}, resolved ${summary.resolved.length}.`);
+    `closed ${summary.closed}, opened ${summary.created.length}, resolved ${summary.resolved.length}; ` +
+    `book: uploaded [${summary.book.uploaded.join(', ')}], closed ${summary.book.closed}, settled [${summary.book.settled.join(', ')}].`);
   for (const s of summary.created) log(`  opened ${s}`);
   for (const s of summary.resolved) log(`  resolved ${s}`);
   return summary;
+}
+
+// ---------- The Book ----------
+// What the database needs from a book file (upsert_book's shape).
+export function bookPayload(book) {
+  return {
+    week: book.week, locksAt: book.locksAt,
+    events: book.events.map(e => ({
+      id: e.id, type: e.type, title: e.title, params: e.params || {}, settlesFrom: e.settlesFrom || null, sort: e.sort ?? 0,
+      ...(e.closesAt ? { closesAt: e.closesAt } : {}),
+      selections: e.selections.map(s => ({
+        id: s.id, label: s.label, line: s.line ?? null, americanOdds: s.americanOdds, decimalOdds: s.decimalOdds, fairProb: s.fairProb ?? null,
+        market: s.market || null, person: s.person || null, sector: s.sector || null, sort: s.sort ?? 0
+      }))
+    }))
+  };
+}
+
+// Insider-buy results for a week from the filings file: days with a code-P Form 4 filed Mon-Fri, and people with a
+// Form 4 in the week we could not read. ready = the filings were fetched after Friday ended in New York.
+export function bookInsider(week, filingsDoc) {
+  const doc = filingsDoc || {};
+  const generatedDay = doc.generated ? nyDate(doc.generated) : null;
+  const days = {}, unknown = new Set();
+  for (const f of doc.filings || []) {
+    if (!f || !f.personSlug || !/^4(\/A)?$/.test(String(f.form || '')) || !f.filed || f.filed < week.start || f.filed > week.end) continue;
+    if (!f.form4) { unknown.add(f.personSlug); continue; }
+    if (isPBuy(f)) (days[f.personSlug] = days[f.personSlug] || new Set()).add(f.filed);
+  }
+  return {
+    ready: !!generatedDay && generatedDay > week.end,
+    pBuyDays: Object.fromEntries(Object.entries(days).map(([k, v]) => [k, v.size])),
+    insiderUnknown: [...unknown].sort()
+  };
+}
+
+async function syncBook({ api, data, now, today, live, summary, log }) {
+  const weeksById = Object.fromEntries(live.map(w => [w.week, w]));
+  const books = data.books.filter(b => weeksById[b.week] && weeksById[b.week].end >= addDays(today, -RECENT_DAYS));
+  if (!books.length) return;
+  // before the lock: upload (and refresh) the odds
+  for (const b of books) {
+    if (b.locksAt && now.getTime() < new Date(b.locksAt).getTime()) {
+      await api.rpc('upsert_book', { p: bookPayload(b) });
+      summary.book.uploaded.push(b.week);
+    }
+  }
+  // at the lock: close
+  summary.book.closed = Number(await api.rpc('close_due_book', {})) || 0;
+  // after Friday's data: settle
+  for (const b of books) {
+    const w = weeksById[b.week];
+    const haveEnd = data.days.some(d => d.date === w.end);
+    if (!(today > w.end && (haveEnd || today >= addDays(w.end, 2)))) continue;
+    const pending = await api.select('book_events', `select=id&week=eq.${encodeURIComponent(b.week)}&status=in.(open,closed)&limit=1`);
+    if (!pending || !pending.length) continue;
+    const ins = bookInsider(w, data.filingsDoc);
+    const giveUp = today > addDays(w.end, 1 + GIVE_UP_DAYS);
+    if (!ins.ready && !giveUp) { log(`waiting on SEC filings to settle the book for ${b.week}`); continue; }
+    const insider = ins.ready ? ins : { pBuyDays: {}, insiderUnknown: [...new Set(b.events.filter(e => e.type === 'prop_insider').map(e => e.params.slug))] };
+    const totals = weekTotals(w, data.days);
+    const { results, notes } = settleBook(b, { totals, pBuyDays: insider.pBuyDays, insiderUnknown: insider.insiderUnknown });
+    const r = await api.rpc('settle_book', { p: { week: b.week, results, notes } });
+    if (!r || !r.already) summary.book.settled.push(b.week);
+  }
 }

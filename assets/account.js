@@ -37,7 +37,7 @@
     if (!state.enabled) {
       var t = el('div', 'g-account__text');
       t.appendChild(el('strong', null, 'Multiplayer is coming soon.'));
-      var p = el('p', 'g-hint', 'Online leaderboards, leagues and markets will open here. ');
+      var p = el('p', 'g-hint', 'Online leaderboards, leagues and The Book will open here. ');
       var a = el('a', null, 'The solo fantasy game works now'); a.href = 'fantasy.html';
       p.appendChild(a); p.appendChild(document.createTextNode('.'));
       t.appendChild(p);

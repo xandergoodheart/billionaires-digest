@@ -178,6 +178,27 @@
   G.buy = function(marketId, side, coins){ return rpc('buy', { p_market: marketId, p_side: side, p_coins: coins }); };
   G.sell = function(marketId, side, shares){ return rpc('sell', { p_market: marketId, p_side: side, p_shares: shares }); };
 
+  // ---- The Book (play-money odds; see supabase/migrations/0002_book.sql) ----
+  var EVENT_COLS = 'id,week,type,title,params,settles_from,sort,closes_at,status,result';
+  var SEL_COLS = 'id,event_id,label,line,american_odds,decimal_odds,fair_prob,meta,sort,result';
+  // A week's events with their selections: [{ ...event, selections: [...] }], in book order.
+  G.bookWeek = function(week){
+    return table('book_events', function(t){ return t.select(EVENT_COLS + ',book_selections(' + SEL_COLS + ')').eq('week', week).order('sort'); })
+      .then(function(rows){
+        return (rows || []).map(function(e){
+          var s = (e.book_selections || []).slice().sort(function(a, b){ return a.sort - b.sort; });
+          delete e.book_selections; e.selections = s; return e;
+        });
+      });
+  };
+  // Current odds of some selections: [{ id, decimal_odds, american_odds, ... }]
+  G.bookSelections = function(ids){
+    return table('book_selections', function(t){ return t.select(SEL_COLS).in('id', ids); });
+  };
+  G.placeBet = function(ids, stake, decimals){ return rpc('place_bet', { p_selection_ids: ids, p_stake: stake, p_expected_decimal: decimals }); };
+  G.myBets = function(limit){ return rpc('my_bets', { p_limit: limit || 100 }); };
+  G.bookLeaderboard = function(week, limit){ return rpc('book_leaderboard', { p_week: week || null, p_limit: limit || 100 }); };
+
   // LMSR math, the same formulas as the database (for previews; the server has the final say).
   var L = {};
   L.MAX_PRICE = 0.99; L.MAX_SPEND = 500;

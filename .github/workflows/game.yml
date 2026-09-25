@@ -1,6 +1,7 @@
 name: Game sync
 
-# Pushes the fantasy league data to Supabase, scores weeks and runs the play-money markets.
+# Pushes the fantasy league data to Supabase, scores weeks, and runs The Book (play-money odds; the old LMSR markets
+# only close and resolve now).
 # Settings (Settings -> Secrets and variables -> Actions):
 #   variable SUPABASE_URL          e.g. https://<project>.supabase.co
 #   secret   SUPABASE_SERVICE_KEY  the secret (service role) key; never put it in the site
@@ -37,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Test the game database and sync (in-memory Postgres)
-        run: node --test 'scripts/lib/supa/*.test.mjs'
+        run: node --test 'scripts/lib/supa/*.test.mjs' 'scripts/lib/book/*.test.mjs'
       - name: Apply migrations
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}

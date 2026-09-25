@@ -128,3 +128,6 @@
   .gp-board tr.is-me{box-shadow:inset 3px 0 0 var(--g-gold)}
 }
 .gp-how{margin-top:32px}
+.gp-moved{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:24px;border-color:var(--g-gold);box-shadow:inset 3px 0 0 var(--g-gold)}
+.gp-moved .g-hint{font-size:14px;color:var(--soft)}
+.gp-moved a:not(.g-btn){color:var(--accent)}

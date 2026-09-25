@@ -13,7 +13,7 @@ export const NAV = [
     { key: 'fantasy', label: 'My team', href: 'fantasy.html' },
     { key: 'leaderboard', label: 'Leaderboard', href: 'leaderboard.html' },
     { key: 'leagues', label: 'Leagues', href: 'leagues.html' },
-    { key: 'markets', label: 'Markets', href: 'markets.html' },
+    { key: 'book', label: 'The Book', href: 'book.html' },
     { key: 'playterms', label: 'Game rules', href: 'play-terms.html' }
   ] },
   { key: 'tools', label: 'Tools', items: [

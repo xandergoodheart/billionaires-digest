@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Book · Billionaires Digest</title>
+<meta name="description" content="A play-money sportsbook on the fantasy week: matchups, player points, top scorer and insider-buy props, priced from public data. Coins have no cash value.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/game-ui.css">
+<link rel="stylesheet" href="assets/game.css">
+<link rel="stylesheet" href="assets/book.css">
+</head>
+<body>
+<div class="topstrip"><div class="wrap">
+  <span id="dateline">The Book</span>
+  <span id="updated">Play money · no cash value</span>
+</div></div>
+
+<header class="mast"><div class="wrap">
+  <div>
+    <div class="display brand">Billionaires <span>Digest</span></div>
+    <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
+  </div>
+  <button class="themebtn" id="themebtn" type="button">Switch theme</button>
+</div></header>
+
+<!-- nav:start -->
+<nav class="sitenav" aria-label="Site"><div class="wrap">
+  <a href="index.html">Today</a>
+  <a href="people/">People</a>
+  <a href="companies/">Companies</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="calendar.html">Calendar</a>
+  <details class="navmore"><summary aria-current="page">Fantasy</summary><ul>
+    <li><a href="fantasy.html">My team</a></li>
+    <li><a href="leaderboard.html">Leaderboard</a></li>
+    <li><a href="leagues.html">Leagues</a></li>
+    <li><a href="book.html" aria-current="page">The Book</a></li>
+    <li><a href="play-terms.html">Game rules</a></li>
+  </ul></details>
+  <details class="navmore"><summary>Tools</summary><ul>
+    <li><a href="flows.html">Insider flows &amp; leaderboards</a></li>
+    <li><a href="quarterly.html">What their funds bought</a></li>
+    <li><a href="copycat.html">Copycat portfolio</a></li>
+    <li><a href="network.html">Who invests with whom</a></li>
+    <li><a href="compare.html">Compare two billionaires</a></li>
+    <li><a href="property.html">Where they buy</a></li>
+    <li><a href="guides/filings-101/">Filings 101</a></li>
+  </ul></details>
+  <a href="archive.html">Archive</a>
+  <a href="about.html">About</a>
+</div></nav>
+<!-- nav:end -->
+
+<main id="app" class="gp bk">
+  <section class="gp-head g-terminal" aria-labelledby="pageh">
+    <div class="wrap">
+      <div class="gp-head__top">
+        <div class="gp-head__title">
+          <div class="g-card__kicker">Play-money game · Fantasy</div>
+          <h1 class="display" id="pageh">The Book</h1>
+        </div>
+        <div class="gp-head__status">
+          <span id="statuspill"><span class="g-pill g-pill--final"><span class="g-pill__dot"></span>Loading</span></span>
+          <div class="g-countdown" id="lockcd" hidden></div>
+          <div class="g-stat g-stat--sm"><span class="g-stat__label" id="weeklabel">Week</span><span class="g-stat__num g-num" id="weekstat">—</span></div>
+        </div>
+      </div>
+      <p class="gp-dek">Bet play-money coins on the fantasy week: head-to-heads, player points, the top scorer and insider-buy props. Odds come from a simple model of our own data. <a href="#how">How odds work</a> · <a href="play-terms.html#book">Rules</a>.</p>
+      <div id="gameaccount" class="g-account"><p class="g-msg">Loading the online game…</p></div>
+    </div>
+  </section>
+
+  <div class="wrap gp-body bk-layout">
+    <div class="bk-main">
+      <div class="g-tabs bk-tabs" role="tablist" aria-label="The Book" id="booktabs">
+        <button type="button" class="g-tab" role="tab" id="tab-matchups" data-tab="matchups" aria-controls="panel-matchups" aria-selected="true">Matchups</button>
+        <button type="button" class="g-tab" role="tab" id="tab-player" data-tab="player" aria-controls="panel-player" aria-selected="false" tabindex="-1">Player props</button>
+        <button type="button" class="g-tab" role="tab" id="tab-futures" data-tab="futures" aria-controls="panel-futures" aria-selected="false" tabindex="-1">Futures</button>
+        <button type="button" class="g-tab" role="tab" id="tab-props" data-tab="props" aria-controls="panel-props" aria-selected="false" tabindex="-1">Props</button>
+        <button type="button" class="g-tab" role="tab" id="tab-mybets" data-tab="mybets" aria-controls="panel-mybets" aria-selected="false" tabindex="-1">My bets</button>
+      </div>
+      <p class="g-msg bk-status" id="bookstatus">Loading the odds…</p>
+      <section class="bk-panel" role="tabpanel" id="panel-matchups" aria-labelledby="tab-matchups" tabindex="0"></section>
+      <section class="bk-panel" role="tabpanel" id="panel-player" aria-labelledby="tab-player" tabindex="0" hidden></section>
+      <section class="bk-panel" role="tabpanel" id="panel-futures" aria-labelledby="tab-futures" tabindex="0" hidden></section>
+      <section class="bk-panel" role="tabpanel" id="panel-props" aria-labelledby="tab-props" tabindex="0" hidden></section>
+      <section class="bk-panel" role="tabpanel" id="panel-mybets" aria-labelledby="tab-mybets" tabindex="0" hidden></section>
+
+      <section id="how" class="gp-prose gp-how g-card g-card--flat" aria-labelledby="how-h">
+        <h2 id="how-h">How odds work</h2>
+        <p><strong>American odds.</strong> A minus number is what you stake to win 100: at <b>−110</b> you stake 110 coins to win 100 (you get 210 back). A plus number is what a 100 stake wins: at <b>+250</b> a 100-coin stake wins 250 (you get 350 back). Smaller stakes scale the same way. The slip always shows "To win" and the full payout before you bet.</p>
+        <p><strong>Lines.</strong> "O 150.5" means over 150.5 weekly fantasy points; "U" is under. A spread like "−2.5" means that person must beat the other by 3 or more; "+2.5" wins if they lose by 2 or less, or win. Lines end in .5, so there are no pushes. A tie in a head-to-head moneyline is void and the stake comes back.</p>
+        <p><strong>Parlays.</strong> Combine 2 to 4 picks from different events. The odds multiply, and every pick must win. A void pick drops out and the rest still count. The most any bet can pay back is 10,000 coins.</p>
+        <p><strong>Where the odds come from.</strong> <span id="methodtext">Each person's daily fantasy points are modeled from their recent news, insider buys and how much their holdings usually move. The fair chance of each result is then turned into odds.</span></p>
+        <p><strong>The house margin.</strong> The fair chances add up to 100%, but the prices add up to more: 104.5% on two-way bets (−110 on both sides of a coin flip) and 120% on top scorer and top sector. That margin is how any book works. With play money it just keeps the leaderboard honest.</p>
+        <p><strong>Play money only.</strong> Coins have no value. You can't buy, sell, cash out or send them. Stakes are 1 to 500 coins, up to 50 bets a day. Betting locks Monday at 9:30 AM New York time and bets settle after Friday's scores are in (usually Saturday). The odds you see when you place a bet are the odds you get; if they moved, the slip asks you to review. Nothing here is investment advice. <a href="play-terms.html#book">Full rules</a>.</p>
+      </section>
+    </div>
+
+    <aside class="bk-rail" id="slipslot" aria-label="Bet slip">
+      <div class="g-card bk-slip" id="slip"></div>
+    </aside>
+  </div>
+</main>
+
+<!-- phone: bet slip bar + bottom sheet -->
+<div class="g-bottombar bk-bar" id="slipbar" hidden>
+  <button type="button" class="g-bottombar__sum" id="slipbarsum" aria-controls="slipsheet" aria-expanded="false" aria-haspopup="dialog">
+    <span class="g-bottombar__main" id="slipbarmain">1 pick</span>
+    <span class="g-bottombar__sub">Tap to open the bet slip</span>
+  </button>
+  <button type="button" class="g-btn g-btn--primary" id="slipbaropen" aria-haspopup="dialog">Bet slip</button>
+</div>
+<div class="g-drawer" id="slipsheet" hidden>
+  <div class="g-drawer__scrim" data-close></div>
+  <div class="g-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="sheettitle" tabindex="-1" id="sheetpanel">
+    <div class="g-drawer__grip" aria-hidden="true"></div>
+    <div class="g-drawer__head">
+      <h2 class="g-drawer__title" id="sheettitle">Bet slip</h2>
+      <button type="button" class="g-btn g-btn--icon g-drawer__close" data-close aria-label="Close the bet slip">&times;</button>
+    </div>
+    <div class="g-drawer__body" id="sheetbody"></div>
+  </div>
+</div>
+<div class="g-toast-region" id="toasts" role="status" aria-live="polite"></div>
+
+<!-- footer:start -->
+<footer><div class="wrap">
+  <span>Billionaires Digest · billionairesdigest.com</span>
+  <span class="footlinks"><a href="about.html">About</a> · <a href="about.html#corrections">Corrections</a> · <a href="about.html#sponsor">Sponsor the brief</a> · <a href="calendar.ics">Calendar feed (calendar.ics)</a></span>
+  <span>For information only · not financial advice</span>
+</div></footer>
+<!-- footer:end -->
+
+<script src="assets/common.js"></script>
+<script src="assets/game-client.js"></script>
+<script src="assets/account.js"></script>
+<script src="assets/book.js"></script>
+</body>
+</html>
