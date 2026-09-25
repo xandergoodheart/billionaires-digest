@@ -401,23 +401,40 @@
     return Promise.all(ws).then(function(){ return out; });
   };
 
-  // ---- Tools menu (details.navmore): close on Escape and outside click; one open at a time.
-  // Works without JS as a plain <details>. Same code as NAV_JS in scripts/lib/nav.mjs.
+  // ---- Nav menus (details.navmore: Fantasy, Tools): close on Escape and outside click; one open at a time.
+  // On phones the nav is one swipeable row: scroll the active item into view, fade the edges that can still scroll.
+  // Works without JS as plain <details> and a plain scrolling row. Same code as NAV_JS in scripts/lib/nav.mjs.
   BD.initNavMore = function(){
     var d = document.querySelectorAll('details.navmore');
-    if (!d.length) return;
     function closeAll(ex){ for (var i = 0; i < d.length; i++) if (d[i] !== ex) d[i].removeAttribute('open'); }
-    document.addEventListener('click', function(e){
-      for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open') && !d[i].contains(e.target)) d[i].removeAttribute('open');
-    });
-    document.addEventListener('keydown', function(e){
-      if (e.key !== 'Escape' && e.key !== 'Esc') return;
-      for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open')) {
-        d[i].removeAttribute('open');
-        var s = d[i].querySelector('summary'); if (s) s.focus();
-      }
-    });
-    for (var j = 0; j < d.length; j++) d[j].addEventListener('toggle', function(){ if (this.open) closeAll(this); });
+    if (d.length) {
+      document.addEventListener('click', function(e){
+        for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open') && !d[i].contains(e.target)) d[i].removeAttribute('open');
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key !== 'Escape' && e.key !== 'Esc') return;
+        for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open')) {
+          d[i].removeAttribute('open');
+          var s = d[i].querySelector('summary'); if (s) s.focus();
+        }
+      });
+      for (var j = 0; j < d.length; j++) d[j].addEventListener('toggle', function(){ if (this.open) closeAll(this); });
+    }
+    var nav = document.querySelector('.sitenav'), row = nav && nav.querySelector('.wrap');
+    if (!row) return;
+    function fades(){
+      var max = row.scrollWidth - row.clientWidth;
+      nav.classList.toggle('is-scrolled', row.scrollLeft > 2);
+      nav.classList.toggle('is-end', row.scrollLeft >= max - 2);
+    }
+    var c = row.querySelector('.wrap>a[aria-current="page"],summary[aria-current="page"]');
+    if (c && row.scrollWidth > row.clientWidth) {
+      var x = c.getBoundingClientRect().left - row.getBoundingClientRect().left + row.scrollLeft;
+      if (x + c.offsetWidth > row.clientWidth - 32) row.scrollLeft = Math.max(0, x - (row.clientWidth - c.offsetWidth) / 2);
+    }
+    fades();
+    row.addEventListener('scroll', fades, { passive: true });
+    window.addEventListener('resize', fades);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', BD.initNavMore);
   else BD.initNavMore();

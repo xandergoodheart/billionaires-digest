@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/game-ui.css">
 <link rel="stylesheet" href="assets/game.css">
 </head>
 <body>
@@ -34,7 +35,13 @@
   <a href="companies/">Companies</a>
   <a href="sectors.html">Sectors</a>
   <a href="calendar.html">Calendar</a>
-  <a href="fantasy.html">Fantasy</a>
+  <details class="navmore"><summary aria-current="page">Fantasy</summary><ul>
+    <li><a href="fantasy.html">My team</a></li>
+    <li><a href="leaderboard.html" aria-current="page">Leaderboard</a></li>
+    <li><a href="leagues.html">Leagues</a></li>
+    <li><a href="markets.html">Markets</a></li>
+    <li><a href="play-terms.html">Game rules</a></li>
+  </ul></details>
   <details class="navmore"><summary>Tools</summary><ul>
     <li><a href="flows.html">Insider flows &amp; leaderboards</a></li>
     <li><a href="quarterly.html">What their funds bought</a></li>
@@ -49,13 +56,27 @@
 </div></nav>
 <!-- nav:end -->
 
-<main id="app">
-  <div class="wrap pagehead"><h1 class="serif">Leaderboard</h1><p>How online players rank in the fantasy league this week and over the season, and who has the most play-money coins. <a href="play-terms.html">Rules</a>.</p></div>
-  <div class="wrap pagebody">
-    <div id="gameaccount" class="gx-account"><p class="gx-msg">Loading the online game…</p></div>
-    <div class="tabs" role="tablist" aria-label="Leaderboards" id="boardtabs"></div>
-    <div class="tabpanel" id="boards" role="tabpanel" tabindex="0"><p class="gx-msg">Loading…</p></div>
-    <p class="gx-note">Only nicknames and points are shown. Everyone's picks become visible once a week locks on Monday at 9:30 AM New York time.</p>
+<main id="app" class="gp">
+  <section class="gp-head g-terminal" aria-labelledby="pageh">
+    <div class="wrap">
+      <div class="gp-head__top">
+        <div class="gp-head__title">
+          <div class="g-card__kicker">Play-money game · Fantasy</div>
+          <h1 class="display" id="pageh">Leaderboard</h1>
+        </div>
+        <div class="gp-head__status">
+          <span id="statuspill"><span class="g-pill g-pill--final"><span class="g-pill__dot"></span>Loading</span></span>
+          <div class="g-stat g-stat--sm"><span class="g-stat__label" id="keystatlabel">Your rank</span><span class="g-stat__num g-num" id="keystat">—</span></div>
+        </div>
+      </div>
+      <p class="gp-dek">How online players rank in the fantasy league this week and over the season, and who has the most play-money coins. <a href="play-terms.html">Rules</a>.</p>
+    <div id="gameaccount" class="g-account"><p class="g-msg">Loading the online game…</p></div>
+    </div>
+  </section>
+  <div class="wrap gp-body">
+    <div class="gp-tabsbar"><div class="g-tabs" role="tablist" aria-label="Leaderboards" id="boardtabs"></div></div>
+    <div id="boards" role="tabpanel" tabindex="0"><p class="g-msg">Loading…</p></div>
+    <p class="gp-note">Only nicknames and points are shown. Everyone's picks become visible once a week locks on Monday at 9:30 AM New York time.</p>
   </div>
 </main>
 

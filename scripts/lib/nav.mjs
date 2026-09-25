@@ -9,7 +9,13 @@ export const NAV = [
   { key: 'companies', label: 'Companies', href: 'companies/' },
   { key: 'sectors', label: 'Sectors', href: 'sectors.html' },
   { key: 'calendar', label: 'Calendar', href: 'calendar.html' },
-  { key: 'fantasy', label: 'Fantasy', href: 'fantasy.html' },
+  { key: 'game', label: 'Fantasy', items: [
+    { key: 'fantasy', label: 'My team', href: 'fantasy.html' },
+    { key: 'leaderboard', label: 'Leaderboard', href: 'leaderboard.html' },
+    { key: 'leagues', label: 'Leagues', href: 'leagues.html' },
+    { key: 'markets', label: 'Markets', href: 'markets.html' },
+    { key: 'playterms', label: 'Game rules', href: 'play-terms.html' }
+  ] },
   { key: 'tools', label: 'Tools', items: [
     { key: 'flows', label: 'Insider flows & leaderboards', href: 'flows.html' },
     { key: 'quarterly', label: 'What their funds bought', href: 'quarterly.html' },
@@ -35,8 +41,8 @@ export function renderNav(activeKey, { absolute = false } = {}) {
   const parts = [];
   for (const n of NAV) {
     if (n.items) {
-      const inTools = n.items.some(i => i.key === activeKey);
-      parts.push(`  <details class="navmore"><summary${cur(inTools)}>${escHtml(n.label)}</summary><ul>\n` +
+      const inMenu = n.items.some(i => i.key === activeKey);
+      parts.push(`  <details class="navmore"><summary${cur(inMenu)}>${escHtml(n.label)}</summary><ul>\n` +
         n.items.map(i => `    <li><a href="${escHtml(url(i.href, absolute))}"${cur(i.key === activeKey)}>${escHtml(i.label)}</a></li>`).join('\n') +
         `\n  </ul></details>`);
     } else {
@@ -55,6 +61,7 @@ export function renderFooter({ absolute = false } = {}) {
 </div></footer>`;
 }
 
-// Progressive enhancement for the Tools menu: close on Escape (focus back to summary) and on outside click.
-// ES5, no globals. Same code lives in assets/common.js for the top-level pages.
-export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navmore');if(!d.length)return;function closeAll(ex){for(var i=0;i<d.length;i++)if(d[i]!==ex)d[i].removeAttribute('open');}document.addEventListener('click',function(e){for(var i=0;i<d.length;i++)if(d[i].hasAttribute('open')&&!d[i].contains(e.target))d[i].removeAttribute('open');});document.addEventListener('keydown',function(e){if(e.key!=='Escape'&&e.key!=='Esc')return;for(var i=0;i<d.length;i++)if(d[i].hasAttribute('open')){d[i].removeAttribute('open');var s=d[i].querySelector('summary');if(s)s.focus();}});for(var j=0;j<d.length;j++)d[j].addEventListener('toggle',function(){if(this.open)closeAll(this);});})();`;
+// Progressive enhancement for the nav menus (Fantasy, Tools): close on Escape (focus back to summary) and on outside
+// click, one open at a time. On phones the nav is one swipeable row: scroll the active item into view and show
+// fade hints at the edges that can still scroll. ES5, no globals. Same code lives in assets/common.js for the top-level pages.
+export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navmore');function closeAll(ex){for(var i=0;i<d.length;i++)if(d[i]!==ex)d[i].removeAttribute('open');}if(d.length){document.addEventListener('click',function(e){for(var i=0;i<d.length;i++)if(d[i].hasAttribute('open')&&!d[i].contains(e.target))d[i].removeAttribute('open');});document.addEventListener('keydown',function(e){if(e.key!=='Escape'&&e.key!=='Esc')return;for(var i=0;i<d.length;i++)if(d[i].hasAttribute('open')){d[i].removeAttribute('open');var s=d[i].querySelector('summary');if(s)s.focus();}});for(var j=0;j<d.length;j++)d[j].addEventListener('toggle',function(){if(this.open)closeAll(this);});}var nav=document.querySelector('.sitenav'),row=nav&&nav.querySelector('.wrap');if(!row)return;function fades(){var max=row.scrollWidth-row.clientWidth;nav.classList.toggle('is-scrolled',row.scrollLeft>2);nav.classList.toggle('is-end',row.scrollLeft>=max-2);}var c=row.querySelector('.wrap>a[aria-current="page"],summary[aria-current="page"]');if(c&&row.scrollWidth>row.clientWidth){var x=c.getBoundingClientRect().left-row.getBoundingClientRect().left+row.scrollLeft;if(x+c.offsetWidth>row.clientWidth-32)row.scrollLeft=Math.max(0,x-(row.clientWidth-c.offsetWidth)/2);}fades();row.addEventListener('scroll',fades,{passive:true});window.addEventListener('resize',fades);})();`;

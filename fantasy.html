@@ -18,8 +18,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="assets/site.css">
 <link rel="stylesheet" href="assets/tools.css">
+<link rel="stylesheet" href="assets/game-ui.css">
 <link rel="stylesheet" href="assets/fantasy.css">
 </head>
 <body>
@@ -43,7 +45,13 @@
   <a href="companies/">Companies</a>
   <a href="sectors.html">Sectors</a>
   <a href="calendar.html">Calendar</a>
-  <a href="fantasy.html" aria-current="page">Fantasy</a>
+  <details class="navmore"><summary aria-current="page">Fantasy</summary><ul>
+    <li><a href="fantasy.html" aria-current="page">My team</a></li>
+    <li><a href="leaderboard.html">Leaderboard</a></li>
+    <li><a href="leagues.html">Leagues</a></li>
+    <li><a href="markets.html">Markets</a></li>
+    <li><a href="play-terms.html">Game rules</a></li>
+  </ul></details>
   <details class="navmore"><summary>Tools</summary><ul>
     <li><a href="flows.html">Insider flows &amp; leaderboards</a></li>
     <li><a href="quarterly.html">What their funds bought</a></li>
@@ -59,128 +67,208 @@
 <!-- nav:end -->
 
 <main id="app" class="tools fantasy">
-  <div class="wrap">
-    <p class="fl-testclock" id="testclock" hidden></p>
-
-    <section class="fl-hero" aria-labelledby="heroh">
-      <div class="label">Billionaire Fantasy League · free weekly game</div>
-      <h1 class="display" id="heroh">Draft 5 billionaires. Score on their real portfolios.</h1>
-      <p class="fl-dek">Pick five of the world's richest people under a 100-point salary cap and name a captain. Each trading day they score from the stocks they actually hold, plus bonuses for insider buying and news. Beat the S&amp;P 500, the five richest, and chase the perfect team.</p>
-      <div class="fl-lock" id="lockbox"><p class="tempty">Loading…</p></div>
-      <p class="fl-disclaim"><strong>Game only.</strong> No real money, no prizes, not financial advice. Scores use public prices and disclosed holdings and are approximate.</p>
-    </section>
-
-    <div class="fl-cols">
-      <section class="tsec fl-team" id="team" aria-labelledby="teamh">
-        <h2 class="serif" id="teamh">My team</h2>
-        <p class="tlead" id="teamlead"></p>
-        <div class="fl-cap" id="capbox"></div>
-        <ol class="fl-slots" id="slots"></ol>
-        <div class="tcta">
-          <button type="button" class="tbtn" id="savebtn">Save team</button>
-          <button type="button" class="tbtn ghost" id="clearbtn">Clear picks</button>
+  <section class="fl-head g-terminal" aria-labelledby="heroh">
+    <div class="wrap">
+      <p class="fl-testclock" id="testclock" hidden></p>
+      <div class="fl-head__top">
+        <div class="fl-head__title">
+          <div class="g-card__kicker">Free weekly game · <span id="weeklabel">Loading…</span></div>
+          <h1 class="display" id="heroh">Billionaire Fantasy League</h1>
         </div>
-        <p class="fl-msg" id="teammsg"></p>
-      </section>
-
-      <section class="tsec fl-score" id="scoreboard" aria-labelledby="scoreh">
-        <h2 class="serif" id="scoreh">This week</h2>
-        <div id="scorebox"><p class="tempty">Loading…</p></div>
-      </section>
-    </div>
-
-    <section class="tsec" id="draft" aria-labelledby="drafth">
-      <h2 class="serif" id="drafth">Draft room</h2>
-      <p class="tlead" id="draftlead">Everyone with at least one publicly traded holding is draftable. Salaries are set by Forbes rank and frozen for the week.</p>
-      <div class="fl-filters" role="group" aria-label="Filter and sort the draft room">
-        <div class="fl-field"><label for="q">Search</label><input class="fl-input" id="q" type="search" autocomplete="off" placeholder="Name or ticker"></div>
-        <div class="fl-field"><label for="sector">Sector</label><select class="fl-input" id="sector"><option value="">All sectors</option></select></div>
-        <div class="fl-field"><label for="sort">Sort by</label><select class="fl-input" id="sort">
-          <option value="rank">Forbes rank</option>
-          <option value="salary-desc">Salary, high to low</option>
-          <option value="salary-asc">Salary, low to high</option>
-          <option value="last-desc">Last day points</option>
-          <option value="week-desc">Week points</option>
-          <option value="news-desc">News count</option>
-          <option value="name">Name</option>
-        </select></div>
-        <label class="fl-check"><input type="checkbox" id="afford"> Only who fits my cap</label>
+        <div class="fl-head__status">
+          <span class="g-chip g-chip--coins" id="onlinechip" hidden></span>
+          <span id="livepill"></span>
+          <div class="g-countdown" id="countdown" aria-live="off"><span class="g-countdown__label">Lineup locks in</span> <span class="g-countdown__time">…</span></div>
+          <p class="fl-head__lockat" id="lockat"></p>
+        </div>
       </div>
-      <p class="fl-count" id="draftcount"></p>
-      <ul class="fl-pool" id="pool"><li class="tempty">Loading…</li></ul>
+      <div class="fl-head__chips" id="recordchips" aria-label="Season record"></div>
+      <p class="fl-dek">Draft five of the world's richest people under a 100-point salary cap and name a captain. Each trading day they score from the stocks they actually hold, plus bonuses for insider buying and news. <strong>Game only:</strong> no real money, no prizes, not financial advice.</p>
+    </div>
+  </section>
+
+  <div class="fl-tabsbar">
+    <div class="wrap">
+      <div class="g-tabs" role="tablist" aria-label="Fantasy league" id="maintabs">
+        <button type="button" class="g-tab" role="tab" id="tab-lineup" aria-controls="panel-lineup" aria-selected="true" data-tab="lineup">Lineup</button>
+        <button type="button" class="g-tab" role="tab" id="tab-matchup" aria-controls="panel-matchup" aria-selected="false" tabindex="-1" data-tab="matchup">Matchup</button>
+        <button type="button" class="g-tab" role="tab" id="tab-season" aria-controls="panel-season" aria-selected="false" tabindex="-1" data-tab="season">Season</button>
+        <button type="button" class="g-tab" role="tab" id="tab-how" aria-controls="panel-how" aria-selected="false" tabindex="-1" data-tab="how">How it works</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- LINEUP -->
+    <section class="fl-panel" id="panel-lineup" role="tabpanel" aria-labelledby="tab-lineup" tabindex="-1">
+      <div class="fl-builder">
+        <div class="fl-poolcol">
+          <div class="fl-poolhead">
+            <h2 class="serif" id="poolh">Player pool</h2>
+            <p class="fl-count" id="draftcount"></p>
+          </div>
+          <div class="fl-filters">
+            <div class="fl-search">
+              <label class="g-sr" for="q">Search players</label>
+              <input class="g-input" id="q" type="search" autocomplete="off" placeholder="Search name or ticker">
+            </div>
+            <label class="fl-check"><input type="checkbox" id="afford"> Fits my budget</label>
+          </div>
+          <div class="g-tabs g-tabs--chips fl-sectors" role="tablist" aria-label="Sector" id="sectortabs"></div>
+          <div class="fl-poolwrap">
+            <table class="g-table fl-pool" id="pooltable" aria-labelledby="poolh" aria-describedby="draftcount">
+              <thead><tr id="poolhead"></tr></thead>
+              <tbody id="pool"><tr><td class="tempty" colspan="7">Loading…</td></tr></tbody>
+            </table>
+          </div>
+          <p class="tnote">Salaries follow Forbes rank and are frozen for the week. Avg = average points per scored day this week (practice days before the first real week). Badges: <strong>Hot</strong> = top 10 on the last scored day or up three days running; <strong>News</strong> = stories in recent editions; <strong>Insider buy</strong> = an open-market Form 4 purchase in the last 14 days of scored data.</p>
+        </div>
+
+        <div class="fl-sheetscrim" id="sheetscrim" hidden></div>
+        <aside class="fl-lineup" id="lineupcard" aria-labelledby="lineuph">
+          <div class="g-card fl-lineup__card" id="lineuppanel">
+            <div class="g-drawer__grip fl-sheetonly" aria-hidden="true"></div>
+            <div class="g-card__head">
+              <h2 class="g-card__title" id="lineuph" tabindex="-1">My lineup</h2>
+              <span class="g-card__kicker" id="lineupstatus"></span>
+              <button type="button" class="g-btn g-btn--icon fl-sheetonly" id="sheetclose" aria-label="Close lineup">&times;</button>
+            </div>
+            <p class="fl-lineup__week" id="lineupweek"></p>
+            <div id="lockbanner"></div>
+            <div class="g-budget-bar" id="budget"></div>
+            <ol class="fl-slots" id="slots"></ol>
+            <div id="capwarn"></div>
+            <div class="fl-proj" id="proj"></div>
+            <div class="fl-lineup__acts">
+              <button type="button" class="g-btn g-btn--primary" id="savebtn">Save lineup</button>
+              <button type="button" class="g-btn" id="clearbtn">Clear</button>
+            </div>
+            <p class="fl-sync" id="syncstatus" hidden></p>
+            <p class="fl-msg" id="teammsg"></p>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <section class="tsec" id="season" aria-labelledby="seasonh">
-      <h2 class="serif" id="seasonh">Season record</h2>
+    <!-- MATCHUP -->
+    <section class="fl-panel" id="panel-matchup" role="tabpanel" aria-labelledby="tab-matchup" tabindex="-1" hidden>
+      <div id="matchbox"><p class="tempty">Loading…</p></div>
+    </section>
+
+    <!-- SEASON -->
+    <section class="fl-panel" id="panel-season" role="tabpanel" aria-labelledby="tab-season" tabindex="-1" hidden>
+      <h2 class="serif fl-h2">Season record</h2>
       <div id="seasonbox"><p class="tempty">Loading…</p></div>
-      <div class="fl-io">
-        <h3 class="serif">Move to another browser</h3>
-        <p class="tnote">Your team lives only in this browser. Copy the code and paste it on another device to bring your teams along.</p>
+      <div class="fl-io g-card">
+        <div class="g-card__head"><h3 class="g-card__title">Take your team with you</h3></div>
+        <p class="tnote">Your lineups live only in this browser. Copy the code and paste it on another device to bring them along.</p>
         <div class="tcta">
-          <button type="button" class="tbtn ghost" id="exportbtn">Copy my team code</button>
-          <button type="button" class="tbtn ghost" id="sharebtn">Share my week</button>
+          <button type="button" class="g-btn" id="exportbtn">Copy my team code</button>
+          <button type="button" class="g-btn" id="sharebtn">Share my week</button>
         </div>
         <div class="fl-import">
-          <label for="importcode">Paste a team code</label>
+          <label for="importcode" class="g-stat__label">Paste a team code</label>
           <div class="fl-importrow">
-            <input class="fl-input" id="importcode" type="text" autocomplete="off" spellcheck="false" placeholder="BFL1.…">
-            <button type="button" class="tbtn" id="importbtn">Import</button>
+            <input class="g-input" id="importcode" type="text" autocomplete="off" spellcheck="false" placeholder="BFL1.…">
+            <button type="button" class="g-btn g-btn--primary" id="importbtn">Import</button>
           </div>
         </div>
         <p class="fl-msg" id="iomsg"></p>
       </div>
     </section>
 
-    <section class="tsec" id="rules" aria-labelledby="rulesh">
-      <h2 class="serif" id="rulesh">How scoring works</h2>
+    <!-- HOW IT WORKS -->
+    <section class="fl-panel" id="panel-how" role="tabpanel" aria-labelledby="tab-how" tabindex="-1" hidden>
+      <h2 class="serif fl-h2">How it works</h2>
       <div class="fl-rules">
-        <div>
-          <h3 class="serif">The game</h3>
+        <div class="g-card">
+          <h3 class="g-card__title">The game</h3>
           <ul>
             <li>Pick <strong>5 billionaires</strong> with salaries adding up to <strong>100 cap points or less</strong>. One is your <strong>captain</strong> and scores <strong>1.5×</strong>.</li>
-            <li>A week is Monday to Friday, US market days. Your roster <strong>locks Monday at 9:30 AM New York time</strong>. Saving after the lock sets your team for the next week.</li>
+            <li>A week is Monday to Friday, US market days. Your lineup <strong>locks Monday at 9:30 AM New York time</strong>. Saving after the lock sets your team for the next week.</li>
             <li>Starting mid-week? Your first save also enters you in the current week, scoring from the <strong>next trading day</strong> (late entry).</li>
             <li>Salaries follow Forbes rank among draftable people: ranks 1–5 cost 30, 6–10 cost 26, 11–20 cost 22, 21–35 cost 18, 36–50 cost 14, 51–75 cost 10, 76–100 cost 7. They are frozen when the week opens. After four weeks of results, salaries move up to ±4 by recent form.</li>
           </ul>
         </div>
-        <div>
-          <h3 class="serif">Points per person, per trading day</h3>
-          <ul>
-            <li><strong>Portfolio return × 100</strong>, rounded. +1.23% is 123 points; a down day is negative.</li>
-            <li><strong>+25</strong> on a day they file a Form 4 showing an open-market purchase (transaction code P) with the SEC.</li>
-            <li><strong>+10</strong> for each story about them in that day's edition of the Digest.</li>
-          </ul>
-          <h3 class="serif">Benchmarks</h3>
+        <div class="g-card">
+          <h3 class="g-card__title">Scoring, per person, per trading day</h3>
+          <div class="g-table-wrap">
+            <table class="g-table fl-scoretable">
+              <caption>Points for each pick. The captain's total is multiplied by 1.5 and rounded.</caption>
+              <thead><tr><th scope="col">Event</th><th scope="col">Points</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Portfolio return that day</th><td>return % × 100, rounded (+1.23% = <span class="g-up">+123</span>; a down day is negative)</td></tr>
+                <tr><th scope="row">Form 4 open-market purchase (code P) filed that day</th><td class="g-up">+25</td></tr>
+                <tr><th scope="row">Each story about them in that day's Digest</th><td class="g-up">+10</td></tr>
+                <tr><th scope="row">Captain</th><td class="g-gold">× 1.5</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="g-card__title fl-subh">Benchmarks</h3>
           <ul>
             <li><strong>S&amp;P 500 (SPY)</strong>: SPY's daily return × 100, times 5 so it compares with a five-pick team (no captain).</li>
             <li><strong>Top 5 richest</strong>: the five highest-ranked draftable people, with the richest as captain. It ignores the cap.</li>
             <li><strong>Perfect team</strong>: the best possible five under the cap with the best captain, worked out after the week ends.</li>
           </ul>
         </div>
-        <div>
-          <h3 class="serif">Method notes</h3>
+        <div class="g-card">
+          <h3 class="g-card__title">Method notes</h3>
           <ul>
             <li>A portfolio is the person's current controlling stakes and holdings on their profile that trade on a US exchange, including US lines of foreign companies (ADRs) used for daily moves only.</li>
-            <li>When every holding has an exact disclosed share count, holdings are weighted by value (<em>value-weighted</em>). Otherwise the companies a person controls together count for 75% and their other stakes for 25%, with each group split by value when every holding in it has a share count and equally when not (<em>controls-weighted, 75/25</em>). Someone with only one group puts 100% in it. Each draft card shows the method and the weights.</li>
+            <li>When every holding has an exact disclosed share count, holdings are weighted by value (<em>value-weighted</em>). Otherwise the companies a person controls together count for 75% and their other stakes for 25%, with each group split by value when every holding in it has a share count and equally when not (<em>controls-weighted, 75/25</em>). Someone with only one group puts 100% in it. Each player card shows the method and the weights.</li>
             <li>A quote that did not trade that day counts as 0%. Days with no market (weekends and holidays) do not score.</li>
             <li>Private companies, funds and family holdings have no daily price, so people whose wealth is mostly private cannot be drafted.</li>
+            <li>Lineup projections and the matchup win chance are simple estimates from recent points. They are not forecasts.</li>
           </ul>
         </div>
       </div>
       <p class="fl-disclaim"><strong>Game only.</strong> No real money, no prizes, not financial advice. Scores use public prices and disclosed holdings and are approximate. Nothing here is a recommendation to buy or sell any security.</p>
-    </section>
-
-    <section class="tsec" id="undraftable" aria-labelledby="undrafth">
-      <h2 class="serif" id="undrafth">Not draftable</h2>
       <details class="tdetails" id="nodraftdetails">
         <summary id="nodraftsummary">Show people with no daily market price</summary>
         <ul class="fl-nodraft" id="nodraft"></ul>
       </details>
     </section>
 
-    <div class="sr-only" id="live" aria-live="polite" aria-atomic="true"></div>
+    <!-- online play: shown only when BD.game.ready resolves true (then window.BD_GAME_ONLINE === true) -->
+    <section class="g-card fl-online" id="online" aria-labelledby="onlineh" hidden>
+      <div class="g-card__head">
+        <h2 class="g-card__title" id="onlineh">Play online</h2>
+        <span class="g-card__kicker">Free · play money only</span>
+      </div>
+      <p class="tnote" id="onlinedek">Sign in as a guest to put your lineup on the online leaderboard, join leagues with friends and trade play-money markets. Your lineup still saves in this browser first.</p>
+      <div id="gameaccount" class="g-account"><p class="g-msg">Loading the online game…</p></div>
+      <p class="fl-onlinesync" id="onlinesync" hidden></p>
+      <div class="tcta">
+        <a class="g-btn" href="leaderboard.html">Leaderboard</a>
+        <a class="g-btn" href="leagues.html">Leagues</a>
+        <a class="g-btn" href="markets.html">Markets</a>
+      </div>
+    </section>
   </div>
 </main>
+
+<!-- player drawer (side panel on desktop, bottom sheet on phones) -->
+<div class="g-drawer" id="drawer" hidden>
+  <div class="g-drawer__scrim" data-close></div>
+  <div class="g-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawertitle" tabindex="-1" id="drawerpanel">
+    <div class="g-drawer__grip" aria-hidden="true"></div>
+    <div class="g-drawer__head" id="drawerhead"></div>
+    <div class="g-drawer__body" id="drawerbody"></div>
+    <div class="g-drawer__foot" id="drawerfoot"></div>
+  </div>
+</div>
+
+<!-- phone lineup bar -->
+<div class="g-bottombar" id="bottombar" hidden>
+  <button type="button" class="g-bottombar__sum" id="barsum" aria-controls="lineupcard" aria-expanded="false">
+    <span class="g-bottombar__main" id="barmain">0/5 picked</span>
+    <span class="g-bottombar__sub" id="barsub">Tap to see your lineup</span>
+  </button>
+  <button type="button" class="g-btn g-btn--primary" id="barsave">Save</button>
+</div>
+
+<div class="g-toast-region" id="toasts" role="status" aria-live="polite"></div>
+<div class="g-sr" id="live" aria-live="polite" aria-atomic="true"></div>
 
 <!-- footer:start -->
 <footer><div class="wrap">
@@ -191,6 +279,8 @@
 <!-- footer:end -->
 
 <script src="assets/common.js"></script>
+<script src="assets/game-client.js"></script>
+<script src="assets/account.js"></script>
 <script src="assets/fantasy-core.js"></script>
 <script src="assets/fantasy.js"></script>
 </body>

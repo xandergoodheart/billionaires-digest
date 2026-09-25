@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/game-ui.css">
 <link rel="stylesheet" href="assets/game.css">
 </head>
 <body>
@@ -34,7 +35,13 @@
   <a href="companies/">Companies</a>
   <a href="sectors.html">Sectors</a>
   <a href="calendar.html">Calendar</a>
-  <a href="fantasy.html">Fantasy</a>
+  <details class="navmore"><summary aria-current="page">Fantasy</summary><ul>
+    <li><a href="fantasy.html">My team</a></li>
+    <li><a href="leaderboard.html">Leaderboard</a></li>
+    <li><a href="leagues.html">Leagues</a></li>
+    <li><a href="markets.html" aria-current="page">Markets</a></li>
+    <li><a href="play-terms.html">Game rules</a></li>
+  </ul></details>
   <details class="navmore"><summary>Tools</summary><ul>
     <li><a href="flows.html">Insider flows &amp; leaderboards</a></li>
     <li><a href="quarterly.html">What their funds bought</a></li>
@@ -49,17 +56,31 @@
 </div></nav>
 <!-- nav:end -->
 
-<main id="app">
-  <div class="wrap pagehead"><h1 class="serif">Markets</h1><p>Yes-or-no questions about the week ahead, traded with play-money coins. Prices move as people buy, so a price is the crowd's rough guess at the chance. <a href="#how">How it works</a> · <a href="play-terms.html">Rules</a>.</p></div>
-  <div class="wrap pagebody">
-    <div id="gameaccount" class="gx-account"><p class="gx-msg">Loading the online game…</p></div>
-    <p class="gx-sr" id="marketnews" role="status" aria-live="polite"></p>
-    <h2 class="gx-h2">Open markets</h2>
-    <div id="openmarkets"><p class="gx-msg">Loading…</p></div>
-    <h2 class="gx-h2">Resolved</h2>
+<main id="app" class="gp">
+  <section class="gp-head g-terminal" aria-labelledby="pageh">
+    <div class="wrap">
+      <div class="gp-head__top">
+        <div class="gp-head__title">
+          <div class="g-card__kicker">Play-money game · Fantasy</div>
+          <h1 class="display" id="pageh">Markets</h1>
+        </div>
+        <div class="gp-head__status">
+          <span id="statuspill"><span class="g-pill g-pill--final"><span class="g-pill__dot"></span>Loading</span></span>
+          <div class="g-stat g-stat--sm"><span class="g-stat__label" id="keystatlabel">Open markets</span><span class="g-stat__num g-num" id="keystat">—</span></div>
+        </div>
+      </div>
+      <p class="gp-dek">Yes-or-no questions about the week ahead, traded with play-money coins. A price is the crowd's rough guess at the chance. <a href="#how">How it works</a> · <a href="play-terms.html">Rules</a>.</p>
+    <div id="gameaccount" class="g-account"><p class="g-msg">Loading the online game…</p></div>
+    </div>
+  </section>
+  <div class="wrap gp-body">
+    <p class="g-sr" id="marketnews" role="status" aria-live="polite"></p>
+    <h2 class="gp-h2" id="openh">Open markets</h2>
+    <div id="openmarkets"><p class="g-msg">Loading…</p></div>
+    <h2 class="gp-h2" id="resolvedh">Resolved</h2>
     <div id="resolvedmarkets"></div>
-    <section id="how" class="gx-prose" aria-labelledby="how-h">
-      <h2 class="gx-h2" id="how-h">How markets work</h2>
+    <section id="how" class="gp-prose gp-how g-card g-card--flat" aria-labelledby="how-h">
+      <h2 id="how-h">How markets work</h2>
       <p><strong>Coins are play money.</strong> They have no value. You can't buy, sell, cash out or send them to anyone. Everyone starts with 1,000 coins and can claim 250 more each week while under 5,000.</p>
       <p><strong>Shares pay 1 coin if they are right.</strong> Buy YES if you think the answer will be yes, NO if not. When the market is settled, each winning share pays 1 coin and losing shares pay nothing. If it is void (for example a tie), everyone gets back the coins they put in.</p>
       <p><strong>The price is a running guess.</strong> A YES price of 62% means one more YES share costs about 0.62 coins right now. Every buy nudges the price toward the side bought, and bigger buys move it more. An automatic market maker sets the price (it uses a formula called the logarithmic market scoring rule), so there is always a price and you never wait for someone to take the other side. Buys can't push a price past 99%.</p>
@@ -68,6 +89,21 @@
     </section>
   </div>
 </main>
+
+<!-- trade drawer (side panel on desktop, bottom sheet on phones) -->
+<div class="g-drawer" id="drawer" hidden>
+  <div class="g-drawer__scrim" data-close></div>
+  <div class="g-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="drawertitle" tabindex="-1" id="drawerpanel">
+    <div class="g-drawer__grip" aria-hidden="true"></div>
+    <div class="g-drawer__head">
+      <h2 class="g-drawer__title" id="drawertitle">Trade</h2>
+      <button type="button" class="g-btn g-btn--icon g-drawer__close" data-close aria-label="Close">&times;</button>
+    </div>
+    <form class="g-drawer__body" id="tradeform" novalidate></form>
+    <div class="g-drawer__foot" id="drawerfoot"></div>
+  </div>
+</div>
+<div class="g-toast-region" id="toasts" role="status" aria-live="polite"></div>
 
 <!-- footer:start -->
 <footer><div class="wrap">

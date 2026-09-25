@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/game-ui.css">
 <link rel="stylesheet" href="assets/game.css">
 </head>
 <body>
@@ -33,7 +34,13 @@
   <a href="companies/">Companies</a>
   <a href="sectors.html">Sectors</a>
   <a href="calendar.html">Calendar</a>
-  <a href="fantasy.html">Fantasy</a>
+  <details class="navmore"><summary aria-current="page">Fantasy</summary><ul>
+    <li><a href="fantasy.html">My team</a></li>
+    <li><a href="leaderboard.html">Leaderboard</a></li>
+    <li><a href="leagues.html">Leagues</a></li>
+    <li><a href="markets.html">Markets</a></li>
+    <li><a href="play-terms.html" aria-current="page">Game rules</a></li>
+  </ul></details>
   <details class="navmore"><summary>Tools</summary><ul>
     <li><a href="flows.html">Insider flows &amp; leaderboards</a></li>
     <li><a href="quarterly.html">What their funds bought</a></li>
@@ -48,9 +55,24 @@
 </div></nav>
 <!-- nav:end -->
 
-<main id="app">
-  <div class="wrap pagehead"><h1 class="serif">Game rules and terms</h1><p>The short version: it's a free game with play money. Nothing you win is worth anything, and nothing here is advice.</p></div>
-  <div class="wrap pagebody gx-prose">
+<main id="app" class="gp">
+  <section class="gp-head g-terminal" aria-labelledby="pageh">
+    <div class="wrap">
+      <div class="gp-head__top">
+        <div class="gp-head__title">
+          <div class="g-card__kicker">Play-money game · Fantasy</div>
+          <h1 class="display" id="pageh">Game rules</h1>
+        </div>
+        <div class="gp-head__status">
+          <span id="statuspill"><span class="g-pill g-pill--upcoming"><span class="g-pill__dot"></span>Play money</span></span>
+          <div class="g-stat g-stat--sm"><span class="g-stat__label" id="keystatlabel">Real money involved</span><span class="g-stat__num g-num" id="keystat">None</span></div>
+        </div>
+      </div>
+      <p class="gp-dek">The short version: it's a free game with play money. Nothing you win is worth anything, and nothing here is advice.</p>
+    </div>
+  </section>
+  <div class="wrap gp-body">
+    <div class="gp-prose">
     <h2>Play money only</h2>
     <ul>
       <li>Coins have no cash value. They can't be bought, sold, cashed out, traded or sent to another player.</li>
@@ -87,6 +109,7 @@
     </ul>
     <h2>Fair play</h2>
     <p>One account per person, please. We may remove accounts, nicknames or leagues that abuse the game, try to break it, or use more than one account to move markets or leaderboards.</p>
+    </div>
   </div>
 </main>
 

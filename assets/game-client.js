@@ -7,6 +7,8 @@
  *
  * Fantasy hook: BDGame.syncRoster(week, picks, captain) saves a roster online when the player is signed in
  * with a nickname, and otherwise resolves { ok: false, skipped: true } without doing anything.
+ * BD.game.ready (when assets/common.js is loaded first) is a Promise<boolean>: true only when the config is enabled
+ * and the backend answered the public current_week() probe.
  */
 (function(w){
   var SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js';
@@ -135,6 +137,14 @@
       });
     }).catch(function(e){ return { ok: false, skipped: false, reason: (e && e.message) || 'Could not save online.' }; });
   };
+  // The signed-in player's own saved roster for a week ({ week, picks, captain }), or null.
+  G.myRoster = function(week){
+    return G.session().then(function(s){
+      if (!s || !s.user) return null;
+      return table('rosters', function(t){ return t.select('week,picks,captain').eq('user_id', s.user.id).eq('week', week).limit(1); })
+        .then(function(rows){ return (rows && rows[0]) || null; });
+    });
+  };
   G.currentWeek = function(){ return rpc('current_week'); };
   G.leaderboard = function(kind, opts){
     opts = opts || {};
@@ -190,4 +200,5 @@
   G.lmsr = L;
 
   w.BDGame = G;
+  if (w.BD) w.BD.game = { ready: G.ready().then(function(st){ return !!(st && st.enabled); }, function(){ return false; }) };
 })(window);
