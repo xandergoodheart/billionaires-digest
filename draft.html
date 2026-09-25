@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Draft room · Billionaire Fantasy League · Billionaires Digest</title>
+<meta name="description" content="Draft five billionaires under a 100-point cap and pick a captain. Your team scores on their real, disclosed stock holdings each trading day. A free game with play money only.">
+<meta name="theme-color" content="#13171C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/ui.css">
+<link rel="stylesheet" href="assets/v2/draft.css">
+</head>
+<body class="v2 v2-draftpage">
+<!-- v2topbar:start -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="team.html" aria-current="true">Fantasy</a>
+      <a href="people/">Players</a>
+      <a href="leaderboard.html">Rankings</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="index.html">News</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__search" href="people/">Search</a>
+      <a class="v2-btn v2-btn--primary v2-top__cta" href="team.html">My team</a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
+  </div>
+</header>
+<nav class="v2-subtabs" aria-label="Fantasy">
+  <div class="v2-wrap v2-subtabs__in">
+    <ul class="v2-subtabs__list">
+      <li><a href="team.html">My team</a></li>
+      <li><a href="draft.html" aria-current="page">Draft room</a></li>
+      <li><a href="fantasy.html#matchup">Scores</a></li>
+      <li><a href="leagues.html">Leagues</a></li>
+      <li><a href="book.html">The Book</a></li>
+      <li><a href="play-terms.html">Rules</a></li>
+    </ul>
+    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
+  </div>
+</nav>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="team.html" aria-current="true">Fantasy</a>
+        <ul>
+          <li><a href="team.html">My team</a></li>
+          <li><a href="draft.html" aria-current="page">Draft room</a></li>
+          <li><a href="fantasy.html#matchup">Scores</a></li>
+          <li><a href="leagues.html">Leagues</a></li>
+          <li><a href="book.html">The Book</a></li>
+          <li><a href="play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="people/">Players</a></li>
+      <li><a class="v2-menu__top" href="leaderboard.html">Rankings</a></li>
+      <li><a class="v2-menu__top" href="calendar.html">Calendar</a></li>
+      <li><a class="v2-menu__top" href="index.html">News</a></li>
+      <li><a class="v2-menu__top" href="people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+<!-- v2topbar:end -->
+
+<main id="main" class="v2-main" tabindex="-1">
+  <div class="v2-wrap">
+    <p class="v2-banner" id="testclock" hidden></p>
+
+    <header class="dr-head">
+      <h1 class="v2-display dr-head__h">Draft room</h1>
+      <p class="dr-head__dek">Build your five. Make the cap count.</p>
+      <div class="dr-head__side">
+        <span class="v2-pill" id="weekpill">Loading…</span>
+        <a class="dr-head__rules" href="play-terms.html">Rules</a>
+      </div>
+    </header>
+
+    <div id="notices"></div>
+
+    <section class="dr-stats" id="stats" aria-label="Your draft so far">
+      <div class="dr-stat"><span class="dr-stat__k">Selected</span><span class="dr-stat__v num" id="st-sel">—</span></div>
+      <div class="dr-stat"><span class="dr-stat__k">Cap used</span><span class="dr-stat__v num" id="st-cap">—</span></div>
+      <div class="dr-stat"><span class="dr-stat__k">Remaining</span><span class="dr-stat__v num" id="st-rem">—</span></div>
+      <div class="dr-stat"><span class="dr-stat__k">Roster lock</span><span class="dr-stat__v" id="st-lock">—</span></div>
+      <p class="dr-next" id="st-next"></p>
+    </section>
+
+    <div class="v2-grid dr-grid">
+      <section class="v2-card span-8 dr-pool" aria-labelledby="poolh">
+        <h2 class="v2-sr" id="poolh">Player pool</h2>
+        <div class="dr-filters">
+          <div class="dr-filter dr-filter--q">
+            <label class="v2-sr" for="q">Search players or companies</label>
+            <input class="v2-input" id="q" type="search" placeholder="Search players or companies" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="dr-filter">
+            <label class="v2-sr" for="sector">Sector</label>
+            <select class="v2-select" id="sector"><option value="">All sectors</option></select>
+          </div>
+          <div class="dr-filter">
+            <label class="v2-sr" for="sort">Sort players</label>
+            <select class="v2-select" id="sort">
+              <option value="pts">Sort: week points</option>
+              <option value="capdesc">Sort: cap, high first</option>
+              <option value="capasc">Sort: cap, low first</option>
+              <option value="rank">Sort: Forbes rank</option>
+              <option value="name">Sort: name</option>
+            </select>
+          </div>
+        </div>
+        <table class="v2-table dr-table">
+          <caption class="v2-sr" id="poolcap">Players you can draft</caption>
+          <thead>
+            <tr>
+              <th scope="col">Player</th>
+              <th scope="col" class="n" id="ptshead">Week pts</th>
+              <th scope="col" class="n">Cap</th>
+              <th scope="col" class="dr-th-status">Status</th>
+            </tr>
+          </thead>
+          <tbody id="pool">
+            <tr><td colspan="4"><p class="v2-loading">Loading the player pool…</p></td></tr>
+          </tbody>
+        </table>
+        <p class="dr-foot" id="poolfoot"></p>
+        <details class="dr-nd" id="notdraftable" hidden>
+          <summary id="ndsum"></summary>
+          <ul id="ndlist"></ul>
+        </details>
+      </section>
+
+      <aside class="span-4 dr-side" aria-labelledby="fiveh">
+        <div class="dr-panel" id="sidepanel"></div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- phone: team bar above the bottom tabs + bottom sheet with the same panel -->
+<div class="dr-bar" id="teambar" hidden>
+  <div class="dr-bar__txt">
+    <span class="dr-bar__k">Your team</span>
+    <span class="dr-bar__v num" id="barsum"></span>
+  </div>
+  <button type="button" class="v2-btn v2-btn--primary dr-bar__btn" id="barbtn" aria-haspopup="dialog" aria-controls="sheet">Review</button>
+</div>
+<div class="dr-sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheeth" hidden>
+  <div class="dr-sheet__panel" tabindex="-1">
+    <div class="dr-sheet__head">
+      <span class="dr-sheet__title" id="sheeth">Your team</span>
+      <button type="button" class="dr-sheet__close" id="sheetclose">Close</button>
+    </div>
+    <div class="dr-panel" id="sheetpanel"></div>
+  </div>
+</div>
+
+<div class="v2-sr" id="live" role="status" aria-live="polite"></div>
+
+<!-- v2tabs:start -->
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="team.html" aria-current="true">Fantasy</a>
+  <a href="people/">Players</a>
+  <a href="leaderboard.html">Rankings</a>
+  <a href="index.html">News</a>
+</nav>
+<!-- v2tabs:end -->
+<!-- v2footer:start -->
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="about.html#corrections">Corrections</a>
+      <a href="play-terms.html">Game rules</a>
+    </nav>
+  </div>
+</footer>
+<!-- v2footer:end -->
+
+<script src="assets/common.js"></script>
+<script src="assets/game-client.js"></script>
+<script src="assets/account.js"></script>
+<script src="assets/fantasy-core.js"></script>
+<script src="assets/v2/fantasy-store.js"></script>
+<script src="assets/v2/chrome.js"></script>
+<script src="assets/v2/draft.js"></script>
+</body>
+</html>

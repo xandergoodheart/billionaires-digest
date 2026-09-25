@@ -176,3 +176,24 @@ test('store: no localStorage falls back to memory without throwing', () => {
   assert.equal(r.persisted, false);
   assert.match(r.text, /not keeping site data/);
 });
+
+test('weekPoints: sum of a player\'s scored days, null when none', () => {
+  const { F } = load();
+  assert.equal(F.pure.weekPoints(WK, 'a'), 18);
+  assert.equal(F.pure.weekPoints(WK, 'b'), 4);
+  assert.equal(F.pure.weekPoints(WK, 'f'), null);
+  assert.equal(F.pure.weekPoints(null, 'a'), null);
+  assert.equal(F.pure.weekPoints({ days: [] }, 'a'), null);
+});
+
+test('projectionFrom: recent averages, captain 1.5x (v1 projection)', () => {
+  const { F } = load();
+  const stats = { a: { avg: 6 }, b: { avg: 4 }, c: { avg: null } };
+  assert.equal(F.pure.projectionFrom(stats, ['a', 'b', 'c'], 'a'), 13); // 9 + 4
+  assert.equal(F.pure.projectionFrom(stats, ['c'], 'c'), null);
+  assert.equal(F.pure.projectionFrom(stats, [], null), null);
+  // the store wrapper reads the working roster
+  const S = F.state;
+  S.stats = stats; S.picks = ['a', 'b']; S.captain = 'b';
+  assert.equal(F.projection(), 12); // 6 + 6
+});

@@ -66,6 +66,19 @@
     });
     return { byDay: byDay, total: total, bySlug: bySlug, perDay: perDay, baseBySlug: base, scored: scored };
   }
+  // One player's raw points so far in a week (sum over its scored days); null when the player has no points there.
+  function weekPoints(wk, slug){
+    var t = 0, any = false;
+    if (!wk) return null;
+    arr(wk.days).forEach(function(d){ var v = wk.daily && wk.daily[d] && wk.daily[d][slug]; if (typeof v === 'number'){ t += v; any = true; } });
+    return any ? t : null;
+  }
+  // v1 projection(): recent average points per day for a roster, captain counted 1.5x; null when no averages.
+  function projectionFrom(stats, picks, captain){
+    var t = 0, any = false;
+    picks.forEach(function(s){ var a = stats[s] && stats[s].avg; if (a == null) return; any = true; t += s === captain ? a * C.CAPTAIN_MULT : a; });
+    return any ? Math.round(t) : null;
+  }
   function weekOverAt(wk, t){ return !!wk.final || C.nyDate(t) > wk.end; }
   // The team that scores in a week: the practice week uses the working draft (five picks and a captain).
   function matchTeamFrom(wk, teams, picks, captain){
@@ -257,6 +270,7 @@
     return { ok: true, text: text, errors: [], persisted: ok, late: late, sync: sync };
   }
 
+  function projection(picks, captain){ return projectionFrom(S.stats, picks || S.picks, captain === undefined ? S.captain : captain); }
   function teamWeekState(wk, team){ return teamWeek(wk, team); }
   function matchTeam(wk){ return matchTeamFrom(wk, store.teams, S.picks, S.captain); }
   function weekOver(wk){ return weekOverAt(wk, now()); }
@@ -330,10 +344,10 @@
     person: person, salaries: salaries, capUsed: capUsed, stat: stat,
     savedTeam: savedTeam, dirty: dirty, capLine: capLine, blockReason: blockReason,
     addPick: addPick, removePick: removePick, setCaptain: setCaptain, clearPicks: clearPicks, saveDraft: saveDraft, saveTeam: saveTeam,
-    teamWeek: teamWeekState, matchTeam: matchTeam, weekOver: weekOver,
+    teamWeek: teamWeekState, matchTeam: matchTeam, weekOver: weekOver, weekPoints: weekPoints, projection: projection,
     onlinePlaying: onlinePlaying, me: me, isSynced: isSynced, syncTeam: syncTeam, busy: function(){ return ON.busy; },
     // pure helpers (tested)
-    pure: { teamWeek: teamWeek, dayPeople: dayPeople, computeStatsFrom: computeStatsFrom, matchTeamFrom: matchTeamFrom, weekOverAt: weekOverAt, teamSig: teamSig },
+    pure: { teamWeek: teamWeek, weekPoints: weekPoints, projectionFrom: projectionFrom, dayPeople: dayPeople, computeStatsFrom: computeStatsFrom, matchTeamFrom: matchTeamFrom, weekOverAt: weekOverAt, teamSig: teamSig },
     fmt: { signed: signed, dayLabel: dayLabel, shortDate: shortDate, weekName: weekName, weekTitle: weekTitle, DAYN: DAYN, MONTHS: MONTHS }
   };
 })(typeof window !== 'undefined' ? window : globalThis);
