@@ -136,6 +136,9 @@ a.who:hover{text-decoration:underline}
 .q-why h4{color:var(--accent)} .q-bear h4{color:var(--down)} .q-watch h4{color:var(--up)}
 .src{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding-top:14px;font-size:11px;color:var(--muted)}
 .src a{letter-spacing:.06em;text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center}
+.src a.report{margin-left:auto;color:var(--muted);text-transform:none;letter-spacing:.02em;text-decoration:underline;text-underline-offset:2px}
+.src a.report:hover{color:var(--accent)}
+.correction{margin:-8px 0 16px;padding:6px 10px;border-left:2px solid var(--accent);font-size:12px;line-height:1.5;color:var(--soft)}
 
 .side{display:flex;flex-direction:column;gap:24px}
 .box{border:1px solid var(--line);padding:22px}
@@ -171,6 +174,18 @@ a.who:hover{text-decoration:underline}
 
 footer{border-top:3px double var(--text)}
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+footer .footlinks a{display:inline-flex;align-items:center;min-height:44px;margin:-14px 0;text-decoration:none}
+footer .footlinks a:hover{text-decoration:underline}
+
+/* ---- about page ---- */
+.about{max-width:720px;padding-top:8px;padding-bottom:48px}
+.about section{padding-top:24px;border-bottom:1px solid var(--line);padding-bottom:20px}
+.about section:last-child{border-bottom:none}
+.about h2{margin:0 0 10px;font-style:italic;font-size:26px;line-height:1.2}
+.about p,.about li{margin:0 0 10px;font-size:15px;line-height:1.65;color:var(--soft)}
+.about ul{margin:0 0 10px;padding-left:20px}
+.about a{overflow-wrap:anywhere}
+.about section:target h2{color:var(--accent)}
 
 @media (max-width:900px){
   .lede .wrap,.main .wrap{grid-template-columns:minmax(0,1fr)}
@@ -183,6 +198,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   .sgrid{grid-template-columns:48px minmax(0,1fr);gap:14px}
   .sart{width:48px;height:48px}
   .tengrid .av{--av:48px!important}
+  .src a.report{margin-left:0}
 }
 
 /* ---- site nav (all pages) ---- */

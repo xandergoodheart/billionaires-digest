@@ -18,17 +18,22 @@ Build today's Billionaires Digest edition and publish it.
    Note: `top10` and `top10AsOf` now come from `data/people/index.json` automatically. The publish
    script replaces whatever the draft has with ranks 1-10 from the index. You may still write them
    (the schema below lists them), but they will be overwritten.
-4. Write the draft to `/tmp/digest.draft.json`. It must match the schema below.
-5. Run `node scripts/publish-digest.mjs /tmp/digest.draft.json`.
-6. If it fails, fix only the problems it lists, using real sources, and run it again. Retry at most
+4. Fact-check: for each story, open the source article with WebFetch. Confirm every number, date and
+   name in "move" matches the article. If something doesn't match, fix it to match the article or drop
+   the story. If WebFetch is blocked for a source, keep the story only if the facts appear in at least
+   two independent search results, and list it under 'unverified by fetch' in your final report.
+5. Write the draft to `/tmp/digest.draft.json`. It must match the schema below.
+6. Run `node scripts/publish-digest.mjs /tmp/digest.draft.json`.
+7. If it fails, fix only the problems it lists, using real sources, and run it again. Retry at most
    2 times. If it still fails, stop. Do not commit. The site keeps yesterday's edition.
-7. On success, run:
-   `git add digest.json archive og index.html && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
+8. On success, run:
+   `git add digest.json archive og index.html people editions sitemap.xml robots.txt && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
    (use today's date in New York time). `og/` holds the share image the publish script renders for the
    edition. `index.html` is only changed by the publish script, which points its og:image and
    twitter:image meta tags at that image. If the image step printed a warning, commit anyway.
-8. Final message: how many stories were published, which stories were dropped (and why), and
+9. Final message: how many stories were published, which stories were dropped (and why), and
    anything that looked wrong.
+   Include the 'unverified by fetch' list from step 4 (or say it's empty).
 
 Never edit `index.html` (the publish script updates its share-image meta tags; that is the only change), anything in `scripts/`, or workflow files during a daily run.
 
@@ -54,6 +59,9 @@ These are new and optional. Older editions without them still work.
 - `people`: an array of every top-100 name the story affects, written exactly as in
   `data/people/index.json`. For example, an Alphabet story is `["Larry Page", "Sergey Brin"]`.
 - `who` stays the primary person.
+- `correction`: a string, only when a published story had a significant error that was fixed. Write it as
+  `"Corrected <Mon D, YYYY>: <what was wrong and what it says now>."` The site shows it as a small note
+  under the headline. Leave it out otherwise.
 
 ## Schema
 The publish script sets `date` and `updated` for you, but include them anyway.
@@ -77,7 +85,8 @@ The publish script sets `date` and `updated` for you, but include them anyway.
       "why": why it matters,
       "bear": the strongest counterargument,
       "watch": the next date or signal to watch,
-      "source": publication name, "url": the article URL exactly as found in search results
+      "source": publication name, "url": the article URL exactly as found in search results,
+      "correction": optional, "Corrected <Mon D, YYYY>: <what changed>" (only for a significant fix)
   } ] (8 to 12 stories),
   "consensus": { "headline": string, "body": string, "tags": [string] } or null,
   "filings": [ { "filer": string, "form": "Form 4" | "13F" | "8-K" | "S-1" | "13D" | other, "change": string, "direction": "up" | "down" | "flat" } ],

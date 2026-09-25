@@ -1,0 +1,59 @@
+name: Site health
+
+on:
+  schedule:
+    # 11:15 UTC = 7:15 AM New York in summer (EDT), 6:15 AM in winter (EST)
+    - cron: '15 11 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  contents: read
+
+concurrency:
+  group: site-health
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the live site
+        id: health
+        run: node scripts/health-check.mjs
+      - name: Open, update or close the site-health issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          HEALTHY: ${{ steps.health.outputs.healthy }}
+          REPORT: ${{ steps.health.outputs.report }}
+        run: |
+          set -euo pipefail
+          TODAY="$(TZ=America/New_York date +%Y-%m-%d)"
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          printf '%s\n\n[Workflow run](%s)\n' "$REPORT" "$RUN_URL" > report.md
+          gh label create site-health --color B4501A --description "Automated site health check" 2>/dev/null || true
+          ISSUE="$(gh issue list --label site-health --state open --limit 1 --json number --jq '.[0].number // empty')"
+          if [ "$HEALTHY" = "true" ]; then
+            if [ -n "$ISSUE" ]; then
+              printf 'Recovered %s\n\n' "$TODAY" | cat - report.md > recovered.md
+              gh issue comment "$ISSUE" --body-file recovered.md
+              gh issue close "$ISSUE"
+              echo "Site healthy. Closed issue #$ISSUE."
+            else
+              echo "Site healthy. Nothing to do."
+            fi
+          else
+            if [ -n "$ISSUE" ]; then
+              gh issue comment "$ISSUE" --body-file report.md
+              echo "Site unhealthy. Commented on issue #$ISSUE."
+            else
+              gh issue create --title "Site health: problem on $TODAY" --label site-health --body-file report.md
+              echo "Site unhealthy. Opened a new issue."
+            fi
+          fi

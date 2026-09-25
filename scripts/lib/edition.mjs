@@ -34,6 +34,7 @@ export function schemaText(longDate, shortDate) {
       "why": why it matters,
       "bear": the strongest counterargument,
       "watch": the next date or signal to watch,
+      "correction": optional, only when fixing a published error: "Corrected <date>: <what changed>",
       "source": publication name, "url": the article URL exactly as found in search results
   } ] (8 to 12 stories),
   "consensus": { "headline": string, "body": string, "tags": [string] } or null,

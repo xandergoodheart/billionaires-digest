@@ -174,4 +174,16 @@ try {
 } catch (err) {
   console.warn(`warning: OG image skipped: ${err?.message || err}`);
 }
+
+// ---- static pages for search engines (never fails the publish) ----
+// Rebuilds people/, editions/, sitemap.xml and robots.txt from the data files.
+try {
+  const { buildPages } = await import('./build-pages.mjs');
+  const r = await buildPages('.');
+  console.log(`Static pages built: ${r.people} people, ${r.editions} editions (${r.written} files changed).` +
+    (r.removed.length ? ` Removed stale: ${r.removed.join(', ')}.` : ''));
+} catch (err) {
+  console.warn(`warning: static pages skipped: ${err?.message || err}`);
+}
+console.log('Reminder: commit the static pages too: git add people editions sitemap.xml robots.txt');
 process.exit(0);

@@ -321,6 +321,7 @@
     if (s.read) r.appendChild(el('span', 'read ' + dirClass(s.direction), 'AI read · ' + arrow(s.direction) + s.read));
     a.appendChild(r);
     a.appendChild(el('h3', 'serif', s.headline || ''));
+    if (s.correction && typeof s.correction === 'string') a.appendChild(el('p', 'correction', s.correction));
     var q = el('div', 'quad');
     [['The move', s.move, 'q-move'], ['Why it matters', s.why, 'q-why'], ['The bear case', s.bear, 'q-bear'], ['What to watch', s.watch, 'q-watch']].forEach(function(x){
       if (!x[1]) return;
@@ -331,6 +332,10 @@
     src.appendChild(el('span', null, 'Source · ' + (s.source || 'Unlisted')));
     var u = safeUrl(s.url);
     if (u){ var link = el('a', null, 'Read original ↗'); link.href = u; link.target = '_blank'; link.rel = 'noopener noreferrer'; src.appendChild(link); }
+    var rep = el('a', 'report', 'Report an error');
+    rep.href = 'mailto:hello@billionairesdigest.com?subject=' + encodeURIComponent('Correction: ' + (s.headline || '')) +
+      '&body=' + encodeURIComponent('Story: ' + (s.headline || '') + '\nSource: ' + (u || s.url || '') + "\n\nWhat's wrong:\n");
+    src.appendChild(rep);
     a.appendChild(src);
     return art;
   };
