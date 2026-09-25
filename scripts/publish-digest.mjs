@@ -185,5 +185,5 @@ try {
 } catch (err) {
   console.warn(`warning: static pages skipped: ${err?.message || err}`);
 }
-console.log('Reminder: commit the static pages too: git add people editions sitemap.xml robots.txt');
+console.log('Reminder: commit the static pages too: git add people editions companies guides sitemap.xml robots.txt');
 process.exit(0);

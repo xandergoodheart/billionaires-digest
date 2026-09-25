@@ -2,9 +2,11 @@
 // Usage: node scripts/build-pages.mjs            (from the repo root)
 //        import { buildPages } from './build-pages.mjs'; await buildPages('.')
 //
-// Writes (and only ever deletes inside people/ and editions/):
+// Writes (and only ever deletes inside people/, editions/ and companies/):
 //   people/index.html, people/<slug>/index.html      one per person in data/people/index.json
 //   editions/index.html, editions/<date>/index.html  one per archive/<date>.json
+//   companies/index.html, companies/<slug>/index.html one per company in the profiles' controls + stakes
+//   guides/index.html, guides/filings-101/index.html
 //   sitemap.xml, robots.txt
 // Output is deterministic: no build timestamps. Files are rewritten only when their content changes.
 // sitemap lastmod values are the newest data date behind each page, never "now".
@@ -19,11 +21,15 @@ import { page, breadcrumb } from './lib/pages/layout.mjs';
 import {
   avatar, story, footprint, watchList, filings, listBox, consensusBox, ledgerBox, editionFilingsBox
 } from './lib/pages/render.mjs';
+import { buildCompanyIndex, renderCompany, renderCompanyIndex, relatedFor, COMPANY_CSS } from './lib/pages/companies.mjs';
+import { GUIDES, renderFilings101, renderGuidesIndex, GUIDE_CSS } from './lib/pages/guides.mjs';
 
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const FILINGS_LIMIT = 15;
 const HOLDING_GROUPS = ['controls', 'stakes', 'vehicles', 'realEstate', 'trophies'];
+// top-level pages built by other scripts; listed in the sitemap without a lastmod
+const EXTRA_TOP = ['/calendar.html', '/flows.html', '/quarterly.html', '/copycat.html', '/network.html', '/compare.html', '/property.html'];
 
 async function readJson(p) { return JSON.parse(await readFile(p, 'utf8')); }
 async function readJsonOr(p, fallback) {
@@ -67,6 +73,17 @@ export async function buildPages(root = '.') {
   }
   const ogLatest = SITE + '/og/latest.png';
 
+  // profiles and filings, read once
+  const profiles = new Map();
+  const filingsBySlug = new Map();
+  for (const ip of people) {
+    const prof = ip.hasProfile ? await readJsonOr(P('data/people', ip.slug + '.json'), null) : null;
+    if (prof && typeof prof === 'object') profiles.set(ip.slug, prof);
+    const fd = await readJsonOr(P('data/filings/by-person', ip.slug + '.json'), null);
+    if (fd && typeof fd === 'object') filingsBySlug.set(ip.slug, fd);
+  }
+  const companies = buildCompanyIndex(people, profiles);
+
   // sector for a person: index -> first matching story in the given list -> Other
   function personSector(name, stories) {
     const ip = name ? personOf(name) : null;
@@ -81,14 +98,14 @@ export async function buildPages(root = '.') {
   // ---- people/<slug>/ ----
   for (const ip of people) {
     const name = ip.name;
-    const prof = ip.hasProfile ? await readJsonOr(P('data/people', ip.slug + '.json'), null) : null;
-    const filData = await readJsonOr(P('data/filings/by-person', ip.slug + '.json'), null);
+    const prof = profiles.get(ip.slug) || null;
+    const filData = filingsBySlug.get(ip.slug) || null;
 
     // latest moves across every edition, newest first
     const moves = [];
     for (const { iso, ed } of editions) for (const s of arr(ed.stories)) if (s && storyMatches(s, name)) moves.push({ iso, s });
 
-    const fp = footprint(name, prof, quotes);
+    const fp = footprint(name, prof, quotes, companies.entryLink);
     const fil = filings(filData, FILINGS_LIMIT);
     const holdings = prof ? HOLDING_GROUPS.reduce((n, k) => n + arr(prof[k]).filter(e => e && typeof e === 'object').length, 0) : 0;
     const asOfText = indexIso ? fmtDate(indexIso) : '';
@@ -133,7 +150,7 @@ ${movesHtml}
 </section>
 <section class="ppsec" aria-labelledby="filings"><h2 class="sech2 serif" id="filings">Recent SEC filings</h2>
 ${fil.html}
-${filData ? '<p class="pcnote">Form 4 insider trades post within 2 business days. 13F fund holdings can arrive 45 days after quarter end.</p>' : ''}
+${filData ? '<p class="pcnote">Form 4 insider trades post within 2 business days. 13F fund holdings can arrive 45 days after quarter end. New to filings? Read <a href="/guides/filings-101/">Filings 101</a>.</p>' : ''}
 </section>
 <section class="ppsec" aria-labelledby="footprint"><h2 class="sech2 serif" id="footprint">Footprint</h2>
 ${fp.html}
@@ -274,6 +291,90 @@ ${side}
     sitemap.push(['/editions/', editions.length ? editions[0].iso : null]);
   }
 
+  // ---- companies/<slug>/ ----
+  const companyByPerson = new Map(); // person slug -> [company]
+  for (const c of companies.list) for (const h of c.holders) {
+    if (!companyByPerson.has(h.person.slug)) companyByPerson.set(h.person.slug, []);
+    companyByPerson.get(h.person.slug).push(c);
+  }
+  const keySet = new Set(companies.list.flatMap(c => [...c.tickerKeys]));
+  const companyLastmods = [];
+  for (const c of companies.list) {
+    const r = renderCompany(c, {
+      quotes, pricesProvider: prices && prices.provider ? str(prices.provider) : '', editions, filingsBySlug, profiles,
+      personHref, keySet, related: relatedFor(c, companyByPerson)
+    });
+    const bc = breadcrumb([['Home', '/'], ['Companies', '/companies/'], [c.name, c.href]]);
+    out.set(`companies/${c.slug}/index.html`, page({
+      title: `Who owns ${c.name}? Billionaire holders and moves · Billionaires Digest`,
+      ogTitle: `Who owns ${c.name}? Billionaire holders and moves`,
+      description: r.description,
+      path: c.href,
+      ogImage: ogLatest,
+      dateline: `Companies · ${plural(c.holderCount, 'holder', 'holders')}`,
+      updated: indexIso ? `Net worths as of ${fmtDate(indexIso)}` : '',
+      jsonLd: [bc.ld],
+      css: COMPANY_CSS,
+      body: `${bc.html}\n${r.body}`
+    }));
+    const lm = maxIso(r.lastmods.concat([indexIso]));
+    companyLastmods.push(lm);
+    sitemap.push([c.href, lm]);
+  }
+
+  // ---- companies/ ----
+  {
+    const bc = breadcrumb([['Home', '/'], ['Companies', '/companies/']]);
+    out.set('companies/index.html', page({
+      title: `Who owns this? ${companies.list.length} companies held by the world's richest · Billionaires Digest`,
+      ogTitle: `Who owns this? ${companies.list.length} companies held by the world's richest`,
+      description: `The ${companies.list.length} companies the world's ${people.length} richest people control or hold stakes in, A–Z, with holder counts, sourced stakes, SEC insider filings and recent moves.`,
+      path: '/companies/',
+      ogImage: ogLatest,
+      dateline: 'Companies',
+      updated: indexIso ? `Net worths as of ${fmtDate(indexIso)}` : '',
+      jsonLd: [bc.ld],
+      css: COMPANY_CSS,
+      body: `${bc.html}\n${renderCompanyIndex(companies.list, people.length)}`
+    }));
+    sitemap.push(['/companies/', maxIso(companyLastmods.concat([indexIso]))]);
+  }
+
+  // ---- guides/ ----
+  {
+    const allFilings = [];
+    for (const ip of people) { const fd = filingsBySlug.get(ip.slug); if (fd) for (const f of arr(fd.filings)) if (f && typeof f === 'object') allFilings.push(f); }
+    const g = renderFilings101(allFilings);
+    const meta = GUIDES.find(x => x.slug === 'filings-101');
+    const bc = breadcrumb([['Home', '/'], ['Guides', '/guides/'], [meta.short, '/guides/filings-101/']]);
+    out.set('guides/filings-101/index.html', page({
+      title: `${meta.title} · Billionaires Digest`,
+      ogTitle: meta.title,
+      description: meta.blurb,
+      path: '/guides/filings-101/',
+      ogImage: ogLatest,
+      ogType: 'article',
+      dateline: 'Guides · Filings 101',
+      updated: '',
+      jsonLd: [bc.ld],
+      css: GUIDE_CSS,
+      body: `${bc.html}\n${g.body}`
+    }));
+    const bci = breadcrumb([['Home', '/'], ['Guides', '/guides/']]);
+    out.set('guides/index.html', page({
+      title: 'Guides · Billionaires Digest',
+      description: "Plain-language guides to reading the moves of the world's richest people, starting with SEC filings.",
+      path: '/guides/',
+      ogImage: ogLatest,
+      dateline: 'Guides',
+      updated: '',
+      jsonLd: [bci.ld],
+      body: `${bci.html}\n${renderGuidesIndex()}`
+    }));
+    sitemap.push(['/guides/', g.lastmod]);
+    sitemap.push(['/guides/filings-101/', g.lastmod]);
+  }
+
   // ---- write pages (only when changed) ----
   let written = 0;
   for (const [rel, content] of out) {
@@ -286,11 +387,12 @@ ${side}
     written++;
   }
 
-  // ---- remove stale generated pages (only inside people/ and editions/) ----
+  // ---- remove stale generated pages (only inside people/, editions/ and companies/) ----
   const removed = [];
   const keepPeople = new Set(people.map(p => p.slug));
   const keepEds = new Set(editions.map(e => e.iso));
-  for (const [dir, keep, re] of [['people', keepPeople, SLUG_RE], ['editions', keepEds, DATE_RE]]) {
+  const keepCos = new Set(companies.list.map(c => c.slug));
+  for (const [dir, keep, re] of [['people', keepPeople, SLUG_RE], ['editions', keepEds, DATE_RE], ['companies', keepCos, SLUG_RE]]) {
     let names = [];
     try { names = await readdir(P(dir)); } catch { continue; }
     for (const n of names) {
@@ -310,8 +412,12 @@ ${side}
   const peopleIdx = sitemap.findIndex(x => x[0] === '/people/');
   const entries = [
     ...top,
+    ...EXTRA_TOP.map(p => [p, null]),
     sitemap[peopleIdx],
     ...sitemap.filter(x => x[0].startsWith('/people/') && x[0] !== '/people/'),
+    sitemap.find(x => x[0] === '/companies/'),
+    ...sitemap.filter(x => x[0].startsWith('/companies/') && x[0] !== '/companies/'),
+    ...sitemap.filter(x => x[0].startsWith('/guides/')),
     sitemap.find(x => x[0] === '/editions/'),
     ...sitemap.filter(x => x[0].startsWith('/editions/') && x[0] !== '/editions/')
   ];
@@ -325,14 +431,14 @@ ${side}
     if (old !== content) { await writeFile(P(rel), content); written++; }
   }
 
-  return { people: people.length, editions: editions.length, pages: out.size, written, removed, urls: entries.length };
+  return { people: people.length, editions: editions.length, companies: companies.list.length, pages: out.size, written, removed, urls: entries.length };
 }
 
 // run directly: node scripts/build-pages.mjs
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   try {
     const r = await buildPages('.');
-    console.log(`Static pages: ${r.people} people, ${r.editions} editions, ${r.pages} pages (${r.written} files changed), ${r.urls} sitemap URLs.` +
+    console.log(`Static pages: ${r.people} people, ${r.editions} editions, ${r.companies} companies, ${r.pages} pages (${r.written} files changed), ${r.urls} sitemap URLs.` +
       (r.removed.length ? ` Removed stale: ${r.removed.join(', ')}.` : ''));
   } catch (err) {
     console.error(`build-pages failed: ${err?.stack || err}`);

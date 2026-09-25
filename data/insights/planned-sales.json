@@ -1,0 +1,43 @@
+{
+  "generated": "2026-09-25",
+  "from": "2026-09-18",
+  "inputs": {
+    "filingsGenerated": "2026-09-25T05:56:50.559Z",
+    "pricesGenerated": "2026-09-25T03:44:39.188Z",
+    "peopleAsOf": "2026-09-24T21:15-04:00",
+    "editions": 1
+  },
+  "explainer": "A Form 144 is a notice an insider files with the SEC before selling restricted or control shares. It gives an approximate sale date and size. The sale may be smaller, later or not happen at all.",
+  "note": "12 Form 144 notices in the 90-day filings window; 12 parsed. Rows show approximate sale dates from 2026-09-18 on.",
+  "sales": [
+    {
+      "date": "2026-09-24",
+      "people": [
+        {
+          "name": "Mark Zuckerberg",
+          "slug": "mark-zuckerberg",
+          "sector": "AI & tech"
+        }
+      ],
+      "seller": "Zuckerberg Mark",
+      "issuer": "Meta Platforms, Inc.",
+      "ticker": "META",
+      "tickerSource": "Ticker from a Form 4 for the same issuer in the filings window",
+      "securitiesClassTitle": "Class A Common Shares",
+      "shares": 27474,
+      "value": 21359454,
+      "relationships": [
+        "Officer",
+        "Director",
+        "10% Stockholder",
+        "COB & CEO"
+      ],
+      "plan10b51AdoptedOn": "2026-01-31",
+      "filed": "2026-09-24",
+      "form": "144",
+      "url": "https://www.sec.gov/Archives/edgar/data/1548760/000192109426001050/xsl144X01/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1548760/000192109426001050/0001921094-26-001050-index.htm",
+      "accession": "0001921094-26-001050"
+    }
+  ]
+}

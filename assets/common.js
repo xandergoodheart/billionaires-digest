@@ -401,5 +401,26 @@
     return Promise.all(ws).then(function(){ return out; });
   };
 
+  // ---- Tools menu (details.navmore): close on Escape and outside click; one open at a time.
+  // Works without JS as a plain <details>. Same code as NAV_JS in scripts/lib/nav.mjs.
+  BD.initNavMore = function(){
+    var d = document.querySelectorAll('details.navmore');
+    if (!d.length) return;
+    function closeAll(ex){ for (var i = 0; i < d.length; i++) if (d[i] !== ex) d[i].removeAttribute('open'); }
+    document.addEventListener('click', function(e){
+      for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open') && !d[i].contains(e.target)) d[i].removeAttribute('open');
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key !== 'Escape' && e.key !== 'Esc') return;
+      for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open')) {
+        d[i].removeAttribute('open');
+        var s = d[i].querySelector('summary'); if (s) s.focus();
+      }
+    });
+    for (var j = 0; j < d.length; j++) d[j].addEventListener('toggle', function(){ if (this.open) closeAll(this); });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', BD.initNavMore);
+  else BD.initNavMore();
+
   w.BD = BD;
 })(window);

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-25T03:41:20.708Z",
+  "generated": "2026-09-25T05:56:50.559Z",
   "windowDays": 90,
   "person": "Larry Page",
   "personSlug": "larry-page",
@@ -13,7 +13,39 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1983812/000196858226000714/xsl144X01/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983812/000196858226000714/0001968582-26-000714-index.htm",
       "person": "Larry Page",
-      "personSlug": "larry-page"
+      "personSlug": "larry-page",
+      "form144": {
+        "issuer": "Alphabet, Inc.",
+        "issuerCik": "0001652044",
+        "seller": "The Lawrence Page Trust II",
+        "relationships": [
+          "Affiliate"
+        ],
+        "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
+        "shares": 19360,
+        "aggregateMarketValue": 6975698,
+        "approxSaleDate": "2026-07-09",
+        "lots": [
+          {
+            "securitiesClassTitle": "Class A Common Stock",
+            "shares": 9680,
+            "aggregateMarketValue": 3503385.6,
+            "approxSaleDate": "2026-07-09",
+            "exchange": "NASDAQ"
+          },
+          {
+            "securitiesClassTitle": "Class C Capital Stock",
+            "shares": 9680,
+            "aggregateMarketValue": 3472312.8,
+            "approxSaleDate": "2026-07-09",
+            "exchange": "NASDAQ"
+          }
+        ],
+        "noticeDate": "2026-07-09",
+        "planAdoptionDates": [
+          "2020-11-30"
+        ]
+      }
     },
     {
       "cik": "0001983744",
@@ -24,7 +56,39 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226000713/xsl144X01/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226000713/0001968582-26-000713-index.htm",
       "person": "Larry Page",
-      "personSlug": "larry-page"
+      "personSlug": "larry-page",
+      "form144": {
+        "issuer": "Alphabet, Inc.",
+        "issuerCik": "0001652044",
+        "seller": "The Lawrence Page Trust III",
+        "relationships": [
+          "Affiliate"
+        ],
+        "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
+        "shares": 33760,
+        "aggregateMarketValue": 12164234,
+        "approxSaleDate": "2026-07-09",
+        "lots": [
+          {
+            "securitiesClassTitle": "Class A Common Stock",
+            "shares": 16880,
+            "aggregateMarketValue": 6109209.6,
+            "approxSaleDate": "2026-07-09",
+            "exchange": "NASDAQ"
+          },
+          {
+            "securitiesClassTitle": "Class C Capital Stock",
+            "shares": 16880,
+            "aggregateMarketValue": 6055024.8,
+            "approxSaleDate": "2026-07-09",
+            "exchange": "NASDAQ"
+          }
+        ],
+        "noticeDate": "2026-07-09",
+        "planAdoptionDates": [
+          "2020-11-30"
+        ]
+      }
     },
     {
       "cik": "0001983811",
@@ -35,7 +99,39 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1983811/000196858226000712/xsl144X01/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983811/000196858226000712/0001968582-26-000712-index.htm",
       "person": "Larry Page",
-      "personSlug": "larry-page"
+      "personSlug": "larry-page",
+      "form144": {
+        "issuer": "Alphabet, Inc.",
+        "issuerCik": "0001652044",
+        "seller": "The Lawrence Page Trust",
+        "relationships": [
+          "Affiliate"
+        ],
+        "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
+        "shares": 450720,
+        "aggregateMarketValue": 162401177,
+        "approxSaleDate": "2026-07-09",
+        "lots": [
+          {
+            "securitiesClassTitle": "Class A Common Stock",
+            "shares": 225360,
+            "aggregateMarketValue": 81562291.2,
+            "approxSaleDate": "2026-07-09",
+            "exchange": "NASDAQ"
+          },
+          {
+            "securitiesClassTitle": "Class C Capital Stock",
+            "shares": 225360,
+            "aggregateMarketValue": 80838885.6,
+            "approxSaleDate": "2026-07-09",
+            "exchange": "NASDAQ"
+          }
+        ],
+        "noticeDate": "2026-07-09",
+        "planAdoptionDates": [
+          "2020-11-30"
+        ]
+      }
     }
   ]
 }

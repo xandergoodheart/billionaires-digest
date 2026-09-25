@@ -50,7 +50,7 @@ export function story(s, opts = {}) {
 
 // ---- footprint (matches the person card's Footprint tab) ----
 const WHAT_MAX = 120;
-function shortRole(r) {
+export function shortRole(r) {
   let s = str(r);
   const i = s.search(/[;(]/);
   if (i > 0) s = s.slice(0, i);
@@ -61,7 +61,7 @@ function shortStake(st) {
   const m = /^\s*([~<>≈]?\s*\d+(?:[.,]\d+)?\s*%)/.exec(s);
   return m ? m[1].replace(/\s+/g, '') : clip(s, 32);
 }
-function stakeShort(e) {
+export function stakeShort(e) {
   const sh = e.stake ? shortStake(e.stake) : '';
   const when = e.stakeAsOf || e.date;
   return joinBits([sh, when ? 'as of ' + monYear(when) : '']);
@@ -80,7 +80,7 @@ function shortWhen(x) {
   if (/^\d{4}-\d{2}$/.test(s)) return monYear(s);
   return clip(s, 40);
 }
-function fullRows(pairs) { return pairs.filter(p => str(p[1]) !== '').map(p => [p[0], str(p[1])]); }
+export function fullRows(pairs) { return pairs.filter(p => str(p[1]) !== '').map(p => [p[0], str(p[1])]); }
 function stakeFull(e) { return [['Stake', e.stake], ['Stake as of', e.stakeAsOf]]; }
 function fpControls(e) {
   const role = str(e.role), stake = str(e.stake);
@@ -146,12 +146,19 @@ function srcLink(u, text) {
   const su = safeUrl(u);
   return su ? `<a href="${esc(su)}" ${EXT}>${esc(text || 'source ↗')}</a>` : '';
 }
-function fpRow(x, source, sources) {
+// x.href + x.head: link the leading company name (x.head, a prefix of x.main) to its company page
+export function fpRow(x, source, sources) {
   const detail = joinBits(arr(x.bits));
   let det = '';
   if (detail || x.quote) det = `<span class="fpdet">${esc(detail)}${x.quote ? (detail ? ' · ' : '') + x.quote : ''}</span>`;
   const more = x.lossy && arr(x.full).length ? moreBox(x.full) : '';
-  const main = `<div class="fpmain">${esc(x.main || '')}${det}${more}</div>`;
+  const mainText = String(x.main || '');
+  let mainHtml = esc(mainText);
+  if (x.href) {
+    const head = x.head && mainText.startsWith(x.head) ? x.head : mainText;
+    mainHtml = `<a class="colink" href="${esc(x.href)}">${esc(head)}</a>${esc(mainText.slice(head.length))}`;
+  }
+  const main = `<div class="fpmain">${mainHtml}${det}${more}</div>`;
   const list = arr(sources).filter(u => !!safeUrl(u));
   let links;
   if (list.length > 1) links = `<span class="fpsrcs">${list.map((u, i) => srcLink(u, 'source ' + (i + 1) + ' ↗')).join('')}</span>`;
@@ -176,7 +183,7 @@ export function quoteFor(e, quotes) {
   }
   return null;
 }
-function quoteHtml(qb) {
+export function quoteHtml(qb) {
   const pct = qb.q.changePct, has = typeof pct === 'number' && isFinite(pct);
   const dir = !has ? 'flat' : (pct > 0 ? 'up' : (pct < 0 ? 'down' : 'flat'));
   const t = (qb.sym ? qb.sym + ' ' : '') + fmtPrice(qb.q.price) + (has ? ' ' + arrow(dir) + Math.abs(pct).toFixed(2) + '%' : '');
@@ -184,7 +191,8 @@ function quoteHtml(qb) {
 }
 
 // returns { html, quoteTimes: [iso timestamps of quotes shown], any }
-export function footprint(name, prof, quotes) {
+// companyLink(entry) -> { href, head } | null links a Companies/Stakes row to its company page
+export function footprint(name, prof, quotes, companyLink) {
   if (!prof) return { html: `<p class="pcnote">${esc('Footprint research for ' + name + ' is coming soon.')}</p>`, quoteTimes: [], any: false };
   const out = [], quoteTimes = [];
   let any = false;
@@ -198,6 +206,8 @@ export function footprint(name, prof, quotes) {
       if (key === 'controls' || key === 'stakes') {
         const qb = quoteFor(e, quotes);
         if (qb) { x.quote = quoteHtml(qb); if (qb.q.time) quoteTimes.push(String(qb.q.time)); }
+        const cl = companyLink ? companyLink(e) : null;
+        if (cl && cl.href) { x.href = cl.href; x.head = cl.head; }
       }
       rows.push(fpRow(x, e.source, e.sources));
     }
@@ -258,7 +268,8 @@ export function sortFilings(list) {
     .sort((a, b) => { const x = str(a.f.filed), y = str(b.f.filed); return x < y ? 1 : (x > y ? -1 : a.i - b.i); })
     .map(x => x.f);
 }
-function filingRow(f) {
+// whoHtml: optional pre-escaped markup shown before the form label (e.g. a link to the filer's person page)
+export function filingRow(f, whoHtml) {
   const who = str(f.person) || str(f.filer);
   const label = formLabel(f.form);
   const u = safeUrl(f.url) || safeUrl(f.indexUrl);
@@ -274,7 +285,7 @@ function filingRow(f) {
       (lines.length > 3 ? `<span class="flat">+${lines.length - 3} more</span>` : '') + '</div>';
   }
   const meta = joinBits([str(f.filer), f.filed ? 'filed ' + fmtDate(str(f.filed)) : '']);
-  return `<div class="filrow"><div class="filtop">${top}</div>${tx}${meta ? `<div class="filmeta">${esc(meta)}</div>` : ''}</div>`;
+  return `<div class="filrow"><div class="filtop">${whoHtml || ''}${top}</div>${tx}${meta ? `<div class="filmeta">${esc(meta)}</div>` : ''}</div>`;
 }
 // data: the by-person filings file or null. Returns { html, latestFiled }
 export function filings(data, limit) {
@@ -285,7 +296,7 @@ export function filings(data, limit) {
   const list = all.slice(0, limit);
   const note = all.length > list.length ? `<p class="pcnote">${esc('Showing the ' + list.length + ' newest of ' + all.length + ' filings in the last ' + days + ' days.')}</p>` : '';
   return {
-    html: `<div class="fpg"><h3 class="fph">${esc('SEC filings · last ' + days + ' days')}</h3>${list.map(filingRow).join('')}</div>${note}`,
+    html: `<div class="fpg"><h3 class="fph">${esc('SEC filings · last ' + days + ' days')}</h3>${list.map(f => filingRow(f)).join('')}</div>${note}`,
     latestFiled: str(list[0].filed) || null
   };
 }

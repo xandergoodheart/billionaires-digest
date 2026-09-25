@@ -2,6 +2,17 @@
 // Content is server-rendered; the only script is the theme toggle (same behavior as BD.initTheme).
 
 import { esc, ldJson, SITE } from './util.mjs';
+import { renderNav, renderFooter, NAV_JS } from '../nav.mjs';
+
+// active nav key for a generated page's site path
+function navKey(path) {
+  const p = String(path || '');
+  if (p.startsWith('/people/')) return 'people';
+  if (p.startsWith('/companies/')) return 'companies';
+  if (p.startsWith('/guides/filings-101/')) return 'filings101';
+  if (p.startsWith('/editions/')) return 'archive';
+  return null;
+}
 
 const FONTS = 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap';
 const ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E";
@@ -22,12 +33,13 @@ const PAGE_CSS = `.crumbs{padding-top:10px}
 .storydate{padding-bottom:8px}
 .story .srow a.who,.plist a{overflow-wrap:anywhere}
 .quotenote{margin:12px 0 0}
+.fprow .fpmain a.colink{display:inline;font-size:inherit;letter-spacing:inherit;min-height:0;margin:0}
 .fpg .fph{margin:18px 0 4px;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--accent)}`;
 
 const THEME_JS = `(function(){var r=document.documentElement,b=document.getElementById('themebtn');try{var s=localStorage.getItem('bd-theme');if(s)r.setAttribute('data-theme',s);}catch(e){}function d(){var t=r.getAttribute('data-theme');if(t)return t==='dark';return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;}if(!b)return;function l(){b.textContent=d()?'Paper mode':'Terminal mode';}l();b.addEventListener('click',function(){var n=d()?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('bd-theme',n);}catch(e){}l();});})();`;
 
 // opts: { title, description, path (site path, e.g. /people/elon-musk/), ogImage (absolute URL), ogType,
-//         jsonLd: [objects], dateline, updated, body (HTML string) }
+//         jsonLd: [objects], dateline, updated, body (HTML string), css (optional extra page CSS) }
 export function page(o) {
   const url = SITE + o.path;
   const ld = (o.jsonLd || []).map(x => `<script type="application/ld+json">${ldJson(x)}</script>`).join('\n');
@@ -55,7 +67,7 @@ export function page(o) {
 <link href="${FONTS}" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <style>
-${PAGE_CSS}
+${PAGE_CSS}${o.css ? '\n' + o.css : ''}
 </style>
 ${ld}
 </head>
@@ -73,25 +85,16 @@ ${ld}
   <button class="themebtn" id="themebtn" type="button">Switch theme</button>
 </div></header>
 
-<nav class="sitenav" aria-label="Site"><div class="wrap">
-  <a href="/">Today</a>
-  <a href="/sectors.html">Sectors</a>
-  <a href="/archive.html">Archive</a>
-  <a href="/people/">People</a>
-  <a href="/about.html">About</a>
-</div></nav>
+${renderNav(o.navKey !== undefined ? o.navKey : navKey(o.path), { absolute: true })}
 
 <main id="app">
 ${o.body}
 </main>
 
-<footer><div class="wrap">
-  <span>Billionaires Digest · billionairesdigest.com</span>
-  <span class="footlinks"><a href="/about.html">About</a> · <a href="/about.html#corrections">Corrections</a></span>
-  <span>For information only · not financial advice</span>
-</div></footer>
+${renderFooter({ absolute: true })}
 
-<script>${THEME_JS}</script>
+<script>${THEME_JS}
+${NAV_JS}</script>
 </body>
 </html>
 `;

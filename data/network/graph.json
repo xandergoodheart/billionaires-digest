@@ -1,0 +1,3105 @@
+{
+  "asOf": "2026-09-24T21:15-04:00",
+  "source": "Built from each person's profile (data/people): companies they control or hold stakes in, plus private deals that name a company another person holds.",
+  "rule": "Two people are linked when they currently hold the same company (holdings described as sold, exited or historical, and note rows, are left out). Companies match by ticker (exchange prefix removed; GOOG counted as GOOGL, BRK.A as BRK.B), otherwise by company name without corporate suffixes and notes. A private deal links two people only when its text names, word for word, a company the other person holds.",
+  "viewBox": [
+    0,
+    0,
+    1000,
+    720
+  ],
+  "nodes": [
+    {
+      "slug": "elon-musk",
+      "name": "Elon Musk",
+      "rank": 1,
+      "sector": "Aerospace",
+      "worth": 927.9,
+      "worthText": "$927.9B",
+      "r": 26,
+      "x": 734.2,
+      "y": 298.6
+    },
+    {
+      "slug": "jeff-bezos",
+      "name": "Jeff Bezos",
+      "rank": 2,
+      "sector": "AI & tech",
+      "worth": 369.3,
+      "worthText": "$369.3B",
+      "r": 19.7,
+      "x": 687.6,
+      "y": 200.2
+    },
+    {
+      "slug": "larry-page",
+      "name": "Larry Page",
+      "rank": 3,
+      "sector": "AI & tech",
+      "worth": 280.8,
+      "worthText": "$280.8B",
+      "r": 18.4,
+      "x": 479.6,
+      "y": 398.4
+    },
+    {
+      "slug": "mark-zuckerberg",
+      "name": "Mark Zuckerberg",
+      "rank": 4,
+      "sector": "AI & tech",
+      "worth": 266.4,
+      "worthText": "$266.4B",
+      "r": 18.1,
+      "x": 637.5,
+      "y": 275.5
+    },
+    {
+      "slug": "sergey-brin",
+      "name": "Sergey Brin",
+      "rank": 6,
+      "sector": "AI & tech",
+      "worth": 258.5,
+      "worthText": "$258.5B",
+      "r": 18,
+      "x": 395.5,
+      "y": 534.2
+    },
+    {
+      "slug": "jensen-huang",
+      "name": "Jensen Huang",
+      "rank": 7,
+      "sector": "AI & tech",
+      "worth": 194.5,
+      "worthText": "$194.5B",
+      "r": 16.8,
+      "x": 484,
+      "y": 482.6
+    },
+    {
+      "slug": "larry-ellison",
+      "name": "Larry Ellison",
+      "rank": 8,
+      "sector": "AI & tech",
+      "worth": 184,
+      "worthText": "$184B",
+      "r": 16.6,
+      "x": 571.8,
+      "y": 519.1
+    },
+    {
+      "slug": "steve-ballmer",
+      "name": "Steve Ballmer",
+      "rank": 9,
+      "sector": "AI & tech",
+      "worth": 155.6,
+      "worthText": "$155.6B",
+      "r": 16,
+      "x": 218.8,
+      "y": 424.5
+    },
+    {
+      "slug": "warren-buffett",
+      "name": "Warren Buffett",
+      "rank": 10,
+      "sector": "Finance",
+      "worth": 143.8,
+      "worthText": "$143.8B",
+      "r": 15.7,
+      "x": 385.6,
+      "y": 438.7
+    },
+    {
+      "slug": "rob-walton-family",
+      "name": "Rob Walton & family",
+      "rank": 12,
+      "sector": "Luxury & retail",
+      "worth": 132,
+      "worthText": "$132B",
+      "r": 15.4,
+      "x": 227.8,
+      "y": 308.3
+    },
+    {
+      "slug": "jim-walton-family",
+      "name": "Jim Walton & family",
+      "rank": 13,
+      "sector": "Luxury & retail",
+      "worth": 128.8,
+      "worthText": "$128.8B",
+      "r": 15.3,
+      "x": 371,
+      "y": 171.7
+    },
+    {
+      "slug": "bernard-arnault-family",
+      "name": "Bernard Arnault & family",
+      "rank": 14,
+      "sector": "Luxury & retail",
+      "worth": 122.8,
+      "worthText": "$122.8B",
+      "r": 15.2,
+      "x": 253.4,
+      "y": 165.7
+    },
+    {
+      "slug": "alice-walton",
+      "name": "Alice Walton",
+      "rank": 15,
+      "sector": "Luxury & retail",
+      "worth": 118.6,
+      "worthText": "$118.6B",
+      "r": 15.1,
+      "x": 288.4,
+      "y": 77.4
+    },
+    {
+      "slug": "bill-gates",
+      "name": "Bill Gates",
+      "rank": 18,
+      "sector": "AI & tech",
+      "worth": 114.3,
+      "worthText": "$114.3B",
+      "r": 15,
+      "x": 299.8,
+      "y": 601.8
+    },
+    {
+      "slug": "francoise-bettencourt-meyers-family",
+      "name": "Francoise Bettencourt Meyers & family",
+      "rank": 21,
+      "sector": "Luxury & retail",
+      "worth": 94,
+      "worthText": "$94B",
+      "r": 14.4,
+      "x": 717.3,
+      "y": 115.8
+    },
+    {
+      "slug": "giancarlo-devasini",
+      "name": "Giancarlo Devasini",
+      "rank": 22,
+      "sector": "Finance",
+      "worth": 89.3,
+      "worthText": "$89.3B",
+      "r": 14.3,
+      "x": 806.6,
+      "y": 413.5
+    },
+    {
+      "slug": "julia-koch-family",
+      "name": "Julia Koch & family",
+      "rank": 23,
+      "sector": "Industrials",
+      "worth": 84.6,
+      "worthText": "$84.6B",
+      "r": 14.1,
+      "x": 588.1,
+      "y": 353.8
+    },
+    {
+      "slug": "zhang-yiming",
+      "name": "Zhang Yiming",
+      "rank": 24,
+      "sector": "AI & tech",
+      "worth": 84,
+      "worthText": "$84B",
+      "r": 14.1,
+      "x": 749.1,
+      "y": 482.1
+    },
+    {
+      "slug": "gautam-adani",
+      "name": "Gautam Adani",
+      "rank": 26,
+      "sector": "Industrials",
+      "worth": 80.3,
+      "worthText": "$80.3B",
+      "r": 14,
+      "x": 911,
+      "y": 440.8
+    },
+    {
+      "slug": "jeff-yass",
+      "name": "Jeff Yass",
+      "rank": 27,
+      "sector": "Finance",
+      "worth": 77.8,
+      "worthText": "$77.8B",
+      "r": 13.9,
+      "x": 662.2,
+      "y": 645.1
+    },
+    {
+      "slug": "charles-koch-family",
+      "name": "Charles Koch & family",
+      "rank": 28,
+      "sector": "Industrials",
+      "worth": 76.9,
+      "worthText": "$76.9B",
+      "r": 13.9,
+      "x": 482.2,
+      "y": 560.9
+    },
+    {
+      "slug": "masayoshi-son",
+      "name": "Masayoshi Son",
+      "rank": 29,
+      "sector": "AI & tech",
+      "worth": 72.6,
+      "worthText": "$72.6B",
+      "r": 13.8,
+      "x": 653.2,
+      "y": 532.5
+    },
+    {
+      "slug": "john-mars",
+      "name": "John Mars",
+      "rank": 36,
+      "sector": "Luxury & retail",
+      "worth": 50.3,
+      "worthText": "$50.3B",
+      "r": 13,
+      "x": 545.9,
+      "y": 643
+    },
+    {
+      "slug": "jacqueline-mars",
+      "name": "Jacqueline Mars",
+      "rank": 36,
+      "sector": "Luxury & retail",
+      "worth": 50.3,
+      "worthText": "$50.3B",
+      "r": 13,
+      "x": 400.9,
+      "y": 646.8
+    },
+    {
+      "slug": "li-ka-shing",
+      "name": "Li Ka-shing",
+      "rank": 38,
+      "sector": "Other",
+      "worth": 48.9,
+      "worthText": "$48.9B",
+      "r": 12.9,
+      "x": 316.4,
+      "y": 319.7
+    },
+    {
+      "slug": "ma-huateng",
+      "name": "Ma Huateng",
+      "rank": 41,
+      "sector": "AI & tech",
+      "worth": 47.2,
+      "worthText": "$47.2B",
+      "r": 12.8,
+      "x": 307.9,
+      "y": 403.8
+    },
+    {
+      "slug": "rafaela-aponte-diamant",
+      "name": "Rafaela Aponte-Diamant",
+      "rank": 43,
+      "sector": "Industrials",
+      "worth": 46.2,
+      "worthText": "$46.2B",
+      "r": 12.8,
+      "x": 86.5,
+      "y": 296.1
+    },
+    {
+      "slug": "gianluigi-aponte",
+      "name": "Gianluigi Aponte",
+      "rank": 43,
+      "sector": "Industrials",
+      "worth": 46.2,
+      "worthText": "$46.2B",
+      "r": 12.8,
+      "x": 180.6,
+      "y": 236.5
+    },
+    {
+      "slug": "lukas-walton",
+      "name": "Lukas Walton",
+      "rank": 45,
+      "sector": "Luxury & retail",
+      "worth": 44.4,
+      "worthText": "$44.4B",
+      "r": 12.7,
+      "x": 138.3,
+      "y": 158.6
+    },
+    {
+      "slug": "mark-mateschitz",
+      "name": "Mark Mateschitz",
+      "rank": 46,
+      "sector": "Luxury & retail",
+      "worth": 44.2,
+      "worthText": "$44.2B",
+      "r": 12.7,
+      "x": 414.8,
+      "y": 72.5
+    },
+    {
+      "slug": "eduardo-saverin",
+      "name": "Eduardo Saverin",
+      "rank": 47,
+      "sector": "AI & tech",
+      "worth": 42.9,
+      "worthText": "$42.9B",
+      "r": 12.7,
+      "x": 481.2,
+      "y": 173.6
+    },
+    {
+      "slug": "andreas-von-bechtolsheim-family",
+      "name": "Andreas von Bechtolsheim & family",
+      "rank": 50,
+      "sector": "AI & tech",
+      "worth": 41.3,
+      "worthText": "$41.3B",
+      "r": 12.6,
+      "x": 527.1,
+      "y": 257.8
+    },
+    {
+      "slug": "liang-wenfeng",
+      "name": "Liang Wenfeng",
+      "rank": 53,
+      "sector": "AI & tech",
+      "worth": 39.9,
+      "worthText": "$39.9B",
+      "r": 12.5,
+      "x": 428.6,
+      "y": 248.1
+    },
+    {
+      "slug": "alain-wertheimer",
+      "name": "Alain Wertheimer",
+      "rank": 55,
+      "sector": "Luxury & retail",
+      "worth": 39.4,
+      "worthText": "$39.4B",
+      "r": 12.5,
+      "x": 851.3,
+      "y": 170.9
+    },
+    {
+      "slug": "gerard-wertheimer",
+      "name": "Gerard Wertheimer",
+      "rank": 55,
+      "sector": "Luxury & retail",
+      "worth": 39.4,
+      "worthText": "$39.4B",
+      "r": 12.5,
+      "x": 819.3,
+      "y": 322
+    },
+    {
+      "slug": "eric-schmidt",
+      "name": "Eric Schmidt",
+      "rank": 57,
+      "sector": "AI & tech",
+      "worth": 38.1,
+      "worthText": "$38.1B",
+      "r": 12.4,
+      "x": 641.9,
+      "y": 441
+    },
+    {
+      "slug": "paolo-ardoino",
+      "name": "Paolo Ardoino",
+      "rank": 58,
+      "sector": "Finance",
+      "worth": 38,
+      "worthText": "$38B",
+      "r": 12.4,
+      "x": 866.6,
+      "y": 538.7
+    },
+    {
+      "slug": "jean-louis-van-der-velde",
+      "name": "Jean-Louis van der Velde",
+      "rank": 58,
+      "sector": "Finance",
+      "worth": 38,
+      "worthText": "$38B",
+      "r": 12.4,
+      "x": 751,
+      "y": 579.7
+    },
+    {
+      "slug": "peter-thiel",
+      "name": "Peter Thiel",
+      "rank": 60,
+      "sector": "AI & tech",
+      "worth": 37.2,
+      "worthText": "$37.2B",
+      "r": 12.4,
+      "x": 562.1,
+      "y": 427.4
+    },
+    {
+      "slug": "he-xiangjian-family",
+      "name": "He Xiangjian & family",
+      "rank": 63,
+      "sector": "Industrials",
+      "worth": 36.6,
+      "worthText": "$36.6B",
+      "r": 12.4,
+      "x": 281.5,
+      "y": 502.3
+    },
+    {
+      "slug": "john-tu",
+      "name": "John Tu",
+      "rank": 65,
+      "sector": "AI & tech",
+      "worth": 35.5,
+      "worthText": "$35.5B",
+      "r": 12.3,
+      "x": 192.3,
+      "y": 580
+    },
+    {
+      "slug": "david-sun",
+      "name": "David Sun",
+      "rank": 66,
+      "sector": "AI & tech",
+      "worth": 35.4,
+      "worthText": "$35.4B",
+      "r": 12.3,
+      "x": 60.4,
+      "y": 444.1
+    },
+    {
+      "slug": "melinda-french-gates",
+      "name": "Melinda French Gates",
+      "rank": 70,
+      "sector": "AI & tech",
+      "worth": 34.5,
+      "worthText": "$34.5B",
+      "r": 12.3,
+      "x": 150.3,
+      "y": 498
+    },
+    {
+      "slug": "henry-samueli",
+      "name": "Henry Samueli",
+      "rank": 73,
+      "sector": "AI & tech",
+      "worth": 33.2,
+      "worthText": "$33.2B",
+      "r": 12.2,
+      "x": 322.4,
+      "y": 240.9
+    },
+    {
+      "slug": "elaine-marshall-family",
+      "name": "Elaine Marshall & family",
+      "rank": 74,
+      "sector": "Industrials",
+      "worth": 32.2,
+      "worthText": "$32.2B",
+      "r": 12.2,
+      "x": 402.1,
+      "y": 353.8
+    },
+    {
+      "slug": "idan-ofer",
+      "name": "Idan Ofer",
+      "rank": 75,
+      "sector": "Industrials",
+      "worth": 31.6,
+      "worthText": "$31.6B",
+      "r": 12.1,
+      "x": 139.6,
+      "y": 374.5
+    },
+    {
+      "slug": "david-tepper",
+      "name": "David Tepper",
+      "rank": 82,
+      "sector": "Finance",
+      "worth": 28.5,
+      "worthText": "$28.5B",
+      "r": 12,
+      "x": 493.6,
+      "y": 322.1
+    },
+    {
+      "slug": "mackenzie-scott",
+      "name": "MacKenzie Scott",
+      "rank": 90,
+      "sector": "AI & tech",
+      "worth": 27.3,
+      "worthText": "$27.3B",
+      "r": 11.9,
+      "x": 518.3,
+      "y": 90.9
+    },
+    {
+      "slug": "jack-ma",
+      "name": "Jack Ma",
+      "rank": 92,
+      "sector": "Luxury & retail",
+      "worth": 26.2,
+      "worthText": "$26.2B",
+      "r": 11.9,
+      "x": 598.9,
+      "y": 119.8
+    },
+    {
+      "slug": "vinod-adani",
+      "name": "Vinod Adani",
+      "rank": 94,
+      "sector": "Industrials",
+      "worth": 25.8,
+      "worthText": "$25.8B",
+      "r": 11.8,
+      "x": 940.6,
+      "y": 287.6
+    },
+    {
+      "slug": "greg-brockman",
+      "name": "Greg Brockman",
+      "rank": 97,
+      "sector": "AI & tech",
+      "worth": 25.5,
+      "worthText": "$25.5B",
+      "r": 11.8,
+      "x": 694.8,
+      "y": 376
+    },
+    {
+      "slug": "gina-rinehart",
+      "name": "Gina Rinehart",
+      "rank": 98,
+      "sector": "Industrials",
+      "worth": 25.2,
+      "worthText": "$25.2B",
+      "r": 11.8,
+      "x": 580.6,
+      "y": 206.2
+    },
+    {
+      "slug": "francois-pinault-family",
+      "name": "François Pinault & family",
+      "rank": 100,
+      "sector": "Luxury & retail",
+      "worth": 25.1,
+      "worthText": "$25.1B",
+      "r": 11.8,
+      "x": 836,
+      "y": 248.6
+    }
+  ],
+  "edges": [
+    {
+      "a": "gianluigi-aponte",
+      "b": "rafaela-aponte-diamant",
+      "weight": 14,
+      "companies": [
+        {
+          "name": "AGL",
+          "key": "N:agl",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            5,
+            5
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/gianluigi-aponte/",
+            "https://www.forbes.com/profile/gianluigi-aponte/"
+          ]
+        },
+        {
+          "name": "Boluda Towage",
+          "key": "N:boluda towage",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            4,
+            4
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        },
+        {
+          "name": "Clasquin Group",
+          "key": "N:clasquin",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            2
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        },
+        {
+          "name": "Genoa airport",
+          "key": "N:genoa airport",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            3,
+            3
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        },
+        {
+          "name": "Gram Car Carriers",
+          "key": "N:gram car carriers",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            8,
+            8
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        },
+        {
+          "name": "Grandi Navi Veloci and SNAV ferries",
+          "key": "N:grandi navi veloci and snav ferries",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            7,
+            7
+          ],
+          "sources": [
+            "https://www.shippax.com/en/news/aponte-family-completes-generational-handover-at-msc.aspx",
+            "https://www.shippax.com/en/news/aponte-family-completes-generational-handover-at-msc.aspx"
+          ]
+        },
+        {
+          "name": "HHLA",
+          "key": "N:hhla",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        },
+        {
+          "name": "Italo",
+          "key": "N:italo",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            1
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Italo_Nuovo_Trasporto_Viaggiatori",
+            "https://en.wikipedia.org/wiki/Italo_Nuovo_Trasporto_Viaggiatori"
+          ]
+        },
+        {
+          "name": "Medlog incl. UK haulier Maritime Transport",
+          "key": "N:medlog incl uk haulier maritime transport",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            4,
+            4
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        },
+        {
+          "name": "MSC Air Cargo",
+          "key": "N:msc air cargo",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            9,
+            9
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        },
+        {
+          "name": "MSC Cruises and Explora Journeys",
+          "key": "N:msc cruises and explora journeys",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            2,
+            2
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Explora_Journeys",
+            "https://en.wikipedia.org/wiki/Explora_Journeys"
+          ]
+        },
+        {
+          "name": "MSC Mediterranean Shipping Company",
+          "key": "N:msc mediterranean shipping",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/gianluigi-aponte/",
+            "https://www.forbes.com/profile/rafaela-aponte-diamant/"
+          ]
+        },
+        {
+          "name": "Terminal Investment Limited",
+          "key": "N:terminal investment",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            3,
+            3
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        },
+        {
+          "name": "Wilson Sons",
+          "key": "N:wilson sons",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            6,
+            6
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company",
+            "https://en.wikipedia.org/wiki/Mediterranean_Shipping_Company"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "alain-wertheimer",
+      "b": "gerard-wertheimer",
+      "weight": 9,
+      "companies": [
+        {
+          "name": "Chanel Limited",
+          "key": "N:chanel",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://jingdaily.com/intels/2026-05/25/chanel-backed-wertheimer-family-set-for-usd21b-in-dividends-over-a-decade",
+            "https://jingdaily.com/intels/2026-05/25/chanel-backed-wertheimer-family-set-for-usd21b-in-dividends-over-a-decade"
+          ]
+        },
+        {
+          "name": "Charvet",
+          "key": "N:charvet",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            4,
+            4
+          ],
+          "sources": [
+            "https://us.fashionnetwork.com/news/Chanel-acquires-charvet,1849194.html",
+            "https://us.fashionnetwork.com/news/Chanel-acquires-charvet,1849194.html"
+          ]
+        },
+        {
+          "name": "Chateau Rauzan-Segla",
+          "key": "N:chateau rauzan segla",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            3,
+            3
+          ],
+          "sources": [
+            "https://www.winespectator.com/articles/st-supery-acquires-rudd-estates",
+            "https://www.winespectator.com/articles/st-supery-acquires-rudd-estates"
+          ]
+        },
+        {
+          "name": "Grey Mer",
+          "key": "N:grey mer",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            5,
+            5
+          ],
+          "sources": [
+            "https://www.laconceria.it/en/finance/chanel-strikes-again-securing-a-majority-stake-in-grey-mer/",
+            "https://www.laconceria.it/en/finance/chanel-strikes-again-securing-a-majority-stake-in-grey-mer/"
+          ]
+        },
+        {
+          "name": "Kross Manufacture",
+          "key": "N:kross manufacture",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            1
+          ],
+          "sources": [
+            "https://watchesbysjx.com/2026/01/chanel-kross-manufacture.html",
+            "https://watchesbysjx.com/2026/01/chanel-kross-manufacture.html"
+          ]
+        },
+        {
+          "name": "Leo France",
+          "key": "N:leo france",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            3,
+            3
+          ],
+          "sources": [
+            "https://luxus-plus.com/en/chanel-acquires-stake-in-leo-france/",
+            "https://luxus-plus.com/en/chanel-acquires-stake-in-leo-france/"
+          ]
+        },
+        {
+          "name": "Mantero Seta",
+          "key": "N:mantero seta",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            2
+          ],
+          "sources": [
+            "https://luxus-plus.com/en/chanel-acquires-a-stake-in-the-italian-silk-manufacturer-montero/",
+            "https://luxus-plus.com/en/chanel-acquires-a-stake-in-the-italian-silk-manufacturer-montero/"
+          ]
+        },
+        {
+          "name": "St. Supery Estate Vineyards & Winery",
+          "key": "N:st supery estate vineyards winery",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            2,
+            2
+          ],
+          "sources": [
+            "https://www.winespectator.com/articles/st-supery-acquires-rudd-estates",
+            "https://www.winespectator.com/articles/st-supery-acquires-rudd-estates"
+          ]
+        },
+        {
+          "name": "The Row",
+          "key": "N:row",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://fashionunited.com/executive/management/the-row-receives-investment-from-chanel-and-loreal-owners/2024091361861",
+            "https://fashionunited.com/executive/management/the-row-receives-investment-from-chanel-and-loreal-owners/2024091361861"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jean-louis-van-der-velde",
+      "b": "paolo-ardoino",
+      "weight": 6,
+      "companies": [
+        {
+          "name": "Bitfinex",
+          "key": "N:bitfinex",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            2
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/jean-louis-van-der-velde/",
+            "https://www.sec.gov/Archives/edgar/data/2070457/000121390026087471/ea0299640-10q_twentyone.htm"
+          ]
+        },
+        {
+          "name": "Gold.com, Inc. (GOLD)",
+          "key": "T:GOLD",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            1
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105914/xslSCHEDULE_13D_X02/primary_doc.xml",
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105914/xslSCHEDULE_13D_X02/primary_doc.xml"
+          ]
+        },
+        {
+          "name": "Metalla Royalty & Streaming Ltd.",
+          "key": "N:metalla royalty streaming",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            2
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926058902/xslSCHEDULE_13G_X02/primary_doc.xml",
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926058902/xslSCHEDULE_13G_X02/primary_doc.xml"
+          ]
+        },
+        {
+          "name": "Rumble Inc. / RUM Group Inc. (RUM)",
+          "key": "T:RUM",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105546/xslSCHEDULE_13D_X02/primary_doc.xml",
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105546/xslSCHEDULE_13D_X02/primary_doc.xml"
+          ]
+        },
+        {
+          "name": "Tether Holdings",
+          "key": "N:tether",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            1,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/jean-louis-van-der-velde/",
+            "https://www.forbes.com/profile/paolo-ardoino/"
+          ]
+        },
+        {
+          "name": "Twenty One Capital, Inc. (XXI)",
+          "key": "T:XXI",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            3,
+            3
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2070457/000121390026087471/ea0299640-10q_twentyone.htm",
+            "https://www.sec.gov/Archives/edgar/data/2070457/000121390026087471/ea0299640-10q_twentyone.htm"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jacqueline-mars",
+      "b": "john-mars",
+      "weight": 5,
+      "companies": [
+        {
+          "name": "Kellanova",
+          "key": "N:kellanova",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            1,
+            1
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/55067/000119312525315130/d90636d8k.htm",
+            "https://www.sec.gov/Archives/edgar/data/55067/000119312525315130/d90636d8k.htm"
+          ]
+        },
+        {
+          "name": "Mars Food & Nutrition",
+          "key": "N:mars food nutrition",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            4,
+            4
+          ],
+          "sources": [
+            "https://www.mars.com/about/leadership",
+            "https://www.mars.com/about/leadership"
+          ]
+        },
+        {
+          "name": "Mars Petcare",
+          "key": "N:mars petcare",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            2,
+            2
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mars_Inc.",
+            "https://en.wikipedia.org/wiki/Mars_Inc."
+          ]
+        },
+        {
+          "name": "Mars Snacking",
+          "key": "N:mars snacking",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            3,
+            3
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Mars_Inc.",
+            "https://en.wikipedia.org/wiki/Mars_Inc."
+          ]
+        },
+        {
+          "name": "Mars, Incorporated",
+          "key": "N:mars",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/jacqueline-mars/",
+            "https://www.forbes.com/profile/john-mars/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "giancarlo-devasini",
+      "b": "paolo-ardoino",
+      "weight": 4,
+      "companies": [
+        {
+          "name": "Bitfinex",
+          "key": "N:bitfinex",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            2,
+            2
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Giancarlo_Devasini",
+            "https://www.sec.gov/Archives/edgar/data/2070457/000121390026087471/ea0299640-10q_twentyone.htm"
+          ]
+        },
+        {
+          "name": "Gold.com, Inc. (GOLD)",
+          "key": "T:GOLD",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            1
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml",
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105914/xslSCHEDULE_13D_X02/primary_doc.xml"
+          ]
+        },
+        {
+          "name": "Rumble Inc. / RUM Group Inc. (RUM)",
+          "key": "T:RUM",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2050373/000110465926105551/xslF345X06/tm2624697-1_4seq1.xml",
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105546/xslSCHEDULE_13D_X02/primary_doc.xml"
+          ]
+        },
+        {
+          "name": "Tether Holdings",
+          "key": "N:tether",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2050373/000110465925010615/xslF345X02/tm255553-1_3seq1.xml",
+            "https://www.forbes.com/profile/paolo-ardoino/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "giancarlo-devasini",
+      "b": "jean-louis-van-der-velde",
+      "weight": 4,
+      "companies": [
+        {
+          "name": "Bitfinex",
+          "key": "N:bitfinex",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            2,
+            0
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Giancarlo_Devasini",
+            "https://www.forbes.com/profile/jean-louis-van-der-velde/"
+          ]
+        },
+        {
+          "name": "Gold.com, Inc. (GOLD)",
+          "key": "T:GOLD",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            1
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml",
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105914/xslSCHEDULE_13D_X02/primary_doc.xml"
+          ]
+        },
+        {
+          "name": "Rumble Inc. / RUM Group Inc. (RUM)",
+          "key": "T:RUM",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2050373/000110465926105551/xslF345X06/tm2624697-1_4seq1.xml",
+            "https://www.sec.gov/Archives/edgar/data/2025889/000110465926105546/xslSCHEDULE_13D_X02/primary_doc.xml"
+          ]
+        },
+        {
+          "name": "Tether Holdings",
+          "key": "N:tether",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            1
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/2050373/000110465925010615/xslF345X02/tm255553-1_3seq1.xml",
+            "https://www.forbes.com/profile/jean-louis-van-der-velde/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "elon-musk",
+      "b": "peter-thiel",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "Founders Fund",
+          "key": "N:founders fund",
+          "kinds": [
+            "privateDeals",
+            "controls"
+          ],
+          "refs": [
+            6,
+            2
+          ],
+          "sources": [
+            "https://techcrunch.com/2025/05/28/elon-musks-neuralink-raises-600m-at-9b-valuation/",
+            "https://www.forbes.com/profile/peter-thiel/"
+          ]
+        },
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            1
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm",
+            "https://www.forbes.com/profile/peter-thiel/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jensen-huang",
+      "b": "masayoshi-son",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "Intel Corp. (INTC)",
+          "key": "T:INTC",
+          "kinds": [
+            "privateDeals",
+            "stakes"
+          ],
+          "refs": [
+            5,
+            1
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Nvidia",
+            "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
+          ]
+        },
+        {
+          "name": "SB Energy, Inc. (SBE)",
+          "key": "T:SBE",
+          "kinds": [
+            "privateDeals",
+            "controls"
+          ],
+          "refs": [
+            3,
+            3
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+            "https://group.softbank/en/news/press/20260902"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-ellison",
+      "b": "zhang-yiming",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "ByteDance Ltd.",
+          "key": "N:bytedance",
+          "kinds": [
+            "privateDeals",
+            "controls"
+          ],
+          "refs": [
+            3,
+            0
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Oracle_Corporation",
+            "https://fortune.com/2026/09/17/billionaire-tiktok-founder-zhang-yiming-richest-person-in-asia-105-billion-net-worth-gained-92-billion-since-2019-ai/"
+          ]
+        },
+        {
+          "name": "Oracle Corporation (ORCL)",
+          "key": "T:ORCL",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm",
+            "https://www.forbes.com/profile/zhang-yiming/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-ellison",
+      "b": "jeff-yass",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "ByteDance Ltd.",
+          "key": "N:bytedance",
+          "kinds": [
+            "privateDeals",
+            "stakes"
+          ],
+          "refs": [
+            3,
+            0
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Oracle_Corporation",
+            "https://en.wikipedia.org/wiki/Susquehanna_International_Group"
+          ]
+        },
+        {
+          "name": "Oracle Corporation (ORCL)",
+          "key": "T:ORCL",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm",
+            "https://en.wikipedia.org/wiki/TikTok_USDS_Joint_Venture"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "warren-buffett",
+      "b": "david-tepper",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            3,
+            3
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/56757.xml",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        },
+        {
+          "name": "Apple Inc (AAPL)",
+          "key": "T:AAPL",
+          "kinds": [
+            "stakes",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/56757.xml",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "bill-gates",
+      "b": "melinda-french-gates",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "AutoNation (AN)",
+          "key": "T:AN",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1052192/000110465926055650/primary_doc.xml",
+            "https://www.sec.gov/Archives/edgar/data/1226523/000095014224002532/xslSCHEDULE_13G_X01/primary_doc.xml"
+          ]
+        },
+        {
+          "name": "Canadian National Railway (CNI)",
+          "key": "T:CNI",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            5,
+            2
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml",
+            "https://www.sec.gov/Archives/edgar/data/1226523/000095014224002531/xslSCHEDULE_13G_X01/primary_doc.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "zhang-yiming",
+      "b": "jeff-yass",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "ByteDance Ltd.",
+          "key": "N:bytedance",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://fortune.com/2026/09/17/billionaire-tiktok-founder-zhang-yiming-richest-person-in-asia-105-billion-net-worth-gained-92-billion-since-2019-ai/",
+            "https://en.wikipedia.org/wiki/Susquehanna_International_Group"
+          ]
+        },
+        {
+          "name": "TikTok USDS Joint Venture LLC",
+          "key": "N:tiktok usds joint venture",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            1
+          ],
+          "sources": [
+            "https://newsroom.tiktok.com/announcement-from-the-new-tiktok-usds-joint-venture-llc",
+            "https://en.wikipedia.org/wiki/TikTok_USDS_Joint_Venture"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "gautam-adani",
+      "b": "vinod-adani",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "Adani Enterprises Ltd (ADANIENT)",
+          "key": "T:ADANIENT",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.acclimited.com/-/media/Project/ACC-Limited/Investor/Portfolio-Updates/Adani-Portfolio-FY26-Results-Compendium.ashx",
+            "https://www.forbes.com/profile/vinod-adani/"
+          ]
+        },
+        {
+          "name": "Ambuja Cements Ltd (AMBUJACEM)",
+          "key": "T:AMBUJACEM",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            6,
+            1
+          ],
+          "sources": [
+            "https://www.acclimited.com/-/media/Project/ACC-Limited/Investor/Portfolio-Updates/Adani-Portfolio-FY26-Results-Compendium.ashx",
+            "https://en.wikipedia.org/wiki/Ambuja_Cements"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "li-ka-shing",
+      "b": "gianluigi-aponte",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "CK Hutchison Holdings Limited (0001)",
+          "key": "T:0001",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://doc.irasia.com/listco/hk/ckh/interim/2025/CKHH_2025_InterimReport_e.pdf",
+            "https://www.ckh.com.hk/en/media/press_each.php?id=3432"
+          ]
+        },
+        {
+          "name": "Hutchison Ports",
+          "key": "N:hutchison ports",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            5,
+            6
+          ],
+          "sources": [
+            "https://doc.irasia.com/listco/hk/ckh/interim/2025/CKHH_2025_InterimReport_e.pdf",
+            "https://en.wikipedia.org/wiki/Gianluigi_Aponte"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "peter-thiel",
+      "b": "david-tepper",
+      "weight": 2,
+      "companies": [
+        {
+          "name": "Meta Platforms, Inc. (META)",
+          "key": "T:META",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            5
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/peter-thiel/",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        },
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "stakes",
+            "privateDeals"
+          ],
+          "refs": [
+            1,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/peter-thiel/",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "elon-musk",
+      "b": "larry-page",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            1,
+            2
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm",
+            "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "elon-musk",
+      "b": "larry-ellison",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Tesla, Inc. (TSLA)",
+          "key": "T:TSLA",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1494730/000110465926075203/0001104659-26-075203-index.htm",
+            "https://en.wikipedia.org/wiki/Larry_Ellison"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "elon-musk",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            1,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "elon-musk",
+      "b": "gina-rinehart",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            11
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm",
+            "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jeff-bezos",
+      "b": "eduardo-saverin",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Liverpool F.C.",
+          "key": "N:liverpool f c",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            1
+          ],
+          "sources": [
+            "https://www.skysports.com/football/news/11669/13573040/liverpool-fsg-sell-minority-stake-to-amazon-founder-jeff-bezos-backed-consortium-led-by-amit-bhatia",
+            "https://www.liverpoolfc.com/news/fsg-announces-strategic-minority-investment-liverpool-fc"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jeff-bezos",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Amazon.com, Inc. (AMZN)",
+          "key": "T:AMZN",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jeff-bezos",
+      "b": "mackenzie-scott",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Amazon.com, Inc. (AMZN)",
+          "key": "T:AMZN",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm",
+            "https://en.wikipedia.org/wiki/MacKenzie_Scott"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-page",
+      "b": "sergey-brin",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1652044/000130817926000342/goog-20260424.htm",
+            "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-page",
+      "b": "warren-buffett",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            3
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1652044/000130817926000342/goog-20260424.htm",
+            "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/56757.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-page",
+      "b": "andreas-von-bechtolsheim-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1652044/000130817926000342/goog-20260424.htm",
+            "https://www.forbes.com/profile/andreas-von-bechtolsheim/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-page",
+      "b": "eric-schmidt",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1652044/000130817926000342/goog-20260424.htm",
+            "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-page",
+      "b": "peter-thiel",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "privateDeals",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            1
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+            "https://www.forbes.com/profile/peter-thiel/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-page",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            3
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1652044/000130817926000342/goog-20260424.htm",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "larry-page",
+      "b": "gina-rinehart",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "privateDeals",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            11
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm",
+            "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "mark-zuckerberg",
+      "b": "eduardo-saverin",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Meta Platforms, Inc. (META)",
+          "key": "T:META",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm",
+            "https://www.forbes.com/profile/eduardo-saverin/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "mark-zuckerberg",
+      "b": "peter-thiel",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Meta Platforms, Inc. (META)",
+          "key": "T:META",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            2
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm",
+            "https://www.forbes.com/profile/peter-thiel/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "mark-zuckerberg",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Meta Platforms, Inc. (META)",
+          "key": "T:META",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            5
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "sergey-brin",
+      "b": "warren-buffett",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            3
+          ],
+          "sources": [
+            "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html",
+            "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/56757.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "sergey-brin",
+      "b": "andreas-von-bechtolsheim-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html",
+            "https://www.forbes.com/profile/andreas-von-bechtolsheim/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "sergey-brin",
+      "b": "eric-schmidt",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html",
+            "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "sergey-brin",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            3
+          ],
+          "sources": [
+            "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jensen-huang",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "NVIDIA Corporation (NVDA)",
+          "key": "T:NVDA",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            7
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1197649/000119764926000012/wk-form4_1789765856.xml",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jensen-huang",
+      "b": "greg-brockman",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "OpenAI",
+          "key": "N:openai",
+          "kinds": [
+            "privateDeals",
+            "controls"
+          ],
+          "refs": [
+            3,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm",
+            "https://www.bloomberg.com/news/articles/2026-05-04/brockman-says-his-stake-in-openai-worth-nearly-30-billion"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "steve-ballmer",
+      "b": "bill-gates",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Microsoft Corp. (MSFT)",
+          "key": "T:MSFT",
+          "kinds": [
+            "stakes",
+            "controls"
+          ],
+          "refs": [
+            0,
+            3
+          ],
+          "sources": [
+            "https://en.wikipedia.org/wiki/Steve_Ballmer",
+            "https://www.forbes.com/profile/bill-gates/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "warren-buffett",
+      "b": "bill-gates",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Berkshire Hathaway Inc. (BRK.B)",
+          "key": "T:BRK.B",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            3
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml",
+            "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "warren-buffett",
+      "b": "andreas-von-bechtolsheim-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            3,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/56757.xml",
+            "https://www.forbes.com/profile/andreas-von-bechtolsheim/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "warren-buffett",
+      "b": "eric-schmidt",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            3,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/56757.xml",
+            "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "rob-walton-family",
+      "b": "jim-walton-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Walmart Inc. (WMT)",
+          "key": "T:WMT",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "rob-walton-family",
+      "b": "alice-walton",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Walmart Inc. (WMT)",
+          "key": "T:WMT",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "rob-walton-family",
+      "b": "lukas-walton",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Walmart Inc. (WMT)",
+          "key": "T:WMT",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+            "https://www.forbes.com/profile/lukas-walton/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jim-walton-family",
+      "b": "alice-walton",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Walmart Inc. (WMT)",
+          "key": "T:WMT",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "jim-walton-family",
+      "b": "lukas-walton",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Walmart Inc. (WMT)",
+          "key": "T:WMT",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+            "https://www.forbes.com/profile/lukas-walton/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "bernard-arnault-family",
+      "b": "mark-mateschitz",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Paris FC",
+          "key": "N:paris fc",
+          "kinds": [
+            "privateDeals",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            3
+          ],
+          "sources": [
+            "https://www.france24.com/en/live-news/20241129-arnault-family-s-paris-fc-takeover-completed",
+            "https://www.france24.com/en/live-news/20241129-arnault-family-s-paris-fc-takeover-completed"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "alice-walton",
+      "b": "lukas-walton",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Walmart Inc. (WMT)",
+          "key": "T:WMT",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+            "https://www.forbes.com/profile/lukas-walton/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "francoise-bettencourt-meyers-family",
+      "b": "alain-wertheimer",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "The Row",
+          "key": "N:row",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            0
+          ],
+          "sources": [
+            "https://www.bloomberg.com/news/articles/2024-09-12/chanel-owners-l-oreal-heir-said-to-invest-in-olsens-the-row",
+            "https://fashionunited.com/executive/management/the-row-receives-investment-from-chanel-and-loreal-owners/2024091361861"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "francoise-bettencourt-meyers-family",
+      "b": "gerard-wertheimer",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "The Row",
+          "key": "N:row",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            0
+          ],
+          "sources": [
+            "https://www.bloomberg.com/news/articles/2024-09-12/chanel-owners-l-oreal-heir-said-to-invest-in-olsens-the-row",
+            "https://fashionunited.com/executive/management/the-row-receives-investment-from-chanel-and-loreal-owners/2024091361861"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "francoise-bettencourt-meyers-family",
+      "b": "francois-pinault-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "L'Oréal S.A. (OR)",
+          "key": "T:OR",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            2
+          ],
+          "sources": [
+            "https://www.forbes.com/sites/maryroeloffs/2025/02/06/loral-heiress-francoise-bettencourt-meyers-worlds-second-richest-woman-retiring-from-companys-board/",
+            "https://en.wikipedia.org/wiki/Kering"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "julia-koch-family",
+      "b": "charles-koch-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Koch, Inc.",
+          "key": "N:koch",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/julia-koch/",
+            "https://www.forbes.com/profile/charles-koch/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "julia-koch-family",
+      "b": "elaine-marshall-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Koch, Inc.",
+          "key": "N:koch",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/julia-koch/",
+            "https://www.forbes.com/profile/elaine-marshall/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "charles-koch-family",
+      "b": "elaine-marshall-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Koch, Inc.",
+          "key": "N:koch",
+          "kinds": [
+            "controls",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/charles-koch/",
+            "https://www.forbes.com/profile/elaine-marshall/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "masayoshi-son",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Taiwan Semiconductor ADS (TSM)",
+          "key": "T:TSM",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            8,
+            2
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "masayoshi-son",
+      "b": "greg-brockman",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "OpenAI",
+          "key": "N:openai",
+          "kinds": [
+            "privateDeals",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://group.softbank/en/news/press/20260227",
+            "https://www.bloomberg.com/news/articles/2026-05-04/brockman-says-his-stake-in-openai-worth-nearly-30-billion"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "li-ka-shing",
+      "b": "rafaela-aponte-diamant",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "CK Hutchison Holdings Limited (0001)",
+          "key": "T:0001",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://doc.irasia.com/listco/hk/ckh/interim/2025/CKHH_2025_InterimReport_e.pdf",
+            "https://www.ckh.com.hk/en/media/press_each.php?id=3432"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "li-ka-shing",
+      "b": "he-xiangjian-family",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "HUTCHMED Limited (HCM)",
+          "key": "T:HCM",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            4,
+            2
+          ],
+          "sources": [
+            "https://doc.irasia.com/listco/hk/ckh/interim/2025/CKHH_2025_InterimReport_e.pdf",
+            "https://www.yicaiglobal.com/news/midea-founder-expands-empire-buys-third-largest-stake-in-samsung-pc-insurance"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "li-ka-shing",
+      "b": "idan-ofer",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "HUTCHMED Limited (HCM)",
+          "key": "T:HCM",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            4,
+            1
+          ],
+          "sources": [
+            "https://doc.irasia.com/listco/hk/ckh/interim/2025/CKHH_2025_InterimReport_e.pdf",
+            "https://www.sec.gov/Archives/edgar/data/1611005/000117891326001842/zk2634883.htm"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "li-ka-shing",
+      "b": "gina-rinehart",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "NexGen Energy Ltd. (NXE)",
+          "key": "T:NXE",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            15
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1686621/000149315224002511/formsc13da.htm",
+            "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "ma-huateng",
+      "b": "liang-wenfeng",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Tencent Holdings Limited (0700)",
+          "key": "T:0700",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.bloomberg.com/billionaires/profiles/huateng-ma/",
+            "https://www.scmp.com/tech/big-tech/article/3355818/deepseek-nears-us7b-haul-first-ever-funding-round-backing-tencent-catl"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "eduardo-saverin",
+      "b": "peter-thiel",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Meta Platforms, Inc. (META)",
+          "key": "T:META",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            2
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/eduardo-saverin/",
+            "https://www.forbes.com/profile/peter-thiel/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "eduardo-saverin",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Meta Platforms, Inc. (META)",
+          "key": "T:META",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            5
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/eduardo-saverin/",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "andreas-von-bechtolsheim-family",
+      "b": "eric-schmidt",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/andreas-von-bechtolsheim/",
+            "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "andreas-von-bechtolsheim-family",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            3
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/andreas-von-bechtolsheim/",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "liang-wenfeng",
+      "b": "jack-ma",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alibaba Group (BABA)",
+          "key": "T:BABA",
+          "kinds": [
+            "privateDeals",
+            "controls"
+          ],
+          "refs": [
+            2,
+            0
+          ],
+          "sources": [
+            "https://techcrunch.com/2026/05/06/deepseek-could-hit-45b-valuation-from-its-first-investment-round/",
+            "https://en.wikipedia.org/wiki/Jack_Ma"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "eric-schmidt",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Alphabet Inc. (GOOGL)",
+          "key": "T:GOOGL",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            3
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "peter-thiel",
+      "b": "greg-brockman",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Stripe",
+          "key": "N:stripe",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/peter-thiel/",
+            "https://finance.yahoo.com/markets/stocks/articles/openai-exploring-ipo-greg-brockman-194116972.html"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "peter-thiel",
+      "b": "gina-rinehart",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            1,
+            11
+          ],
+          "sources": [
+            "https://www.forbes.com/profile/peter-thiel/",
+            "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "he-xiangjian-family",
+      "b": "idan-ofer",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "HUTCHMED Limited (HCM)",
+          "key": "T:HCM",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            2,
+            1
+          ],
+          "sources": [
+            "https://www.yicaiglobal.com/news/midea-founder-expands-empire-buys-third-largest-stake-in-samsung-pc-insurance",
+            "https://www.sec.gov/Archives/edgar/data/1611005/000117891326001842/zk2634883.htm"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "john-tu",
+      "b": "david-sun",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Kingston Technology Corporation",
+          "key": "N:kingston technology",
+          "kinds": [
+            "controls",
+            "controls"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.forbes.com/companies/kingston-technology/",
+            "https://www.forbes.com/profile/david-sun/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "henry-samueli",
+      "b": "david-tepper",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Broadcom Inc. (AVGO)",
+          "key": "T:AVGO",
+          "kinds": [
+            "controls",
+            "privateDeals"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.sec.gov/Archives/edgar/data/1730168/000119312526085691/d49254ddef14a.htm",
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "david-tepper",
+      "b": "mackenzie-scott",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Amazon.com, Inc. (AMZN)",
+          "key": "T:AMZN",
+          "kinds": [
+            "stakes",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            0
+          ],
+          "sources": [
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/",
+            "https://en.wikipedia.org/wiki/MacKenzie_Scott"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "david-tepper",
+      "b": "greg-brockman",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "CoreWeave (CRWV)",
+          "key": "T:CRWV",
+          "kinds": [
+            "privateDeals",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            1
+          ],
+          "sources": [
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/",
+            "https://finance.yahoo.com/markets/stocks/articles/openai-exploring-ipo-greg-brockman-194116972.html"
+          ]
+        }
+      ]
+    },
+    {
+      "a": "david-tepper",
+      "b": "gina-rinehart",
+      "weight": 1,
+      "companies": [
+        {
+          "name": "Space Exploration Technologies Corp. (SPCX)",
+          "key": "T:SPCX",
+          "kinds": [
+            "privateDeals",
+            "stakes"
+          ],
+          "refs": [
+            0,
+            11
+          ],
+          "sources": [
+            "https://www.danielscrivner.com/david-tepper-trades-and-holdings-q2-2026/",
+            "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+          ]
+        }
+      ]
+    }
+  ]
+}

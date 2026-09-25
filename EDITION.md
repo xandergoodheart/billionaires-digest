@@ -27,7 +27,7 @@ Build today's Billionaires Digest edition and publish it.
 7. If it fails, fix only the problems it lists, using real sources, and run it again. Retry at most
    2 times. If it still fails, stop. Do not commit. The site keeps yesterday's edition.
 8. On success, run:
-   `git add digest.json archive og index.html people editions sitemap.xml robots.txt && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
+   `git add digest.json archive og index.html people editions companies guides sitemap.xml robots.txt && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
    (use today's date in New York time). `og/` holds the share image the publish script renders for the
    edition. `index.html` is only changed by the publish script, which points its og:image and
    twitter:image meta tags at that image. If the image step printed a warning, commit anyway.

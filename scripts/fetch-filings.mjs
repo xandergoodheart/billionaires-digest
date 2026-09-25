@@ -3,6 +3,7 @@
 //   SEC_USER_AGENT="Billionaires Digest hello@billionairesdigest.com" node scripts/fetch-filings.mjs
 //
 // Writes data/filings/latest.json and data/filings/by-person/<slug>.json.
+// Form 4 and Form 144 filings (newest 60 of each) also get a parsed summary (form4 / form144).
 // SEC fair access: identified User-Agent (from env only), sequential requests, at most ~6-7 per second.
 // Exits 0 without fetching when SEC_USER_AGENT is unset. Exits 1 (and writes nothing) only when
 // every CIK request failed.
@@ -13,6 +14,7 @@ import { ROOT, loadProfiles, padCik, spacer, sleep, writeJson } from './lib/data
 
 const WINDOW_DAYS = 90;
 const FORM4_CAP = 60;
+const FORM144_CAP = 60;
 const MAX_DESCRIPTION = 200;
 const OUT_DIR = join(ROOT, 'data', 'filings');
 
@@ -197,6 +199,62 @@ export function parseForm4(xml) {
   return { issuer, ticker, summary, transactionCount: transactions.length, transactions: transactions.slice(0, MAX_TX) };
 }
 
+// ---------- Form 144 XML (notice of proposed sale) ----------
+
+// "09/24/2026" -> "2026-09-24"; anything else -> undefined.
+function isoFromUs(s) {
+  const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(String(s ?? '').trim());
+  if (!m) return undefined;
+  return `${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}`;
+}
+
+function allTags(xml, name) {
+  return xml.match(new RegExp(`<${name}\\b[^>]*>[\\s\\S]*?</${name}>`, 'g')) ?? [];
+}
+
+// Summary of a Form 144 primary_doc.xml. Broker details are deliberately left out.
+// Missing fields are omitted, never guessed. Form 144 has no ticker field.
+export function parseForm144(rawXml) {
+  // Some filers use namespace prefixes (<ns2:issuerName>); drop them so one parser fits both.
+  const xml = String(rawXml).replace(/<(\/?)[A-Za-z_][\w.-]*:/g, '<$1');
+  const issuerInfo = tag(xml, 'issuerInfo') ?? '';
+  const issuer = val(issuerInfo, 'issuerName');
+  const issuerCik = val(issuerInfo, 'issuerCik');
+  const seller = val(issuerInfo, 'nameOfPersonForWhoseAccountTheSecuritiesAreToBeSold');
+  const relBlock = tag(issuerInfo, 'relationshipsToIssuer') ?? '';
+  const relationships = allTags(relBlock, 'relationshipToIssuer').map((b) => decode(b.replace(/<[^>]+>/g, ''))).filter(Boolean);
+
+  const lots = allTags(xml, 'securitiesInformation').map((b) => {
+    const lot = {
+      securitiesClassTitle: val(b, 'securitiesClassTitle'),
+      shares: num(val(b, 'noOfUnitsSold')),
+      aggregateMarketValue: num(val(b, 'aggregateMarketValue')),
+      approxSaleDate: isoFromUs(val(b, 'approxSaleDate')),
+      exchange: val(b, 'securitiesExchangeName'),
+    };
+    for (const k of Object.keys(lot)) if (lot[k] === undefined) delete lot[k];
+    return lot;
+  }).filter((l) => Object.keys(l).length);
+
+  const out = { issuer, issuerCik, seller, relationships: relationships.length ? relationships : undefined };
+  if (lots.length) {
+    const titles = [...new Set(lots.map((l) => l.securitiesClassTitle).filter(Boolean))];
+    if (titles.length) out.securitiesClassTitle = titles.join('; ');
+    if (lots.every((l) => l.shares !== undefined)) out.shares = lots.reduce((s, l) => s + l.shares, 0);
+    if (lots.every((l) => l.aggregateMarketValue !== undefined)) out.aggregateMarketValue = Math.round(lots.reduce((s, l) => s + l.aggregateMarketValue, 0));
+    const dates = lots.map((l) => l.approxSaleDate).filter(Boolean).sort();
+    if (dates.length) out.approxSaleDate = dates[0];
+    if (lots.length > 1) out.lots = lots;
+  }
+  const notice = tag(xml, 'noticeSignature') ?? '';
+  const noticeDate = isoFromUs(val(notice, 'noticeDate'));
+  if (noticeDate) out.noticeDate = noticeDate;
+  const planDates = allTags(notice, 'planAdoptionDate').map((b) => isoFromUs(decode(b.replace(/<[^>]+>/g, '')))).filter(Boolean);
+  if (planDates.length) out.planAdoptionDates = planDates;
+  for (const k of Object.keys(out)) if (out[k] === undefined) delete out[k];
+  return out;
+}
+
 function rawXmlUrl(rec) {
   const doc = rec.primaryDocument;
   if (!doc || !/\.xml$/i.test(doc)) return null;
@@ -280,6 +338,30 @@ async function main() {
     if (parsed) rec.form4 = parsed;
   }
 
+  // Form 144 detail: newest first, one fetch per accession, capped.
+  const form144Cache = new Map();
+  let form144Tried = 0;
+  let form144Parsed = 0;
+  for (const rec of filings) {
+    if (rec.form !== '144') continue;
+    if (!form144Cache.has(rec.accession)) {
+      if (form144Tried >= FORM144_CAP) continue;
+      const url = rawXmlUrl(rec);
+      if (!url) continue;
+      form144Tried++;
+      try {
+        const xml = await secFetch(url, { as: 'text' });
+        form144Cache.set(rec.accession, parseForm144(xml));
+        form144Parsed++;
+      } catch (err) {
+        console.warn(`! Form 144 ${rec.accession}: ${err.message}`);
+        form144Cache.set(rec.accession, null);
+      }
+    }
+    const parsed = form144Cache.get(rec.accession);
+    if (parsed && Object.keys(parsed).length) rec.form144 = parsed;
+  }
+
   for (const rec of filings) delete rec.primaryDocument;
 
   const generated = now.toISOString();
@@ -292,7 +374,7 @@ async function main() {
     await writeJson(join(OUT_DIR, 'by-person', `${slug}.json`), { generated, windowDays: WINDOW_DAYS, person, personSlug: slug, filings: list });
   }
 
-  console.log(`Done. CIKs fetched ${fetched}/${attempted}; filings kept ${filings.length}; Form 4s parsed ${form4Parsed}/${form4Tried}; people files ${bySlug.size}.`);
+  console.log(`Done. CIKs fetched ${fetched}/${attempted}; filings kept ${filings.length}; Form 4s parsed ${form4Parsed}/${form4Tried}; Form 144s parsed ${form144Parsed}/${form144Tried}; people files ${bySlug.size}.`);
   return 0;
 }
 

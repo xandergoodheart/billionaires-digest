@@ -1,0 +1,607 @@
+{
+  "generated": "2026-09-25T06:02:14.112Z",
+  "method": "Hypothetical. Buys at the insider's reported price on their Form 4 filing, held to today's price. Ignores timing lag, fees, taxes and dividends. Not investment advice.",
+  "methodDetail": "Each buy is one Form 4 filing and one security: the share-weighted average of its open-market purchase (code P) lines. The portfolio return is the simple average of every priced buy (equal dollars in each). A filing listed under more than one person counts once in the portfolio and once for each person. Buys without a US ticker or a current quote are listed but not counted. Amended filings (4/A) are not used.",
+  "pricesAsOf": "2026-09-25T03:44:39.188Z",
+  "filingsAsOf": "2026-09-25T05:56:50.559Z",
+  "windowDays": 365,
+  "coverage": {
+    "from": "2026-07-23",
+    "to": "2026-09-23",
+    "carriedFromEarlierRuns": 0
+  },
+  "portfolio": {
+    "buys": 20,
+    "priced": 16,
+    "invested": 1654991460,
+    "avgReturnPct": -1.32,
+    "up": 3,
+    "down": 13
+  },
+  "people": [
+    {
+      "person": "Giancarlo Devasini",
+      "personSlug": "giancarlo-devasini",
+      "buys": 1,
+      "priced": 1,
+      "invested": 3930350,
+      "avgReturnPct": 10.63,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "person": "Jean-Louis van der Velde",
+      "personSlug": "jean-louis-van-der-velde",
+      "buys": 1,
+      "priced": 1,
+      "invested": 3930350,
+      "avgReturnPct": 10.63,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "person": "Paolo Ardoino",
+      "personSlug": "paolo-ardoino",
+      "buys": 1,
+      "priced": 1,
+      "invested": 3930350,
+      "avgReturnPct": 10.63,
+      "up": 1,
+      "down": 0
+    },
+    {
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "buys": 3,
+      "priced": 3,
+      "invested": 212645223,
+      "avgReturnPct": 2.97,
+      "up": 2,
+      "down": 1
+    },
+    {
+      "person": "Bill Gates",
+      "personSlug": "bill-gates",
+      "buys": 12,
+      "priced": 12,
+      "invested": 1380322193,
+      "avgReturnPct": -3.38,
+      "up": 0,
+      "down": 12
+    },
+    {
+      "person": "Michael Dell",
+      "personSlug": "michael-dell",
+      "buys": 1,
+      "priced": 0,
+      "invested": 30950172,
+      "avgReturnPct": null,
+      "up": 0,
+      "down": 0
+    },
+    {
+      "person": "Stephen Schwarzman",
+      "personSlug": "stephen-schwarzman",
+      "buys": 3,
+      "priced": 0,
+      "invested": 27143522,
+      "avgReturnPct": null,
+      "up": 0,
+      "down": 0
+    }
+  ],
+  "buys": [
+    {
+      "key": "0001213900-26-103146|Common Shares of Beneficial Interest",
+      "accession": "0001213900-26-103146",
+      "filed": "2026-09-24",
+      "date": "2026-09-23",
+      "dateFrom": "2026-09-23",
+      "issuer": "Blackstone Private Real Estate Credit & Income Fund",
+      "securityTitle": "Common Shares of Beneficial Interest",
+      "ticker": null,
+      "tickerText": "NONE",
+      "shares": 191695.131,
+      "pricePaid": 26.17,
+      "value": 5016662,
+      "lines": 2,
+      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026103146/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026103146/0001213900-26-103146-index.htm",
+      "people": [
+        {
+          "person": "Stephen Schwarzman",
+          "personSlug": "stephen-schwarzman"
+        }
+      ],
+      "priceNow": null,
+      "returnPct": null,
+      "unpricedReason": "no US ticker on the filing"
+    },
+    {
+      "key": "0001193125-26-397059|Class A Common Stock",
+      "accession": "0001193125-26-397059",
+      "filed": "2026-09-21",
+      "date": "2026-09-21",
+      "dateFrom": "2026-09-17",
+      "issuer": "LENNAR CORP /NEW/",
+      "securityTitle": "Class A Common Stock",
+      "ticker": "LEN",
+      "tickerText": "LEN, LEN.B",
+      "shares": 2668508,
+      "pricePaid": 77.4578,
+      "value": 206696718,
+      "lines": 8,
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/0001193125-26-397059-index.htm",
+      "people": [
+        {
+          "person": "Warren Buffett",
+          "personSlug": "warren-buffett"
+        }
+      ],
+      "priceNow": 81.47,
+      "returnPct": 5.18
+    },
+    {
+      "key": "0001193125-26-397059|Class B Common Stock",
+      "accession": "0001193125-26-397059",
+      "filed": "2026-09-21",
+      "date": "2026-09-21",
+      "dateFrom": "2026-09-17",
+      "issuer": "LENNAR CORP /NEW/",
+      "securityTitle": "Class B Common Stock",
+      "ticker": "LEN.B",
+      "tickerText": "LEN, LEN.B",
+      "shares": 75021,
+      "pricePaid": 75.9578,
+      "value": 5698433,
+      "lines": 8,
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/0001193125-26-397059-index.htm",
+      "people": [
+        {
+          "person": "Warren Buffett",
+          "personSlug": "warren-buffett"
+        }
+      ],
+      "priceNow": 79.88,
+      "returnPct": 5.16
+    },
+    {
+      "key": "0001104659-26-107592|Common stock",
+      "accession": "0001104659-26-107592",
+      "filed": "2026-09-14",
+      "date": "2026-09-11",
+      "dateFrom": "2026-09-10",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 580810,
+      "pricePaid": 222.6298,
+      "value": 129305617,
+      "lines": 8,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/xslF345X06/tm2625411-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/0001104659-26-107592-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -4.45
+    },
+    {
+      "key": "0001104659-26-106713|Common stock",
+      "accession": "0001104659-26-106713",
+      "filed": "2026-09-10",
+      "date": "2026-09-09",
+      "dateFrom": "2026-09-08",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 720804,
+      "pricePaid": 221.4098,
+      "value": 159593041,
+      "lines": 6,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926106713/xslF345X06/tm2625157-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926106713/0001104659-26-106713-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -3.92
+    },
+    {
+      "key": "0001104659-26-105908|Common stock",
+      "accession": "0001104659-26-105908",
+      "filed": "2026-09-08",
+      "date": "2026-09-04",
+      "dateFrom": "2026-09-03",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 735303,
+      "pricePaid": 223.9916,
+      "value": 164701666,
+      "lines": 7,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926105908/xslF345X06/tm2624905-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926105908/0001104659-26-105908-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -5.03
+    },
+    {
+      "key": "0001193125-26-385264|Common Stock",
+      "accession": "0001193125-26-385264",
+      "filed": "2026-09-08",
+      "date": "2026-09-03",
+      "dateFrom": "2026-09-03",
+      "issuer": "Gold.com, Inc.",
+      "securityTitle": "Common Stock",
+      "ticker": "GOLD",
+      "tickerText": "GOLD",
+      "shares": 100000,
+      "pricePaid": 39.3035,
+      "value": 3930350,
+      "lines": 1,
+      "url": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/0001193125-26-385264-index.htm",
+      "people": [
+        {
+          "person": "Giancarlo Devasini",
+          "personSlug": "giancarlo-devasini"
+        },
+        {
+          "person": "Jean-Louis van der Velde",
+          "personSlug": "jean-louis-van-der-velde"
+        },
+        {
+          "person": "Paolo Ardoino",
+          "personSlug": "paolo-ardoino"
+        }
+      ],
+      "priceNow": 43.48,
+      "returnPct": 10.63
+    },
+    {
+      "key": "0001104659-26-105062|Common stock",
+      "accession": "0001104659-26-105062",
+      "filed": "2026-09-03",
+      "date": "2026-09-02",
+      "dateFrom": "2026-09-01",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 534000,
+      "pricePaid": 223.0429,
+      "value": 119104891,
+      "lines": 8,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926105062/xslF345X06/tm2624729-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926105062/0001104659-26-105062-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -4.63
+    },
+    {
+      "key": "0001104659-26-104314|Common stock",
+      "accession": "0001104659-26-104314",
+      "filed": "2026-09-01",
+      "date": "2026-08-31",
+      "dateFrom": "2026-08-28",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 552400,
+      "pricePaid": 221.525,
+      "value": 122370391,
+      "lines": 7,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926104314/xslF345X06/tm2624425-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926104314/0001104659-26-104314-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -3.97
+    },
+    {
+      "key": "0001104659-26-103265|Common stock",
+      "accession": "0001104659-26-103265",
+      "filed": "2026-08-28",
+      "date": "2026-08-27",
+      "dateFrom": "2026-08-26",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 560100,
+      "pricePaid": 220.5174,
+      "value": 123511813,
+      "lines": 6,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926103265/xslF345X06/tm2624303-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926103265/0001104659-26-103265-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -3.54
+    },
+    {
+      "key": "0001104659-26-101497|Common stock",
+      "accession": "0001104659-26-101497",
+      "filed": "2026-08-26",
+      "date": "2026-08-25",
+      "dateFrom": "2026-08-24",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 571116,
+      "pricePaid": 222.4248,
+      "value": 127030343,
+      "lines": 7,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926101497/xslF345X06/tm2624067-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926101497/0001104659-26-101497-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -4.36
+    },
+    {
+      "key": "0001104659-26-100306|Common stock",
+      "accession": "0001104659-26-100306",
+      "filed": "2026-08-24",
+      "date": "2026-08-21",
+      "dateFrom": "2026-08-20",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 400286,
+      "pricePaid": 220.3001,
+      "value": 88183049,
+      "lines": 6,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926100306/xslF345X06/tm2623834-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926100306/0001104659-26-100306-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -3.44
+    },
+    {
+      "key": "0001213900-26-093085|Common Shares of Beneficial Interest",
+      "accession": "0001213900-26-093085",
+      "filed": "2026-08-24",
+      "date": "2026-08-21",
+      "dateFrom": "2026-08-21",
+      "issuer": "Blackstone Private Real Estate Credit & Income Fund",
+      "securityTitle": "Common Shares of Beneficial Interest",
+      "ticker": null,
+      "tickerText": "NONE",
+      "shares": 272641.916,
+      "pricePaid": 26.14,
+      "value": 7126860,
+      "lines": 2,
+      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026093085/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026093085/0001213900-26-093085-index.htm",
+      "people": [
+        {
+          "person": "Stephen Schwarzman",
+          "personSlug": "stephen-schwarzman"
+        }
+      ],
+      "priceNow": null,
+      "returnPct": null,
+      "unpricedReason": "no US ticker on the filing"
+    },
+    {
+      "key": "0001104659-26-099249|Common stock",
+      "accession": "0001104659-26-099249",
+      "filed": "2026-08-20",
+      "date": "2026-08-19",
+      "dateFrom": "2026-08-18",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 378969,
+      "pricePaid": 220.0785,
+      "value": 83402937,
+      "lines": 12,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926099249/xslF345X06/tm2623658-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926099249/0001104659-26-099249-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -3.34
+    },
+    {
+      "key": "0001104659-26-098392|Common stock",
+      "accession": "0001104659-26-098392",
+      "filed": "2026-08-18",
+      "date": "2026-08-17",
+      "dateFrom": "2026-08-14",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 356050,
+      "pricePaid": 215.2605,
+      "value": 76643506,
+      "lines": 5,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926098392/xslF345X06/tm2623466-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926098392/0001104659-26-098392-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -1.18
+    },
+    {
+      "key": "0001104659-26-097181|Common stock",
+      "accession": "0001104659-26-097181",
+      "filed": "2026-08-14",
+      "date": "2026-08-13",
+      "dateFrom": "2026-08-12",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 362960,
+      "pricePaid": 215.8066,
+      "value": 78329177,
+      "lines": 7,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926097181/xslF345X06/tm2623234-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926097181/0001104659-26-097181-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -1.43
+    },
+    {
+      "key": "0001193125-26-349574|Class B Common Stock",
+      "accession": "0001193125-26-349574",
+      "filed": "2026-08-13",
+      "date": "2026-08-12",
+      "dateFrom": "2026-08-12",
+      "issuer": "BERKSHIRE HATHAWAY INC",
+      "securityTitle": "Class B Common Stock",
+      "ticker": "BRK.B",
+      "tickerText": "BRK.B",
+      "shares": 488,
+      "pricePaid": 512.4427,
+      "value": 250072,
+      "lines": 3,
+      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526349574/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526349574/0001193125-26-349574-index.htm",
+      "people": [
+        {
+          "person": "Warren Buffett",
+          "personSlug": "warren-buffett"
+        }
+      ],
+      "priceNow": 505.18,
+      "returnPct": -1.42
+    },
+    {
+      "key": "0001104659-26-094887|Common stock",
+      "accession": "0001104659-26-094887",
+      "filed": "2026-08-12",
+      "date": "2026-08-11",
+      "dateFrom": "2026-08-10",
+      "issuer": "REPUBLIC SERVICES, INC.",
+      "securityTitle": "Common stock",
+      "ticker": "RSG",
+      "tickerText": "RSG",
+      "shares": 501664,
+      "pricePaid": 215.5741,
+      "value": 108145762,
+      "lines": 7,
+      "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926094887/xslF345X06/tm2623023-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926094887/0001104659-26-094887-index.htm",
+      "people": [
+        {
+          "person": "Bill Gates",
+          "personSlug": "bill-gates"
+        }
+      ],
+      "priceNow": 212.72,
+      "returnPct": -1.32
+    },
+    {
+      "key": "0001193125-26-321223|Common Stock",
+      "accession": "0001193125-26-321223",
+      "filed": "2026-07-28",
+      "date": "2026-07-24",
+      "dateFrom": "2026-07-24",
+      "issuer": "5C Lending Partners Corp.",
+      "securityTitle": "Common Stock",
+      "ticker": null,
+      "tickerText": "NONE",
+      "shares": 1274194,
+      "pricePaid": 24.29,
+      "value": 30950172,
+      "lines": 1,
+      "url": "https://www.sec.gov/Archives/edgar/data/908724/000119312526321223/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/908724/000119312526321223/0001193125-26-321223-index.htm",
+      "people": [
+        {
+          "person": "Michael Dell",
+          "personSlug": "michael-dell"
+        }
+      ],
+      "priceNow": null,
+      "returnPct": null,
+      "unpricedReason": "no US ticker on the filing"
+    },
+    {
+      "key": "0001213900-26-081436|Common Shares of Beneficial Interest",
+      "accession": "0001213900-26-081436",
+      "filed": "2026-07-24",
+      "date": "2026-07-23",
+      "dateFrom": "2026-07-23",
+      "issuer": "Blackstone Private Real Estate Credit & Income Fund",
+      "securityTitle": "Common Shares of Beneficial Interest",
+      "ticker": null,
+      "tickerText": "NONE",
+      "shares": 573613.767,
+      "pricePaid": 26.15,
+      "value": 15000000,
+      "lines": 1,
+      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026081436/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026081436/0001213900-26-081436-index.htm",
+      "people": [
+        {
+          "person": "Stephen Schwarzman",
+          "personSlug": "stephen-schwarzman"
+        }
+      ],
+      "priceNow": null,
+      "returnPct": null,
+      "unpricedReason": "no US ticker on the filing"
+    }
+  ]
+}

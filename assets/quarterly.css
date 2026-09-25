@@ -1,0 +1,95 @@
+/* Quarterly 13F page (quarterly.html) and copycat tracker (copycat.html). Uses the tokens in site.css. */
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.qlead{margin:10px 0 0;font-size:13px;color:var(--soft);max-width:720px;line-height:1.6}
+.qlead a{white-space:nowrap}
+
+/* jump list of filers */
+.qjump{display:flex;flex-wrap:wrap;gap:6px;padding:16px 0 4px}
+.qjump a{min-height:44px;display:inline-flex;align-items:center;padding:0 12px;border:1px solid var(--line2);color:var(--text);text-decoration:none;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.qjump a:hover{border-color:var(--text)}
+
+/* filer card */
+.fcard{padding:28px 0 22px;border-bottom:1px solid var(--line)}
+.fcard:target .fname{color:var(--accent)}
+.fhead{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.fhead .av{color:var(--text)}
+.fwho{min-width:0;flex:1 1 280px}
+.fperson{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.fperson a{text-decoration:none;min-height:44px;display:inline-flex;align-items:center;margin:-12px 0}
+.fperson a:hover{text-decoration:underline}
+.fname{margin:2px 0 4px;font-size:clamp(24px,3vw,32px);line-height:1.15;overflow-wrap:anywhere}
+.fmeta{font-size:12px;color:var(--muted)}
+.flink{flex:none;font-size:11px;letter-spacing:.08em;text-transform:uppercase;min-height:44px;display:inline-flex;align-items:center}
+.fstats{display:flex;flex-wrap:wrap;gap:8px 22px;margin:16px 0 0;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+.fstats b{display:block;font-size:20px;line-height:1.2;color:var(--text);font-weight:600;font-family:'Newsreader',Georgia,serif}
+.fnote{margin:10px 0 0;font-size:12px;line-height:1.55;color:var(--muted);max-width:760px}
+.fconf{margin:14px 0 0;padding:10px 12px;border-left:2px solid var(--accent);font-size:13px;color:var(--soft)}
+
+.fgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px 36px;margin-top:18px}
+.fsec h3{margin:0 0 8px;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--accent)}
+.fsec h3 .cnt{color:var(--muted)}
+.chgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+.chg h3.new{color:var(--up)} .chg h3.exited{color:var(--down)} .chg h3.inc{color:var(--up)} .chg h3.dec{color:var(--down)}
+
+/* compact data tables */
+.qtable{width:100%;border-collapse:collapse;font-size:13px}
+.qtable caption{text-align:left}
+.qtable th{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:6px 8px 6px 0;border-bottom:1px solid var(--line2);white-space:nowrap}
+.qtable td{padding:8px 8px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.qtable th.n,.qtable td.n{text-align:right;white-space:nowrap}
+.qtable tr:last-child td{border-bottom:none}
+.qtable .co{overflow-wrap:anywhere}
+.qtable .sub{display:block;font-size:11px;color:var(--muted);font-weight:400}
+.qtable .sub.hide-sm-inv{display:none}
+.pctbar{display:block;height:4px;background:var(--line);margin-top:4px}
+.pctbar i{display:block;height:4px;background:var(--accent)}
+
+.chrow{display:flex;justify-content:space-between;gap:4px 12px;padding:7px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.45}
+.chrow:first-of-type{border-top:none}
+.chrow .co{min-width:0;overflow-wrap:anywhere}
+.chrow .co .sub{display:block;font-size:11px;color:var(--muted)}
+.chrow .nums{flex:none;text-align:right;white-space:nowrap}
+.chrow .nums .sub{display:block;font-size:11px;color:var(--muted)}
+.chnone{font-size:12px;color:var(--muted);padding:6px 0}
+.morebtn{min-height:44px;padding:0 12px;margin-top:4px;background:transparent;color:var(--accent);border:1px solid var(--line2);font:inherit;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.morebtn:hover{border-color:var(--accent)}
+
+/* ---- copycat ---- */
+.ccmethod{margin:18px 0 0;padding:14px 16px;border:1px solid var(--text);font-size:14px;line-height:1.6;max-width:820px}
+.ccmethod strong{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;font-weight:600}
+.cchero{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 36px;padding:22px 0 18px;border-bottom:1px solid var(--line)}
+.ccbig{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(48px,9vw,88px);line-height:1}
+.cchero .ccsub{font-size:13px;color:var(--soft);max-width:520px}
+.ccstats{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12px;color:var(--muted)}
+.ccstats b{display:block;font-size:20px;line-height:1.2;color:var(--text);font-weight:600;font-family:'Newsreader',Georgia,serif}
+.ccgrid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:36px;padding-top:24px;align-items:start}
+.cch2{margin:0 0 10px;font-style:italic;font-size:24px}
+.qtable td.up,.qtable td.down{font-weight:600}
+.qtable a{text-decoration:none}
+.qtable a:hover{text-decoration:underline}
+.qtable td a.src{display:inline-flex;align-items:center;min-height:44px;margin:-12px 0;font-size:11px;letter-spacing:.06em}
+.ccperson{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.ccperson:first-of-type{border-top:none}
+.ccperson .av{color:var(--text)}
+.ccperson .who{min-width:0;flex:1 1 auto;font-size:14px;overflow-wrap:anywhere}
+.ccperson .who a{text-decoration:none}
+.ccperson .who a:hover{text-decoration:underline}
+.ccperson .who .sub{display:block;font-size:11px;color:var(--muted)}
+.ccperson .ret{flex:none;text-align:right;font-weight:600;font-size:15px}
+.ccdetail{margin:16px 0 0;font-size:12px;line-height:1.6;color:var(--muted);max-width:820px}
+
+@media (max-width:900px){
+  .fgrid,.ccgrid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:600px){
+  .chgrid{grid-template-columns:minmax(0,1fr)}
+  .qjump{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}
+  .qjump a{flex:none;white-space:nowrap}
+  .fhead .av{--av:48px!important}
+  .qtable{font-size:12px}
+  .qtable th,.qtable td{padding-right:6px}
+  .qtable .hide-sm{display:none}
+  .qtable .sub.hide-sm-inv{display:block}
+  .ccbig{font-size:56px}
+}

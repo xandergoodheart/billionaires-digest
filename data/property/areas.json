@@ -1,0 +1,2280 @@
+{
+  "asOf": "2026-09-24T21:15-04:00",
+  "source": "Built from the real-estate entries in each person's profile (data/people). Each entry links to its original report.",
+  "privacy": "We list reported deals at city or neighborhood level only. No addresses.",
+  "total": 127,
+  "countries": [
+    {
+      "country": "United States",
+      "count": 80,
+      "areas": 51
+    },
+    {
+      "country": "France",
+      "count": 7,
+      "areas": 2
+    },
+    {
+      "country": "Germany",
+      "count": 5,
+      "areas": 4
+    },
+    {
+      "country": "United Kingdom",
+      "count": 5,
+      "areas": 4
+    },
+    {
+      "country": "Canada",
+      "count": 3,
+      "areas": 3
+    },
+    {
+      "country": "Austria",
+      "count": 2,
+      "areas": 1
+    },
+    {
+      "country": "Hong Kong",
+      "count": 2,
+      "areas": 2
+    },
+    {
+      "country": "Italy",
+      "count": 2,
+      "areas": 2
+    },
+    {
+      "country": "Japan",
+      "count": 2,
+      "areas": 2
+    },
+    {
+      "country": "Argentina",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "China",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "Greece",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "India",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "Mexico",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "Netherlands",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "New Zealand",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "Singapore",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "Spain",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "St. Vincent and the Grenadines",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "Switzerland",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "country": "Several places",
+      "count": 8,
+      "areas": 1
+    }
+  ],
+  "regions": [
+    {
+      "region": "California, United States",
+      "country": "United States",
+      "state": "California",
+      "count": 20,
+      "areas": 14
+    },
+    {
+      "region": "Florida, United States",
+      "country": "United States",
+      "state": "Florida",
+      "count": 14,
+      "areas": 7
+    },
+    {
+      "region": "New York, United States",
+      "country": "United States",
+      "state": "New York",
+      "count": 13,
+      "areas": 4
+    },
+    {
+      "region": "Hawaii, United States",
+      "country": "United States",
+      "state": "Hawaii",
+      "count": 8,
+      "areas": 6
+    },
+    {
+      "region": "France",
+      "country": "France",
+      "state": null,
+      "count": 7,
+      "areas": 2
+    },
+    {
+      "region": "Germany",
+      "country": "Germany",
+      "state": null,
+      "count": 5,
+      "areas": 4
+    },
+    {
+      "region": "United Kingdom",
+      "country": "United Kingdom",
+      "state": null,
+      "count": 5,
+      "areas": 4
+    },
+    {
+      "region": "Washington, United States",
+      "country": "United States",
+      "state": "Washington",
+      "count": 4,
+      "areas": 4
+    },
+    {
+      "region": "Canada",
+      "country": "Canada",
+      "state": null,
+      "count": 3,
+      "areas": 3
+    },
+    {
+      "region": "Colorado, United States",
+      "country": "United States",
+      "state": "Colorado",
+      "count": 3,
+      "areas": 2
+    },
+    {
+      "region": "Illinois, United States",
+      "country": "United States",
+      "state": "Illinois",
+      "count": 3,
+      "areas": 1
+    },
+    {
+      "region": "Austria",
+      "country": "Austria",
+      "state": null,
+      "count": 2,
+      "areas": 1
+    },
+    {
+      "region": "Connecticut, United States",
+      "country": "United States",
+      "state": "Connecticut",
+      "count": 2,
+      "areas": 1
+    },
+    {
+      "region": "Hong Kong",
+      "country": "Hong Kong",
+      "state": null,
+      "count": 2,
+      "areas": 2
+    },
+    {
+      "region": "Italy",
+      "country": "Italy",
+      "state": null,
+      "count": 2,
+      "areas": 2
+    },
+    {
+      "region": "Japan",
+      "country": "Japan",
+      "state": null,
+      "count": 2,
+      "areas": 2
+    },
+    {
+      "region": "Massachusetts, United States",
+      "country": "United States",
+      "state": "Massachusetts",
+      "count": 2,
+      "areas": 1
+    },
+    {
+      "region": "Texas, United States",
+      "country": "United States",
+      "state": "Texas",
+      "count": 2,
+      "areas": 2
+    },
+    {
+      "region": "Argentina",
+      "country": "Argentina",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "China",
+      "country": "China",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Greece",
+      "country": "Greece",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "India",
+      "country": "India",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Kansas, United States",
+      "country": "United States",
+      "state": "Kansas",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Mexico",
+      "country": "Mexico",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Montana, United States",
+      "country": "United States",
+      "state": "Montana",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Nebraska, United States",
+      "country": "United States",
+      "state": "Nebraska",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Netherlands",
+      "country": "Netherlands",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Nevada, United States",
+      "country": "United States",
+      "state": "Nevada",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "New Hampshire, United States",
+      "country": "United States",
+      "state": "New Hampshire",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "New Mexico, United States",
+      "country": "United States",
+      "state": "New Mexico",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "New Zealand",
+      "country": "New Zealand",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Pennsylvania, United States",
+      "country": "United States",
+      "state": "Pennsylvania",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Singapore",
+      "country": "Singapore",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Spain",
+      "country": "Spain",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "St. Vincent and the Grenadines",
+      "country": "St. Vincent and the Grenadines",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Switzerland",
+      "country": "Switzerland",
+      "state": null,
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Virginia, United States",
+      "country": "United States",
+      "state": "Virginia",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Wyoming, United States",
+      "country": "United States",
+      "state": "Wyoming",
+      "count": 1,
+      "areas": 1
+    },
+    {
+      "region": "Several places",
+      "country": "Several places",
+      "state": null,
+      "count": 8,
+      "areas": 1
+    }
+  ],
+  "areas": [
+    {
+      "area": "Manhattan, NY",
+      "country": "United States",
+      "state": "New York",
+      "count": 10,
+      "people": 7,
+      "entries": [
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Upper East Side, Manhattan, NY",
+          "type": "Adjoining ~7,500 sq ft duplex co-op, off-market all-cash",
+          "price": 38000000,
+          "date": "2026-04",
+          "source": "https://therealdeal.com/new-york/2026/04/09/duplex-at-740-park-ave-trades-for-38m/"
+        },
+        {
+          "person": "Julia Koch & family",
+          "slug": "julia-koch-family",
+          "place": "Upper East Side, Manhattan, New York",
+          "type": "residence (sold)",
+          "price": "$45M sale (first listed at $48M in 2022)",
+          "date": "2025-02",
+          "source": "https://therealdeal.com/new-york/2025/02/18/julia-koch-david-koch-740-park-avenue/"
+        },
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Upper East Side, Manhattan, NY",
+          "type": "Duplex co-op apartment (bought from Julia Koch)",
+          "price": 45000000,
+          "date": "2025-02",
+          "source": "https://finance.yahoo.com/news/hedge-fund-titan-ken-griffin-130041407.html"
+        },
+        {
+          "person": "Jeff Bezos",
+          "slug": "jeff-bezos",
+          "place": "Manhattan, NY",
+          "type": "Condominium apartment (adds to top-floor units bought 2019 for $80M)",
+          "price": 16100000,
+          "date": "2022-02",
+          "source": "https://en.wikipedia.org/wiki/Jeff_Bezos"
+        },
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Midtown/Central Park South, Manhattan, NY",
+          "type": "Four unfinished floors in condo tower (then U.S. residential record) (as of 2019)",
+          "price": 238000000,
+          "date": "2019-01",
+          "source": "https://en.wikipedia.org/wiki/Kenneth_C._Griffin"
+        },
+        {
+          "person": "Michael Dell",
+          "slug": "michael-dell",
+          "place": "Manhattan, NY",
+          "type": "Air rights interest bought for $126M in 2016; part sold to JPMorgan for $238M in 2018 (older)",
+          "price": 126000000,
+          "date": "2016",
+          "source": "https://en.wikipedia.org/wiki/MSD_Capital"
+        },
+        {
+          "person": "Israel Englander",
+          "slug": "israel-englander",
+          "place": "Manhattan, NY",
+          "type": "Duplex penthouse co-op (then a record Manhattan co-op price)",
+          "price": 71300000,
+          "date": "2014",
+          "source": "https://en.wikipedia.org/wiki/Israel_Englander"
+        },
+        {
+          "person": "Carlos Slim Helu & family",
+          "slug": "carlos-slim-helu-family",
+          "place": "Manhattan, New York City",
+          "type": "Beaux-Arts mansion (Duke-Semans mansion)",
+          "price": 44000000,
+          "date": "2010 (old; listed for sale in 2015 at $80M)",
+          "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+        },
+        {
+          "person": "Eyal Ofer",
+          "slug": "eyal-ofer",
+          "place": "Manhattan, New York",
+          "type": "Luxury condo development (address removed) - famous holding",
+          "price": null,
+          "date": null,
+          "source": "https://www.forbes.com/profile/eyal-ofer/"
+        },
+        {
+          "person": "Eyal Ofer",
+          "slug": "eyal-ofer",
+          "place": "Manhattan, New York",
+          "type": "Residential tower (address removed) - famous holding",
+          "price": null,
+          "date": null,
+          "source": "https://www.forbes.com/profile/eyal-ofer/"
+        }
+      ]
+    },
+    {
+      "area": "Several or unspecified places",
+      "country": "Several places",
+      "state": null,
+      "count": 8,
+      "people": 8,
+      "entries": [
+        {
+          "person": "Aliko Dangote",
+          "slug": "aliko-dangote",
+          "place": "United States and United Kingdom",
+          "type": "Two US mansions and a UK house - sold (Dangote said he sold all foreign properties when he moved into industry; timing not given)",
+          "price": null,
+          "date": "reported 2026-05-15",
+          "source": "https://www.premiumtimesng.com/entertainment/naija-fashion/879723-why-i-sold-my-mansions-in-the-us-uk-aliko-dangote.html"
+        },
+        {
+          "person": "Bill Gates",
+          "slug": "bill-gates",
+          "place": "19 US states",
+          "type": "Farmland (~242,000 acres; largest private US farmland owner) via Cascade",
+          "price": null,
+          "date": "accumulated mainly 2010s-2021",
+          "source": "https://en.wikipedia.org/wiki/Bill_Gates"
+        },
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Global",
+          "type": "Portfolio: ~216 buildings, estimated $25bn (offices, prime retail, hotels, logistics, residential)",
+          "price": null,
+          "date": "2026-04",
+          "source": "https://www.idealista.com/en/news/lifestyle-in-spain/2026/04/23/893862-how-zara-s-founder-became-the-world-s-property-king"
+        },
+        {
+          "person": "Elon Musk",
+          "slug": "elon-musk",
+          "place": "Multiple US locations",
+          "type": "Condominiums and land (1,000+ acres) held via ~37 companies appearing to be for Musk's personal use (NYT Feb 2026 report, as summarized)",
+          "price": null,
+          "date": "2026-02",
+          "source": "https://en.wikipedia.org/wiki/Wealth_of_Elon_Musk"
+        },
+        {
+          "person": "Vinod Adani",
+          "slug": "vinod-adani",
+          "place": "Dubai and Singapore",
+          "type": "Portfolio reported as 37 Dubai properties incl. a ~19,000 sq ft villa (~$10M), plus one Singapore apartment (Forbes 2023, older)",
+          "price": "~$10M (villa est.)",
+          "date": "2023 (reported)",
+          "source": "https://en.wikipedia.org/wiki/Vinod_Adani"
+        },
+        {
+          "person": "Larry Page",
+          "slug": "larry-page",
+          "place": "Caribbean / South Pacific",
+          "type": "Private islands: Hans Lollik (2014), Eustatia, Cayo Norte (2018), Tavarua, Fiji (2020) (older reports)",
+          "price": null,
+          "date": "2014-2020",
+          "source": "https://fortune.com/2024/02/01/larry-page-private-island-cayo-norte-5/"
+        },
+        {
+          "person": "Len Blavatnik",
+          "slug": "len-blavatnik",
+          "place": "United States and Latin America",
+          "type": "Hotels and residences (Faena)",
+          "price": null,
+          "date": null,
+          "source": "https://www.accessindustries.com/"
+        },
+        {
+          "person": "Vicky Safra & family",
+          "slug": "vicky-safra-family",
+          "place": "Portfolio of 200+ commercial, residential, retail and farmland properties worldwide, including a Midtown Manhattan office/retail tower and a City of London office tower",
+          "type": "commercial investment portfolio",
+          "price": null,
+          "date": null,
+          "source": "https://www.jsafrasarasin.com/content/dam/jsafrasarasin/company/media/document/annual-results/Media%20release%2030032026%20EN.pdf.coredownload.inline.pdf"
+        }
+      ]
+    },
+    {
+      "area": "Paris, France",
+      "country": "France",
+      "state": null,
+      "count": 6,
+      "people": 4,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Paris, France",
+          "type": "Office complex 'Capital 8' (~45,000 sqm; former EDF HQ), bought from Invesco; largest Pontegadea deal in Europe",
+          "price": "~EUR 800m",
+          "date": "2026-07",
+          "source": "https://www.iberian.property/news/offices/pontegadea-acquires-paris-office-complex-in-eur800m-deal/"
+        },
+        {
+          "person": "Israel Englander",
+          "slug": "israel-englander",
+          "place": "Paris, France",
+          "type": "Apartment formerly owned by the Bettencourt family",
+          "price": 20000000,
+          "date": "2022",
+          "source": "https://en.wikipedia.org/wiki/Israel_Englander"
+        },
+        {
+          "person": "François Pinault & family",
+          "slug": "francois-pinault-family",
+          "place": "Paris, 7th arrondissement",
+          "type": "Historic hôtel particulier (Hôtel de Cavoye)",
+          "price": null,
+          "date": "2021",
+          "source": "https://en.wikipedia.org/wiki/Fran%C3%A7ois_Pinault"
+        },
+        {
+          "person": "François Pinault & family",
+          "slug": "francois-pinault-family",
+          "place": "Paris",
+          "type": "Bourse de Commerce, converted into Pinault Collection museum (opened May 2021)",
+          "price": null,
+          "date": "2021",
+          "source": "https://en.wikipedia.org/wiki/Fran%C3%A7ois_Pinault"
+        },
+        {
+          "person": "Bernard Arnault & family",
+          "slug": "bernard-arnault-family",
+          "place": "Paris",
+          "type": "Fondation Louis Vuitton museum building (Frank Gehry; opened 20 Oct 2014; cost ~EUR 780m by 2017); on a concession, it passes to the City of Paris after 55 years",
+          "price": "~EUR 780m (construction)",
+          "date": "2014",
+          "source": "https://en.wikipedia.org/wiki/Fondation_Louis_Vuitton"
+        },
+        {
+          "person": "François Pinault & family",
+          "slug": "francois-pinault-family",
+          "place": "Paris",
+          "type": "Théâtre Marigny (renovated 2013-2018)",
+          "price": null,
+          "date": null,
+          "source": "https://en.wikipedia.org/wiki/Fran%C3%A7ois_Pinault"
+        }
+      ]
+    },
+    {
+      "area": "Miami-Dade County, FL",
+      "country": "United States",
+      "state": "Florida",
+      "count": 4,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Mark Zuckerberg",
+          "slug": "mark-zuckerberg",
+          "place": "Indian Creek Village, Miami-Dade County, FL",
+          "type": "Unfinished waterfront home, Miami-Dade County record price (asking $200M), bought with Priscilla Chan",
+          "price": 170000000,
+          "date": "2026-03",
+          "source": "https://www.nytimes.com/2026/03/11/realestate/mark-zuckerberg-ivana-trump-david-lynch-real-estate.html"
+        },
+        {
+          "person": "Jeff Bezos",
+          "slug": "jeff-bezos",
+          "place": "Indian Creek Village, Miami-Dade County, FL",
+          "type": "Third residential property",
+          "price": 87000000,
+          "date": "2024",
+          "source": "https://fortune.com/2026/08/21/miami-exclusive-jeff-bezos-indian-creek-country-club/"
+        },
+        {
+          "person": "Jeff Bezos",
+          "slug": "jeff-bezos",
+          "place": "Indian Creek Village, Miami-Dade County, FL",
+          "type": "Waterfront estate",
+          "price": 68000000,
+          "date": "2023",
+          "source": "https://fortune.com/2026/08/21/miami-exclusive-jeff-bezos-indian-creek-country-club/"
+        },
+        {
+          "person": "Jeff Bezos",
+          "slug": "jeff-bezos",
+          "place": "Indian Creek Village, Miami-Dade County, FL",
+          "type": "~19,000 sq ft home adjacent to first purchase",
+          "price": 79000000,
+          "date": "2023",
+          "source": "https://fortune.com/2026/08/21/miami-exclusive-jeff-bezos-indian-creek-country-club/"
+        }
+      ]
+    },
+    {
+      "area": "Miami, FL",
+      "country": "United States",
+      "state": "Florida",
+      "count": 4,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Larry Page",
+          "slug": "larry-page",
+          "place": "Coconut Grove, Miami, FL",
+          "type": "Mansion (bought by a trust with ties to Page)",
+          "price": 71900000,
+          "date": "2026-01",
+          "source": "https://www.nytimes.com/2026/01/09/technology/google-founders-california-wealth-tax.html"
+        },
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Wynwood, Miami, FL",
+          "type": "Office building (545Wyn), with Goldman Properties",
+          "price": 180000000,
+          "date": "2026-01",
+          "source": "https://therealdeal.com/miami/2026/01/14/ken-griffin-goldman-buy-545wyn-wynwood-office-building/"
+        },
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Coconut Grove, Miami, FL",
+          "type": "~4-acre waterfront estate (former Adrienne Arsht estate); Miami-Dade single-family record",
+          "price": 106875000,
+          "date": "2022-09",
+          "source": "https://therealdeal.com/miami/2022/09/07/ken-griffin-buyer-of-adrienne-arshts-107m-estate-sources/"
+        },
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Brickell, Miami, FL",
+          "type": "2.5-acre bayfront development site for planned Citadel/Citadel Securities HQ (54-story, ~1.7M sq ft office tower, ~$2.5B project)",
+          "price": 363000000,
+          "date": "2022",
+          "source": "https://www.brgintl.com/citadel-brickell-headquarters-2-5b-tower-miami/"
+        }
+      ]
+    },
+    {
+      "area": "Chicago, IL",
+      "country": "United States",
+      "state": "Illinois",
+      "count": 3,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Chicago, IL, USA",
+          "type": "One North Wacker office tower (51 storeys), from Donald Bren - reported in negotiation",
+          "price": "~EUR 440m",
+          "date": "2026-06 (reported)",
+          "source": "https://www.ejeprime.com/empresa/el-holding-de-amancio-ortega-invirtio-mas-de-1800-millones-en-el-primer-semestre-de-2026"
+        },
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Chicago, IL",
+          "type": "Last Chicago condo (penthouse) under contract after cut to $12.5M list",
+          "price": 12500000,
+          "date": "2025-12 (sale pending)",
+          "source": "https://www.bloomberg.com/news/articles/2025-12-03/ken-griffin-nears-sale-of-his-last-chicago-home-after-price-cut"
+        },
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Chicago, IL",
+          "type": "Two condos sold to Gov. J.B. Pritzker (combined)",
+          "price": 19000000,
+          "date": "2024 (sale)",
+          "source": "https://billionairereporter.com/ken-griffin-sells-final-chicago-property/"
+        }
+      ]
+    },
+    {
+      "area": "Inglewood, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 3,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Steve Ballmer",
+          "slug": "steve-ballmer",
+          "place": "Inglewood, CA",
+          "type": "Intuit Dome arena (Clippers home; hosted 2026 NBA All-Star Game; 2028 Olympics basketball)",
+          "price": 2000000000,
+          "date": "2024-08-15",
+          "source": "https://en.wikipedia.org/wiki/Intuit_Dome"
+        },
+        {
+          "person": "Steve Ballmer",
+          "slug": "steve-ballmer",
+          "place": "Inglewood, CA",
+          "type": "The Forum arena (bought from MSG, all cash)",
+          "price": 400000000,
+          "date": "2020",
+          "source": "https://en.wikipedia.org/wiki/Intuit_Dome"
+        },
+        {
+          "person": "Stanley Kroenke",
+          "slug": "stanley-kroenke",
+          "place": "Inglewood, CA",
+          "type": "Stadium and mixed-use development (SoFi Stadium)",
+          "price": null,
+          "date": "2015 (announced)",
+          "source": "https://en.wikipedia.org/wiki/Kroenke_Sports_%26_Entertainment"
+        }
+      ]
+    },
+    {
+      "area": "Aspen, CO",
+      "country": "United States",
+      "state": "Colorado",
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Thomas Peterffy",
+          "slug": "thomas-peterffy",
+          "place": "Aspen, Colorado",
+          "type": "Home",
+          "price": null,
+          "date": "reported",
+          "source": "https://en.wikipedia.org/wiki/Thomas_Peterffy"
+        },
+        {
+          "person": "Charles Koch & family",
+          "slug": "charles-koch-family",
+          "place": "Aspen, Colorado",
+          "type": "residence (long-held; date/price not reported)",
+          "price": null,
+          "date": null,
+          "source": "https://en.wikipedia.org/wiki/Charles_Koch"
+        }
+      ]
+    },
+    {
+      "area": "Beverly Hills, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Steve Cohen",
+          "slug": "steve-cohen",
+          "place": "Beverly Hills, CA",
+          "type": "Mansion (SOLD)",
+          "price": 35000000,
+          "date": "2025-10",
+          "source": "https://therealdeal.com/la/2025/10/15/ny-mets-owner-steve-cohen-finds-buyer-for-la-mansion/"
+        },
+        {
+          "person": "Jeff Bezos",
+          "slug": "jeff-bezos",
+          "place": "Beverly Hills, CA",
+          "type": "Warner Estate, bought from David Geffen - then an LA-area record (2020 report)",
+          "price": 165000000,
+          "date": "2020-02",
+          "source": "https://en.wikipedia.org/wiki/Jeff_Bezos"
+        }
+      ]
+    },
+    {
+      "area": "Boston, MA",
+      "country": "United States",
+      "state": "Massachusetts",
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Abigail Johnson",
+          "slug": "abigail-johnson",
+          "place": "Boston, Massachusetts",
+          "type": "residence",
+          "price": null,
+          "date": "as of 2026-09",
+          "source": "https://www.forbes.com/profile/abigail-johnson/"
+        },
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Boston, MA, USA",
+          "type": "The Kensington, 27-storey 381-unit apartment tower, from Kensington Investment Management",
+          "price": "$234m",
+          "date": "2026-07-09",
+          "source": "https://www.bisnow.com/boston/news/multifamily/spanish-billionaire-acquires-theater-district-apartment-tower-for-234m-135372"
+        }
+      ]
+    },
+    {
+      "area": "Greenwich, CT",
+      "country": "United States",
+      "state": "Connecticut",
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Thomas Peterffy",
+          "slug": "thomas-peterffy",
+          "place": "Greenwich, Connecticut",
+          "type": "80-acre estate (sold)",
+          "price": 21000000,
+          "date": "2020 (sale; first listed at $65M in 2015)",
+          "source": "https://en.wikipedia.org/wiki/Thomas_Peterffy"
+        },
+        {
+          "person": "Steve Cohen",
+          "slug": "steve-cohen",
+          "place": "Greenwich, CT",
+          "type": "Main residence, about 35,000 sq ft on 14 acres (long-held, bought 1998)",
+          "price": null,
+          "date": "1998",
+          "source": "https://en.wikipedia.org/wiki/Steve_Cohen_(businessman)"
+        }
+      ]
+    },
+    {
+      "area": "Heilbronn, Germany",
+      "country": "Germany",
+      "state": null,
+      "count": 2,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Dieter Schwarz",
+          "slug": "dieter-schwarz",
+          "place": "Heilbronn, Germany",
+          "type": "Innovation Park AI (IPAI) campus (~EUR 3bn)",
+          "price": 3000000000,
+          "date": "2025-10",
+          "source": "https://de.wikipedia.org/wiki/Schwarz_Gruppe"
+        },
+        {
+          "person": "Dieter Schwarz",
+          "slug": "dieter-schwarz",
+          "place": "Heilbronn, Germany",
+          "type": "Bildungscampus Heilbronn (education campus incl. TUM Campus Heilbronn, opened 2011)",
+          "price": null,
+          "date": "2011+",
+          "source": "https://de.wikipedia.org/wiki/Dieter_Schwarz_Stiftung"
+        }
+      ]
+    },
+    {
+      "area": "Kauai, HI",
+      "country": "United States",
+      "state": "Hawaii",
+      "count": 2,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Mark Zuckerberg",
+          "slug": "mark-zuckerberg",
+          "place": "Kauai, HI",
+          "type": "110 acres added to ~1,500-acre estate (Ko'olau Ranch)",
+          "price": 17000000,
+          "date": "2021-12",
+          "source": "https://www.theguardian.com/technology/2021/dec/28/mark-zuckerberg-110-acres-hawaii"
+        },
+        {
+          "person": "Mark Zuckerberg",
+          "slug": "mark-zuckerberg",
+          "place": "Kauai, HI",
+          "type": "Cumulative land spend of at least $145M on ~1,400+ acre retreat (2024 report)",
+          "price": 145000000,
+          "date": "2014-2024",
+          "source": "https://www.forbes.com/sites/phoebeliu/2024/02/18/meet-the-billionaires-buying-up-hawaii/"
+        }
+      ]
+    },
+    {
+      "area": "London, United Kingdom",
+      "country": "United Kingdom",
+      "state": null,
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Eric Schmidt",
+          "slug": "eric-schmidt",
+          "place": "Holland Park, London, UK",
+          "type": "mansion (described as investment)",
+          "price": "over $55M",
+          "date": "reported 2025 (date not stated)",
+          "source": "https://finance.yahoo.com/news/former-google-ceo-eric-schmidt-194612519.html"
+        },
+        {
+          "person": "Eyal Ofer",
+          "slug": "eyal-ofer",
+          "place": "London",
+          "type": "Office building (Vogue House)",
+          "price": null,
+          "date": null,
+          "source": "https://www.forbes.com/profile/eyal-ofer/"
+        }
+      ]
+    },
+    {
+      "area": "Malibu, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 2,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Sergey Brin",
+          "slug": "sergey-brin",
+          "place": "Malibu, CA",
+          "type": "residential compound",
+          "price": 49700000,
+          "date": "2025-12",
+          "source": "https://finance.yahoo.com/news/googles-sergey-brin-scores-42m-183103159.html"
+        },
+        {
+          "person": "Sergey Brin",
+          "slug": "sergey-brin",
+          "place": "Point Dume, Malibu, CA",
+          "type": "bluff-top mansion",
+          "price": 35000000,
+          "date": "2023-06",
+          "source": "https://patch.com/california/malibu/google-co-founder-sergey-brin-buys-35m-malibu-home-report"
+        }
+      ]
+    },
+    {
+      "area": "Maui, HI",
+      "country": "United States",
+      "state": "Hawaii",
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Jeff Bezos",
+          "slug": "jeff-bezos",
+          "place": "Maui, HI",
+          "type": "14-acre estate",
+          "price": 78000000,
+          "date": "2022",
+          "source": "https://en.wikipedia.org/wiki/Jeff_Bezos"
+        },
+        {
+          "person": "Jensen Huang",
+          "slug": "jensen-huang",
+          "place": "Wailea, Maui, HI",
+          "type": "second home (2004 purchase, older report)",
+          "price": null,
+          "date": "2004",
+          "source": "https://en.wikipedia.org/wiki/Jensen_Huang"
+        }
+      ]
+    },
+    {
+      "area": "Palm Beach, FL",
+      "country": "United States",
+      "state": "Florida",
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Thomas Peterffy",
+          "slug": "thomas-peterffy",
+          "place": "Palm Beach, Florida",
+          "type": "Primary residence",
+          "price": null,
+          "date": "current",
+          "source": "https://www.forbes.com/profile/thomas-peterffy/"
+        },
+        {
+          "person": "Ken Griffin",
+          "slug": "ken-griffin",
+          "place": "Palm Beach, FL",
+          "type": "Oceanfront property/site; agreed sale to TZ Capital",
+          "price": 81000000,
+          "date": "2025-11 (sale)",
+          "source": "https://www.bloomberg.com/news/articles/2025-11-14/ken-griffin-to-sell-palm-beach-property-for-81-million"
+        }
+      ]
+    },
+    {
+      "area": "Palo Alto, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Andreas von Bechtolsheim & family",
+          "slug": "andreas-von-bechtolsheim-family",
+          "place": "Palo Alto, California",
+          "type": "residence",
+          "price": null,
+          "date": "as of 2026-09",
+          "source": "https://www.forbes.com/profile/andreas-von-bechtolsheim/"
+        },
+        {
+          "person": "Mark Zuckerberg",
+          "slug": "mark-zuckerberg",
+          "place": "Palo Alto, CA",
+          "type": "Family residential compound",
+          "price": null,
+          "date": "as of 2025",
+          "source": "https://en.wikipedia.org/wiki/Mark_Zuckerberg"
+        }
+      ]
+    },
+    {
+      "area": "San Francisco, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 2,
+      "people": 2,
+      "entries": [
+        {
+          "person": "Eric Schmidt",
+          "slug": "eric-schmidt",
+          "place": "Pacific Heights, San Francisco, CA",
+          "type": "full-floor co-op penthouse",
+          "price": "$24M",
+          "date": "2025-06",
+          "source": "https://finance.yahoo.com/news/former-google-ceo-eric-schmidt-194612519.html"
+        },
+        {
+          "person": "Jensen Huang",
+          "slug": "jensen-huang",
+          "place": "San Francisco, CA",
+          "type": "mansion (2017 report)",
+          "price": 38000000,
+          "date": "2017",
+          "source": "https://en.wikipedia.org/wiki/Jensen_Huang"
+        }
+      ]
+    },
+    {
+      "area": "Styria, Austria",
+      "country": "Austria",
+      "state": null,
+      "count": 2,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Mark Mateschitz",
+          "slug": "mark-mateschitz",
+          "place": "Murtal region, Styria, Austria",
+          "type": "Castles/hotels/restaurants portfolio (e.g., Schloss Gabelhofen, Steirerschloessl, Schoenberghof), horse-breeding estate Schloss Admontbichl, Thalheim brewery; family-owned (as of 2022)",
+          "price": null,
+          "date": "as of 2022",
+          "source": "https://www.meinbezirk.at/murtal/c-lokales/der-milliardaer-hat-eine-ganze-region-aufbluehen-lassen_a5620558"
+        },
+        {
+          "person": "Mark Mateschitz",
+          "slug": "mark-mateschitz",
+          "place": "Fohnsdorf, Styria, Austria",
+          "type": "Thermal spa (Therme Fohnsdorf)",
+          "price": null,
+          "date": "2021",
+          "source": "https://www.meinbezirk.at/murtal/c-lokales/der-milliardaer-hat-eine-ganze-region-aufbluehen-lassen_a5620558"
+        }
+      ]
+    },
+    {
+      "area": "Anaheim, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Henry Samueli",
+          "slug": "henry-samueli",
+          "place": "Anaheim, CA",
+          "type": "Mixed-use entertainment/residential development (OCVIBE)",
+          "price": null,
+          "date": "ongoing",
+          "source": "https://www.ocvibe.com/"
+        }
+      ]
+    },
+    {
+      "area": "Athens, Greece",
+      "country": "Greece",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Andrea Pignataro",
+          "slug": "andrea-pignataro",
+          "place": "The Ellinikon, Athens, Greece",
+          "type": "Land for research & innovation campus (commercial)",
+          "price": "€450M",
+          "date": "2025-08",
+          "source": "https://www.thenationalherald.com/e450m-for-development-of-global-rd-and-innovation-campus-at-the-ellinikon/"
+        }
+      ]
+    },
+    {
+      "area": "Atherton, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Eric Schmidt",
+          "slug": "eric-schmidt",
+          "place": "Atherton, CA",
+          "type": "estate listed for sale",
+          "price": "$24.5M asking",
+          "date": "2024-04",
+          "source": "https://sfstandard.com/2024/04/30/eric-schmidt-google-billionaire-atherton-mansion/"
+        }
+      ]
+    },
+    {
+      "area": "Baden-Wuerttemberg, Germany",
+      "country": "Germany",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Dieter Schwarz",
+          "slug": "dieter-schwarz",
+          "place": "Bad Friedrichshall, Baden-Wuerttemberg, Germany",
+          "type": "Schwarz Digits campus HQ (opened July 2026, ~5,500 employees)",
+          "price": null,
+          "date": "2026-07",
+          "source": "https://de.wikipedia.org/wiki/Schwarz_Digits"
+        }
+      ]
+    },
+    {
+      "area": "BC, Canada",
+      "country": "Canada",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Vancouver, BC, Canada",
+          "type": "The Post (former Canada Post building, office; Amazon anchor tenant), from QuadReal - largest office deal in Vancouver history",
+          "price": "over $1.1bn (as reported)",
+          "date": "2025-11-20",
+          "source": "https://retail-insider.com/retail-insider/2025/11/vancouver-landmark-the-post-sold-in-record-office-deal/"
+        }
+      ]
+    },
+    {
+      "area": "Brandenburg, Germany",
+      "country": "Germany",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Dieter Schwarz",
+          "slug": "dieter-schwarz",
+          "place": "Luebbenau, Brandenburg, Germany",
+          "type": "AI data center site (EUR 11bn project)",
+          "price": 11000000000,
+          "date": "2025-11",
+          "source": "https://de.wikipedia.org/wiki/Schwarz_Digits"
+        }
+      ]
+    },
+    {
+      "area": "Buckinghamshire, United Kingdom",
+      "country": "United Kingdom",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Mukesh Ambani",
+          "slug": "mukesh-ambani",
+          "place": "Stoke Park, Buckinghamshire, England",
+          "type": "country club/golf estate and hotel (seen in the Bond film Goldfinger)",
+          "price": "~$79M",
+          "date": "2021-04 (older)",
+          "source": "https://www.forbes.com/sites/emmareynolds/2021/04/23/billionaire-mukesh-ambani-buys-golf-club-featured-in-james-bond-film--goldfinger-for-79-million/"
+        }
+      ]
+    },
+    {
+      "area": "Buenos Aires, Argentina",
+      "country": "Argentina",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Peter Thiel",
+          "slug": "peter-thiel",
+          "place": "Buenos Aires, Argentina",
+          "type": "residence",
+          "price": null,
+          "date": "as of 2026-09",
+          "source": "https://www.forbes.com/profile/peter-thiel/"
+        }
+      ]
+    },
+    {
+      "area": "Canouan island, St. Vincent and the Grenadines",
+      "country": "St. Vincent and the Grenadines",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Andrea Pignataro",
+          "slug": "andrea-pignataro",
+          "place": "Canouan island, St. Vincent and the Grenadines",
+          "type": "Collection of luxury villas and hotels / 1,200-acre estate incl. Mandarin Oriental resort",
+          "price": null,
+          "date": null,
+          "source": "https://www.forbes.com/profile/andrea-pignataro/"
+        }
+      ]
+    },
+    {
+      "area": "Cap-Ferrat, France",
+      "country": "France",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Len Blavatnik",
+          "slug": "len-blavatnik",
+          "place": "Cap-Ferrat, French Riviera",
+          "type": "Hotel (Grand-Hôtel du Cap-Ferrat)",
+          "price": null,
+          "date": null,
+          "source": "https://www.accessindustries.com/"
+        }
+      ]
+    },
+    {
+      "area": "Coupeville, WA",
+      "country": "United States",
+      "state": "Washington",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Steve Ballmer",
+          "slug": "steve-ballmer",
+          "place": "Coupeville, WA",
+          "type": "~10 properties (as of 2024)",
+          "price": null,
+          "date": "2024",
+          "source": "https://en.wikipedia.org/wiki/Steve_Ballmer"
+        }
+      ]
+    },
+    {
+      "area": "Dallas, TX",
+      "country": "United States",
+      "state": "Texas",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Miriam Adelson & family",
+          "slug": "miriam-adelson-family",
+          "place": "Dallas Design District, Dallas, TX",
+          "type": "Mavericks practice-facility land (more than a dozen acres), acquired alongside the team deal; county tax value $22.4M",
+          "price": 22400000,
+          "date": "2024-01",
+          "source": "https://www.reviewjournal.com/business/adelson-buys-downtown-dallas-property-in-mavs-deal-2975603/"
+        }
+      ]
+    },
+    {
+      "area": "Downtown Denver, CO",
+      "country": "United States",
+      "state": "Colorado",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Stanley Kroenke",
+          "slug": "stanley-kroenke",
+          "place": "Downtown Denver, CO",
+          "type": "Development land (~117 acres total per report; KSE bought out partner Revesco)",
+          "price": null,
+          "date": null,
+          "source": "https://www.westword.com/news/kroenkes-now-own-all-river-mile-development-downtown-denver-24790528/"
+        }
+      ]
+    },
+    {
+      "area": "East Setauket, NY",
+      "country": "United States",
+      "state": "New York",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Marilyn Simons & family",
+          "slug": "marilyn-simons-family",
+          "place": "East Setauket, New York",
+          "type": "residence",
+          "price": null,
+          "date": "as of 2026-09",
+          "source": "https://www.forbes.com/profile/marilyn-simons/"
+        }
+      ]
+    },
+    {
+      "area": "Florida (no city given)",
+      "country": "United States",
+      "state": "Florida",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Thomas Peterffy",
+          "slug": "thomas-peterffy",
+          "place": "Florida",
+          "type": "Land holdings of over 560,000 acres",
+          "price": null,
+          "date": "current (Forbes)",
+          "source": "https://www.forbes.com/profile/thomas-peterffy/"
+        }
+      ]
+    },
+    {
+      "area": "Geneva, Switzerland",
+      "country": "Switzerland",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Gerard Wertheimer",
+          "slug": "gerard-wertheimer",
+          "place": "Geneva, Switzerland",
+          "type": "primary residence (Fortune reported he lives in Geneva)",
+          "price": null,
+          "date": "as of 2023",
+          "source": "https://fortune.com/europe/2023/11/27/chanel-heir-gerard-wertheimer-wealth-switzerland"
+        }
+      ]
+    },
+    {
+      "area": "Guangdong, China",
+      "country": "China",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "He Xiangjian & family",
+          "slug": "he-xiangjian-family",
+          "place": "Foshan, Guangdong, China",
+          "type": "residence",
+          "price": null,
+          "date": "as of 2026-09",
+          "source": "https://www.forbes.com/profile/he-xiangjian/"
+        }
+      ]
+    },
+    {
+      "area": "Hamburg, Germany",
+      "country": "Germany",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Hamburg, Germany",
+          "type": "Hotel + office complex, from Union Investment - reported in negotiation",
+          "price": "~EUR 200m (estimate)",
+          "date": "2026-02 (reported)",
+          "source": "https://www.ejeprime.com/empresa/el-holding-de-amancio-ortega-invirtio-mas-de-1800-millones-en-el-primer-semestre-de-2026"
+        }
+      ]
+    },
+    {
+      "area": "Haverford, PA",
+      "country": "United States",
+      "state": "Pennsylvania",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Jeff Yass",
+          "slug": "jeff-yass",
+          "place": "Haverford, Pennsylvania",
+          "type": "primary residence (long-time; purchase date/price not reported)",
+          "price": null,
+          "date": null,
+          "source": "https://www.forbes.com/profile/jeff-yass/"
+        }
+      ]
+    },
+    {
+      "area": "Hawaii (no city given)",
+      "country": "United States",
+      "state": "Hawaii",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Tadashi Yanai & family",
+          "slug": "tadashi-yanai-family",
+          "place": "Hawaii, USA",
+          "type": "two golf courses",
+          "price": null,
+          "date": "older holding (as of 2019)",
+          "source": "https://en.wikipedia.org/wiki/Tadashi_Yanai"
+        }
+      ]
+    },
+    {
+      "area": "Hawaii Island, HI",
+      "country": "United States",
+      "state": "Hawaii",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Michael Dell",
+          "slug": "michael-dell",
+          "place": "Kukio, Hawaii Island, HI",
+          "type": "18,500 sq ft oceanfront residence (valued ~$64.7M, 2014 report)",
+          "price": 64700000,
+          "date": "2014 report",
+          "source": "https://www.forbes.com/sites/erincarlyle/2014/04/18/hawaiis-most-exclusive-community-inside-the-billionaire-getaway-kukio/"
+        }
+      ]
+    },
+    {
+      "area": "Hunts Point, WA",
+      "country": "United States",
+      "state": "Washington",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Steve Ballmer",
+          "slug": "steve-ballmer",
+          "place": "Hunts Point, WA",
+          "type": "primary residence",
+          "price": null,
+          "date": null,
+          "source": "https://en.wikipedia.org/wiki/Steve_Ballmer"
+        }
+      ]
+    },
+    {
+      "area": "Indian Wells, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Charles Koch & family",
+          "slug": "charles-koch-family",
+          "place": "Indian Wells, California",
+          "type": "residence (long-held; date/price not reported)",
+          "price": null,
+          "date": null,
+          "source": "https://en.wikipedia.org/wiki/Charles_Koch"
+        }
+      ]
+    },
+    {
+      "area": "Irvine, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "David Sun",
+          "slug": "david-sun",
+          "place": "Irvine, California",
+          "type": "residence",
+          "price": null,
+          "date": "as of 2026-09",
+          "source": "https://www.forbes.com/profile/david-sun/"
+        }
+      ]
+    },
+    {
+      "area": "Irving, TX",
+      "country": "United States",
+      "state": "Texas",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Miriam Adelson & family",
+          "slug": "miriam-adelson-family",
+          "place": "Irving, TX",
+          "type": "~259-acre development site owned by Las Vegas Sands (considered alternative Mavericks arena/resort site)",
+          "price": null,
+          "date": null,
+          "source": "https://www.hoopsrumors.com/2026/06/mavericks-reach-agreement-on-arena-site-outside-of-downtown.html"
+        }
+      ]
+    },
+    {
+      "area": "Jackson, WY",
+      "country": "United States",
+      "state": "Wyoming",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "John Mars",
+          "slug": "john-mars",
+          "place": "Jackson, Wyoming",
+          "type": "Residence (per Forbes; previously Fairfax County, Virginia per Wikipedia)",
+          "price": null,
+          "date": "as of 2026",
+          "source": "https://www.forbes.com/profile/john-mars/"
+        }
+      ]
+    },
+    {
+      "area": "Lake Tahoe, NV",
+      "country": "United States",
+      "state": "Nevada",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Sergey Brin",
+          "slug": "sergey-brin",
+          "place": "Crystal Bay, Lake Tahoe",
+          "type": "lakefront estate (now listed primary residence)",
+          "price": 42000000,
+          "date": "2025-12-05",
+          "source": "https://finance.yahoo.com/news/googles-sergey-brin-scores-42m-183103159.html"
+        }
+      ]
+    },
+    {
+      "area": "Lanai, HI",
+      "country": "United States",
+      "state": "Hawaii",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Larry Ellison",
+          "slug": "larry-ellison",
+          "place": "Lanai, Hawaii",
+          "type": "island incl. resorts and land",
+          "price": null,
+          "date": "2012 (older)",
+          "source": "https://en.wikipedia.org/wiki/Larry_Ellison"
+        }
+      ]
+    },
+    {
+      "area": "Los Altos Hills, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Jensen Huang",
+          "slug": "jensen-huang",
+          "place": "Los Altos Hills, CA",
+          "type": "primary residence (2003 purchase, older report)",
+          "price": null,
+          "date": "2003",
+          "source": "https://en.wikipedia.org/wiki/Jensen_Huang"
+        }
+      ]
+    },
+    {
+      "area": "Los Angeles, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Eric Schmidt",
+          "slug": "eric-schmidt",
+          "place": "Holmby Hills, Los Angeles, CA",
+          "type": "estate ('The Manor', former Aaron Spelling mansion, 4.68 acres)",
+          "price": "$110M",
+          "date": "2025-08",
+          "source": "https://finance.yahoo.com/news/ex-google-ceo-eric-schmidt-144602113.html"
+        }
+      ]
+    },
+    {
+      "area": "Madrid, Spain",
+      "country": "Spain",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Madrid, Spain",
+          "type": "Torre Picasso office skyscraper (famous holding)",
+          "price": "~$540m (as reported)",
+          "date": "2011",
+          "source": "https://www.idealista.com/en/news/lifestyle-in-spain/2026/04/23/893862-how-zara-s-founder-became-the-world-s-property-king"
+        }
+      ]
+    },
+    {
+      "area": "Manalapan, FL",
+      "country": "United States",
+      "state": "Florida",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Larry Ellison",
+          "slug": "larry-ellison",
+          "place": "Manalapan, FL",
+          "type": "estate - Florida's priciest residential sale at the time",
+          "price": 173000000,
+          "date": "2022",
+          "source": "https://en.wikipedia.org/wiki/Larry_Ellison"
+        }
+      ]
+    },
+    {
+      "area": "Maui and Hualalai, HI",
+      "country": "United States",
+      "state": "Hawaii",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Michael Dell",
+          "slug": "michael-dell",
+          "place": "Maui and Hualalai, HI",
+          "type": "Resort holdings: Four Seasons Resort Maui and Four Seasons Resort Hualalai (via MSD Capital)",
+          "price": null,
+          "date": null,
+          "source": "https://en.wikipedia.org/wiki/MSD_Capital"
+        }
+      ]
+    },
+    {
+      "area": "Medina, WA",
+      "country": "United States",
+      "state": "Washington",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Bill Gates",
+          "slug": "bill-gates",
+          "place": "Medina, Washington",
+          "type": "Primary residence estate (~66,000 sq ft; assessed $147.5M in 2009 - old)",
+          "price": null,
+          "date": "long-held",
+          "source": "https://en.wikipedia.org/wiki/Bill_Gates%27s_house"
+        }
+      ]
+    },
+    {
+      "area": "Mexico City, Mexico",
+      "country": "Mexico",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Carlos Slim Helu & family",
+          "slug": "carlos-slim-helu-family",
+          "place": "Mexico City",
+          "type": "Plaza Carso mixed-use complex (Carso HQ, Museo Soumaya, Inbursa Aquarium)",
+          "price": null,
+          "date": "developed 2010s",
+          "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+        }
+      ]
+    },
+    {
+      "area": "Miami Beach, FL",
+      "country": "United States",
+      "state": "Florida",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Sergey Brin",
+          "slug": "sergey-brin",
+          "place": "Allison Island, Miami Beach, FL",
+          "type": "waterfront mansion",
+          "price": 51000000,
+          "date": "2026-03",
+          "source": "https://fortune.com/2026/07/22/google-cofounders-sergey-brin-larry-page-buying-miami-mansions-billionaires-flee-california-tax-google-office-space/"
+        }
+      ]
+    },
+    {
+      "area": "Montana (no city given)",
+      "country": "United States",
+      "state": "Montana",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Charles Koch & family",
+          "slug": "charles-koch-family",
+          "place": "Montana",
+          "type": "340,000-acre ranch SOLD by Koch subsidiary Matador Cattle Company to Rupert Murdoch and Jerry Hall (as of 2021)",
+          "price": "$200 million",
+          "date": "2021-12",
+          "source": "https://en.wikipedia.org/wiki/Koch,_Inc."
+        }
+      ]
+    },
+    {
+      "area": "Montecito, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Eric Schmidt",
+          "slug": "eric-schmidt",
+          "place": "Montecito, CA",
+          "type": "~350 undeveloped acres held as preserve by The Schmidt Family Foundation",
+          "price": null,
+          "date": "as of 2025",
+          "source": "https://finance.yahoo.com/news/former-google-ceo-eric-schmidt-194612519.html"
+        }
+      ]
+    },
+    {
+      "area": "Mumbai, India",
+      "country": "India",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Cyrus Poonawalla",
+          "slug": "cyrus-poonawalla",
+          "place": "Mumbai, India",
+          "type": "heritage mansion",
+          "price": "Rs 750 crore (~$113M)",
+          "date": "2015-09",
+          "source": "https://en.wikipedia.org/wiki/Lincoln_House_(Mumbai)"
+        }
+      ]
+    },
+    {
+      "area": "Nashua, NH",
+      "country": "United States",
+      "state": "New Hampshire",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Zhong Shanshan",
+          "slug": "zhong-shanshan",
+          "place": "Nashua, New Hampshire, USA",
+          "type": "Commercial property (corporate, Nongfu Spring)",
+          "price": 67000000,
+          "date": "2025",
+          "source": "https://en.wikipedia.org/wiki/Nongfu_Spring"
+        }
+      ]
+    },
+    {
+      "area": "Netherlands (no city given)",
+      "country": "Netherlands",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Netherlands",
+          "type": "Logistics centre, from Invesco",
+          "price": "EUR 132m",
+          "date": "2026-06-09",
+          "source": "https://www.ejeprime.com/empresa/el-holding-de-amancio-ortega-invirtio-mas-de-1800-millones-en-el-primer-semestre-de-2026"
+        }
+      ]
+    },
+    {
+      "area": "New Mexico (no city given)",
+      "country": "United States",
+      "state": "New Mexico",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Stanley Kroenke",
+          "slug": "stanley-kroenke",
+          "place": "New Mexico",
+          "type": "Ranchland (Singleton Ranches, 937,000+ deeded acres)",
+          "price": null,
+          "date": "2025-12",
+          "source": "https://landreport.com/stan-kroenke-americas-largest-landowner"
+        }
+      ]
+    },
+    {
+      "area": "Omaha, NE",
+      "country": "United States",
+      "state": "Nebraska",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Warren Buffett",
+          "slug": "warren-buffett",
+          "place": "Omaha, NE",
+          "type": "primary home owned and occupied since 1958 (his 'first and only home')",
+          "price": null,
+          "date": "1958",
+          "source": "https://www.berkshirehathaway.com/news/nov1025.pdf"
+        }
+      ]
+    },
+    {
+      "area": "Ontario, Canada",
+      "country": "Canada",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Oshawa, Ontario, Canada",
+          "type": "Refrigerated warehouse leased to Lactalis",
+          "price": "EUR 115m",
+          "date": "2026-06-15",
+          "source": "https://www.ejeprime.com/empresa/el-holding-de-amancio-ortega-invirtio-mas-de-1800-millones-en-el-primer-semestre-de-2026"
+        }
+      ]
+    },
+    {
+      "area": "Outside Tokyo, Japan",
+      "country": "Japan",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Tadashi Yanai & family",
+          "slug": "tadashi-yanai-family",
+          "place": "Outside Tokyo, Japan",
+          "type": "primary residence (~16,586 sq ft)",
+          "price": "~$50 million (reported value)",
+          "date": "older holding (as of 2019)",
+          "source": "https://en.wikipedia.org/wiki/Tadashi_Yanai"
+        }
+      ]
+    },
+    {
+      "area": "Palm Beach County, FL",
+      "country": "United States",
+      "state": "Florida",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Steve Cohen",
+          "slug": "steve-cohen",
+          "place": "Palm Beach County, FL",
+          "type": "Mansion, about 31,000 sq ft",
+          "price": null,
+          "date": "2021",
+          "source": "https://en.wikipedia.org/wiki/Steve_Cohen_(businessman)"
+        }
+      ]
+    },
+    {
+      "area": "Perthshire, United Kingdom",
+      "country": "United Kingdom",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Vladimir Lisin",
+          "slug": "vladimir-lisin",
+          "place": "Perthshire, Scotland",
+          "type": "17th-century castle and sporting estate (Aberuchill); older holding",
+          "price": null,
+          "date": "2005",
+          "source": "https://en.wikipedia.org/wiki/Vladimir_Lisin"
+        }
+      ]
+    },
+    {
+      "area": "Repulse Bay, Hong Kong",
+      "country": "Hong Kong",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Ma Huateng",
+          "slug": "ma-huateng",
+          "place": "Repulse Bay, Hong Kong Island",
+          "type": "House",
+          "price": "US$57 million",
+          "date": "2014 (older holding)",
+          "source": "https://fortune.com/2018/06/21/alibaba-tencent-hong-kong-jack-ma-pony-ma"
+        }
+      ]
+    },
+    {
+      "area": "Rolling Hills, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "John Tu",
+          "slug": "john-tu",
+          "place": "Rolling Hills, California",
+          "type": "residence",
+          "price": null,
+          "date": "as of 2026-09",
+          "source": "https://www.forbes.com/profile/john-tu/"
+        }
+      ]
+    },
+    {
+      "area": "Sardinia, Italy",
+      "country": "Italy",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Alexey Mordashov & family",
+          "slug": "alexey-mordashov-family",
+          "place": "Sardinia, Italy",
+          "type": "villa (frozen by Italian authorities under 2022 sanctions)",
+          "price": "$115M (reported value)",
+          "date": "frozen 2022",
+          "source": "https://www.forbes.com/profile/alexey-mordashov/"
+        }
+      ]
+    },
+    {
+      "area": "Seattle, WA",
+      "country": "United States",
+      "state": "Washington",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Seattle, WA, USA",
+          "type": "Kiara apartment building",
+          "price": "$322.2m",
+          "date": "2022-12",
+          "source": "https://en.wikipedia.org/wiki/Kiara_(building)"
+        }
+      ]
+    },
+    {
+      "area": "Shek O, Hong Kong",
+      "country": "Hong Kong",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Ma Huateng",
+          "slug": "ma-huateng",
+          "place": "Shek O, Hong Kong Island",
+          "type": "Luxury house on large site (application to redevelop into ~19,600 sq ft three-storey residence); bought 2009, valued ~HK$1.9bn in 2017",
+          "price": "HK$480 million (~US$61 million)",
+          "date": "2009 (famous holding)",
+          "source": "https://www.scmp.com/property/article/2081213/tencent-founder-pony-mas-shek-o-property-quadruples-value"
+        }
+      ]
+    },
+    {
+      "area": "Singapore",
+      "country": "Singapore",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Zhang Yiming",
+          "slug": "zhang-yiming",
+          "place": "Singapore",
+          "type": "residence",
+          "price": null,
+          "date": "as of 2026-09",
+          "source": "https://www.forbes.com/profile/zhang-yiming/"
+        }
+      ]
+    },
+    {
+      "area": "Somers, NY",
+      "country": "United States",
+      "state": "New York",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Carlos Slim Helu & family",
+          "slug": "carlos-slim-helu-family",
+          "place": "Somers, New York",
+          "type": "Corporate campus (former PepsiCo Americas Beverages HQ)",
+          "price": 87000000,
+          "date": "2015 (old)",
+          "source": "https://en.wikipedia.org/wiki/Carlos_Slim"
+        }
+      ]
+    },
+    {
+      "area": "Southampton, NY",
+      "country": "United States",
+      "state": "New York",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Julia Koch & family",
+          "slug": "julia-koch-family",
+          "place": "Southampton, New York",
+          "type": "estate (purchase)",
+          "price": "~$70M",
+          "date": "2022-06",
+          "source": "https://therealdeal.com/new-york/tristate/2022/06/22/julia-koch-revealed-as-buyer-of-dated-70m-southampton-estate/"
+        }
+      ]
+    },
+    {
+      "area": "The Plains, VA",
+      "country": "United States",
+      "state": "Virginia",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Jacqueline Mars",
+          "slug": "jacqueline-mars",
+          "place": "The Plains, Virginia area",
+          "type": "Horse farm / working organic farm under a perpetual conservation easement with the Land Trust of Virginia",
+          "price": null,
+          "date": "long-held",
+          "source": "https://en.wikipedia.org/wiki/Jacqueline_Mars"
+        }
+      ]
+    },
+    {
+      "area": "Tokyo, Japan",
+      "country": "Japan",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Masayoshi Son",
+          "slug": "masayoshi-son",
+          "place": "Tokyo, Japan",
+          "type": "primary residence (three-story home with indoor golf range)",
+          "price": "valued ~$85 million (valuation, not purchase price)",
+          "date": "older holding (date not stated)",
+          "source": "https://en.wikipedia.org/wiki/Masayoshi_Son"
+        }
+      ]
+    },
+    {
+      "area": "Toronto, Canada",
+      "country": "Canada",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Amancio Ortega",
+          "slug": "amancio-ortega",
+          "place": "Toronto, Canada",
+          "type": "Royal Bank Plaza office towers",
+          "price": "~$916m (as reported)",
+          "date": "2022",
+          "source": "https://www.idealista.com/en/news/lifestyle-in-spain/2026/04/23/893862-how-zara-s-founder-became-the-world-s-property-king"
+        }
+      ]
+    },
+    {
+      "area": "Venice, Italy",
+      "country": "Italy",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "François Pinault & family",
+          "slug": "francois-pinault-family",
+          "place": "Venice, Italy",
+          "type": "Palazzo Grassi and Punta della Dogana museums (older)",
+          "price": null,
+          "date": "2005-2009",
+          "source": "https://en.wikipedia.org/wiki/Groupe_Art%C3%A9mis"
+        }
+      ]
+    },
+    {
+      "area": "Whakatane District, New Zealand",
+      "country": "New Zealand",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Zhong Shanshan",
+          "slug": "zhong-shanshan",
+          "place": "Otakiri Springs, Whakatane District, New Zealand",
+          "type": "Water source and bottling facility (Nongfu Spring's first overseas water source; consent process as of 2017-2020)",
+          "price": null,
+          "date": "2017+",
+          "source": "https://en.wikipedia.org/wiki/Nongfu_Spring"
+        }
+      ]
+    },
+    {
+      "area": "Wichita, KS",
+      "country": "United States",
+      "state": "Kansas",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Charles Koch & family",
+          "slug": "charles-koch-family",
+          "place": "Wichita, Kansas",
+          "type": "primary residence (long-held; no recent transaction reported)",
+          "price": null,
+          "date": null,
+          "source": "https://en.wikipedia.org/wiki/Charles_Koch"
+        }
+      ]
+    },
+    {
+      "area": "Wiltshire/Hampshire border, United Kingdom",
+      "country": "United Kingdom",
+      "state": null,
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Stephen Schwarzman",
+          "slug": "stephen-schwarzman",
+          "place": "Conholt Park, Wiltshire/Hampshire border, England",
+          "type": "country estate",
+          "price": "more than £80M",
+          "date": "2022",
+          "source": "https://www.bloomberg.com/news/articles/2022-09-27/steve-schwarzman-buys-80-million-english-country-estate"
+        }
+      ]
+    },
+    {
+      "area": "Woodside, CA",
+      "country": "United States",
+      "state": "California",
+      "count": 1,
+      "people": 1,
+      "entries": [
+        {
+          "person": "Masayoshi Son",
+          "slug": "masayoshi-son",
+          "place": "Woodside, California, USA",
+          "type": "single-family estate",
+          "price": "$117 million",
+          "date": "older holding (reported ~2012; date not stated in cited source)",
+          "source": "https://en.wikipedia.org/wiki/Masayoshi_Son"
+        }
+      ]
+    }
+  ]
+}
