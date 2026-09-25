@@ -47,3 +47,30 @@ Two settings to add in the repo (Settings → Secrets and variables → Actions)
 - Secret `FINNHUB_API_KEY`: a free key from an account at https://finnhub.io.
 
 If either one is missing, that step prints a note and skips. Nothing is fetched and no file is changed.
+
+## Game backend
+The online side of the fantasy league (leaderboards, private leagues, play-money markets) runs on Supabase
+(Postgres + Auth + row level security). The static site talks to it straight from the browser. Coins are play money.
+
+- `supabase/migrations/0001_game.sql`: every table, rule and function. It is safe to run again and again.
+  Players write only through checked functions (and their own roster, which a trigger checks and locks at
+  Monday 9:30 AM New York time; a player without a team can still join late and scores from the next trading day).
+  Practice weeks in `data/fantasy` stay solo and are never uploaded. The admin functions can only be called with the secret key.
+- `config/supabase.json`: the project URL and the **publishable** key. Both are meant to be public.
+  Set `"enabled": false` to show "Multiplayer is coming soon" everywhere. If the config is empty or the
+  database isn't set up yet, the pages show the same message and the solo game keeps working.
+- `assets/game-client.js` (API wrapper, `BDGame.syncRoster()` for the fantasy page), `assets/account.js`
+  (guest sign-in, nickname, coins), `markets.html`, `leagues.html`, `leaderboard.html`, `play-terms.html`.
+- `scripts/supabase-sync.mjs` (run by `.github/workflows/game.yml` every day at 10:45 UTC, or by hand from the
+  Actions tab): uploads `data/fantasy` weeks and daily points, scores weeks, opens the week's markets on Mondays,
+  closes them Friday 4 PM New York time and settles them from our own data files (fantasy scores, SEC Form 4s).
+  "Force markets" on a manual run opens this week's markets on another day if they're missing.
+- Tests (no real project needed, uses an in-memory Postgres): `node --test 'scripts/lib/supa/*.test.mjs'`.
+
+Settings for the game job (Settings → Secrets and variables → Actions). Anything missing is skipped with a note:
+- Variable `SUPABASE_URL`: `https://<project>.supabase.co`.
+- Secret `SUPABASE_SERVICE_KEY`: the project's secret key (service role). Never put it in the site.
+- Secret `SUPABASE_DB_URL`: the Postgres connection string, used only to apply `supabase/migrations`.
+
+In the Supabase dashboard: Authentication → Sign In / Providers → turn on **Allow anonymous sign-ins**.
+Turning on CAPTCHA for sign-ins is a good idea to slow down people making many guest accounts.

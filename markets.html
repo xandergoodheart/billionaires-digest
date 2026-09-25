@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Markets · Billionaires Digest</title>
+<meta name="description" content="Play-money yes/no markets on what the world’s richest people will do this week, settled from public data. Coins have no cash value.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/game.css">
+</head>
+<body>
+<div class="topstrip"><div class="wrap">
+  <span id="dateline">Markets</span>
+  <span id="updated">Play money · no cash value</span>
+</div></div>
+
+<header class="mast"><div class="wrap">
+  <div>
+    <div class="display brand">Billionaires <span>Digest</span></div>
+    <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
+  </div>
+  <button class="themebtn" id="themebtn" type="button">Switch theme</button>
+</div></header>
+
+<!-- nav:start -->
+<nav class="sitenav" aria-label="Site"><div class="wrap">
+  <a href="index.html">Today</a>
+  <a href="people/">People</a>
+  <a href="companies/">Companies</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="calendar.html">Calendar</a>
+  <a href="fantasy.html">Fantasy</a>
+  <details class="navmore"><summary>Tools</summary><ul>
+    <li><a href="flows.html">Insider flows &amp; leaderboards</a></li>
+    <li><a href="quarterly.html">What their funds bought</a></li>
+    <li><a href="copycat.html">Copycat portfolio</a></li>
+    <li><a href="network.html">Who invests with whom</a></li>
+    <li><a href="compare.html">Compare two billionaires</a></li>
+    <li><a href="property.html">Where they buy</a></li>
+    <li><a href="guides/filings-101/">Filings 101</a></li>
+  </ul></details>
+  <a href="archive.html">Archive</a>
+  <a href="about.html">About</a>
+</div></nav>
+<!-- nav:end -->
+
+<main id="app">
+  <div class="wrap pagehead"><h1 class="serif">Markets</h1><p>Yes-or-no questions about the week ahead, traded with play-money coins. Prices move as people buy, so a price is the crowd's rough guess at the chance. <a href="#how">How it works</a> · <a href="play-terms.html">Rules</a>.</p></div>
+  <div class="wrap pagebody">
+    <div id="gameaccount" class="gx-account"><p class="gx-msg">Loading the online game…</p></div>
+    <p class="gx-sr" id="marketnews" role="status" aria-live="polite"></p>
+    <h2 class="gx-h2">Open markets</h2>
+    <div id="openmarkets"><p class="gx-msg">Loading…</p></div>
+    <h2 class="gx-h2">Resolved</h2>
+    <div id="resolvedmarkets"></div>
+    <section id="how" class="gx-prose" aria-labelledby="how-h">
+      <h2 class="gx-h2" id="how-h">How markets work</h2>
+      <p><strong>Coins are play money.</strong> They have no value. You can't buy, sell, cash out or send them to anyone. Everyone starts with 1,000 coins and can claim 250 more each week while under 5,000.</p>
+      <p><strong>Shares pay 1 coin if they are right.</strong> Buy YES if you think the answer will be yes, NO if not. When the market is settled, each winning share pays 1 coin and losing shares pay nothing. If it is void (for example a tie), everyone gets back the coins they put in.</p>
+      <p><strong>The price is a running guess.</strong> A YES price of 62% means one more YES share costs about 0.62 coins right now. Every buy nudges the price toward the side bought, and bigger buys move it more. An automatic market maker sets the price (it uses a formula called the logarithmic market scoring rule), so there is always a price and you never wait for someone to take the other side. Buys can't push a price past 99%.</p>
+      <p><strong>You can sell before it closes.</strong> Selling gives shares back to the market at the current price, rounded down to a whole coin. Trading stops Friday at 4:00 PM New York time. You can spend up to 500 coins per trade.</p>
+      <p><strong>Results come from public data.</strong> Head-to-head and sector questions use the fantasy league's scores for the week. Insider-buy questions use Form 4 filings on SEC EDGAR filed Monday to Friday. Each result links to its source. Nothing here is investment advice.</p>
+    </section>
+  </div>
+</main>
+
+<!-- footer:start -->
+<footer><div class="wrap">
+  <span>Billionaires Digest · billionairesdigest.com</span>
+  <span class="footlinks"><a href="about.html">About</a> · <a href="about.html#corrections">Corrections</a> · <a href="about.html#sponsor">Sponsor the brief</a> · <a href="calendar.ics">Calendar feed (calendar.ics)</a></span>
+  <span>For information only · not financial advice</span>
+</div></footer>
+<!-- footer:end -->
+
+<script src="assets/common.js"></script>
+<script src="assets/game-client.js"></script>
+<script src="assets/account.js"></script>
+<script src="assets/markets.js"></script>
+</body>
+</html>

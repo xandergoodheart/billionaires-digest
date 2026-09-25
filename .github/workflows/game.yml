@@ -1,0 +1,58 @@
+name: Game sync
+
+# Pushes the fantasy league data to Supabase, scores weeks and runs the play-money markets.
+# Settings (Settings -> Secrets and variables -> Actions):
+#   variable SUPABASE_URL          e.g. https://<project>.supabase.co
+#   secret   SUPABASE_SERVICE_KEY  the secret (service role) key; never put it in the site
+#   secret   SUPABASE_DB_URL       Postgres connection string, used only to apply supabase/migrations
+# Anything missing is skipped with a note; the job still passes.
+
+on:
+  schedule:
+    - cron: '45 10 * * *' # 10:45 UTC, after the 09:30 UTC data job
+  workflow_dispatch:
+    inputs:
+      force_markets:
+        description: Open this week's markets today if they are missing (normally Mondays only)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: game-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Test the game database and sync (in-memory Postgres)
+        run: node --test 'scripts/lib/supa/*.test.mjs'
+      - name: Apply migrations
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo "SUPABASE_DB_URL is not set: skipping migrations"
+            exit 0
+          fi
+          for f in supabase/migrations/*.sql; do
+            echo "Applying $f"
+            psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -q -f "$f"
+          done
+      - name: Sync
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          GAME_FORCE_MARKETS: ${{ inputs.force_markets && '1' || '' }}
+        run: node scripts/supabase-sync.mjs
