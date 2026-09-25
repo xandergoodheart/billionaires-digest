@@ -43,6 +43,9 @@ jobs:
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: node scripts/fetch-prices.mjs
+      - name: Fantasy league (days, weeks, salaries)
+        if: ${{ !cancelled() }}
+        run: node scripts/build-fantasy.mjs
       - name: Insights (calendar, flows, leaderboards)
         if: ${{ !cancelled() }}
         run: node scripts/build-insights.mjs
@@ -60,8 +63,8 @@ jobs:
         run: |
           git config user.name "Billionaires Digest bot"
           git config user.email "hello@billionairesdigest.com"
-          mkdir -p data/filings data/prices data/insights data/13f data/copycat data/network data/property
-          git add data/filings data/prices data/insights data/13f data/copycat data/network data/property calendar.ics people editions companies guides sitemap.xml robots.txt
+          mkdir -p data/filings data/prices data/fantasy data/insights data/13f data/copycat data/network data/property
+          git add data/filings data/prices data/fantasy data/insights data/13f data/copycat data/network data/property calendar.ics people editions companies guides sitemap.xml robots.txt
           git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "Morning data $(date -u +%Y-%m-%d)"
           git pull --rebase origin main

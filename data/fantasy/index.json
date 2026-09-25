@@ -1,0 +1,395 @@
+{
+  "generated": "2026-09-25T06:53:45.789Z",
+  "currentWeek": "2026-W39",
+  "draftWeek": "2026-W40",
+  "practiceWeeks": [
+    "2026-W39"
+  ],
+  "firstRealWeek": "2026-W40",
+  "latestDay": "2026-09-24",
+  "weeks": [
+    {
+      "week": "2026-W39",
+      "label": "Practice week",
+      "practice": true,
+      "start": "2026-09-21",
+      "end": "2026-09-25",
+      "locksAt": "2026-09-21T13:30:00.000Z",
+      "days": 1,
+      "final": false
+    },
+    {
+      "week": "2026-W40",
+      "label": "Week of 2026-09-28",
+      "practice": false,
+      "start": "2026-09-28",
+      "end": "2026-10-02",
+      "locksAt": "2026-09-28T13:30:00.000Z",
+      "days": 0,
+      "final": false
+    }
+  ],
+  "news": {
+    "mark-zuckerberg": 1,
+    "jensen-huang": 1,
+    "warren-buffett": 1,
+    "larry-ellison": 1,
+    "elon-musk": 1
+  },
+  "newsEditions": [
+    "2026-09-24"
+  ],
+  "notDraftable": [
+    {
+      "slug": "amancio-ortega",
+      "name": "Amancio Ortega",
+      "rank": 11,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "bernard-arnault-family",
+      "name": "Bernard Arnault & family",
+      "rank": 14,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "michael-bloomberg",
+      "name": "Michael Bloomberg",
+      "rank": 20,
+      "sector": "Finance",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "francoise-bettencourt-meyers-family",
+      "name": "Francoise Bettencourt Meyers & family",
+      "rank": 21,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "julia-koch-family",
+      "name": "Julia Koch & family",
+      "rank": 23,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "zhang-yiming",
+      "name": "Zhang Yiming",
+      "rank": 24,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "mukesh-ambani",
+      "name": "Mukesh Ambani",
+      "rank": 25,
+      "sector": "Other",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "gautam-adani",
+      "name": "Gautam Adani",
+      "rank": 26,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "jeff-yass",
+      "name": "Jeff Yass",
+      "rank": 27,
+      "sector": "Finance",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "tadashi-yanai-family",
+      "name": "Tadashi Yanai & family",
+      "rank": 31,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "ken-griffin",
+      "name": "Ken Griffin",
+      "rank": 32,
+      "sector": "Finance",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "zhong-shanshan",
+      "name": "Zhong Shanshan",
+      "rank": 33,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "dieter-schwarz",
+      "name": "Dieter Schwarz",
+      "rank": 34,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "aliko-dangote",
+      "name": "Aliko Dangote",
+      "rank": 35,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "john-mars",
+      "name": "John Mars",
+      "rank": 36,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "jacqueline-mars",
+      "name": "Jacqueline Mars",
+      "rank": 36,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "robin-zeng",
+      "name": "Robin Zeng",
+      "rank": 39,
+      "sector": "Autos",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "giovanni-ferrero",
+      "name": "Giovanni Ferrero",
+      "rank": 42,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "rafaela-aponte-diamant",
+      "name": "Rafaela Aponte-Diamant",
+      "rank": 43,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "gianluigi-aponte",
+      "name": "Gianluigi Aponte",
+      "rank": 43,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "mark-mateschitz",
+      "name": "Mark Mateschitz",
+      "rank": 46,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "abigail-johnson",
+      "name": "Abigail Johnson",
+      "rank": 49,
+      "sector": "Finance",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "andrea-pignataro",
+      "name": "Andrea Pignataro",
+      "rank": 51,
+      "sector": "Finance",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "savitri-jindal-family",
+      "name": "Savitri Jindal & family",
+      "rank": 52,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "liang-wenfeng",
+      "name": "Liang Wenfeng",
+      "rank": 53,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "alain-wertheimer",
+      "name": "Alain Wertheimer",
+      "rank": 55,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "gerard-wertheimer",
+      "name": "Gerard Wertheimer",
+      "rank": 55,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "alexey-mordashov-family",
+      "name": "Alexey Mordashov & family",
+      "rank": 61,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "marilyn-simons-family",
+      "name": "Marilyn Simons & family",
+      "rank": 62,
+      "sector": "Finance",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "he-xiangjian-family",
+      "name": "He Xiangjian & family",
+      "rank": 63,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "john-tu",
+      "name": "John Tu",
+      "rank": 65,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "david-sun",
+      "name": "David Sun",
+      "rank": 66,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "jay-y-lee",
+      "name": "Jay Y. Lee",
+      "rank": 67,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "elaine-marshall-family",
+      "name": "Elaine Marshall & family",
+      "rank": 74,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "vladimir-potanin",
+      "name": "Vladimir Potanin",
+      "rank": 77,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "vagit-alekperov",
+      "name": "Vagit Alekperov",
+      "rank": 79,
+      "sector": "Energy",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "chen-tianshi",
+      "name": "Chen Tianshi",
+      "rank": 81,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "cyrus-poonawalla",
+      "name": "Cyrus Poonawalla",
+      "rank": 83,
+      "sector": "Health",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "leonid-mikhelson-family",
+      "name": "Leonid Mikhelson & family",
+      "rank": 84,
+      "sector": "Energy",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "shiv-nadar",
+      "name": "Shiv Nadar",
+      "rank": 85,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "reinhold-wuerth-family",
+      "name": "Reinhold Wuerth & family",
+      "rank": 86,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "stanley-kroenke",
+      "name": "Stanley Kroenke",
+      "rank": 87,
+      "sector": "Real estate",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "israel-englander",
+      "name": "Israel Englander",
+      "rank": 89,
+      "sector": "Finance",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "mackenzie-scott",
+      "name": "MacKenzie Scott",
+      "rank": 90,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "steve-cohen",
+      "name": "Steve Cohen",
+      "rank": 91,
+      "sector": "Finance",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "vinod-adani",
+      "name": "Vinod Adani",
+      "rank": 94,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "suleiman-kerimov-family",
+      "name": "Suleiman Kerimov & family",
+      "rank": 95,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "vladimir-lisin",
+      "name": "Vladimir Lisin",
+      "rank": 96,
+      "sector": "Industrials",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "greg-brockman",
+      "name": "Greg Brockman",
+      "rank": 97,
+      "sector": "AI & tech",
+      "reason": "No daily market price (private wealth)"
+    },
+    {
+      "slug": "francois-pinault-family",
+      "name": "François Pinault & family",
+      "rank": 100,
+      "sector": "Luxury & retail",
+      "reason": "No daily market price (private wealth)"
+    }
+  ],
+  "disclaimer": "Game only. No real money, no prizes, not financial advice. Scores use public prices and disclosed holdings and are approximate."
+}

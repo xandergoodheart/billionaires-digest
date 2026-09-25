@@ -13,7 +13,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 // page file -> active nav key
 const ACTIVE = {
-  'index.html': 'today', 'sectors.html': 'sectors', 'calendar.html': 'calendar', 'archive.html': 'archive', 'about.html': 'about',
+  'index.html': 'today', 'sectors.html': 'sectors', 'calendar.html': 'calendar', 'fantasy.html': 'fantasy', 'archive.html': 'archive', 'about.html': 'about',
   'flows.html': 'flows', 'quarterly.html': 'quarterly', 'copycat.html': 'copycat', 'network.html': 'network',
   'compare.html': 'compare', 'property.html': 'property'
 };

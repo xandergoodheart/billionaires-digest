@@ -9,6 +9,7 @@ export const NAV = [
   { key: 'companies', label: 'Companies', href: 'companies/' },
   { key: 'sectors', label: 'Sectors', href: 'sectors.html' },
   { key: 'calendar', label: 'Calendar', href: 'calendar.html' },
+  { key: 'fantasy', label: 'Fantasy', href: 'fantasy.html' },
   { key: 'tools', label: 'Tools', items: [
     { key: 'flows', label: 'Insider flows & leaderboards', href: 'flows.html' },
     { key: 'quarterly', label: 'What their funds bought', href: 'quarterly.html' },

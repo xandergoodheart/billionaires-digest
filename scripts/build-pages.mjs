@@ -29,7 +29,7 @@ const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const FILINGS_LIMIT = 15;
 const HOLDING_GROUPS = ['controls', 'stakes', 'vehicles', 'realEstate', 'trophies'];
 // top-level pages built by other scripts; listed in the sitemap without a lastmod
-const EXTRA_TOP = ['/calendar.html', '/flows.html', '/quarterly.html', '/copycat.html', '/network.html', '/compare.html', '/property.html'];
+const EXTRA_TOP = ['/calendar.html', '/fantasy.html', '/flows.html', '/quarterly.html', '/copycat.html', '/network.html', '/compare.html', '/property.html'];
 
 async function readJson(p) { return JSON.parse(await readFile(p, 'utf8')); }
 async function readJsonOr(p, fallback) {

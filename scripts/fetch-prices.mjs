@@ -2,12 +2,15 @@
 //
 //   FINNHUB_API_KEY=... node scripts/fetch-prices.mjs
 //
+// Also quotes the Billionaire Fantasy League symbols (scripts/lib/fantasy.mjs): SPY, name aliases and the
+// curated US ADR lines used for daily returns only.
 // Writes data/prices/latest.json, data/prices/history/<SYM>.json and data/prices/networth-est.json.
 // Exits 0 without fetching or writing when FINNHUB_API_KEY is unset.
 // The key is sent in the X-Finnhub-Token header and is never logged.
 
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { fantasySymbols } from './lib/fantasy.mjs';
 import { ROOT, METHOD, MIN_COVERAGE, loadProfiles, holdingSymbols, estimateAll, adrSet, worthBySlug, nyDate, readJson, spacer, sleep, writeJson } from './lib/data-common.mjs';
 
 const OUT_DIR = join(ROOT, 'data', 'prices');
@@ -42,6 +45,7 @@ export function collectSymbols(profiles) {
       for (const s of r.skipped) if (!skipped.has(s.symbol)) skipped.set(s.symbol, s.reason);
     }
   }
+  for (const s of fantasySymbols(profiles)) symbols.add(s);
   for (const s of symbols) skipped.delete(s);
   return { symbols: [...symbols].sort(), skipped: [...skipped].map(([symbol, reason]) => ({ symbol, reason })) };
 }

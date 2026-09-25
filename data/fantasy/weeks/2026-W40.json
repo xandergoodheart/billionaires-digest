@@ -1,0 +1,1452 @@
+{
+  "week": "2026-W40",
+  "label": "Week of 2026-09-28",
+  "practice": false,
+  "start": "2026-09-28",
+  "end": "2026-10-02",
+  "locksAt": "2026-09-28T13:30:00.000Z",
+  "createdAt": "2026-09-25T06:53:45.789Z",
+  "cap": 100,
+  "picks": 5,
+  "captainMultiplier": 1.5,
+  "salaryMethod": "Forbes-rank tiers among draftable",
+  "salaries": {
+    "elon-musk": 30,
+    "jeff-bezos": 30,
+    "larry-page": 30,
+    "mark-zuckerberg": 30,
+    "michael-dell": 30,
+    "sergey-brin": 26,
+    "jensen-huang": 26,
+    "larry-ellison": 26,
+    "steve-ballmer": 26,
+    "warren-buffett": 26,
+    "rob-walton-family": 22,
+    "jim-walton-family": 22,
+    "alice-walton": 22,
+    "carlos-slim-helu-family": 22,
+    "changpeng-zhao": 22,
+    "bill-gates": 22,
+    "thomas-peterffy": 22,
+    "giancarlo-devasini": 22,
+    "charles-koch-family": 22,
+    "masayoshi-son": 22,
+    "german-larrea-mota-velasco-family": 18,
+    "li-ka-shing": 18,
+    "iris-fontbona-family": 18,
+    "ma-huateng": 18,
+    "lukas-walton": 18,
+    "eduardo-saverin": 18,
+    "stephen-schwarzman": 18,
+    "andreas-von-bechtolsheim-family": 18,
+    "william-ding": 18,
+    "eric-schmidt": 18,
+    "jean-louis-van-der-velde": 18,
+    "paolo-ardoino": 18,
+    "peter-thiel": 18,
+    "pham-nhat-vuong": 18,
+    "thomas-frist-jr-family": 18,
+    "eyal-ofer": 14,
+    "melinda-french-gates": 14,
+    "len-blavatnik": 14,
+    "lakshmi-mittal": 14,
+    "henry-samueli": 14,
+    "idan-ofer": 14,
+    "miriam-adelson-family": 14,
+    "robert-pera": 14,
+    "lyndal-stephens-greth-family": 14,
+    "david-tepper": 14,
+    "colin-huang": 14,
+    "jack-ma": 14,
+    "dilip-shanghvi": 14,
+    "gina-rinehart": 14,
+    "vicky-safra-family": 14
+  },
+  "draftable": [
+    {
+      "slug": "elon-musk",
+      "name": "Elon Musk",
+      "rank": 1,
+      "sector": "Aerospace",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "SPCX",
+          "name": "Space Exploration Technologies Corp.",
+          "weight": 0.7823,
+          "tier": "controls"
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "weight": 0.2177,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "jeff-bezos",
+      "name": "Jeff Bezos",
+      "rank": 2,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "AMZN",
+          "name": "Amazon.com, Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "larry-page",
+      "name": "Larry Page",
+      "rank": 3,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "mark-zuckerberg",
+      "name": "Mark Zuckerberg",
+      "rank": 4,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "michael-dell",
+      "name": "Michael Dell",
+      "rank": 5,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "DELL",
+          "name": "Dell Technologies Inc.",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "HAYW",
+          "name": "Hayward Holdings",
+          "weight": 0.125,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "SAFE",
+          "name": "Safehold Inc.",
+          "weight": 0.125,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "sergey-brin",
+      "name": "Sergey Brin",
+      "rank": 6,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "jensen-huang",
+      "name": "Jensen Huang",
+      "rank": 7,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA Corporation",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "larry-ellison",
+      "name": "Larry Ellison",
+      "rank": 8,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "ORCL",
+          "name": "Oracle Corporation",
+          "weight": 0.5,
+          "tier": "controls"
+        },
+        {
+          "ticker": "PSKY",
+          "name": "Paramount Skydance Corp.",
+          "weight": 0.5,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "steve-ballmer",
+      "name": "Steve Ballmer",
+      "rank": 9,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "STGW",
+          "name": "Stagwell Inc. Class A",
+          "weight": 1,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "warren-buffett",
+      "name": "Warren Buffett",
+      "rank": 10,
+      "sector": "Finance",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "BRK.B",
+          "name": "Berkshire Hathaway Inc.",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "AAPL",
+          "name": "Apple Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "ALLY",
+          "name": "Ally Finl Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "AXP",
+          "name": "American Express Co",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "BAC",
+          "name": "Bank Of Amer Corp",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CB",
+          "name": "Chubb Limited",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "COF",
+          "name": "Capital One Finl Corp",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CVX",
+          "name": "Chevron Corporation",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "DAL",
+          "name": "Delta Air Lines Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "DHI",
+          "name": "D R Horton Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "DVA",
+          "name": "Davita Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "JEF",
+          "name": "Jefferies Financial Group In",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "KHC",
+          "name": "Kraft Heinz Co",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "KO",
+          "name": "Coca Cola Co",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "KR",
+          "name": "Kroger Co",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "LEN",
+          "name": "Lennar Corp",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "LLYVA",
+          "name": "Liberty Live Holdings Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "LLYVK",
+          "name": "Liberty Live Holdings Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "LPX",
+          "name": "Louisiana Pac Corp",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "M",
+          "name": "Macys Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "MCO",
+          "name": "Moodys Corp",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "NUE",
+          "name": "Nucor Corp",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "NVR",
+          "name": "Nvr Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "NYT",
+          "name": "New York Times Co Mtn Be",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "OXY",
+          "name": "Occidental Pete Corp",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "SIRI",
+          "name": "Siriusxm Holdings Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "VRSN",
+          "name": "Verisign Inc",
+          "weight": 0.0093,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "rob-walton-family",
+      "name": "Rob Walton & family",
+      "rank": 12,
+      "sector": "Luxury & retail",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "WMT",
+          "name": "Walmart Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "jim-walton-family",
+      "name": "Jim Walton & family",
+      "rank": 13,
+      "sector": "Luxury & retail",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "WMT",
+          "name": "Walmart Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "alice-walton",
+      "name": "Alice Walton",
+      "rank": 15,
+      "sector": "Luxury & retail",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "WMT",
+          "name": "Walmart Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "carlos-slim-helu-family",
+      "name": "Carlos Slim Helu & family",
+      "rank": 16,
+      "sector": "Media",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "AMX",
+          "name": "América Móvil",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "PBF",
+          "name": "PBF Energy Inc. Class A",
+          "weight": 0.0833,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "TALO",
+          "name": "Talos Energy Inc.",
+          "weight": 0.0833,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "TKC",
+          "name": "Turkcell Iletisim Hizmetleri",
+          "weight": 0.0833,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "changpeng-zhao",
+      "name": "Changpeng Zhao",
+      "rank": 17,
+      "sector": "Finance",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "BNC",
+          "name": "CEA Industries Inc.",
+          "weight": 1,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "bill-gates",
+      "name": "Bill Gates",
+      "rank": 18,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "MSFT",
+          "name": "Microsoft",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "RSG",
+          "name": "Republic Services",
+          "weight": 0.1077,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "BRK.B",
+          "name": "Berkshire Hathaway",
+          "weight": 0.0323,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CNI",
+          "name": "Canadian National Railway",
+          "weight": 0.0271,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "WM",
+          "name": "Waste Management",
+          "weight": 0.0242,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CAT",
+          "name": "Caterpillar",
+          "weight": 0.0223,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "FMX",
+          "name": "FEMSA",
+          "weight": 0.0143,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "DE",
+          "name": "Deere & Co.",
+          "weight": 0.0108,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "ECL",
+          "name": "Ecolab",
+          "weight": 0.0063,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "AN",
+          "name": "AutoNation",
+          "weight": 0.005,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "MXF",
+          "name": "The Mexico Fund",
+          "weight": 0.0001,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "thomas-peterffy",
+      "name": "Thomas Peterffy",
+      "rank": 19,
+      "sector": "Finance",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "IBKR",
+          "name": "Interactive Brokers Group",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "NMAX",
+          "name": "Newsmax Inc. Class B common",
+          "weight": 0.25,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "giancarlo-devasini",
+      "name": "Giancarlo Devasini",
+      "rank": 22,
+      "sector": "Finance",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "RUM",
+          "name": "Rumble Inc. / RUM Group Inc.",
+          "weight": 0.8843,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "GOLD",
+          "name": "Gold.com, Inc.",
+          "weight": 0.1157,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "charles-koch-family",
+      "name": "Charles Koch & family",
+      "rank": 28,
+      "sector": "Industrials",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "MRVL",
+          "name": "Marvell Technology",
+          "weight": 0.322,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "IBTA",
+          "name": "Ibotta Inc",
+          "weight": 0.2275,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CMP",
+          "name": "Compass Minerals International",
+          "weight": 0.199,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "KBDC",
+          "name": "Kayne Anderson BDC",
+          "weight": 0.1694,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "SLI",
+          "name": "Standard Lithium",
+          "weight": 0.0345,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CMTG",
+          "name": "Claros Mortgage Trust",
+          "weight": 0.0245,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "GETY",
+          "name": "Getty Images Holdings",
+          "weight": 0.0232,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "masayoshi-son",
+      "name": "Masayoshi Son",
+      "rank": 29,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "ARM",
+          "name": "Arm Holdings plc",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "INTC",
+          "name": "Intel Corp.",
+          "weight": 0.0313,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "INTR",
+          "name": "Inter & Co",
+          "weight": 0.0313,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "KLAR",
+          "name": "Klarna Group plc",
+          "weight": 0.0313,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "SYM",
+          "name": "Symbotic Inc.",
+          "weight": 0.0313,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "TEM",
+          "name": "Tempus AI",
+          "weight": 0.0313,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "TMUS",
+          "name": "T-Mobile US",
+          "weight": 0.0313,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "TSM",
+          "name": "Taiwan Semiconductor ADS",
+          "weight": 0.0313,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "WBTN",
+          "name": "Webtoon Entertainment",
+          "weight": 0.0313,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "german-larrea-mota-velasco-family",
+      "name": "Germán Larrea Mota Velasco & family",
+      "rank": 30,
+      "sector": "Industrials",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "SCCO",
+          "name": "Southern Copper Corporation",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "li-ka-shing",
+      "name": "Li Ka-shing",
+      "rank": 38,
+      "sector": "Other",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "CELH",
+          "name": "Celsius Holdings",
+          "weight": 0.25,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CVE",
+          "name": "Cenovus Energy Inc.",
+          "weight": 0.25,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "NXE",
+          "name": "NexGen Energy Ltd.",
+          "weight": 0.25,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "ZM",
+          "name": "Zoom Video Communications",
+          "weight": 0.25,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "iris-fontbona-family",
+      "name": "Iris Fontbona & family",
+      "rank": 40,
+      "sector": "Industrials",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "BCH",
+          "name": "Banco de Chile",
+          "weight": 0.5,
+          "tier": "controls"
+        },
+        {
+          "ticker": "CCU",
+          "name": "Compañía Cervecerías Unidas",
+          "weight": 0.5,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "ma-huateng",
+      "name": "Ma Huateng",
+      "rank": 41,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "TME",
+          "name": "Tencent Music Entertainment Group",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "RDDT",
+          "name": "Reddit, Inc.",
+          "weight": 0.25,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "lukas-walton",
+      "name": "Lukas Walton",
+      "rank": 45,
+      "sector": "Luxury & retail",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "WMT",
+          "name": "Walmart Inc.",
+          "weight": 1,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "eduardo-saverin",
+      "name": "Eduardo Saverin",
+      "rank": 47,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "CARL",
+          "name": "Carlsmed, Inc.",
+          "weight": 0.5,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "weight": 0.5,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "stephen-schwarzman",
+      "name": "Stephen Schwarzman",
+      "rank": 48,
+      "sector": "Finance",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "BX",
+          "name": "Blackstone Inc.",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "BAER",
+          "name": "Bridger Aerospace Group",
+          "weight": 0.05,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CRBG",
+          "name": "Corebridge Financial",
+          "weight": 0.05,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "JMKE",
+          "name": "Jersey Mike's Subs Inc.",
+          "weight": 0.05,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "MDLN",
+          "name": "Medline Inc.",
+          "weight": 0.05,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "PJT",
+          "name": "PJT Partners",
+          "weight": 0.05,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "andreas-von-bechtolsheim-family",
+      "name": "Andreas von Bechtolsheim & family",
+      "rank": 50,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "ANET",
+          "name": "Arista Networks, Inc.",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet/Google",
+          "weight": 0.25,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "william-ding",
+      "name": "William Ding",
+      "rank": 54,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "DAO",
+          "name": "Youdao, Inc.",
+          "weight": 0.5,
+          "tier": "controls"
+        },
+        {
+          "ticker": "NTES",
+          "name": "NetEase, Inc.",
+          "weight": 0.5,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "eric-schmidt",
+      "name": "Eric Schmidt",
+      "rank": 57,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet Inc.",
+          "weight": 1,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "paolo-ardoino",
+      "name": "Paolo Ardoino",
+      "rank": 58,
+      "sector": "Finance",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "RUM",
+          "name": "RUM Group Inc.",
+          "weight": 0.5,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "XXI",
+          "name": "Twenty One Capital, Inc.",
+          "weight": 0.5,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "jean-louis-van-der-velde",
+      "name": "Jean-Louis van der Velde",
+      "rank": 58,
+      "sector": "Finance",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "RUM",
+          "name": "RUM Group Inc.",
+          "weight": 0.5,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "XXI",
+          "name": "Twenty One Capital, Inc.",
+          "weight": 0.5,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "peter-thiel",
+      "name": "Peter Thiel",
+      "rank": 60,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "GUTS",
+          "name": "Fractyl Health, Inc.",
+          "weight": 0.0833,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms",
+          "weight": 0.0833,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "SPCX",
+          "name": "SpaceX",
+          "weight": 0.0833,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "pham-nhat-vuong",
+      "name": "Pham Nhat Vuong",
+      "rank": 64,
+      "sector": "Other",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "VFS",
+          "name": "VinFast Auto Ltd.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "thomas-frist-jr-family",
+      "name": "Thomas Frist Jr & family",
+      "rank": 68,
+      "sector": "Health",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "HCA",
+          "name": "HCA Healthcare, Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "eyal-ofer",
+      "name": "Eyal Ofer",
+      "rank": 69,
+      "sector": "Real estate",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "RCL",
+          "name": "Royal Caribbean Cruises Ltd.",
+          "weight": 1,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "melinda-french-gates",
+      "name": "Melinda French Gates",
+      "rank": 70,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "CNI",
+          "name": "Canadian National Railway",
+          "weight": 0.8089,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "AN",
+          "name": "AutoNation, Inc.",
+          "weight": 0.1911,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "len-blavatnik",
+      "name": "Len Blavatnik",
+      "rank": 71,
+      "sector": "Media",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "WMG",
+          "name": "Warner Music Group Corp.",
+          "weight": 0.4579,
+          "tier": "controls"
+        },
+        {
+          "ticker": "LYB",
+          "name": "LyondellBasell Industries N.V.",
+          "weight": 0.1737,
+          "tier": "controls"
+        },
+        {
+          "ticker": "DOCN",
+          "name": "DigitalOcean Holdings, Inc.",
+          "weight": 0.1183,
+          "tier": "controls"
+        },
+        {
+          "ticker": "CEG",
+          "name": "Constellation Energy",
+          "weight": 0.0417,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "CHYM",
+          "name": "Chime Financial, Inc.",
+          "weight": 0.0417,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "COAG",
+          "name": "Hemab Therapeutics Holdings",
+          "weight": 0.0417,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "OKUR",
+          "name": "OnKure Therapeutics",
+          "weight": 0.0417,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "OPEN",
+          "name": "Opendoor Technologies",
+          "weight": 0.0417,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "TYGO",
+          "name": "Tigo Energy",
+          "weight": 0.0417,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "lakshmi-mittal",
+      "name": "Lakshmi Mittal",
+      "rank": 72,
+      "sector": "Industrials",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "MT",
+          "name": "ArcelorMittal S.A.",
+          "weight": 0.75,
+          "tier": "controls"
+        },
+        {
+          "ticker": "GS",
+          "name": "Goldman Sachs Group",
+          "weight": 0.25,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "henry-samueli",
+      "name": "Henry Samueli",
+      "rank": 73,
+      "sector": "AI & tech",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "idan-ofer",
+      "name": "Idan Ofer",
+      "rank": 75,
+      "sector": "Industrials",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "ICL",
+          "name": "ICL Group Ltd.",
+          "weight": 0.5,
+          "tier": "controls"
+        },
+        {
+          "ticker": "KEN",
+          "name": "Kenon Holdings Ltd.",
+          "weight": 0.5,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "miriam-adelson-family",
+      "name": "Miriam Adelson & family",
+      "rank": 76,
+      "sector": "Real estate",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "LVS",
+          "name": "Las Vegas Sands Corp.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "robert-pera",
+      "name": "Robert Pera",
+      "rank": 78,
+      "sector": "AI & tech",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "UI",
+          "name": "Ubiquiti Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "lyndal-stephens-greth-family",
+      "name": "Lyndal Stephens Greth & family",
+      "rank": 80,
+      "sector": "Energy",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "FANG",
+          "name": "Diamondback Energy, Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "david-tepper",
+      "name": "David Tepper",
+      "rank": 82,
+      "sector": "Finance",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet",
+          "weight": 0.5,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms",
+          "weight": 0.5,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "colin-huang",
+      "name": "Colin Huang",
+      "rank": 88,
+      "sector": "Luxury & retail",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "PDD",
+          "name": "PDD Holdings Inc.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "jack-ma",
+      "name": "Jack Ma",
+      "rank": 92,
+      "sector": "Luxury & retail",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "BABA",
+          "name": "Alibaba Group",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "dilip-shanghvi",
+      "name": "Dilip Shanghvi",
+      "rank": 93,
+      "sector": "Health",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "OGN",
+          "name": "Organon & Co.",
+          "weight": 1,
+          "tier": "controls"
+        }
+      ]
+    },
+    {
+      "slug": "gina-rinehart",
+      "name": "Gina Rinehart",
+      "rank": 98,
+      "sector": "Industrials",
+      "method": "value-weighted",
+      "holdings": [
+        {
+          "ticker": "SPCX",
+          "name": "SpaceX",
+          "weight": 0.3812,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "MP",
+          "name": "MP Materials",
+          "weight": 0.2358,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "TECK",
+          "name": "Teck Resources Class B",
+          "weight": 0.2205,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "HBM",
+          "name": "Hudbay Minerals",
+          "weight": 0.1354,
+          "tier": "stakes"
+        },
+        {
+          "ticker": "NXE",
+          "name": "NexGen Energy",
+          "weight": 0.0271,
+          "tier": "stakes"
+        }
+      ]
+    },
+    {
+      "slug": "vicky-safra-family",
+      "name": "Vicky Safra & family",
+      "rank": 99,
+      "sector": "Finance",
+      "method": "controls-weighted (75/25)",
+      "holdings": [
+        {
+          "ticker": "LTH",
+          "name": "Life Time Group Holdings",
+          "weight": 1,
+          "tier": "stakes"
+        }
+      ]
+    }
+  ],
+  "days": [],
+  "daily": {},
+  "spyDaily": {},
+  "totals": {
+    "elon-musk": 0,
+    "jeff-bezos": 0,
+    "larry-page": 0,
+    "mark-zuckerberg": 0,
+    "michael-dell": 0,
+    "sergey-brin": 0,
+    "jensen-huang": 0,
+    "larry-ellison": 0,
+    "steve-ballmer": 0,
+    "warren-buffett": 0,
+    "rob-walton-family": 0,
+    "jim-walton-family": 0,
+    "alice-walton": 0,
+    "carlos-slim-helu-family": 0,
+    "changpeng-zhao": 0,
+    "bill-gates": 0,
+    "thomas-peterffy": 0,
+    "giancarlo-devasini": 0,
+    "charles-koch-family": 0,
+    "masayoshi-son": 0,
+    "german-larrea-mota-velasco-family": 0,
+    "li-ka-shing": 0,
+    "iris-fontbona-family": 0,
+    "ma-huateng": 0,
+    "lukas-walton": 0,
+    "eduardo-saverin": 0,
+    "stephen-schwarzman": 0,
+    "andreas-von-bechtolsheim-family": 0,
+    "william-ding": 0,
+    "eric-schmidt": 0,
+    "jean-louis-van-der-velde": 0,
+    "paolo-ardoino": 0,
+    "peter-thiel": 0,
+    "pham-nhat-vuong": 0,
+    "thomas-frist-jr-family": 0,
+    "eyal-ofer": 0,
+    "melinda-french-gates": 0,
+    "len-blavatnik": 0,
+    "lakshmi-mittal": 0,
+    "henry-samueli": 0,
+    "idan-ofer": 0,
+    "miriam-adelson-family": 0,
+    "robert-pera": 0,
+    "lyndal-stephens-greth-family": 0,
+    "david-tepper": 0,
+    "colin-huang": 0,
+    "jack-ma": 0,
+    "dilip-shanghvi": 0,
+    "gina-rinehart": 0,
+    "vicky-safra-family": 0
+  },
+  "benchmarks": {
+    "spy": null,
+    "top5": {
+      "picks": [
+        "elon-musk",
+        "jeff-bezos",
+        "larry-page",
+        "mark-zuckerberg",
+        "michael-dell"
+      ],
+      "captain": "elon-musk",
+      "points": 0
+    },
+    "perfect": null
+  },
+  "final": false
+}
