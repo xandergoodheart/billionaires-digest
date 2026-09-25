@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My team · Billionaire Fantasy League · Billionaires Digest</title>
+<meta name="description" content="Your Billionaire Fantasy League team: this week's score against the S&amp;P 500, your starting five, the next lineup lock and news about your players. A free game with play money only.">
+<meta name="theme-color" content="#13171C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/ui.css">
+<link rel="stylesheet" href="assets/v2/team.css">
+</head>
+<body class="v2">
+<!-- v2topbar:start -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="team.html" aria-current="true">Fantasy</a>
+      <a href="people/">Players</a>
+      <a href="leaderboard.html">Rankings</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="index.html">News</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__search" href="people/">Search</a>
+      <a class="v2-btn v2-btn--primary v2-top__cta" href="team.html">My team</a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
+  </div>
+</header>
+<nav class="v2-subtabs" aria-label="Fantasy">
+  <div class="v2-wrap v2-subtabs__in">
+    <ul class="v2-subtabs__list">
+      <li><a href="team.html" aria-current="page">My team</a></li>
+      <li><a href="draft.html">Draft room</a></li>
+      <li><a href="fantasy.html#matchup">Scores</a></li>
+      <li><a href="leagues.html">Leagues</a></li>
+      <li><a href="book.html">The Book</a></li>
+      <li><a href="play-terms.html">Rules</a></li>
+    </ul>
+    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
+  </div>
+</nav>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="team.html" aria-current="true">Fantasy</a>
+        <ul>
+          <li><a href="team.html" aria-current="page">My team</a></li>
+          <li><a href="draft.html">Draft room</a></li>
+          <li><a href="fantasy.html#matchup">Scores</a></li>
+          <li><a href="leagues.html">Leagues</a></li>
+          <li><a href="book.html">The Book</a></li>
+          <li><a href="play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="people/">Players</a></li>
+      <li><a class="v2-menu__top" href="leaderboard.html">Rankings</a></li>
+      <li><a class="v2-menu__top" href="calendar.html">Calendar</a></li>
+      <li><a class="v2-menu__top" href="index.html">News</a></li>
+      <li><a class="v2-menu__top" href="people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+<!-- v2topbar:end -->
+
+<div class="v2-strip" id="scorestrip" hidden>
+  <div class="v2-wrap v2-strip__in" id="scorestripin" aria-label="Top scorers on your team"></div>
+</div>
+
+<main id="main" class="v2-main" tabindex="-1">
+  <div class="v2-wrap">
+    <p class="v2-banner" id="testclock" hidden></p>
+    <div class="v2-grid">
+      <div class="span-8 v2-stack">
+        <section class="v2-hero" id="hero" aria-labelledby="teamname" aria-busy="true">
+          <span class="v2-kicker">Your team</span>
+          <h1 class="v2-h1 v2-hero__name" id="teamname">Your team</h1>
+          <p class="v2-loading">Loading your team…</p>
+          <span class="v2-skel v2-skel--lg"></span>
+        </section>
+        <section class="v2-card" id="five" aria-labelledby="fiveh">
+          <div class="v2-card__head"><h2 class="v2-h2" id="fiveh">Your starting five</h2><span class="v2-card__meta" id="capmeta"></span></div>
+          <div id="fivebody"><span class="v2-skel"></span><span class="v2-skel"></span><span class="v2-skel"></span></div>
+        </section>
+      </div>
+      <div class="span-4 v2-stack">
+        <section class="v2-card" id="next" aria-labelledby="nexth">
+          <h2 class="v2-h2" id="nexth">Next round</h2>
+          <div id="nextbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
+        </section>
+        <section class="v2-card" id="news" aria-labelledby="newsh">
+          <div class="v2-card__head"><h2 class="v2-h2" id="newsh">Your team's news</h2></div>
+          <div id="newsbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
+        </section>
+        <section class="v2-card v2-card--tint" id="leagues" aria-labelledby="leaguesh">
+          <span class="v2-kicker">Leagues</span>
+          <h2 class="v2-h2" id="leaguesh">Play against your friends.</h2>
+          <div id="leaguesbody"><p class="v2-loading">Loading…</p></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="v2-sr" id="live" role="status" aria-live="polite"></div>
+<div class="v2-toasts" id="toasts" aria-live="polite"></div>
+
+<!-- v2tabs:start -->
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="team.html" aria-current="true">Fantasy</a>
+  <a href="people/">Players</a>
+  <a href="leaderboard.html">Rankings</a>
+  <a href="index.html">News</a>
+</nav>
+<!-- v2tabs:end -->
+<!-- v2footer:start -->
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="about.html#corrections">Corrections</a>
+      <a href="play-terms.html">Game rules</a>
+    </nav>
+  </div>
+</footer>
+<!-- v2footer:end -->
+
+<script src="assets/common.js"></script>
+<script src="assets/game-client.js"></script>
+<script src="assets/account.js"></script>
+<script src="assets/fantasy-core.js"></script>
+<script src="assets/v2/fantasy-store.js"></script>
+<script src="assets/v2/chrome.js"></script>
+<script src="assets/v2/team.js"></script>
+</body>
+</html>

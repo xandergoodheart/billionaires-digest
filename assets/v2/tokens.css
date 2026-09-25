@@ -1,0 +1,136 @@
+/* Billionaires Digest v2: design tokens (from the reference pack's design-tokens.json).
+   Light is the default. The dark set below only applies when <html> has the data-v2-dark attribute
+   (owner decision pending), and then follows data-theme="dark" or the system setting. */
+:root {
+  /* brand palette */
+  --ink: #13171C;
+  --canvas: #F2F3F5;
+  --surface: #FFFFFF;
+  --brand: #D62D27;
+  --positive: #08764A;
+  --muted: #59616D;
+  --line: #D9DEE4;
+  --focus: #2359C4;
+  --warning: #8A5200;
+
+  /* derived */
+  --ink-2: #1B2027;            /* dark hero panel */
+  --ink-3: #2A3038;            /* rules and pills on dark */
+  --on-ink: #FFFFFF;
+  --on-ink-muted: #B7BEC8;
+  --brand-hover: #B8231E;
+  --brand-tint: #FBE9E8;
+  --positive-tint: #E4F3EC;
+  --negative: #C1231E;         /* negative numbers: slightly darker than brand for small text contrast */
+  --info-tint: #E8EEF9;        /* soft blue card (leagues / proposed) */
+  --info-ink: #2359C4;
+  --disabled-bg: #E3E7EC;
+  --disabled-ink: #6B7380;
+
+  /* semantic */
+  --bg: var(--canvas);
+  --card: var(--surface);
+  --text: var(--ink);
+  --text-muted: var(--muted);
+  --bar: var(--ink);           /* top bar and footer */
+
+  /* type */
+  --font-display: 'Barlow Condensed', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Barlow', 'Helvetica Neue', Arial, sans-serif;
+  --fw-display: 800;
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-md: 16px;
+  --fs-lg: 20px;
+  --fs-xl: 28px;
+  --fs-2xl: 40px;
+  --fs-3xl: 56px;
+  --fs-hero: 104px;
+
+  /* spacing: 8px unit */
+  --s-1: 4px;
+  --s0: 8px;
+  --s1: 16px;
+  --s2: 24px;
+  --s3: 32px;
+  --s4: 40px;
+  --s5: 48px;
+  --s6: 64px;
+
+  /* layout */
+  --radius: 4px;
+  --max: 1440px;
+  --gutter: 24px;
+  --margin: 40px;
+  --margin-mobile: 16px;
+  --tap: 44px;
+  --topbar-h: 76px;
+  --tabs-h: 60px;
+
+  /* motion */
+  --t-fast: 150ms;
+  --t-base: 200ms;
+  --ease: cubic-bezier(.2, .7, .3, 1);
+
+  color-scheme: light;
+}
+
+/* Dark set: gated behind data-v2-dark (default off). */
+:root[data-v2-dark][data-theme="dark"] {
+  --canvas: #0E1115;
+  --surface: #171B21;
+  --line: #2C333C;
+  --muted: #A3ABB6;
+  --ink-2: #1F252D;
+  --ink-3: #333B45;
+  --brand-tint: #3A1715;
+  --positive: #3CB37E;
+  --positive-tint: #10301F;
+  --negative: #F0625D;
+  --info-tint: #17233A;
+  --info-ink: #8DB0F0;
+  --focus: #7EA6F2;
+  --disabled-bg: #242A32;
+  --disabled-ink: #8A929D;
+  --bg: var(--canvas);
+  --card: var(--surface);
+  --text: #EEF1F4;
+  --text-muted: var(--muted);
+  --bar: #0A0C0F;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-v2-dark]:not([data-theme="light"]) {
+    --canvas: #0E1115;
+    --surface: #171B21;
+    --line: #2C333C;
+    --muted: #A3ABB6;
+    --ink-2: #1F252D;
+    --ink-3: #333B45;
+    --brand-tint: #3A1715;
+    --positive: #3CB37E;
+    --positive-tint: #10301F;
+    --negative: #F0625D;
+    --info-tint: #17233A;
+    --info-ink: #8DB0F0;
+    --focus: #7EA6F2;
+    --disabled-bg: #242A32;
+    --disabled-ink: #8A929D;
+    --bg: var(--canvas);
+    --card: var(--surface);
+    --text: #EEF1F4;
+    --text-muted: var(--muted);
+    --bar: #0A0C0F;
+    color-scheme: dark;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --margin: 16px;
+    --topbar-h: 60px;
+    --fs-hero: 72px;
+    --fs-3xl: 40px;
+    --fs-2xl: 32px;
+  }
+}
