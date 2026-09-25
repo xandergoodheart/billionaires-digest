@@ -377,3 +377,7 @@ html.v2-lock, html.v2-lock body { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* Prototype label: shown only on the Cloudflare preview (*.pages.dev), set by chrome.js */
+.v2-proto { background: var(--warning); color: #fff; font-size: var(--fs-sm); font-weight: 600; text-align: center; padding: 6px var(--s2); }
+.v2-proto a { color: #fff; }

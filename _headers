@@ -1,0 +1,5 @@
+# Cloudflare Pages only (ignored by GitHub Pages): keep the v2 prototype preview out of search engines.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
