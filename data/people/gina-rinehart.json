@@ -12,12 +12,6 @@
   ],
   "controls": [
     {
-      "name": "Hancock Prospecting Pty Ltd",
-      "role": "Executive Chairman",
-      "stake": "76.6% (remaining 23.4% Hope Margaret Hancock Trust)",
-      "source": "https://en.wikipedia.org/wiki/Hancock_Prospecting"
-    },
-    {
       "name": "Roy Hill iron ore mine (Pilbara)",
       "role": "Controlled via Hancock",
       "stake": "70% Hancock (Marubeni 15%, POSCO 12.5%, China Steel 2.5%)",
@@ -37,16 +31,21 @@
       "source": "https://investingnews.com/gina-rinehart-hancock-mining-investments/"
     },
     {
-      "name": "S. Kidman & Co (cattle)",
-      "role": "Controlled via Hancock (older, 2016)",
-      "stake": "67%",
-      "stakeAsOf": "2016",
-      "source": "https://en.wikipedia.org/wiki/Hancock_Prospecting"
-    },
-    {
       "name": "Northback Holdings (Grassy Mountain coal project, Alberta)",
       "role": "Hancock-owned developer",
       "source": "https://en.wikipedia.org/wiki/Gina_Rinehart"
+    },
+    {
+      "name": "Hancock Prospecting Pty Ltd (private; Perth)",
+      "role": "Principal shareholder and director",
+      "stake": "~76.55%",
+      "stakeAsOf": "2026-05-07",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026056582/primary_doc.xml"
+    },
+    {
+      "name": "Hancock Iron Ore — brings together Roy Hill and Atlas Iron under one brand",
+      "role": "owned via Hancock Prospecting",
+      "source": "https://www.hancockironore.com.au/"
     }
   ],
   "stakes": [
@@ -122,6 +121,66 @@
       "stake": "5.4% (A$7.95M)",
       "stakeAsOf": "2026-07",
       "source": "https://www.indexbox.io/blog/gina-rineharts-hancock-prospecting-expands-beyond-iron-ore-with-nine-mining-investments/"
+    },
+    {
+      "name": "SpaceX (Space Exploration Technologies Corp) Class A — 8,000,000 shares, $1.367B (largest line in Hancock's 13F)",
+      "stake": "8,000,000 shares",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+    },
+    {
+      "name": "MP Materials — 14,861,212 shares, $832.4M",
+      "ticker": "MP",
+      "stake": "14,861,212 shares",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+    },
+    {
+      "name": "Teck Resources Class B — 10,298,293 shares, $612.3M",
+      "ticker": "TECK",
+      "stake": "10,298,293 shares",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+    },
+    {
+      "name": "Hudbay Minerals — 15,885,729 shares, $374.4M",
+      "ticker": "HBM",
+      "stake": "15,885,729 shares",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+    },
+    {
+      "name": "NexGen Energy (uranium) — 9,078,245 shares, $85.1M; EQT Corp 1,553,042 shares, $82.6M; Gulfport Energy 227,500 shares, $38.6M",
+      "ticker": "NXE / EQT / GPOR",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+    },
+    {
+      "name": "US defence stocks: L3Harris 121,800 shares ($35.4M), RTX 183,600 ($34.8M), Lockheed Martin 68,000 ($34.6M)",
+      "ticker": "LHX / RTX / LMT",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+    },
+    {
+      "name": "Big Tech/index: Invesco QQQ $940.9M, Amazon, Alphabet, Meta, Microsoft, Broadcom, Nvidia, CrowdStrike, Fox Corp Class B (1,230,167 shares), plus S&P 500 and AI ETFs",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
+    },
+    {
+      "name": "Rare Earths Americas, Inc. — 1,248,204 shares after its May 2026 offering (Schedule 13G; held by Hancock, indirectly by Rinehart)",
+      "stake": "6.26%",
+      "stakeAsOf": "2026-05-07",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026056582/primary_doc.xml"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "Hancock Prospecting Pty Ltd (13F filer)",
+      "type": "holding co",
+      "cik": "0002017993",
+      "files13F": true,
+      "notes": "Files 13F-HR quarterly since Q4 2024 (Q2 2026: 42 positions, $5.71B, filed 2026-08-14), plus N-PX and 13G filings (MP Materials 2024; Rare Earths Americas 2026)",
+      "source": "https://data.sec.gov/submissions/CIK0002017993.json"
     }
   ],
   "privateDeals": [
@@ -139,6 +198,11 @@
       "what": "Arafura Rare Earths A$125M investment for 15.7%",
       "date": "2025-10",
       "source": "https://investingnews.com/gina-rinehart-hancock-mining-investments/"
+    },
+    {
+      "what": "Took 6.26% of Rare Earths Americas in its offering",
+      "date": "2026-05-07",
+      "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026056582/primary_doc.xml"
     }
   ],
   "trophies": [
@@ -174,7 +238,12 @@
     {
       "what": "Grassy Mountain coal court/regulatory rulings in Alberta",
       "source": "https://en.wikipedia.org/wiki/Gina_Rinehart"
+    },
+    {
+      "what": "Hancock Prospecting Q3 2026 13F-HR (SpaceX, MP Materials, Teck, Hudbay position changes)",
+      "when": "by 2026-11-16",
+      "source": "https://data.sec.gov/submissions/CIK0002017993.json"
     }
   ],
-  "gaps": "Trade press (IndexBox Sep 2026) also reports Hancock stakes in SpaceX (~$1.37B, June 2026) and US defence stocks (Lockheed, Northrop, RTX, May 2026); left out as unverified by primary/top-tier source. ASX substantial-holder notices not fetched; stake %s rely on Investing News Network roundup (Nov 2025). No Hancock SEC 13F CIK verified. Real estate not researched beyond cattle stations. Hope Downs judgment date not confirmed."
+  "gaps": "Pass 2 replaces the IndexBox trade-press claims about SpaceX and US defence stakes with Hancock's own 13F. Hancock's 76.55% ownership is now primary-sourced from its SEC 13G; the Wikipedia Hancock_Prospecting URL is retracted, which also drops the S. Kidman 67% entry (not re-verified). Roy Hill 70%, Hope Downs 50% and the Hope Downs/Grassy Mountain litigation are still Wikipedia-sourced. MP Materials % not recomputed: the 13F gives only shares."
 }

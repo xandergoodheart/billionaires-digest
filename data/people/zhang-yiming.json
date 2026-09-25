@@ -21,10 +21,10 @@
   ],
   "stakes": [
     {
-      "name": "TikTok USDS Joint Venture (US TikTok entity; ByteDance and affiliates keep 50%, Oracle 15%, Silver Lake 15%, MGX 15%, others 5%; CEO Adam Presser)",
-      "stake": "indirect via ByteDance's 50%",
-      "stakeAsOf": "2026-01-22",
-      "source": "https://en.wikipedia.org/wiki/TikTok_USDS"
+      "name": "TikTok USDS Joint Venture LLC (US TikTok, CapCut and Lemon8 operations; CEO Adam Presser) — indirect via ByteDance. ByteDance holds 19.9%; Oracle, Silver Lake and MGX 15% each as managing investors; other investors include the Dell family office and affiliates of Susquehanna, General Atlantic and Dragoneer, plus Alpha Wave, Revolution and Xavier Niel's family office",
+      "stake": "indirect via ByteDance's 19.9%",
+      "stakeAsOf": "2026-01-23",
+      "source": "https://newsroom.tiktok.com/announcement-from-the-new-tiktok-usds-joint-venture-llc"
     }
   ],
   "privateDeals": [
@@ -37,16 +37,39 @@
       "what": "New valuation marks from BlackRock and Fidelity lifted Zhang's net worth by ~$12B in September 2026; Fortune reported he overtook Gautam Adani as Asia's richest person",
       "date": "2026-09",
       "source": "https://fortune.com/2026/09/17/billionaire-tiktok-founder-zhang-yiming-richest-person-in-asia-105-billion-net-worth-gained-92-billion-since-2019-ai/"
+    },
+    {
+      "what": "TikTok USDS JV established under the 2025-09-25 executive order. Its 7-member board includes Shou Chew, Egon Durban (Silver Lake), Kenneth Glueck (Oracle) and David Scott (MGX). US owners are to lease ByteDance's algorithm, which Oracle will retrain",
+      "date": "2026-01-22",
+      "source": "https://techcrunch.com/2026/01/23/heres-whats-you-should-know-about-the-us-tiktok-deal/"
+    }
+  ],
+  "realEstate": [
+    {
+      "area": "Singapore (listed residence)",
+      "type": "residence",
+      "date": "as of 2026-09",
+      "source": "https://www.forbes.com/profile/zhang-yiming/"
     }
   ],
   "policy": [
     {
-      "what": "TikTok US divestiture/JV under US government pressure; ByteDance holds 50% of TikTok USDS JV with Oracle/Silver Lake/MGX at 15% each",
-      "source": "https://www.nytimes.com/2026/01/22/technology/tiktok-deal-oracle-bytedance-china-us.html"
-    },
-    {
       "what": "Reuters, citing the WSJ, reported the Trump administration was set to receive a ~$10B fee for brokering the TikTok deal (headline seen via citation; Reuters blocked fetch)",
       "source": "https://www.reuters.com/world/china/trump-administration-set-receive-10-billion-fee-brokering-tiktok-deal-wsj-2026-03-13/"
+    },
+    {
+      "what": "Irish Data Protection Commission fined TikTok €530M (€485M for GDPR Art. 46(1) China data transfers, €45M for transparency) and ordered compliance within 6 months or suspension of transfers to China (decision 2025-04-30, announced 2025-05-02)",
+      "source": "https://www.dataprotection.ie/en/news-media/latest-news/irish-data-protection-commission-fines-tiktok-eu530-million-and-orders-corrective-measures-following"
+    },
+    {
+      "what": "DPC opened a new inquiry (July 2025) into TikTok's transfers of EEA users' personal data to servers in China",
+      "source": "https://www.dataprotection.ie/en/news-media/press-releases/dpc-announces-inquiry-tiktok-technology-limiteds-transfers-eea-users-personal-data-servers-located"
+    }
+  ],
+  "giving": [
+    {
+      "name": "$10M commitment to the Gates Foundation's COVID-19 Therapeutics Accelerator (May 2020; older)",
+      "source": "https://www.forbes.com/profile/zhang-yiming/"
     }
   ],
   "watch": [
@@ -55,13 +78,17 @@
       "source": "https://fortune.com/2026/09/17/billionaire-tiktok-founder-zhang-yiming-richest-person-in-asia-105-billion-net-worth-gained-92-billion-since-2019-ai/"
     },
     {
-      "what": "TikTok USDS JV governance, algorithm-licensing arrangement and any stake changes by Oracle/Silver Lake/MGX",
-      "source": "https://en.wikipedia.org/wiki/TikTok_USDS"
-    },
-    {
       "what": "ByteDance AI push: Doubao assistant (345M MAU; China's top AI app in Q1 2026)",
       "source": "https://www.forbes.com/profile/zhang-yiming/"
+    },
+    {
+      "what": "TikTok USDS JV governance, algorithm-lease and Oracle retraining; any change to ByteDance's 19.9% stake",
+      "source": "https://newsroom.tiktok.com/announcement-from-the-new-tiktok-usds-joint-venture-llc"
+    },
+    {
+      "what": "Outcome of the DPC's second inquiry into TikTok's EEA-to-China data transfers",
+      "source": "https://www.dataprotection.ie/en/news-media/press-releases/dpc-announces-inquiry-tiktok-technology-limiteds-transfers-eea-users-personal-data-servers-located"
     }
   ],
-  "gaps": "Web search quota ran out. Missing: Zhang's personal vehicles and holding entities; real estate (none sourced); philanthropy (e.g., the Nankai University fund, which could not be verified); ByteDance's latest buyback valuation; EU DSA and other regulatory actions against TikTok. JV stake split is sourced to Wikipedia, which cites NYT/Hollywood Reporter; the NYT and Reuters URLs came from Wikipedia citations and could not be fetched. ByteDance is private, so there is no SEC CIK."
+  "gaps": "The published profile relied on Wikipedia for the TikTok USDS split and said ByteDance and affiliates keep 50%. The TikTok newsroom says ByteDance itself holds 19.9%; the ~50% figure seems to add in ByteDance's existing investors. The Wikipedia source is retracted and replaced. Still missing: Zhang's personal holding vehicles and ByteDance's 2026 buyback price. Only low-tier reports of a ~$550B valuation were seen, so it was left out."
 }

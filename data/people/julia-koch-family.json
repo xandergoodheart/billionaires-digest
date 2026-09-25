@@ -38,6 +38,12 @@
       "stake": "10% minority, non-controlling ($10B team valuation)",
       "stakeAsOf": "2025-10",
       "source": "https://www.nfl.com/news/nfl-owners-approve-sale-10-percent-giants-julia-koch-family"
+    },
+    {
+      "name": "New York Giants (NFL) — 10% minority stake, in a deal valuing the team at a record $10.3B; approved by NFL owners at the fall meeting",
+      "stake": "10%",
+      "stakeAsOf": "2025-10-22",
+      "source": "https://www.cnbc.com/2025/10/22/nfl-sale-minority-stake-giants-koch.html"
     }
   ],
   "privateDeals": [
@@ -50,22 +56,27 @@
       "what": "Bought 15% of BSE Global (Nets/Liberty/Barclays Center). Forbes puts the price at nearly $700M; ESPN estimated about $900M.",
       "date": "2024-06-19",
       "source": "https://www.espn.com/nba/story/_/id/40386481/billionaire-julia-koch-buys-stake-nba-nets-wnba-liberty"
+    },
+    {
+      "what": "NFL owners approved the Koch family's purchase of 10% of the New York Giants at a $10.3B valuation",
+      "date": "2025-10-22",
+      "source": "https://www.cnbc.com/2025/10/22/nfl-sale-minority-stake-giants-koch.html"
     }
   ],
   "realEstate": [
     {
-      "area": "Manhattan, New York City (Upper East Side co-op building)",
-      "type": "co-op duplex apartment (bought 2004), listed for sale for $60M or more",
-      "price": "$60M+ asking",
-      "date": "2022-02 (listing)",
-      "source": "https://www.wsj.com/articles/david-kochs-widow-looks-to-sell-manhattan-apartment-for-60-million-or-more-11644600492"
+      "area": "Upper East Side, Manhattan, New York (co-op duplex)",
+      "type": "residence (sold)",
+      "price": "$45M sale (first listed at $48M in 2022)",
+      "date": "2025-02",
+      "source": "https://therealdeal.com/new-york/2025/02/18/julia-koch-david-koch-740-park-avenue/"
     },
     {
-      "area": "Manhattan, New York City",
-      "type": "townhouse",
-      "price": "$40.25M",
-      "date": "2018 (older; purchase)",
-      "source": "https://www.wsj.com/articles/david-kochs-widow-looks-to-sell-manhattan-apartment-for-60-million-or-more-11644600492"
+      "area": "Southampton, New York (Meadow Lane oceanfront)",
+      "type": "estate (purchase)",
+      "price": "~$70M",
+      "date": "2022-06",
+      "source": "https://therealdeal.com/new-york/tristate/2022/06/22/julia-koch-revealed-as-buyer-of-dated-70m-southampton-estate/"
     }
   ],
   "trophies": [
@@ -80,18 +91,18 @@
   ],
   "giving": [
     {
-      "name": "Julia Koch Family Foundation (Wichita, KS)",
-      "ein": "92-1599313",
-      "source": "https://projects.propublica.org/nonprofits/search?q=Koch+Foundation"
-    },
-    {
-      "name": "David H Koch Charitable Foundation (Wichita, KS)",
-      "ein": "48-0926946",
-      "source": "https://projects.propublica.org/nonprofits/search?q=Koch+Foundation"
-    },
-    {
       "name": "$75M NYU Langone gift through Julia Koch Family Foundation (West Palm Beach ambulatory care center)",
       "source": "https://www.palmbeachpost.com/story/news/local/westpb/2024/02/21/julia-koch-gives-75m-for-nyu-langone-medical-center-in-west-palm-beach/72617495007/"
+    },
+    {
+      "name": "Julia Koch Family Foundation (Wichita, KS) — total assets $50.2M, revenue $55.2M, expenses $5.1M (FY2023 Form 990-PF)",
+      "ein": "92-1599313",
+      "source": "https://projects.propublica.org/nonprofits/organizations/921599313"
+    },
+    {
+      "name": "David H Koch Charitable Foundation (Wichita, KS) — total assets $3.5M (FY2023)",
+      "ein": "48-0926946",
+      "source": "https://projects.propublica.org/nonprofits/organizations/480926946"
     }
   ],
   "watch": [
@@ -108,5 +119,5 @@
       "source": "https://www.nfl.com/news/nfl-owners-approve-sale-10-percent-giants-julia-koch-family"
     }
   ],
-  "gaps": "Web search quota ran out, so these items are missing: the name of the family office/investment vehicle; Koch, Inc. lawsuits, regulatory actions and government contracts (policy is empty); real estate after 2022, including the outcome of the Manhattan listing and any Florida purchases; the exact Giants closing date and price. The two real-estate facts come from a WSJ URL cited on Wikipedia; WSJ blocked a direct fetch. BSE price conflict: Forbes says nearly $700M, ESPN estimated $900M. Koch, Inc. is private, so no SEC CIK. Did not check EDGAR for a Julia Koch reporting-owner CIK."
+  "gaps": "Pass 2 retracts the WSJ 2022 listing entries, which were cited via Wikipedia and not seen directly, and replaces them with The Real Deal's reporting of the Feb 2025 $45M sale. It also swaps the ProPublica search-page citations for org pages with EINs. A reported ~$33.5M Southampton lot added to a family compound (Aug 2026) was seen only in low-tier outlets and is left out. The family office name, Koch, Inc. litigation, and the Giants closing date and price are still unverified."
 }

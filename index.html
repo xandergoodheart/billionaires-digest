@@ -283,7 +283,11 @@
     var row = el('div', 'fprow');
     var m = el('div', 'fpmain', x.main || '');
     var detail = joinBits(arr(x.bits));
-    if (detail) m.appendChild(el('span', 'fpdet', detail));
+    if (detail || x.quote){
+      var det = el('span', 'fpdet', detail);
+      if (x.quote){ if (detail) det.appendChild(document.createTextNode(' · ')); det.appendChild(x.quote); }
+      m.appendChild(det);
+    }
     if (x.lossy && arr(x.full).length) m.appendChild(moreBox(x.full));
     row.appendChild(m);
     var list = arr(sources).filter(function(u){ return !!safeUrl(u); });
@@ -297,7 +301,35 @@
     }
     return row;
   }
-  function renderFootprint(box, name, prof){
+  // ---- market quotes (data/prices/latest.json; optional) ----
+  // same rule as scripts/lib/data-common.mjs isUsExchange: no exchange stated, or Nasdaq/NYSE and not delisted/proposed
+  function usListing(exchange){
+    var s = str(exchange);
+    if (!s) return true;
+    return !/delisted|proposed/i.test(s) && /^(nasdaq|nyse)\b/i.test(s);
+  }
+  // first quoted symbol for a profile ticker ("NVDA", "GOOGL / GOOG", "NYSE:MP"); null when none
+  function quoteFor(e, quotes){
+    if (!quotes || !e) return null;
+    var raw = str(e.ticker);
+    if (!raw || /\(/.test(raw) || !usListing(e.exchange)) return null;
+    var toks = raw.split('/').map(function(t){ return t.replace(/^[A-Za-z]+:\s*/, '').trim(); }).filter(Boolean);
+    for (var i = 0; i < toks.length; i++){
+      var q = Object.prototype.hasOwnProperty.call(quotes, toks[i]) ? quotes[toks[i]] : null;
+      if (q && typeof q.price === 'number' && isFinite(q.price) && q.price > 0) return { sym: toks.length > 1 ? toks[i] : '', q: q };
+    }
+    return null;
+  }
+  function fmtPrice(p){ return '$' + Number(p).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  // "$412.30 ▲ 1.23%" colored by the day's move
+  function quoteEl(qb){
+    var pct = qb.q.changePct, has = typeof pct === 'number' && isFinite(pct);
+    var dir = !has ? 'flat' : (pct > 0 ? 'up' : (pct < 0 ? 'down' : 'flat'));
+    var t = (qb.sym ? qb.sym + ' ' : '') + fmtPrice(qb.q.price) + (has ? ' ' + arrow(dir) + Math.abs(pct).toFixed(2) + '%' : '');
+    return el('span', 'fpq ' + dirClass(dir), t);
+  }
+
+  function renderFootprint(box, name, prof, quotes){
     box.textContent = '';
     if (!prof){ box.appendChild(el('p', 'pcnote', 'Footprint research for ' + name + ' is coming soon.')); return; }
     var any = false;
@@ -307,7 +339,12 @@
       any = true;
       var sec = el('div', 'fpg');
       sec.appendChild(el('h4', null, g[1]));
-      items.forEach(function(e){ var x = g[2](e); if (x.main) sec.appendChild(fpRow(x, e.source, e.sources)); });
+      items.forEach(function(e){
+        var x = g[2](e);
+        if (!x.main) return;
+        if (g[0] === 'controls' || g[0] === 'stakes'){ var qb = quoteFor(e, quotes); if (qb) x.quote = quoteEl(qb); }
+        sec.appendChild(fpRow(x, e.source, e.sources));
+      });
       box.appendChild(sec);
     });
     if (!any) box.appendChild(el('p', 'pcnote', 'No sourced footprint entries on file for ' + name + ' yet.'));
@@ -331,6 +368,93 @@
     });
     box.appendChild(sec);
   }
+  // ---- SEC filings (data/filings/*.json) ----
+  function formLabel(code){
+    var c = str(code).toUpperCase().replace(/^SC\s+/, 'SCHEDULE ');
+    if (/^4(\/A)?$/.test(c)) return 'Form 4 · insider trade';
+    if (/^144(\/A)?$/.test(c)) return 'Form 144 · planned sale';
+    if (/13[DG]\b/.test(c)) return '13D/13G · big stake';
+    if (/^13F/.test(c)) return '13F · fund holdings';
+    if (/^8-K/.test(c)) return '8-K · company event';
+    if (/^3(\/A)?$/.test(c)) return 'Form 3 · new insider';
+    if (/^D(\/A)?$/.test(c)) return 'Form D · private raise';
+    return c ? 'Form ' + c : 'SEC filing';
+  }
+  var TX_VERB = { P: 'Bought', S: 'Sold', F: 'Withheld for tax', G: 'Gifted', X: 'Exercised', M: 'Exercised', C: 'Converted', A: 'Awarded', D: 'Disposed' };
+  // one Form 4 summary line: "Sold 12.3M ASPN · ~$58.1M"
+  function txLine(s){
+    var verb = TX_VERB[str(s.code).toUpperCase()] || str(s.codeLabel) || 'Traded';
+    // "LEN, LEN.B" + "Class B Common Stock" -> "LEN.B"; otherwise the first symbol
+    var toks = str(s.ticker).split(/[\s,\/]+/).filter(Boolean);
+    var cls = /\bClass\s+([A-Z])\b/i.exec(str(s.securityTitle));
+    var tk = toks[0] || '';
+    if (cls) toks.forEach(function(t){ if (t.toUpperCase().slice(-2) === '.' + cls[1].toUpperCase()) tk = t; });
+    if (!tk) tk = clip(str(s.issuer), 28);
+    var bits = [verb];
+    if (typeof s.shares === 'number' && isFinite(s.shares) && s.shares > 0) bits.push(BD.fmtShares(s.shares));
+    if (tk) bits.push(tk);
+    var t = bits.join(' ');
+    if (typeof s.value === 'number' && isFinite(s.value) && s.value > 0) t += ' · ~' + BD.fmtUsd(s.value);
+    return t;
+  }
+  function sortFilings(list){
+    return arr(list).filter(function(f){ return f && typeof f === 'object'; })
+      .map(function(f, i){ return { f: f, i: i }; })
+      .sort(function(a, b){ var x = str(a.f.filed), y = str(b.f.filed); return x < y ? 1 : (x > y ? -1 : a.i - b.i); })
+      .map(function(x){ return x.f; });
+  }
+  // ISO timestamp -> New York calendar date "YYYY-MM-DD"
+  function nyIso(ts){
+    var d = new Date(ts);
+    if (!ts || isNaN(d.getTime())) return isoOf(ts);
+    try { return isoOf(d.toLocaleDateString('en-CA', { timeZone: 'America/New_York' })) || isoOf(ts); } catch(e){ return isoOf(ts); }
+  }
+  // opts.withPerson: lead with the person's name (sidebar). opts.withFiler: always show filer entity + filed date (card).
+  function filingRow(f, opts){
+    var o = opts || {};
+    var row = el('div', 'filrow');
+    var top = el('div', 'filtop');
+    var who = str(f.person) || str(f.filer);
+    if (o.withPerson){
+      if (f.personSlug){ var pl = el('a', 'filwho', who); pl.href = '#person=' + encodeURIComponent(f.personSlug); top.appendChild(pl); }
+      else top.appendChild(el('span', 'filwho', who));
+    }
+    var label = formLabel(f.form);
+    var u = safeUrl(f.url) || safeUrl(f.indexUrl);
+    if (u){
+      var fa = el('a', 'filform', label + ' ↗'); fa.href = u; fa.target = '_blank'; fa.rel = 'noopener noreferrer';
+      fa.setAttribute('aria-label', label + (who ? ', ' + who : '') + (f.filed ? ', filed ' + fmtDate(f.filed) : '') + ' (opens on SEC EDGAR)');
+      top.appendChild(fa);
+    } else top.appendChild(el('span', 'filform', label));
+    row.appendChild(top);
+    var lines = f.form4 ? arr(f.form4.summary).filter(function(s){ return s && typeof s === 'object'; }) : [];
+    if (lines.length){
+      var tx = el('div', 'filtx');
+      lines.slice(0, 3).forEach(function(s){ tx.appendChild(el('span', dirClass(s.direction), txLine(s))); });
+      if (lines.length > 3) tx.appendChild(el('span', 'flat', '+' + (lines.length - 3) + ' more'));
+      row.appendChild(tx);
+    }
+    if (!lines.length || o.withFiler){
+      var when = f.filed ? 'filed ' + (o.withFiler ? fmtDate(str(f.filed)) : BD.monDay(f.filed)) : '';
+      var meta = joinBits([str(f.filer), when]);
+      if (meta) row.appendChild(el('div', 'filmeta', meta));
+    }
+    return row;
+  }
+  function renderFilings(box, st, data){
+    box.textContent = '';
+    if (st === 'loading' || st === 'idle'){ box.appendChild(el('p', 'pcnote', 'Loading SEC filings…')); return; }
+    if (st === 'error'){ box.appendChild(el('p', 'pcnote', "SEC filings couldn't load. Refresh the page to try again.")); return; }
+    if (st === 'none' || !data){ box.appendChild(el('p', 'pcnote', "This person doesn't file with the SEC.")); return; }
+    var days = typeof data.windowDays === 'number' && data.windowDays > 0 ? data.windowDays : 90;
+    var list = sortFilings(data.filings);
+    if (!list.length){ box.appendChild(el('p', 'pcnote', 'No SEC filings in the last ' + days + ' days.')); return; }
+    var sec = el('div', 'fpg');
+    sec.appendChild(el('h4', null, 'SEC filings · last ' + days + ' days'));
+    list.forEach(function(f){ sec.appendChild(filingRow(f, { withFiler: true })); });
+    box.appendChild(sec);
+  }
+
   function renderSpark(box, name, ip){
     box.textContent = '';
     box.appendChild(el('div', 'label', 'Wealth history'));
@@ -427,6 +551,25 @@
     }
     if (te && te.worth && ip) nw.appendChild(el('div', 'pcsub', "Today's edition: " + te.worth));
     else if (te && !ip && digest.top10AsOf) nw.appendChild(el('div', 'pcsub', digest.top10AsOf));
+    // estimated daily change from public stakes (data/prices/networth-est.json; shown only when present)
+    var estBox = el('div', 'pcest'); estBox.hidden = true;
+    nw.appendChild(estBox);
+    BD.loadNetworthEst().then(function(est){
+      if (activePerson !== name || !document.body.contains(estBox)) return;
+      var pe = est && est.people && typeof est.people === 'object' && Object.prototype.hasOwnProperty.call(est.people, s) ? est.people[s] : null;
+      var v = pe && pe.estDailyChange;
+      if (typeof v !== 'number' || !isFinite(v)) return;
+      var dir = v > 0 ? 'up' : (v < 0 ? 'down' : 'flat');
+      estBox.appendChild(document.createTextNode('Est. today: '));
+      estBox.appendChild(el('span', dirClass(dir), arrow(dir) + (BD.fmtUsd(Math.abs(v)) || '$0')));
+      estBox.appendChild(document.createTextNode(' from public stakes'));
+      var how = el('details', 'estmore');
+      var sm = el('summary', null, '*'); sm.setAttribute('aria-label', 'How this estimate works');
+      how.appendChild(sm);
+      how.appendChild(el('span', 'estmethod', str(est.method) || 'Estimated from disclosed share counts in US-listed holdings only. Partial; may undercount.'));
+      estBox.appendChild(how);
+      estBox.hidden = false;
+    });
     card.appendChild(nw);
 
     // wealth history
@@ -435,11 +578,23 @@
     renderSpark(sp, name, ip);
 
     // tabs
-    var TABS = [['footprint', 'Footprint'], ['watch', 'Watch']];
+    var TABS = [['footprint', 'Footprint'], ['filings', 'Filings'], ['watch', 'Watch']];
     var tl = el('div', 'tabs'); tl.setAttribute('role', 'tablist'); tl.setAttribute('aria-label', 'Profile sections');
     var panel = el('div', 'tabpanel'); panel.setAttribute('role', 'tabpanel'); panel.tabIndex = 0;
     var btns = [];
-    var prof, profState = 'loading';
+    var prof, profState = 'loading', quotes = null;
+    // Filings tab: loaded the first time it is shown. idle | loading | ready | none (no file) | error
+    var filState = 'idle', filData = null;
+    function loadFilingsTab(){
+      if (filState !== 'idle') return;
+      filState = 'loading';
+      BD.loadPersonFilings(s).then(function(x){
+        filData = x; filState = x ? 'ready' : 'none';
+      }, function(){ filState = 'error'; }).then(function(){
+        if (activePerson !== name || !document.body.contains(panel)) return;
+        if (activeTab === 'filings') paint();
+      });
+    }
     function paint(){
       btns.forEach(function(b){
         var on = b._key === activeTab;
@@ -448,10 +603,11 @@
         if (on) panel.setAttribute('aria-labelledby', b.id);
       });
       panel.id = 'pcpanel';
+      if (activeTab === 'filings'){ loadFilingsTab(); renderFilings(panel, filState, filData); return; }
       if (profState === 'loading'){ panel.textContent = ''; panel.appendChild(el('p', 'pcnote', 'Loading profile…')); return; }
       if (profState === 'error'){ panel.textContent = ''; panel.appendChild(el('p', 'pcnote', "The profile couldn't load. Refresh the page to try again.")); return; }
       if (activeTab === 'watch') renderWatch(panel, ip ? ip.name : name, prof);
-      else renderFootprint(panel, ip ? ip.name : name, prof);
+      else renderFootprint(panel, ip ? ip.name : name, prof, quotes);
     }
     TABS.forEach(function(t, i){
       var b = el('button', 'tab', t[1]); b.type = 'button'; b._key = t[0];
@@ -475,8 +631,12 @@
     paint();
 
     function done(p){
-      if (activePerson !== name || !document.body.contains(panel)) return;
-      prof = p; profState = 'ready'; paint();
+      // quotes are optional (data/prices/latest.json); loadPrices resolves to null when the file is missing
+      BD.loadPrices().then(function(pr){
+        if (activePerson !== name || !document.body.contains(panel)) return;
+        quotes = pr && pr.quotes && typeof pr.quotes === 'object' ? pr.quotes : null;
+        prof = p; profState = 'ready'; paint();
+      });
     }
     // async even when there is nothing to fetch: the card is attached after renderCard returns
     if (!peopleIndex){
@@ -497,6 +657,31 @@
     a.href = BD.sectorHref(sector);
     a.setAttribute('aria-label', 'Open the ' + sector + ' sector page');
     return a;
+  }
+
+  var FILINGS_TIMING = 'Form 4 insider trades post within 2 business days. 13F fund holdings can arrive 45 days after quarter end.';
+  function secFilingsBox(sec){
+    var fb = el('div', 'box filbox'); fb.appendChild(el('h3', 'serif', 'Filings tracker'));
+    var list = sortFilings(sec.filings).slice(0, 8);
+    if (!list.length) fb.appendChild(el('p', 'note', 'No SEC filings from the people we track in the last ' + (sec.windowDays || 90) + ' days.'));
+    list.forEach(function(f){ fb.appendChild(filingRow(f, { withPerson: true })); });
+    var gen = nyIso(sec.generated);
+    fb.appendChild(el('p', 'note', 'Straight from SEC EDGAR' + (gen ? ' · updated ' + BD.monDay(gen) : '')));
+    fb.appendChild(el('p', 'note', FILINGS_TIMING));
+    return fb;
+  }
+  function digestFilingsBox(d){
+    if (!arr(d && d.filings).length) return null;
+    var fb = el('div', 'box'); fb.appendChild(el('h3', 'serif', 'Filings tracker'));
+    var hr = el('div', 'frow h'); ['Filer', 'Form', 'Change'].forEach(function(x){ hr.appendChild(el('span', null, x)); }); fb.appendChild(hr);
+    d.filings.forEach(function(f){
+      var fr = el('div', 'frow');
+      fr.appendChild(el('span', null, f.filer || '')); fr.appendChild(el('span', 'flat', f.form || ''));
+      fr.appendChild(el('span', dirClass(f.direction), arrow(f.direction) + (f.change || '')));
+      fb.appendChild(fr);
+    });
+    fb.appendChild(el('p', 'note', FILINGS_TIMING));
+    return fb;
   }
 
   function render(){
@@ -619,18 +804,15 @@
       });
       mf.appendChild(fl); side.appendChild(mf);
     }
-    if (arr(d.filings).length){
-      var fb = el('div', 'box'); fb.appendChild(el('h3', 'serif', 'Filings tracker'));
-      var hr = el('div', 'frow h'); ['Filer', 'Form', 'Change'].forEach(function(x){ hr.appendChild(el('span', null, x)); }); fb.appendChild(hr);
-      d.filings.forEach(function(f){
-        var fr = el('div', 'frow');
-        fr.appendChild(el('span', null, f.filer || '')); fr.appendChild(el('span', 'flat', f.form || ''));
-        fr.appendChild(el('span', dirClass(f.direction), arrow(f.direction) + (f.change || '')));
-        fb.appendChild(fr);
-      });
-      fb.appendChild(el('p', 'note', 'Form 4 insider trades post within 2 business days. 13F fund holdings can arrive 45 days after quarter end.'));
-      side.appendChild(fb);
-    }
+    // filings tracker: real SEC EDGAR data (data/filings/latest.json), else the edition's own filings list
+    var filHold = el('div'); filHold.hidden = true;
+    side.appendChild(filHold);
+    BD.loadFilings().then(function(sec){
+      if (!filHold.parentNode || !document.body.contains(filHold)) return;
+      var box = sec && Array.isArray(sec.filings) ? secFilingsBox(sec) : digestFilingsBox(d);
+      if (box) filHold.parentNode.replaceChild(box, filHold);
+      else filHold.parentNode.removeChild(filHold);
+    });
     [['What to watch', d.watch], ['Quick hits', d.quickHits], ['If you run a business, not a fund', d.memo, true]].forEach(function(x){
       var b = BD.listBox(x[0], x[1], x[2]);
       if (b) side.appendChild(b);
@@ -651,6 +833,8 @@
     app.appendChild(e);
     document.getElementById('dateline').textContent = 'Billionaires Digest';
   }
+
+  BD.loadFilings();   // start early; the sidebar box fills in when it arrives
 
   fetch('digest.json?t=' + Date.now(), { cache: 'no-store' })
     .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })

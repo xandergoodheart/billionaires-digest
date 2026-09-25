@@ -17,19 +17,10 @@
       "name": "LVMH Moët Hennessy Louis Vuitton SE",
       "ticker": "MC",
       "exchange": "Euronext Paris",
-      "role": "Chairman and CEO since January 1989; family control via Christian Dior SE / Financière Agache",
-      "stake": "49.77% of shares, 65.89% of votes (Arnault family, per Wikipedia)",
-      "stakeAsOf": "not stated in source (LVMH IR shows a December 2025 shareholder-structure table that could not be rendered)",
-      "source": "https://en.wikipedia.org/wiki/LVMH"
-    },
-    {
-      "name": "Christian Dior SE",
-      "ticker": "CDI",
-      "exchange": "Euronext Paris",
-      "role": "Family-controlled holding that owns ~42% of LVMH",
-      "stake": "97.5% (Groupe Familial Arnault via Financière Agache)",
-      "stakeAsOf": "2024",
-      "source": "https://en.wikipedia.org/wiki/Christian_Dior_SE"
+      "role": "Chairman & CEO; Arnault family group is controlling shareholder",
+      "stake": "Arnault family group 50.33% of capital, 66.27% of voting rights (incl. Financière Agache 6.77%/8.49% direct and Agache 0.51% direct; remainder via Christian Dior SE)",
+      "stakeAsOf": "2026-09-23",
+      "source": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html"
     },
     {
       "name": "Financière Agache / Agache SCA",
@@ -37,11 +28,20 @@
       "source": "https://en.wikipedia.org/wiki/Groupe_Arnault"
     },
     {
-      "name": "Paris FC (Ligue 1)",
-      "role": "Majority owner via Agache Sport (takeover completed 29 Nov 2024); Red Bull GmbH holds 10.6%",
-      "stake": "52.4%",
+      "name": "Christian Dior SE (listed holding company over LVMH)",
+      "ticker": "CDI",
+      "exchange": "Euronext Paris",
+      "role": "Family holding; to be merged with Agache and renamed Agache SCA",
+      "stake": "Financière Agache 96.00% of capital / 97.10% of votes, plus Agache 0.65% direct",
+      "stakeAsOf": "2026-09-23",
+      "source": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html"
+    },
+    {
+      "name": "Paris FC (Paris football club) via Agache",
+      "role": "Majority owner (Agache), with Red Bull as minority partner; family share to rise to ~80% in 2027",
+      "stake": "52.4% (Red Bull 10.6%)",
       "stakeAsOf": "2024-11-29",
-      "source": "https://en.wikipedia.org/wiki/Paris_FC"
+      "source": "https://www.france24.com/en/live-news/20241129-arnault-family-s-paris-fc-takeover-completed"
     }
   ],
   "stakes": [
@@ -50,10 +50,10 @@
       "source": "https://en.wikipedia.org/wiki/Ch%C3%A2teau_Cheval_Blanc"
     },
     {
-      "name": "Loro Piana (via LVMH)",
-      "stake": "94% (LVMH, up from 85% after buying ~EUR 1bn of founding-family shares)",
-      "stakeAsOf": "end-2025",
-      "source": "https://en.wikipedia.org/wiki/Loro_Piana"
+      "name": "Loro Piana (via LVMH) — LVMH exercised a call option to buy another 9% from the Loro Piana family for about €1B, taking its stake from 85% to 94% (implied €11B valuation)",
+      "stake": "94% (LVMH)",
+      "stakeAsOf": "2025 (reported Jan 2026)",
+      "source": "https://wwd.com/business-news/mergers-acquisitions/lvmh-increases-stake-loro-piana-1238526632/"
     }
   ],
   "vehicles": [
@@ -65,9 +65,13 @@
     },
     {
       "name": "Financière Agache",
-      "type": "family office",
-      "notes": "Paris-based family office/holding; owns ~96-97.5% of Christian Dior SE. No EDGAR entity found (searched 'agache' and 'groupe arnault').",
-      "source": "https://en.wikipedia.org/wiki/Groupe_Arnault"
+      "type": "holding co",
+      "notes": "Holds 96.00% of Christian Dior and 6.77% of LVMH; to be merged into Agache at end-2026",
+      "source": "https://en.wikipedia.org/wiki/Groupe_Arnault",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Groupe_Arnault",
+        "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html"
+      ]
     },
     {
       "name": "Aglaé Ventures",
@@ -76,28 +80,33 @@
       "source": "https://en.wikipedia.org/wiki/Groupe_Arnault"
     },
     {
-      "name": "Agache Sport",
+      "name": "Agache (family holding; to absorb Financière Agache, then merge into Christian Dior to form Agache SCA)",
       "type": "holding co",
-      "notes": "Holds 52.4% of Paris FC.",
-      "source": "https://en.wikipedia.org/wiki/Paris_FC"
+      "notes": "Post-restructuring Agache SCA would hold directly 49.76% of LVMH capital and 65.55% of votes (per the Sept 2026 plan)",
+      "source": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html"
     },
     {
-      "name": "Christian Dior SE",
+      "name": "Agache (Paris FC holder)",
       "type": "holding co",
-      "notes": "Listed holding (CDI) holding ~42% of LVMH.",
-      "source": "https://en.wikipedia.org/wiki/Christian_Dior_SE"
+      "notes": "Became Paris FC majority owner on completion of the takeover, 2024-11-29",
+      "source": "https://www.france24.com/en/live-news/20241129-arnault-family-s-paris-fc-takeover-completed"
     }
   ],
   "privateDeals": [
     {
-      "what": "LVMH raised its Loro Piana stake from 85% to 94% by buying ~EUR 1bn of shares from the founding family",
-      "date": "2025 (end)",
-      "source": "https://en.wikipedia.org/wiki/Loro_Piana"
+      "what": "Arnault family group plan to simplify its structure (announced 2026-09-23): Financière Agache merges into Agache, then Agache converts to an SCA and merges into Christian Dior, which is renamed Agache SCA; then a mandatory tender offer for the 2.44% of Christian Dior it does not own, at 95% of look-through NAV based on the 1-month average LVMH price (illustrative €469.05/share), with no squeeze-out",
+      "date": "2026-09-23",
+      "source": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html"
     },
     {
-      "what": "Arnault family (Agache Sport) completed majority takeover of Paris FC alongside Red Bull",
+      "what": "LVMH bought ~9% more of Loro Piana from the founding family for ~€1B via call option (85% to 94%)",
+      "date": "2025",
+      "source": "https://wwd.com/business-news/mergers-acquisitions/lvmh-increases-stake-loro-piana-1238526632/"
+    },
+    {
+      "what": "Agache completed majority takeover of Paris FC (52.4%) alongside Red Bull (10.6%)",
       "date": "2024-11-29",
-      "source": "https://en.wikipedia.org/wiki/Paris_FC"
+      "source": "https://www.france24.com/en/live-news/20241129-arnault-family-s-paris-fc-takeover-completed"
     }
   ],
   "realEstate": [
@@ -111,10 +120,6 @@
     }
   ],
   "trophies": [
-    {
-      "what": "Paris FC - promoted to Ligue 1 on 2 May 2025; moved to Stade Jean-Bouin for 2025-26; finished 11th in 2025-26",
-      "source": "https://en.wikipedia.org/wiki/Paris_FC"
-    },
     {
       "what": "Fondation Louis Vuitton (Paris contemporary art museum commissioned by Arnault)",
       "source": "https://en.wikipedia.org/wiki/Fondation_Louis_Vuitton"
@@ -130,13 +135,13 @@
     {
       "what": "Wine estates in the group, incl. Château Cheval Blanc (with Frère family) and Château d'Yquem (LVMH)",
       "source": "https://en.wikipedia.org/wiki/Ch%C3%A2teau_Cheval_Blanc"
+    },
+    {
+      "what": "Paris FC — majority-owned via Agache, with Red Bull as partner",
+      "source": "https://www.france24.com/en/live-news/20241129-arnault-family-s-paris-fc-takeover-completed"
     }
   ],
   "policy": [
-    {
-      "what": "Milan court placed Loro Piana under judicial administration (July 2025) over labour exploitation at subcontractors; court lifted the measure early in April 2026",
-      "source": "https://en.wikipedia.org/wiki/Loro_Piana"
-    },
     {
       "what": "Milan court placed Manufactures Dior SRL under one-year judicial administration (June 2024) over exploitative conditions at four suppliers",
       "source": "https://en.wikipedia.org/wiki/Dior"
@@ -152,6 +157,14 @@
     {
       "what": "Anti-corruption group's complaint alleging ~EUR 603m in state tax benefits for Fondation Louis Vuitton was dismissed in Sept 2019 (older)",
       "source": "https://en.wikipedia.org/wiki/Fondation_Louis_Vuitton"
+    },
+    {
+      "what": "Milan court placed Loro Piana under one-year judicial administration (July 2025) over worker exploitation at subcontracted workshops; the brand later welcomed an early end to the administration",
+      "source": "https://wwd.com/business-news/legal/milan-court-loro-piana-judicial-administration-alleged-worker-exploitation-1237979980/"
+    },
+    {
+      "what": "Early conclusion of Loro Piana's judicial administration",
+      "source": "https://wwd.com/business-news/legal/loro-piana-cleared-judicial-administration-labor-practices-1238919728/"
     }
   ],
   "giving": [
@@ -170,13 +183,24 @@
       "source": "https://en.wikipedia.org/wiki/Dior"
     },
     {
-      "what": "Further LVMH buy-ups of minority stakes in maisons (e.g., remaining 6% of Loro Piana)",
-      "source": "https://en.wikipedia.org/wiki/Loro_Piana"
+      "what": "Christian Dior EGM to vote on the Agache merger and SCA conversion",
+      "when": "December 2026",
+      "source": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html"
     },
     {
-      "what": "Paris FC 2026-27 Ligue 1 season and further Agache Sport investment",
-      "source": "https://en.wikipedia.org/wiki/Paris_FC"
+      "what": "Mandatory tender offer for the 2.44% Christian Dior minority (subject to AMF clearance; price fixed 5 business days before the EGM)",
+      "when": "Q1 2027",
+      "source": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html"
+    },
+    {
+      "what": "Paris FC: planned increase of the Arnault share to ~80% (and Red Bull to 15%) in 2027",
+      "when": "2027",
+      "source": "https://www.france24.com/en/live-news/20241129-arnault-family-s-paris-fc-takeover-completed"
+    },
+    {
+      "what": "Remaining ~6% Loro Piana minority held by the founding family",
+      "source": "https://wwd.com/business-news/mergers-acquisitions/lvmh-increases-stake-loro-piana-1238526632/"
     }
   ],
-  "gaps": "The web-search budget ran out before this profile, so it relies mostly on Wikipedia and could not be checked against Reuters/Bloomberg/AMF. No EDGAR CIK found for Bernard Arnault, Agache or Groupe Arnault (only other family members appear as individual filers; they are not profiled here). LVMH IR shareholder table (Dec 2025) and financial calendar are JS-rendered and could not be read, so the family stake has no as-of date and LVMH event dates are unconfirmed. Not verified: 2025-2026 AMF share-purchase declarations by the family, the 2025 change to LVMH's CEO age limit, US tariff effects, Arnault personal real estate, the Carrefour/Richemont stake history, and whether the Dior Milan administration has been lifted. French foundations have no US EIN."
+  "gaps": "Pass 2 replaced the Wikipedia sourcing for LVMH/Dior stakes, Paris FC and Loro Piana with the 2026-09-23 group press release, France24/AFP and WWD. Still Wikipedia-sourced and not retracted: Groupe Arnault media (Les Echos/Le Parisien), Aglaé Ventures, Cheval Blanc, Fondation Louis Vuitton, and the Dior court/AGCM/data-breach items. The LVMH Q3 revenue date is still unconfirmed."
 }

@@ -271,3 +271,27 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   .secname{font-size:18px}
   .sectile .secbody{padding:10px 10px 12px}
 }
+
+/* ---- SEC filings rows (sidebar tracker + person card Filings tab) ---- */
+.filrow{padding:10px 0;border-top:1px solid var(--line);font-size:12px;line-height:1.5}
+.filtop{display:flex;justify-content:space-between;align-items:baseline;gap:2px 12px;flex-wrap:wrap}
+.filwho{color:var(--text);font-weight:600;min-width:0;overflow-wrap:anywhere}
+a.filwho{text-decoration:none;min-height:44px;display:inline-flex;align-items:center;margin:-13px 0}
+a.filwho:hover{text-decoration:underline}
+.filform{font-size:11px;letter-spacing:.04em;color:var(--muted)}
+a.filform{color:var(--accent);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;margin:-13px 0}
+a.filform:hover{text-decoration:underline}
+.filtx{margin-top:4px}
+.filtx span{display:block;overflow-wrap:anywhere}
+.filmeta{margin-top:2px;font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+.tabpanel .filrow{font-size:13px}
+.tabpanel .fpg .filrow:first-of-type{margin-top:0}
+
+/* ---- market data (optional): footprint quotes + estimated daily change ---- */
+.fpq{white-space:nowrap}
+.pcest{font-size:12px;color:var(--soft);margin-top:6px}
+.estmore{display:inline}
+.estmore summary{display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:44px;margin:-14px 0;cursor:pointer;color:var(--accent);font-weight:600;list-style:none}
+.estmore summary::-webkit-details-marker{display:none}
+.estmore summary:focus-visible{outline:2px solid var(--accent);outline-offset:-6px}
+.estmethod{display:block;margin:8px 0 2px;padding:8px 12px;border-left:2px solid var(--line2);font-size:11px;line-height:1.55;color:var(--muted);max-width:560px}

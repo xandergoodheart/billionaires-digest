@@ -1,0 +1,78 @@
+{
+  "rank": 50,
+  "name": "Andreas von Bechtolsheim & family",
+  "slug": "andreas-von-bechtolsheim-family",
+  "worth": "$41.3B",
+  "source": "Google",
+  "sector": "AI & tech",
+  "asOf": "2026-09-24T21:15-04:00",
+  "aliases": [
+    "Andy Bechtolsheim",
+    "Andreas Bechtolsheim",
+    "BECHTOLSHEIM ANDREAS (EDGAR)",
+    "Bechtolsheim Family Trust"
+  ],
+  "secPersonCik": "0001133206",
+  "controls": [
+    {
+      "name": "Arista Networks, Inc. (co-founder; largest holder)",
+      "ticker": "ANET",
+      "exchange": "NYSE",
+      "role": "Co-founder; former chairman. Files Form 4s as a 10% owner (not as officer/director) following his 2024 SEC settlement",
+      "stake": "183,799,896 shares = 14.6% (183,228,048 held by the Bechtolsheim Family Trust, of which he is trustee; 413,848 direct; 158,000 options)",
+      "stakeAsOf": "2026-04-02",
+      "source": "https://www.sec.gov/Archives/edgar/data/1596532/000119312526158942/d66465ddef14a.htm"
+    }
+  ],
+  "stakes": [
+    {
+      "name": "Alphabet/Google — early $100,000 investment in Google, cited by Forbes as a wealth source (no current share count disclosed)",
+      "ticker": "GOOGL",
+      "source": "https://www.forbes.com/profile/andreas-von-bechtolsheim/"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "Bechtolsheim Family Trust",
+      "type": "trust",
+      "cik": "0001605976",
+      "files13F": false,
+      "notes": "Holds almost all of his Arista shares; he is trustee with sole voting/investment power. Filed Schedule 13G/A on Arista annually through 2024-01-31",
+      "source": "https://data.sec.gov/submissions/CIK0001605976.json"
+    }
+  ],
+  "privateDeals": [
+    {
+      "what": "Arista share sales under a Rule 10b5-1 plan adopted 2026-02-20: 12 Form 4s covering 3,256,848 shares sold 2026-05-22 to 2026-09-17, about $579M (our total from the Form 4 weighted-average prices). Trust held 180,543,048 shares after the 2026-09-17 sales",
+      "date": "2026-05-22 to 2026-09-17",
+      "source": "https://www.sec.gov/Archives/edgar/data/1133206/000159653226000230/edgardoc.xml"
+    }
+  ],
+  "realEstate": [
+    {
+      "area": "Palo Alto, California (listed residence)",
+      "type": "residence",
+      "date": "as of 2026-09",
+      "source": "https://www.forbes.com/profile/andreas-von-bechtolsheim/"
+    }
+  ],
+  "policy": [
+    {
+      "what": "SEC insider-trading settlement (Mar 2024): charged over trading Acacia Communications options before Cisco's 2019 acquisition announcement in accounts of a relative and an associate ($415,726 profits); without admitting or denying, agreed to a five-year bar from serving as officer or director of a public company and a $923,740 civil penalty",
+      "source": "https://www.sec.gov/newsroom/press-releases/2024-40"
+    }
+  ],
+  "watch": [
+    {
+      "what": "Continuing Arista sales under the Feb 2026 10b5-1 plan (Form 144s filed roughly every two to three weeks, latest 2026-09-17)",
+      "when": "ongoing",
+      "source": "https://data.sec.gov/submissions/CIK0001133206.json"
+    },
+    {
+      "what": "Five-year officer/director bar from the SEC runs to about 2029, so a formal Arista board return can't come before then",
+      "when": "~2029",
+      "source": "https://www.sec.gov/newsroom/press-releases/2024-40"
+    }
+  ],
+  "gaps": "Forbes still lists him as Arista chairman/CDO and gives a stake of 'nearly 17%'. That conflicts with the SEC bar and the 14.6% in the 2026 proxy; the primary filings are used here. No foundation or EIN found (ProPublica search returned nothing). Current Alphabet holding is not disclosed. No reputable reporting on real-estate deals was found. His other angel and startup investments were not researched."
+}

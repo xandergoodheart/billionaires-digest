@@ -19,11 +19,11 @@
       "source": "https://en.wikipedia.org/wiki/Jack_Ma"
     },
     {
-      "name": "Ant Group",
-      "role": "Founder; ceased to be actual controller in Jan 2023 restructuring",
-      "stake": "voting rights cut from ~50% to 6%",
-      "stakeAsOf": "2023-01",
-      "source": "https://en.wikipedia.org/wiki/Ant_Group"
+      "name": "Ant Group (private) — economic interest via Hangzhou Junhan (~32% of Ant) alongside other employees; Junao ~22%; Alibaba 33%",
+      "role": "Founder; no longer controls Ant: after Dec 2023 changes to Junhan/Junao voting structures, each is controlled by a separate GP not controlled by any single person, and no shareholder controls Ant",
+      "stake": "Junhan ~32%, Junao ~22% of Ant (Ma's personal share not disclosed; Ma has confirmed to Alibaba his economic interest will be cut over time to no more than 8.8%)",
+      "stakeAsOf": "2026-03-31",
+      "source": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm"
     }
   ],
   "stakes": [
@@ -34,6 +34,12 @@
     {
       "name": "Huayi Brothers Media",
       "source": "https://www.forbes.com/profile/jack-ma/"
+    },
+    {
+      "name": "Alibaba Group Holding — co-founder, retired from the company in 2020; not listed among ≥5% holders or directors in the FY2026 20-F ownership table (as of 2026-05-18; 18.67B shares outstanding), so his current stake is below 5% and undisclosed",
+      "ticker": "BABA / 9988",
+      "stakeAsOf": "2026-05-18",
+      "source": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm"
     }
   ],
   "vehicles": [
@@ -42,6 +48,12 @@
       "type": "fund",
       "notes": "Private equity firm he co-founded",
       "source": "https://en.wikipedia.org/wiki/Jack_Ma"
+    },
+    {
+      "name": "Yunfeng Funds (Yunfeng Capital)",
+      "type": "fund",
+      "notes": "Per Alibaba's 20-F, Ma holds minority interests in the GPs and some investment-advisor entities of several Yunfeng funds set up before his 2020 retirement, and his family holds LP interests. His GP/adviser interests are non-voting or he has waived voting, and he agreed to donate certain economic benefits to the Alibaba Group Charitable Fund or other charities. Alibaba co-invests alongside the funds",
+      "source": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm"
     }
   ],
   "trophies": [
@@ -52,12 +64,16 @@
   ],
   "policy": [
     {
-      "what": "Ant Group IPO halted by Shanghai Stock Exchange on 2020-11-03; Ant fined CNY 7.123bn (~$985M) by regulators in July 2023; in Dec 2024 Ant said it had no immediate IPO plans",
-      "source": "https://en.wikipedia.org/wiki/Ant_Group"
+      "what": "PBOC fined Ant Group 7.12B yuan (~$985M) in July 2023 for governance, consumer-protection and AML violations, ending the regulatory overhaul that began when Ant's Nov 2020 IPO was halted (older)",
+      "source": "https://www.cnbc.com/2023/07/07/china-hits-alibaba-affiliate-ant-group-hit-with-985-million-fine.html"
     },
     {
-      "what": "Alibaba: U.S. added it to Pentagon 'Chinese military companies' list in June 2026 and Alibaba sued for removal; Texas banned Alibaba products on state devices (Jan 2026)",
-      "source": "https://en.wikipedia.org/wiki/Alibaba_Group"
+      "what": "Pentagon added Alibaba (with Baidu and BYD) to its Section 1260H 'Chinese military companies' list in June 2026; the DoD may not contract directly with listed firms and third-party procurement bans follow from June 2027",
+      "source": "https://www.cnbc.com/2026/06/09/alibaba-baidu-byd-named-on-pentagons-china-military-list-.html"
+    },
+    {
+      "what": "Alibaba sued the Defense Department on 2026-06-23 seeking removal from the 1260H list, calling the designation 'arbitrary and capricious'",
+      "source": "https://www.japantimes.co.jp/business/2026/06/24/companies/alibaba-sues-pentagon/"
     }
   ],
   "giving": [
@@ -68,17 +84,13 @@
   ],
   "watch": [
     {
-      "what": "Alibaba lawsuit challenging its U.S. 'Chinese military company' designation",
-      "source": "https://en.wikipedia.org/wiki/Alibaba_Group"
+      "what": "Alibaba v. Department of Defense (1260H designation) — court ruling; Xiaomi and AMEC previously won removal through litigation",
+      "source": "https://www.japantimes.co.jp/business/2026/06/24/companies/alibaba-sues-pentagon/"
     },
     {
-      "what": "Alibaba quarterly results (Sept quarter) and any further asset disposals",
-      "source": "https://en.wikipedia.org/wiki/Alibaba_Group"
-    },
-    {
-      "what": "Any revival of Ant Group IPO plans",
-      "source": "https://en.wikipedia.org/wiki/Ant_Group"
+      "what": "Ant Group IPO revival or further Junhan/Junao restructuring (Alibaba holds a right of first refusal on transfers until a qualified Ant IPO)",
+      "source": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm"
     }
   ],
-  "gaps": "Current Alibaba stake % not verified (Alibaba 20-F not fetched). Real estate (e.g. Hong Kong, Adirondacks purchases in older press) not verified and left out. Yunfeng Financial's links and crypto moves not verified. The web search budget ran out."
+  "gaps": "Pass 2 swaps the Wikipedia-sourced 1260H items, Ant control, and the Ant fine for CNBC, Japan Times and Alibaba's FY2026 20-F; those Wikipedia URLs are retracted. The earlier Alibaba 'controls' entry (cited to Wikipedia/Jack_Ma) is superseded by the 'stakes' entry, since Ma has no board seat and holds under 5%. Still unverified: his exact Alibaba share count (not in the 20-F), Jack Ma Foundation details, the Bordeaux vineyards, and any real estate."
 }

@@ -83,7 +83,26 @@
     return u === 'T' ? n * 1000 : (u === 'M' ? n / 1000 : n);
   }
   function fmtWorth(v){ return v >= 1000 ? '$' + (v / 1000).toFixed(2).replace(/\.?0+$/, '') + 'T' : '$' + (Math.round(v * 10) / 10) + 'B'; }
+  // 845000 -> "845K", 12280426 -> "12.3M", 1.2e9 -> "1.2B" (absolute value; '' when not a number)
+  function compactNum(n){
+    var a = Math.abs(Number(n));
+    if (n === null || n === '' || !isFinite(a)) return '';
+    var units = ['', 'K', 'M', 'B', 'T'], i = 0;
+    while (i < units.length - 1 && a >= 999.95){ a /= 1000; i++; }
+    if (i === 0) return String(Math.round(a));
+    return String(a >= 99.95 ? Math.round(a) : Math.round(a * 10) / 10) + units[i];
+  }
+  // share counts: 12280426 -> "12.3M"
+  function fmtShares(n){ return compactNum(n); }
+  // dollars: 58086415 -> "$58.1M", -1.2e9 -> "-$1.2B"
+  function fmtUsd(n){ var c = compactNum(n); return c ? (Number(n) < 0 ? '-$' : '$') + c : ''; }
+  // "2026-09-24" -> "Sep 24"
+  function monDay(iso){
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ''));
+    return m && +m[2] >= 1 && +m[2] <= 12 ? MONTHS[+m[2] - 1] + ' ' + (+m[3]) : (iso ? String(iso) : '');
+  }
   BD.MONTHS = MONTHS; BD.isoOf = isoOf; BD.fmtDate = fmtDate; BD.monYear = monYear; BD.isoFromLong = isoFromLong; BD.parseWorth = parseWorth; BD.fmtWorth = fmtWorth;
+  BD.fmtShares = fmtShares; BD.fmtUsd = fmtUsd; BD.monDay = monDay;
 
   // text: cut at a word boundary with an ellipsis
   function clip(s, max){
@@ -200,8 +219,34 @@
     return profileCache[s];
   };
 
+  // optional morning-data files: resolve to the parsed object, or null when missing or broken. Never reject. Loaded once.
+  var optionalCache = {};
+  function optionalJson(u){
+    if (!optionalCache[u]){
+      optionalCache[u] = getJson(u).then(function(x){ return x && typeof x === 'object' ? x : null; }, function(){ return null; });
+    }
+    return optionalCache[u];
+  }
+  BD.loadFilings = function(){ return optionalJson('data/filings/latest.json'); };        // SEC EDGAR, newest filings
+  BD.loadPrices = function(){ return optionalJson('data/prices/latest.json'); };          // { quotes: { SYM: { price, changePct, ... } } }
+  BD.loadNetworthEst = function(){ return optionalJson('data/prices/networth-est.json'); }; // { method, people: { slug: { estDailyChange } } }
+
+  // one person's SEC filings: null when the person has no file (404); rejects on other errors
+  var personFilingsCache = {};
+  BD.loadPersonFilings = function(s){
+    if (!personFilingsCache[s]){
+      personFilingsCache[s] = fetch('data/filings/by-person/' + encodeURIComponent(s) + '.json', { cache: 'no-store' }).then(function(r){
+        if (r.status === 404) return null;
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      });
+      personFilingsCache[s].catch(function(){ delete personFilingsCache[s]; });
+    }
+    return personFilingsCache[s];
+  };
+
   // archive of editions
-  var archiveIndex = null;   // promise of every edition date, newest first
+  var archiveIndex = null;  // promise of every edition date, newest first
   var editionCache = {};     // date -> promise of the edition object (or null when it failed)
   BD.loadArchiveIndex = function(){
     if (!archiveIndex){

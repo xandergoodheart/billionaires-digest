@@ -1,0 +1,90 @@
+{
+  "rank": 49,
+  "name": "Abigail Johnson",
+  "slug": "abigail-johnson",
+  "worth": "$41.6B",
+  "source": "Fidelity",
+  "sector": "Finance",
+  "asOf": "2026-09-24T21:15-04:00",
+  "aliases": [
+    "Abigail P. Johnson",
+    "Abby Johnson"
+  ],
+  "controls": [
+    {
+      "name": "FMR LLC / Fidelity Investments (private; Boston) — 2025 revenue $37.7B, operating income $12.7B, $18.0T assets under administration, $7.1T managed assets",
+      "role": "Chairman (since 2016) and CEO (since 2014); director of FMR LLC",
+      "stake": "~29% (Forbes estimate)",
+      "stakeAsOf": "2026-09-24",
+      "source": "https://www.forbes.com/profile/abigail-johnson/"
+    },
+    {
+      "name": "Johnson family voting control of FMR LLC — family members incl. Abigail P. Johnson are predominant owners of Series B voting shares = 49% of FMR voting power; Series B voting agreement means the family may be deemed a controlling group",
+      "role": "co-reporting person with FMR LLC on Schedule 13G filings",
+      "stake": "Series B = 49% of voting power (family, not her individually)",
+      "stakeAsOf": "2026-08-31",
+      "source": "https://www.sec.gov/Archives/edgar/data/315066/000031506626002300/exhibit99.txt"
+    }
+  ],
+  "stakes": [
+    {
+      "name": "Fidelity Digital Assets — OCC conditionally approved conversion from state trust company to national trust bank (Dec 2025); OCC letter says its proposed USD-backed stablecoin issuance is permissible",
+      "stakeAsOf": "2025-12-12",
+      "source": "https://occ.treas.gov/topics/charters-and-licensing/interpretations-and-decisions/2026/ca1355.pdf"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "FMR LLC",
+      "type": "holding co",
+      "cik": "0000315066",
+      "files13F": true,
+      "notes": "Parent of Fidelity; Abigail P. Johnson is named as a joint reporting person on FMR's Schedule 13G/13G-A filings (e.g., a batch filed 2026-09-08). She has no separate EDGAR filer CIK; she is listed by name only",
+      "source": "https://data.sec.gov/submissions/CIK0000315066.json"
+    }
+  ],
+  "privateDeals": [
+    {
+      "what": "Fidelity 2025 results: revenue +15% to $37.7B, operating income +24% to $12.7B, assets under administration +19% to $18.0T",
+      "date": "2026 (FY2025 annual report)",
+      "source": "https://about.fidelity.com/data-and-insights/2025-annual-report"
+    }
+  ],
+  "realEstate": [
+    {
+      "area": "Boston, Massachusetts (listed residence)",
+      "type": "residence",
+      "date": "as of 2026-09",
+      "source": "https://www.forbes.com/profile/abigail-johnson/"
+    }
+  ],
+  "trophies": [
+    {
+      "what": "Subject of 2026 book 'House of Fidelity' (Justin Baer, Hachette), which reports she threatened to leave Fidelity during a succession showdown with her father",
+      "source": "https://www.bostonglobe.com/2026/05/21/newsletters/fidelity-book-abby-ned-showdown/"
+    }
+  ],
+  "giving": [
+    {
+      "name": "Fidelity Foundation (Boston; corporate foundation of Fidelity)",
+      "ein": "04-6131201",
+      "source": "https://projects.propublica.org/nonprofits/api/v2/search.json?q=Fidelity+Foundation"
+    },
+    {
+      "name": "Johnson family giving to Boston-area nonprofits incl. Harvard, the Institute of Contemporary Art and Historic New England",
+      "source": "https://www.forbes.com/profile/abigail-johnson/"
+    }
+  ],
+  "watch": [
+    {
+      "what": "Fidelity Digital Assets national trust bank conversion and stablecoin launch (conditional OCC approval Dec 2025)",
+      "source": "https://www.americanbanker.com/news/fidelity-plans-to-launch-a-stablecoin"
+    },
+    {
+      "what": "Fidelity Q3 2026 business update (Fidelity publishes quarterly business updates)",
+      "when": "Q4 2026",
+      "source": "https://about.fidelity.com/data-and-insights/q2-2025-business-update"
+    }
+  ],
+  "gaps": "Fidelity is private, so her ~29% stake is a Forbes estimate; no primary filing gives her personal economic stake. No verified personal real-estate deals beyond the Forbes-listed Boston residence. Personal family foundation not identified; the Edward C. Johnson Fund (EIN 04-6108344, Boston) exists but its tie to her was not confirmed. The Johnson family's stake in Fidelity International (FIL) was not checked."
+}

@@ -14,24 +14,27 @@
   ],
   "controls": [
     {
-      "name": "Safra Group (J. Safra Group)",
-      "role": "Family-controlled banking and investment group inherited after Joseph Safra's death (Dec 2020)",
-      "source": "https://en.wikipedia.org/wiki/Vicky_Safra"
+      "name": "J. Safra Group (private) — $590B AuM; privately owned banks plus investment holdings in real estate and agribusiness; >32,000 employees",
+      "role": "Family-owned group; Jacob J. Safra is chairman of J. Safra Sarasin Group",
+      "source": "https://www.jsafrasarasin.com/content/dam/jsafrasarasin/company/media/document/annual-results/Media%20release%2030032026%20EN.pdf.coredownload.inline.pdf"
     },
     {
-      "name": "Banco Safra (Brazil)",
-      "role": "Family-controlled private bank",
-      "source": "https://en.wikipedia.org/wiki/Banco_Safra"
+      "name": "J. Safra Sarasin Group (Basel) — 2025 net profit CHF 522.3M (+3.5%), operating income CHF 1,742.1M, AuM CHF 228.5B, equity CHF 5.5B, CET1 34.5%",
+      "role": "Family-owned private bank",
+      "stakeAsOf": "2025-12-31",
+      "source": "https://www.jsafrasarasin.com/content/dam/jsafrasarasin/company/media/document/annual-results/Media%20release%2030032026%20EN.pdf.coredownload.inline.pdf"
     },
     {
-      "name": "J. Safra Sarasin (Switzerland)",
-      "role": "Family-controlled wealth manager",
-      "source": "https://en.wikipedia.org/wiki/Vicky_Safra"
+      "name": "Saxo Bank (Denmark) — majority stake acquired by J. Safra Sarasin Group, completed 2026-03-02",
+      "role": "majority owner via J. Safra Sarasin",
+      "stake": "majority",
+      "stakeAsOf": "2026-03-02",
+      "source": "https://www.jsafrasarasin.com/content/dam/jsafrasarasin/company/media/document/annual-results/Media%20release%2030032026%20EN.pdf.coredownload.inline.pdf"
     },
     {
-      "name": "Safra National Bank of New York",
-      "role": "Family-controlled US bank",
-      "source": "https://en.wikipedia.org/wiki/Vicky_Safra"
+      "name": "Banco Safra (São Paulo) and Safra National Bank of New York — group banks, each supervised separately",
+      "role": "Family-owned banks",
+      "source": "https://www.jsafrasarasin.com/content/dam/jsafrasarasin/company/media/document/annual-results/Media%20release%2030032026%20EN.pdf.coredownload.inline.pdf"
     }
   ],
   "stakes": [
@@ -39,46 +42,83 @@
       "name": "Chiquita (co-owned with Cutrale)",
       "stake": "50% (Safra Group)",
       "source": "https://en.wikipedia.org/wiki/Chiquita"
+    },
+    {
+      "name": "Chiquita Brands International — listed by the group as one of its investments, alongside agribusiness holdings in Brazil",
+      "source": "https://www.jsafrasarasin.com/content/dam/jsafrasarasin/company/media/document/annual-results/Media%20release%2030032026%20EN.pdf.coredownload.inline.pdf"
+    },
+    {
+      "name": "Life Time Group Holdings — J. Safra (JSS LTF Holdings and transferees controlled by the Joseph Safra family or J. Safra Group) is a 'Principal Stockholder' under the stockholders agreement, with a board-observer right until it recovers its initial investment through sales",
+      "ticker": "LTH",
+      "stakeAsOf": "2026-03-10",
+      "source": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000020/lth-20260310.htm"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "J. Safra Sarasin Holding AG (Basel)",
+      "type": "holding co",
+      "cik": "0001890222",
+      "files13F": true,
+      "notes": "13F-HR for Q2 2026: 1,701 positions, $6.97B (filed 2026-07-31)",
+      "source": "https://www.sec.gov/Archives/edgar/data/1890222/000189022226000004/primary_doc.xml"
+    },
+    {
+      "name": "J.Safra Asset Management Corp (New York)",
+      "type": "fund",
+      "cik": "0001535293",
+      "files13F": true,
+      "notes": "13F-HR for Q2 2026: 633 positions, $2.17B (filed 2026-08-06)",
+      "source": "https://www.sec.gov/Archives/edgar/data/1535293/000153529326000005/primary_doc.xml"
+    },
+    {
+      "name": "J. Safra Holdings Luxembourg S.à r.l. / J. Safra Holdings International (Luxembourg) S.A. / JS International Holdings Ltd / JSS LTF Holdings Ltd",
+      "type": "holding co",
+      "cik": "0001890236",
+      "files13F": false,
+      "notes": "Filed as a 10% owner of Life Time Group (LTH) on Form 3/A, Dec 2021",
+      "source": "https://www.sec.gov/Archives/edgar/data/1890236/000114036121042168/form3.xml"
     }
   ],
   "realEstate": [
     {
-      "area": "City of London",
-      "type": "Office tower (30 St Mary Axe, 'The Gherkin'); famous holding",
-      "price": "more than GBP 700 million",
-      "date": "2014-11",
-      "via": "Safra Group",
-      "source": "https://en.wikipedia.org/wiki/Joseph_Safra"
-    },
-    {
-      "area": "Manhattan, New York",
-      "type": "More than a dozen properties acquired, mainly commercial (older)",
-      "date": "2013",
-      "via": "Safra family",
-      "source": "https://en.wikipedia.org/wiki/Joseph_Safra"
+      "area": "Portfolio of 200+ commercial, residential, retail and farmland properties worldwide, including a Midtown Manhattan office/retail tower and a City of London office tower",
+      "type": "commercial investment portfolio",
+      "via": "J. Safra Group",
+      "source": "https://www.jsafrasarasin.com/content/dam/jsafrasarasin/company/media/document/annual-results/Media%20release%2030032026%20EN.pdf.coredownload.inline.pdf"
     }
   ],
   "policy": [
     {
       "what": "Chiquita (50% Safra-owned): June 2024 US federal jury (Judge Kenneth Marra, S.D. Fla.) found it liable for AUC paramilitary killings in Colombia, awarding $38.3M to victims' families; July 2025 Colombian court sentenced seven former Chiquita executives",
       "source": "https://en.wikipedia.org/wiki/Chiquita"
-    },
-    {
-      "what": "Proposed 'Tulip' tower next to the Gherkin rejected by London mayor in 2019 (older)",
-      "source": "https://en.wikipedia.org/wiki/Joseph_Safra"
     }
   ],
   "giving": [
     {
-      "name": "Joseph Safra Philanthropic Foundation (headed by Vicky Safra)",
-      "source": "https://en.wikipedia.org/wiki/Vicky_Safra"
+      "name": "Joseph & Vicky Safra Foundation Inc (New York) — total assets $22.4M, expenses $11.6M (FY2023)",
+      "ein": "06-1640434",
+      "source": "https://projects.propublica.org/nonprofits/organizations/61640434"
     }
   ],
   "watch": [
     {
       "what": "Further Chiquita AUC litigation (bellwether trials/appeals following 2024 verdict)",
       "source": "https://en.wikipedia.org/wiki/Chiquita"
+    },
+    {
+      "what": "Saxo Bank integration under J. Safra Sarasin (majority stake closed 2026-03-02)",
+      "source": "https://www.jsafrasarasin.com/content/dam/jsafrasarasin/company/media/document/annual-results/Media%20release%2030032026%20EN.pdf.coredownload.inline.pdf"
+    },
+    {
+      "what": "J. Safra Sarasin Holding and J.Safra Asset Management Q3 2026 13F-HR filings",
+      "when": "by 2026-11-16",
+      "source": "https://www.sec.gov/Archives/edgar/data/1890222/000189022226000004/primary_doc.xml"
+    },
+    {
+      "what": "Life Time (LTH) sell-down by J. Safra, which would end its board-observer right",
+      "source": "https://www.sec.gov/Archives/edgar/data/1869198/000186919826000020/lth-20260310.htm"
     }
   ],
-  "gaps": "Very thin primary sourcing (mostly Wikipedia); web search budget exhausted before Reuters/Bloomberg checks. Not verified: Safra National Bank SEC/13F filer CIK, J. Safra Sarasin AUM, 2024-26 deals, and the status of the family inheritance dispute (left out as a family matter)."
+  "gaps": "Pass 2 replaces the Wikipedia-sourced group, bank and real-estate entries with J. Safra Sarasin's 30 Mar 2026 release and SEC filings, and retracts the Vicky_Safra, Joseph_Safra and Banco_Safra Wikipedia URLs. The Chiquita 50% (with Cutrale) split and the AUC verdict are still Wikipedia-sourced. The individual split of ownership among Vicky Safra and her children is not disclosed. The Saxo stake % was not stated in the release."
 }

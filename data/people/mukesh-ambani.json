@@ -41,6 +41,29 @@
       "name": "Reliance Retail",
       "role": "Controlled via Reliance",
       "source": "https://www.forbes.com/profile/mukesh-ambani/"
+    },
+    {
+      "name": "Reliance Industries Ltd. (promoter & promoter group, 47 holding entities/persons)",
+      "ticker": "RELIANCE",
+      "exchange": "NSE / BSE",
+      "role": "Chairman & MD; promoter",
+      "stake": "Promoter & promoter group 6,715,496,096 shares = 50.48% of shares (A+B+C2), 49.62% of total voting rights; Mukesh D Ambani directly 16,104,040 shares; main holding LLPs: Srichakra Commercials 11.12%, Devarshi Commercials 8.20%, Karuna Commercials 8.20%, Reliance Industries Holding Pvt Ltd 4.57%",
+      "stakeAsOf": "2026-06-30",
+      "source": "https://www.ril.com/sites/default/files/2026-07/SHP30062026.pdf"
+    }
+  ],
+  "vehicles": [
+    {
+      "name": "Promoter LLPs (Srichakra, Devarshi, Karuna, Tattvam, Samarjit Commercials/Enterprises LLP and others)",
+      "type": "holding co",
+      "notes": "Named in RIL's significant-beneficial-owner table, with Mukesh D Ambani among the SBOs; e.g., Srichakra 10.93%, Devarshi 8.06%, Karuna 8.06%, Tattvam 8.06%, Samarjit 1.84% (SBO table %)",
+      "source": "https://www.ril.com/sites/default/files/2026-07/SHP30062026.pdf"
+    },
+    {
+      "name": "Petroleum Trust (formerly controlled Reliance Services and Holdings Ltd)",
+      "type": "trust",
+      "notes": "Dissolved on 2026-04-30 and removed from the promoter group listing",
+      "source": "https://www.ril.com/sites/default/files/2026-07/SHP30062026.pdf"
     }
   ],
   "privateDeals": [
@@ -57,6 +80,11 @@
     {
       "what": "Plans an $80B renewable-energy investment over the next decade",
       "source": "https://www.forbes.com/profile/mukesh-ambani/"
+    },
+    {
+      "what": "Jio Platforms IPO: draft filed 2026-06-19; SEBI final observations 2026-08-28; up to 270M new shares (~2.9% dilution), ~$4B raise; global investor roadshow from mid-Sept; targeting November 2026 (Bloomberg via Business Today)",
+      "date": "2026-08-28",
+      "source": "https://www.businesstoday.in/markets/ipo-corner/story/jio-platforms-gears-up-for-ipo-marketing-next-week-report-553848-2026-09-08"
     }
   ],
   "realEstate": [
@@ -67,12 +95,6 @@
       "date": "2021-04 (older)",
       "via": "Reliance Industries",
       "source": "https://www.forbes.com/sites/emmareynolds/2021/04/23/billionaire-mukesh-ambani-buys-golf-club-featured-in-james-bond-film--goldfinger-for-79-million/"
-    },
-    {
-      "area": "Mumbai, India",
-      "type": "27-story private residence tower (Antilia; famous long-held holding)",
-      "date": "long-held",
-      "source": "https://en.wikipedia.org/wiki/Mukesh_Ambani"
     }
   ],
   "trophies": [
@@ -103,7 +125,17 @@
     {
       "what": "JioStar media JV performance and any change in Disney's 36.84% stake",
       "source": "https://economictimes.indiatimes.com/industry/media/entertainment/media/ril-viacom18-and-disney-complete-merger-to-create-a-rs-70-352-cr-jv/articleshow/115299610.cms"
+    },
+    {
+      "what": "Jio Platforms IPO pricing/listing (~$4B, possibly India's largest)",
+      "when": "target Nov 2026",
+      "source": "https://www.businesstoday.in/markets/ipo-corner/story/jio-platforms-gears-up-for-ipo-marketing-next-week-report-553848-2026-09-08"
+    },
+    {
+      "what": "RIL Sept-quarter 2026 shareholding pattern (promoter % after Petroleum Trust dissolution)",
+      "when": "Oct 2026",
+      "source": "https://www.ril.com/investors/shareholders-information/shareholding-pattern"
     }
   ],
-  "gaps": "Web search quota ran out, and the RIL shareholding page and BSE could not be fetched, so the promoter-group stake % is omitted (Wikipedia gives an unsourced 50.4%). A reported Sept 2025 purchase of a ~$20M building in Tribeca, New York, was left out: its only source was low-tier (luxurylaunches) and returned 403. Reported Dubai (Palm Jumeirah) villa purchases were not verified. The Reliance Foundation is not sourced. The Stoke Park Forbes URL came from a Wikipedia citation and returned 403 on a direct fetch; the Bloomberg Jio IPO and Economic Times JioStar URLs likewise came from Wikipedia citations and were not fetched directly. Reliance quarterly results dates are not captured. No SEC CIK (Indian company)."
+  "gaps": "The promoter stake now comes from RIL's own Reg 31 shareholding-pattern filing, not Wikipedia. The Mumbai residence entry cited only Wikipedia and is retracted; no replacement source was fetched. Tribeca and Dubai property reports are still unverified."
 }

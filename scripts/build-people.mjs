@@ -9,6 +9,11 @@
 // - Every entry needs an http(s) source. Real-estate entries have street addresses scrubbed.
 // - Duplicate entries merge into one: real estate by area + type + date, other categories by
 //   label (name / what / area). A merged entry keeps `source` (the first) and gains `sources: [...]`.
+// - Files under a folder named `pass2` win for scalar fields: when a pass2 entry duplicates an
+//   earlier entry, its scalar values (stake, stakeAsOf, ...) replace the earlier ones and sources
+//   merge. Person-level `secPersonCik` and `gaps` from pass2 also replace earlier values.
+// - A person's `retractSources: [url, ...]` (any file) removes those URLs after merging: entries
+//   left with no source are dropped. `retractSources` is never written to output.
 
 import { readFile, writeFile, mkdir, readdir, unlink } from 'node:fs/promises';
 import path from 'node:path';
@@ -65,7 +70,19 @@ function norm(x) {
 function slugOf(name) { return norm(name).replace(/ /g, '-'); }
 const isUrl = u => typeof u === 'string' && /^https?:\/\//i.test(u.trim());
 
-const log = { scrubbed: [], dropped: [], unmatched: [], files: [], merged: 0 };
+const log = { scrubbed: [], dropped: [], unmatched: [], files: [], merged: 0, retracted: [] };
+
+// URL comparison key: trimmed, trailing slash stripped, host lowercased.
+function normUrl(u) {
+  const t = String(u == null ? '' : u).trim().replace(/\/+$/, '');
+  try {
+    const x = new URL(t);
+    x.hostname = x.hostname.toLowerCase();
+    return x.toString().replace(/\/+$/, '');
+  } catch {
+    return t;
+  }
+}
 
 // ---------- read inputs ----------
 async function readJson(file) {
@@ -92,7 +109,7 @@ async function jsonFilesIn(dir) {
 function isPerson(p) {
   return !!p && typeof p === 'object' && !Array.isArray(p) &&
     typeof p.name === 'string' && p.name.trim() !== '' &&
-    (Array.isArray(p.aliases) || typeof p.secPersonCik === 'string' || typeof p.gaps === 'string' ||
+    (Array.isArray(p.aliases) || Array.isArray(p.retractSources) || typeof p.secPersonCik === 'string' || typeof p.gaps === 'string' ||
       CATEGORIES.some(c => Array.isArray(p[c])));
 }
 
@@ -179,12 +196,36 @@ function entryKey(c, e) {
   return label ? norm(label) : JSON.stringify(e);
 }
 
-// Adds e's source to an already-kept duplicate.
+// Adds e's sources to an already-kept duplicate.
 function mergeSource(kept, e) {
   const list = Array.isArray(kept.sources) ? kept.sources : [kept.source];
-  const src = e.source.trim();
-  if (!list.some(u => u.trim() === src)) list.push(src);
+  const incoming = Array.isArray(e.sources) ? e.sources : [e.source];
+  for (const u of incoming) {
+    if (!isUrl(u)) continue;
+    const src = u.trim();
+    if (!list.some(x => x.trim() === src)) list.push(src);
+  }
   if (list.length > 1) kept.sources = list;
+}
+
+// A pass2 duplicate replaces the kept entry's scalar fields (source/sources are merged instead).
+function applyPass2Scalars(kept, e) {
+  for (const [k, v] of Object.entries(e)) {
+    if (k === 'source' || k === 'sources') continue;
+    if (v !== null && typeof v === 'object') continue;
+    kept[k] = v;
+  }
+}
+
+// Removes retracted URLs from an entry. Returns the entry, or null if no source remains.
+function retractFromEntry(e, retracted) {
+  const list = Array.isArray(e.sources) ? e.sources : [e.source];
+  const remaining = list.filter(u => !retracted.has(normUrl(u)));
+  if (remaining.length === list.length) return e;
+  if (!remaining.length) return null;
+  const out = { ...e, source: remaining[0] };
+  if (remaining.length > 1) out.sources = remaining; else delete out.sources;
+  return out;
 }
 
 // ---------- main ----------
@@ -225,6 +266,7 @@ async function main() {
     }
     const people = extractPeople(data);
     if (!people.length) { log.files.push(`${path.relative(researchDir, file)}: no person objects, ignored`); continue; }
+    const isPass2 = path.relative(researchDir, file).split(path.sep).includes('pass2');
     let used = 0;
     for (const p of people) {
       const names = [p.name, ...(Array.isArray(p.aliases) ? p.aliases : [])];
@@ -234,7 +276,7 @@ async function main() {
       used++;
       let m = merged.get(r.slug);
       if (!m) {
-        m = { aliases: [], secPersonCik: undefined, gaps: [], seen: {} };
+        m = { aliases: [], secPersonCik: undefined, cikFromPass2: false, gaps: [], gapsPass2: [], retract: new Set(), seen: {}, fromPass2: new WeakSet() };
         CATEGORIES.forEach(c => { m[c] = []; m.seen[c] = new Map(); });
         merged.set(r.slug, m);
       }
@@ -242,8 +284,17 @@ async function main() {
         const t = typeof a === 'string' ? a.trim() : '';
         if (t && !m.aliases.some(x => norm(x) === norm(t))) m.aliases.push(t);
       });
-      if (m.secPersonCik === undefined && typeof p.secPersonCik === 'string' && p.secPersonCik.trim()) m.secPersonCik = p.secPersonCik.trim();
-      if (typeof p.gaps === 'string' && p.gaps.trim() && !m.gaps.includes(p.gaps.trim())) m.gaps.push(p.gaps.trim());
+      (Array.isArray(p.retractSources) ? p.retractSources : []).forEach(u => { if (isUrl(u)) m.retract.add(normUrl(u)); });
+      if (typeof p.secPersonCik === 'string' && p.secPersonCik.trim()) {
+        if (m.secPersonCik === undefined || (isPass2 && !m.cikFromPass2)) {
+          m.secPersonCik = p.secPersonCik.trim();
+          m.cikFromPass2 = isPass2;
+        }
+      }
+      if (typeof p.gaps === 'string' && p.gaps.trim()) {
+        const g = isPass2 ? m.gapsPass2 : m.gaps;
+        if (!g.includes(p.gaps.trim())) g.push(p.gaps.trim());
+      }
       for (const c of CATEGORIES) {
         for (const raw of Array.isArray(p[c]) ? p[c] : []) {
           if (!raw || typeof raw !== 'object') continue;
@@ -259,13 +310,36 @@ async function main() {
           }
           const k = entryKey(c, e);
           const kept = m.seen[c].get(k);
-          if (kept) { mergeSource(kept, e); log.merged++; continue; }
+          if (kept) {
+            if (isPass2 && !m.fromPass2.has(kept)) { applyPass2Scalars(kept, e); m.fromPass2.add(kept); }
+            mergeSource(kept, e);
+            log.merged++;
+            continue;
+          }
           m.seen[c].set(k, e);
+          if (isPass2) m.fromPass2.add(e);
           m[c].push(e);
         }
       }
     }
     log.files.push(`${path.relative(researchDir, file)}: ${used} matched`);
+  }
+
+  // Apply retractions.
+  for (const r of roster) {
+    const m = merged.get(r.slug);
+    if (!m || !m.retract.size) continue;
+    for (const c of CATEGORIES) {
+      const next = [];
+      for (const e of m[c]) {
+        const after = retractFromEntry(e, m.retract);
+        const label = e.name || e.what || e.area || '?';
+        if (!after) { log.retracted.push(`${r.name} · ${c}: "${label}" (dropped, all sources retracted)`); continue; }
+        if (after !== e) log.retracted.push(`${r.name} · ${c}: "${label}" (retracted URL removed, kept with ${after.sources ? after.sources.length : 1} source(s))`);
+        next.push(after);
+      }
+      m[c] = next;
+    }
   }
 
   // Write output.
@@ -289,7 +363,8 @@ async function main() {
     for (const c of CATEGORIES) {
       if (m[c].length) { out[c] = m[c]; counts[c] += m[c].length; }
     }
-    if (m.gaps.length) out.gaps = m.gaps.join(' ');
+    const gaps = m.gapsPass2.length ? m.gapsPass2 : m.gaps;
+    if (gaps.length) out.gaps = gaps.join(' ');
     const clean = cleanValue(out);
     await writeFile(path.join(OUT_DIR, `${r.slug}.json`), JSON.stringify(clean, null, 2) + '\n');
     keep.add(`${r.slug}.json`);
@@ -319,6 +394,8 @@ async function main() {
   CATEGORIES.forEach(c => console.log(`  ${c.padEnd(13)} ${counts[c]}`));
   const multi = [...merged.values()].reduce((n, m) => n + CATEGORIES.reduce((k, c) => k + m[c].filter(e => e.sources).length, 0), 0);
   console.log(`\nDuplicates merged: ${log.merged} (entries now carrying 2+ sources: ${multi})`);
+  console.log(`\nRetractions (${log.retracted.length}):`);
+  log.retracted.forEach(x => console.log('  ' + x));
   console.log(`\nScrubbed (${log.scrubbed.length}):`);
   log.scrubbed.forEach(x => console.log('  ' + x));
   console.log(`Dropped (${log.dropped.length}):`);
