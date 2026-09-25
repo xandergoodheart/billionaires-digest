@@ -164,4 +164,14 @@ if (problems.length) {
 
 await writeEdition(digest, isoDate);
 console.log(`Published ${digest.stories.length} stories for ${longDate} (${dropped.length} dropped).`);
+
+// ---- Open Graph image (never fails the publish) ----
+// Writes og/<isoDate>.png and og/latest.png and points index.html's og:image and twitter:image at the dated file.
+try {
+  const { publishOg } = await import('./lib/og.mjs');
+  const r = await publishOg(digest, isoDate, '.');
+  console.log(`OG image written: og/${isoDate}.png and og/latest.png${r.metaChanged ? '; index.html meta tags updated' : ''}.`);
+} catch (err) {
+  console.warn(`warning: OG image skipped: ${err?.message || err}`);
+}
 process.exit(0);

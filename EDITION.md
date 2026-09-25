@@ -23,12 +23,14 @@ Build today's Billionaires Digest edition and publish it.
 6. If it fails, fix only the problems it lists, using real sources, and run it again. Retry at most
    2 times. If it still fails, stop. Do not commit. The site keeps yesterday's edition.
 7. On success, run:
-   `git add digest.json archive && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
-   (use today's date in New York time).
+   `git add digest.json archive og index.html && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
+   (use today's date in New York time). `og/` holds the share image the publish script renders for the
+   edition. `index.html` is only changed by the publish script, which points its og:image and
+   twitter:image meta tags at that image. If the image step printed a warning, commit anyway.
 8. Final message: how many stories were published, which stories were dropped (and why), and
    anything that looked wrong.
 
-Never edit `index.html`, anything in `scripts/`, or workflow files during a daily run.
+Never edit `index.html` (the publish script updates its share-image meta tags; that is the only change), anything in `scripts/`, or workflow files during a daily run.
 
 ## Editorial rules
 Source of truth: `scripts/lib/edition.mjs` `rulesText()`. If you change one, change both.

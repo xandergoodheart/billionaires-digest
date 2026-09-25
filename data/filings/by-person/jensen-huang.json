@@ -1,0 +1,75 @@
+{
+  "generated": "2026-09-25T03:03:06.438Z",
+  "windowDays": 90,
+  "person": "Jensen Huang",
+  "personSlug": "jensen-huang",
+  "filings": [
+    {
+      "cik": "0001197649",
+      "filer": "HUANG JEN HSUN",
+      "form": "4",
+      "filed": "2026-09-18",
+      "reportDate": "2026-09-16",
+      "accession": "0001197649-26-000012",
+      "url": "https://www.sec.gov/Archives/edgar/data/1197649/000119764926000012/xslF345X06/wk-form4_1789765856.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1197649/000119764926000012/0001197649-26-000012-index.htm",
+      "description": "FORM 4",
+      "person": "Jensen Huang",
+      "personSlug": "jensen-huang",
+      "form4": {
+        "issuer": "NVIDIA CORP",
+        "ticker": "NVDA",
+        "summary": [
+          {
+            "issuer": "NVIDIA CORP",
+            "ticker": "NVDA",
+            "securityTitle": "Common Stock",
+            "code": "F",
+            "codeLabel": "Tax withholding",
+            "shares": 45728,
+            "price": 212.17,
+            "value": 9702110,
+            "direction": "down",
+            "transactions": 1
+          },
+          {
+            "issuer": "NVIDIA CORP",
+            "ticker": "NVDA",
+            "securityTitle": "Common Stock",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 438000,
+            "direction": "flat",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-09-16",
+            "code": "F",
+            "codeLabel": "Tax withholding",
+            "shares": 45728,
+            "price": 212.17,
+            "value": 9702110,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 70100666,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-09-17",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 438000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 467693547,
+            "direction": "flat"
+          }
+        ]
+      }
+    }
+  ]
+}

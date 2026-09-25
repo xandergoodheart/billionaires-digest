@@ -1,0 +1,116 @@
+{
+  "generated": "2026-09-25T03:03:06.438Z",
+  "windowDays": 90,
+  "person": "Mark Zuckerberg",
+  "personSlug": "mark-zuckerberg",
+  "filings": [
+    {
+      "cik": "0001548760",
+      "filer": "Zuckerberg Mark",
+      "form": "144",
+      "filed": "2026-09-24",
+      "accession": "0001921094-26-001050",
+      "url": "https://www.sec.gov/Archives/edgar/data/1548760/000192109426001050/xsl144X01/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1548760/000192109426001050/0001921094-26-001050-index.htm",
+      "person": "Mark Zuckerberg",
+      "personSlug": "mark-zuckerberg"
+    },
+    {
+      "cik": "0001997453",
+      "filer": "Chan Zuckerberg Initiative, LLC",
+      "form": "13F-HR",
+      "filed": "2026-08-14",
+      "reportDate": "2026-06-30",
+      "accession": "0001193125-26-350680",
+      "url": "https://www.sec.gov/Archives/edgar/data/1997453/000119312526350680/xslForm13F_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1997453/000119312526350680/0001193125-26-350680-index.htm",
+      "person": "Mark Zuckerberg",
+      "personSlug": "mark-zuckerberg"
+    },
+    {
+      "cik": "0001548760",
+      "filer": "Zuckerberg Mark",
+      "form": "4",
+      "filed": "2026-08-04",
+      "reportDate": "2026-07-31",
+      "accession": "0000950103-26-011908",
+      "url": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326011908/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326011908/0000950103-26-011908-index.htm",
+      "description": "FORM 4",
+      "person": "Mark Zuckerberg",
+      "personSlug": "mark-zuckerberg",
+      "form4": {
+        "issuer": "Meta Platforms, Inc.",
+        "ticker": "META",
+        "summary": [
+          {
+            "issuer": "Meta Platforms, Inc.",
+            "ticker": "META",
+            "securityTitle": "Class A Common Stock",
+            "code": "C",
+            "codeLabel": "Conversion",
+            "shares": 591690,
+            "direction": "up",
+            "transactions": 1
+          },
+          {
+            "issuer": "Meta Platforms, Inc.",
+            "ticker": "META",
+            "securityTitle": "Class A Common Stock",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 591690,
+            "direction": "flat",
+            "transactions": 1
+          },
+          {
+            "issuer": "Meta Platforms, Inc.",
+            "ticker": "META",
+            "securityTitle": "Class A Common Stock",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 591690,
+            "direction": "flat",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 3,
+        "transactions": [
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-07-31",
+            "code": "C",
+            "codeLabel": "Conversion",
+            "shares": 591690,
+            "price": 0,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 591690,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-07-31",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 591690,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 0,
+            "direction": "flat"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-07-31",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 591690,
+            "price": 0,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 1231037,
+            "direction": "flat"
+          }
+        ]
+      }
+    }
+  ]
+}

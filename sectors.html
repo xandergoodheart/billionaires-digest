@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sectors · Billionaires Digest</title>
+<meta name="description" content="Where the world's 100 richest people have their money, sector by sector, and what moved this week.">
+<meta property="og:title" content="Billionaires Digest · Sectors">
+<meta property="og:description" content="Follow the money by sector: who is positioned where, and what moved this week.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://billionairesdigest.com/sectors.html">
+<meta property="og:image" content="https://billionairesdigest.com/og/latest.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://billionairesdigest.com/og/latest.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="topstrip"><div class="wrap">
+  <span id="dateline">Sectors</span>
+  <span id="updated">Follow the money by sector</span>
+</div></div>
+
+<header class="mast"><div class="wrap">
+  <div>
+    <div class="display brand">Billionaires <span>Digest</span></div>
+    <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
+  </div>
+  <button class="themebtn" id="themebtn" type="button">Switch theme</button>
+</div></header>
+
+<nav class="sitenav" aria-label="Site"><div class="wrap">
+  <a href="index.html">Today</a>
+  <a href="sectors.html" aria-current="page">Sectors</a>
+  <a href="archive.html">Archive</a>
+</div></nav>
+
+<main id="app">
+  <div class="wrap pagehead"><h1 class="serif">Sectors</h1><p>Loading sectors…</p></div>
+</main>
+
+<footer><div class="wrap">
+  <span>Billionaires Digest · billionairesdigest.com</span>
+  <span>For information only · not financial advice</span>
+</div></footer>
+
+<script src="assets/common.js"></script>
+<script>
+(function(){
+  BD.initTheme();
+  var el = BD.el, arr = BD.arr, plural = BD.plural;
+  var app = document.getElementById('app');
+  var TITLE = 'Sectors · Billionaires Digest';
+  var WEEK = 7;            // editions counted as "this week"
+  var RECENT = 14;         // editions searched for recent moves
+  var EXPOSED_MAX = 30;    // profile files fetched for "Also exposed"
+  var EXPOSED_CONCURRENCY = 4;
+
+  function hashSector(){
+    var m = /^#([a-z0-9-]+)$/.exec(location.hash || '');
+    return m ? BD.sectorFromSlug(m[1]) : null;
+  }
+  function focusHeading(h){ if (!h) return; h.tabIndex = -1; try { h.focus({ preventScroll: true }); } catch(e){ h.focus(); } }
+  function people(){ var ix = BD.getPeople(); return ix ? ix.people : []; }
+  function byRank(a, b){ return (Number(a.rank) || 999) - (Number(b.rank) || 999); }
+  // stories in the newest n editions: [{ iso, date, s }], newest first
+  function storiesIn(n){
+    return BD.loadArchiveDated(n).then(function(list){
+      var out = [];
+      list.forEach(function(x){
+        if (!x.ed) return;
+        arr(x.ed.stories).forEach(function(s){ if (s) out.push({ iso: x.iso, date: x.ed.date || BD.fmtDate(x.iso), s: s }); });
+      });
+      return out;
+    });
+  }
+  function personLink(p, extra){
+    var li = el('li');
+    var a = el('a'); a.href = 'index.html#person=' + encodeURIComponent(p.slug);
+    a.appendChild(BD.avatar({ name: p.name, sector: p.sector || 'Other' }, 40));
+    var info = el('span', 'plinfo');
+    info.appendChild(el('span', 'pln serif', p.name));
+    info.appendChild(el('span', 'plw', (p.rank ? '#' + p.rank + ' · ' : '') + (p.worth || '')));
+    if (extra) info.appendChild(el('span', 'plx', extra));
+    a.appendChild(info);
+    li.appendChild(a);
+    return li;
+  }
+
+  // ---- grid of every sector ----
+  function renderGrid(){
+    document.title = TITLE;
+    app.textContent = '';
+    var head = el('div', 'wrap pagehead');
+    head.appendChild(el('h1', 'serif', 'Sectors'));
+    head.appendChild(el('p', null, 'Where the top 100 have their money, and how many moves each sector saw this week.'));
+    app.appendChild(head);
+    var body = el('div', 'wrap pagebody');
+    var grid = el('div', 'secgrid');
+    body.appendChild(grid);
+    app.appendChild(body);
+
+    var ps = people();
+    var stats = {};
+    BD.SECTORS.forEach(function(sec){
+      var a = el('a', 'sectile'); a.href = '#' + BD.sectorSlug(sec);
+      a.appendChild(BD.artImg('', BD.sectorArt(sec), 320));
+      var b = el('div', 'secbody');
+      b.appendChild(el('span', 'secname serif', sec));
+      var n = ps.filter(function(p){ return (p.sector || 'Other') === sec; }).length;
+      var s1 = el('span', 'secstat');
+      if (ps.length){ s1.appendChild(el('b', null, String(n))); s1.appendChild(document.createTextNode(' of the top 100')); }
+      else s1.textContent = 'Top 100 count unavailable';
+      var s2 = el('span', 'secstat', 'Counting moves…');
+      b.appendChild(s1); b.appendChild(s2);
+      a.appendChild(b);
+      grid.appendChild(a);
+      stats[sec] = { a: a, s2: s2, n: n };
+    });
+    storiesIn(WEEK).then(function(list){
+      var c = {};
+      list.forEach(function(x){ var k = x.s.sector || 'Other'; c[k] = (c[k] || 0) + 1; });
+      BD.SECTORS.forEach(function(sec){
+        var m = c[sec] || 0, st = stats[sec];
+        st.s2.textContent = '';
+        st.s2.appendChild(el('b', null, String(m)));
+        st.s2.appendChild(document.createTextNode(m === 1 ? ' move this week' : ' moves this week'));
+        st.a.setAttribute('aria-label', sec + ': ' + (ps.length ? st.n + ' of the top 100, ' : '') + plural(m, 'move', 'moves') + ' this week');
+      });
+    }).catch(function(){
+      BD.SECTORS.forEach(function(sec){ stats[sec].s2.textContent = 'Moves unavailable'; });
+    });
+  }
+
+  // ---- one sector ----
+  function renderSector(sec){
+    document.title = sec + ' · Sectors · Billionaires Digest';
+    app.textContent = '';
+    window.scrollTo(0, 0);
+    var w = el('div', 'wrap pagebody');
+    var back = el('a', 'backlink', '← All sectors'); back.href = 'sectors.html';
+    back.addEventListener('click', function(e){ e.preventDefault(); history.pushState(null, '', location.pathname + location.search); route(); });
+    w.appendChild(back);
+
+    var hero = el('div', 'sechero');
+    hero.appendChild(BD.artImg('', BD.sectorArt(sec), 160, true));
+    var ht = el('div');
+    ht.appendChild(el('div', 'label', 'Sector'));
+    var h1 = el('h1', 'serif', sec);
+    ht.appendChild(h1);
+    var sum = el('p');
+    ht.appendChild(sum);
+    hero.appendChild(ht);
+    w.appendChild(hero);
+    app.appendChild(w);
+
+    // who's positioned here
+    var ps = people();
+    var here = ps.filter(function(p){ return (p.sector || 'Other') === sec; }).sort(byRank);
+    w.appendChild(el('h2', 'serif sech2', "Who's positioned here"));
+    if (!ps.length) w.appendChild(el('p', 'note', "The top-100 list couldn't load. Refresh the page to try again."));
+    else if (!here.length) w.appendChild(el('p', 'note', 'Nobody in the top 100 is filed under ' + sec + ' right now.'));
+    else {
+      var ul = el('ul', 'plist');
+      here.forEach(function(p){ ul.appendChild(personLink(p, p.source || '')); });
+      w.appendChild(ul);
+    }
+    var hereText = ps.length ? plural(here.length, 'person', 'people') + ' in the top 100' : '';
+    sum.textContent = hereText;
+
+    // also exposed
+    w.appendChild(el('h2', 'serif sech2', 'Also exposed'));
+    var exNote = el('p', 'note');
+    w.appendChild(exNote);
+    var exList = el('ul', 'plist');
+    w.appendChild(exList);
+    var re = BD.sectorKeywordRe(sec);
+    if (!re){
+      exNote.textContent = 'No keyword list for this sector, so there is nothing to cross-check.';
+    } else if (!ps.length){
+      exNote.textContent = "The top-100 list couldn't load.";
+    } else {
+      var cands = ps.filter(function(p){ return (p.sector || 'Other') !== sec && p.hasProfile; }).sort(byRank).slice(0, EXPOSED_MAX);
+      exNote.textContent = 'Checking the companies and stakes of ' + cands.length + ' people outside this sector…';
+      exNote.setAttribute('role', 'status');
+      BD.pool(cands, EXPOSED_CONCURRENCY, function(p){ return BD.loadProfile(p.slug); }).then(function(profs){
+        if (hashSector() !== sec) return;
+        var found = 0, failed = 0;
+        cands.forEach(function(p, i){
+          var prof = profs[i];
+          if (!prof){ failed++; return; }
+          var hits = [], label;
+          ['controls', 'stakes'].forEach(function(k){
+            arr(prof[k]).forEach(function(e){
+              if (!e || !e.name) return;
+              if (re.test(BD.exposureText(e)) && hits.indexOf(label = String(e.name).replace(/\s*\([^)]*\)/g, '').replace(/\s+-\s+.*$/, '')) < 0) hits.push(label);
+            });
+          });
+          if (!hits.length) return;
+          found++;
+          var shown = hits.slice(0, 2).map(function(h){ return BD.clip(h, 40); });
+          exList.appendChild(personLink(p, 'Via ' + shown.join(', ') + (hits.length > 2 ? ' and ' + (hits.length - 2) + ' more' : '')));
+        });
+        exNote.textContent = found
+          ? 'People filed under another sector who control or hold a company that matches ' + sec + ' keywords. Checked the top ' + cands.length + ' profiles outside this sector.'
+          : 'None of the top ' + cands.length + ' profiles outside this sector name a ' + sec + ' company.';
+        if (failed) exNote.textContent += ' ' + plural(failed, 'profile', 'profiles') + " couldn't load.";
+      });
+    }
+
+    // recent moves
+    w.appendChild(el('h2', 'serif sech2', 'Recent moves'));
+    var mvNote = el('p', 'note', 'Loading moves from the last ' + RECENT + ' editions…');
+    w.appendChild(mvNote);
+    var mvBox = el('div');
+    w.appendChild(mvBox);
+    storiesIn(RECENT).then(function(list){
+      if (hashSector() !== sec) return;
+      var mine = list.filter(function(x){ return (x.s.sector || 'Other') === sec; });
+      storiesIn(WEEK).then(function(wl){
+        if (hashSector() !== sec) return;
+        var n = wl.filter(function(x){ return (x.s.sector || 'Other') === sec; }).length;
+        sum.textContent = (hereText ? hereText + ' · ' : '') + plural(n, 'move', 'moves') + ' this week';
+      });
+      if (!mine.length){ mvNote.textContent = 'No ' + sec + ' moves in the last ' + RECENT + ' editions.'; return; }
+      mvNote.textContent = plural(mine.length, 'move', 'moves') + ' in the last ' + RECENT + ' editions, newest first.';
+      mine.forEach(function(x){
+        var a = BD.renderStory(x.s, { personHref: 'index.html#person=' });
+        var lb = el('div', 'label'); lb.style.paddingBottom = '8px';
+        var dl = el('a', 'backlink', x.date); dl.href = 'archive.html#' + x.iso;
+        lb.appendChild(dl);
+        a.insertBefore(lb, a.firstChild);
+        mvBox.appendChild(a);
+      });
+    }).catch(function(){
+      mvNote.textContent = "The archive couldn't load. Refresh the page to try again.";
+    });
+    focusHeading(h1);
+  }
+
+  function route(){
+    var sec = hashSector();
+    if (sec) renderSector(sec); else renderGrid();
+  }
+  window.addEventListener('hashchange', route);
+  BD.loadPeople().then(route, route);
+})();
+</script>
+</body>
+</html>

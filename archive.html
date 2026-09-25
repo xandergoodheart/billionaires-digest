@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Archive · Billionaires Digest</title>
+<meta name="description" content="Every edition of Billionaires Digest, newest first: the daily moves of the world's 100 richest people.">
+<meta property="og:title" content="Billionaires Digest · Archive">
+<meta property="og:description" content="Every edition of the daily brief on what the world's 100 richest are buying, selling and building.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://billionairesdigest.com/archive.html">
+<meta property="og:image" content="https://billionairesdigest.com/og/latest.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://billionairesdigest.com/og/latest.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="topstrip"><div class="wrap">
+  <span id="dateline">Archive</span>
+  <span id="updated">Every edition, newest first</span>
+</div></div>
+
+<header class="mast"><div class="wrap">
+  <div>
+    <div class="display brand">Billionaires <span>Digest</span></div>
+    <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
+  </div>
+  <button class="themebtn" id="themebtn" type="button">Switch theme</button>
+</div></header>
+
+<nav class="sitenav" aria-label="Site"><div class="wrap">
+  <a href="index.html">Today</a>
+  <a href="sectors.html">Sectors</a>
+  <a href="archive.html" aria-current="page">Archive</a>
+</div></nav>
+
+<main id="app">
+  <div class="wrap pagehead"><h1 class="serif">Archive</h1><p>Loading editions…</p></div>
+</main>
+
+<footer><div class="wrap">
+  <span>Billionaires Digest · billionairesdigest.com</span>
+  <span>For information only · not financial advice</span>
+</div></footer>
+
+<script src="assets/common.js"></script>
+<script>
+(function(){
+  BD.initTheme();
+  var el = BD.el, arr = BD.arr, plural = BD.plural;
+  var app = document.getElementById('app');
+  var BATCH = 10;
+  var TITLE = 'Archive · Billionaires Digest';
+  var shown = BATCH;         // how many rows the list shows (grows in batches)
+  var observer = null;
+  var listScroll = 0;
+
+  function hashIso(){ var m = /^#(\d{4}-\d{2}-\d{2})$/.exec(location.hash || ''); return m ? m[1] : null; }
+  function focusHeading(h){ if (!h) return; h.tabIndex = -1; try { h.focus({ preventScroll: true }); } catch(e){ h.focus(); } }
+
+  // up to 3 people from an edition's stories, lede person first
+  function edPeople(ed){
+    var out = [], seen = {};
+    function add(name, sector){
+      var k = BD.coreName(name);
+      if (!k || seen[k] || out.length >= 3) return;
+      seen[k] = true; out.push({ name: name, sector: sector });
+    }
+    var lp = ed && ed.lede ? BD.ledePerson(ed, ed.lede.ini) : null;
+    if (lp){
+      var ls = null;
+      arr(ed.stories).forEach(function(s){ if (!ls && s && BD.storyMatches(s, lp)) ls = s.sector; });
+      add(lp, ls);
+    }
+    arr(ed && ed.stories).forEach(function(s){ if (s && s.who) add(s.who, s.sector); });
+    return out;
+  }
+
+  function fillRow(li, iso, ed){
+    var a = li.firstChild;
+    a.textContent = '';
+    li.className = 'edrow';
+    var txt = el('div');
+    var dateText = (ed && ed.date) || BD.fmtDate(iso);
+    txt.appendChild(el('div', 'eddate', dateText));
+    if (!ed){
+      li.className = 'edrow loading';
+      txt.appendChild(el('h2', 'edh serif', "This edition couldn't load."));
+      txt.appendChild(el('div', 'edmeta', 'Open it to try again.'));
+      a.appendChild(txt);
+      return;
+    }
+    txt.appendChild(el('h2', 'edh serif', (ed.lede && ed.lede.headline) || 'Edition of ' + dateText));
+    txt.appendChild(el('div', 'edmeta', plural(arr(ed.stories).length, 'move', 'moves')));
+    a.appendChild(txt);
+    var avs = el('div', 'edavs');
+    edPeople(ed).forEach(function(p){
+      var ip = BD.indexByName(p.name);
+      avs.appendChild(BD.avatar({ name: p.name, sector: (ip && ip.sector) || p.sector || 'Other' }, 32));
+    });
+    var names = edPeople(ed).map(function(p){ return p.name; });
+    if (names.length) a.setAttribute('aria-label', dateText + ': ' + ((ed.lede && ed.lede.headline) || '') + '. ' + plural(arr(ed.stories).length, 'move', 'moves') + '. Featuring ' + names.join(', ') + '.');
+    a.appendChild(avs);
+  }
+
+  function renderList(){
+    document.title = TITLE;
+    if (observer){ observer.disconnect(); observer = null; }
+    app.textContent = '';
+    var head = el('div', 'wrap pagehead');
+    var h = el('h1', 'serif', 'Archive');
+    head.appendChild(h);
+    var intro = el('p', null, 'Every edition, newest first. Open one to read it as it ran.');
+    head.appendChild(intro);
+    app.appendChild(head);
+    var body = el('div', 'wrap pagebody');
+    var ul = el('ul', 'edlist');
+    body.appendChild(ul);
+    var more = el('button', 'chip edmore', 'Show more editions'); more.type = 'button'; more.hidden = true;
+    body.appendChild(more);
+    var sentinel = el('div', 'edsentinel');
+    body.appendChild(sentinel);
+    app.appendChild(body);
+
+    BD.loadArchiveIndex().then(function(dates){
+      if (hashIso()) return;
+      if (!dates.length){ intro.textContent = 'No editions on file yet. The archive grows every morning.'; return; }
+      intro.textContent = plural(dates.length, 'edition', 'editions') + ', newest first. Open one to read it as it ran.';
+      var rendered = 0;
+      function addRows(){
+        var end = Math.min(shown, dates.length);
+        for (; rendered < end; rendered++){
+          (function(iso){
+            var li = el('li', 'edrow loading');
+            var a = el('a'); a.href = '#' + iso;
+            li.appendChild(a);
+            var txt = el('div');
+            txt.appendChild(el('div', 'eddate', BD.fmtDate(iso)));
+            txt.appendChild(el('h2', 'edh serif', 'Loading…'));
+            a.appendChild(txt);
+            ul.appendChild(li);
+            BD.loadEdition(iso).then(function(ed){ if (document.body.contains(li)) fillRow(li, iso, ed); });
+          })(dates[rendered]);
+        }
+        more.hidden = rendered >= dates.length;
+        if (rendered >= dates.length && observer){ observer.disconnect(); observer = null; }
+      }
+      function next(){ if (shown < dates.length){ shown += BATCH; addRows(); } }
+      more.addEventListener('click', next);
+      addRows();
+      if ('IntersectionObserver' in window && rendered < dates.length){
+        observer = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){ if (e.isIntersecting) next(); });
+        }, { rootMargin: '400px 0px' });
+        observer.observe(sentinel);
+      }
+      if (listScroll) window.scrollTo(0, listScroll);
+    }).catch(function(){
+      intro.textContent = "The archive couldn't load. Refresh the page to try again.";
+    });
+  }
+
+  function renderEdition(iso){
+    if (observer){ observer.disconnect(); observer = null; }
+    app.textContent = '';
+    var top = el('div', 'wrap');
+    var back = el('a', 'backlink', '← Back to all editions'); back.href = 'archive.html';
+    back.addEventListener('click', function(e){ e.preventDefault(); history.pushState(null, '', location.pathname + location.search); route(); });
+    top.appendChild(back);
+    var status = el('p', 'note', 'Loading the edition of ' + BD.fmtDate(iso) + '…');
+    status.setAttribute('role', 'status');
+    top.appendChild(status);
+    app.appendChild(top);
+    window.scrollTo(0, 0);
+
+    BD.loadEdition(iso).then(function(ed){
+      if (hashIso() !== iso) return;
+      if (!ed){
+        status.textContent = "The edition of " + BD.fmtDate(iso) + " couldn't load. It may not exist, or the connection dropped. Try again in a minute.";
+        focusHeading(status);
+        return;
+      }
+      BD.setStories(ed.stories);
+      var dateText = ed.date || BD.fmtDate(iso);
+      document.title = 'Edition of ' + BD.fmtDate(iso) + ' · Billionaires Digest';
+      status.remove();
+      top.appendChild(el('div', 'label', 'From the archive · ' + dateText)).style.paddingBottom = '14px';
+      var lede = BD.renderLede(ed);
+      if (lede) app.appendChild(lede);
+
+      var ms = el('section', 'main'), mw = el('div', 'wrap');
+      var feed = el('div');
+      var fh = el('div', 'feedhead');
+      fh.appendChild(el(lede ? 'h2' : 'h1', 'serif', 'Signal feed'));
+      fh.appendChild(el('span', 'label', plural(arr(ed.stories).length, 'move', 'moves')));
+      feed.appendChild(fh);
+      arr(ed.stories).forEach(function(s){ if (s) feed.appendChild(BD.renderStory(s, { personHref: 'index.html#person=' })); });
+      mw.appendChild(feed);
+      var side = el('aside', 'side');
+      var cb = BD.consensusBox(ed.consensus);
+      if (cb) side.appendChild(cb);
+      [['What to watch', ed.watch], ['Quick hits', ed.quickHits], ['If you run a business, not a fund', ed.memo, true]].forEach(function(x){
+        var b = BD.listBox(x[0], x[1], x[2]);
+        if (b) side.appendChild(b);
+      });
+      mw.appendChild(side);
+      ms.appendChild(mw); app.appendChild(ms);
+      var h = app.querySelector('h1');
+      focusHeading(h);
+    });
+  }
+
+  function route(){
+    var iso = hashIso();
+    if (iso){ renderEdition(iso); return; }
+    renderList();
+  }
+
+  window.addEventListener('hashchange', function(){ route(); });
+  // remember the list position so "Back" returns to it
+  app.addEventListener('click', function(e){
+    var a = e.target && e.target.closest ? e.target.closest('.edrow a') : null;
+    if (a) listScroll = window.pageYOffset || 0;
+  });
+  // avatars and name links need the people index; render once it arrives (or fails)
+  BD.loadPeople().then(route, route);
+})();
+</script>
+</body>
+</html>
