@@ -1,0 +1,43 @@
+name: Backfill price history
+
+# One-time (re-runnable) backfill of ~1 year of daily closes from Tiingo into data/prices/history.
+# Manual only. Resumable: a second run picks up where the last one stopped (data/prices/history/_backfill-state.json).
+# Avoid starting it close to 09:30 UTC, when "Morning data" also writes data/prices/history.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: price-backfill
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Backfill from Tiingo
+        env:
+          TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
+        run: node scripts/backfill-history.mjs --max-minutes 330
+      - name: Commit history (also partial progress on failure)
+        if: always()
+        run: |
+          git config user.name "Billionaires Digest bot"
+          git config user.email "hello@billionairesdigest.com"
+          mkdir -p data/prices/history
+          git add data/prices/history
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Backfill price history (Tiingo)" || true
+          git pull --rebase origin main
+          git push
