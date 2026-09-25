@@ -157,7 +157,7 @@
       var pl = el('div', 'v2-player');
       pl.appendChild(avatar(p));
       var tx = el('div', 'v2-player__txt');
-      tx.appendChild(link('v2-player__name', p.name, 'people/' + encodeURIComponent(p.slug) + '/'));
+      tx.appendChild(link('v2-player__name', p.name, 'player.html?p=' + encodeURIComponent(p.slug)));
       var tk = tickerList(p).slice(0, 2).join(' · ');
       tx.appendChild(el('span', 'v2-player__sub', (tk ? tk + ' / ' : '') + (p.sector || 'Other')));
       pl.appendChild(tx); tdP.appendChild(pl); tr.appendChild(tdP);
@@ -196,7 +196,7 @@
     var ul = clear($('ndlist'));
     nd.forEach(function(p){
       var li = el('li');
-      li.appendChild(link(null, p.name, 'people/' + encodeURIComponent(p.slug) + '/'));
+      li.appendChild(link(null, p.name, 'player.html?p=' + encodeURIComponent(p.slug)));
       li.appendChild(el('span', 'v2-small', ' · ' + (p.reason || 'Not draftable')));
       ul.appendChild(li);
     });

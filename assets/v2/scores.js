@@ -20,7 +20,7 @@
   function btn(cls, text){ var b = el('button', cls, text); b.type = 'button'; return b; }
   function sr(text){ return el('span', 'v2-sr', text); }
   function say(t){ var n = $('live'); n.textContent = ''; setTimeout(function(){ n.textContent = t; }, 30); }
-  function personHref(slug){ return 'people/' + encodeURIComponent(slug) + '/'; }
+  function personHref(slug){ return 'player.html?p=' + encodeURIComponent(slug); }
   function avatar(p){
     var a = el('span', 'v2-av v2-av--sm', BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));

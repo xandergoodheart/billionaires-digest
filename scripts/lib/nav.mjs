@@ -76,7 +76,7 @@ export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navm
 // Top-level sections. Links point at the best existing page until the v2 screen exists.
 export const NAV_V2 = [
   { key: 'fantasy', label: 'Fantasy', href: 'team.html' },
-  { key: 'players', label: 'Players', href: 'people/' },
+  { key: 'players', label: 'Players', href: 'players.html' },
   { key: 'rankings', label: 'Rankings', href: 'scores.html#leaderboard' },   // until the v2 Rankings screen exists
   { key: 'calendar', label: 'Calendar', href: 'calendar.html' },
   { key: 'news', label: 'News', href: 'index.html' }

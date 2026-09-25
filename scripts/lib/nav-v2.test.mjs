@@ -42,9 +42,9 @@ test('renderTopbarV2: draft sub-tab, and no sub-tab marked when subKey is null',
 
 test('renderTopbarV2: relative and absolute links', () => {
   const rel = renderTopbarV2('fantasy', 'team');
-  assert.ok(rel.includes('href="team.html"') && rel.includes('href="people/"') && rel.includes('href="index.html"'));
+  assert.ok(rel.includes('href="team.html"') && rel.includes('href="players.html"') && rel.includes('href="index.html"'));
   const abs = renderTopbarV2('fantasy', 'team', { absolute: true });
-  assert.ok(abs.includes('href="/team.html"') && abs.includes('href="/people/"') && abs.includes('href="/"'));
+  assert.ok(abs.includes('href="/team.html"') && abs.includes('href="/players.html"') && abs.includes('href="/"'));
   assert.ok(abs.includes('href="/scores.html"'));
   assert.ok(abs.includes('href="/scores.html#leaderboard"'));
   assert.ok(!/href="(?!\/|#)/.test(abs), 'every absolute link starts with / or #');
@@ -98,4 +98,19 @@ test('v1 Fantasy menu links into the v2 section', () => {
   }
   assert.ok(html.includes('<a href="leagues.html" aria-current="page">Leagues</a>'));
   assert.ok(!html.includes('href="fantasy.html"') && !html.includes('href="leaderboard.html"'));
+});
+
+test('Players section: v2 players.html in the top bar, phone menu and bottom tabs; no sub-tabs', () => {
+  assert.equal(NAV_V2.find((n) => n.key === 'players').href, 'players.html');
+  assert.equal(SUBNAV_V2.players, undefined);
+  const html = renderTopbarV2('players', null);
+  const top = html.slice(html.indexOf('<nav class="v2-topnav"'), html.indexOf('</nav>'));
+  assert.ok(top.includes('<a href="players.html" aria-current="true">Players</a>'));
+  const menu = html.slice(html.indexOf('id="v2-menu"'));
+  assert.ok(menu.includes('<a class="v2-menu__top" href="players.html" aria-current="true">Players</a>'));
+  assert.ok(!html.includes('v2-subtabs'));
+  const tabs = renderBottomTabsV2('players');
+  assert.ok(tabs.includes('<a href="players.html" aria-current="true">Players</a>'));
+  assert.deepEqual(currentLinks(tabs, 'aria-current'), ['Players']);
+  assert.ok(renderBottomTabsV2('fantasy', { absolute: true }).includes('href="/players.html"'));
 });

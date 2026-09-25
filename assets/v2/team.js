@@ -19,7 +19,7 @@
     var ws = String(name || '').replace(/\s*&\s*family\s*$/i, '').trim().split(/\s+/);
     return ws[ws.length - 1] || '';
   }
-  function personHref(slug){ return 'people/' + encodeURIComponent(slug) + '/'; }
+  function personHref(slug){ return 'player.html?p=' + encodeURIComponent(slug); }
   function nyFmt(ms, opts){
     try { opts.timeZone = 'America/New_York'; return new Intl.DateTimeFormat('en-US', opts).format(new Date(ms)); }
     catch (e) { return new Date(ms).toUTCString(); }

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Billionaire Slots (mockup) · Billionaire Fantasy League · Billionaires Digest</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Design mockup: the Draft room as a slot machine. Play money only.">
+<meta name="theme-color" content="#13171C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/v2/tokens.css">
+<link rel="stylesheet" href="../assets/v2/ui.css">
+<link rel="stylesheet" href="slot-machine.css">
+</head>
+<body class="v2 sm-page">
+<!-- Mockup only: not linked from the site. Chrome below is a static copy of draft.html (no sync-nav markers). -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<p class="sm-mockbar"><strong>MOCKUP</strong> — not part of the site yet</p>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="../team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="../team.html" aria-current="true">Fantasy</a>
+      <a href="../people/">Players</a>
+      <a href="../scores.html#leaderboard">Rankings</a>
+      <a href="../calendar.html">Calendar</a>
+      <a href="../index.html">News</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__search" href="../people/">Search</a>
+      <a class="v2-btn v2-btn--primary v2-top__cta" href="../team.html">My team</a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
+  </div>
+</header>
+<nav class="v2-subtabs" aria-label="Fantasy">
+  <div class="v2-wrap v2-subtabs__in">
+    <ul class="v2-subtabs__list">
+      <li><a href="../team.html">My team</a></li>
+      <li><a href="../draft.html">Draft room</a></li>
+      <li><a href="../scores.html">Scores</a></li>
+      <li><a href="../leagues.html">Leagues</a></li>
+      <li><a href="../book.html">The Book</a></li>
+      <li><a href="../play-terms.html">Rules</a></li>
+    </ul>
+    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
+  </div>
+</nav>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="../team.html" aria-current="true">Fantasy</a>
+        <ul>
+          <li><a href="../team.html">My team</a></li>
+          <li><a href="../draft.html">Draft room</a></li>
+          <li><a href="../scores.html">Scores</a></li>
+          <li><a href="../leagues.html">Leagues</a></li>
+          <li><a href="../book.html">The Book</a></li>
+          <li><a href="../play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="../people/">Players</a></li>
+      <li><a class="v2-menu__top" href="../scores.html#leaderboard">Rankings</a></li>
+      <li><a class="v2-menu__top" href="../calendar.html">Calendar</a></li>
+      <li><a class="v2-menu__top" href="../index.html">News</a></li>
+      <li><a class="v2-menu__top" href="../people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+
+<main id="main" class="v2-main" tabindex="-1">
+  <div class="v2-wrap">
+    <header class="sm-head">
+      <h1 class="v2-display sm-head__h">Lucky five</h1>
+      <p class="sm-head__dek">Pull the lever for a random team of five that fits under the 100 cap. Hold the ones you like and spin the rest.</p>
+      <p class="sm-play">Play money · no prizes · not financial advice</p>
+    </header>
+
+    <section class="sm-cab" aria-labelledby="sm-title">
+      <div class="sm-cab__frame">
+        <div class="sm-marquee">
+          <div class="sm-bulbs" aria-hidden="true"></div>
+          <h2 class="sm-marquee__title" id="sm-title">Billionaire Slots</h2>
+          <p class="sm-marquee__sub" id="sm-week">Loading players…</p>
+          <div class="sm-bulbs" aria-hidden="true"></div>
+        </div>
+
+        <div class="sm-body">
+          <div class="sm-reels" id="reels" role="group" aria-label="Your five roster slots">
+            <!-- five reels built by slot-machine.js -->
+          </div>
+          <div class="sm-payout" id="payout" aria-label="Result">
+            <div class="sm-led">
+              <span class="sm-led__k">Cap used</span>
+              <span class="sm-led__v num" id="capused">— <small>/ 100</small></span>
+            </div>
+            <div class="sm-led sm-led--wide">
+              <span class="sm-led__k" id="ptslabel">Team points so far this week</span>
+              <span class="sm-led__v num" id="teampts">—</span>
+            </div>
+            <p class="sm-payout__note" id="payoutnote">Pull the lever or press Spin.</p>
+          </div>
+        </div>
+
+        <div class="sm-controls">
+          <button type="button" class="sm-spin" id="spin" disabled>Spin</button>
+          <button type="button" class="v2-btn sm-take" id="take" disabled>Take this team to the Draft room</button>
+        </div>
+        <p class="sm-takenote" id="takenote" hidden></p>
+      </div>
+
+      <button type="button" class="sm-lever" id="lever" aria-label="Pull the lever: spin for a lucky five" disabled>
+        <span class="sm-lever__arm" aria-hidden="true"><span class="sm-lever__ball"></span></span>
+        <span class="sm-lever__base" aria-hidden="true"></span>
+      </button>
+    </section>
+
+    <div class="sm-notes">
+      <p class="sm-notes__ph"><strong>Portrait placeholder</strong> — illustrated portraits come after style approval. Every reel uses the same made-up cartoon face; it is not any real person.</p>
+      <p>Names, cap costs and points are the real game data. Captain is the highest cap cost on the team and counts 1.5 times. Points are play-money game points, summed over the days scored so far.</p>
+      <p class="sm-play">Play money · no prizes · not financial advice</p>
+    </div>
+  </div>
+</main>
+
+<div class="sm-dlg" id="closeup" role="dialog" aria-modal="true" aria-labelledby="cu-name" hidden>
+  <div class="sm-dlg__panel">
+    <div class="sm-zoom" id="cu-zoom" aria-hidden="true">
+      <div class="sm-zoom__face" id="cu-face"></div>
+      <span class="sm-spark sm-spark--1"></span>
+      <span class="sm-spark sm-spark--2"></span>
+      <span class="sm-spark sm-spark--3"></span>
+      <span class="sm-spark sm-spark--4"></span>
+    </div>
+    <p class="sm-dlg__kick">Close-up · portrait placeholder</p>
+    <h2 class="v2-display sm-dlg__name" id="cu-name"></h2>
+    <dl class="sm-dlg__stats">
+      <div><dt>Cap</dt><dd class="num" id="cu-cap"></dd></div>
+      <div><dt id="cu-ptsk">Points so far this week</dt><dd class="num" id="cu-pts"></dd></div>
+      <div><dt>Sector</dt><dd id="cu-sector"></dd></div>
+    </dl>
+    <p class="sm-dlg__note">Play money · no prizes · not financial advice</p>
+    <button type="button" class="v2-btn v2-btn--primary sm-dlg__close" id="cu-close">Close</button>
+  </div>
+</div>
+
+<div class="v2-sr" id="live" role="status" aria-live="polite"></div>
+
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="../team.html" aria-current="true">Fantasy</a>
+  <a href="../people/">Players</a>
+  <a href="../scores.html#leaderboard">Rankings</a>
+  <a href="../index.html">News</a>
+</nav>
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="../team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="../about.html">About</a>
+      <a href="../about.html#corrections">Corrections</a>
+      <a href="../play-terms.html">Game rules</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/common.js"></script>
+<script src="../assets/fantasy-core.js"></script>
+<script src="../assets/v2/fantasy-store.js"></script>
+<script src="../assets/v2/chrome.js"></script>
+<script src="slot-machine.js"></script>
+</body>
+</html>

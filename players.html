@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Scores · Billionaire Fantasy League · Billionaires Digest</title>
-<meta name="description" content="Your fantasy week head to head against the S&amp;P 500, the Top 5 richest and the perfect team, day by day, plus your season record and the online leaderboard. A free game with play money only.">
+<title>Players · Billionaire Fantasy League · Billionaires Digest</title>
+<meta name="description" content="Every billionaire you can draft this week in the Billionaire Fantasy League: week points, recent average, cap cost and Forbes rank. A free game with play money only.">
 <meta name="theme-color" content="#13171C">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,18 +13,18 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="assets/v2/tokens.css">
 <link rel="stylesheet" href="assets/v2/ui.css">
-<link rel="stylesheet" href="assets/v2/game.css">
-<link rel="stylesheet" href="assets/v2/scores.css">
+<link rel="stylesheet" href="assets/v2/draft.css">
+<link rel="stylesheet" href="assets/v2/players.css">
 </head>
-<body class="v2 v2-scorespage">
+<body class="v2 v2-playerspage">
 <!-- v2topbar:start -->
 <a class="v2-skip" href="#main">Skip to content</a>
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
     <a class="v2-mark" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
     <nav class="v2-topnav" aria-label="Main">
-      <a href="team.html" aria-current="true">Fantasy</a>
-      <a href="players.html">Players</a>
+      <a href="team.html">Fantasy</a>
+      <a href="players.html" aria-current="true">Players</a>
       <a href="scores.html#leaderboard">Rankings</a>
       <a href="calendar.html">Calendar</a>
       <a href="index.html">News</a>
@@ -36,19 +36,6 @@
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
 </header>
-<nav class="v2-subtabs" aria-label="Fantasy">
-  <div class="v2-wrap v2-subtabs__in">
-    <ul class="v2-subtabs__list">
-      <li><a href="team.html">My team</a></li>
-      <li><a href="draft.html">Draft room</a></li>
-      <li><a href="scores.html" aria-current="page">Scores</a></li>
-      <li><a href="leagues.html">Leagues</a></li>
-      <li><a href="book.html">The Book</a></li>
-      <li><a href="play-terms.html">Rules</a></li>
-    </ul>
-    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
-  </div>
-</nav>
 <div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
   <div class="v2-menu__panel" tabindex="-1">
     <div class="v2-menu__head">
@@ -56,16 +43,16 @@
       <button type="button" class="v2-menu__close" data-menu-close>Close</button>
     </div>
     <ul class="v2-menu__list">
-      <li><a class="v2-menu__top" href="team.html" aria-current="true">Fantasy</a>
+      <li><a class="v2-menu__top" href="team.html">Fantasy</a>
         <ul>
           <li><a href="team.html">My team</a></li>
           <li><a href="draft.html">Draft room</a></li>
-          <li><a href="scores.html" aria-current="page">Scores</a></li>
+          <li><a href="scores.html">Scores</a></li>
           <li><a href="leagues.html">Leagues</a></li>
           <li><a href="book.html">The Book</a></li>
           <li><a href="play-terms.html">Rules</a></li>
         </ul></li>
-      <li><a class="v2-menu__top" href="players.html">Players</a></li>
+      <li><a class="v2-menu__top" href="players.html" aria-current="true">Players</a></li>
       <li><a class="v2-menu__top" href="scores.html#leaderboard">Rankings</a></li>
       <li><a class="v2-menu__top" href="calendar.html">Calendar</a></li>
       <li><a class="v2-menu__top" href="index.html">News</a></li>
@@ -79,64 +66,73 @@
   <div class="v2-wrap">
     <p class="v2-banner" id="testclock" hidden></p>
 
-    <header class="sc-head">
-      <h1 class="v2-display sc-head__h">Scores</h1>
-      <p class="sc-head__dek">Your week, head to head.</p>
-      <div class="sc-head__side">
+    <header class="dr-head pl-head">
+      <h1 class="v2-display dr-head__h">Players</h1>
+      <p class="dr-head__dek">Every billionaire you can draft this week.</p>
+      <div class="dr-head__side">
         <span class="v2-pill" id="weekpill">Loading…</span>
-        <a class="sc-head__rules" href="play-terms.html">Rules</a>
+        <a class="dr-head__rules" href="draft.html">Draft room</a>
       </div>
     </header>
 
-    <section class="v2-hero sc-board" id="board" aria-labelledby="boardh" aria-busy="true">
-      <h2 class="v2-sr" id="boardh">Your matchup</h2>
-      <p class="v2-loading">Loading your matchup…</p>
-      <span class="v2-skel v2-skel--lg"></span>
-    </section>
+    <div id="notices"></div>
 
-    <div class="v2-grid sc-grid" id="scgrid">
-      <div class="span-8 v2-stack" id="scmain">
-        <section class="v2-card" id="days" aria-labelledby="daysh">
-          <div class="v2-card__head"><h2 class="v2-h2" id="daysh">Day by day</h2><span class="v2-card__meta" id="daysmeta"></span></div>
-          <div id="daysbody"><span class="v2-skel"></span><span class="v2-skel"></span><span class="v2-skel"></span></div>
-        </section>
-        <section class="v2-card" id="season" aria-labelledby="seasonh">
-          <div class="v2-card__head"><h2 class="v2-h2" id="seasonh">Season record</h2></div>
-          <div id="seasonbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
-        </section>
-      </div>
-      <div class="span-4 v2-stack" id="scside" hidden>
-        <section class="v2-card" id="prev" aria-labelledby="prevh">
-          <div class="v2-card__head"><h2 class="v2-h2" id="prevh">Last week</h2><span class="v2-card__meta" id="prevmeta"></span></div>
-          <div id="prevbody"></div>
-        </section>
-      </div>
-    </div>
+    <section class="pl-mine" id="mine" aria-label="Your draft" hidden></section>
 
-    <section class="v2-card sc-lb" id="leaderboard" aria-labelledby="lbh" tabindex="-1">
-      <div class="v2-card__head sc-lb__head">
-        <h2 class="v2-h2" id="lbh">Leaderboard</h2>
-        <div class="sc-lb__status">
-          <span id="statuspill"></span>
-          <div class="g-stat g-stat--sm"><span class="g-stat__label" id="keystatlabel">Your rank</span><span class="g-stat__num g-num" id="keystat">—</span></div>
+    <section class="v2-card dr-pool pl-pool" aria-labelledby="poolh">
+      <h2 class="v2-sr" id="poolh">Player pool</h2>
+      <div class="dr-filters">
+        <div class="dr-filter dr-filter--q">
+          <label class="v2-sr" for="q">Search by name, ticker, company or sector</label>
+          <input class="v2-input" id="q" type="search" placeholder="Search name, ticker, company or sector" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="dr-filter">
+          <label class="v2-sr" for="sector">Sector</label>
+          <select class="v2-select" id="sector"><option value="">All sectors</option></select>
+        </div>
+        <div class="dr-filter">
+          <label class="v2-sr" for="sort">Sort players</label>
+          <select class="v2-select" id="sort">
+            <option value="pts">Sort: week points</option>
+            <option value="avg">Sort: average points per day</option>
+            <option value="capdesc">Sort: cap, high first</option>
+            <option value="capasc">Sort: cap, low first</option>
+            <option value="rank">Sort: Forbes rank</option>
+            <option value="name">Sort: name</option>
+          </select>
         </div>
       </div>
-      <p class="sc-lb__dek">How online players rank in the fantasy league this week and over the season, and who has the most play-money coins. <a href="play-terms.html">Rules</a>.</p>
-      <div id="gameaccount" class="g-account"><p class="g-msg">Loading the online game…</p></div>
-      <div class="gp-tabsbar"><div class="g-tabs" role="tablist" aria-label="Leaderboards" id="boardtabs"></div></div>
-      <div id="boards" role="tabpanel" tabindex="0"><p class="g-msg">Loading…</p></div>
-      <p class="gp-note">Only nicknames and points are shown. Everyone's picks become visible once a week locks on Monday at 9:30 AM New York time.</p>
+      <table class="v2-table dr-table pl-table">
+        <caption class="v2-sr" id="poolcap">Players you can draft</caption>
+        <thead>
+          <tr>
+            <th scope="col">Player</th>
+            <th scope="col" class="n" id="ptshead">Week pts</th>
+            <th scope="col" class="n" id="avghead">Avg/day</th>
+            <th scope="col" class="n">Cap</th>
+            <th scope="col" class="n">Forbes</th>
+            <th scope="col" class="pl-th-status">Your team</th>
+          </tr>
+        </thead>
+        <tbody id="pool">
+          <tr><td colspan="6"><p class="v2-loading">Loading the player pool…</p></td></tr>
+        </tbody>
+      </table>
+      <p class="dr-foot" id="poolfoot"></p>
+      <details class="dr-nd" id="notdraftable" hidden>
+        <summary id="ndsum"></summary>
+        <ul id="ndlist"></ul>
+      </details>
     </section>
   </div>
 </main>
 
 <div class="v2-sr" id="live" role="status" aria-live="polite"></div>
-<div class="v2-toasts" id="toasts" aria-live="polite"></div>
 
 <!-- v2tabs:start -->
 <nav class="v2-tabs" aria-label="Sections">
-  <a href="team.html" aria-current="true">Fantasy</a>
-  <a href="players.html">Players</a>
+  <a href="team.html">Fantasy</a>
+  <a href="players.html" aria-current="true">Players</a>
   <a href="scores.html#leaderboard">Rankings</a>
   <a href="index.html">News</a>
 </nav>
@@ -161,10 +157,10 @@
 <script src="assets/common.js"></script>
 <script src="assets/game-client.js"></script>
 <script src="assets/account.js"></script>
-<script src="assets/leagues.js"></script>
 <script src="assets/fantasy-core.js"></script>
 <script src="assets/v2/fantasy-store.js"></script>
+<script src="assets/v2/players-core.js"></script>
 <script src="assets/v2/chrome.js"></script>
-<script src="assets/v2/scores.js"></script>
+<script src="assets/v2/players.js"></script>
 </body>
 </html>
