@@ -1,0 +1,29 @@
+name: DB connection diagnose (temporary)
+on: workflow_dispatch
+permissions: {}
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect connection string shape (no secret values printed)
+        env:
+          U: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          python3 - <<'PY'
+          import os, urllib.parse as up
+          u = os.environ.get("U","").strip()
+          p = up.urlparse(u)
+          pw = p.password or ""
+          print("scheme:", p.scheme)
+          print("user:", p.username)
+          print("host:", p.hostname, "port:", p.port, "db:", p.path)
+          print("password length:", len(pw))
+          print("has [ or ]:", "[" in u or "]" in u)
+          print("contains YOUR-PASSWORD:", "YOUR-PASSWORD" in u.upper())
+          print("password has chars needing URL-encoding:", any(c in pw for c in "@:/#?%[] "))
+          print("leading/trailing whitespace in raw secret:", os.environ.get("U","") != u)
+          PY
+      - name: Try a harmless query
+        env:
+          U: ${{ secrets.SUPABASE_DB_URL }}
+        run: psql "$U" -v ON_ERROR_STOP=1 -tAc "select 'connected as ' || current_user" || true
