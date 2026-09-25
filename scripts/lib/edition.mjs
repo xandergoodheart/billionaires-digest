@@ -23,7 +23,7 @@ export function schemaText(longDate, shortDate) {
   "top10": [ { "name": string, "ini": string, "tick": short last name, "worth": "$123B" } ] (exactly 10, richest first),
   "top10AsOf": string saying which source and date the net worths come from,
   "stories": [ {
-      "who": person's name, "sector": one of "AI & tech" | "Finance" | "Aerospace" | "Luxury & retail" | "Real estate" | "Energy" | "Media" | "Autos" | "Other",
+      "who": person's name, "sector": one of "AI & tech" | "Finance" | "Aerospace" | "Luxury & retail" | "Real estate" | "Energy" | "Media" | "Autos" | "Industrials" (mining, metals, steel, cement, chemicals, shipping, manufacturing) | "Health" (pharma, vaccines, hospitals, biotech) | "Other",
       "via": optional, the company or vehicle the story is about when it isn't the person directly (e.g. "Tesla"),
       "people": optional, array of every top-100 name the story affects (e.g. ["Larry Page", "Sergey Brin"]),
       "type": e.g. "Acquisition" | "Investment" | "Insider trade" | "IPO / Markets" | "Leadership" | "Product launch" | "Policy" | "Property" | "Divestiture",
@@ -85,6 +85,43 @@ export function validate(d) {
     if (!p || !p.name || !p.worth) problems.push(`top10 #${i + 1} missing name or worth`);
   });
   return problems;
+}
+
+// ---- top 10 from data/people/index.json ----
+function bareName(name) { return String(name == null ? '' : name).replace(/\s*&\s*family\s*$/i, '').trim(); }
+function nameWords(name) { return bareName(name).split(/\s+/).filter(Boolean); }
+
+// First 10 people by rank (file order breaks ties) as top10 entries.
+export function top10FromIndex(index) {
+  const people = (Array.isArray(index?.people) ? index.people : [])
+    .filter(p => p && p.name && Number.isFinite(Number(p.rank)))
+    .map((p, i) => ({ p, i }))
+    .sort((a, b) => Number(a.p.rank) - Number(b.p.rank) || a.i - b.i)
+    .slice(0, 10)
+    .map(x => x.p);
+  return people.map(p => {
+    const w = nameWords(p.name);
+    const ini = w.length ? (w[0].charAt(0) + (w.length > 1 ? w[w.length - 1].charAt(0) : '')).toUpperCase() : '';
+    const tick = w.length ? w[w.length - 1] : p.name;
+    return { name: p.name, ini, tick, worth: p.worth };
+  });
+}
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// "2026-09-24T21:15-04:00" -> "Net worths per Forbes Real-Time Billionaires as of Sep 24, 2026 9:15 PM ET"
+// Uses the wall-clock date and time written in asOf (the index is stamped in New York time).
+export function top10AsOfFromIndex(index) {
+  const src = index?.source || 'Forbes Real-Time Billionaires';
+  const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(String(index?.asOf || ''));
+  if (!m) return `Net worths per ${src}`;
+  let when = `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}`;
+  if (m[4] != null) {
+    const h = Number(m[4]);
+    const h12 = h % 12 === 0 ? 12 : h % 12;
+    when += ` ${h12}:${m[5]} ${h < 12 ? 'AM' : 'PM'} ET`;
+  }
+  return `Net worths per ${src} as of ${when}`;
 }
 
 // Writes digest.json, archive/<isoDate>.json and rebuilds archive/index.json.

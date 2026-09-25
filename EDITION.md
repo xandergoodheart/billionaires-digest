@@ -15,6 +15,9 @@ Build today's Billionaires Digest edition and publish it.
 3. Research with web search. Look at the last 48 hours first. Go back up to 7 days only if needed.
    Look up the current top 10 by net worth (Forbes real-time or Bloomberg Billionaires Index) and
    write the source and date in `top10AsOf`.
+   Note: `top10` and `top10AsOf` now come from `data/people/index.json` automatically. The publish
+   script replaces whatever the draft has with ranks 1-10 from the index. You may still write them
+   (the schema below lists them), but they will be overwritten.
 4. Write the draft to `/tmp/digest.draft.json`. It must match the schema below.
 5. Run `node scripts/publish-digest.mjs /tmp/digest.draft.json`.
 6. If it fails, fix only the problems it lists, using real sources, and run it again. Retry at most
@@ -61,7 +64,7 @@ The publish script sets `date` and `updated` for you, but include them anyway.
   "top10": [ { "name": string, "ini": string, "tick": short last name, "worth": "$123B" } ] (exactly 10, richest first),
   "top10AsOf": string saying which source and date the net worths come from,
   "stories": [ {
-      "who": person's name, "sector": one of "AI & tech" | "Finance" | "Aerospace" | "Luxury & retail" | "Real estate" | "Energy" | "Media" | "Autos" | "Other",
+      "who": person's name, "sector": one of "AI & tech" | "Finance" | "Aerospace" | "Luxury & retail" | "Real estate" | "Energy" | "Media" | "Autos" | "Industrials" (mining, metals, steel, cement, chemicals, shipping, manufacturing) | "Health" (pharma, vaccines, hospitals, biotech) | "Other",
       "via": optional, the company or vehicle the story is about when it isn't the person directly (e.g. "Tesla"),
       "people": optional, array of every top-100 name the story affects (e.g. ["Larry Page", "Sergey Brin"]),
       "type": e.g. "Acquisition" | "Investment" | "Insider trade" | "IPO / Markets" | "Leadership" | "Product launch" | "Policy" | "Property" | "Divestiture",

@@ -20,6 +20,41 @@ const BUILDING_RE = /\b(tower|towers|building|house|residences?|plaza|hotel|apar
 
 const OUT_DIR = path.join('data', 'people');
 
+// Sector from the Forbes `source` string: ordered keyword rules, first match wins.
+// Values match the story sectors in scripts/lib/edition.mjs schemaText().
+const SECTOR_RULES = [
+  ['Aerospace', /spacex/i],
+  ['AI & tech', /google|facebook|microsoft|nvidia|oracle|dell|tiktok|online games|computer hardware|semiconductor|software|wireless|openai|\bai\b|samsung|amazon|telecom, investments/i],
+  ['Finance', /berkshire|brokerage|hedge fund|investments|trading|fidelity|banking|cryptocurrency|financial|bloomberg/i],
+  ['Luxury & retail', /zara|walmart|lvmh|l'or|fashion|retail|chanel|luxury|e-commerce|candy|nutella|chocolate|red bull|beverages/i],
+  ['Media', /telecom|music/i],
+  ['Energy', /oil|gas/i],
+  ['Real estate', /real estate|casino|sports/i],
+  ['Industrials', /mining|metals|steel|cement|gold|shipping|infrastructure|fasteners|koch|home appliances|batteries/i],
+  ['Health', /vaccine|pharma|hospital/i],
+  ['Other', /diversified/i],
+];
+const SECTOR_OVERRIDES = {
+  'Elon Musk': 'Aerospace',
+  'Zhong Shanshan': 'Luxury & retail',
+  'Len Blavatnik': 'Media',
+  'Eyal Ofer': 'Real estate',
+  'Julia Koch & family': 'Industrials',
+  'Charles Koch & family': 'Industrials',
+  'Elaine Marshall & family': 'Industrials',
+  'Robin Zeng': 'Autos',
+  'Stanley Kroenke': 'Real estate',
+  'Miriam Adelson & family': 'Real estate',
+  'Alexey Mordashov & family': 'Industrials',
+  'Andrea Pignataro': 'Finance',
+};
+function sectorOf(name, source) {
+  if (Object.prototype.hasOwnProperty.call(SECTOR_OVERRIDES, name)) return SECTOR_OVERRIDES[name];
+  const s = String(source == null ? '' : source);
+  for (const [sector, re] of SECTOR_RULES) if (re.test(s)) return sector;
+  return 'Other';
+}
+
 function norm(x) {
   return String(x == null ? '' : x)
     .toLowerCase()
@@ -170,7 +205,7 @@ async function main() {
     let s = base, n = 2;
     while (used.has(s)) s = `${base}-${n++}`;
     used.add(s);
-    return { rank: p.rank, name: p.name, slug: s, worth: p.worth, source: p.source };
+    return { rank: p.rank, name: p.name, slug: s, worth: p.worth, source: p.source, sector: sectorOf(p.name, p.source) };
   });
 
   // Name lookup (names + aliases from research).
@@ -242,13 +277,13 @@ async function main() {
     source: top.source,
     sourceUrl: top.sourceUrl,
     asOf,
-    people: roster.map(r => ({ rank: r.rank, name: r.name, slug: r.slug, worth: r.worth, source: r.source, hasProfile: merged.has(r.slug) })),
+    people: roster.map(r => ({ rank: r.rank, name: r.name, slug: r.slug, worth: r.worth, source: r.source, sector: r.sector, hasProfile: merged.has(r.slug) })),
   };
 
   for (const r of roster) {
     const m = merged.get(r.slug);
     if (!m) continue;
-    const out = { rank: r.rank, name: r.name, slug: r.slug, worth: r.worth, source: r.source, asOf };
+    const out = { rank: r.rank, name: r.name, slug: r.slug, worth: r.worth, source: r.source, sector: r.sector, asOf };
     if (m.aliases.length) out.aliases = m.aliases;
     if (m.secPersonCik) out.secPersonCik = m.secPersonCik;
     for (const c of CATEGORIES) {
@@ -273,6 +308,13 @@ async function main() {
   console.log(`\nPeople in index: ${roster.length}`);
   console.log(`People with profiles: ${merged.size}`);
   console.log(`  ${roster.filter(r => merged.has(r.slug)).map(r => '#' + r.rank + ' ' + r.name).join(', ')}`);
+  const bySector = {};
+  roster.forEach(r => { bySector[r.sector] = (bySector[r.sector] || 0) + 1; });
+  console.log('\nPeople per sector:');
+  Object.keys(bySector).sort((a, b) => bySector[b] - bySector[a] || a.localeCompare(b))
+    .forEach(k => console.log(`  ${k.padEnd(16)} ${bySector[k]}`));
+  console.log('\nSector by person:');
+  roster.forEach(r => console.log(`  #${r.rank} ${r.name} -> ${r.sector}  (${r.source || ''})`));
   console.log('\nEntries per category:');
   CATEGORIES.forEach(c => console.log(`  ${c.padEnd(13)} ${counts[c]}`));
   const multi = [...merged.values()].reduce((n, m) => n + CATEGORIES.reduce((k, c) => k + m[c].filter(e => e.sources).length, 0), 0);

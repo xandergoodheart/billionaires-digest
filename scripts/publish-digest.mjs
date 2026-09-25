@@ -5,7 +5,7 @@
 // exits 1 without writing anything. The draft file is never modified.
 
 import { readFile } from 'node:fs/promises';
-import { validate, DIRECTIONS, dates, writeEdition } from './lib/edition.mjs';
+import { validate, DIRECTIONS, dates, writeEdition, top10FromIndex, top10AsOfFromIndex } from './lib/edition.mjs';
 
 const USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
@@ -140,6 +140,17 @@ if (Array.isArray(digest.stories)) {
     }
   }
   digest.stories = kept;
+}
+
+// ---- top 10 from the people index ----
+// data/people/index.json is the source of truth for the top 10 when it exists.
+
+let peopleIndex = null;
+try { peopleIndex = JSON.parse(await readFile('data/people/index.json', 'utf8')); } catch { /* no index: keep the draft's top10 */ }
+if (peopleIndex) {
+  digest.top10 = top10FromIndex(peopleIndex);
+  digest.top10AsOf = top10AsOfFromIndex(peopleIndex);
+  console.log(`Top 10 set from data/people/index.json (${digest.top10AsOf}).`);
 }
 
 // ---- validate and write ----
