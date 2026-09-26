@@ -218,8 +218,10 @@ footer .footlinks a:hover{text-decoration:underline}
 .navmore>ul a{display:flex;align-items:center;min-height:44px;padding:0 16px;color:var(--text);text-decoration:none;font-size:14px;letter-spacing:0;text-transform:none;border-left:2px solid transparent}
 .navmore>ul a:hover{background:var(--panel);color:var(--text)}
 .navmore>ul a[aria-current="page"]{border-left-color:var(--accent);font-weight:600}
-/* phones: one swipeable row. The row scrolls inside itself (no page scroll); menus open as a full-width panel
-   under the row (the row is position:static, so the panel is placed against .sitenav and is not clipped). */
+/* phones: one swipeable row. The row scrolls inside itself (no page scroll). With JS (html.js-navpanel) the real
+   list is never shown on phones: iOS Safari does not reliably paint it inside the scrolling row, so JS copies the
+   open menu into .navpanel, a fixed panel that is a direct child of <body>, placed at the nav's bottom edge.
+   Without JS the list opens as a full-width panel under the row (the row is position:static). */
 @media (max-width:699.98px){
   .sitenav .wrap{flex-wrap:nowrap;gap:0;overflow-x:auto;overflow-y:hidden;position:static;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;padding-left:calc(clamp(16px,3vw,40px) - 12px);padding-right:0;scroll-padding-left:calc(clamp(16px,3vw,40px) - 12px)}
   .sitenav .wrap::-webkit-scrollbar{display:none}
@@ -227,7 +229,16 @@ footer .footlinks a:hover{text-decoration:underline}
   .sitenav .wrap>a,.navmore>summary{flex:none;margin:0;padding:0 12px;white-space:nowrap;scroll-snap-align:start}
   .navmore{position:static;flex:none}
   .navmore>ul{left:0;right:0;top:100%;min-width:0;width:auto;max-height:70vh;overflow-y:auto;border-left:none;border-right:none;padding:4px 0}
+  .js-navpanel .navmore>ul{display:none !important}
   .navmore>ul a{padding:0 clamp(16px,3vw,40px)}
+  .navpanel{position:fixed;left:0;right:0;z-index:1000;max-height:calc(100vh - 80px);overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);box-shadow:0 10px 24px rgba(0,0,0,.18)}
+  .navpanel[hidden]{display:none}
+  .navpanel ul{margin:0;padding:4px 0;list-style:none}
+  .navpanel li{margin:0;padding:0}
+  .navpanel a{display:flex;align-items:center;min-height:44px;padding:0 clamp(16px,3vw,40px);color:var(--text);text-decoration:none;font-size:14px;letter-spacing:0;text-transform:none;border-left:2px solid transparent}
+  .navpanel a:hover{background:var(--panel);color:var(--text)}
+  .navpanel a[aria-current="page"]{border-left-color:var(--accent);font-weight:600}
+  .navpanel a:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
   .sitenav::before,.sitenav::after{content:'';position:absolute;top:0;bottom:1px;width:32px;pointer-events:none;z-index:1;transition:opacity .15s}
   .sitenav::before{left:0;background:linear-gradient(90deg,var(--bg),transparent);opacity:0}
   .sitenav::after{right:0;background:linear-gradient(270deg,var(--bg),transparent);opacity:1}
