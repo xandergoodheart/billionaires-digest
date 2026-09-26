@@ -403,10 +403,17 @@
 
   // ---- Nav menus (details.navmore: Fantasy, Tools): close on Escape and outside click; one open at a time.
   // On phones the nav is one swipeable row: scroll the active item into view, fade the edges that can still scroll.
+  // Phones show the open menu as a fixed panel (iOS clips it inside the scrolling row), so --navmore-top pins it
+  // under the nav and any page scroll or resize closes it (the panel never floats detached from the nav).
   // Works without JS as plain <details> and a plain scrolling row. Same code as NAV_JS in scripts/lib/nav.mjs.
   BD.initNavMore = function(){
-    var d = document.querySelectorAll('details.navmore');
+    var d = document.querySelectorAll('details.navmore'), nav = document.querySelector('.sitenav');
     function closeAll(ex){ for (var i = 0; i < d.length; i++) if (d[i] !== ex) d[i].removeAttribute('open'); }
+    function place(el){
+      var ul = el.querySelector('ul');
+      if (ul && nav) ul.style.setProperty('--navmore-top', Math.round(nav.getBoundingClientRect().bottom) + 'px');
+    }
+    function onMove(){ for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open')) d[i].removeAttribute('open'); }
     if (d.length) {
       document.addEventListener('click', function(e){
         for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open') && !d[i].contains(e.target)) d[i].removeAttribute('open');
@@ -418,9 +425,15 @@
           var s = d[i].querySelector('summary'); if (s) s.focus();
         }
       });
-      for (var j = 0; j < d.length; j++) d[j].addEventListener('toggle', function(){ if (this.open) closeAll(this); });
+      for (var j = 0; j < d.length; j++) {
+        var sm = d[j].querySelector('summary');
+        if (sm) sm.addEventListener('click', function(){ place(this.parentNode); });
+        d[j].addEventListener('toggle', function(){ if (this.open) { place(this); closeAll(this); } });
+      }
+      window.addEventListener('scroll', onMove, { passive: true });
+      window.addEventListener('resize', onMove);
     }
-    var nav = document.querySelector('.sitenav'), row = nav && nav.querySelector('.wrap');
+    var row = nav && nav.querySelector('.wrap');
     if (!row) return;
     function fades(){
       var max = row.scrollWidth - row.clientWidth;
