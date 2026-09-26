@@ -1,12 +1,12 @@
 {
-  "generated": "2026-09-25T06:53:45.789Z",
+  "generated": "2026-09-26T13:51:49.945Z",
   "currentWeek": "2026-W39",
   "draftWeek": "2026-W40",
   "practiceWeeks": [
     "2026-W39"
   ],
   "firstRealWeek": "2026-W40",
-  "latestDay": "2026-09-24",
+  "latestDay": "2026-09-25",
   "weeks": [
     {
       "week": "2026-W39",
@@ -15,8 +15,8 @@
       "start": "2026-09-21",
       "end": "2026-09-25",
       "locksAt": "2026-09-21T13:30:00.000Z",
-      "days": 1,
-      "final": false
+      "days": 2,
+      "final": true
     },
     {
       "week": "2026-W40",
@@ -30,42 +30,26 @@
     }
   ],
   "news": {
-    "mark-zuckerberg": 1,
-    "jensen-huang": 1,
+    "mark-zuckerberg": 2,
+    "jensen-huang": 2,
+    "bernard-arnault-family": 1,
     "warren-buffett": 1,
-    "larry-ellison": 1,
-    "elon-musk": 1
+    "larry-ellison": 2,
+    "elon-musk": 2,
+    "masayoshi-son": 1,
+    "changpeng-zhao": 1,
+    "steve-ballmer": 1
   },
   "newsEditions": [
-    "2026-09-24"
+    "2026-09-24",
+    "2026-09-26"
   ],
   "notDraftable": [
-    {
-      "slug": "amancio-ortega",
-      "name": "Amancio Ortega",
-      "rank": 11,
-      "sector": "Luxury & retail",
-      "reason": "No daily market price (private wealth)"
-    },
-    {
-      "slug": "bernard-arnault-family",
-      "name": "Bernard Arnault & family",
-      "rank": 14,
-      "sector": "Luxury & retail",
-      "reason": "No daily market price (private wealth)"
-    },
     {
       "slug": "michael-bloomberg",
       "name": "Michael Bloomberg",
       "rank": 20,
       "sector": "Finance",
-      "reason": "No daily market price (private wealth)"
-    },
-    {
-      "slug": "francoise-bettencourt-meyers-family",
-      "name": "Francoise Bettencourt Meyers & family",
-      "rank": 21,
-      "sector": "Luxury & retail",
       "reason": "No daily market price (private wealth)"
     },
     {
@@ -101,13 +85,6 @@
       "name": "Jeff Yass",
       "rank": 27,
       "sector": "Finance",
-      "reason": "No daily market price (private wealth)"
-    },
-    {
-      "slug": "tadashi-yanai-family",
-      "name": "Tadashi Yanai & family",
-      "rank": 31,
-      "sector": "Luxury & retail",
       "reason": "No daily market price (private wealth)"
     },
     {
@@ -381,13 +358,6 @@
       "name": "Greg Brockman",
       "rank": 97,
       "sector": "AI & tech",
-      "reason": "No daily market price (private wealth)"
-    },
-    {
-      "slug": "francois-pinault-family",
-      "name": "François Pinault & family",
-      "rank": 100,
-      "sector": "Luxury & retail",
       "reason": "No daily market price (private wealth)"
     }
   ],
