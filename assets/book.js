@@ -1,4 +1,4 @@
-/* book.html: The Book, a play-money sportsbook on the fantasy week. ES5, needs common.js, game-client.js, account.js.
+/* book.html: The Book, a play-money sportsbook on billionaires' price moves and the fantasy week. ES5, needs common.js, game-client.js, account.js.
    UI kit: assets/game-ui.css (g-card, g-tabs, g-drawer, g-bottombar, g-countdown, g-toast); layout: assets/game.css (gp-) + assets/book.css (bk-).
    Odds come from data/book/<week>.json (built by scripts/build-book.mjs); when the game is online the live prices from the
    database win (they freeze once someone bets). Anyone can browse and build a slip; placing a bet needs Play online. */
@@ -9,13 +9,17 @@
   if (!window.BDAccount || !window.BDGame) {   // a game script failed to load: never throw
     var soon = $('gameaccount'); if (soon) soon.textContent = 'Multiplayer is coming soon.';
   }
-  var LIM = { minStake: 1, maxStake: 500, maxLegs: 4, maxPayout: 10000 };
-  var TABS = ['matchups', 'player', 'futures', 'props', 'mybets'];
+  // limits mirror place_bet (supabase/migrations/0003_book_wealth.sql); the week file's "limits" replaces them when loaded
+  var LIM = { minStake: 1, maxStake: 500, maxLegs: 4, maxPayout: 10000,
+    longShots: [{ minDecimal: 21, maxStake: 50 }, { minDecimal: 6, maxStake: 150 }] };
+  var TABS = ['blasts', 'ladders', 'races', 'matchups', 'player', 'futures', 'props', 'mybets'];
+  var RUNGS = [-10, -5, -2, 2, 5, 10];   // ladder strikes, downside to upside
   var MINUS = '−';
   var S = {
     week: null, file: null, events: [], bySel: {}, byEvent: {}, source: 'file', loadErr: '',
     slip: [], mode: 'single', stake: '10', busy: false, msg: '', msgBad: false,
-    tab: 'matchups', query: '', bets: null, betsErr: '', board: null
+    tab: 'blasts', query: '', bquery: '', bets: null, betsErr: '', board: null,
+    boardMode: 'week', season: null, seasonErr: '', seasonLoading: false
   };
   var acct = { enabled: false, loading: true, signedIn: false, me: null };
 
@@ -32,6 +36,33 @@
   function nyTime(iso){
     try { return new Date(iso).toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' ET'; }
     catch(e){ return iso; }
+  }
+  // "Mon 9:30 AM ET" (with the date when it is more than 6 days away)
+  function closeText(iso){
+    var t = Date.parse(iso); if (!isFinite(t)) return '';
+    var o = { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: '2-digit' };
+    if (t - Date.now() > 6 * 864e5) { o.month = 'short'; o.day = 'numeric'; }
+    try { return new Date(t).toLocaleString('en-US', o) + ' ET'; } catch(e){ return iso; }
+  }
+  function nyToday(){
+    try { var p = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' }); if (/^\d{4}-\d{2}-\d{2}$/.test(p)) return p; } catch(e){}
+    return new Date().toISOString().slice(0, 10);
+  }
+  function dayText(ymd){
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(ymd || ''); if (!m) return ymd || '';
+    var d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], 12));
+    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getUTCDay()] + ' ' + monDay(ymd);
+  }
+  function usdText(v){
+    v = Number(v); if (!isFinite(v)) return '';
+    return v >= 1e12 ? '$' + (v / 1e12).toFixed(2) + 'T' : '$' + (v / 1e9).toFixed(1) + 'B';
+  }
+  function lcFirst(t){ t = String(t || ''); return t.charAt(0).toLowerCase() + t.slice(1); }
+  // the most one bet may stake at these decimal odds (combined odds for a parlay)
+  function capFor(dec){
+    var cap = LIM.maxStake;
+    (LIM.longShots || []).forEach(function(ls){ if (dec >= Number(ls.minDecimal) - 1e-9) cap = Math.min(cap, Number(ls.maxStake)); });
+    return cap;
   }
   function monDay(ymd){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(ymd || ''); return m ? BD.MONTHS[+m[2] - 1] + ' ' + (+m[3]) : ymd; }
   function playing(){ return !!(acct.enabled && acct.signedIn && acct.me); }
@@ -100,6 +131,7 @@
         if (saved.stake) S.stake = String(saved.stake);
       }
       if (b.method) $('methodtext').textContent = b.method;
+      if (b.limits) ['minStake', 'maxStake', 'maxLegs', 'maxPayout', 'longShots'].forEach(function(k){ if (b.limits[k] != null) LIM[k] = b.limits[k]; });
       setEvents(fromFile(b), 'file');
     });
   }
@@ -125,18 +157,26 @@
     var lock = Date.parse(b.locksAt), left = lock - Date.now();
     var settled = S.events.length && S.events.every(function(e){ return e.status === 'settled' || e.status === 'void'; });
     if (settled) { pill('final', 'Settled'); cd.hidden = true; return; }
+    // after the weekly lock, daily boards can still be open: count down to the next one that closes
+    var next = nextClose(), label = 'Locks in', at = b.locksAt;
+    if (left <= 0 && next) { at = next; left = Date.parse(next) - Date.now(); label = 'Next close in'; }
     if (left > 0) {
-      pill('live', 'Betting open');
+      pill('live', label === 'Locks in' ? 'Betting open' : 'Daily boards open');
       cd.hidden = false; cd.innerHTML = '';
-      cd.appendChild(el('span', 'g-countdown__label', 'Locks in'));
+      cd.appendChild(el('span', 'g-countdown__label', label));
       var tm = el('span', 'g-countdown__time'), p = parts(left);
       [[p.d, 'd'], [p.h, 'h'], [p.m, 'm']].forEach(function(x, i){ if (i === 0 && !x[0]) return; tm.appendChild(el('b', null, String(x[0]))); tm.appendChild(el('small', null, x[1])); });
       cd.appendChild(tm);
-      cd.setAttribute('aria-label', 'Betting locks in ' + spanText(left) + ', ' + nyTime(b.locksAt));
+      cd.setAttribute('aria-label', (label === 'Locks in' ? 'Betting locks in ' : 'The next market closes in ') + spanText(left) + ', ' + nyTime(at));
     } else {
       pill('live', 'Live · betting closed');
       cd.hidden = true;
     }
+  }
+  function nextClose(){
+    var best = null;
+    S.events.forEach(function(e){ if (isOpen(e) && (best == null || Date.parse(e.closesAt) < Date.parse(best))) best = e.closesAt; });
+    return best;
   }
   setInterval(function(){ renderHead(); }, 60000);
 
@@ -144,7 +184,7 @@
   var tablist = $('booktabs');
   function tabFromHash(){ var h = String(location.hash || '').replace('#', ''); return TABS.indexOf(h) >= 0 ? h : null; }
   function setTab(name, focus, fromHash){
-    if (TABS.indexOf(name) < 0) name = 'matchups';
+    if (TABS.indexOf(name) < 0) name = 'blasts';
     S.tab = name;
     TABS.forEach(function(t){
       var tab = $('tab-' + t), on = t === name;
@@ -152,9 +192,17 @@
       $('panel-' + t).hidden = !on;
     });
     if (focus) $('tab-' + name).focus();
+    showTab($('tab-' + name));
     if (!fromHash && history.replaceState) { try { history.replaceState(null, '', '#' + name); } catch(e){} }
     save('bd-book-tab', name);
     if (name === 'mybets') loadMyBets();
+  }
+  // keep the selected tab visible inside the sideways-scrolling tab bar (phones) without scrolling the page
+  function showTab(tab){
+    var tr = tab.getBoundingClientRect(), lr = tablist.getBoundingClientRect();
+    if (!lr.width) return;
+    if (tr.left < lr.left) tablist.scrollLeft -= (lr.left - tr.left) + 16;
+    else if (tr.right > lr.right) tablist.scrollLeft += (tr.right - lr.right) + 16;
   }
   tablist.addEventListener('click', function(e){ var t = e.target.closest && e.target.closest('[role="tab"]'); if (t) setTab(t.getAttribute('data-tab'), false); });
   tablist.addEventListener('keydown', function(e){
@@ -172,7 +220,11 @@
 
   // ---------- odds buttons ----------
   function inSlip(id){ for (var i = 0; i < S.slip.length; i++) if (S.slip[i].id === id) return i; return -1; }
-  function personName(slug){ var m = S.file && S.file.model && S.file.model[slug]; return (m && m.name) || slug; }
+  function personName(slug){
+    var m = S.file && S.file.model && S.file.model[slug];
+    if (m && m.name) return m.name;
+    return String(slug || '').replace(/-family$/, '').split('-').map(function(w){ return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+  }
   // what a pick says in the slip and to a screen reader
   function pickText(s){
     var ev = S.byEvent[s.eventId];
@@ -180,6 +232,18 @@
     if (ev && ev.type === 'prop_insider') return personName(ev.params.slug) + ' insider buy: ' + s.label;
     if (ev && ev.type === 'futures_top') return s.label + ' to top the week';
     if (ev && ev.type === 'prop_sector') return s.label + ' top sector';
+    var P = (ev && ev.params) || {};
+    if (ev && ev.type === 'blast') return personName(s.person) + ': ' + lcFirst(ev.title);
+    if (ev && ev.type === 'ladder') return personName(P.slug || s.person) + ' ' + lcFirst(s.label) + ' this week';
+    if (ev && ev.type === 'bracket') return personName(P.slug || s.person) + ' this week: ' + lcFirst(s.label);
+    if (ev && ev.type === 'race') {
+      return (s.market === 'no' ? 'No: ' + personName(P.chaser) + ' does not pass ' : 'Yes: ' + personName(P.chaser) + ' passes ') +
+        personName(P.leader) + (P.to ? ' by the ' + dayText(P.to) + ' close' : '');
+    }
+    if (ev && ev.type === 'duel') {
+      var other = s.person === P.a ? P.b : P.a;
+      return s.label + ' (dollar change vs ' + personName(other) + ')';
+    }
     return s.label;
   }
   function oddBtn(s, text){
@@ -211,10 +275,12 @@
     var head = el('div', 'bk-ev__head');
     var h = el('h3', 'bk-ev__title', ev.title); h.id = 'ev-' + cssId(ev.id);
     head.appendChild(h);
-    var meta = ev.status === 'settled' ? 'Settled' : ev.status === 'void' ? 'Void' : isOpen(ev) ? (sub || 'Open') : 'Closed';
-    head.appendChild(el('span', 'bk-ev__meta', meta));
+    head.appendChild(el('span', 'bk-ev__meta', metaText(ev, sub)));
     art.appendChild(head);
     return art;
+  }
+  function metaText(ev, sub){
+    return ev.status === 'settled' ? 'Settled' : ev.status === 'void' ? 'Void' : isOpen(ev) ? (sub || 'Closes ' + closeText(ev.closesAt)) : 'Closed';
   }
   function cssId(id){ return String(id).replace(/[^A-Za-z0-9_-]/g, '_'); }
   function foot(art, ev, text){
@@ -226,6 +292,14 @@
     var ul = el('ul', 'bk-list');
     items.forEach(function(n){ var li = el('li'); li.appendChild(n); ul.appendChild(li); });
     panel.appendChild(ul);
+  }
+  // how an event settles (its source), folded away so the cards stay short
+  function rule(art, ev, what){
+    if (!ev || !ev.settlesFrom) return;
+    var d = el('details', 'bk-rule');
+    d.appendChild(el('summary', null, what ? 'How the ' + what + ' settles' : 'How it settles'));
+    d.appendChild(el('p', null, ev.settlesFrom));
+    art.appendChild(d);
   }
   function empty(panel, title, text){
     var d = el('div', 'g-empty'); d.appendChild(el('h2', 'g-empty__title', title)); if (text) d.appendChild(el('p', null, text)); panel.appendChild(d);
@@ -328,16 +402,224 @@
       p.appendChild(art);
     });
   }
+  // ---------- price markets: Blasts ----------
+  function boardCard(ev){
+    var art = card(ev);
+    var ul = el('ul', 'bk-boardlist');
+    ul.setAttribute('aria-labelledby', 'ev-' + cssId(ev.id));
+    ev.selections.forEach(function(s){
+      var li = el('li'); li.setAttribute('data-name', BD.norm(personName(s.person) + ' ' + s.label));
+      li.appendChild(oddBtn(s, personName(s.person) || s.label)); ul.appendChild(li);
+    });
+    art.appendChild(ul);
+    art.appendChild(el('p', 'bk-ev__foot bk-nomatch', 'No one on this board matches.')).hidden = true;
+    foot(art, ev);
+    rule(art, ev);
+    return art;
+  }
+  function renderBlasts(){
+    var p = $('panel-blasts'); p.innerHTML = '';
+    var evs = ofType('blast');
+    if (!evs.length) return empty(p, 'No price boards this week', 'Boards open with the week\'s odds.');
+    p.appendChild(el('p', 'bk-note', 'Who moves most? Each board pays the person with the biggest move, measured from the opening price to the closing price. % boards follow each person\'s holdings basket; $ boards follow tracked stock wealth (share counts from SEC filings times the price). A tie voids the tied picks.'));
+    var box = el('div', 'bk-search');
+    var lab = el('label', 'g-label', 'Find a person'); lab.htmlFor = 'blastq';
+    var q = el('input', 'g-input'); q.type = 'search'; q.id = 'blastq'; q.autocomplete = 'off'; q.value = S.bquery;
+    q.setAttribute('aria-describedby', 'blastcount');
+    var count = el('p', 'g-hint'); count.id = 'blastcount'; count.setAttribute('aria-live', 'polite');
+    box.appendChild(lab); box.appendChild(q); box.appendChild(count);
+    p.appendChild(box);
+
+    var weekly = evs.filter(function(e){ return e.params && e.params.period === 'week'; });
+    var byDay = {}, days = [];
+    evs.forEach(function(e){
+      var d = e.params && e.params.period; if (!d || d === 'week') return;
+      if (!byDay[d]) { byDay[d] = []; days.push(d); }
+      byDay[d].push(e);
+    });
+    days.sort();
+    // the "Today" strip: the next day with an open board, else the latest day (its results)
+    var cur = null;
+    days.forEach(function(d){ if (!cur && byDay[d].some(isOpen)) cur = d; });
+    if (!cur && days.length) cur = days[days.length - 1];
+    if (cur) {
+      var strip = el('section', 'bk-today');
+      strip.setAttribute('aria-labelledby', 'todayh');
+      var h = el('h2', 'bk-h3', (cur === nyToday() ? 'Today · ' : 'Next up · ') + dayText(cur)); h.id = 'todayh';
+      strip.appendChild(h);
+      list(strip, byDay[cur].map(boardCard));
+      p.appendChild(strip);
+    }
+    if (weekly.length) {
+      p.appendChild(el('h2', 'bk-h3', 'This week'));
+      list(p, weekly.map(boardCard));
+    }
+    var rest = days.filter(function(d){ return d !== cur; });
+    if (rest.length) {
+      var more = el('details', 'bk-more');
+      more.appendChild(el('summary', null, 'Other days this week (' + rest.length + ')'));
+      rest.forEach(function(d){
+        more.appendChild(el('h3', 'bk-h4', dayText(d)));
+        list(more, byDay[d].map(boardCard));
+      });
+      p.appendChild(more);
+    }
+    function filter(){
+      var v = BD.norm(q.value), shown = 0, total = 0;
+      Array.prototype.forEach.call(p.querySelectorAll('.bk-ev'), function(art){
+        var any = false;
+        Array.prototype.forEach.call(art.querySelectorAll('li[data-name]'), function(li){
+          var on = !v || li.getAttribute('data-name').indexOf(v) >= 0; li.hidden = !on; total++; if (on) { shown++; any = true; }
+        });
+        var nm = art.querySelector('.bk-nomatch'); if (nm) nm.hidden = any;
+      });
+      count.textContent = v ? shown + ' of ' + total + ' picks shown' : '';
+    }
+    q.addEventListener('input', function(){ S.bquery = q.value; filter(); });
+    filter();
+  }
+
+  // ---------- price markets: Ladders (strike ladder + range, one card per person) ----------
+  function rungText(k){ return (k > 0 ? '+' : MINUS) + Math.abs(k) + '%'; }
+  function bandText(r){
+    var lo = r && r[0], hi = r && r[1];
+    function n(x){ return (x > 0 ? '+' : x < 0 ? MINUS : '') + Math.abs(x); }
+    if (lo == null && hi != null) return 'Below ' + n(hi) + '%';
+    if (hi == null && lo != null) return n(lo) + '% up';
+    if (lo == null) return '';
+    return n(lo) + ' to ' + n(hi) + '%';
+  }
+  function rungBtn(s, top){
+    var b = oddBtn(s);
+    b.className = b.className.replace(' bk-odd--center', '') + ' bk-odd--rung';
+    b.insertBefore(el('span', 'bk-odd__label', top), b.firstChild);
+    return b;
+  }
+  function basketText(basket){
+    if (!basket || !basket.length) return '';
+    var top = basket.slice(0, 4).map(function(x){ return x.ticker + ' ' + Math.round(x.weight * 100) + '%'; });
+    return 'Tracks ' + top.join(' · ') + (basket.length > 4 ? ' · ' + (basket.length - 4) + ' more' : '') + '.';
+  }
+  function renderLadders(){
+    var p = $('panel-ladders'); p.innerHTML = '';
+    var lad = ofType('ladder'), br = ofType('bracket'), slugs = [], by = {};
+    lad.concat(br).forEach(function(e){
+      var slug = e.params && e.params.slug; if (!slug) return;
+      if (!by[slug]) { by[slug] = {}; slugs.push(slug); }
+      by[slug][e.type] = e;
+    });
+    if (!slugs.length) return empty(p, 'No ladders this week', 'Ladders open with the week\'s odds.');
+    p.appendChild(el('p', 'bk-note', 'How far will each person\'s holdings basket move this week, from the opening price to Friday\'s closing price? Ladder: "+5%" wins if the week ends up 5% or more, "' + MINUS + '5%" if it ends down 5% or more. The further out, the bigger the payout. Range: pick the band the move lands in.'));
+    list(p, slugs.map(function(slug){
+      var L = by[slug].ladder, B = by[slug].bracket, main = L || B;
+      var art = el('article', 'g-card bk-ev');
+      var hid = 'ev-' + cssId(main.id);
+      art.setAttribute('aria-labelledby', hid);
+      var head = el('div', 'bk-ev__head');
+      var h = el('h3', 'bk-ev__title', personName(slug)); h.id = hid;
+      head.appendChild(h);
+      head.appendChild(el('span', 'bk-ev__meta', metaText(main)));
+      art.appendChild(head);
+      if (L) {
+        var lg = el('div', 'bk-rungs'); lg.setAttribute('role', 'group'); lg.setAttribute('aria-label', personName(slug) + ': move ladder, ' + (isOpen(L) ? 'closes ' + closeText(L.closesAt) : 'closed'));
+        lg.appendChild(el('span', 'bk-rungs__h', 'Ladder'));
+        RUNGS.forEach(function(k, i){
+          if (i === 3) lg.appendChild(el('span', 'bk-rungs__zero'));
+          var s = L.selections.filter(function(x){ return x.market === 'strike' && Number(x.line) === k; })[0];
+          lg.appendChild(s ? rungBtn(s, rungText(k)) : el('span', 'bk-rungs__gap'));
+        });
+        var ax = el('div', 'bk-rungs__axis'); ax.setAttribute('aria-hidden', 'true');
+        ax.appendChild(el('span', null, '← Down')); ax.appendChild(el('span', null, 'Up →'));
+        lg.appendChild(ax);
+        art.appendChild(lg);
+      }
+      if (B) {
+        var bg = el('div', 'bk-rungs bk-rungs--range'); bg.setAttribute('role', 'group'); bg.setAttribute('aria-label', personName(slug) + ': range of the week\'s move, ' + (isOpen(B) ? 'closes ' + closeText(B.closesAt) : 'closed'));
+        bg.appendChild(el('span', 'bk-rungs__h', 'Range'));
+        var bk = (B.params && B.params.buckets) || {};
+        B.selections.forEach(function(s, i){
+          if (i === 3 && B.selections.length === 6) bg.appendChild(el('span', 'bk-rungs__zero'));
+          bg.appendChild(rungBtn(s, bandText(bk[s.id]) || s.label));
+        });
+        art.appendChild(bg);
+      }
+      var bt = basketText(main.params && main.params.basket);
+      if (bt) art.appendChild(el('p', 'bk-ev__foot', bt));
+      if (L) foot(art, L);
+      if (B && B.result && B.result.note) foot(art, B);
+      var both = L && B && B.settlesFrom !== L.settlesFrom;
+      rule(art, L, both ? 'ladder' : '');
+      if (B && (!L || both)) rule(art, B, both ? 'range' : '');
+      return art;
+    }));
+  }
+
+  // ---------- price markets: Races (rank flips + dollar duels) ----------
+  function nowLine(P, slugs){
+    var v = (P && P.value0) || {};
+    var bits = slugs.filter(function(x){ return v[x] != null; }).map(function(x){ return personName(x) + ' ' + usdText(v[x]); });
+    if (!bits.length) return '';
+    return 'Tracked stock wealth' + (P.value0Date ? ' at the ' + dayText(P.value0Date) + ' close' : ' now') + ': ' + bits.join(' · ') + '.';
+  }
+  function renderRaces(){
+    var p = $('panel-races'); p.innerHTML = '';
+    var races = ofType('race'), duels = ofType('duel');
+    if (!races.length && !duels.length) return empty(p, 'No races this week', 'Races open with the week\'s odds.');
+    if (races.length) {
+      p.appendChild(el('h2', 'bk-h3', 'Rank races'));
+      p.appendChild(el('p', 'bk-note', 'Will one fortune pass the one just above it by Friday\'s close? Based on tracked stock wealth: share counts from SEC filings times the closing price.'));
+      list(p, races.map(function(ev){
+        var art = card(ev), P = ev.params || {};
+        var nl = nowLine(P, [P.chaser, P.leader]); if (nl) art.appendChild(el('p', 'bk-ev__foot', nl));
+        var g = el('div', 'bk-ladder'); g.setAttribute('role', 'group'); g.setAttribute('aria-labelledby', 'ev-' + cssId(ev.id));
+        ev.selections.forEach(function(s){ g.appendChild(oddBtn(s, s.label)); });
+        art.appendChild(g);
+        foot(art, ev); rule(art, ev);
+        return art;
+      }));
+    }
+    if (duels.length) {
+      p.appendChild(el('h2', 'bk-h3', 'Dollar duels'));
+      p.appendChild(el('p', 'bk-note', 'Whose tracked stock wealth gains more dollars this week (or loses less)? "To win": pick the bigger gain. "By $X+": that person has to win by more than that amount.'));
+      list(p, duels.map(function(ev){
+        var art = card(ev), P = ev.params || {};
+        var nl = nowLine(P, [P.a, P.b]); if (nl) art.appendChild(el('p', 'bk-ev__foot', nl));
+        var lines = [];
+        ev.selections.forEach(function(s){ if (s.market === 'by' && lines.indexOf(Number(s.line)) < 0) lines.push(Number(s.line)); });
+        lines.sort(function(a, b){ return a - b; });
+        var g = el('div', 'bk-grid bk-grid--duel');
+        g.style.gridTemplateColumns = 'minmax(0,1fr) repeat(' + (1 + lines.length) + ', minmax(64px,auto))';
+        g.setAttribute('role', 'group'); g.setAttribute('aria-labelledby', 'ev-' + cssId(ev.id));
+        g.appendChild(el('span', 'bk-grid__h', 'Person')); g.appendChild(el('span', 'bk-grid__h', 'To win'));
+        lines.forEach(function(x){ g.appendChild(el('span', 'bk-grid__h', 'By $' + x + 'B+')); });
+        [P.a, P.b].forEach(function(slug){
+          var ml = sel(ev, 'ml', slug);
+          g.appendChild(el('span', 'bk-grid__name', personName(slug)));
+          g.appendChild(ml ? oddBtn(ml) : el('span'));
+          lines.forEach(function(x){
+            var s = ev.selections.filter(function(y){ return y.market === 'by' && y.person === slug && Number(y.line) === x; })[0];
+            g.appendChild(s ? oddBtn(s) : el('span'));
+          });
+        });
+        art.appendChild(g);
+        foot(art, ev); rule(art, ev);
+        return art;
+      }));
+    }
+  }
+
   function renderPanels(){
     var st = $('bookstatus');
     if (S.loadErr) { st.textContent = S.loadErr; st.className = 'g-msg bk-status g-msg--bad'; }
     else if (!S.file) { st.textContent = 'Loading the odds…'; st.className = 'g-msg bk-status'; }
     else {
       st.className = 'g-msg bk-status';
-      st.textContent = 'Week of ' + monDay(S.file.start) + ' · ' + (Date.parse(S.file.locksAt) > Date.now() ? 'betting locks ' + nyTime(S.file.locksAt) : 'betting closed at the lock') +
+      var nx = nextClose();
+      st.textContent = 'Week of ' + monDay(S.file.start) + ' · ' + (Date.parse(S.file.locksAt) > Date.now() ? 'weekly betting locks ' + nyTime(S.file.locksAt)
+        : nx ? 'weekly betting closed; next close ' + nyTime(nx) : 'betting closed') +
         (S.source === 'file' ? ' · published odds' : ' · live odds');
     }
-    renderMatchups(); renderPlayer(); renderFutures(); renderProps();
+    renderBlasts(); renderLadders(); renderRaces(); renderMatchups(); renderPlayer(); renderFutures(); renderProps();
     renderHead();
   }
 
@@ -370,11 +652,28 @@
     var tp = 0; S.slip.forEach(function(p){ tp += payoutOf(st, p.decimal); });
     return { stake: st * n, payout: tp, win: tp - st * n, bets: n };
   }
+  // the most each bet in the slip may stake: combined odds for a parlay, the longest single otherwise
+  function slipCap(){
+    if (!S.slip.length) return LIM.maxStake;
+    if (S.mode === 'parlay' && S.slip.length > 1) return capFor(parlayDec());
+    var cap = LIM.maxStake;
+    S.slip.forEach(function(p){ cap = Math.min(cap, capFor(p.decimal)); });
+    return cap;
+  }
+  function capHint(){
+    var cap = slipCap(), n = S.slip.length, parlay = S.mode === 'parlay' && n > 1;
+    var tail = ' The most a bet pays back is ' + num(LIM.maxPayout) + '.';
+    if (cap >= LIM.maxStake) return LIM.minStake + ' to ' + LIM.maxStake + ' coins per bet.' + tail;
+    return (parlay ? 'Long-shot parlay: ' : n > 1 ? 'Long shot in the slip: ' : 'Long shot: ') + 'the most you can stake is ' + cap + ' coins' +
+      (!parlay && n > 1 ? ' per bet' : '') + ' (' + (cap <= 50 ? 'odds of +2000 or longer' : 'odds of +500 or longer') + ').' + tail;
+  }
   function problem(){
     var st = stakeVal(), t = totals();
     if (!S.slip.length) return 'Add a pick to start.';
     if (!(Number(S.stake) >= LIM.minStake)) return 'Enter a stake of at least ' + LIM.minStake + ' coin.';
     if (st > LIM.maxStake) return 'The most you can stake on one bet is ' + LIM.maxStake + ' coins.';
+    var cap = slipCap();
+    if (st > cap) return 'Long shots are capped at ' + cap + ' coins.';
     if (playing() && t.stake > Number(acct.me.coins)) return 'You have ' + num(acct.me.coins) + ' coins' + (t.bets > 1 ? ' (these ' + t.bets + ' bets need ' + num(t.stake) + ').' : '.');
     return '';
   }
@@ -424,6 +723,8 @@
       rm.setAttribute('aria-label', 'Remove ' + p.label);
       rm.addEventListener('click', function(){ togglePick(p.id); var next = $('rm-' + Math.min(i, S.slip.length - 1)) || $('slipclear') || $('tab-' + S.tab); if (next) next.focus(); });
       li.appendChild(rm);
+      var lc = capFor(p.decimal);
+      if (lc < LIM.maxStake && !(S.mode === 'parlay' && n > 1)) li.appendChild(el('span', 'bk-leg__cap', 'Long shot · max ' + lc + ' coins'));
       if (p.changed) li.appendChild(el('span', 'bk-leg__moved', 'Odds moved' + (p.prev != null ? ' from ' + am(p.prev) : '') + ' to ' + am(p.american) + '.'));
       ul.appendChild(li);
     });
@@ -445,7 +746,7 @@
     // stake
     var sk = el('div', 'bk-stake');
     var lab = el('label', 'g-label', S.mode === 'parlay' || n === 1 ? 'Stake (coins)' : 'Stake per bet (coins)'); lab.htmlFor = 'stake';
-    var inp = el('input', 'g-input g-num'); inp.id = 'stake'; inp.type = 'number'; inp.min = '1'; inp.max = String(LIM.maxStake); inp.step = '1';
+    var inp = el('input', 'g-input g-num'); inp.id = 'stake'; inp.type = 'number'; inp.min = '1'; inp.max = String(slipCap()); inp.step = '1';
     inp.inputMode = 'numeric'; inp.value = S.stake; inp.setAttribute('aria-describedby', 'stakehint slipmsg');
     sk.appendChild(lab); sk.appendChild(inp);
     var chips = el('div', 'bk-chips');
@@ -457,14 +758,14 @@
         if (v === 'max') {
           var per = S.mode === 'parlay' && n > 1 ? 1 : n;
           var bal = playing() ? Number(acct.me.coins) : LIM.maxStake * per;
-          val = Math.max(1, Math.min(LIM.maxStake, Math.floor(bal / per)));
+          val = Math.max(1, Math.min(slipCap(), Math.floor(bal / per)));
         }
         inp.value = String(val); S.stake = String(val); persistSlip(); update(); inp.focus();
       });
       chips.appendChild(c);
     });
     sk.appendChild(chips);
-    sk.appendChild(el('p', 'g-hint', LIM.minStake + ' to ' + LIM.maxStake + ' coins per bet. The most a bet pays back is ' + num(LIM.maxPayout) + '.')).id = 'stakehint';
+    var hint = el('p', 'g-hint', capHint()); hint.id = 'stakehint'; sk.appendChild(hint);
     box.appendChild(sk);
 
     // totals
@@ -488,7 +789,7 @@
       aN.textContent = num(t.stake); wN.textContent = num(t.win);
       payLine.textContent = 'Payout if ' + (S.mode === 'parlay' && n > 1 ? 'every pick wins' : 'every bet wins') + ': ' + num(t.payout) + ' coins' +
         (S.mode === 'parlay' && n > 1 ? ' (odds ' + am(decToAm(t.dec)) + ')' : '') + (t.payout >= LIM.maxPayout ? ' · capped at ' + num(LIM.maxPayout) : '') + '.';
-      if (pr) inp.setAttribute('aria-invalid', /stake/i.test(pr) ? 'true' : 'false'); else inp.removeAttribute('aria-invalid');
+      if (pr) inp.setAttribute('aria-invalid', /stake|capped/i.test(pr) ? 'true' : 'false'); else inp.removeAttribute('aria-invalid');
       if (S.busy) { go.textContent = 'Placing…'; go.disabled = true; }
       else if (!acct.enabled) { go.textContent = acct.loading ? 'Loading…' : 'Online betting coming soon'; go.disabled = true; }
       else if (!playing()) { go.textContent = 'Play online to bet'; go.disabled = false; }
@@ -653,6 +954,60 @@
     Promise.all([BDGame.myBets(100), S.week ? BDGame.bookLeaderboard(S.week, 10).then(null, function(){ return []; }) : Promise.resolve([])]).then(function(r){
       S.bets = r[0] || []; S.board = r[1] || []; S.betsErr = '';
     }, function(e){ S.betsErr = 'Could not load your bets. ' + e.message; }).then(function(){ S.betsLoading = false; renderMyBets(); });
+    if (S.boardMode === 'season') loadSeason();
+  }
+  function loadSeason(){
+    if (S.seasonLoading || !BDGame.bookSeasonLeaderboard) return;
+    S.seasonLoading = true; S.seasonErr = '';
+    BDGame.bookSeasonLeaderboard(20).then(function(rows){ S.season = rows || []; }, function(e){ S.seasonErr = 'Could not load the season table. ' + ((e && e.message) || ''); })
+      .then(function(){ S.seasonLoading = false; if (S.tab === 'mybets') renderMyBets(); });
+  }
+  function signed(n){ n = Number(n) || 0; return (n > 0 ? '+' : n < 0 ? MINUS : '') + num(Math.abs(n)); }
+  function roiText(r){ if (r == null || !isFinite(Number(r))) return '—'; var v = Number(r) * 100; return (v > 0 ? '+' : v < 0 ? MINUS : '') + Math.abs(v).toFixed(1) + '%'; }
+  // "Top bettors": this week (book_leaderboard) or the season (book_season_leaderboard)
+  function renderBoard(p){
+    var season = S.boardMode === 'season';
+    p.appendChild(el('h2', 'bk-h3', 'Top bettors'));
+    var tg = el('div', 'bk-toggle'); tg.setAttribute('role', 'group'); tg.setAttribute('aria-label', 'Leaderboard period');
+    [['week', 'This week'], ['season', 'Season']].forEach(function(m){
+      var b = btn('bk-toggle__btn', m[1]); b.id = 'board-' + m[0];
+      b.setAttribute('aria-pressed', S.boardMode === m[0] ? 'true' : 'false');
+      b.addEventListener('click', function(){
+        if (S.boardMode === m[0]) return;
+        S.boardMode = m[0];
+        if (m[0] === 'season' && !S.season) loadSeason();
+        renderMyBets();
+        var f = $('board-' + m[0]); if (f) f.focus();
+      });
+      tg.appendChild(b);
+    });
+    p.appendChild(tg);
+    var rows = season ? S.season : S.board;
+    if (season && S.seasonErr) { p.appendChild(el('p', 'g-msg g-msg--bad', S.seasonErr)); return; }
+    if (season && !rows) { p.appendChild(el('p', 'g-msg', 'Loading the season table…')); return; }
+    if (!rows || !rows.length) {
+      p.appendChild(el('p', 'g-msg', season ? 'No one has 10 settled bets yet. The season table lists players with 10 or more.' : 'No settled bets this week yet.'));
+      return;
+    }
+    var wrap = el('div', 'g-table-wrap bk-board');
+    var t = el('table', 'g-table gp-board');
+    t.appendChild(el('caption', null, season
+      ? 'Season: net coins from settled bets (payouts minus stakes) and return on stake (net divided by coins staked). Players with 10 or more settled bets. Nicknames only.'
+      : 'Net coins won from settled bets this week (payouts minus stakes). Nicknames only.'));
+    var th = el('thead'), tr = el('tr');
+    (season ? ['#', 'Player', 'Bets', 'Net', 'ROI'] : ['#', 'Player', 'Bets', 'Net']).forEach(function(h){ var c = el('th', null, h); c.scope = 'col'; tr.appendChild(c); });
+    th.appendChild(tr); t.appendChild(th);
+    var tb = el('tbody');
+    rows.forEach(function(r){
+      var row = el('tr', r.is_me ? 'is-me' : null);
+      row.appendChild(el('td', 'gp-rank', String(r.rank)));
+      var nm = el('th', null, r.nickname); nm.scope = 'row'; if (r.is_me) nm.appendChild(el('span', 'gp-you', 'You')); row.appendChild(nm);
+      row.appendChild(el('td', 'g-num', num(r.bets)));
+      var net = Number(r.net); row.appendChild(el('td', 'g-num ' + (net > 0 ? 'g-up' : net < 0 ? 'g-down' : ''), signed(net)));
+      if (season) { var roi = Number(r.roi); row.appendChild(el('td', 'g-num ' + (roi > 0 ? 'g-up' : roi < 0 ? 'g-down' : ''), roiText(r.roi))); }
+      tb.appendChild(row);
+    });
+    t.appendChild(tb); wrap.appendChild(t); p.appendChild(wrap);
   }
   function resultWord(r){ return r === 'win' ? 'Won' : r === 'lose' ? 'Lost' : r === 'void' ? 'Void' : 'Open'; }
   function betCard(b){
@@ -697,33 +1052,15 @@
     if (!open.length) p.appendChild(el('p', 'g-msg', 'No open bets. Tap a price to start a slip.'));
     else { var u1 = el('ul', 'bk-bets'); open.forEach(function(b){ var li = el('li'); li.appendChild(betCard(b)); u1.appendChild(li); }); p.appendChild(u1); }
     p.appendChild(el('h2', 'bk-h3', 'Settled (' + done.length + ')'));
-    if (!done.length) p.appendChild(el('p', 'g-msg', 'Nothing settled yet. Bets settle after Friday\'s scores are in.'));
+    if (!done.length) p.appendChild(el('p', 'g-msg', 'Nothing settled yet. Price bets settle once the closing prices are in; fantasy bets after Friday\'s scores.'));
     else { var u2 = el('ul', 'bk-bets'); done.forEach(function(b){ var li = el('li'); li.appendChild(betCard(b)); u2.appendChild(li); }); p.appendChild(u2); }
-    if (S.board && S.board.length) {
-      p.appendChild(el('h2', 'bk-h3', 'Top bettors this week'));
-      var wrap = el('div', 'g-table-wrap bk-board');
-      var t = el('table', 'g-table gp-board');
-      t.appendChild(el('caption', null, 'Net coins won from settled bets this week (payouts minus stakes). Nicknames only.'));
-      var th = el('thead'), tr = el('tr');
-      ['#', 'Player', 'Bets', 'Net'].forEach(function(h){ var c = el('th', null, h); c.scope = 'col'; tr.appendChild(c); });
-      th.appendChild(tr); t.appendChild(th);
-      var tb = el('tbody');
-      S.board.forEach(function(r){
-        var row = el('tr', r.is_me ? 'is-me' : null);
-        row.appendChild(el('td', 'gp-rank', String(r.rank)));
-        var nm = el('th', null, r.nickname); nm.scope = 'row'; if (r.is_me) nm.appendChild(el('span', 'gp-you', 'You')); row.appendChild(nm);
-        row.appendChild(el('td', 'g-num', num(r.bets)));
-        var net = Number(r.net); row.appendChild(el('td', 'g-num ' + (net > 0 ? 'g-up' : net < 0 ? 'g-down' : ''), (net > 0 ? '+' : net < 0 ? MINUS : '') + num(Math.abs(net))));
-        tb.appendChild(row);
-      });
-      t.appendChild(tb); wrap.appendChild(t); p.appendChild(wrap);
-    }
+    renderBoard(p);
   }
 
   // ---------- start ----------
   var live = el('p', 'g-sr'); live.id = 'sliplive'; live.setAttribute('aria-live', 'polite'); live.setAttribute('aria-atomic', 'true');
   document.getElementById('app').appendChild(live);
-  var first = tabFromHash() || load('bd-book-tab', 'matchups');
+  var first = tabFromHash() || load('bd-book-tab', 'blasts');
   setTab(first, false, !!tabFromHash());
   renderSlip(); renderBar();
   loadFile().then(null, function(){ S.loadErr = 'The odds for the next week are not published yet. They appear after the weekend data run.'; })
@@ -731,7 +1068,7 @@
   if (window.BDAccount) {
     BDAccount.onChange(function(s){
       acct = s;
-      var go = function(){ return loadLive().then(function(){ renderPanels(); syncPressed(); renderSlip(); renderBar(); if (S.tab === 'mybets') { S.bets = null; loadMyBets(); } }); };
+      var go = function(){ return loadLive().then(function(){ renderPanels(); syncPressed(); renderSlip(); renderBar(); S.season = null; if (S.tab === 'mybets') { S.bets = null; loadMyBets(); } }); };
       if (S.file) go(); else setTimeout(function wait(){ if (S.file || S.loadErr) go(); else setTimeout(wait, 100); }, 100);
     });
   }
