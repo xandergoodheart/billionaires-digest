@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { closeOn, prevTradingClose, basketReturn, trackedValue, dollarPool } from './wealth.mjs';
+import { closeOn, openOn, prevTradingClose, basketReturn, trackedValue, dollarPool } from './wealth.mjs';
 
 const H = {
   AAA: [['2026-09-24', 100], ['2026-09-25', 110], ['2026-09-28', 99], ['2026-09-29', 121]],
@@ -67,4 +67,21 @@ test('dollarPool: coverage filter, frozen entries, sorted by slug', () => {
   ]);
   assert.deepEqual(dollarPool(est, 0.95).map((p) => p.slug), ['fam']);
   assert.deepEqual(dollarPool(null), []);
+});
+
+test('open start: openOn, basketReturn and trackedValue from the open', () => {
+  const O = { AAA: [['2026-09-28', 104]], WMT: [['2026-09-28', 100]] };
+  const Hx = { AAA: [['2026-09-28', 99], ['2026-10-02', 130]], WMT: [['2026-10-02', 102]] };
+  assert.equal(openOn(O, 'AAA', '2026-09-28'), 104);
+  assert.equal(openOn(O, 'AAA', '2026-09-29'), null);
+  assert.equal(openOn(null, 'AAA', '2026-09-28'), null);
+  // open 104 on Monday -> close 130 on Friday = +25%; the close-based default still uses Monday's close (99)
+  assert.equal(basketReturn([{ ticker: 'AAA', weight: 1 }], Hx, '2026-09-28', '2026-10-02', { startKind: 'open', opens: O }), 25);
+  assert.equal(basketReturn([{ ticker: 'AAA', weight: 1 }], Hx, '2026-09-28', '2026-10-02'), 31.3131);
+  assert.equal(basketReturn([{ ticker: 'AAA', weight: 1 }], Hx, '2026-09-28', '2026-10-02', { startKind: 'open', opens: {} }), null);
+  assert.equal(trackedValue({ method: 'shares', shares: { AAA: 10 } }, Hx, '2026-09-28', { kind: 'open', opens: O }), 1040);
+  const w = { method: 'worth', worth: 1e9, ticker: 'WMT', refDate: '2026-09-25', refClose: 100 };
+  assert.equal(trackedValue(w, Hx, '2026-09-28', { kind: 'open', opens: O }), 1e9);
+  assert.equal(trackedValue(w, Hx, '2026-10-02'), 1.02e9);
+  assert.equal(trackedValue(w, Hx, '2026-09-29', { kind: 'open', opens: O }), null);
 });

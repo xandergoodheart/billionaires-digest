@@ -102,6 +102,8 @@ create policy bet_legs_read on public.bet_legs for select to authenticated
 -- Place a single (1 selection) or a parlay (2-4 selections from different events).
 -- p_expected_decimal: the decimal odds the player saw, one per selection, in the same order. If any differs from the
 -- current price the bet is refused ('Odds changed — review your slip') so nobody bets at a price they did not see.
+-- Stakes: 1-500 coins; long shots are capped: combined decimal odds >= 21.0 -> at most 50 coins, >= 6.0 -> at most 150.
+-- (The only definition of place_bet: the daily job re-applies every migration, so a copy elsewhere would briefly win.)
 create or replace function public.place_bet(p_selection_ids text[], p_stake int, p_expected_decimal numeric[]) returns json
 language plpgsql security definer set search_path = public, extensions, pg_temp as $$
 declare
@@ -148,6 +150,10 @@ begin
     prod := prod * r.decimal_odds;
     wk := greatest(coalesce(wk, r.week), r.week);
   end loop;
+
+  -- long shots: the longer the combined odds, the smaller the most you can stake
+  if prod >= 21.0 and p_stake > 50 then raise exception 'Long shots are capped at 50 coins.'; end if;
+  if prod >= 6.0 and p_stake > 150 then raise exception 'Long shots are capped at 150 coins.'; end if;
 
   select count(*) into today_n from public.bets b
   where b.user_id = uid

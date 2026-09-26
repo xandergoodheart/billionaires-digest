@@ -4,7 +4,9 @@
 //
 // Also quotes the Billionaire Fantasy League symbols (scripts/lib/fantasy.mjs): SPY, name aliases and the
 // curated US ADR lines used for daily returns only.
-// Writes data/prices/latest.json, data/prices/history/<SYM>.json and data/prices/networth-est.json.
+// Writes data/prices/latest.json, data/prices/history/<SYM>.json (closes), data/prices/opens/<SYM>.json (that session's
+// opening price; The Book's price markets run from an open to a close) and data/prices/networth-est.json.
+// The 5:30 AM quote is the previous session, so its open and close belong to the same New York date.
 // Exits 0 without fetching or writing when FINNHUB_API_KEY is unset.
 // The key is sent in the X-Finnhub-Token header and is never logged.
 
@@ -50,13 +52,30 @@ export function collectSymbols(profiles) {
   return { symbols: [...symbols].sort(), skipped: [...skipped].map(([symbol, reason]) => ({ symbol, reason })) };
 }
 
-async function appendHistory(symbol, isoDate, close) {
-  const path = join(OUT_DIR, 'history', `${symbol}.json`);
+// Adds (or replaces) one [isoDate, value] row in <dir>/<symbol>.json, sorted by date, keeping the last HISTORY_KEEP rows.
+export async function appendSeries(dir, symbol, isoDate, value) {
+  const path = join(dir, `${symbol}.json`);
   const rows = await readJson(path, []);
   const map = new Map(Array.isArray(rows) ? rows.filter((r) => Array.isArray(r) && r.length === 2) : []);
-  map.set(isoDate, close);
+  map.set(isoDate, value);
   const out = [...map].sort((a, b) => a[0].localeCompare(b[0])).slice(-HISTORY_KEEP);
   await writeJson(path, out, { pretty: false });
+}
+const appendHistory = (symbol, isoDate, close) => appendSeries(join(OUT_DIR, 'history'), symbol, isoDate, close);
+const appendOpen = (symbol, isoDate, open) => appendSeries(join(OUT_DIR, 'opens'), symbol, isoDate, open);
+
+// A Finnhub quote {c, d, dp, pc, o, t} -> the latest.json entry, or null when there is no usable quote.
+// open is kept only when it is a positive number.
+export function quoteEntry(q) {
+  if (!q || typeof q.c !== 'number' || q.c === 0 || !q.t) return null;
+  return {
+    price: q.c,
+    change: typeof q.d === 'number' ? q.d : null,
+    changePct: typeof q.dp === 'number' ? q.dp : null,
+    prevClose: typeof q.pc === 'number' ? q.pc : null,
+    ...(typeof q.o === 'number' && Number.isFinite(q.o) && q.o > 0 ? { open: q.o } : {}),
+    time: new Date(q.t * 1000).toISOString(),
+  };
 }
 
 async function main() {
@@ -75,18 +94,15 @@ async function main() {
   for (const sym of symbols) {
     try {
       const q = await quote(sym);
-      if (!q || typeof q.c !== 'number' || q.c === 0 || !q.t) {
+      const entry = quoteEntry(q);
+      if (!entry) {
         skipped.push({ symbol: sym, reason: 'no quote from Finnhub' });
         continue;
       }
-      quotes[sym] = {
-        price: q.c,
-        change: typeof q.d === 'number' ? q.d : null,
-        changePct: typeof q.dp === 'number' ? q.dp : null,
-        prevClose: typeof q.pc === 'number' ? q.pc : null,
-        time: new Date(q.t * 1000).toISOString(),
-      };
-      await appendHistory(sym, nyDate(new Date(q.t * 1000)), q.c);
+      quotes[sym] = entry;
+      const day = nyDate(new Date(q.t * 1000));
+      await appendHistory(sym, day, q.c);
+      if (entry.open != null) await appendOpen(sym, day, entry.open);
     } catch (err) {
       console.warn(`! ${sym}: ${err.message}`);
       skipped.push({ symbol: sym, reason: `request failed (${err.message})` });

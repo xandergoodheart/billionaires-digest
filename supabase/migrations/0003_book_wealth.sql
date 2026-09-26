@@ -4,14 +4,13 @@
 --
 -- What is here
 --   book_events.type        also allows the price markets: blast, ladder, bracket, race, duel
---   place_bet()             same checks as 0002, plus long-shot caps: combined decimal odds >= 21.0 -> at most 50 coins,
---                           >= 6.0 -> at most 150 coins (otherwise 500)
---   settle_book_events()    settles only the events passed (price markets settle one by one as their closes come in;
+--   settle_book_events()    settles only the events passed (price markets settle one by one as their prices come in;
 --                           settle_book() in 0002 finalizes a whole week and voids anything without a result)
 --   book_season_leaderboard()  net, stake and ROI over the whole season, players with 10+ settled bets
+-- The long-shot stake caps live in place_bet() in 0002 (its only definition, so re-applying the migrations never
+-- leaves an uncapped version in place, even for a moment).
 --
--- Safe to run more than once, like 0001/0002. The daily job applies every migration in order, so this file's
--- place_bet always replaces 0002's.
+-- Safe to run more than once, like 0001/0002.
 --
 -- Apply:  psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/0003_book_wealth.sql
 
@@ -21,74 +20,6 @@
 alter table public.book_events drop constraint if exists book_events_type_check;
 alter table public.book_events add constraint book_events_type_check
   check (type in ('h2h', 'player_ou', 'futures_top', 'prop_insider', 'prop_sector', 'blast', 'ladder', 'bracket', 'race', 'duel'));
-
--- ---------------------------------------------------------------------------
--- place_bet: 0002's version plus long-shot stake caps
--- ---------------------------------------------------------------------------
-create or replace function public.place_bet(p_selection_ids text[], p_stake int, p_expected_decimal numeric[]) returns json
-language plpgsql security definer set search_path = public, extensions, pg_temp as $$
-declare
-  uid uuid := auth.uid();
-  p public.profiles%rowtype;
-  n int := coalesce(array_length(p_selection_ids, 1), 0);
-  found_n int;
-  events_n int;
-  r record;
-  prod numeric := 1;
-  pay int;
-  wk text;
-  today_n int;
-  bid uuid;
-  i int;
-begin
-  if uid is null then raise exception 'Please sign in first.'; end if;
-  select * into p from public.profiles where id = uid for update;          -- lock order: profile, then selections
-  if not found then raise exception 'Pick a nickname first.'; end if;
-  if n < 1 or n > 4 then raise exception 'A bet has 1 to 4 picks.'; end if;
-  if array_position(p_selection_ids, null) is not null then raise exception 'That pick is no longer available.'; end if;
-  if (select count(distinct x) from unnest(p_selection_ids) x) <> n then raise exception 'Pick each selection only once.'; end if;
-  if coalesce(array_length(p_expected_decimal, 1), 0) <> n then raise exception 'Odds changed — review your slip'; end if;
-  if p_stake is null or p_stake < 1 then raise exception 'Stake at least 1 coin.'; end if;
-  if p_stake > 500 then raise exception 'You can stake up to 500 coins per bet.'; end if;
-  if p_stake > p.coins then raise exception 'You only have % coins.', p.coins; end if;
-
-  select count(*), count(distinct s.event_id) into found_n, events_n
-  from public.book_selections s where s.id = any(p_selection_ids);
-  if found_n <> n then raise exception 'That pick is no longer available.'; end if;
-  if events_n <> n then raise exception 'Parlay picks must come from different events.'; end if;
-
-  for i in 1..n loop
-    select s.id, s.decimal_odds, s.american_odds, s.result, e.status, e.closes_at, e.week into r
-    from public.book_selections s join public.book_events e on e.id = s.event_id
-    where s.id = p_selection_ids[i]
-    for share of e;
-    if r.status <> 'open' or public.game_now() >= r.closes_at or r.result is not null then
-      raise exception 'Betting on this event is closed.';
-    end if;
-    if p_expected_decimal[i] is null or r.decimal_odds <> p_expected_decimal[i] then
-      raise exception 'Odds changed — review your slip';
-    end if;
-    prod := prod * r.decimal_odds;
-    wk := greatest(coalesce(wk, r.week), r.week);
-  end loop;
-
-  -- long shots: the longer the combined odds, the smaller the most you can stake
-  if prod >= 21.0 and p_stake > 50 then raise exception 'Long shots are capped at 50 coins.'; end if;
-  if prod >= 6.0 and p_stake > 150 then raise exception 'Long shots are capped at 150 coins.'; end if;
-
-  select count(*) into today_n from public.bets b
-  where b.user_id = uid
-    and (b.created_at at time zone 'America/New_York')::date = (public.game_now() at time zone 'America/New_York')::date;
-  if today_n >= 50 then raise exception 'You can place up to 50 bets a day. Try again tomorrow.'; end if;
-
-  pay := least(floor(p_stake * prod), 10000)::int;
-  insert into public.bets (user_id, week, created_at, stake, potential_payout, status, is_parlay)
-    values (uid, wk, public.game_now(), p_stake, pay, 'open', n > 1) returning id into bid;
-  insert into public.bet_legs (bet_id, selection_id, decimal_odds_at_bet, american_odds_at_bet)
-    select bid, s.id, s.decimal_odds, s.american_odds from public.book_selections s where s.id = any(p_selection_ids);
-  update public.profiles set coins = coins - p_stake where id = uid;
-  return json_build_object('id', bid, 'stake', p_stake, 'potential_payout', pay, 'legs', n, 'coins', p.coins - p_stake);
-end $$;
 
 -- ---------------------------------------------------------------------------
 -- settle_book_events: settle only the events passed
@@ -184,9 +115,7 @@ $$;
 -- ---------------------------------------------------------------------------
 -- Who may call what (Supabase grants EXECUTE on new functions to everyone by default, so reset it)
 -- ---------------------------------------------------------------------------
-revoke execute on function public.place_bet(text[], int, numeric[]), public.settle_book_events(jsonb),
-  public.book_season_leaderboard(int)
+revoke execute on function public.settle_book_events(jsonb), public.book_season_leaderboard(int)
   from public, anon, authenticated;
 grant execute on function public.book_season_leaderboard(int) to anon, authenticated;
-grant execute on function public.place_bet(text[], int, numeric[]) to authenticated;
 grant execute on function public.settle_book_events(jsonb) to service_role;

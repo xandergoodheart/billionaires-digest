@@ -168,3 +168,31 @@ test('long-shot stake caps (mirror place_bet)', () => {
   assert.equal(maxStakeFor(500), 50);
   assert.equal(stakeCapMessage(50), 'Long shots are capped at 50 coins.');
 });
+
+test('open start (params.start "open"): measured from the first day\'s open to the last day\'s close; a missing open voids', () => {
+  const M = '2026-09-28', Fr = '2026-10-02';
+  const hist = { A: [[F, 100], [M, 101], [Fr, 110]], B: [[F, 100], [M, 100], [Fr, 99]], WMT: [[F, 100], [Fr, 104]] };
+  const opens = { A: [[M, 104]], B: [[M, 90]], WMT: [[M, 100]] };        // no open for B on Friday
+  const lad = { id: 'W:ladder:a', type: 'ladder', params: { slug: 'a', from: M, to: Fr, start: 'open', basket: bk('A') },
+    selections: [{ id: 'u5', market: 'strike', line: 5 }, { id: 'u10', market: 'strike', line: 10 }] };
+  // open 104 -> close 110 = +5.7692% (close-to-close from Monday would be +8.9%)
+  assert.deepEqual(priceMeasure(lad, hist, opens), { a: 5.7692 });
+  assert.deepEqual(settleEvent(lad, { history: hist, opens }).out, { u5: 'win', u10: 'lose' });
+  // % board: A +5.77%, B from 90 -> 99 = +10%
+  const board = blastEv('pct', 'up', ['a', 'b'], { from: M, to: Fr, start: 'open', baskets: { a: bk('A'), b: bk('B') } });
+  assert.deepEqual(settleEvent(board, { history: hist, opens }).out, { 'b-a': 'lose', 'b-b': 'win' });
+  // $ board and duel from the open: a 1e9 A (+$6B), w $100B x WMT 100 -> 104 (+$4B)
+  const wealth = { a: shares('A')(1e9), w: { method: 'worth', worth: 1e11, ticker: 'WMT', refDate: F, refClose: 100 } };
+  assert.deepEqual(priceMeasure(blastEv('usd', 'up', ['a', 'w'], { from: M, to: Fr, start: 'open', wealth }), hist, opens), { a: 6e9, w: 4e9 });
+  // a daily board on Friday: no Friday opens at all -> not ready, then void after the give-up window
+  const fri = blastEv('pct', 'up', ['a', 'b'], { from: Fr, to: Fr, start: 'open', baskets: { a: bk('A'), b: bk('B') } });
+  assert.equal(priceMeasure(fri, hist, opens), null);
+  assert.equal(priceEventState(fri, hist, '2026-10-03', opens), 'waiting');
+  assert.equal(priceEventState(fri, hist, '2026-10-07', opens), 'missing');
+  const v = settleEvent(fri, { history: hist, opens });
+  assert.deepEqual(v.out, { 'b-a': 'void', 'b-b': 'void' });
+  assert.match(v.note, /opening or closing price is missing/);
+  // no opens file at all: the open-start ladder is void, not measured from a close
+  assert.deepEqual(settleEvent(lad, { history: hist }).out, { u5: 'void', u10: 'void' });
+  assert.equal(priceEventState(lad, hist, '2026-10-03', opens), 'ready');
+});

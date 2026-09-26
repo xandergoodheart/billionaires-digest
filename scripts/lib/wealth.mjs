@@ -1,6 +1,7 @@
 // Wealth math for The Book's price-based markets. Pure functions, no I/O.
 //
 // history = { TICKER: [[isoDate, close], ...] }  (same rows as data/prices/history/<TICKER>.json)
+// opens   = { TICKER: [[isoDate, open], ...] }   (same rows as data/prices/opens/<TICKER>.json: that session's opening price)
 // Dates are ISO calendar dates (YYYY-MM-DD, America/New_York trading days); string comparison orders them.
 
 // Close on exactly `date`, or null.
@@ -11,6 +12,16 @@ export function closeOn(history, ticker, date) {
     if (r && r[0] === date) return typeof r[1] === 'number' && Number.isFinite(r[1]) && r[1] > 0 ? r[1] : null;
   }
   return null;
+}
+
+// Opening price on exactly `date`, or null.
+export function openOn(opens, ticker, date) {
+  return closeOn(opens, ticker, date);
+}
+
+// Price of `ticker` on `date`: its close (kind 'close', the default) or its open (kind 'open', from `opens`).
+function priceOn(history, ticker, date, kind = 'close', opens = null) {
+  return kind === 'open' ? openOn(opens, ticker, date) : closeOn(history, ticker, date);
 }
 
 // Latest date strictly before `date` on which every ticker has a close, or null.
@@ -28,12 +39,13 @@ export function prevTradingClose(history, tickers, date) {
 
 const round4 = (x) => Math.round(x * 1e4) / 1e4;
 
-// Σ weight × (close(to)/close(from) − 1) × 100, in percent (4 dp). Null if any close is missing or the basket is empty.
-export function basketReturn(basket, history, from, to) {
+// Σ weight × (close(to)/start(from) − 1) × 100, in percent (4 dp). Null if any price is missing or the basket is empty.
+// start is the close on `from` (default) or, with { startKind: 'open', opens }, the open on `from`.
+export function basketReturn(basket, history, from, to, { startKind = 'close', opens = null } = {}) {
   if (!Array.isArray(basket) || !basket.length) return null;
   let r = 0;
   for (const b of basket) {
-    const c0 = closeOn(history, b.ticker, from);
+    const c0 = priceOn(history, b.ticker, from, startKind, opens);
     const c1 = closeOn(history, b.ticker, to);
     if (c0 === null || c1 === null) return null;
     r += (b.weight ?? 0) * (c1 / c0 - 1) * 100;
@@ -41,17 +53,18 @@ export function basketReturn(basket, history, from, to) {
   return round4(r);
 }
 
-// Tracked dollar value of one dollar-pool entry on `date`, or null if a close is missing.
-//   { method:'shares', shares:{TICKER:n} }                  -> Σ n × close(date)
-//   { method:'worth', worth, ticker, refDate, refClose }    -> worth × close(date) / refClose
-export function trackedValue(entry, history, date) {
+// Tracked dollar value of one dollar-pool entry on `date`, or null if a price is missing.
+//   { method:'shares', shares:{TICKER:n} }                  -> Σ n × price(date)
+//   { method:'worth', worth, ticker, refDate, refClose }    -> worth × price(date) / refClose
+// price = the close (default) or, with { kind: 'open', opens }, that day's open.
+export function trackedValue(entry, history, date, { kind = 'close', opens = null } = {}) {
   if (!entry) return null;
   if (entry.method === 'shares') {
     const tickers = Object.keys(entry.shares ?? {});
     if (!tickers.length) return null;
     let v = 0;
     for (const t of tickers) {
-      const c = closeOn(history, t, date);
+      const c = priceOn(history, t, date, kind, opens);
       if (c === null) return null;
       v += entry.shares[t] * c;
     }
@@ -59,7 +72,7 @@ export function trackedValue(entry, history, date) {
   }
   if (entry.method === 'worth') {
     if (!(entry.worth > 0) || !(entry.refClose > 0)) return null;
-    const c = closeOn(history, entry.ticker, date);
+    const c = priceOn(history, entry.ticker, date, kind, opens);
     if (c === null) return null;
     return entry.worth * c / entry.refClose;
   }

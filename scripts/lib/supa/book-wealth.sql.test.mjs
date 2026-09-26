@@ -1,5 +1,5 @@
 // node --test 'scripts/lib/supa/*.test.mjs'
-// supabase/migrations/0003_book_wealth.sql in PGlite: price-market event types, long-shot stake caps,
+// supabase/migrations/0003_book_wealth.sql (and the long-shot caps in 0002's place_bet) in PGlite: price-market event types, long-shot stake caps,
 // settle_book_events (only the events passed), book_season_leaderboard.
 import { test, before, describe } from 'node:test';
 import assert from 'node:assert/strict';
@@ -63,6 +63,18 @@ for (const mode of MODES) describe(mode, () => {
     assert.equal(closes[E.daily], TUE_CLOSE);
     assert.equal(closes[E.h2h], LOCK);
     await rejectsWith(assert, upsert({ week: W, locksAt: LOCK, events: [{ id: `${W}:x`, type: 'moonshot', title: 'X', selections: [] }] }), /book_events_type_check|check constraint/);
+  });
+
+  test('place_bet has exactly one definition in the migrations, and it carries the caps', async () => {
+    const { readdir, readFile } = await import('node:fs/promises');
+    const dir = new URL('../../../supabase/migrations/', import.meta.url);
+    const files = (await readdir(dir)).filter(f => f.endsWith('.sql'));
+    const defs = [];
+    for (const f of files) if (/create or replace function public\.place_bet\(/i.test(await readFile(new URL(f, dir), 'utf8'))) defs.push(f);
+    assert.deepEqual(defs, ['0002_book.sql']);
+    const src = (await t.root(`select prosrc from pg_proc where proname = 'place_bet'`)).rows;
+    assert.equal(src.length, 1);
+    assert.match(src[0].prosrc, /Long shots are capped at 50 coins/);
   });
 
   test('long-shot caps: 21.0+ -> 50 coins, 6.0+ -> 150, otherwise 500; parlays use the combined odds', async () => {

@@ -232,15 +232,15 @@ function wealthFixture(weekId = '2026-W40', start = '2026-09-28', end = '2026-10
 const buildW = (fx, n = 2000) => buildBook({ week: fx.week, history: fx.history, est: fx.est, overrides: fx.overrides, editions: [], filings: [],
   storyMatches: () => false, generated: '2026-09-25T00:00:00.000Z', n });
 
-test('dates: previous weekday, the week\'s weekdays, 4 PM New York closes across DST', () => {
+test('dates: previous weekday, the week\'s weekdays, 9:30 AM New York betting close across DST', () => {
   assert.equal(prevWeekday('2026-09-28'), '2026-09-25');   // Monday -> Friday
   assert.equal(prevWeekday('2026-09-30'), '2026-09-29');
   assert.deepEqual(weekdaysOf({ start: '2026-09-28', end: '2026-10-02' }), ['2026-09-28', '2026-09-29', '2026-09-30', '2026-10-01', '2026-10-02']);
-  assert.equal(closesAtFor('2026-09-25'), '2026-09-25T20:00:00.000Z');   // EDT
-  assert.equal(closesAtFor('2026-10-30'), '2026-10-30T20:00:00.000Z');   // last Friday of EDT
-  assert.equal(closesAtFor('2026-11-02'), '2026-11-02T21:00:00.000Z');   // EST (clocks went back Sun Nov 1)
-  assert.equal(closesAtFor('2026-03-06'), '2026-03-06T21:00:00.000Z');
-  assert.equal(closesAtFor('2026-03-09'), '2026-03-09T20:00:00.000Z');   // EDT from Sun Mar 8
+  assert.equal(closesAtFor('2026-09-28'), '2026-09-28T13:30:00.000Z');   // EDT
+  assert.equal(closesAtFor('2026-10-30'), '2026-10-30T13:30:00.000Z');   // last Friday of EDT
+  assert.equal(closesAtFor('2026-11-02'), '2026-11-02T14:30:00.000Z');   // EST (clocks went back Sun Nov 1)
+  assert.equal(closesAtFor('2026-03-06'), '2026-03-06T14:30:00.000Z');
+  assert.equal(closesAtFor('2026-03-09'), '2026-03-09T13:30:00.000Z');   // EDT from Sun Mar 8
 });
 
 test('price markets: every type, pools, params, closesAt, >= 2 selections, deterministic', () => {
@@ -256,17 +256,19 @@ test('price markets: every type, pools, params, closesAt, >= 2 selections, deter
   for (const e of a.events) {
     assert.ok(e.selections.length >= 2, `${e.id} has ${e.selections.length}`);
     if (!PRICE.includes(e.type)) { assert.equal(e.closesAt, undefined); continue; }
-    assert.equal(e.params.from < e.params.to, true);
+    assert.equal(e.params.from <= e.params.to, true);
     assert.equal(e.closesAt, closesAtFor(e.params.from));
     assert.ok(Date.parse(e.closesAt) < Date.parse(`${e.params.to}T20:00:00Z`));
+    assert.equal(e.params.start, e.type === 'race' ? undefined : 'open');   // races have no start price
     assert.ok(['blasts', 'ladders', 'races'].includes(e.group));
   }
   const W = '2026-W40';
   const wk = a.events.find(e => e.id === `${W}:blast:pct:up:week`);
-  assert.deepEqual([wk.params.from, wk.params.to, wk.closesAt], ['2026-09-25', '2026-10-02', '2026-09-25T20:00:00.000Z']);
+  assert.deepEqual([wk.params.from, wk.params.to, wk.params.start, wk.closesAt], ['2026-09-28', '2026-10-02', 'open', '2026-09-28T13:30:00.000Z']);
+  assert.equal(wk.closesAt, a.locksAt);                                  // weekly markets close with the fantasy lock
   const tue = a.events.find(e => e.id === `${W}:blast:usd:up:2026-09-29`);
-  assert.deepEqual([tue.params.from, tue.params.to, tue.closesAt, tue.title], ['2026-09-28', '2026-09-29', '2026-09-28T20:00:00.000Z', 'Biggest $ gainer today (Tue Sep 29)']);
-  assert.equal(a.events.find(e => e.id === `${W}:blast:pct:up:2026-09-28`).params.from, '2026-09-25');
+  assert.deepEqual([tue.params.from, tue.params.to, tue.closesAt, tue.title], ['2026-09-29', '2026-09-29', '2026-09-29T13:30:00.000Z', 'Biggest $ gainer today (Tue Sep 29)']);
+  assert.equal(a.events.find(e => e.id === `${W}:blast:pct:up:2026-09-28`).closesAt, '2026-09-28T13:30:00.000Z');
   // pools: % boards use baskets of all 12; $ boards the dollar pool (coverage >= 0.4), valued at the latest close
   assert.equal(wk.params.slugs.length, 12);
   assert.deepEqual(Object.keys(wk.params.baskets).sort(), wk.params.slugs.slice().sort());
@@ -329,7 +331,7 @@ test('price markets: every type, pools, params, closesAt, >= 2 selections, deter
   for (const e of a.events) for (const x of e.selections) { assert.ok(!ids.has(x.id)); ids.add(x.id); assert.ok(x.id.startsWith(e.id + ':')); assert.equal(x.decimalOdds, americanToDecimal(x.americanOdds)); }
   assert.deepEqual(a.limits.longShots, [{ minDecimal: 21, maxStake: 50 }, { minDecimal: 6, maxStake: 150 }]);
   assert.equal(LIMITS.maxStake, 500);
-  assert.match(a.method, /4 PM New York/);
+  assert.match(a.method, /opening price on the first day to the closing price on the last day; betting closes at the opening bell \(9:30 AM New York\)/);
 });
 
 test('price markets: no networth estimate -> no dollar markets; % markets still built', () => {
@@ -341,14 +343,17 @@ test('price markets: no networth estimate -> no dollar markets; % markets still 
   assert.ok(a.events.filter(e => e.type === 'blast').every(e => e.params.metric === 'pct'));
 });
 
-test('price markets: DST week closes at 4 PM New York in both offsets', () => {
-  const fx = wealthFixture('2026-W45', '2026-11-02', '2026-11-06', '2026-11-02T14:30:00.000Z');
-  const a = buildW(fx, 500);
-  const byId = id => a.events.find(e => e.id === id);
-  assert.equal(byId('2026-W45:blast:pct:up:week').closesAt, '2026-10-30T20:00:00.000Z');       // Friday Oct 30, EDT
-  assert.equal(byId('2026-W45:blast:pct:up:2026-11-02').closesAt, '2026-10-30T20:00:00.000Z');
-  assert.equal(byId('2026-W45:blast:pct:up:2026-11-03').closesAt, '2026-11-02T21:00:00.000Z'); // Monday Nov 2, EST
-  assert.equal(byId('2026-W45:ladder:p00').closesAt, '2026-10-30T20:00:00.000Z');
+test('price markets: betting closes at 9:30 AM New York in EDT and EST weeks', () => {
+  const byId = (b, id) => b.events.find(e => e.id === id).closesAt;
+  const edt = buildW(wealthFixture(), 500);                                                    // W40, EDT
+  assert.equal(byId(edt, '2026-W40:blast:pct:up:week'), '2026-09-28T13:30:00.000Z');
+  assert.equal(byId(edt, '2026-W40:ladder:p00'), '2026-09-28T13:30:00.000Z');
+  assert.equal(byId(edt, '2026-W40:blast:pct:up:2026-10-01'), '2026-10-01T13:30:00.000Z');
+  const est = buildW(wealthFixture('2026-W45', '2026-11-02', '2026-11-06', '2026-11-02T14:30:00.000Z'), 500);   // W45, EST
+  assert.equal(byId(est, '2026-W45:blast:pct:up:week'), '2026-11-02T14:30:00.000Z');
+  assert.equal(byId(est, '2026-W45:bracket:p00'), '2026-11-02T14:30:00.000Z');
+  assert.equal(byId(est, '2026-W45:blast:pct:up:2026-11-02'), '2026-11-02T14:30:00.000Z');
+  assert.equal(byId(est, '2026-W45:blast:usd:up:2026-11-03'), '2026-11-03T14:30:00.000Z');
 });
 
 test('blastProbs / raceProb: seeded, sum to 1, dollar scale and side matter', () => {
@@ -375,13 +380,13 @@ test('build-book: price events past their close are kept exactly as published', 
   const fresh = buildW(moved, 500);
   const id = '2026-W40:blast:usd:up:week';
   assert.notDeepEqual(fresh.events.find(e => e.id === id).params.wealth.p00, old.events.find(e => e.id === id).params.wealth.p00);
-  const kept = keepClosedEvents(fresh, old, Date.parse('2026-09-26T12:00:00Z'));      // weekly markets closed Fri 4 PM
+  const kept = keepClosedEvents(fresh, old, Date.parse('2026-09-28T15:00:00Z'));      // weekly markets closed Mon 9:30 AM
   const k = kept.events.find(e => e.id === id), o = old.events.find(e => e.id === id);
   assert.deepEqual({ ...k, sort: 0 }, { ...o, sort: 0 });
   const tue = '2026-W40:blast:pct:up:2026-09-29';                                     // still open: rebuilt
   assert.equal(kept.events.find(e => e.id === tue), fresh.events.find(e => e.id === tue));
   // a closed market the rebuild no longer offers (p01 can't catch p00 at $300B) is kept, so it still settles
-  const gone = old.events.filter(e => PRICE.includes(e.type) && e.closesAt <= '2026-09-26' && !fresh.events.some(f => f.id === e.id)).map(e => e.id);
+  const gone = old.events.filter(e => PRICE.includes(e.type) && e.closesAt <= '2026-09-28T15' && !fresh.events.some(f => f.id === e.id)).map(e => e.id);
   assert.deepEqual(gone, ['2026-W40:race:p01:p00']);
   assert.equal(kept.events.length, fresh.events.length + 1);
   assert.ok(kept.events.some(e => e.id === gone[0]));

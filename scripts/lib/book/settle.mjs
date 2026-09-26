@@ -5,18 +5,20 @@
 //   pBuyDays: { slug: days with a code-P Form 4 filed Mon-Fri }
 //   insiderUnknown: [slug]                             (had a Form 4 in the week we could not read: void unless a buy is confirmed)
 //   history:  { TICKER: [[date, close]] }              (data/prices/history; the price markets below settle from it)
+//   opens:    { TICKER: [[date, open]] }               (data/prices/opens: each session's opening price)
 // }
 // Returns { results: { selectionId: 'win' | 'lose' | 'void' }, notes: { eventId: text } }.
 //
-// Price markets (blast, ladder, bracket, race, duel) settle close-to-close from the frozen basket / wealth entries in the
-// event's params (see pricing.mjs). A missing close on the from or to date makes the whole event void (stake back).
+// Price markets (blast, ladder, bracket, race, duel) settle from the frozen basket / wealth entries in the event's params
+// (see pricing.mjs): from the opening price on the from date (params.start 'open'; older events without it: the close)
+// to the closing price on the to date. A missing open or close makes the whole event void (stake back).
 import { basketReturn, trackedValue } from '../wealth.mjs';
 
 export const PRICE_TYPES = ['blast', 'ladder', 'bracket', 'race', 'duel'];
 export const isPriceEvent = ev => !!ev && PRICE_TYPES.includes(ev.type);
 // Waiting for a close: after this many days past the to date (+1), a still-missing close voids the event.
 export const PRICE_GIVE_UP_DAYS = 3;
-// Long-shot stake caps (mirrors place_bet in supabase/migrations/0003_book_wealth.sql): combined decimal odds at or
+// Long-shot stake caps (mirrors place_bet in supabase/migrations/0002_book.sql): combined decimal odds at or
 // above minDecimal -> at most maxStake coins. Otherwise the normal 500-coin limit.
 export const MAX_STAKE = 500;
 export const STAKE_CAPS = [{ minDecimal: 21, maxStake: 50 }, { minDecimal: 6, maxStake: 150 }];
@@ -41,15 +43,17 @@ const addDays = (s, n) => { const [y, m, d] = s.split('-').map(Number); return n
 const pctText = v => `${v > 0 ? '+' : v < 0 ? '−' : ''}${Math.abs(v).toFixed(2)}%`;
 const usdText = v => `${v > 0 ? '+' : v < 0 ? '−' : ''}$${(Math.abs(v) / 1e9).toFixed(2)}B`;
 
-// What a price event measures, from the price history; null when any close it needs is missing.
-//   blast (pct), ladder, bracket: { slug: basket return % from -> to (4 dp) }
-//   blast (usd), duel:            { slug: tracked $ change from -> to (whole dollars) }
-//   race:                         { slug: tracked $ value on the to date (whole dollars) }
-export function priceMeasure(ev, history = {}) {
+// What a price event measures; null when any price it needs is missing.
+//   blast (pct), ladder, bracket: { slug: basket return % from the start price to the to close (4 dp) }
+//   blast (usd), duel:            { slug: tracked $ change, same span (whole dollars) }
+//   race:                         { slug: tracked $ value at the to close (whole dollars) }
+// Start price: the open on the from date when params.start is 'open', else the close on the from date.
+export function priceMeasure(ev, history = {}, opens = {}) {
   const p = (ev && ev.params) || {};
-  const pct = b => basketReturn(b, history, p.from, p.to);
+  const startKind = p.start === 'open' ? 'open' : 'close';
+  const pct = b => basketReturn(b, history, p.from, p.to, { startKind, opens });
   const usd = w => {
-    const a = trackedValue(w, history, p.from), b = trackedValue(w, history, p.to);
+    const a = trackedValue(w, history, p.from, { kind: startKind, opens }), b = trackedValue(w, history, p.to);
     return a == null || b == null ? null : Math.round(b - a);
   };
   const each = (slugs, f) => {
@@ -67,18 +71,18 @@ export function priceMeasure(ev, history = {}) {
   }
 }
 
-// 'ready' (every close is in), 'missing' (still not in PRICE_GIVE_UP_DAYS + 1 days after the to date: settles void),
-// or 'waiting'. today: New York 'YYYY-MM-DD'.
-export function priceEventState(ev, history, today) {
-  if (priceMeasure(ev, history)) return 'ready';
+// 'ready' (the start open and end close are in for every ticker), 'missing' (still not in PRICE_GIVE_UP_DAYS + 1 days
+// after the to date: settles void), or 'waiting'. today: New York 'YYYY-MM-DD'.
+export function priceEventState(ev, history, today, opens = {}) {
+  if (priceMeasure(ev, history, opens)) return 'ready';
   const to = ev && ev.params && ev.params.to;
   return to && today > addDays(to, 1 + PRICE_GIVE_UP_DAYS) ? 'missing' : 'waiting';
 }
 
 function settlePrice(ev, res, out, all) {
   const p = ev.params || {};
-  const m = priceMeasure(ev, res.history || {});
-  if (!m) { all('void'); return 'Void: a closing price is missing.'; }
+  const m = priceMeasure(ev, res.history || {}, res.opens || {});
+  if (!m) { all('void'); return 'Void: an opening or closing price is missing.'; }
 
   if (ev.type === 'blast') {
     const vals = Object.values(m);

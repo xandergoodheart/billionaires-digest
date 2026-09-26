@@ -9,9 +9,10 @@
 //   0.6 in the same sector, 0.3 otherwise.
 // Weekly total = sum of the week's trading days (5).
 //
-// Price markets (blast, ladder, bracket, race, duel): a person's close-to-close % return of their basket (the week file's
-// draftable holdings weights) ~ Normal(0, vol) per trading day, vol = the same blended daily volatility; over d days the
-// spread is vol x sqrt(d). Same correlations. Dollar change = tracked value x return. See buildBook.
+// Price markets (blast, ladder, bracket, race, duel): a person's % return of their basket (the week file's draftable
+// holdings weights) from the opening price on the first day to the closing price on the last ~ Normal(0, vol) per trading
+// day, vol = the same blended daily volatility; over d days the spread is vol x sqrt(d). Same correlations. Dollar change
+// = tracked value x return. Betting closes at the opening bell (9:30 AM New York) of the first day. See buildBook.
 import { nyToUtc } from '../supa/time.mjs';
 import { trackedValue, prevTradingClose, dollarPool } from '../wealth.mjs';
 import { STAKE_CAPS } from './settle.mjs';
@@ -40,7 +41,7 @@ export const OU_PEOPLE = 15;
 export const OU_QUANTILES = [0.2, 0.35, 0.5, 0.65, 0.8];
 export const MIN_SECTOR_SIZE = 3;
 // bet limits (the database enforces them; here for the page and the method text)
-// longShots: combined decimal odds >= minDecimal -> at most maxStake coins (place_bet in 0003_book_wealth.sql).
+// longShots: combined decimal odds >= minDecimal -> at most maxStake coins (place_bet in 0002_book.sql).
 export const LIMITS = { minStake: 1, maxStake: 500, maxLegs: 4, maxPayout: 10000, betsPerDay: 50, longShots: STAKE_CAPS };
 // price markets
 export const OVERROUND_BRACKET = 1.12;
@@ -53,7 +54,7 @@ export const RACE_MAX = 8;
 export const RACE_P = [0.03, 0.97];
 export const DUEL_MAX = 8;
 export const DUEL_SIGMAS = [0.5, 1];
-export const REF_CLOSE_NY = '16:00';          // betting closes at the reference (from) close, New York time
+export const BET_CLOSE_NY = '09:30';          // betting closes at the opening bell of the first measured day, New York time
 
 const round4 = x => Math.round(x * 10000) / 10000;
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
@@ -372,7 +373,7 @@ const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const DOW_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const dow = s => new Date(`${s}T12:00:00Z`).getUTCDay();
 const bySlug = (a, b) => a.slug.localeCompare(b.slug);
-// The weekday before `date` (Monday -> the Friday before). Market holidays are not skipped: a missing close voids the market.
+// The weekday before `date` (Monday -> the Friday before). Market holidays are not skipped.
 export function prevWeekday(date) {
   let d = addDays(date, -1);
   while (dow(d) === 0 || dow(d) === 6) d = addDays(d, -1);
@@ -384,13 +385,13 @@ export function weekdaysOf(week) {
   for (let d = week.start; d <= week.end; d = addDays(d, 1)) if (dow(d) >= 1 && dow(d) <= 5) out.push(d);
   return out;
 }
-// Betting closes at the reference close: 4 PM New York on the from date, as ISO UTC (DST-correct).
-export const closesAtFor = from => nyToUtc(from, REF_CLOSE_NY).toISOString();
+// Betting closes at the opening bell: 9:30 AM New York on the from (first measured) date, as ISO UTC (DST-correct).
+export const closesAtFor = from => nyToUtc(from, BET_CLOSE_NY).toISOString();
 const dayLabel = s => `${DOW[dow(s)]} ${monDay(s)}`;
 export const basketOf = m => (m.holdings || []).filter(h => h && h.ticker && Number(h.weight) > 0).map(h => ({ ticker: h.ticker, weight: Number(h.weight) }));
 const fmtB = x => (Number.isInteger(x) ? String(x) : x.toFixed(1));
 
-// Simulated close-to-close returns (%) over `days` trading days; people need {slug, sector, holdings, vol}.
+// Simulated returns (%) over `days` trading days; people need {slug, sector, holdings, vol}.
 function simReturns(people, { seed, n, days, onSample }) {
   return simulateWeeks(people.map(p => ({ slug: p.slug, sector: p.sector, holdings: p.holdings, mu: 0, sigma: p.vol })), { seed, n, days, onSample });
 }
@@ -435,7 +436,7 @@ export function buildPriceMarkets({ W, week, models, history = {}, est = null, o
   const byslug = Object.fromEntries(models.map(m => [m.slug, m]));
   const days = weekdaysOf(week);
   const wDays = days.length || DAYS;
-  const wFrom = prevWeekday(week.start), wTo = week.end;
+  const wFrom = week.start, wTo = week.end;                  // open of the first weekday -> close of the last
   const wClose = closesAtFor(wFrom);
   const pctPool = models.filter(m => basketOf(m).length).sort(bySal).slice(0, BLAST_PCT_PEOPLE);
 
@@ -454,10 +455,10 @@ export function buildPriceMarkets({ W, week, models, history = {}, est = null, o
   usdPool.sort((a, b) => b.value0 - a.value0 || a.slug.localeCompare(b.slug));
 
   const measure = {
-    pct: 'the close-to-close % change of each person\'s holdings basket (the fantasy weights)',
-    usd: 'the close-to-close change in each person\'s tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings)'
+    pct: 'the % change of each person\'s holdings basket (the fantasy weights)',
+    usd: 'the change in each person\'s tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings)'
   };
-  const span = (from, to) => `from the ${dayLabel(from)} close to the ${dayLabel(to)} close, from our daily price history`;
+  const span = (from, to) => `from the opening price on ${dayLabel(from)} to the closing price on ${dayLabel(to)}, from our daily price data`;
 
   // 1. blasts: biggest gainer / loser boards
   const blast = (metric, side, period, from, to, pool, nDays, title) => {
@@ -468,11 +469,11 @@ export function buildPriceMarkets({ W, week, models, history = {}, est = null, o
     const q = priceMultiWay(order.map(m => probs[m.slug]));
     events.push({
       id, type: 'blast', title, group: 'blasts', closesAt: closesAtFor(from),
-      params: { metric, side, period, from, to, slugs: order.map(m => m.slug),
+      params: { metric, side, period, from, to, start: 'open', slugs: order.map(m => m.slug),
         ...(metric === 'usd' ? { wealth: Object.fromEntries(order.map(m => [m.slug, m.wealth])) } : { baskets: Object.fromEntries(order.map(m => [m.slug, basketOf(m)])) }) },
       selections: order.map((m, i) => ({ id: `${id}:${m.slug}`, label: m.name, market: 'pick', person: m.slug, ...q[i] })),
       settlesFrom: `${measure[metric][0].toUpperCase()}${measure[metric].slice(1)}, ${span(from, to)}. The biggest ${side === 'up' ? 'gain' : 'drop'} wins. ` +
-        'A tie voids the tied picks; a missing close voids the market.'
+        'A tie voids the tied picks; a missing opening or closing price voids the market.'
     });
   };
   const sym = { pct: '%', usd: '$' };
@@ -481,7 +482,7 @@ export function buildPriceMarkets({ W, week, models, history = {}, est = null, o
   }
   for (const d of days) {
     for (const metric of ['pct', 'usd']) {
-      blast(metric, 'up', d, prevWeekday(d), d, metric === 'usd' ? usdPool : pctPool, 1, `Biggest ${sym[metric]} gainer today (${dayLabel(d)})`);
+      blast(metric, 'up', d, d, d, metric === 'usd' ? usdPool : pctPool, 1, `Biggest ${sym[metric]} gainer today (${dayLabel(d)})`);
     }
   }
 
@@ -499,8 +500,8 @@ export function buildPriceMarkets({ W, week, models, history = {}, est = null, o
     }
     if (sels.length >= 2) {
       events.push({ id, type: 'ladder', title: `${m.name}: this week's move`, group: 'ladders', closesAt: wClose,
-        params: { slug: m.slug, from: wFrom, to: wTo, basket }, selections: sels,
-        settlesFrom: `${base[0].toUpperCase()}${base.slice(1)}. "Up 5% or more" wins at +5.00% or higher; "Down 5% or more" at −5.00% or lower. A missing close voids the market.` });
+        params: { slug: m.slug, from: wFrom, to: wTo, start: 'open', basket }, selections: sels,
+        settlesFrom: `${base[0].toUpperCase()}${base.slice(1)}. "Up 5% or more" wins at +5.00% or higher; "Down 5% or more" at −5.00% or lower. A missing opening or closing price voids the market.` });
     }
     const bid = `${W}:bracket:${m.slug}`;
     const probs = BRACKETS.map(([lo, hi]) => (hi == null ? 1 : normCdf(hi / sd)) - (lo == null ? 0 : normCdf(lo / sd)));
@@ -512,11 +513,11 @@ export function buildPriceMarkets({ W, week, models, history = {}, est = null, o
       return { id: sid, label: bucketLabel(lo, hi), market: 'bracket', person: m.slug, ...q[i] };
     });
     events.push({ id: bid, type: 'bracket', title: `${m.name}: this week's range`, group: 'ladders', closesAt: wClose,
-      params: { slug: m.slug, from: wFrom, to: wTo, basket, buckets }, selections: bsels,
-      settlesFrom: `${base[0].toUpperCase()}${base.slice(1)}. Each range includes its lower end (a move of exactly −2.00% is "Down less than 2%"; exactly +2.00% is "Up 2% to 5%"). A missing close voids the market.` });
+      params: { slug: m.slug, from: wFrom, to: wTo, start: 'open', basket, buckets }, selections: bsels,
+      settlesFrom: `${base[0].toUpperCase()}${base.slice(1)}. Each range includes its lower end (a move of exactly −2.00% is "Down less than 2%"; exactly +2.00% is "Up 2% to 5%"). A missing opening or closing price voids the market.` });
   }
 
-  // 4. races: will the next one down pass the one above (tracked value at the week's last close)?
+  // 4. races: will the next one down pass the one above (tracked value at the week's last close; no start price)?
   let nRace = 0;
   for (let i = 0; i + 1 < usdPool.length && nRace < RACE_MAX; i++) {
     const leader = usdPool[i], chaser = usdPool[i + 1];
@@ -532,7 +533,7 @@ export function buildPriceMarkets({ W, week, models, history = {}, est = null, o
         { id: `${id}:yes`, label: 'Yes', market: 'yes', person: chaser.slug, ...y },
         { id: `${id}:no`, label: 'No', market: 'no', ...no }
       ],
-      settlesFrom: `Tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings) at the ${dayLabel(wTo)} close, from our daily price history. Yes if ${chaser.name} is strictly above ${leader.name}. A missing close voids the market.` });
+      settlesFrom: `Tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings) at the ${dayLabel(wTo)} close, from our daily price data. Yes if ${chaser.name} is strictly above ${leader.name}. A missing close voids the market.` });
     nRace++;
   }
 
@@ -563,11 +564,11 @@ export function buildPriceMarkets({ W, week, models, history = {}, est = null, o
       }
     }
     events.push({ id, type: 'duel', title: `${a.name} vs ${b.name}: dollar change this week`, group: 'races', closesAt: wClose,
-      params: { a: a.slug, b: b.slug, from: wFrom, to: wTo, rho, value0: { [a.slug]: a.value0, [b.slug]: b.value0 },
+      params: { a: a.slug, b: b.slug, from: wFrom, to: wTo, start: 'open', rho, value0: { [a.slug]: a.value0, [b.slug]: b.value0 },
         wealth: { [a.slug]: a.wealth, [b.slug]: b.wealth } },
       selections: sels,
-      settlesFrom: `Change in tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings) ${span(wFrom, wTo)}. ` +
-        'To win: the bigger dollar gain (or smaller loss); a tie is void. "By $XB+": wins by more than X billion dollars; exactly X is void. A missing close voids the market.' });
+      settlesFrom: `Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) ${span(wFrom, wTo)}. ` +
+        'To win: the bigger dollar gain (or smaller loss); a tie is void. "By $XB+": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.' });
     nDuel++;
   }
 
@@ -592,14 +593,15 @@ export const METHOD_TEXT =
   'insider-buy prop uses the daily buy rate (Poisson). Two-way prices carry a 4.5% house margin (-110 both sides at 50/50), ' +
   'many-way prices 20%. Odds are rounded to the nearest 5 (25 above +1000, 100 above +5000). ' +
   'Price markets (biggest gainer and loser boards, move ladders and ranges, rank races, dollar duels) follow each person\'s ' +
-  'holdings basket (the fantasy weights): its close-to-close change is modeled as a normal distribution centred on zero with the ' +
+  'holdings basket (the fantasy weights): its change is modeled as a normal distribution centred on zero with the ' +
   'same daily volatility, times the square root of the trading days for a week, with the same correlations. Dollar markets ' +
-  'multiply by tracked stock wealth: share counts from SEC filings times the closing price, or, where a family stake is not ' +
+  'multiply by tracked stock wealth: share counts from SEC filings times the share price, or, where a family stake is not ' +
   'split in filings, the published net worth moved by that stock. Boards and races use 20,000 simulated outcomes (seeded); ' +
   'ladders, ranges and duels use the normal formula. Ladder rungs and duel lines carry a 4.5% margin each, ranges 12%, boards 20%. ' +
-  'Every price market runs from one closing price to another and closes for betting at the first close (4 PM New York): weekly ' +
-  'markets from the last close before the week to Friday\'s close, daily boards from the previous weekday\'s close to that ' +
-  'day\'s close. A missing close (market holiday or data gap) makes the market void (stake back). Stakes: up to 500 coins; ' +
+  'Measured from the opening price on the first day to the closing price on the last day; betting closes at the opening bell ' +
+  '(9:30 AM New York). Weekly markets run from Monday\'s open to Friday\'s close (races compare tracked wealth at Friday\'s ' +
+  'close), daily boards from that day\'s open to its close. A missing opening or closing price (market holiday or data gap) ' +
+  'makes the market void (stake back). Stakes: up to 500 coins; ' +
   '150 when the combined odds pay 6x or more (decimal 6.0, +500); 50 when they pay 21x or more (decimal 21.0, +2000). ' +
   'Play money only; not a forecast and not advice.';
 

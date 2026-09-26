@@ -23,15 +23,19 @@ const DAYS = [day('2026-09-28', s => PTS[s]), day('2026-09-29', () => 0), day('2
 const P = (slug, filed) => ({ form: '4', filed, personSlug: slug, form4: { summary: [{ code: 'P' }] } });
 const FILINGS_BEFORE = [P('p1', '2026-09-10'), P('p4', '2026-08-20'), P('p7', '2026-09-01')];
 const FILINGS_WEEK = [...FILINGS_BEFORE, P('p1', '2026-09-30'), { form: '4', filed: '2026-10-01', personSlug: 'p7' }];
-// closes: 100 everywhere, except P3 103 on Mon 09-28 (Monday's top daily %), and the week (Fri 09-25 -> Fri 10-02):
-// P1 +10% (exactly the top ladder rung), P2 -5% (exactly the -5 rung), P4 +2%, P5 +1%, P6 -1%, P7 -2%.
+// Prices run from each day's open to its close. Opens 100 everywhere except P3 103 on Tue 09-29; closes 100 everywhere
+// except P3 103 on Mon 09-28 (Monday's top daily %: +3%; Tuesday P3 -2.9%, the rest tie at 0) and Friday 10-02, which
+// makes the week (Monday's open -> Friday's close): P1 +10% (exactly the top ladder rung), P2 -5% (exactly the -5 rung),
+// P4 +2%, P5 +1%, P6 -1%, P7 -2%.
 const CLOSE_FRI = { P1: 110, P2: 95, P3: 100, P4: 102, P5: 101, P6: 99, P7: 98, P8: 100 };
 const closes = (t, d) => (d === '2026-10-02' ? CLOSE_FRI[t] : t === 'P3' && d === '2026-09-28' ? 103 : 100);
+const opensOf = (t, d) => (t === 'P3' && d === '2026-09-29' ? 103 : 100);
 const HIST_DATES = ['2026-09-25', '2026-09-28', '2026-09-29', '2026-09-30', '2026-10-01', '2026-10-02'];
 async function putHistory(upTo) {
   for (const s of slugs) {
     const t = s.toUpperCase();
     await put(`data/prices/history/${t}.json`, HIST_DATES.filter(d => d <= upTo).map(d => [d, closes(t, d)]));
+    await put(`data/prices/opens/${t}.json`, HIST_DATES.filter(d => d <= upTo).map(d => [d, opensOf(t, d)]));
   }
 }
 const BOOK = buildBook({ week: W40, filings: FILINGS_BEFORE, editions: [], storyMatches: () => false, generated: '2026-09-25T00:00:00.000Z', n: 2000 });
@@ -182,9 +186,9 @@ test('sync: uploads before the lock, closes at the lock, settles after Friday on
     assert.deepEqual([...early[0].args.p.events].sort(), [...dailyIds].sort());
     const ER = early[0].args.p.results;
     const monPct = BOOK.events.find(e => e.id === '2026-W40:blast:pct:up:2026-09-28');
-    for (const x of monPct.selections) assert.equal(ER[x.id], x.person === 'p3' ? 'win' : 'lose', x.id);    // P3 +3%
+    for (const x of monPct.selections) assert.equal(ER[x.id], x.person === 'p3' ? 'win' : 'lose', x.id);    // P3 open 100 -> close 103
     const tuePct = BOOK.events.find(e => e.id === '2026-W40:blast:pct:up:2026-09-29');
-    for (const x of tuePct.selections) assert.equal(ER[x.id], x.person === 'p3' ? 'lose' : 'void', x.id);   // P3 -2.9%, the rest tie at 0
+    for (const x of tuePct.selections) assert.equal(ER[x.id], x.person === 'p3' ? 'lose' : 'void', x.id);   // P3 open 103 -> 100, the rest tie at 0
     assert.equal(s.book.events, dailyIds.length);
 
     // filings fetched Saturday, but Friday's closes are not in yet -> the week waits for the price markets
