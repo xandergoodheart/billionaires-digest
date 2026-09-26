@@ -8,6 +8,13 @@
 // Correlation: 1.0 when two people share a holding weighted >= 50% for both (never paired head-to-head),
 //   0.6 in the same sector, 0.3 otherwise.
 // Weekly total = sum of the week's trading days (5).
+//
+// Price markets (blast, ladder, bracket, race, duel): a person's close-to-close % return of their basket (the week file's
+// draftable holdings weights) ~ Normal(0, vol) per trading day, vol = the same blended daily volatility; over d days the
+// spread is vol x sqrt(d). Same correlations. Dollar change = tracked value x return. See buildBook.
+import { nyToUtc } from '../supa/time.mjs';
+import { trackedValue, prevTradingClose, dollarPool } from '../wealth.mjs';
+import { STAKE_CAPS } from './settle.mjs';
 
 export const DAYS = 5;
 export const MC_N = 20000;
@@ -33,7 +40,20 @@ export const OU_PEOPLE = 15;
 export const OU_QUANTILES = [0.2, 0.35, 0.5, 0.65, 0.8];
 export const MIN_SECTOR_SIZE = 3;
 // bet limits (the database enforces them; here for the page and the method text)
-export const LIMITS = { minStake: 1, maxStake: 500, maxLegs: 4, maxPayout: 10000, betsPerDay: 50 };
+// longShots: combined decimal odds >= minDecimal -> at most maxStake coins (place_bet in 0003_book_wealth.sql).
+export const LIMITS = { minStake: 1, maxStake: 500, maxLegs: 4, maxPayout: 10000, betsPerDay: 50, longShots: STAKE_CAPS };
+// price markets
+export const OVERROUND_BRACKET = 1.12;
+export const BLAST_PCT_PEOPLE = 20;          // % boards: the top 20 draftable by salary
+export const LADDER_PEOPLE = 15;             // ladders and brackets: the top 15 of those
+export const LADDER_STRIKES = [-10, -5, -2, 2, 5, 10];
+export const LADDER_MIN_FAIR = 0.01;         // rungs less likely than 1% are left off
+export const BRACKETS = [[null, -5], [-5, -2], [-2, 0], [0, 2], [2, 5], [5, null]];
+export const RACE_MAX = 8;
+export const RACE_P = [0.03, 0.97];
+export const DUEL_MAX = 8;
+export const DUEL_SIGMAS = [0.5, 1];
+export const REF_CLOSE_NY = '16:00';          // betting closes at the reference (from) close, New York time
 
 const round4 = x => Math.round(x * 10000) / 10000;
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
@@ -130,10 +150,14 @@ export function priceTwoWay(pA) {
   const b = clamp((1 - p) * VIG_TWO_WAY, CLAMP_TWO_WAY[0], CLAMP_TWO_WAY[1]);
   return [quote(a, p), quote(b, 1 - p)];
 }
-// Many-way market (futures, sectors): fair probabilities (sum 1) scaled to 120%, clamped to [0.002, 0.9].
-export function priceMultiWay(probs) {
+// Many-way market (futures, sectors, blasts): fair probabilities (sum 1) scaled to 120% (brackets: 112%), clamped to [0.002, 0.9].
+export function priceMultiWay(probs, over = OVERROUND_FUTURES) {
   const sum = probs.reduce((s, x) => s + x, 0) || 1;
-  return probs.map(p => { const f = p / sum; return quote(clamp(f * OVERROUND_FUTURES, CLAMP_FUTURES[0], CLAMP_FUTURES[1]), f); });
+  return probs.map(p => { const f = p / sum; return quote(clamp(f * over, CLAMP_FUTURES[0], CLAMP_FUTURES[1]), f); });
+}
+// One-sided price (ladder rungs, duel alt lines): fair x 1.045, clamped to [0.02, 0.98].
+export function priceOneSided(fair) {
+  return quote(clamp(fair * VIG_TWO_WAY, CLAMP_TWO_WAY[0], CLAMP_TWO_WAY[1]), fair);
 }
 // Total implied probability of a set of quoted selections (the "book" percentage).
 export const overround = sels => sels.reduce((s, x) => s + americanToProb(x.americanOdds), 0);
@@ -343,6 +367,213 @@ export function pickMatchups(models, salaries, count = H2H_MATCHUPS) {
   return out;
 }
 
+// ---------- price markets ----------
+const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const DOW_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const dow = s => new Date(`${s}T12:00:00Z`).getUTCDay();
+const bySlug = (a, b) => a.slug.localeCompare(b.slug);
+// The weekday before `date` (Monday -> the Friday before). Market holidays are not skipped: a missing close voids the market.
+export function prevWeekday(date) {
+  let d = addDays(date, -1);
+  while (dow(d) === 0 || dow(d) === 6) d = addDays(d, -1);
+  return d;
+}
+// Monday-Friday dates from week.start to week.end.
+export function weekdaysOf(week) {
+  const out = [];
+  for (let d = week.start; d <= week.end; d = addDays(d, 1)) if (dow(d) >= 1 && dow(d) <= 5) out.push(d);
+  return out;
+}
+// Betting closes at the reference close: 4 PM New York on the from date, as ISO UTC (DST-correct).
+export const closesAtFor = from => nyToUtc(from, REF_CLOSE_NY).toISOString();
+const dayLabel = s => `${DOW[dow(s)]} ${monDay(s)}`;
+export const basketOf = m => (m.holdings || []).filter(h => h && h.ticker && Number(h.weight) > 0).map(h => ({ ticker: h.ticker, weight: Number(h.weight) }));
+const fmtB = x => (Number.isInteger(x) ? String(x) : x.toFixed(1));
+
+// Simulated close-to-close returns (%) over `days` trading days; people need {slug, sector, holdings, vol}.
+function simReturns(people, { seed, n, days, onSample }) {
+  return simulateWeeks(people.map(p => ({ slug: p.slug, sector: p.sector, holdings: p.holdings, mu: 0, sigma: p.vol })), { seed, n, days, onSample });
+}
+// P(each person has the biggest gain (side 'up') or the biggest drop ('down')) of % return, or of dollar change when
+// scale = { slug: tracked value } is given. Ties (people with the same basket; within 1e-5 relative, which absorbs the
+// correlation repair's rounding) share the win equally.
+export function blastProbs(people, { seed, n = MC_N, days = DAYS, side = 'up', scale = null }) {
+  const order = [...people].sort(bySlug);
+  const k = order.length, sc = order.map(p => (scale ? scale[p.slug] / 100 : 1)), win = new Float64Array(k), x = new Float64Array(k);
+  const sgn = side === 'down' ? -1 : 1;
+  simReturns(order, { seed, n, days, onSample(t) {
+    let best = -Infinity;
+    for (let i = 0; i < k; i++) { x[i] = sgn * t[i] * sc[i]; if (x[i] > best) best = x[i]; }
+    const tol = 1e-5 * Math.max(1, Math.abs(best));
+    let c = 0;
+    for (let i = 0; i < k; i++) if (x[i] >= best - tol) c++;
+    for (let i = 0; i < k; i++) if (x[i] >= best - tol) win[i] += 1 / c;
+  } });
+  return Object.fromEntries(order.map((p, i) => [p.slug, win[i] / n]));
+}
+// P(the chaser's tracked value ends above the leader's) after `days` trading days; people need value0 too.
+export function raceProb(chaser, leader, { seed, n = MC_N, days = DAYS }) {
+  const order = [chaser, leader].sort(bySlug);
+  const ci = order[0] === chaser ? 0 : 1, li = 1 - ci;
+  let yes = 0;
+  simReturns(order, { seed, n, days, onSample(t) { if (chaser.value0 * (1 + t[ci] / 100) > leader.value0 * (1 + t[li] / 100)) yes++; } });
+  return yes / n;
+}
+const bucketLabel = (lo, hi) => {
+  if (lo == null) return `Down more than ${-hi}%`;
+  if (hi == null) return `Up ${lo}% or more`;
+  if (hi <= 0) return hi === 0 ? `Down less than ${-lo}%` : `Down ${-hi}% to ${-lo}%`;
+  return lo === 0 ? `Flat or up less than ${hi}%` : `Up ${lo}% to ${hi}%`;
+};
+
+// The price-market events of a week. models: personModel list (with holdings and vol); est: data/prices/networth-est.json
+// (for the dollar pool, may be null); overrides: config/wealth-overrides.json .people. Returns { events, pool }.
+export function buildPriceMarkets({ W, week, models, history = {}, est = null, overrides = {}, n = MC_N }) {
+  const events = [];
+  const salary = s => Number(week.salaries && week.salaries[s]) || 0;
+  const bySal = (x, y) => salary(y.slug) - salary(x.slug) || x.slug.localeCompare(y.slug);
+  const byslug = Object.fromEntries(models.map(m => [m.slug, m]));
+  const days = weekdaysOf(week);
+  const wDays = days.length || DAYS;
+  const wFrom = prevWeekday(week.start), wTo = week.end;
+  const wClose = closesAtFor(wFrom);
+  const pctPool = models.filter(m => basketOf(m).length).sort(bySal).slice(0, BLAST_PCT_PEOPLE);
+
+  // dollar pool: networth-est people with coverage >= 40% who are draftable (for the basket), valued at the latest close
+  const usdPool = [];
+  for (const { slug, wealth } of dollarPool(est)) {
+    const m = byslug[slug];
+    if (!m || !basketOf(m).length) continue;
+    const tickers = wealth.method === 'worth' ? [wealth.ticker] : Object.keys(wealth.shares);
+    const d = prevTradingClose(history, tickers, week.start);
+    const v = d ? trackedValue(wealth, history, d) : null;
+    if (!(v > 0)) continue;
+    const ov = overrides && overrides[slug];
+    usdPool.push({ ...m, wealth, value0: Math.round(v), value0Date: d, ...(ov && ov.note ? { wealthNote: ov.note, wealthSource: ov.source || null } : {}) });
+  }
+  usdPool.sort((a, b) => b.value0 - a.value0 || a.slug.localeCompare(b.slug));
+
+  const measure = {
+    pct: 'the close-to-close % change of each person\'s holdings basket (the fantasy weights)',
+    usd: 'the close-to-close change in each person\'s tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings)'
+  };
+  const span = (from, to) => `from the ${dayLabel(from)} close to the ${dayLabel(to)} close, from our daily price history`;
+
+  // 1. blasts: biggest gainer / loser boards
+  const blast = (metric, side, period, from, to, pool, nDays, title) => {
+    if (pool.length < 2) return;
+    const id = `${W}:blast:${metric}:${side}:${period}`;
+    const probs = blastProbs(pool, { seed: id, n, days: nDays, side, scale: metric === 'usd' ? Object.fromEntries(pool.map(m => [m.slug, m.value0])) : null });
+    const order = [...pool].sort((x, y) => probs[y.slug] - probs[x.slug] || x.slug.localeCompare(y.slug));
+    const q = priceMultiWay(order.map(m => probs[m.slug]));
+    events.push({
+      id, type: 'blast', title, group: 'blasts', closesAt: closesAtFor(from),
+      params: { metric, side, period, from, to, slugs: order.map(m => m.slug),
+        ...(metric === 'usd' ? { wealth: Object.fromEntries(order.map(m => [m.slug, m.wealth])) } : { baskets: Object.fromEntries(order.map(m => [m.slug, basketOf(m)])) }) },
+      selections: order.map((m, i) => ({ id: `${id}:${m.slug}`, label: m.name, market: 'pick', person: m.slug, ...q[i] })),
+      settlesFrom: `${measure[metric][0].toUpperCase()}${measure[metric].slice(1)}, ${span(from, to)}. The biggest ${side === 'up' ? 'gain' : 'drop'} wins. ` +
+        'A tie voids the tied picks; a missing close voids the market.'
+    });
+  };
+  const sym = { pct: '%', usd: '$' };
+  for (const [metric, side] of [['pct', 'up'], ['pct', 'down'], ['usd', 'up'], ['usd', 'down']]) {
+    blast(metric, side, 'week', wFrom, wTo, metric === 'usd' ? usdPool : pctPool, wDays, `Biggest ${sym[metric]} ${side === 'up' ? 'gainer' : 'loser'} this week`);
+  }
+  for (const d of days) {
+    for (const metric of ['pct', 'usd']) {
+      blast(metric, 'up', d, prevWeekday(d), d, metric === 'usd' ? usdPool : pctPool, 1, `Biggest ${sym[metric]} gainer today (${dayLabel(d)})`);
+    }
+  }
+
+  // 2 + 3. ladders and brackets: the week's % move, one card per person
+  for (const m of pctPool.slice(0, LADDER_PEOPLE)) {
+    const sd = m.vol * Math.sqrt(wDays), basket = basketOf(m);
+    const base = `${measure.pct.replace('each person\'s', `${m.name}'s`)}, ${span(wFrom, wTo)}`;
+    const id = `${W}:ladder:${m.slug}`;
+    const sels = [];
+    for (const K of LADDER_STRIKES) {
+      const fair = K > 0 ? 1 - normCdf(K / sd) : normCdf(K / sd);
+      if (fair < LADDER_MIN_FAIR) continue;
+      sels.push({ id: `${id}:${K > 0 ? 'up' : 'down'}${Math.abs(K)}`, label: K > 0 ? `Up ${K}% or more` : `Down ${-K}% or more`,
+        market: 'strike', person: m.slug, line: K, ...priceOneSided(fair) });
+    }
+    if (sels.length >= 2) {
+      events.push({ id, type: 'ladder', title: `${m.name}: this week's move`, group: 'ladders', closesAt: wClose,
+        params: { slug: m.slug, from: wFrom, to: wTo, basket }, selections: sels,
+        settlesFrom: `${base[0].toUpperCase()}${base.slice(1)}. "Up 5% or more" wins at +5.00% or higher; "Down 5% or more" at −5.00% or lower. A missing close voids the market.` });
+    }
+    const bid = `${W}:bracket:${m.slug}`;
+    const probs = BRACKETS.map(([lo, hi]) => (hi == null ? 1 : normCdf(hi / sd)) - (lo == null ? 0 : normCdf(lo / sd)));
+    const q = priceMultiWay(probs, OVERROUND_BRACKET);
+    const buckets = {};
+    const bsels = BRACKETS.map(([lo, hi], i) => {
+      const sid = `${bid}:r${i}`;
+      buckets[sid] = [lo, hi];
+      return { id: sid, label: bucketLabel(lo, hi), market: 'bracket', person: m.slug, ...q[i] };
+    });
+    events.push({ id: bid, type: 'bracket', title: `${m.name}: this week's range`, group: 'ladders', closesAt: wClose,
+      params: { slug: m.slug, from: wFrom, to: wTo, basket, buckets }, selections: bsels,
+      settlesFrom: `${base[0].toUpperCase()}${base.slice(1)}. Each range includes its lower end (a move of exactly −2.00% is "Down less than 2%"; exactly +2.00% is "Up 2% to 5%"). A missing close voids the market.` });
+  }
+
+  // 4. races: will the next one down pass the one above (tracked value at the week's last close)?
+  let nRace = 0;
+  for (let i = 0; i + 1 < usdPool.length && nRace < RACE_MAX; i++) {
+    const leader = usdPool[i], chaser = usdPool[i + 1];
+    const id = `${W}:race:${chaser.slug}:${leader.slug}`;
+    const p = raceProb(chaser, leader, { seed: id, n, days: wDays });
+    if (p < RACE_P[0] || p > RACE_P[1]) continue;
+    const [y, no] = priceTwoWay(p);
+    events.push({ id, type: 'race', title: `Will ${chaser.name} pass ${leader.name} by ${DOW_LONG[dow(wTo)]}'s close?`, group: 'races', closesAt: wClose,
+      params: { chaser: chaser.slug, leader: leader.slug, from: wFrom, to: wTo,
+        value0: { [chaser.slug]: chaser.value0, [leader.slug]: leader.value0 }, value0Date: leader.value0Date === chaser.value0Date ? leader.value0Date : null,
+        wealth: { [chaser.slug]: chaser.wealth, [leader.slug]: leader.wealth } },
+      selections: [
+        { id: `${id}:yes`, label: 'Yes', market: 'yes', person: chaser.slug, ...y },
+        { id: `${id}:no`, label: 'No', market: 'no', ...no }
+      ],
+      settlesFrom: `Tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings) at the ${dayLabel(wTo)} close, from our daily price history. Yes if ${chaser.name} is strictly above ${leader.name}. A missing close voids the market.` });
+    nRace++;
+  }
+
+  // 5. duels: dollar head-to-heads between people of similar tracked value (never two who move as one)
+  const used = new Set();
+  let nDuel = 0;
+  for (let i = 0; i < usdPool.length && nDuel < DUEL_MAX; i++) {
+    const a = usdPool[i];
+    if (used.has(a.slug)) continue;
+    const b = usdPool.slice(i + 1).find(x => !used.has(x.slug) && correlation(a, x) < CORR.shared);
+    if (!b) continue;
+    used.add(a.slug); used.add(b.slug);
+    const rho = correlation(a, b);
+    const sa = a.value0 * a.vol * Math.sqrt(wDays) / 100, sb = b.value0 * b.vol * Math.sqrt(wDays) / 100;
+    const sd = Math.sqrt(Math.max(sa * sa + sb * sb - 2 * rho * sa * sb, 1));
+    const id = `${W}:duel:${a.slug}:${b.slug}`;
+    const [mlA, mlB] = priceTwoWay(1 - normCdf(0));
+    const sels = [
+      { id: `${id}:ml:${a.slug}`, label: `${a.name} to win`, market: 'ml', person: a.slug, ...mlA },
+      { id: `${id}:ml:${b.slug}`, label: `${b.name} to win`, market: 'ml', person: b.slug, ...mlB }
+    ];
+    const lines = [...new Set(DUEL_SIGMAS.map(k => Math.round(k * sd / 1e9 * 2) / 2))].filter(x => x > 0).sort((x, y) => x - y);
+    for (const X of lines) {
+      const fair = 1 - normCdf(X * 1e9 / sd);
+      if (fair < LADDER_MIN_FAIR) continue;
+      for (const m of [a, b]) {
+        sels.push({ id: `${id}:by:${m.slug}:${X}`, label: `${m.name} by $${fmtB(X)}B+`, market: 'by', person: m.slug, line: X, ...priceOneSided(fair) });
+      }
+    }
+    events.push({ id, type: 'duel', title: `${a.name} vs ${b.name}: dollar change this week`, group: 'races', closesAt: wClose,
+      params: { a: a.slug, b: b.slug, from: wFrom, to: wTo, rho, value0: { [a.slug]: a.value0, [b.slug]: b.value0 },
+        wealth: { [a.slug]: a.wealth, [b.slug]: b.wealth } },
+      selections: sels,
+      settlesFrom: `Change in tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings) ${span(wFrom, wTo)}. ` +
+        'To win: the bigger dollar gain (or smaller loss); a tie is void. "By $XB+": wins by more than X billion dollars; exactly X is void. A missing close voids the market.' });
+    nDuel++;
+  }
+
+  return { events, pool: { pct: pctPool.map(m => m.slug), usd: usdPool } };
+}
+
 // ---------- the book ----------
 const cleanName = n => String(n || '').replace(/\s*&\s*family\s*$/i, '').trim();
 const fmtLine = x => (x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x).toFixed(1);
@@ -359,12 +590,24 @@ export const METHOD_TEXT =
   'otherwise, 1.0 when they share a main holding (those pairs never meet head-to-head). Matchups, spreads and over/unders use the ' +
   'normal formula; top scorer and top sector use 20,000 simulated weeks (seeded, so the same data gives the same odds); the ' +
   'insider-buy prop uses the daily buy rate (Poisson). Two-way prices carry a 4.5% house margin (-110 both sides at 50/50), ' +
-  'many-way prices 20%. Odds are rounded to the nearest 5 (25 above +1000, 100 above +5000). Play money only; not a forecast and not advice.';
+  'many-way prices 20%. Odds are rounded to the nearest 5 (25 above +1000, 100 above +5000). ' +
+  'Price markets (biggest gainer and loser boards, move ladders and ranges, rank races, dollar duels) follow each person\'s ' +
+  'holdings basket (the fantasy weights): its close-to-close change is modeled as a normal distribution centred on zero with the ' +
+  'same daily volatility, times the square root of the trading days for a week, with the same correlations. Dollar markets ' +
+  'multiply by tracked stock wealth: share counts from SEC filings times the closing price, or, where a family stake is not ' +
+  'split in filings, the published net worth moved by that stock. Boards and races use 20,000 simulated outcomes (seeded); ' +
+  'ladders, ranges and duels use the normal formula. Ladder rungs and duel lines carry a 4.5% margin each, ranges 12%, boards 20%. ' +
+  'Every price market runs from one closing price to another and closes for betting at the first close (4 PM New York): weekly ' +
+  'markets from the last close before the week to Friday\'s close, daily boards from the previous weekday\'s close to that ' +
+  'day\'s close. A missing close (market holiday or data gap) makes the market void (stake back). Stakes: up to 500 coins; ' +
+  '150 when the combined odds pay 6x or more (decimal 6.0, +500); 50 when they pay 21x or more (decimal 21.0, +2000). ' +
+  'Play money only; not a forecast and not advice.';
 
 // Build the week's book.
 // week: data/fantasy/weeks/<W>.json; history: { TICKER: [[date, close]] }; editions: [{ date, stories }] (newest last or any order);
-// filings: data/filings/latest.json .filings; storyMatches(story, name) -> bool; generated: ISO string (from the inputs).
-export function buildBook({ week, history = {}, editions = [], filings = [], storyMatches, generated, n = MC_N }) {
+// filings: data/filings/latest.json .filings; storyMatches(story, name) -> bool; generated: ISO string (from the inputs);
+// est: data/prices/networth-est.json (dollar markets; none without it); overrides: config/wealth-overrides.json .people.
+export function buildBook({ week, history = {}, editions = [], filings = [], storyMatches, generated, n = MC_N, est = null, overrides = {} }) {
   const asOf = addDays(week.start, -1);
   const pFrom = addDays(asOf, -(P_LOOKBACK_DAYS - 1));
   const buys = pBuyDays(filings, pFrom, asOf);
@@ -461,12 +704,20 @@ export function buildBook({ week, history = {}, editions = [], filings = [], sto
       settlesFrom: `${settlesPoints} Highest average points per draftable person in the sector (sectors with 3 or more). A tie for first is void for the tied picks.` });
   }
 
+  // 5-9. price markets (blast, ladder, bracket, race, duel)
+  const price = buildPriceMarkets({ W, week, models, history, est, overrides, n });
+  events.push(...price.events);
+  const usd = Object.fromEntries(price.pool.usd.map(m => [m.slug, m]));
+
   events.forEach((e, i) => { e.sort = i; e.selections.forEach((s, j) => { s.sort = j; }); });
   return {
     week: W, start: week.start, end: week.end, locksAt: new Date(week.locksAt).toISOString(), generated,
     asOf, method: METHOD_TEXT, limits: LIMITS,
     model: Object.fromEntries(models.map(m => [m.slug, {
-      name: m.name, sector: m.sector, mu: round4(m.mu), sigma: round4(m.sigma), vol: round4(m.vol), closes: m.closes, stories: m.stories, buyDays: m.buyDays
+      name: m.name, sector: m.sector, mu: round4(m.mu), sigma: round4(m.sigma), vol: round4(m.vol), closes: m.closes, stories: m.stories, buyDays: m.buyDays,
+      basket: basketOf(m),
+      ...(usd[m.slug] ? { wealth: usd[m.slug].wealth, value0: usd[m.slug].value0, value0Date: usd[m.slug].value0Date,
+        ...(usd[m.slug].wealthNote ? { wealthNote: usd[m.slug].wealthNote, wealthSource: usd[m.slug].wealthSource } : {}) } : {})
     }])),
     events
   };

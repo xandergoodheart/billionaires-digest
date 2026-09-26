@@ -9,13 +9,16 @@
 //   6. The Book (data/book/<week>.json):
 //      before the lock, upload the week's odds            -> upsert_book (odds of anything already bet on stay frozen)
 //      at the lock, close the events                      -> close_due_book
-//      once Friday's data is in, settle from our files    -> settle_book (results from lib/book/settle.mjs)
+//      price markets (blast, ladder, bracket, race, duel), each as soon as its closes are in (or voided once they are
+//      PRICE_GIVE_UP_DAYS late)                          -> settle_book_events (only the events passed)
+//      once Friday's data is in, settle from our files    -> settle_book (results from lib/book/settle.mjs); it voids every
+//      unsettled selection of the week, so it waits until no price market of the week is still waiting on a close
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { makeRest } from './rest.mjs';
 import { nyDate, nyWeekday, addDays } from './time.mjs';
 import { generateMarkets, resolveMarket, weekTotals, isPBuy, GIVE_UP_DAYS } from './markets.mjs';
-import { settleBook } from '../book/settle.mjs';
+import { settleBook, isPriceEvent, priceEventState } from '../book/settle.mjs';
 
 // The Book replaced the LMSR markets in the UI: no new markets unless this is turned back on.
 export const LMSR_NEW_MARKETS = false;
@@ -47,11 +50,18 @@ export async function loadData(root) {
   const filingsDoc = await optionalJson(join(root, 'data', 'filings', 'latest.json'), { filings: [] });
   // The Book: one file per real (non-practice) week
   const books = (await readJsonDir(join(root, 'data', 'book'))).filter(b => b && /^\d{4}-W\d{2}$/.test(b.week || '') && b.practice !== true && Array.isArray(b.events));
+  // daily closes, { TICKER: [[date, close]] } (file name = ticker): the price markets settle from them
+  const history = {};
+  let histNames = [];
+  try { histNames = (await readdir(join(root, 'data', 'prices', 'history'))).filter(f => f.endsWith('.json')).sort(); } catch { histNames = []; }
+  for (const f of histNames) {
+    try { const rows = await readJson(join(root, 'data', 'prices', 'history', f)); if (Array.isArray(rows)) history[f.slice(0, -5)] = rows; } catch (e) { console.warn(`skip ${f}: ${e.message}`); }
+  }
   const people = {};
   for (const p of await readJsonDir(join(root, 'data', 'people'))) {
     if (p && p.slug && p.name) people[p.slug] = { name: String(p.name).replace(/\s*&\s*family\s*$/i, ''), sector: p.sector || null };
   }
-  return { weeks, days, filingsDoc, people, books };
+  return { weeks, days, filingsDoc, people, books, history };
 }
 
 export async function sync({ env = process.env, root, now = new Date(), fetchImpl = fetch, log = console.log } = {}) {
@@ -63,7 +73,7 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
   const api = makeRest({ url, key, fetchImpl });
   const data = await loadData(root);
   const today = nyDate(now);
-  const summary = { weeks: 0, points: 0, settled: [], closed: 0, created: [], resolved: [], book: { uploaded: [], closed: 0, settled: [] } };
+  const summary = { weeks: 0, points: 0, settled: [], closed: 0, created: [], resolved: [], book: { uploaded: [], closed: 0, settled: [], events: 0 } };
 
   // 1. upload
   // practice weeks stay solo: never uploaded, scored or given markets
@@ -135,7 +145,8 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
 
   log(`Game sync: ${summary.weeks} week(s), ${summary.points} point row(s), settled [${summary.settled.join(', ')}], ` +
     `closed ${summary.closed}, opened ${summary.created.length}, resolved ${summary.resolved.length}; ` +
-    `book: uploaded [${summary.book.uploaded.join(', ')}], closed ${summary.book.closed}, settled [${summary.book.settled.join(', ')}].`);
+    `book: uploaded [${summary.book.uploaded.join(', ')}], closed ${summary.book.closed}, price events settled ${summary.book.events}, ` +
+    `settled [${summary.book.settled.join(', ')}].`);
   for (const s of summary.created) log(`  opened ${s}`);
   for (const s of summary.resolved) log(`  resolved ${s}`);
   return summary;
@@ -186,8 +197,32 @@ async function syncBook({ api, data, now, today, live, summary, log }) {
       summary.book.uploaded.push(b.week);
     }
   }
-  // at the lock: close
+  // at the lock (or an event's own closesAt): close
   summary.book.closed = Number(await api.rpc('close_due_book', {})) || 0;
+  // price markets: settle each one whose betting has closed once its closes are in (void once they are too late)
+  const history = data.history || {};
+  const waitingPrice = {};
+  for (const b of books) {
+    const priced = b.events.filter(isPriceEvent);
+    if (!priced.length) continue;
+    const rows = await api.select('book_events', `select=id&week=eq.${encodeURIComponent(b.week)}&status=in.(open,closed)`);
+    const pending = new Set((rows || []).map(r => r.id));
+    const due = [];
+    let waiting = 0;
+    for (const e of priced) {
+      if (!pending.has(e.id)) continue;
+      const closed = e.closesAt ? now.getTime() >= new Date(e.closesAt).getTime() : now.getTime() >= new Date(b.locksAt).getTime();
+      const state = closed ? priceEventState(e, history, today) : 'waiting';
+      if (state === 'waiting') waiting++;
+      else due.push(e);
+    }
+    if (due.length) {
+      const { results, notes } = settleBook({ events: due }, { history });
+      await api.rpc('settle_book_events', { p: { week: b.week, events: due.map(e => e.id), results, notes } });
+      summary.book.events += due.length;
+    }
+    waitingPrice[b.week] = waiting;
+  }
   // after Friday's data: settle
   for (const b of books) {
     const w = weeksById[b.week];
@@ -198,9 +233,10 @@ async function syncBook({ api, data, now, today, live, summary, log }) {
     const ins = bookInsider(w, data.filingsDoc);
     const giveUp = today > addDays(w.end, 1 + GIVE_UP_DAYS);
     if (!ins.ready && !giveUp) { log(`waiting on SEC filings to settle the book for ${b.week}`); continue; }
+    if (waitingPrice[b.week]) { log(`waiting on closing prices for ${waitingPrice[b.week]} price market(s) to settle the book for ${b.week}`); continue; }
     const insider = ins.ready ? ins : { pBuyDays: {}, insiderUnknown: [...new Set(b.events.filter(e => e.type === 'prop_insider').map(e => e.params.slug))] };
     const totals = weekTotals(w, data.days);
-    const { results, notes } = settleBook(b, { totals, pBuyDays: insider.pBuyDays, insiderUnknown: insider.insiderUnknown });
+    const { results, notes } = settleBook(b, { totals, pBuyDays: insider.pBuyDays, insiderUnknown: insider.insiderUnknown, history });
     const r = await api.rpc('settle_book', { p: { week: b.week, results, notes } });
     if (!r || !r.already) summary.book.settled.push(b.week);
   }

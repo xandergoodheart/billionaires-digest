@@ -125,7 +125,7 @@ for (const mode of MODES) describe(mode, () => {
     await t.setNow(BEFORE);
     const u = await t.newUser('whale_bettor');
     await t.root('update public.profiles set coins = 100000 where id = $1', [u]);
-    const r = await bet(u, [S.topA, S.secX], 500);               // 500 x 51 x 10 = 255,000 -> capped
+    const r = await bet(u, [S.topA, S.secX], 50);                // 50 x 51 x 10 = 25,500 -> capped (long shot: 50 coins max, 0003)
     assert.equal(r.potential_payout, 10000);
     // 49 more today is fine; the 51st is refused
     await t.root(`insert into public.bets (user_id, week, created_at, stake, potential_payout, is_parlay) select $1, $2, $3::timestamptz, 1, 1, false from generate_series(1, 49)`, [u, W, BEFORE]);

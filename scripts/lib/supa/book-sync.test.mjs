@@ -23,6 +23,17 @@ const DAYS = [day('2026-09-28', s => PTS[s]), day('2026-09-29', () => 0), day('2
 const P = (slug, filed) => ({ form: '4', filed, personSlug: slug, form4: { summary: [{ code: 'P' }] } });
 const FILINGS_BEFORE = [P('p1', '2026-09-10'), P('p4', '2026-08-20'), P('p7', '2026-09-01')];
 const FILINGS_WEEK = [...FILINGS_BEFORE, P('p1', '2026-09-30'), { form: '4', filed: '2026-10-01', personSlug: 'p7' }];
+// closes: 100 everywhere, except P3 103 on Mon 09-28 (Monday's top daily %), and the week (Fri 09-25 -> Fri 10-02):
+// P1 +10% (exactly the top ladder rung), P2 -5% (exactly the -5 rung), P4 +2%, P5 +1%, P6 -1%, P7 -2%.
+const CLOSE_FRI = { P1: 110, P2: 95, P3: 100, P4: 102, P5: 101, P6: 99, P7: 98, P8: 100 };
+const closes = (t, d) => (d === '2026-10-02' ? CLOSE_FRI[t] : t === 'P3' && d === '2026-09-28' ? 103 : 100);
+const HIST_DATES = ['2026-09-25', '2026-09-28', '2026-09-29', '2026-09-30', '2026-10-01', '2026-10-02'];
+async function putHistory(upTo) {
+  for (const s of slugs) {
+    const t = s.toUpperCase();
+    await put(`data/prices/history/${t}.json`, HIST_DATES.filter(d => d <= upTo).map(d => [d, closes(t, d)]));
+  }
+}
 const BOOK = buildBook({ week: W40, filings: FILINGS_BEFORE, editions: [], storyMatches: () => false, generated: '2026-09-25T00:00:00.000Z', n: 2000 });
 const PRACTICE_BOOK = { ...BOOK, week: '2026-W39', locksAt: W39P.locksAt, events: BOOK.events.map(e => ({ ...e, id: e.id.replace('W40', 'W39') })) };
 
@@ -70,6 +81,16 @@ function fake() {
           let c = 0;
           for (const e of events.values()) if (e.status === 'open' && new Date(e.closes_at) <= state.now) { e.status = 'closed'; c++; }
           return send(200, c);
+        }
+        if (n === 'settle_book_events') {
+          let changed = 0;
+          for (const id of args.p.events) {
+            const e = events.get(id);
+            if (!e || e.week !== args.p.week || e.status === 'settled') continue;
+            e.status = 'settled'; e.results = Object.fromEntries(e.selections.map(s => [s.id, args.p.results[s.id] || 'void'])); e.note = args.p.notes[e.id];
+            changed++;
+          }
+          return send(200, { week: args.p.week, events: changed });
         }
         if (n === 'settle_book') {
           let changed = 0;
@@ -145,20 +166,56 @@ test('sync: uploads before the lock, closes at the lock, settles after Friday on
     s = await sync({ env, root, now, log: quiet });
     assert.equal(rpcs(f, 'settle_book').length, 0);
 
-    // Saturday: Friday data in, but filings fetched before Friday ended -> wait
+    // Saturday: Friday data in, but filings fetched before Friday ended -> wait. Closes through Thursday only:
+    // the Monday-Thursday daily boards settle on their own; the weekly price markets and Friday's board wait.
     await put('data/fantasy/days/2026-10-02.json', DAYS[2]);
     await put('data/fantasy/weeks/2026-W40.json', { ...W40, totals: PTS });
+    await putHistory('2026-10-01');
     now = new Date('2026-10-03T14:00:00Z'); f.state.now = now; f.calls.length = 0;
     const lines = [];
     s = await sync({ env, root, now, log: x => lines.push(x) });
     assert.equal(rpcs(f, 'settle_book').length, 0);
     assert.match(lines.join('\n'), /waiting on SEC filings/);
+    const early = rpcs(f, 'settle_book_events');
+    assert.equal(early.length, 1);
+    const dailyIds = BOOK.events.filter(e => e.type === 'blast' && e.params.period !== 'week' && e.params.to <= '2026-10-01').map(e => e.id);
+    assert.deepEqual([...early[0].args.p.events].sort(), [...dailyIds].sort());
+    const ER = early[0].args.p.results;
+    const monPct = BOOK.events.find(e => e.id === '2026-W40:blast:pct:up:2026-09-28');
+    for (const x of monPct.selections) assert.equal(ER[x.id], x.person === 'p3' ? 'win' : 'lose', x.id);    // P3 +3%
+    const tuePct = BOOK.events.find(e => e.id === '2026-W40:blast:pct:up:2026-09-29');
+    for (const x of tuePct.selections) assert.equal(ER[x.id], x.person === 'p3' ? 'lose' : 'void', x.id);   // P3 -2.9%, the rest tie at 0
+    assert.equal(s.book.events, dailyIds.length);
 
-    // filings fetched Saturday -> settle
+    // filings fetched Saturday, but Friday's closes are not in yet -> the week waits for the price markets
     await put('data/filings/latest.json', { generated: '2026-10-03T13:00:00Z', filings: FILINGS_WEEK });
+    f.calls.length = 0; lines.length = 0;
+    s = await sync({ env, root, now, log: x => lines.push(x) });
+    assert.equal(rpcs(f, 'settle_book').length, 0);
+    assert.equal(rpcs(f, 'settle_book_events').length, 0);
+    assert.match(lines.join('\n'), /waiting on closing prices/);
+
+    // Friday's closes in -> the rest of the price markets settle first, then the week
+    await putHistory('2026-10-02');
     f.calls.length = 0;
     s = await sync({ env, root, now, log: quiet });
     assert.deepEqual(s.book.settled, ['2026-W40']);
+    const late = rpcs(f, 'settle_book_events')[0].args.p;
+    const PR = late.results;
+    const priced = BOOK.events.filter(e => ['blast', 'ladder', 'bracket'].includes(e.type));
+    assert.deepEqual([...late.events, ...dailyIds].sort(), priced.map(e => e.id).sort());
+    const i1 = f.calls.findIndex(c => c.path.endsWith('/rpc/settle_book_events')), i2 = f.calls.findIndex(c => c.path.endsWith('/rpc/settle_book'));
+    assert.ok(i1 >= 0 && i2 > i1, 'price markets settle before the week');
+    const wkUp = BOOK.events.find(e => e.id === '2026-W40:blast:pct:up:week');
+    for (const x of wkUp.selections) assert.equal(PR[x.id], x.person === 'p1' ? 'win' : 'lose');
+    const wkDown = BOOK.events.find(e => e.id === '2026-W40:blast:pct:down:week');
+    for (const x of wkDown.selections) assert.equal(PR[x.id], x.person === 'p2' ? 'win' : 'lose');
+    const lad1 = BOOK.events.find(e => e.id === '2026-W40:ladder:p1');
+    for (const x of lad1.selections) assert.equal(PR[x.id], x.line > 0 ? 'win' : 'lose', x.id);            // +10% wins every up rung
+    const lad2 = BOOK.events.find(e => e.id === '2026-W40:ladder:p2');
+    if (lad2) for (const x of lad2.selections) assert.equal(PR[x.id], x.line === -2 || x.line === -5 ? 'win' : 'lose', x.id);
+    const br4 = BOOK.events.find(e => e.id === '2026-W40:bracket:p4');
+    assert.deepEqual(br4.selections.filter(x => PR[x.id] === 'win').map(x => x.label), ['Up 2% to 5%']);   // exactly +2%: lower end included
     const call = rpcs(f, 'settle_book')[0].args.p;
     assert.equal(call.week, '2026-W40');
     const R = call.results;

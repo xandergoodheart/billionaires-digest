@@ -2,16 +2,20 @@
 //
 //   node scripts/build-book.mjs [--week=2026-W40] [--now=2026-09-25T12:00:00Z] [--force]
 //
-// Reads data/fantasy/weeks/<week>.json, data/prices/history/*.json, data/filings/latest.json and archive/<date>.json.
+// Reads data/fantasy/weeks/<week>.json, data/prices/history/*.json, data/prices/networth-est.json (written earlier the same
+// morning by fetch-prices), config/wealth-overrides.json, data/filings/latest.json and archive/<date>.json.
 // Writes data/book/<week>.json and data/book/index.json. Default week: the next week to lock (the draft week).
 // Practice weeks get no book. A book whose week has locked is never rewritten (odds are live online) unless --force.
-// Same inputs -> same bytes: the simulation is seeded by the week id, and "generated" comes from the input files.
+// Price markets (blast, ladder, bracket, race, duel) close for betting before the week locks: once an event's closesAt
+// has passed, a rebuild keeps that event exactly as it was in the existing file (settlement reads its frozen params).
+// Same inputs -> same bytes: the simulations are seeded by the week / event id, and "generated" comes from the input files.
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, readJson, writeJson } from './lib/data-common.mjs';
 import { core, storyMatches } from './lib/fantasy.mjs';
 import { buildBook } from './lib/book/pricing.mjs';
+import { isPriceEvent } from './lib/book/settle.mjs';
 
 const OUT = join(ROOT, 'data', 'book');
 const arg = (name) => { const a = process.argv.find((x) => x.startsWith(`--${name}=`)); return a ? a.slice(name.length + 3) : null; };
@@ -29,6 +33,18 @@ export async function loadHistory() {
     if (Array.isArray(rows)) out[f.slice(0, -5)] = rows;
   }
   return out;
+}
+
+// Price events whose betting has closed stay exactly as they were published (frozen baskets, wealth entries and odds).
+export function keepClosedEvents(book, existing, now) {
+  const closed = new Map(((existing && existing.events) || [])
+    .filter(e => isPriceEvent(e) && e.closesAt && Date.parse(e.closesAt) <= now).map(e => [e.id, e]));
+  if (!closed.size) return book;
+  const events = book.events.map(e => closed.get(e.id) || e);
+  const have = new Set(events.map(e => e.id));
+  for (const [id, e] of closed) if (!have.has(id)) events.push(e);
+  events.forEach((e, i) => { e.sort = i; });
+  return { ...book, events };
 }
 
 async function writeIndex() {
@@ -72,12 +88,16 @@ async function main() {
   const stamps = [filingsDoc.generated, week.createdAt].filter((x) => x && Number.isFinite(Date.parse(x))).map((x) => new Date(x).toISOString()).sort();
   const generated = stamps.length ? stamps[stamps.length - 1] : new Date(Date.parse(week.locksAt)).toISOString();
 
-  const book = buildBook({ week, history, editions, filings: filingsDoc.filings ?? [], storyMatches, generated });
+  const est = await readJson(join(ROOT, 'data', 'prices', 'networth-est.json'), null);
+  const overrides = (await readJson(join(ROOT, 'config', 'wealth-overrides.json'), { people: {} }))?.people ?? {};
+  const built = buildBook({ week, history, editions, filings: filingsDoc.filings ?? [], storyMatches, generated, est, overrides });
+  const book = keepClosedEvents(built, existing, now);
   await writeJson(path, book);
   await writeIndex();
   const count = (t) => book.events.filter((e) => e.type === t).length;
   console.log(`Book ${id}: ${book.events.length} events (${count('h2h')} matchups, ${count('player_ou')} player ladders, ` +
-    `${count('futures_top')} futures, ${count('prop_insider')} insider props, ${count('prop_sector')} sector prop); ` +
+    `${count('futures_top')} futures, ${count('prop_insider')} insider props, ${count('prop_sector')} sector prop, ` +
+    `${count('blast')} boards, ${count('ladder')} ladders, ${count('bracket')} ranges, ${count('race')} races, ${count('duel')} duels); ` +
     `${book.events.reduce((n, e) => n + e.selections.length, 0)} selections; locks ${book.locksAt}.`);
   return 0;
 }
