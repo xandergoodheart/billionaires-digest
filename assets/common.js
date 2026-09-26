@@ -403,20 +403,46 @@
 
   // ---- Nav menus (details.navmore: Fantasy, Tools): close on Escape and outside click; one open at a time.
   // On phones the nav is one swipeable row: scroll the active item into view, fade the edges that can still scroll.
-  // Phones show the open menu as a fixed panel (iOS clips it inside the scrolling row), so --navmore-top pins it
-  // under the nav and any page scroll or resize closes it (the panel never floats detached from the nav).
+  // Phones (iOS Safari) do not reliably paint a list inside the scrolling row or inside <details>, so on phones the
+  // open menu is copied into one body-level panel (#navpanel) placed just under the nav; outside click, Escape,
+  // page scroll or resize close it. Desktop keeps the plain dropdown.
   // Works without JS as plain <details> and a plain scrolling row. Same code as NAV_JS in scripts/lib/nav.mjs.
   BD.initNavMore = function(){
     var d = document.querySelectorAll('details.navmore'), nav = document.querySelector('.sitenav');
+    var mq = w.matchMedia ? w.matchMedia('(max-width: 699.98px)') : null, panel = null, cur = null, y0 = 0;
     function closeAll(ex){ for (var i = 0; i < d.length; i++) if (d[i] !== ex) d[i].removeAttribute('open'); }
-    function place(el){
-      var ul = el.querySelector('ul');
-      if (ul && nav) ul.style.setProperty('--navmore-top', Math.round(nav.getBoundingClientRect().bottom) + 'px');
+    function hidePanel(){
+      if (panel) { panel.hidden = true; while (panel.firstChild) panel.removeChild(panel.firstChild); }
+      var s = cur && cur.querySelector('summary');
+      if (s) { s.removeAttribute('aria-expanded'); s.removeAttribute('aria-controls'); }
+      cur = null;
     }
-    function onMove(){ for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open')) d[i].removeAttribute('open'); }
+    function closeCur(){ var el = cur; hidePanel(); if (el) el.removeAttribute('open'); }
+    function showPanel(el){
+      var ul = el.querySelector('ul'), s = el.querySelector('summary');
+      hidePanel();
+      if (!ul) return;
+      if (!panel) {
+        panel = document.createElement('div');
+        panel.className = 'navpanel'; panel.id = 'navpanel'; panel.setAttribute('role', 'region'); panel.hidden = true;
+        document.body.appendChild(panel);
+      }
+      panel.setAttribute('aria-label', (s ? s.textContent.replace(/\s+/g, ' ').replace(/^ | $/g, '') : 'Site') + ' menu');
+      panel.appendChild(ul.cloneNode(true));
+      panel.style.top = Math.round(nav ? nav.getBoundingClientRect().bottom : 0) + 'px';
+      panel.hidden = false;
+      cur = el; y0 = w.pageYOffset || 0;
+      if (s) { s.setAttribute('aria-expanded', 'true'); s.setAttribute('aria-controls', 'navpanel'); }
+    }
+    function onScroll(){ if (cur && Math.abs((w.pageYOffset || 0) - y0) > 2) closeCur(); }
+    function onResize(){ if (cur) closeCur(); }
     if (d.length) {
+      document.documentElement.className += ' js-navpanel';
       document.addEventListener('click', function(e){
-        for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open') && !d[i].contains(e.target)) d[i].removeAttribute('open');
+        var t = e.target;
+        if (panel && panel.contains(t)) return;
+        if (cur && !cur.contains(t)) closeCur();
+        for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open') && !d[i].contains(t)) d[i].removeAttribute('open');
       });
       document.addEventListener('keydown', function(e){
         if (e.key !== 'Escape' && e.key !== 'Esc') return;
@@ -424,14 +450,14 @@
           d[i].removeAttribute('open');
           var s = d[i].querySelector('summary'); if (s) s.focus();
         }
+        hidePanel();
       });
-      for (var j = 0; j < d.length; j++) {
-        var sm = d[j].querySelector('summary');
-        if (sm) sm.addEventListener('click', function(){ place(this.parentNode); });
-        d[j].addEventListener('toggle', function(){ if (this.open) { place(this); closeAll(this); } });
-      }
-      window.addEventListener('scroll', onMove, { passive: true });
-      window.addEventListener('resize', onMove);
+      for (var j = 0; j < d.length; j++) d[j].addEventListener('toggle', function(){
+        if (this.open) { closeAll(this); if (mq && mq.matches) showPanel(this); }
+        else if (this === cur) hidePanel();
+      });
+      w.addEventListener('scroll', onScroll, { passive: true });
+      w.addEventListener('resize', onResize);
     }
     var row = nav && nav.querySelector('.wrap');
     if (!row) return;
