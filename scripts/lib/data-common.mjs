@@ -119,7 +119,9 @@ export function parseShareCount(text) {
   const s = String(text);
   if (/\b(exited|historical|former)\b/i.test(s)) return null;
   const re = /(?<![\d.,~])(\d{1,3}(?:,\d{3})+)\s+(?:(?:Class\s+[A-Z]|common|ordinary)\s+)?(shares|ADSs|ADS)\b/i;
-  const m = s.match(re);
+  // Fallback: a count followed by a share class without the word "shares", e.g. "188,290 Class A + 1,162 Class B".
+  const classRe = /(?<![\d.,~])(\d{1,3}(?:,\d{3})+)\s+Class\s+[A-Z]\b/i;
+  const m = s.match(re) ?? s.match(classRe);
   if (!m) return null;
   const shares = Number(m[1].replace(/,/g, ''));
   if (!Number.isFinite(shares) || shares <= 0) return null;
@@ -132,6 +134,22 @@ export const METHOD =
   "Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. " +
   'Covers only disclosed share counts in US-listed holdings; may undercount. ' +
   "Shown only when these holdings are at least 25% of the person's Forbes net worth.";
+
+// Added to the method text when config/wealth-overrides.json lists anyone.
+export const OVERRIDES_METHOD =
+  "For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's " +
+  "Walmart stake), the estimate is the published net worth × that stock's daily % change.";
+
+// Method text for the output file; mentions overrides when there are any.
+export function methodText(overrides) {
+  return overrides && Object.keys(overrides).length ? `${METHOD} ${OVERRIDES_METHOD}` : METHOD;
+}
+
+// config/wealth-overrides.json -> { slug: { basis, ticker, shareText?, note, source } } ({} when missing).
+export async function loadWealthOverrides() {
+  const cfg = await readJson(join(ROOT, 'config', 'wealth-overrides.json'), null);
+  return (cfg && cfg.people) || {};
+}
 
 // Estimates covering less than this share of the person's net worth are hidden on the site.
 export const MIN_COVERAGE = 0.25;
@@ -156,8 +174,15 @@ export function worthBySlug(index) {
 
 // Adds coveredValue (Σ shares × current price) and coverage (coveredValue / worth, 3 decimals) to each person entry.
 // coverage is null when the worth or a price is missing. Mutates and returns `people`.
+// Worth-basis entries (method 'worth', see estimateAll overrides) get coveredValue = worth and coverage = 1.
 export function addCoverage(people, quotes, worths) {
   for (const [slug, entry] of Object.entries(people)) {
+    if (entry.method === 'worth') {
+      const w = worths?.[slug] ?? null;
+      entry.coveredValue = w ? Math.round(w) : null;
+      entry.coverage = w ? 1 : null;
+      continue;
+    }
     let covered = 0;
     let ok = true;
     for (const h of entry.holdings ?? []) {
@@ -232,11 +257,20 @@ export function personHoldings(profile, quotes, adrs = KNOWN_ADRS) {
 
 // Estimates for everyone. The same (ticker, shares) holding under more than one person is excluded for all of them.
 // With `worths` (slug -> USD), each entry also gets coveredValue and coverage (see addCoverage).
-export function estimateAll(profiles, quotes, adrs = adrSet(profiles), worths = null) {
+// `overrides` (slug -> { basis:'worth', ticker, shareText?, source }, from config/wealth-overrides.json): those people's
+// parsed share rows are ignored; their estimate is net worth × the ticker's daily % change (needs `worths` and a quote).
+export function estimateAll(profiles, quotes, adrs = adrSet(profiles), worths = null, overrides = null) {
   const per = new Map();
   const skipped = [];
   const owners = new Map(); // "TICKER|shares" -> [slug]
+  const worthBased = {};
   for (const p of profiles) {
+    const ov = overrides?.[p.slug];
+    if (ov && ov.basis === 'worth') {
+      const e = worthEntry(p.slug, ov, quotes, worths);
+      if (e) worthBased[p.slug] = e;
+      continue;
+    }
     const r = personHoldings(p, quotes, adrs);
     skipped.push(...r.skipped);
     per.set(p.slug, r.holdings);
@@ -258,8 +292,35 @@ export function estimateAll(profiles, quotes, adrs = adrSet(profiles), worths = 
     if (!kept.length) continue;
     people[slug] = { estDailyChange: kept.reduce((s, h) => s + h.estChange, 0), partial: true, holdings: kept };
   }
+  Object.assign(people, worthBased);
   if (worths) addCoverage(people, quotes, worths);
   return { people, excluded, skipped };
+}
+
+// One worth-basis estimate (see estimateAll `overrides`), or null when the worth or the quote's % change is missing.
+export function worthEntry(slug, ov, quotes, worths) {
+  const worth = worths?.[slug];
+  const q = quotes?.[ov.ticker];
+  if (typeof worth !== 'number' || !(worth > 0)) return null;
+  if (!q || typeof q.changePct !== 'number' || !Number.isFinite(q.changePct)) return null;
+  const estChange = Math.round(worth * q.changePct / 100);
+  return {
+    estDailyChange: estChange,
+    partial: true,
+    method: 'worth',
+    holdings: [{
+      ticker: ov.ticker,
+      basis: 'worth',
+      change: q.change,
+      changePct: q.changePct,
+      estChange,
+      shareText: ov.shareText ?? `net worth × ${ov.ticker} price move`,
+      source: ov.source,
+      // Reference close the net worth is pinned to (used by scripts/lib/wealth.mjs trackedValue).
+      refClose: typeof q.price === 'number' && Number.isFinite(q.price) ? q.price : null,
+      refDate: q.time ? nyDate(new Date(q.time)) : null,
+    }],
+  };
 }
 
 // Single-person convenience wrapper (no shared-holding check).
