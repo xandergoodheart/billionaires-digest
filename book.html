@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Book · Billionaires Digest</title>
-<meta name="description" content="A play-money sportsbook on the fantasy week: matchups, player points, top scorer and insider-buy props, priced from public data. Coins have no cash value.">
+<meta name="description" content="A play-money sportsbook on billionaires' fortunes and the fantasy week: biggest gainers, move ladders, rank races, dollar duels, matchups and props, priced from public data. Coins have no cash value.">
 <meta name="theme-color" content="#13171C">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="assets/v2/tokens.css">
 <link rel="stylesheet" href="assets/v2/ui.css">
 <link rel="stylesheet" href="assets/v2/game.css">
+<link rel="stylesheet" href="assets/book.css">
 </head>
 <body class="v2 v2-gamepage">
 <!-- v2topbar:start -->
@@ -81,7 +82,7 @@
         <span class="v2-kicker">Play-money game · Fantasy</span>
         <h1 class="v2-display gm-head__h" id="pageh">The Book</h1>
       </div>
-      <p class="gm-head__dek">Bet play-money coins on the fantasy week: head-to-heads, player points, the top scorer and insider-buy props. Odds come from a simple model of our own data. <a href="#how">How odds work</a> · <a href="play-terms.html#book">Rules</a>.</p>
+      <p class="gm-head__dek">Bet play-money coins on how billionaires' stock wealth moves (biggest gainers, move ladders, rank races, dollar duels) and on the fantasy week (head-to-heads, player points, props). Odds come from a simple model of our own data. <a href="#how">How odds work</a> · <a href="play-terms.html#book">Rules</a>.</p>
     </header>
 
     <section class="gm-panel g-terminal" aria-label="Online game">
@@ -96,14 +97,20 @@
     <div class="bk-layout">
       <div class="bk-main">
         <div class="g-tabs bk-tabs" role="tablist" aria-label="The Book" id="booktabs">
-          <button type="button" class="g-tab" role="tab" id="tab-matchups" data-tab="matchups" aria-controls="panel-matchups" aria-selected="true">Matchups</button>
+          <button type="button" class="g-tab" role="tab" id="tab-blasts" data-tab="blasts" aria-controls="panel-blasts" aria-selected="true">Blasts</button>
+          <button type="button" class="g-tab" role="tab" id="tab-ladders" data-tab="ladders" aria-controls="panel-ladders" aria-selected="false" tabindex="-1">Ladders</button>
+          <button type="button" class="g-tab" role="tab" id="tab-races" data-tab="races" aria-controls="panel-races" aria-selected="false" tabindex="-1">Races</button>
+          <button type="button" class="g-tab" role="tab" id="tab-matchups" data-tab="matchups" aria-controls="panel-matchups" aria-selected="false" tabindex="-1">Matchups</button>
           <button type="button" class="g-tab" role="tab" id="tab-player" data-tab="player" aria-controls="panel-player" aria-selected="false" tabindex="-1">Player props</button>
           <button type="button" class="g-tab" role="tab" id="tab-futures" data-tab="futures" aria-controls="panel-futures" aria-selected="false" tabindex="-1">Futures</button>
           <button type="button" class="g-tab" role="tab" id="tab-props" data-tab="props" aria-controls="panel-props" aria-selected="false" tabindex="-1">Props</button>
           <button type="button" class="g-tab" role="tab" id="tab-mybets" data-tab="mybets" aria-controls="panel-mybets" aria-selected="false" tabindex="-1">My bets</button>
         </div>
         <p class="g-msg bk-status" id="bookstatus">Loading the odds…</p>
-        <section class="bk-panel" role="tabpanel" id="panel-matchups" aria-labelledby="tab-matchups" tabindex="0"></section>
+        <section class="bk-panel" role="tabpanel" id="panel-blasts" aria-labelledby="tab-blasts" tabindex="0"></section>
+        <section class="bk-panel" role="tabpanel" id="panel-ladders" aria-labelledby="tab-ladders" tabindex="0" hidden></section>
+        <section class="bk-panel" role="tabpanel" id="panel-races" aria-labelledby="tab-races" tabindex="0" hidden></section>
+        <section class="bk-panel" role="tabpanel" id="panel-matchups" aria-labelledby="tab-matchups" tabindex="0" hidden></section>
         <section class="bk-panel" role="tabpanel" id="panel-player" aria-labelledby="tab-player" tabindex="0" hidden></section>
         <section class="bk-panel" role="tabpanel" id="panel-futures" aria-labelledby="tab-futures" tabindex="0" hidden></section>
         <section class="bk-panel" role="tabpanel" id="panel-props" aria-labelledby="tab-props" tabindex="0" hidden></section>
@@ -112,11 +119,13 @@
         <section id="how" class="gp-prose gp-how g-card g-card--flat" aria-labelledby="how-h">
           <h2 id="how-h">How odds work</h2>
           <p><strong>American odds.</strong> A minus number is what you stake to win 100: at <b>−110</b> you stake 110 coins to win 100 (you get 210 back). A plus number is what a 100 stake wins: at <b>+250</b> a 100-coin stake wins 250 (you get 350 back). Smaller stakes scale the same way. The slip always shows "To win" and the full payout before you bet.</p>
-          <p><strong>Lines.</strong> "O 150.5" means over 150.5 weekly fantasy points; "U" is under. A spread like "−2.5" means that person must beat the other by 3 or more; "+2.5" wins if they lose by 2 or less, or win. Lines end in .5, so there are no pushes. A tie in a head-to-head moneyline is void and the stake comes back.</p>
+          <p><strong>Price markets.</strong> Blasts, Ladders and Races follow real stock prices, measured from the opening price to the closing price; betting closes at the opening bell (9:30 AM New York) of the first day measured. Each event shows when it closes. A <b>board</b> ("Biggest % gainer today") pays the person with the biggest move; % boards use each person's holdings basket, $ boards use tracked stock wealth (share counts from SEC filings times the price). A <b>ladder</b> rung like "Up 5% or more" wins if the week's move reaches it (exactly 5% counts). A <b>range</b> pays the band the move lands in. A <b>race</b> asks whether one person's tracked wealth passes another's by Friday's close. A <b>dollar duel</b> pays whoever gains more dollars; "by $39.5B+" needs a win by more than that. A missing price (market holiday or data gap) voids the market and the stake comes back.</p>
+          <p><strong>Fantasy lines.</strong> "O 150.5" means over 150.5 weekly fantasy points; "U" is under. A spread like "−2.5" means that person must beat the other by 3 or more; "+2.5" wins if they lose by 2 or less, or win. Lines end in .5, so there are no pushes. A tie in a head-to-head moneyline is void and the stake comes back.</p>
           <p><strong>Parlays.</strong> Combine 2 to 4 picks from different events. The odds multiply, and every pick must win. A void pick drops out and the rest still count. The most any bet can pay back is 10,000 coins.</p>
-          <p><strong>Where the odds come from.</strong> <span id="methodtext">Each person's daily fantasy points are modeled from their recent news, insider buys and how much their holdings usually move. The fair chance of each result is then turned into odds.</span></p>
-          <p><strong>The house margin.</strong> The fair chances add up to 100%, but the prices add up to more: 104.5% on two-way bets (−110 on both sides of a coin flip) and 120% on top scorer and top sector. That margin is how any book works. With play money it just keeps the leaderboard honest.</p>
-          <p><strong>Play money only.</strong> Coins have no value. You can't buy, sell, cash out or send them. Stakes are 1 to 500 coins, up to 50 bets a day. Betting locks Monday at 9:30 AM New York time and bets settle after Friday's scores are in (usually Saturday). The odds you see when you place a bet are the odds you get; if they moved, the slip asks you to review. Nothing here is investment advice. <a href="play-terms.html#book">Full rules</a>.</p>
+          <p><strong>Where the odds come from.</strong> <span id="methodtext">Each person's daily fantasy points and price moves are modeled from our own data. The fair chance of each result is then turned into odds.</span></p>
+          <p><strong>The house margin.</strong> The fair chances add up to 100%, but the prices add up to more: 104.5% on two-way bets, ladder rungs and duel lines (−110 on both sides of a coin flip), 112% on ranges, and 120% on the boards, top scorer and top sector. That margin is how any book works. With play money it just keeps the leaderboard honest.</p>
+          <p><strong>Stakes and long shots.</strong> Stakes are 1 to 500 coins, up to 50 bets a day. Long shots have smaller limits: at most 150 coins when the odds pay 6 times the stake or more (+500 and longer), and at most 50 coins when they pay 21 times or more (+2000 and longer). For a parlay the combined odds count. The slip shows the limit before you bet.</p>
+          <p><strong>Play money only.</strong> Coins have no value. You can't buy, sell, cash out or send them. Fantasy markets lock Monday at 9:30 AM New York time and settle after Friday's scores are in (usually Saturday); price markets settle once the closing prices are in. The odds you see when you place a bet are the odds you get; if they moved, the slip asks you to review. Nothing here is investment advice. <a href="play-terms.html#book">Full rules</a>.</p>
         </section>
       </div>
 
