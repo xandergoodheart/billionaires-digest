@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="assets/v2/tokens.css">
 <link rel="stylesheet" href="assets/v2/ui.css">
 <link rel="stylesheet" href="assets/v2/draft.css">
+<link rel="stylesheet" href="assets/v2/lucky.css">
 </head>
 <body class="v2 v2-draftpage">
 <!-- v2topbar:start -->
@@ -84,6 +85,10 @@
       <div class="dr-head__side">
         <span class="v2-pill" id="weekpill">Loading…</span>
         <a class="dr-head__rules" href="play-terms.html">Rules</a>
+        <div class="lk-entry" hidden>
+          <button type="button" class="v2-btn v2-btn--secondary lk-entry__btn" data-lucky-open aria-haspopup="dialog" aria-controls="lucky" aria-describedby="lk-hint">Lucky five</button>
+          <span class="lk-entry__hint" id="lk-hint">Spin a random team under the cap</span>
+        </div>
       </div>
     </header>
 
@@ -162,6 +167,10 @@
       <span class="dr-sheet__title" id="sheeth">Your team</span>
       <button type="button" class="dr-sheet__close" id="sheetclose">Close</button>
     </div>
+    <div class="lk-entry lk-entry--sheet" hidden>
+      <button type="button" class="v2-btn lk-entry__btn" data-lucky-open data-lucky-sheet aria-haspopup="dialog" aria-controls="lucky" aria-describedby="lk-hint-sheet">Lucky five</button>
+      <span class="lk-entry__hint" id="lk-hint-sheet">Spin a random team under the cap</span>
+    </div>
     <div class="dr-panel" id="sheetpanel"></div>
   </div>
 </div>
@@ -200,5 +209,7 @@
 <script src="assets/v2/fantasy-store.js"></script>
 <script src="assets/v2/chrome.js"></script>
 <script src="assets/v2/draft.js"></script>
+<script src="assets/v2/portraits.js"></script>
+<script src="assets/v2/lucky.js"></script>
 </body>
 </html>

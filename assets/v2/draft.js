@@ -465,7 +465,7 @@
 
   F.onChange(function(kind){
     if (!F.state.loaded) return;
-    if (kind === 'roster'){ renderAll(); return; }
+    if (kind === 'roster'){ UI.saveMsg = null; renderAll(); return; }
     if (kind === 'online' || kind === 'sync') renderSide();
   });
 
