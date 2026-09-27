@@ -2,6 +2,7 @@
   "note": "Billionaire Life roster, built by scripts/build-life.mjs from data/life/<slug>.json. Only files that pass validation are listed.",
   "updated": "2026-09-27",
   "count": 8,
+  "schools": 8,
   "people": [
     {
       "slug": "elon-musk",
@@ -14,7 +15,90 @@
         "from": 1999,
         "to": 2022
       },
-      "checked": "2026-09-27"
+      "checked": "2026-09-27",
+      "school": {
+        "name": "First principles, built in-house",
+        "tagline": "Reason from physics, make the key parts yourself, move fast through failure, and back it with your own money.",
+        "principles": [
+          {
+            "id": "first-principles",
+            "name": "First-principles thinking",
+            "summary": "Break a problem down to basic facts and reason up from there, instead of copying what others do. He has said he wanted to \"boil things down to their fundamental truths\" and that a rocket's raw materials were about 2% of its typical price.",
+            "sources": [
+              {
+                "title": "The mind behind Tesla, SpaceX, SolarCity (TED talk)",
+                "url": "https://www.ted.com/talks/elon_musk_the_mind_behind_tesla_spacex_solarcity",
+                "publisher": "TED",
+                "date": "2013-03-19"
+              },
+              {
+                "title": "Elon Musk's mission to Mars",
+                "url": "https://www.wired.com/2012/10/ff-elon-musk-qa/",
+                "publisher": "WIRED",
+                "date": "2012-10-21"
+              }
+            ]
+          },
+          {
+            "id": "vertical",
+            "name": "Vertical integration",
+            "summary": "Make the important parts yourself rather than buying them. SpaceX describes itself as making a significant portion of its parts in-house, including engines, avionics, structures and software, and says about 80% of Starship is made in-house. Tesla's 2010 prospectus said it sold and serviced its cars through its own network, unlike carmakers that typically franchise.",
+            "sources": [
+              {
+                "title": "SpaceX IPO prospectus (Form 424B4)",
+                "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2026-06-12"
+              },
+              {
+                "title": "Tesla Motors IPO prospectus (Form 424B4)",
+                "url": "https://www.sec.gov/Archives/edgar/data/1318605/000119312510149105/d424b4.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2010-06-29"
+              }
+            ]
+          },
+          {
+            "id": "speed",
+            "name": "Iterate fast, accept failure",
+            "summary": "Build, test, break and fix quickly. SpaceX describes a five-step method it calls \"The Algorithm\" and says building in-house lets it \"test, fail, and iterate rapidly\"; Musk has said SpaceX came very close to failure in 2008.",
+            "sources": [
+              {
+                "title": "SpaceX IPO prospectus (Form 424B4)",
+                "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2026-06-12"
+              },
+              {
+                "title": "The mind behind Tesla, SpaceX, SolarCity (TED talk)",
+                "url": "https://www.ted.com/talks/elon_musk_the_mind_behind_tesla_spacex_solarcity",
+                "publisher": "TED",
+                "date": "2013-03-19"
+              }
+            ]
+          },
+          {
+            "id": "bet-big",
+            "name": "Bet big, with your own money",
+            "summary": "He has put a lot of his own money into his companies. Tesla's 2010 prospectus says he had historically provided a significant amount of its funding, and on the TED stage he joked about turning \"a large fortune into a small one.\"",
+            "sources": [
+              {
+                "title": "Tesla Motors IPO prospectus (Form 424B4)",
+                "url": "https://www.sec.gov/Archives/edgar/data/1318605/000119312510149105/d424b4.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2010-06-29"
+              },
+              {
+                "title": "The mind behind Tesla, SpaceX, SolarCity (TED talk)",
+                "url": "https://www.ted.com/talks/elon_musk_the_mind_behind_tesla_spacex_solarcity",
+                "publisher": "TED",
+                "date": "2013-03-19"
+              }
+            ]
+          }
+        ]
+      },
+      "lessons": 5
     },
     {
       "slug": "jeff-bezos",
@@ -27,7 +111,78 @@
         "from": 1994,
         "to": 2020
       },
-      "checked": "2026-09-27"
+      "checked": "2026-09-27",
+      "school": {
+        "name": "Day 1: customer-first, long-term invention",
+        "tagline": "Start from the customer, judge choices over years not quarters, and keep a start-up's speed.",
+        "principles": [
+          {
+            "id": "customer",
+            "name": "Customer obsession",
+            "summary": "He argues that centering a company on customers, rather than on competitors or products, keeps it inventive, because customers always want something better even when they say they are happy. His first letter promised to focus relentlessly on customers.",
+            "sources": [
+              {
+                "title": "1997 letter to shareholders (reprinted with the 2017 letter)",
+                "url": "https://www.aboutamazon.com/news/company-news/2017-letter-to-shareholders",
+                "publisher": "Amazon",
+                "date": "2018-04-18"
+              },
+              {
+                "title": "2016 letter to shareholders",
+                "url": "https://www.aboutamazon.com/news/company-news/2016-letter-to-shareholders",
+                "publisher": "Amazon",
+                "date": "2017-04-17"
+              }
+            ]
+          },
+          {
+            "id": "long-term",
+            "name": "It's all about the long term",
+            "summary": "His 1997 letter said Amazon would make investment decisions for long-term market leadership, not short-term profit or Wall Street's reaction, and would choose future cash flow over flattering accounting.",
+            "sources": [
+              {
+                "title": "1997 letter to shareholders (reprinted with the 2017 letter)",
+                "url": "https://www.aboutamazon.com/news/company-news/2017-letter-to-shareholders",
+                "publisher": "Amazon",
+                "date": "2018-04-18"
+              }
+            ]
+          },
+          {
+            "id": "invent",
+            "name": "Invent, wander and accept failure",
+            "summary": "He expects bold bets, many of which will fail, and says failures need to grow in size along with the company. He points to AWS as something no customer asked for, and to the Fire phone as a flop whose lessons and developers sped up work on Echo and Alexa.",
+            "sources": [
+              {
+                "title": "2018 letter to shareholders",
+                "url": "https://www.aboutamazon.com/news/company-news/2018-letter-to-shareholders",
+                "publisher": "Amazon",
+                "date": "2019-04-11"
+              },
+              {
+                "title": "1997 letter to shareholders (reprinted with the 2017 letter)",
+                "url": "https://www.aboutamazon.com/news/company-news/2017-letter-to-shareholders",
+                "publisher": "Amazon",
+                "date": "2018-04-18"
+              }
+            ]
+          },
+          {
+            "id": "day-1",
+            "name": "Stay in Day 1: decide fast",
+            "summary": "Day 2, he wrote, is stasis followed by decline. To avoid it he urges making most decisions with about 70% of the information you wish you had, correcting mistakes quickly, and using \"disagree and commit\" to move ahead without full agreement.",
+            "sources": [
+              {
+                "title": "2016 letter to shareholders",
+                "url": "https://www.aboutamazon.com/news/company-news/2016-letter-to-shareholders",
+                "publisher": "Amazon",
+                "date": "2017-04-17"
+              }
+            ]
+          }
+        ]
+      },
+      "lessons": 5
     },
     {
       "slug": "mark-zuckerberg",
@@ -40,7 +195,102 @@
         "from": 2012,
         "to": 2023
       },
-      "checked": "2026-09-27"
+      "checked": "2026-09-27",
+      "school": {
+        "name": "The Hacker Way",
+        "tagline": "Move fast, connect everyone, keep founder control and fund long bets on the next platform.",
+        "principles": [
+          {
+            "id": "move-fast",
+            "name": "Move fast, stay lean",
+            "summary": "His 2012 IPO letter described a culture of shipping small improvements quickly and learning from them, with the saying \"Move fast and break things.\" In 2023 he argued that every extra management layer slows decisions, so a flatter, leaner company moves faster.",
+            "sources": [
+              {
+                "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+                "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2012-02-01"
+              },
+              {
+                "title": "Update on Meta's Year of Efficiency",
+                "url": "https://about.fb.com/news/2023/03/mark-zuckerberg-meta-year-of-efficiency/",
+                "publisher": "Meta Newsroom",
+                "date": "2023-03-14"
+              }
+            ]
+          },
+          {
+            "id": "connect",
+            "name": "Own the networks people use",
+            "summary": "He framed the company's mission as making the world more open and connected. Facebook bought popular apps with big user bases, Instagram and then WhatsApp, and said both would keep growing independently under their own brands.",
+            "sources": [
+              {
+                "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+                "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2012-02-01"
+              },
+              {
+                "title": "Facebook to Acquire Instagram",
+                "url": "https://about.fb.com/news/2012/04/facebook-to-acquire-instagram/",
+                "publisher": "Meta Newsroom",
+                "date": "2012-04-09"
+              },
+              {
+                "title": "Facebook to Acquire WhatsApp",
+                "url": "https://about.fb.com/news/2014/02/facebook-to-acquire-whatsapp/",
+                "publisher": "Meta Newsroom",
+                "date": "2014-02-19"
+              }
+            ]
+          },
+          {
+            "id": "control",
+            "name": "Keep founder control",
+            "summary": "Facebook went public with two share classes: Class B shares carry ten votes each, Class A shares one. That structure lets him control shareholder votes, and he has kept majority voting control even after pledging substantially all of his shares to giving.",
+            "sources": [
+              {
+                "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+                "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2012-02-01"
+              },
+              {
+                "title": "Facebook current report (Form 8-K), December 1, 2015",
+                "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680115000035/form8kdec2015.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2015-12-01"
+              },
+              {
+                "title": "Meta Platforms 2026 proxy statement",
+                "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2026-04-16"
+              }
+            ]
+          },
+          {
+            "id": "long-term",
+            "name": "Make money to build",
+            "summary": "His IPO letter said: \"we don't build services to make money; we make money to build better services.\" In 2021 he cited that line to explain very large, long-term investments in what he saw as the next platform, the metaverse.",
+            "sources": [
+              {
+                "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+                "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2012-02-01"
+              },
+              {
+                "title": "Founder's Letter, 2021",
+                "url": "https://about.fb.com/news/2021/10/founders-letter/",
+                "publisher": "Meta Newsroom",
+                "date": "2021-10-28"
+              }
+            ]
+          }
+        ]
+      },
+      "lessons": 5
     },
     {
       "slug": "michael-dell",
@@ -53,7 +303,96 @@
         "from": 1984,
         "to": 2025
       },
-      "checked": "2026-09-27"
+      "checked": "2026-09-27",
+      "school": {
+        "name": "Cut out the middleman",
+        "tagline": "Sell straight to customers, run lean, and reshape the company itself when the stock market gets in the way.",
+        "principles": [
+          {
+            "id": "direct",
+            "name": "Sell direct",
+            "summary": "Build computers to order and sell them straight to buyers instead of through stores. Skipping the middleman let a dorm-room start-up undercut IBM's prices.",
+            "sources": [
+              {
+                "title": "Michael S. Dell, profile",
+                "url": "https://achievement.org/achiever/michael-dell/",
+                "publisher": "Academy of Achievement",
+                "date": ""
+              },
+              {
+                "title": "Dell to sell computers at Wal-Mart",
+                "url": "https://www.nbcnews.com/id/wbna18846045",
+                "publisher": "Associated Press (via NBC News)",
+                "date": "2007-05-24"
+              }
+            ]
+          },
+          {
+            "id": "lean",
+            "name": "Run lean with shared information",
+            "summary": "Buy parts only for orders already in hand so little inventory sits around. Harvard Business Review's 1998 interview with him, \"The Power of Virtual Integration,\" describes how selling direct and building to order cut out the reseller.",
+            "sources": [
+              {
+                "title": "Michael S. Dell, profile",
+                "url": "https://achievement.org/achiever/michael-dell/",
+                "publisher": "Academy of Achievement",
+                "date": ""
+              },
+              {
+                "title": "The Power of Virtual Integration: An Interview with Dell Computer's Michael Dell",
+                "url": "https://hbr.org/1998/03/the-power-of-virtual-integration-an-interview-with-dell-computers-michael-dell",
+                "publisher": "Harvard Business Review",
+                "date": "1998-03"
+              }
+            ]
+          },
+          {
+            "id": "long-term",
+            "name": "Play the long game in private",
+            "summary": "He argued that public markets pushed Dell toward short-term results, so he took it private in 2013 to invest for the long run. He wrote that it let the team focus on customers in a way not always possible while meeting \"the quarterly demands of Wall Street.\"",
+            "sources": [
+              {
+                "title": "Going Private Is Paying Off for Dell (op-ed by Michael Dell, first published in The Wall Street Journal)",
+                "url": "https://i.dell.com/sites/content/corporate/corp-comm/en/Pages/WSJOpEd24Nov14.pdf",
+                "publisher": "Dell",
+                "date": "2014-11-24"
+              },
+              {
+                "title": "Dell enters into agreement to be acquired by Michael Dell and Silver Lake (Form 8-K exhibit)",
+                "url": "https://www.sec.gov/Archives/edgar/data/826083/000119312513038969/d480650dex991.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2013-02-05"
+              }
+            ]
+          },
+          {
+            "id": "structure",
+            "name": "Use deal structure as a tool",
+            "summary": "Shape the financing to fit the goal: borrow heavily and pay partly in tracking stock to buy EMC, then spin off VMware and use a special dividend to pay down debt.",
+            "sources": [
+              {
+                "title": "Michael S. Dell, MSD Partners and Silver Lake lead transaction to combine Dell and EMC (EMC Form 8-K exhibit)",
+                "url": "https://www.sec.gov/Archives/edgar/data/790070/000119312515342168/d84913dex995.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2015-10-12"
+              },
+              {
+                "title": "Dell Technologies annual report (Form 10-K), fiscal 2017",
+                "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199617000004/delltechnologiesfy1710k.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2017-03-31"
+              },
+              {
+                "title": "Dell Technologies announces completion of VMware spin-off (Form 8-K exhibit)",
+                "url": "https://www.sec.gov/Archives/edgar/data/1571996/000119312521315488/d146470dex991.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2021-11-01"
+              }
+            ]
+          }
+        ]
+      },
+      "lessons": 5
     },
     {
       "slug": "jensen-huang",
@@ -66,7 +405,78 @@
         "from": 1993,
         "to": 2022
       },
-      "checked": "2026-09-27"
+      "checked": "2026-09-27",
+      "school": {
+        "name": "Build the market before it exists",
+        "tagline": "Bet early on new kinds of computing, build the whole platform, and treat setbacks as fuel.",
+        "principles": [
+          {
+            "id": "zero-billion",
+            "name": "Zero-billion-dollar markets",
+            "summary": "Huang likes markets that do not exist yet, because where there are no customers there are also no competitors. He told Caltech graduates NVIDIA went looking for such markets after early products were pushed out of the markets they had entered.",
+            "sources": [
+              {
+                "title": "Jensen Huang tells Caltech grads to pursue 'zero-billion-dollar markets'",
+                "url": "https://www.tomshardware.com/tech-industry/jensen-huang-tells-caltech-grads-to-pursue-zero-billion-dollar-markets-hopes-to-inspire-the-next-big-tech-leaders",
+                "publisher": "Tom's Hardware",
+                "date": "2024-06-16"
+              }
+            ]
+          },
+          {
+            "id": "accelerated",
+            "name": "Accelerated computing, full stack",
+            "summary": "His case is that ordinary processors stopped speeding up at the old pace, so big gains now come from GPUs paired with specialized software. He called NVIDIA's CUDA-X software libraries \"the treasure of our company.\"",
+            "sources": [
+              {
+                "title": "NVIDIA GTC Washington, DC: live updates",
+                "url": "https://blogs.nvidia.com/blog/nvidia-gtc-washington-dc-2025-news/",
+                "publisher": "NVIDIA Blog",
+                "date": "2025-10-28"
+              },
+              {
+                "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+                "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2026"
+              }
+            ]
+          },
+          {
+            "id": "conviction",
+            "name": "Reasoned conviction, welcome setbacks",
+            "summary": "Believe in something unconventional, as long as it is informed and reasoned, then commit to it. He argues that setbacks and hardship build character and resilience, and told Stanford students he wished them \"ample doses of pain and suffering.\"",
+            "sources": [
+              {
+                "title": "Caltech honors graduates at 130th commencement ceremony",
+                "url": "https://www.caltech.edu/about/news/caltech-commencement-2024",
+                "publisher": "Caltech",
+                "date": "2024-06-14"
+              },
+              {
+                "title": "Nvidia's Jensen Huang: The incredible future of AI",
+                "url": "https://siepr.stanford.edu/news/nvidias-jensen-huang-incredible-future-ai",
+                "publisher": "Stanford Institute for Economic Policy Research",
+                "date": "2024-03-07"
+              }
+            ]
+          },
+          {
+            "id": "open-org",
+            "name": "Flat and transparent",
+            "summary": "Huang has had dozens of direct reports (55, per Fortune in 2024) and no one-on-one meetings with them, so everyone hears the same information. He says the aim is agility: information should flow as fast as possible.",
+            "sources": [
+              {
+                "title": "Jensen Huang's no one-on-one meetings rule for his 55 direct reports",
+                "url": "https://fortune.com/2024/06/12/nvidia-ceo-jensen-huang-meeting-rule/",
+                "publisher": "Fortune",
+                "date": "2024-06-12"
+              }
+            ]
+          }
+        ]
+      },
+      "lessons": 5
     },
     {
       "slug": "larry-ellison",
@@ -79,7 +489,90 @@
         "from": 1977,
         "to": 2025
       },
-      "checked": "2026-09-27"
+      "checked": "2026-09-27",
+      "school": {
+        "name": "Own the whole stack",
+        "tagline": "Sell new technology first, buy up rivals, and control every layer of the system you sell.",
+        "principles": [
+          {
+            "id": "ship-first",
+            "name": "Commercialize the idea first",
+            "summary": "Find a promising idea that no one is selling yet and race to turn it into a product. Oracle's founders built a commercial database from an IBM research paper; Ellison has said innovators must be \"prepared for everyone telling you you're nuts.\"",
+            "sources": [
+              {
+                "title": "Defying Conventional Wisdom (Oracle 30th anniversary timeline)",
+                "url": "https://www.oracle.com/us/corporate/profit/p27anniv-timeline-151918.pdf",
+                "publisher": "Oracle Profit magazine",
+                "date": "2007-05"
+              },
+              {
+                "title": "Oracle's decade of acquisition: Innovative or just well-financed?",
+                "url": "https://www.cio.com/article/280740/enterprise-software-oracle-s-decade-of-acquisition-innovative-or-just-well-financed.html",
+                "publisher": "CIO",
+                "date": "2009-12-14"
+              }
+            ]
+          },
+          {
+            "id": "consolidate",
+            "name": "Grow by buying rivals",
+            "summary": "Ellison predicted that the software industry would shrink to a few giants and used acquisitions to make Oracle one of them. Starting with the hostile PeopleSoft bid, CIO counted 56 Oracle acquisitions through 2009, including the then-pending Sun deal.",
+            "sources": [
+              {
+                "title": "Oracle's decade of acquisition: Innovative or just well-financed?",
+                "url": "https://www.cio.com/article/280740/enterprise-software-oracle-s-decade-of-acquisition-innovative-or-just-well-financed.html",
+                "publisher": "CIO",
+                "date": "2009-12-14"
+              },
+              {
+                "title": "Oracle Buys PeopleSoft",
+                "url": "https://www.oracle.com/corporate/pressrelease/oracle-buys-peoplesoft-121304.html",
+                "publisher": "Oracle",
+                "date": "2004-12-13"
+              }
+            ]
+          },
+          {
+            "id": "full-stack",
+            "name": "Engineer the whole system",
+            "summary": "Instead of selling only software, own the layers underneath it so every piece is designed to fit together. When buying Sun he said Oracle could build integrated systems from \"applications to disk.\"",
+            "sources": [
+              {
+                "title": "Oracle to Buy Sun (joint press release)",
+                "url": "https://www.sec.gov/Archives/edgar/data/709519/000119312509082650/dex991.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2009-04-20"
+              }
+            ]
+          },
+          {
+            "id": "infrastructure",
+            "name": "Bet big on infrastructure",
+            "summary": "When computing shifts, build capacity on a huge scale early. Oracle joined the Stargate AI venture in 2025 and agreed to develop gigawatts of new data center capacity for OpenAI, paid for partly with heavy borrowing.",
+            "sources": [
+              {
+                "title": "Trump announces AI infrastructure investment backed by Oracle, OpenAI and SoftBank",
+                "url": "https://www.cnbc.com/2025/01/21/trump-ai-openai-oracle-softbank.html",
+                "publisher": "CNBC",
+                "date": "2025-01-21"
+              },
+              {
+                "title": "OpenAI, Oracle, and SoftBank expand Stargate with five new AI data center sites",
+                "url": "https://group.softbank/en/news/press/20250924",
+                "publisher": "SoftBank Group",
+                "date": "2025-09-24"
+              },
+              {
+                "title": "Oracle Corporation current report (Form 8-K): issuance of $18 billion of notes",
+                "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525220445/d31817d8k.htm",
+                "publisher": "SEC EDGAR",
+                "date": "2025-09-26"
+              }
+            ]
+          }
+        ]
+      },
+      "lessons": 5
     },
     {
       "slug": "warren-buffett",
@@ -92,7 +585,84 @@
         "from": 1964,
         "to": 2025
       },
-      "checked": "2026-09-27"
+      "checked": "2026-09-27",
+      "school": {
+        "name": "Value investing, Berkshire style",
+        "tagline": "Buy durable businesses you understand at sensible prices, then own them for a very long time.",
+        "principles": [
+          {
+            "id": "moat",
+            "name": "Durable businesses (economic moats)",
+            "summary": "He looks for businesses he understands that have a lasting edge, like being the low-cost producer or owning a world-famous brand, which keeps rivals from eating their profits. In his words, \"A moat that must be continuously rebuilt will eventually be no moat at all.\" Charlie Munger pushed him to prefer wonderful businesses at fair prices over fair businesses at wonderful prices.",
+            "sources": [
+              {
+                "title": "Berkshire Hathaway 2007 shareholder letter",
+                "url": "https://www.berkshirehathaway.com/letters/2007ltr.pdf",
+                "publisher": "Berkshire Hathaway",
+                "date": "2008-02"
+              },
+              {
+                "title": "Berkshire Hathaway 2014 shareholder letter",
+                "url": "https://www.berkshirehathaway.com/letters/2014ltr.pdf",
+                "publisher": "Berkshire Hathaway",
+                "date": "2015-02-27"
+              }
+            ]
+          },
+          {
+            "id": "price-value",
+            "name": "Price is not value",
+            "summary": "He separates what a stock costs today from what the business is worth, which he defines as the cash it can hand out over its remaining life, discounted to today. He quotes his teacher Ben Graham: \"Price is what you pay; value is what you get.\"",
+            "sources": [
+              {
+                "title": "Berkshire Hathaway 2008 shareholder letter",
+                "url": "https://www.berkshirehathaway.com/letters/2008ltr.pdf",
+                "publisher": "Berkshire Hathaway",
+                "date": "2009-02-27"
+              },
+              {
+                "title": "An Owner's Manual (updated version of the 1996 booklet)",
+                "url": "https://www.berkshirehathaway.com/ownman.pdf",
+                "publisher": "Berkshire Hathaway",
+                "date": "1996"
+              }
+            ]
+          },
+          {
+            "id": "long-term",
+            "name": "Think like an owner, hold for years",
+            "summary": "He treats a share as part ownership of a real business, not a ticker to trade, and asks shareholders to see themselves the same way. For outstanding businesses with outstanding managers, he wrote, \"our favorite holding period is forever.\"",
+            "sources": [
+              {
+                "title": "Berkshire Hathaway 1988 shareholder letter",
+                "url": "https://www.berkshirehathaway.com/letters/1988.html",
+                "publisher": "Berkshire Hathaway",
+                "date": "1989-02-28"
+              },
+              {
+                "title": "An Owner's Manual (updated version of the 1996 booklet)",
+                "url": "https://www.berkshirehathaway.com/ownman.pdf",
+                "publisher": "Berkshire Hathaway",
+                "date": "1996"
+              }
+            ]
+          },
+          {
+            "id": "managers",
+            "name": "Allocate the money, trust able managers",
+            "summary": "At Berkshire he mainly decided where money went and who ran each business, then left day-to-day decisions to those managers. He described delegating \"almost to the point of abdication.\"",
+            "sources": [
+              {
+                "title": "An Owner's Manual (updated version of the 1996 booklet)",
+                "url": "https://www.berkshirehathaway.com/ownman.pdf",
+                "publisher": "Berkshire Hathaway",
+                "date": "1996"
+              }
+            ]
+          }
+        ]
+      },
+      "lessons": 5
     },
     {
       "slug": "bill-gates",
@@ -105,7 +675,84 @@
         "from": 1975,
         "to": 2025
       },
-      "checked": "2026-09-27"
+      "checked": "2026-09-27",
+      "school": {
+        "name": "Software and scale, then measured giving",
+        "tagline": "Bet early on where computing is going, own the software layer, then point the fortune at measurable problems.",
+        "principles": [
+          {
+            "id": "vision",
+            "name": "Bet on where computing is going",
+            "summary": "Gates and Allen started Microsoft believing that microprocessors would make computers small and affordable enough for everyone; their early goal was \"a computer on every desk and in every home.\" In a 1995 memo he told his executives the internet \"changes the rules\" and gave it the highest level of importance, noting its loop of more users bringing more content and more content bringing more users.",
+            "sources": [
+              {
+                "title": "Here's what Bill Gates said about the internet in a Microsoft internal memo 25 years ago today: It's a 'tidal wave'",
+                "url": "https://www.cnbc.com/2020/05/26/how-bill-gates-described-the-internet-tidal-wave-in-1995.html",
+                "publisher": "CNBC",
+                "date": "2020-05-26"
+              },
+              {
+                "title": "Bill Gates regretted leaving Harvard: I spent Microsoft's first year trying to get a friend to 'take charge,' so I could return",
+                "url": "https://www.cnbc.com/2025/02/14/bill-gates-i-regretted-leaving-harvard-university-to-start-microsoft.html",
+                "publisher": "CNBC",
+                "date": "2025-02-14"
+              }
+            ]
+          },
+          {
+            "id": "software-rights",
+            "name": "Software is the valuable layer: keep the rights",
+            "summary": "In a 1976 open letter he argued that when people copy software without paying, programmers cannot afford to do professional work, so less good software gets written. Microsoft later kept the rights to its DOS system and licensed it to other computer makers, not only to IBM.",
+            "sources": [
+              {
+                "title": "50 years ago, a young Bill Gates took on the 'software pirates'",
+                "url": "https://thenewstack.io/50-years-ago-a-young-bill-gates-took-on-the-software-pirates/",
+                "publisher": "The New Stack",
+                "date": "2026-02-01"
+              },
+              {
+                "title": "Microsoft MS-DOS early source code",
+                "url": "https://computerhistory.org/blog/microsoft-ms-dos-early-source-code/",
+                "publisher": "Computer History Museum",
+                "date": "2014-03-25"
+              }
+            ]
+          },
+          {
+            "id": "owners",
+            "name": "Make the builders owners",
+            "summary": "To attract managers and top programmers, Microsoft sold them shares and granted stock options, so the people building the company also owned part of it. At the IPO Gates set an informal rule that insiders should not sell more than 10% of their holdings, and he kept most of his own stake.",
+            "sources": [
+              {
+                "title": "Inside the deal that made Bill Gates $350,000,000 (1986 cover story, republished)",
+                "url": "https://fortune.com/2011/03/13/inside-the-deal-that-made-bill-gates-350000000/",
+                "publisher": "Fortune",
+                "date": "1986-07-21"
+              }
+            ]
+          },
+          {
+            "id": "impact",
+            "name": "Measure impact, give with urgency",
+            "summary": "In his 2013 annual letter he argued that clear goals and careful measurement are what make aid, health and education programs improve. In 2025 he said the world's urgent problems were a reason to give his money back to society much faster than planned.",
+            "sources": [
+              {
+                "title": "Annual Letter 2013: Measuring Progress",
+                "url": "https://www.gatesfoundation.org/ideas/annual-letters/annual-letter-2013",
+                "publisher": "Gates Foundation",
+                "date": "2013"
+              },
+              {
+                "title": "Gates Foundation will double spending over next 20 years to accelerate progress on saving and improving lives",
+                "url": "https://www.gatesfoundation.org/ideas/media-center/press-releases/2025/05/25th-anniversary-announcement",
+                "publisher": "Gates Foundation",
+                "date": "2025-05-08"
+              }
+            ]
+          }
+        ]
+      },
+      "lessons": 5
     }
   ]
 }

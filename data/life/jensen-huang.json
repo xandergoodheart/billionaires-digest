@@ -15,6 +15,76 @@
       "date": ""
     }
   },
+  "school": {
+    "name": "Build the market before it exists",
+    "tagline": "Bet early on new kinds of computing, build the whole platform, and treat setbacks as fuel.",
+    "principles": [
+      {
+        "id": "zero-billion",
+        "name": "Zero-billion-dollar markets",
+        "summary": "Huang likes markets that do not exist yet, because where there are no customers there are also no competitors. He told Caltech graduates NVIDIA went looking for such markets after early products were pushed out of the markets they had entered.",
+        "sources": [
+          {
+            "title": "Jensen Huang tells Caltech grads to pursue 'zero-billion-dollar markets'",
+            "url": "https://www.tomshardware.com/tech-industry/jensen-huang-tells-caltech-grads-to-pursue-zero-billion-dollar-markets-hopes-to-inspire-the-next-big-tech-leaders",
+            "publisher": "Tom's Hardware",
+            "date": "2024-06-16"
+          }
+        ]
+      },
+      {
+        "id": "accelerated",
+        "name": "Accelerated computing, full stack",
+        "summary": "His case is that ordinary processors stopped speeding up at the old pace, so big gains now come from GPUs paired with specialized software. He called NVIDIA's CUDA-X software libraries \"the treasure of our company.\"",
+        "sources": [
+          {
+            "title": "NVIDIA GTC Washington, DC: live updates",
+            "url": "https://blogs.nvidia.com/blog/nvidia-gtc-washington-dc-2025-news/",
+            "publisher": "NVIDIA Blog",
+            "date": "2025-10-28"
+          },
+          {
+            "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2026"
+          }
+        ]
+      },
+      {
+        "id": "conviction",
+        "name": "Reasoned conviction, welcome setbacks",
+        "summary": "Believe in something unconventional, as long as it is informed and reasoned, then commit to it. He argues that setbacks and hardship build character and resilience, and told Stanford students he wished them \"ample doses of pain and suffering.\"",
+        "sources": [
+          {
+            "title": "Caltech honors graduates at 130th commencement ceremony",
+            "url": "https://www.caltech.edu/about/news/caltech-commencement-2024",
+            "publisher": "Caltech",
+            "date": "2024-06-14"
+          },
+          {
+            "title": "Nvidia's Jensen Huang: The incredible future of AI",
+            "url": "https://siepr.stanford.edu/news/nvidias-jensen-huang-incredible-future-ai",
+            "publisher": "Stanford Institute for Economic Policy Research",
+            "date": "2024-03-07"
+          }
+        ]
+      },
+      {
+        "id": "open-org",
+        "name": "Flat and transparent",
+        "summary": "Huang has had dozens of direct reports (55, per Fortune in 2024) and no one-on-one meetings with them, so everyone hears the same information. He says the aim is agility: information should flow as fast as possible.",
+        "sources": [
+          {
+            "title": "Jensen Huang's no one-on-one meetings rule for his 55 direct reports",
+            "url": "https://fortune.com/2024/06/12/nvidia-ceo-jensen-huang-meeting-rule/",
+            "publisher": "Fortune",
+            "date": "2024-06-12"
+          }
+        ]
+      }
+    ]
+  },
   "decisions": [
     {
       "id": "found",
@@ -60,7 +130,23 @@
           "publisher": "NVIDIA Newsroom",
           "date": "2026-02-25"
         }
-      ]
+      ],
+      "lesson": {
+        "principle": "conviction",
+        "takeaway": "Leaving a secure job was a specific, reasoned bet: bringing 3D graphics to games and multimedia.",
+        "watchOut": "Early wins did not last on their own: Huang has said NVIDIA's early products could be hits and then get \"kicked out of those markets\" a year later.",
+        "terms": [
+          "fiscal-year"
+        ],
+        "sources": [
+          {
+            "title": "Jensen Huang tells Caltech grads to pursue 'zero-billion-dollar markets'",
+            "url": "https://www.tomshardware.com/tech-industry/jensen-huang-tells-caltech-grads-to-pursue-zero-billion-dollar-markets-hopes-to-inspire-the-next-big-tech-leaders",
+            "publisher": "Tom's Hardware",
+            "date": "2024-06-16"
+          }
+        ]
+      }
     },
     {
       "id": "cuda",
@@ -100,7 +186,16 @@
           "publisher": "SEC EDGAR",
           "date": "2026"
         }
-      ]
+      ],
+      "lesson": {
+        "principle": "zero-billion",
+        "takeaway": "CUDA opened GPUs to scientists years before AI made that market large: NVIDIA built the tools first and let customers arrive later.",
+        "watchOut": "A lead attracts challengers: NVIDIA's fiscal 2026 annual report says some customers can build their own solutions to replace its products, and lists Alphabet, Amazon and Microsoft among companies with in-house AI computing.",
+        "terms": [
+          "gpu",
+          "platform"
+        ]
+      }
     },
     {
       "id": "dgx",
@@ -146,7 +241,24 @@
           "publisher": "NVIDIA Newsroom",
           "date": "2026-02-25"
         }
-      ]
+      ],
+      "lesson": {
+        "principle": "accelerated",
+        "takeaway": "DGX-1 packaged chips and software into one complete AI system, and getting it to researchers early was a bet on who would drive future demand.",
+        "watchOut": "Revenue became concentrated: in fiscal 2026 two direct customers made up 22% and 14% of NVIDIA's revenue, according to its annual report.",
+        "terms": [
+          "accelerated-computing",
+          "gpu"
+        ],
+        "sources": [
+          {
+            "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2026"
+          }
+        ]
+      }
     },
     {
       "id": "arm",
@@ -192,7 +304,17 @@
           "publisher": "US Federal Trade Commission",
           "date": "2022-02"
         }
-      ]
+      ],
+      "lesson": {
+        "principle": "conviction",
+        "takeaway": "Huang talks about seeing setbacks as new opportunities; walking away ended a costly regulatory fight while NVIDIA kept its 20-year Arm license.",
+        "watchOut": "Walking away was not free: SoftBank kept NVIDIA's $1.25 billion prepayment and NVIDIA booked a $1.36 billion charge.",
+        "terms": [
+          "acquisition",
+          "antitrust",
+          "vertical-merger"
+        ]
+      }
     },
     {
       "id": "osu",
@@ -232,7 +354,13 @@
           "publisher": "Oregon State University Foundation",
           "date": "2024-04"
         }
-      ]
+      ],
+      "lesson": {
+        "principle": "accelerated",
+        "takeaway": "The gift backs a research center built around an AI supercomputer, bringing the kind of computing his company champions into university science.",
+        "watchOut": "Big projects drift: the center was announced as a $200 million project in 2022 and was described as a $213 million facility at its 2024 groundbreaking.",
+        "terms": []
+      }
     }
   ],
   "ranks": [
@@ -247,6 +375,85 @@
     {
       "min": 0,
       "title": "Keep your day job"
+    }
+  ],
+  "glossary": [
+    {
+      "id": "fiscal-year",
+      "term": "Fiscal year",
+      "definition": "A company's 12-month accounting year, which can end in a month other than December. NVIDIA's fiscal 2026, for example, ended in January 2026.",
+      "source": {
+        "title": "Tax years",
+        "url": "https://www.irs.gov/businesses/small-businesses-self-employed/tax-years",
+        "publisher": "IRS",
+        "date": ""
+      }
+    },
+    {
+      "id": "gpu",
+      "term": "GPU (graphics processing unit)",
+      "definition": "A chip with hundreds of cores that can handle thousands of tasks at once. Built first for graphics, GPUs are now also key to supercomputers and AI.",
+      "source": {
+        "title": "What's the difference between a CPU and a GPU?",
+        "url": "https://blogs.nvidia.com/blog/whats-the-difference-between-a-cpu-and-a-gpu/",
+        "publisher": "NVIDIA Blog",
+        "date": "2009-12-16"
+      }
+    },
+    {
+      "id": "platform",
+      "term": "Platform",
+      "definition": "A base of hardware and software tools that other developers build their own products on. NVIDIA describes CUDA as its platform for accelerated computing.",
+      "source": {
+        "title": "CUDA platform for accelerated computing",
+        "url": "https://developer.nvidia.com/cuda-zone",
+        "publisher": "NVIDIA Developer",
+        "date": ""
+      }
+    },
+    {
+      "id": "accelerated-computing",
+      "term": "Accelerated computing",
+      "definition": "Using special chips such as GPUs alongside a regular processor to run heavy, parallel work much faster than the regular processor could alone.",
+      "source": {
+        "title": "What is accelerated computing?",
+        "url": "https://blogs.nvidia.com/blog/what-is-accelerated-computing/",
+        "publisher": "NVIDIA Blog",
+        "date": "2021-09-01"
+      }
+    },
+    {
+      "id": "acquisition",
+      "term": "Acquisition",
+      "definition": "When one company buys another business or its assets through a deal or contract.",
+      "source": {
+        "title": "Acquisition",
+        "url": "https://www.law.cornell.edu/wex/acquisition",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "antitrust",
+      "term": "Antitrust",
+      "definition": "Laws and enforcement meant to stop monopolies and other practices that harm competition. In the US, federal laws such as the Sherman Act and the Clayton Act, which covers mergers, set these rules.",
+      "source": {
+        "title": "Antitrust",
+        "url": "https://www.law.cornell.edu/wex/antitrust",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "vertical-merger",
+      "term": "Vertical merger",
+      "definition": "A deal joining companies at different steps of the same supply chain, such as a chipmaker buying a supplier of chip designs. Regulators can worry that the buyer would gain control over something its rivals rely on.",
+      "source": {
+        "title": "FTC sues to block $40 billion semiconductor chip merger",
+        "url": "https://www.ftc.gov/news-events/news/press-releases/2021/12/ftc-sues-block-40-billion-semiconductor-chip-merger",
+        "publisher": "US Federal Trade Commission",
+        "date": "2021-12-02"
+      }
     }
   ]
 }

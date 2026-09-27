@@ -15,6 +15,82 @@
       "date": ""
     }
   },
+  "school": {
+    "name": "Software and scale, then measured giving",
+    "tagline": "Bet early on where computing is going, own the software layer, then point the fortune at measurable problems.",
+    "principles": [
+      {
+        "id": "vision",
+        "name": "Bet on where computing is going",
+        "summary": "Gates and Allen started Microsoft believing that microprocessors would make computers small and affordable enough for everyone; their early goal was \"a computer on every desk and in every home.\" In a 1995 memo he told his executives the internet \"changes the rules\" and gave it the highest level of importance, noting its loop of more users bringing more content and more content bringing more users.",
+        "sources": [
+          {
+            "title": "Here's what Bill Gates said about the internet in a Microsoft internal memo 25 years ago today: It's a 'tidal wave'",
+            "url": "https://www.cnbc.com/2020/05/26/how-bill-gates-described-the-internet-tidal-wave-in-1995.html",
+            "publisher": "CNBC",
+            "date": "2020-05-26"
+          },
+          {
+            "title": "Bill Gates regretted leaving Harvard: I spent Microsoft's first year trying to get a friend to 'take charge,' so I could return",
+            "url": "https://www.cnbc.com/2025/02/14/bill-gates-i-regretted-leaving-harvard-university-to-start-microsoft.html",
+            "publisher": "CNBC",
+            "date": "2025-02-14"
+          }
+        ]
+      },
+      {
+        "id": "software-rights",
+        "name": "Software is the valuable layer: keep the rights",
+        "summary": "In a 1976 open letter he argued that when people copy software without paying, programmers cannot afford to do professional work, so less good software gets written. Microsoft later kept the rights to its DOS system and licensed it to other computer makers, not only to IBM.",
+        "sources": [
+          {
+            "title": "50 years ago, a young Bill Gates took on the 'software pirates'",
+            "url": "https://thenewstack.io/50-years-ago-a-young-bill-gates-took-on-the-software-pirates/",
+            "publisher": "The New Stack",
+            "date": "2026-02-01"
+          },
+          {
+            "title": "Microsoft MS-DOS early source code",
+            "url": "https://computerhistory.org/blog/microsoft-ms-dos-early-source-code/",
+            "publisher": "Computer History Museum",
+            "date": "2014-03-25"
+          }
+        ]
+      },
+      {
+        "id": "owners",
+        "name": "Make the builders owners",
+        "summary": "To attract managers and top programmers, Microsoft sold them shares and granted stock options, so the people building the company also owned part of it. At the IPO Gates set an informal rule that insiders should not sell more than 10% of their holdings, and he kept most of his own stake.",
+        "sources": [
+          {
+            "title": "Inside the deal that made Bill Gates $350,000,000 (1986 cover story, republished)",
+            "url": "https://fortune.com/2011/03/13/inside-the-deal-that-made-bill-gates-350000000/",
+            "publisher": "Fortune",
+            "date": "1986-07-21"
+          }
+        ]
+      },
+      {
+        "id": "impact",
+        "name": "Measure impact, give with urgency",
+        "summary": "In his 2013 annual letter he argued that clear goals and careful measurement are what make aid, health and education programs improve. In 2025 he said the world's urgent problems were a reason to give his money back to society much faster than planned.",
+        "sources": [
+          {
+            "title": "Annual Letter 2013: Measuring Progress",
+            "url": "https://www.gatesfoundation.org/ideas/annual-letters/annual-letter-2013",
+            "publisher": "Gates Foundation",
+            "date": "2013"
+          },
+          {
+            "title": "Gates Foundation will double spending over next 20 years to accelerate progress on saving and improving lives",
+            "url": "https://www.gatesfoundation.org/ideas/media-center/press-releases/2025/05/25th-anniversary-announcement",
+            "publisher": "Gates Foundation",
+            "date": "2025-05-08"
+          }
+        ]
+      }
+    ]
+  },
   "decisions": [
     {
       "id": "harvard",
@@ -32,7 +108,13 @@
       "sources": [
         { "title": "Bill Gates regretted leaving Harvard: I spent Microsoft's first year trying to get a friend to 'take charge,' so I could return", "url": "https://www.cnbc.com/2025/02/14/bill-gates-i-regretted-leaving-harvard-university-to-start-microsoft.html", "publisher": "CNBC", "date": "2025-02-14" },
         { "title": "Bill Gates, foundation leadership biography", "url": "https://www.gatesfoundation.org/about/leadership/bill-gates", "publisher": "Gates Foundation", "date": "" }
-      ]
+      ],
+      "lesson": {
+        "principle": "vision",
+        "takeaway": "When you believe a big shift is coming, timing can matter as much as the idea: Gates and Allen moved as soon as the Altair computer kit appeared on a magazine cover.",
+        "watchOut": "It was not an easy call: Gates later said he regretted leaving Harvard, and he spent much of Microsoft's first year torn, even trying to get a friend to take charge so he could finish his studies.",
+        "terms": []
+      }
     },
     {
       "id": "dos",
@@ -49,7 +131,15 @@
       "outcome": "Microsoft kept the rights and licensed the system to other computer makers under the name MS-DOS. Version 2.0 shipped in March 1983, both with IBM's PC-XT and to other manufacturers, and MS-DOS kept being updated until the late 1990s.",
       "sources": [
         { "title": "Microsoft MS-DOS early source code", "url": "https://computerhistory.org/blog/microsoft-ms-dos-early-source-code/", "publisher": "Computer History Museum", "date": "2014-03-25" }
-      ]
+      ],
+      "lesson": {
+        "principle": "software-rights",
+        "takeaway": "Keeping the rights let Microsoft license the same system to companies making IBM-compatible PCs as well as to IBM.",
+        "watchOut": "Microsoft signed with IBM before it had an operating system, so the plan depended on quickly licensing, then buying, one written by another company.",
+        "terms": [
+          "licensing"
+        ]
+      }
     },
     {
       "id": "ipo",
@@ -67,7 +157,17 @@
       "sources": [
         { "title": "Inside the deal that made Bill Gates $350,000,000 (1986 cover story, republished)", "url": "https://fortune.com/2011/03/13/inside-the-deal-that-made-bill-gates-350000000/", "publisher": "Fortune", "date": "1986-07-21" },
         { "title": "Microsoft's IPO turns 40 today. If you invested $1,000 in Microsoft in 1986, you'd have $5.5 million today", "url": "https://fortune.com/2026/03/13/microsofts-ipo-40-years-1000-investment-5-5-million/", "publisher": "Fortune", "date": "2026-03-13" }
-      ]
+      ],
+      "lesson": {
+        "principle": "owners",
+        "takeaway": "Offering key people shares and stock options helped Microsoft attract talent, and selling only a small slice at the IPO let Gates keep a large stake as the company grew.",
+        "watchOut": "Gates worried that being public would distract the company, and afterwards he found it harder to attract talent without cheap stock to offer.",
+        "terms": [
+          "ipo",
+          "stock-option",
+          "stock-split"
+        ]
+      }
     },
     {
       "id": "handover",
@@ -86,7 +186,13 @@
         { "title": "Gates plans gradual exit from Microsoft", "url": "https://www.npr.org/2006/06/16/5490229/gates-plans-gradual-exit-from-microsoft", "publisher": "NPR", "date": "2006-06-16" },
         { "title": "Microsoft announces change to its board of directors", "url": "https://www.prnewswire.com/news-releases/microsoft-announces-change-to-its-board-of-directors-301023293.html", "publisher": "Microsoft (via PR Newswire)", "date": "2020-03-13" },
         { "title": "Bill Gates, foundation leadership biography", "url": "https://www.gatesfoundation.org/about/leadership/bill-gates", "publisher": "Gates Foundation", "date": "" }
-      ]
+      ],
+      "lesson": {
+        "principle": "impact",
+        "takeaway": "Gates chose to move his full-time work to the foundation, and planned a two-year handover so people, knowledge and skills could transfer smoothly rather than all at once.",
+        "watchOut": "Stepping back was gradual: he stayed Microsoft's chairman until 2014 and on its board until 2020, so the full exit took well over a decade.",
+        "terms": []
+      }
     },
     {
       "id": "spenddown",
@@ -105,7 +211,72 @@
         { "title": "Gates Foundation will double spending over next 20 years to accelerate progress on saving and improving lives", "url": "https://www.gatesfoundation.org/ideas/media-center/press-releases/2025/05/25th-anniversary-announcement", "publisher": "Gates Foundation", "date": "2025-05-08" },
         { "title": "Bill Gates announces plan to give 'virtually all' his money away and end the Gates Foundation in 20 years", "url": "https://www.cnn.com/2025/05/08/tech/bill-gates-giving-money-away-20-years", "publisher": "CNN", "date": "2025-05-08" },
         { "title": "Gates Foundation commits to historic $9 billion annual payout", "url": "https://www.gatesfoundation.org/ideas/media-center/press-releases/2026/01/historic-annual-budget-to-accelerate-mission", "publisher": "Gates Foundation", "date": "2026-01-14" }
-      ]
+      ],
+      "lesson": {
+        "principle": "impact",
+        "takeaway": "Spending faster is a bet that money does more good now than later; the plan ties the giving to three primary goals and a fixed closing date in 2045.",
+        "watchOut": "The total is not fixed: Gates said the exact amount will depend on markets and inflation, and the foundation says it is preparing the institutions that will outlast it to carry the work on.",
+        "terms": [
+          "endowment"
+        ]
+      }
+    }
+  ],
+  "glossary": [
+    {
+      "id": "licensing",
+      "term": "Licensing",
+      "definition": "Letting another party use something you own, such as software or a patent, in return for fees, while you keep ownership of it.",
+      "source": {
+        "title": "Licensing Agreement",
+        "url": "https://corporatefinanceinstitute.com/resources/accounting/licensing-agreement/",
+        "publisher": "Corporate Finance Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "ipo",
+      "term": "IPO (initial public offering)",
+      "definition": "The first time a company sells its shares to the public.",
+      "source": {
+        "title": "Initial Public Offering (IPO)",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/initial-public-offering-ipo",
+        "publisher": "Investor.gov (U.S. SEC)",
+        "date": ""
+      }
+    },
+    {
+      "id": "stock-option",
+      "term": "Stock option",
+      "definition": "A right given to an employee to buy the company's stock at a set price after a certain period of time.",
+      "source": {
+        "title": "Employee Stock Option Plans",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/employee-stock-option-plans",
+        "publisher": "Investor.gov (U.S. SEC)",
+        "date": ""
+      }
+    },
+    {
+      "id": "stock-split",
+      "term": "Stock split",
+      "definition": "When a company divides each existing share into several shares. Each holder has more shares at a lower price per share, but the total value does not change.",
+      "source": {
+        "title": "Stock Split",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stock-split",
+        "publisher": "Investor.gov (U.S. SEC)",
+        "date": ""
+      }
+    },
+    {
+      "id": "endowment",
+      "term": "Endowment",
+      "definition": "A pool of donated money that a nonprofit invests, using part of the investment returns to fund its work and reinvesting the rest.",
+      "source": {
+        "title": "Endowment",
+        "url": "https://corporatefinanceinstitute.com/resources/wealth-management/endowment/",
+        "publisher": "Corporate Finance Institute",
+        "date": ""
+      }
     }
   ]
 }

@@ -15,6 +15,82 @@
       "date": "2025-11-10"
     }
   },
+  "school": {
+    "name": "Value investing, Berkshire style",
+    "tagline": "Buy durable businesses you understand at sensible prices, then own them for a very long time.",
+    "principles": [
+      {
+        "id": "moat",
+        "name": "Durable businesses (economic moats)",
+        "summary": "He looks for businesses he understands that have a lasting edge, like being the low-cost producer or owning a world-famous brand, which keeps rivals from eating their profits. In his words, \"A moat that must be continuously rebuilt will eventually be no moat at all.\" Charlie Munger pushed him to prefer wonderful businesses at fair prices over fair businesses at wonderful prices.",
+        "sources": [
+          {
+            "title": "Berkshire Hathaway 2007 shareholder letter",
+            "url": "https://www.berkshirehathaway.com/letters/2007ltr.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "2008-02"
+          },
+          {
+            "title": "Berkshire Hathaway 2014 shareholder letter",
+            "url": "https://www.berkshirehathaway.com/letters/2014ltr.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "2015-02-27"
+          }
+        ]
+      },
+      {
+        "id": "price-value",
+        "name": "Price is not value",
+        "summary": "He separates what a stock costs today from what the business is worth, which he defines as the cash it can hand out over its remaining life, discounted to today. He quotes his teacher Ben Graham: \"Price is what you pay; value is what you get.\"",
+        "sources": [
+          {
+            "title": "Berkshire Hathaway 2008 shareholder letter",
+            "url": "https://www.berkshirehathaway.com/letters/2008ltr.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "2009-02-27"
+          },
+          {
+            "title": "An Owner's Manual (updated version of the 1996 booklet)",
+            "url": "https://www.berkshirehathaway.com/ownman.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "1996"
+          }
+        ]
+      },
+      {
+        "id": "long-term",
+        "name": "Think like an owner, hold for years",
+        "summary": "He treats a share as part ownership of a real business, not a ticker to trade, and asks shareholders to see themselves the same way. For outstanding businesses with outstanding managers, he wrote, \"our favorite holding period is forever.\"",
+        "sources": [
+          {
+            "title": "Berkshire Hathaway 1988 shareholder letter",
+            "url": "https://www.berkshirehathaway.com/letters/1988.html",
+            "publisher": "Berkshire Hathaway",
+            "date": "1989-02-28"
+          },
+          {
+            "title": "An Owner's Manual (updated version of the 1996 booklet)",
+            "url": "https://www.berkshirehathaway.com/ownman.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "1996"
+          }
+        ]
+      },
+      {
+        "id": "managers",
+        "name": "Allocate the money, trust able managers",
+        "summary": "At Berkshire he mainly decided where money went and who ran each business, then left day-to-day decisions to those managers. He described delegating \"almost to the point of abdication.\"",
+        "sources": [
+          {
+            "title": "An Owner's Manual (updated version of the 1996 booklet)",
+            "url": "https://www.berkshirehathaway.com/ownman.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "1996"
+          }
+        ]
+      }
+    ]
+  },
   "decisions": [
     {
       "id": "berkshire",
@@ -32,7 +108,24 @@
       "sources": [
         { "title": "Berkshire Hathaway 2014 shareholder letter", "url": "https://www.berkshirehathaway.com/letters/2014ltr.pdf", "publisher": "Berkshire Hathaway", "date": "2015-02-27" },
         { "title": "Berkshire Hathaway 2025 shareholder letter", "url": "https://www.berkshirehathaway.com/letters/2025ltr.pdf", "publisher": "Berkshire Hathaway", "date": "2026-02-28" }
-      ]
+      ],
+      "lesson": {
+        "principle": "moat",
+        "takeaway": "A cheap price could not rescue a weak business: the textile operation tied up money for nearly two decades until he shut it down in 1985. That lesson, plus Charlie Munger’s advice, pushed him toward buying wonderful businesses at fair prices instead.",
+        "watchOut": "Emotion is expensive: he said he refused the offer because he bristled at being lowballed, and he later called that choice monumentally stupid.",
+        "terms": [
+          "tender-offer",
+          "economic-moat"
+        ],
+        "sources": [
+          {
+            "title": "Berkshire Hathaway 2014 shareholder letter",
+            "url": "https://www.berkshirehathaway.com/letters/2014ltr.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "2015-02-27"
+          }
+        ]
+      }
     },
     {
       "id": "coke",
@@ -51,7 +144,30 @@
         { "title": "Berkshire Hathaway 1988 shareholder letter", "url": "https://www.berkshirehathaway.com/letters/1988.html", "publisher": "Berkshire Hathaway", "date": "1989-02-28" },
         { "title": "Berkshire Hathaway 1989 shareholder letter", "url": "https://www.berkshirehathaway.com/letters/1989.html", "publisher": "Berkshire Hathaway", "date": "1990-03-02" },
         { "title": "Berkshire Hathaway 2025 shareholder letter", "url": "https://www.berkshirehathaway.com/letters/2025ltr.pdf", "publisher": "Berkshire Hathaway", "date": "2026-02-28" }
-      ]
+      ],
+      "lesson": {
+        "principle": "long-term",
+        "takeaway": "He bought a business with a world-famous brand that he had admired since childhood and kept it for decades: by 2025 it paid Berkshire $816 million a year in dividends on a cost basis of about $1.3 billion.",
+        "watchOut": "Holding forever has a cost too: in his 2004 letter he said he only grumbled about sky-high prices for Berkshire’s \"Big Four\" holdings, Coca-Cola among them, during the stock-market bubble instead of acting, admitting \"I talked when I should have walked.\"",
+        "terms": [
+          "cost-basis",
+          "dividend"
+        ],
+        "sources": [
+          {
+            "title": "Berkshire Hathaway 1988 shareholder letter",
+            "url": "https://www.berkshirehathaway.com/letters/1988.html",
+            "publisher": "Berkshire Hathaway",
+            "date": "1989-02-28"
+          },
+          {
+            "title": "Berkshire Hathaway 2004 shareholder letter",
+            "url": "https://www.berkshirehathaway.com/letters/2004ltr.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "2005-02-28"
+          }
+        ]
+      }
     },
     {
       "id": "pledge",
@@ -69,7 +185,23 @@
       "sources": [
         { "title": "Berkshire Hathaway Form 8-K with Schedule 13D/A (Amendment No. 52) describing the pledge", "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312506136954/dex991.htm", "publisher": "SEC EDGAR", "date": "2006-06-27" },
         { "title": "Buffett converts A shares and donates B shares to five foundations", "url": "https://www.berkshirehathaway.com/news/jun2725.pdf", "publisher": "Berkshire Hathaway", "date": "2025-06-27" }
-      ]
+      ],
+      "lesson": {
+        "principle": "managers",
+        "takeaway": "Rather than direct every dollar himself, he backed a foundation whose work he said he greatly admired and set a few clear conditions, much as Berkshire backs proven managers and lets them run things.",
+        "watchOut": "Backing others means giving up control: beyond his three conditions, the filing says he placed no limits on how the Gates Foundation used or sold the shares.",
+        "terms": [
+          "form-8-k"
+        ],
+        "sources": [
+          {
+            "title": "Berkshire Hathaway Form 8-K with Schedule 13D/A (Amendment No. 52) describing the pledge",
+            "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312506136954/dex991.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2006-06-27"
+          }
+        ]
+      }
     },
     {
       "id": "goldman",
@@ -89,7 +221,25 @@
         { "title": "Berkshire Hathaway invests US$5 billion in Goldman Sachs amid global financial crisis", "url": "https://www.goldmansachs.com/our-firm/history/moments/2008-buffett-investment", "publisher": "Goldman Sachs", "date": "" },
         { "title": "Berkshire Hathaway 2008 shareholder letter", "url": "https://www.berkshirehathaway.com/letters/2008ltr.pdf", "publisher": "Berkshire Hathaway", "date": "2009-02-27" },
         { "title": "Berkshire Hathaway 2011 shareholder letter", "url": "https://www.berkshirehathaway.com/letters/2011ltr.pdf", "publisher": "Berkshire Hathaway", "date": "2012-02-25" }
-      ]
+      ],
+      "lesson": {
+        "principle": "price-value",
+        "takeaway": "In a panic, few investors have cash to offer, so the one who does can set tough terms: here a 10% dividend plus warrants. It fits his habit of buying quality when it is marked down.",
+        "watchOut": "Buying in turbulent markets can also go wrong: in the same 2008 letter he admitted buying ConocoPhillips near the oil-price peak, a mistake he said cost Berkshire several billion dollars.",
+        "terms": [
+          "preferred-stock",
+          "warrant",
+          "intrinsic-value"
+        ],
+        "sources": [
+          {
+            "title": "Berkshire Hathaway 2008 shareholder letter",
+            "url": "https://www.berkshirehathaway.com/letters/2008ltr.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "2009-02-27"
+          }
+        ]
+      }
     },
     {
       "id": "succession",
@@ -109,7 +259,124 @@
         { "title": "Warren Buffett's Thanksgiving letter to shareholders", "url": "https://www.berkshirehathaway.com/news/nov1025.pdf", "publisher": "Berkshire Hathaway", "date": "2025-11-10" },
         { "title": "Berkshire Hathaway 2025 shareholder letter", "url": "https://www.berkshirehathaway.com/letters/2025ltr.pdf", "publisher": "Berkshire Hathaway", "date": "2026-02-28" },
         { "title": "Warren E. Buffett becomes Chairman Emeritus; Howard G. Buffett elected Chairman", "url": "https://www.berkshirehathaway.com/news/sep1826.pdf", "publisher": "Berkshire Hathaway", "date": "2026-09-18" }
-      ]
+      ],
+      "lesson": {
+        "principle": "managers",
+        "takeaway": "He treated picking the next leader as part of his job, naming Greg Abel while he could still vouch for him in public and stay on as chairman.",
+        "watchOut": "A strong successor does not remove every risk: in November 2025 he wrote that Berkshire's size \"takes its toll\" and that many companies will do better than it over the next decade or two.",
+        "terms": [
+          "annual-report"
+        ],
+        "sources": [
+          {
+            "title": "Warren Buffett's Thanksgiving letter to shareholders",
+            "url": "https://www.berkshirehathaway.com/news/nov1025.pdf",
+            "publisher": "Berkshire Hathaway",
+            "date": "2025-11-10"
+          }
+        ]
+      }
+    }
+  ],
+  "glossary": [
+    {
+      "id": "tender-offer",
+      "term": "Tender offer",
+      "definition": "A public offer by a company or an outside buyer to purchase a large share of a company's stock from its shareholders, usually at a set price for a limited time.",
+      "source": {
+        "title": "Tender Offer",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/tender-offer",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "economic-moat",
+      "term": "Economic moat",
+      "definition": "Buffett's image for a lasting competitive advantage, such as low costs or a powerful brand, that protects a business's profits from competitors the way a moat protects a castle.",
+      "source": {
+        "title": "Berkshire Hathaway 2007 shareholder letter",
+        "url": "https://www.berkshirehathaway.com/letters/2007ltr.pdf",
+        "publisher": "Berkshire Hathaway",
+        "date": "2008-02"
+      }
+    },
+    {
+      "id": "cost-basis",
+      "term": "Cost basis",
+      "definition": "Generally what you paid for an investment, including costs such as commissions. It is used to work out your gain or loss when you sell.",
+      "source": {
+        "title": "Topic no. 703, Basis of assets",
+        "url": "https://www.irs.gov/taxtopics/tc703",
+        "publisher": "IRS",
+        "date": ""
+      }
+    },
+    {
+      "id": "dividend",
+      "term": "Dividend",
+      "definition": "A share of a company's profit paid out to its shareholders, often on a regular schedule.",
+      "source": {
+        "title": "Dividend",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/dividend",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "form-8-k",
+      "term": "Form 8-K",
+      "definition": "A report U.S. public companies file with the SEC to announce major events soon after they happen, between their regular annual and quarterly reports.",
+      "source": {
+        "title": "Form 8-K",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/form-8-k",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "preferred-stock",
+      "term": "Preferred stock",
+      "definition": "A type of share that usually has no voting rights but gets paid dividends before common shareholders, and ranks ahead of them if the company is liquidated.",
+      "source": {
+        "title": "Stocks FAQs",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "warrant",
+      "term": "Warrant",
+      "definition": "A contract issued by a company that gives the holder the right, but not the duty, to buy (or in some cases sell) its shares at a set price before a set date.",
+      "source": {
+        "title": "What Are Stock Warrants?",
+        "url": "https://www.nasdaq.com/articles/what-are-stock-warrants",
+        "publisher": "Nasdaq",
+        "date": ""
+      }
+    },
+    {
+      "id": "intrinsic-value",
+      "term": "Intrinsic value",
+      "definition": "Buffett's definition: the cash a business can hand out over the rest of its life, discounted back to today. It is always an estimate, so two careful people can reach different figures.",
+      "source": {
+        "title": "An Owner's Manual (updated version of the 1996 booklet)",
+        "url": "https://www.berkshirehathaway.com/ownman.pdf",
+        "publisher": "Berkshire Hathaway",
+        "date": "1996"
+      }
+    },
+    {
+      "id": "annual-report",
+      "term": "Annual report",
+      "definition": "A yearly report a public company sends shareholders about its business and results, usually opening with a letter from the chief executive.",
+      "source": {
+        "title": "Annual Report",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/annual-report",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
     }
   ]
 }

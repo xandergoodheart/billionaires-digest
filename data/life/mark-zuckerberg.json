@@ -14,6 +14,100 @@
       "date": "2026-04-16"
     }
   },
+  "school": {
+    "name": "The Hacker Way",
+    "tagline": "Move fast, connect everyone, keep founder control and fund long bets on the next platform.",
+    "principles": [
+      {
+        "id": "move-fast",
+        "name": "Move fast, stay lean",
+        "summary": "His 2012 IPO letter described a culture of shipping small improvements quickly and learning from them, with the saying \"Move fast and break things.\" In 2023 he argued that every extra management layer slows decisions, so a flatter, leaner company moves faster.",
+        "sources": [
+          {
+            "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2012-02-01"
+          },
+          {
+            "title": "Update on Meta's Year of Efficiency",
+            "url": "https://about.fb.com/news/2023/03/mark-zuckerberg-meta-year-of-efficiency/",
+            "publisher": "Meta Newsroom",
+            "date": "2023-03-14"
+          }
+        ]
+      },
+      {
+        "id": "connect",
+        "name": "Own the networks people use",
+        "summary": "He framed the company's mission as making the world more open and connected. Facebook bought popular apps with big user bases, Instagram and then WhatsApp, and said both would keep growing independently under their own brands.",
+        "sources": [
+          {
+            "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2012-02-01"
+          },
+          {
+            "title": "Facebook to Acquire Instagram",
+            "url": "https://about.fb.com/news/2012/04/facebook-to-acquire-instagram/",
+            "publisher": "Meta Newsroom",
+            "date": "2012-04-09"
+          },
+          {
+            "title": "Facebook to Acquire WhatsApp",
+            "url": "https://about.fb.com/news/2014/02/facebook-to-acquire-whatsapp/",
+            "publisher": "Meta Newsroom",
+            "date": "2014-02-19"
+          }
+        ]
+      },
+      {
+        "id": "control",
+        "name": "Keep founder control",
+        "summary": "Facebook went public with two share classes: Class B shares carry ten votes each, Class A shares one. That structure lets him control shareholder votes, and he has kept majority voting control even after pledging substantially all of his shares to giving.",
+        "sources": [
+          {
+            "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2012-02-01"
+          },
+          {
+            "title": "Facebook current report (Form 8-K), December 1, 2015",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680115000035/form8kdec2015.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2015-12-01"
+          },
+          {
+            "title": "Meta Platforms 2026 proxy statement",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2026-04-16"
+          }
+        ]
+      },
+      {
+        "id": "long-term",
+        "name": "Make money to build",
+        "summary": "His IPO letter said: \"we don't build services to make money; we make money to build better services.\" In 2021 he cited that line to explain very large, long-term investments in what he saw as the next platform, the metaverse.",
+        "sources": [
+          {
+            "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2012-02-01"
+          },
+          {
+            "title": "Founder's Letter, 2021",
+            "url": "https://about.fb.com/news/2021/10/founders-letter/",
+            "publisher": "Meta Newsroom",
+            "date": "2021-10-28"
+          }
+        ]
+      }
+    ]
+  },
   "decisions": [
     {
       "id": "instagram",
@@ -32,7 +126,17 @@
         { "title": "Facebook to Acquire Instagram", "url": "https://about.fb.com/news/2012/04/facebook-to-acquire-instagram/", "publisher": "Meta Newsroom", "date": "2012-04-09" },
         { "title": "FTC Sues Facebook for Illegal Monopolization", "url": "https://www.ftc.gov/news-events/news/press-releases/2020/12/ftc-sues-facebook-illegal-monopolization", "publisher": "Federal Trade Commission", "date": "2020-12-09" },
         { "title": "Meta quarterly report (Form 10-Q), quarter ended June 30, 2026", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "publisher": "SEC EDGAR", "date": "2026-07-29" }
-      ]
+      ],
+      "lesson": {
+        "principle": "connect",
+        "takeaway": "The idea: buy a popular network with many users, and keep what its users love instead of folding everything into your own app.",
+        "watchOut": "He said then that Facebook did not plan many more deals like it, yet it bought WhatsApp two years later; the FTC's 2020 lawsuit cited both deals, the court ruled for Meta in November 2025, and the FTC has appealed.",
+        "terms": [
+          "acquisition",
+          "network-effects",
+          "antitrust"
+        ]
+      }
     },
     {
       "id": "whatsapp",
@@ -52,7 +156,16 @@
         { "title": "Facebook annual report (Form 10-K), 2014", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680115000006/fb-12312014x10k.htm", "publisher": "SEC EDGAR", "date": "2015" },
         { "title": "FTC Sues Facebook for Illegal Monopolization", "url": "https://www.ftc.gov/news-events/news/press-releases/2020/12/ftc-sues-facebook-illegal-monopolization", "publisher": "Federal Trade Commission", "date": "2020-12-09" },
         { "title": "Meta annual report (Form 10-K), 2025", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm", "publisher": "SEC EDGAR", "date": "2026-01-29" }
-      ]
+      ],
+      "lesson": {
+        "principle": "connect",
+        "takeaway": "Paying for users before revenue is a bet that a huge, fast-growing network can become valuable later.",
+        "watchOut": "Facebook's 2014 annual report said it made money from WhatsApp in only a very limited way, and the deal became part of the FTC's case; the court ruled for Meta in November 2025 and the FTC has appealed.",
+        "terms": [
+          "acquisition",
+          "antitrust"
+        ]
+      }
     },
     {
       "id": "giving",
@@ -72,7 +185,23 @@
         { "title": "Mark Zuckerberg Says He Plans to Give Away 99 Percent of His Facebook Shares", "url": "https://www.nbcnews.com/tech/social-media/mark-zuckerberg-says-he-plans-give-away-99-percent-his-n472371", "publisher": "NBC News", "date": "2015-12-01" },
         { "title": "Biohub launches first large-scale scientific initiative combining frontier AI with frontier biology", "url": "https://biohub.org/news/ai-biology-cure-disease/", "publisher": "Biohub (Chan Zuckerberg Initiative)", "date": "2025-11-06" },
         { "title": "Meta Platforms 2026 proxy statement", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm", "publisher": "SEC EDGAR", "date": "2026-04-16" }
-      ]
+      ],
+      "lesson": {
+        "principle": "control",
+        "takeaway": "Giving through an LLC he controls let him pledge most of his shares while keeping majority voting control of the company.",
+        "watchOut": "Facebook's IPO filing warned that this concentrated control limits other shareholders' ability to influence company decisions.",
+        "terms": [
+          "dual-class-shares"
+        ],
+        "sources": [
+          {
+            "title": "Facebook registration statement (Form S-1), including Letter from Mark Zuckerberg",
+            "url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312512034517/d287954ds1.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2012-02-01"
+          }
+        ]
+      }
     },
     {
       "id": "meta",
@@ -91,7 +220,23 @@
         { "title": "Introducing Meta: A Social Technology Company", "url": "https://about.fb.com/news/2021/10/facebook-company-is-now-meta/", "publisher": "Meta Newsroom", "date": "2021-10-28" },
         { "title": "Meta annual report (Form 10-K), 2025", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm", "publisher": "SEC EDGAR", "date": "2026-01-29" },
         { "title": "Meta quarterly report (Form 10-Q), quarter ended June 30, 2026", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "publisher": "SEC EDGAR", "date": "2026-07-29" }
-      ]
+      ],
+      "lesson": {
+        "principle": "long-term",
+        "takeaway": "A long-term platform bet means spending heavily for years on something that may not pay off soon; he said the business was built to support investments like this.",
+        "watchOut": "The bet is costly: Reality Labs had a $19.19 billion operating loss in 2025, and Meta now says its planned 2026 capital spending of $130 billion to $145 billion is to support its AI efforts and core business.",
+        "terms": [
+          "capital-expenditure"
+        ],
+        "sources": [
+          {
+            "title": "Founder's Letter, 2021",
+            "url": "https://about.fb.com/news/2021/10/founders-letter/",
+            "publisher": "Meta Newsroom",
+            "date": "2021-10-28"
+          }
+        ]
+      }
     },
     {
       "id": "efficiency",
@@ -110,7 +255,95 @@
         { "title": "Mark Zuckerberg's Message to Meta Employees", "url": "https://about.fb.com/news/2022/11/mark-zuckerberg-layoff-message-to-employees/", "publisher": "Meta Newsroom", "date": "2022-11-09" },
         { "title": "Update on Meta's Year of Efficiency", "url": "https://about.fb.com/news/2023/03/mark-zuckerberg-meta-year-of-efficiency/", "publisher": "Meta Newsroom", "date": "2023-03-14" },
         { "title": "Meta annual report (Form 10-K), 2023", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm", "publisher": "SEC EDGAR", "date": "2024-02-02" }
-      ]
+      ],
+      "lesson": {
+        "principle": "move-fast",
+        "takeaway": "Fewer management layers and fewer side projects can speed up a big company; he said many things went faster after the first round of cuts.",
+        "watchOut": "Cuts have a human cost: he acknowledged the changes caused uncertainty and stress and meant saying goodbye to talented colleagues.",
+        "terms": [
+          "net-income",
+          "dividend"
+        ]
+      }
+    }
+  ],
+  "glossary": [
+    {
+      "id": "acquisition",
+      "term": "Acquisition",
+      "definition": "When one company buys part or all of another company's shares or assets, usually to gain control of it.",
+      "source": {
+        "title": "Acquisition",
+        "url": "https://corporatefinanceinstitute.com/resources/valuation/acquisition/",
+        "publisher": "Corporate Finance Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "network-effects",
+      "term": "Network effects",
+      "definition": "When a product becomes more useful as more people use it, like a messaging app that is worth more when all your friends are on it.",
+      "source": {
+        "title": "Network Effect",
+        "url": "https://corporatefinanceinstitute.com/resources/economics/what-is-network-effect/",
+        "publisher": "Corporate Finance Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "antitrust",
+      "term": "Antitrust law",
+      "definition": "Laws meant to protect competition for the benefit of consumers, for example by outlawing illegal monopolization and unlawful mergers.",
+      "source": {
+        "title": "The Antitrust Laws",
+        "url": "https://www.ftc.gov/advice-guidance/competition-guidance/guide-antitrust-laws/antitrust-laws",
+        "publisher": "Federal Trade Commission",
+        "date": ""
+      }
+    },
+    {
+      "id": "dual-class-shares",
+      "term": "Dual-class shares",
+      "definition": "A setup where a company has two kinds of common stock with different voting power, often so founders keep control while selling shares to the public.",
+      "source": {
+        "title": "Dual-Class Stocks",
+        "url": "https://corporatefinanceinstitute.com/resources/equities/dual-class-stocks/",
+        "publisher": "Corporate Finance Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "capital-expenditure",
+      "term": "Capital expenditure (capex)",
+      "definition": "Money a company spends to buy long-term physical assets, such as property and equipment, that it uses in its business.",
+      "source": {
+        "title": "Capital Expenditure (CapEx)",
+        "url": "https://corporatefinanceinstitute.com/resources/accounting/capital-expenditure-capex/",
+        "publisher": "Corporate Finance Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "net-income",
+      "term": "Net income",
+      "definition": "The profit left after a company subtracts all its costs, interest and taxes from its revenue.",
+      "source": {
+        "title": "Net Income",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/net-income",
+        "publisher": "Investor.gov (U.S. SEC)",
+        "date": ""
+      }
+    },
+    {
+      "id": "dividend",
+      "term": "Dividend",
+      "definition": "A portion of a company's profit paid out to its shareholders, often on a regular schedule.",
+      "source": {
+        "title": "Dividend",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/dividend",
+        "publisher": "Investor.gov (U.S. SEC)",
+        "date": ""
+      }
     }
   ]
 }

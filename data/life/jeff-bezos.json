@@ -15,6 +15,76 @@
       "date": "2026-04"
     }
   },
+  "school": {
+    "name": "Day 1: customer-first, long-term invention",
+    "tagline": "Start from the customer, judge choices over years not quarters, and keep a start-up's speed.",
+    "principles": [
+      {
+        "id": "customer",
+        "name": "Customer obsession",
+        "summary": "He argues that centering a company on customers, rather than on competitors or products, keeps it inventive, because customers always want something better even when they say they are happy. His first letter promised to focus relentlessly on customers.",
+        "sources": [
+          {
+            "title": "1997 letter to shareholders (reprinted with the 2017 letter)",
+            "url": "https://www.aboutamazon.com/news/company-news/2017-letter-to-shareholders",
+            "publisher": "Amazon",
+            "date": "2018-04-18"
+          },
+          {
+            "title": "2016 letter to shareholders",
+            "url": "https://www.aboutamazon.com/news/company-news/2016-letter-to-shareholders",
+            "publisher": "Amazon",
+            "date": "2017-04-17"
+          }
+        ]
+      },
+      {
+        "id": "long-term",
+        "name": "It's all about the long term",
+        "summary": "His 1997 letter said Amazon would make investment decisions for long-term market leadership, not short-term profit or Wall Street's reaction, and would choose future cash flow over flattering accounting.",
+        "sources": [
+          {
+            "title": "1997 letter to shareholders (reprinted with the 2017 letter)",
+            "url": "https://www.aboutamazon.com/news/company-news/2017-letter-to-shareholders",
+            "publisher": "Amazon",
+            "date": "2018-04-18"
+          }
+        ]
+      },
+      {
+        "id": "invent",
+        "name": "Invent, wander and accept failure",
+        "summary": "He expects bold bets, many of which will fail, and says failures need to grow in size along with the company. He points to AWS as something no customer asked for, and to the Fire phone as a flop whose lessons and developers sped up work on Echo and Alexa.",
+        "sources": [
+          {
+            "title": "2018 letter to shareholders",
+            "url": "https://www.aboutamazon.com/news/company-news/2018-letter-to-shareholders",
+            "publisher": "Amazon",
+            "date": "2019-04-11"
+          },
+          {
+            "title": "1997 letter to shareholders (reprinted with the 2017 letter)",
+            "url": "https://www.aboutamazon.com/news/company-news/2017-letter-to-shareholders",
+            "publisher": "Amazon",
+            "date": "2018-04-18"
+          }
+        ]
+      },
+      {
+        "id": "day-1",
+        "name": "Stay in Day 1: decide fast",
+        "summary": "Day 2, he wrote, is stasis followed by decline. To avoid it he urges making most decisions with about 70% of the information you wish you had, correcting mistakes quickly, and using \"disagree and commit\" to move ahead without full agreement.",
+        "sources": [
+          {
+            "title": "2016 letter to shareholders",
+            "url": "https://www.aboutamazon.com/news/company-news/2016-letter-to-shareholders",
+            "publisher": "Amazon",
+            "date": "2017-04-17"
+          }
+        ]
+      }
+    ]
+  },
   "decisions": [
     {
       "id": "found",
@@ -32,7 +102,24 @@
       "sources": [
         { "title": "Amazon.com IPO prospectus (Form 424B1)", "url": "https://www.sec.gov/Archives/edgar/data/1018724/0000891020-97-000868.txt", "publisher": "SEC EDGAR", "date": "1997-05-15" },
         { "title": "Amazon annual report (Form 10-K), fiscal 2025", "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm", "publisher": "SEC EDGAR", "date": "2026-02-06" }
-      ]
+      ],
+      "lesson": {
+        "principle": "long-term",
+        "takeaway": "He left a senior job at an established firm to bet on where online shopping could go over many years, not on quick profits.",
+        "watchOut": "The early company was fragile: its 1997 IPO prospectus warned of a limited operating history, a $9.0 million accumulated deficit and more losses ahead.",
+        "terms": [
+          "ipo",
+          "net-income"
+        ],
+        "sources": [
+          {
+            "title": "Amazon.com IPO prospectus (Form 424B1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018724/0000891020-97-000868.txt",
+            "publisher": "SEC EDGAR",
+            "date": "1997-05-15"
+          }
+        ]
+      }
     },
     {
       "id": "prime",
@@ -46,13 +133,35 @@
         { "id": "minimum", "label": "Offer free express shipping only on big orders", "real": false }
       ],
       "actual": "In February 2005 Amazon launched Amazon Prime, its first membership program: $79 a year for unlimited free two-day shipping with no minimum order. He admitted it would cost the company in the short term.",
-      "outcome": "In his 2017 shareholder letter he wrote that no customer ever asked Amazon to create Prime. In his April 2021 letter he said Amazon had more than 200 million Prime members. In 2025 Amazon's subscription sales, which include Prime fees, were $49.6 billion.",
+      "outcome": "In his shareholder letter published in April 2017 he wrote that no customer ever asked Amazon to create Prime. In his April 2021 letter he said Amazon had more than 200 million Prime members. In 2025 Amazon's subscription sales, which include Prime fees, were $49.6 billion.",
       "sources": [
         { "title": "Amazon.com announces record free cash flow; introduces Amazon Prime", "url": "https://press.aboutamazon.com/2005/2/amazon-com-announces-record-free-cash-flow-fueled-by-lower-prices-and-free-shipping-introduces-new-express-shipping-program-amazon-prime", "publisher": "Amazon", "date": "2005-02-02" },
         { "title": "2016 letter to shareholders", "url": "https://www.aboutamazon.com/news/company-news/2016-letter-to-shareholders", "publisher": "Amazon", "date": "2017-04-17" },
         { "title": "2020 letter to shareholders", "url": "https://www.aboutamazon.com/news/company-news/2020-letter-to-shareholders", "publisher": "Amazon", "date": "2021-04-15" },
         { "title": "Amazon annual report (Form 10-K), fiscal 2025", "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm", "publisher": "SEC EDGAR", "date": "2026-02-06" }
-      ]
+      ],
+      "lesson": {
+        "principle": "customer",
+        "takeaway": "Amazon took on a cost it called expensive in the short term to remove a customer annoyance: minimum orders and waiting to bundle purchases. He later wrote that no customer ever asked for Prime.",
+        "watchOut": "Subscriptions can backfire: in September 2025 Amazon agreed to pay $2.5 billion to settle FTC allegations that it enrolled people in Prime without consent and made cancelling hard.",
+        "terms": [
+          "revenue"
+        ],
+        "sources": [
+          {
+            "title": "2016 letter to shareholders",
+            "url": "https://www.aboutamazon.com/news/company-news/2016-letter-to-shareholders",
+            "publisher": "Amazon",
+            "date": "2017-04-17"
+          },
+          {
+            "title": "FTC secures historic $2.5 billion settlement against Amazon",
+            "url": "https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon",
+            "publisher": "Federal Trade Commission",
+            "date": "2025-09-25"
+          }
+        ]
+      }
     },
     {
       "id": "aws",
@@ -70,7 +179,30 @@
       "sources": [
         { "title": "Amazon Web Services launches S3", "url": "https://press.aboutamazon.com/2006/3/amazon-web-services-launches", "publisher": "Amazon", "date": "2006-03-14" },
         { "title": "Amazon annual report (Form 10-K), fiscal 2025", "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm", "publisher": "SEC EDGAR", "date": "2026-02-06" }
-      ]
+      ],
+      "lesson": {
+        "principle": "invent",
+        "takeaway": "Amazon turned tools it built for itself into a product for everyone, a bet he later described as following a hunch that no customer had asked for.",
+        "watchOut": "When others run on your systems, your outages become theirs: a command entered with a wrong input on February 28, 2017 took Amazon S3 down for hours in its Northern Virginia region and disrupted other AWS services there.",
+        "terms": [
+          "cloud-computing",
+          "operating-income"
+        ],
+        "sources": [
+          {
+            "title": "2018 letter to shareholders",
+            "url": "https://www.aboutamazon.com/news/company-news/2018-letter-to-shareholders",
+            "publisher": "Amazon",
+            "date": "2019-04-11"
+          },
+          {
+            "title": "Summary of the Amazon S3 service disruption in the Northern Virginia (US-EAST-1) Region",
+            "url": "https://aws.amazon.com/message/41926/",
+            "publisher": "Amazon Web Services",
+            "date": "2017-03"
+          }
+        ]
+      }
     },
     {
       "id": "post",
@@ -90,7 +222,29 @@
         { "title": "The Washington Post Company Form 8-K on completion of the sale", "url": "https://www.sec.gov/Archives/edgar/data/104889/000010488913000040/d8k.htm", "publisher": "SEC EDGAR", "date": "2013-10-07" },
         { "title": "The Washington Post Company renamed Graham Holdings", "url": "https://www.sec.gov/Archives/edgar/data/104889/000095015713000413/ex99-1.htm", "publisher": "SEC EDGAR", "date": "2013-11-18" },
         { "title": "Amazon 2026 proxy statement (Form DEF 14A)", "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm", "publisher": "SEC EDGAR", "date": "2026-04" }
-      ]
+      ],
+      "lesson": {
+        "principle": "customer",
+        "takeaway": "He bought the paper personally and framed its mission around its audience: \"Our duty to readers will continue to be the heart of the Post.\"",
+        "watchOut": "An owner's choices can cost reader trust: after the Post said in October 2024 it would not endorse a presidential candidate, a decision Bezos took responsibility for, NPR reported that more than 250,000 subscribers had left.",
+        "terms": [
+          "form-8-k"
+        ],
+        "sources": [
+          {
+            "title": "Jeffrey P. Bezos to purchase The Washington Post (press release, 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/104889/000095015713000294/ex99-1.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2013-08-05"
+          },
+          {
+            "title": "More than 250,000 subscribers have left 'Washington Post' over withheld endorsement",
+            "url": "https://www.npr.org/2024/10/29/nx-s1-5170939/more-than-250-000-subscribers-have-left-washington-post-over-withheld-endorsement",
+            "publisher": "NPR",
+            "date": "2024-10-29"
+          }
+        ]
+      }
     },
     {
       "id": "earth",
@@ -110,7 +264,95 @@
         { "title": "Jeff Bezos pledges $10 billion to fight climate change", "url": "https://www.npr.org/2020/02/17/806720144/jeff-bezos-pledges-10-billion-to-fight-climate-change-planets-biggest-threat", "publisher": "NPR", "date": "2020-02-17" },
         { "title": "Jeff Bezos names first recipients of his $10 billion Earth Fund", "url": "https://www.cnbc.com/2020/11/16/jeff-bezos-names-first-recipients-of-his-10-billion-earth-fund.html", "publisher": "CNBC", "date": "2020-11-16" },
         { "title": "Amazon 2026 proxy statement (Form DEF 14A)", "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm", "publisher": "SEC EDGAR", "date": "2026-04" }
-      ]
+      ],
+      "lesson": {
+        "principle": "long-term",
+        "takeaway": "He committed a large, fixed sum to a problem measured in decades and set a timeframe, this decade, for giving it out.",
+        "watchOut": "A pledge is not money spent yet: the first grants in November 2020 totaled $791 million of the $10 billion, with the rest to be granted over the decade.",
+        "terms": [],
+        "sources": [
+          {
+            "title": "Jeff Bezos names first recipients of his $10 billion Earth Fund",
+            "url": "https://www.cnbc.com/2020/11/16/jeff-bezos-names-first-recipients-of-his-10-billion-earth-fund.html",
+            "publisher": "CNBC",
+            "date": "2020-11-16"
+          },
+          {
+            "title": "Amazon 2026 proxy statement (Form DEF 14A)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2026-04"
+          }
+        ]
+      }
+    }
+  ],
+  "glossary": [
+    {
+      "id": "ipo",
+      "term": "IPO (initial public offering)",
+      "definition": "The first time a company sells its shares to the public.",
+      "source": {
+        "title": "Initial Public Offering (IPO)",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/initial-public-offering-ipo",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "net-income",
+      "term": "Net income (and net loss)",
+      "definition": "What a company earned or lost in a period after all its expenses, interest and income taxes are subtracted from its revenue. A profit is called net income (or net profit); a shortfall is a net loss.",
+      "source": {
+        "title": "Beginners' Guide to Financial Statements",
+        "url": "https://www.sec.gov/about/reports-publications/beginners-guide-financial-statements",
+        "publisher": "SEC",
+        "date": ""
+      }
+    },
+    {
+      "id": "revenue",
+      "term": "Revenue (sales)",
+      "definition": "The total money a company takes in from selling its goods and services, before any costs are subtracted.",
+      "source": {
+        "title": "Revenue",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/revenue",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "cloud-computing",
+      "term": "Cloud computing",
+      "definition": "Renting computing power, storage and software over the internet on demand, and paying for what you use, instead of buying and running your own machines.",
+      "source": {
+        "title": "What is cloud computing?",
+        "url": "https://aws.amazon.com/what-is-cloud-computing/",
+        "publisher": "Amazon Web Services",
+        "date": ""
+      }
+    },
+    {
+      "id": "operating-income",
+      "term": "Operating income",
+      "definition": "The profit a business makes from its main activities after paying operating costs, before interest and income taxes.",
+      "source": {
+        "title": "Beginners' Guide to Financial Statements",
+        "url": "https://www.sec.gov/about/reports-publications/beginners-guide-financial-statements",
+        "publisher": "SEC",
+        "date": ""
+      }
+    },
+    {
+      "id": "form-8-k",
+      "term": "Form 8-K",
+      "definition": "A report U.S. public companies file with the SEC to announce major events soon after they happen, between their regular annual and quarterly reports.",
+      "source": {
+        "title": "Form 8-K",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/form-8-k",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
     }
   ]
 }
