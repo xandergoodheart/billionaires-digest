@@ -6,7 +6,11 @@ import assert from 'node:assert/strict';
 import { makeDb, rejectsWith, MODES } from './pgtest.mjs';
 import { probToQ } from '../moves.mjs';
 
-const CLOSES = '2026-10-31T20:00:00Z';
+// dates relative to the real clock: create_market stamps opens_at with the real now(), so a fixed
+// fake 'now' in the past would make fresh markets look not-yet-open (the test broke after 2026-09-27 16:00Z)
+const NOW = new Date(Date.now() + 60 * 1000).toISOString();
+const CLOSES = new Date(Date.now() + 30 * 86400 * 1000).toISOString();
+const PAST = new Date(Date.now() - 3600 * 1000).toISOString();
 const mk = (slug, kind) => ({ slug, question: `Q ${slug}?`, kind, params: { startProb: 0.8 }, closes_at: CLOSES, b: 100 });
 
 for (const mode of MODES) describe(mode, () => {
@@ -16,7 +20,7 @@ for (const mode of MODES) describe(mode, () => {
   const row = async slug => (await t.root('select id, q_yes, q_no, b, kind from public.markets where slug = $1', [slug])).rows[0];
   before(async () => {
     t = await makeDb({ mode });
-    await t.setNow('2026-09-27T16:00:00Z');
+    await t.setNow(NOW);
   });
 
   test('kinds: the new Next Moves kinds are accepted, the old ones still are, anything else is refused; one constraint', async () => {
@@ -58,7 +62,7 @@ for (const mode of MODES) describe(mode, () => {
     assert.deepEqual([r.set, r.reason], [false, 'already traded']);
     const after = await row('mv-traded');
     assert.equal(String(after.q_yes), String(before.q_yes));
-    await create({ ...mk('mv-closed', 'sale_size'), closes_at: '2026-09-27T12:00:00Z' });
+    await create({ ...mk('mv-closed', 'sale_size'), closes_at: PAST });
     await t.admin('select public.close_due_markets()');
     assert.deepEqual((await odds('mv-closed', 0.4)).reason, 'not open');
   });
