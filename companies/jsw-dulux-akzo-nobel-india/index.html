@@ -16,29 +16,15 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://billionairesdigest.com/og/latest.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#07080A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/v2/tokens.css">
+<link rel="stylesheet" href="/assets/v2/ui.css">
+<link rel="stylesheet" href="/assets/v2/news.css">
 <style>
-.crumbs{padding-top:10px}
-.crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.crumbs li+li::before{content:'›';margin-right:8px}
-.crumbs a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
-.crumbs a:hover{text-decoration:underline}
-.pp{max-width:900px;padding-bottom:48px}
-.pp .pcard{border-bottom:none;padding-top:8px}
-.pp .pchead .av{color:var(--text)}
-.livelink{display:inline-flex;align-items:center;min-height:44px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
-.livelink:hover{text-decoration:underline}
-.ppsec{margin-top:8px}
-.ppsec .story:last-child{border-bottom:none}
-.storydate{padding-bottom:8px}
-.story .srow a.who,.plist a{overflow-wrap:anywhere}
-.quotenote{margin:12px 0 0}
-.fprow .fpmain a.colink{display:inline;font-size:inherit;letter-spacing:inherit;min-height:0;margin:0}
-.fpg .fph{margin:18px 0 4px;font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--accent)}
 .coholders{list-style:none;margin:0;padding:0}
 .cohold{padding:14px 0 6px;border-bottom:1px solid var(--line)}
 .cohold:last-child{border-bottom:none}
@@ -60,47 +46,87 @@
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://billionairesdigest.com/"},{"@type":"ListItem","position":2,"name":"Companies","item":"https://billionairesdigest.com/companies/"},{"@type":"ListItem","position":3,"name":"JSW Dulux / Akzo Nobel India","item":"https://billionairesdigest.com/companies/jsw-dulux-akzo-nobel-india/"}]}</script>
 </head>
-<body>
-<div class="topstrip"><div class="wrap">
-  <span>Companies · 1 holder</span>
-  <span>Net worths as of Sep 24, 2026</span>
-</div></div>
-
-<header class="mast"><div class="wrap">
-  <div>
-    <div class="display brand">Billionaires <span>Digest</span></div>
-    <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
+<body class="v2 nw">
+<a class="v2-skip" href="#main">Skip to content</a>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="/team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="/team.html">Play</a>
+      <a href="/academy.html">Learn</a>
+      <a href="/players.html">Players</a>
+      <a href="/" aria-current="true">News</a>
+      <a href="/flows.html">Tools</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__search" href="/people/">Search</a>
+      <a class="v2-btn v2-btn--primary v2-top__cta" href="/team.html">My team</a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
-  <button class="themebtn" id="themebtn" type="button">Switch theme</button>
-</div></header>
+</header>
+<nav class="v2-subtabs" aria-label="News">
+  <div class="v2-wrap v2-subtabs__in">
+    <ul class="v2-subtabs__list">
+      <li><a href="/">Today</a></li>
+      <li><a href="/people/">People</a></li>
+      <li><a href="/companies/" aria-current="page">Companies</a></li>
+      <li><a href="/sectors.html">Sectors</a></li>
+      <li><a href="/calendar.html">Calendar</a></li>
+      <li><a href="/archive.html">Archive</a></li>
+    </ul>
+    <span class="v2-subtabs__label">The Digest</span>
+  </div>
+</nav>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="/team.html">Play</a>
+        <ul>
+          <li><a href="/team.html">My team</a></li>
+          <li><a href="/draft.html">Draft room</a></li>
+          <li><a href="/scores.html">Scores</a></li>
+          <li><a href="/leagues.html">Leagues</a></li>
+          <li><a href="/book.html">The Book</a></li>
+          <li><a href="/moves.html">Next Moves</a></li>
+          <li><a href="/play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="/academy.html">Learn</a>
+        <ul>
+          <li><a href="/academy.html">Academy</a></li>
+          <li><a href="/life.html">Billionaire Life</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="/players.html">Players</a></li>
+      <li><a class="v2-menu__top" href="/" aria-current="true">News</a>
+        <ul>
+          <li><a href="/">Today</a></li>
+          <li><a href="/people/">People</a></li>
+          <li><a href="/companies/" aria-current="page">Companies</a></li>
+          <li><a href="/sectors.html">Sectors</a></li>
+          <li><a href="/calendar.html">Calendar</a></li>
+          <li><a href="/archive.html">Archive</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="/flows.html">Tools</a>
+        <ul>
+          <li><a href="/flows.html">Insider flows</a></li>
+          <li><a href="/quarterly.html">What their funds bought</a></li>
+          <li><a href="/copycat.html">Copycat portfolio</a></li>
+          <li><a href="/network.html">Who invests with whom</a></li>
+          <li><a href="/compare.html">Compare two</a></li>
+          <li><a href="/property.html">Where they buy</a></li>
+          <li><a href="/guides/filings-101/">Filings 101</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="/people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+<div class="nw-ledbar"><p class="wrap nw-led"><span>Companies · 1 holder</span><span>Net worths as of Sep 24, 2026</span></p></div>
 
-<nav class="sitenav" aria-label="Site"><div class="wrap">
-  <a href="/">Today</a>
-  <a href="/people/">People</a>
-  <a href="/companies/" aria-current="page">Companies</a>
-  <a href="/sectors.html">Sectors</a>
-  <a href="/calendar.html">Calendar</a>
-  <details class="navmore"><summary>Fantasy</summary><ul>
-    <li><a href="/fantasy.html">My team</a></li>
-    <li><a href="/leaderboard.html">Leaderboard</a></li>
-    <li><a href="/leagues.html">Leagues</a></li>
-    <li><a href="/book.html">The Book</a></li>
-    <li><a href="/play-terms.html">Game rules</a></li>
-  </ul></details>
-  <details class="navmore"><summary>Tools</summary><ul>
-    <li><a href="/flows.html">Insider flows &amp; leaderboards</a></li>
-    <li><a href="/quarterly.html">What their funds bought</a></li>
-    <li><a href="/copycat.html">Copycat portfolio</a></li>
-    <li><a href="/network.html">Who invests with whom</a></li>
-    <li><a href="/compare.html">Compare two billionaires</a></li>
-    <li><a href="/property.html">Where they buy</a></li>
-    <li><a href="/guides/filings-101/">Filings 101</a></li>
-  </ul></details>
-  <a href="/archive.html">Archive</a>
-  <a href="/about.html">About</a>
-</div></nav>
-
-<main id="app">
+<main id="main" class="nw-main" tabindex="-1">
 <nav class="wrap crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/companies/">Companies</a></li><li><span aria-current="page">JSW Dulux / Akzo Nobel India</span></li></ol></nav>
 <div class="wrap pp">
 <section class="pcard" aria-label="Company: JSW Dulux / Akzo Nobel India">
@@ -129,13 +155,29 @@
 </div>
 </main>
 
-<footer><div class="wrap">
-  <span>Billionaires Digest · billionairesdigest.com</span>
-  <span class="footlinks"><a href="/about.html">About</a> · <a href="/about.html#corrections">Corrections</a> · <a href="/about.html#sponsor">Sponsor the brief</a> · <a href="/calendar.ics">Calendar feed (calendar.ics)</a></span>
-  <span>For information only · not financial advice</span>
-</div></footer>
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="/team.html">Play</a>
+  <a href="/academy.html">Learn</a>
+  <a href="/players.html">Players</a>
+  <a href="/" aria-current="true">News</a>
+</nav>
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="/team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="/about.html">About</a>
+      <a href="/about.html#corrections">Corrections</a>
+      <a href="/play-terms.html">Game rules</a>
+      <a href="/about.html#sponsor">Sponsor the brief</a>
+      <a href="/calendar.ics">Calendar feed</a>
+    </nav>
+  </div>
+</footer>
 
-<script>(function(){var r=document.documentElement,b=document.getElementById('themebtn');try{var s=localStorage.getItem('bd-theme');if(s)r.setAttribute('data-theme',s);}catch(e){}function d(){var t=r.getAttribute('data-theme');if(t)return t==='dark';return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;}if(!b)return;function l(){b.textContent=d()?'Paper mode':'Terminal mode';}l();b.addEventListener('click',function(){var n=d()?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('bd-theme',n);}catch(e){}l();});})();
-(function(){var d=document.querySelectorAll('details.navmore'),nav=document.querySelector('.sitenav');var mq=window.matchMedia?window.matchMedia('(max-width: 699.98px)'):null,panel=null,cur=null,y0=0;function closeAll(ex){for(var i=0;i<d.length;i++)if(d[i]!==ex)d[i].removeAttribute('open');}function hidePanel(){if(panel){panel.hidden=true;while(panel.firstChild)panel.removeChild(panel.firstChild);}var s=cur&&cur.querySelector('summary');if(s){s.removeAttribute('aria-expanded');s.removeAttribute('aria-controls');}cur=null;}function closeCur(){var el=cur;hidePanel();if(el)el.removeAttribute('open');}function showPanel(el){var ul=el.querySelector('ul'),s=el.querySelector('summary');hidePanel();if(!ul)return;if(!panel){panel=document.createElement('div');panel.className='navpanel';panel.id='navpanel';panel.setAttribute('role','region');panel.hidden=true;document.body.appendChild(panel);}panel.setAttribute('aria-label',(s?s.textContent.replace(/\s+/g,' ').replace(/^ | $/g,''):'Site')+' menu');panel.appendChild(ul.cloneNode(true));panel.style.top=Math.round(nav?nav.getBoundingClientRect().bottom:0)+'px';panel.hidden=false;cur=el;y0=window.pageYOffset||0;if(s){s.setAttribute('aria-expanded','true');s.setAttribute('aria-controls','navpanel');}}function onScroll(){if(cur&&Math.abs((window.pageYOffset||0)-y0)>2)closeCur();}function onResize(){if(cur)closeCur();}if(d.length){document.documentElement.className+=' js-navpanel';document.addEventListener('click',function(e){var t=e.target;if(panel&&panel.contains(t))return;if(cur&&!cur.contains(t))closeCur();for(var i=0;i<d.length;i++)if(d[i].hasAttribute('open')&&!d[i].contains(t))d[i].removeAttribute('open');});document.addEventListener('keydown',function(e){if(e.key!=='Escape'&&e.key!=='Esc')return;for(var i=0;i<d.length;i++)if(d[i].hasAttribute('open')){d[i].removeAttribute('open');var s=d[i].querySelector('summary');if(s)s.focus();}hidePanel();});for(var j=0;j<d.length;j++)d[j].addEventListener('toggle',function(){if(this.open){closeAll(this);if(mq&&mq.matches)showPanel(this);}else if(this===cur)hidePanel();});window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onResize);}var row=nav&&nav.querySelector('.wrap');if(!row)return;function fades(){var max=row.scrollWidth-row.clientWidth;nav.classList.toggle('is-scrolled',row.scrollLeft>2);nav.classList.toggle('is-end',row.scrollLeft>=max-2);}var c=row.querySelector('.wrap>a[aria-current="page"],summary[aria-current="page"]');if(c&&row.scrollWidth>row.clientWidth){var x=c.getBoundingClientRect().left-row.getBoundingClientRect().left+row.scrollLeft;if(x+c.offsetWidth>row.clientWidth-32)row.scrollLeft=Math.max(0,x-(row.clientWidth-c.offsetWidth)/2);}fades();row.addEventListener('scroll',fades,{passive:true});window.addEventListener('resize',fades);})();</script>
+<script src="/assets/v2/chrome.js"></script>
 </body>
 </html>

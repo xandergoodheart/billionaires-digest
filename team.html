@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>My team · Billionaire Fantasy League · Billionaires Digest</title>
 <meta name="description" content="Your Billionaire Fantasy League team: this week's score against the S&amp;P 500, your starting five, the next lineup lock and news about your players. A free game with play money only.">
-<meta name="theme-color" content="#13171C">
+<meta name="theme-color" content="#07080A">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,12 +22,11 @@
   <div class="v2-wrap v2-top__in">
     <a class="v2-mark" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
     <nav class="v2-topnav" aria-label="Main">
-      <a href="team.html" aria-current="true">Fantasy</a>
-      <a href="life.html">Life</a>
+      <a href="team.html" aria-current="true">Play</a>
+      <a href="academy.html">Learn</a>
       <a href="players.html">Players</a>
-      <a href="scores.html#leaderboard">Rankings</a>
-      <a href="calendar.html">Calendar</a>
       <a href="index.html">News</a>
+      <a href="flows.html">Tools</a>
     </nav>
     <div class="v2-top__right">
       <a class="v2-top__search" href="people/">Search</a>
@@ -36,7 +35,7 @@
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
 </header>
-<nav class="v2-subtabs" aria-label="Fantasy">
+<nav class="v2-subtabs" aria-label="Play">
   <div class="v2-wrap v2-subtabs__in">
     <ul class="v2-subtabs__list">
       <li><a href="team.html" aria-current="page">My team</a></li>
@@ -57,7 +56,7 @@
       <button type="button" class="v2-menu__close" data-menu-close>Close</button>
     </div>
     <ul class="v2-menu__list">
-      <li><a class="v2-menu__top" href="team.html" aria-current="true">Fantasy</a>
+      <li><a class="v2-menu__top" href="team.html" aria-current="true">Play</a>
         <ul>
           <li><a href="team.html" aria-current="page">My team</a></li>
           <li><a href="draft.html">Draft room</a></li>
@@ -67,15 +66,31 @@
           <li><a href="moves.html">Next Moves</a></li>
           <li><a href="play-terms.html">Rules</a></li>
         </ul></li>
-      <li><a class="v2-menu__top" href="life.html">Life</a>
+      <li><a class="v2-menu__top" href="academy.html">Learn</a>
         <ul>
-          <li><a href="life.html">All billionaires</a></li>
           <li><a href="academy.html">Academy</a></li>
+          <li><a href="life.html">Billionaire Life</a></li>
         </ul></li>
       <li><a class="v2-menu__top" href="players.html">Players</a></li>
-      <li><a class="v2-menu__top" href="scores.html#leaderboard">Rankings</a></li>
-      <li><a class="v2-menu__top" href="calendar.html">Calendar</a></li>
-      <li><a class="v2-menu__top" href="index.html">News</a></li>
+      <li><a class="v2-menu__top" href="index.html">News</a>
+        <ul>
+          <li><a href="index.html">Today</a></li>
+          <li><a href="people/">People</a></li>
+          <li><a href="companies/">Companies</a></li>
+          <li><a href="sectors.html">Sectors</a></li>
+          <li><a href="calendar.html">Calendar</a></li>
+          <li><a href="archive.html">Archive</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="flows.html">Tools</a>
+        <ul>
+          <li><a href="flows.html">Insider flows</a></li>
+          <li><a href="quarterly.html">What their funds bought</a></li>
+          <li><a href="copycat.html">Copycat portfolio</a></li>
+          <li><a href="network.html">Who invests with whom</a></li>
+          <li><a href="compare.html">Compare two</a></li>
+          <li><a href="property.html">Where they buy</a></li>
+          <li><a href="guides/filings-101/">Filings 101</a></li>
+        </ul></li>
       <li><a class="v2-menu__top" href="people/">Search</a></li>
     </ul>
   </div>
@@ -86,49 +101,94 @@
   <div class="v2-wrap v2-strip__in" id="scorestripin" aria-label="Top scorers on your team"></div>
 </div>
 
-<main id="main" class="v2-main" tabindex="-1">
+<main id="main" class="v2-main tm-main" tabindex="-1">
   <div class="v2-wrap">
     <p class="v2-banner" id="testclock" hidden></p>
-    <div class="v2-grid">
-      <div class="span-8 v2-stack">
-        <section class="v2-hero" id="hero" aria-labelledby="teamname" aria-busy="true">
-          <span class="v2-kicker">Your team</span>
-          <h1 class="v2-h1 v2-hero__name" id="teamname">Your team</h1>
-          <p class="v2-loading">Loading your team…</p>
-          <span class="v2-skel v2-skel--lg"></span>
-        </section>
-        <section class="v2-card" id="five" aria-labelledby="fiveh">
-          <div class="v2-card__head"><h2 class="v2-h2" id="fiveh">Your starting five</h2><span class="v2-card__meta" id="capmeta"></span></div>
-          <div id="fivebody"><span class="v2-skel"></span><span class="v2-skel"></span><span class="v2-skel"></span></div>
-        </section>
+    <p class="v2-play">Play money · no prizes · not financial advice</p>
+
+    <section class="tm-jackpot" id="hero" aria-labelledby="teamname" aria-busy="true">
+      <span class="v2-bulbs" aria-hidden="true"></span>
+      <div class="tm-jackpot__in" id="heroin">
+        <span class="v2-kicker">Weekly jackpot</span>
+        <h1 class="tm-jackpot__name" id="teamname">Your team</h1>
+        <p class="v2-loading">Loading your team…</p>
+        <span class="v2-skel v2-skel--lg"></span>
       </div>
-      <div class="span-4 v2-stack">
-        <section class="v2-card" id="next" aria-labelledby="nexth">
-          <h2 class="v2-h2" id="nexth">Next round</h2>
-          <div id="nextbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
-        </section>
-        <section class="v2-card" id="news" aria-labelledby="newsh">
-          <div class="v2-card__head"><h2 class="v2-h2" id="newsh">Your team's news</h2></div>
-          <div id="newsbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
-        </section>
-        <section class="v2-card v2-card--tint" id="leagues" aria-labelledby="leaguesh">
-          <span class="v2-kicker">Leagues</span>
-          <h2 class="v2-h2" id="leaguesh">Play against your friends.</h2>
-          <div id="leaguesbody"><p class="v2-loading">Loading…</p></div>
-        </section>
-      </div>
+      <span class="v2-bulbs" aria-hidden="true"></span>
+    </section>
+
+    <section class="v2-card tm-five" id="five" aria-labelledby="fiveh">
+      <div class="v2-card__head"><h2 class="v2-h2" id="fiveh">Your starting five</h2><span class="v2-card__meta" id="capmeta"></span></div>
+      <p class="tm-hint" id="fivehint" hidden>Tap a player for the close-up.</p>
+      <div id="fivebody"><span class="v2-skel"></span><span class="v2-skel"></span><span class="v2-skel"></span></div>
+    </section>
+
+    <div class="tm-row">
+      <section class="v2-card tm-next" id="next" aria-labelledby="nexth">
+        <h2 class="v2-h2" id="nexth">Next spin</h2>
+        <div id="nextbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
+      </section>
+      <section class="v2-card tm-level" id="level" aria-labelledby="levelh">
+        <h2 class="v2-h2" id="levelh">Streak and level</h2>
+        <div id="levelbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
+      </section>
+      <section class="v2-card tm-trophy" id="trophy" aria-labelledby="trophyh">
+        <h2 class="v2-h2" id="trophyh">Trophy case</h2>
+        <div id="badgebody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
+        <div class="tm-coins" id="coinbody"></div>
+      </section>
     </div>
+
+    <div class="tm-row tm-row--2">
+      <section class="v2-card tm-news" id="news" aria-labelledby="newsh">
+        <div class="v2-card__head"><h2 class="v2-h2" id="newsh">Your team's news</h2></div>
+        <div id="newsbody"><span class="v2-skel"></span><span class="v2-skel"></span></div>
+      </section>
+      <section class="v2-card v2-card--tint tm-leagues" id="leagues" aria-labelledby="leaguesh">
+        <span class="v2-kicker">Leagues</span>
+        <h2 class="v2-h2" id="leaguesh">Play against your friends.</h2>
+        <div id="leaguesbody"><p class="v2-loading">Loading…</p></div>
+      </section>
+    </div>
+
+    <p class="tm-xpnote" id="xpnote" tabindex="-1">How XP works: 100 XP for every finished week you played, plus 50 XP for every week your team beat the S&amp;P 500. Every 500 XP is one level. The practice week does not count. Badges come only from your real season record.</p>
+    <p class="v2-play v2-play--big">Play money · no prizes · not financial advice</p>
   </div>
 </main>
 
+<div class="tm-dlg" id="closeup" role="dialog" aria-modal="true" aria-labelledby="cu-name" hidden>
+  <div class="tm-dlg__panel">
+    <div class="tm-zoom" id="cu-zoom" aria-hidden="true">
+      <div class="tm-zoom__face" id="cu-face"></div>
+      <span class="tm-spark tm-spark--1"></span>
+      <span class="tm-spark tm-spark--2"></span>
+      <span class="tm-spark tm-spark--3"></span>
+      <span class="tm-spark tm-spark--4"></span>
+    </div>
+    <p class="tm-dlg__kick" id="cu-kick">Close-up</p>
+    <h2 class="tm-dlg__name" id="cu-name"></h2>
+    <dl class="tm-dlg__stats">
+      <div><dt>Cap</dt><dd class="num" id="cu-cap"></dd></div>
+      <div><dt id="cu-ptsk">Team pts this week</dt><dd class="num" id="cu-pts"></dd></div>
+      <div><dt>Sector</dt><dd class="tm-dlg__sector" id="cu-sector"></dd></div>
+    </dl>
+    <p class="tm-dlg__note">Play money · no prizes · not financial advice</p>
+    <div class="tm-dlg__btns">
+      <a class="v2-btn v2-btn--ghost" id="cu-link" href="players.html">Player page</a>
+      <button type="button" class="v2-btn v2-btn--gold" id="cu-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="tm-burst" id="burst" aria-hidden="true"></div>
 <div class="v2-sr" id="live" role="status" aria-live="polite"></div>
 <div class="v2-toasts" id="toasts" aria-live="polite"></div>
 
 <!-- v2tabs:start -->
 <nav class="v2-tabs" aria-label="Sections">
-  <a href="team.html" aria-current="true">Fantasy</a>
+  <a href="team.html" aria-current="true">Play</a>
+  <a href="academy.html">Learn</a>
   <a href="players.html">Players</a>
-  <a href="scores.html#leaderboard">Rankings</a>
   <a href="index.html">News</a>
 </nav>
 <!-- v2tabs:end -->
@@ -144,6 +204,8 @@
       <a href="about.html">About</a>
       <a href="about.html#corrections">Corrections</a>
       <a href="play-terms.html">Game rules</a>
+      <a href="about.html#sponsor">Sponsor the brief</a>
+      <a href="calendar.ics">Calendar feed</a>
     </nav>
   </div>
 </footer>
@@ -154,6 +216,7 @@
 <script src="assets/account.js"></script>
 <script src="assets/fantasy-core.js"></script>
 <script src="assets/v2/fantasy-store.js"></script>
+<script src="assets/v2/portraits.js"></script>
 <script src="assets/v2/chrome.js"></script>
 <script src="assets/v2/team.js"></script>
 </body>

@@ -4,44 +4,26 @@
    Motion: one card flip + one landing pulse per reveal; nothing with prefers-reduced-motion. */
 
 .lf-page {
-  --lf-bg: #07080A;
-  --lf-panel: #121418;
-  --lf-panel-2: #0B0C0F;
-  --lf-gold: #F5C542;
-  --lf-gold-2: #FFE08A;
-  --lf-gold-dk: #8E6B1C;
+  --lf-bg: var(--felt);
+  --lf-panel: var(--panel);
+  --lf-panel-2: var(--panel-2);
+  --lf-gold: var(--gold);
+  --lf-gold-2: var(--gold-2);
+  --lf-gold-dk: var(--gold-dk);
   --lf-red: #FF5A5A;
-  --lf-red-dk: #D62D27;
-  --lf-green: #39E07A;
-  --lf-text: #F4F1E8;
+  --lf-red-dk: var(--brand);
+  --lf-green: var(--positive);
+  --lf-text: var(--text);
   --lf-muted: #BDB6A4;
   --lf-dim: #6F6A5E;
-  --lf-brass: linear-gradient(145deg, #FBEAB0 0%, #B98E32 22%, #F5C542 45%, #7A5A1A 70%, #E9C766 100%);
-  --lf-chrome: linear-gradient(145deg, #F4F6F8 0%, #8C949D 25%, #E9EDF1 48%, #5F6770 72%, #D5DAE0 100%);
-  background-color: var(--lf-bg);
-  background-image:
-    radial-gradient(ellipse 90% 1200px at 50% 0%, rgba(40, 70, 52, .38) 0%, rgba(7, 8, 10, 0) 70%),
-    linear-gradient(90deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0) 82%, rgba(0, 0, 0, .7) 100%),
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, .012) 0 2px, rgba(0, 0, 0, .02) 2px 4px);
+  --lf-brass: var(--brass);
+  --lf-chrome: var(--chrome);
   color: var(--lf-text);
   overflow-x: hidden;
 }
-.lf-page :focus-visible { outline: 3px solid var(--lf-gold-2); outline-offset: 3px; }
 .lf-page h2:focus, .lf-page h2:focus-visible, .lf-verdict:focus { outline: none; }
 
-/* chrome, darkened */
-.lf-page .v2-top { background: #000; box-shadow: inset 0 -2px 0 var(--lf-gold-dk); }
-.lf-page .v2-foot { background: #000; border-top: 2px solid var(--lf-gold-dk); }
-.lf-page .v2-subtabs { background: #0B0C0F; border-bottom: 1px solid #2A2618; }
-.lf-page .v2-subtabs__list a { color: var(--lf-muted); }
-.lf-page .v2-subtabs__list a:hover, .lf-page .v2-subtabs__list a[aria-current] { color: #fff; }
-.lf-page .v2-subtabs__list a[aria-current]::after { background: var(--lf-gold); }
-.lf-page .v2-subtabs__label { color: var(--lf-gold); }
-@media (max-width: 767px) {
-  .lf-page .v2-tabs { background: #000; border-top-color: #2A2618; }
-  .lf-page .v2-tabs a { color: var(--lf-muted); }
-  .lf-page .v2-tabs a[aria-current] { color: var(--lf-gold); box-shadow: inset 0 3px 0 var(--lf-gold); }
-}
+/* chrome: casino style comes from ui.css */
 
 .lf-wrap { max-width: 820px; }
 .lf-main { padding-top: var(--s2); padding-bottom: var(--s3); }

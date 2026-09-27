@@ -35,6 +35,35 @@
   function teamName(){ var me = F.me(); return me && me.nickname ? me.nickname : 'Your team'; }
   function range(wk){ return fmt.shortDate(wk.start) + '–' + fmt.shortDate(wk.end); }
   function weekday(d){ return fmt.DAYN[C.weekday(d)]; }
+  // Odometer total (casino scoreboard): digits in chrome windows; the real value is in text for screen readers.
+  // The digits roll once, on the first scoreboard render only; never with reduced motion.
+  var rolled = false;
+  function odometer(value, cls, srText){
+    var box = el('span', 'v2-odo ' + cls + ' ' + numCls(value));
+    var txt = numTxt(value);
+    box.appendChild(sr(srText + txt));
+    var vis = el('span', 'v2-odo__digits num'); vis.setAttribute('aria-hidden', 'true');
+    var strips = [];
+    for (var i = 0; i < txt.length; i++){
+      var ch = txt.charAt(i);
+      if (/[0-9]/.test(ch)){
+        var col = el('span', 'v2-odo__col'), strip = el('span', 'v2-odo__strip');
+        for (var k = 0; k < 20; k++) strip.appendChild(el('span', 'v2-odo__d', String(k % 10)));
+        col.appendChild(strip); vis.appendChild(col);
+        strips.push({ s: strip, to: 10 + (+ch) });
+      } else vis.appendChild(el('span', 'v2-odo__ch', ch));
+    }
+    box.appendChild(vis);
+    var animate = !rolled && !BD.reducedMotion();
+    strips.forEach(function(x, j){
+      if (!animate){ x.s.style.transform = 'translateY(' + (-x.to) + 'em)'; return; }
+      setTimeout(function(){
+        x.s.style.transition = 'transform ' + (1000 + j * 240) + 'ms cubic-bezier(.2,.75,.25,1.02) ' + (j * 90) + 'ms';
+        x.s.style.transform = 'translateY(' + (-x.to) + 'em)';
+      }, 30);
+    });
+    return box;
+  }
   function emptyState(box, title, text, dark){
     var e = el('div', dark ? 'sc-empty' : 'v2-empty');
     e.appendChild(el('h3', 'v2-h2', title));
@@ -138,7 +167,7 @@
     function side(name, score, res, cls){
       var s = el('div', 'sc-side ' + cls + (res === 'Won' || res === 'Leading' ? ' is-lead' : ''));
       s.appendChild(el('span', 'sc-side__name', name));
-      s.appendChild(el('span', 'v2-hero-num sc-side__score', numTxt(score)));
+      s.appendChild(odometer(score, 'v2-odo--mid sc-side__score', name + ': '));
       s.appendChild(el('span', 'sc-side__res', res || ' '));
       if (!res) s.lastChild.setAttribute('aria-hidden', 'true');
       return s;
@@ -147,6 +176,7 @@
     match.appendChild(el('span', 'sc-vs', 'vs'));
     match.appendChild(side(m.oppName, m.b, rb, 'sc-side--b'));
     box.appendChild(match);
+    rolled = true;
 
     // win chance (estimate, v1 formula) or final margin
     var pr = el('div', 'sc-prob');

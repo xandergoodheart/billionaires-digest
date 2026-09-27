@@ -647,7 +647,15 @@
     st.ready = true;
     if (!dlg) build();
     Array.prototype.forEach.call(document.querySelectorAll('.lk-entry'), function(n){ n.hidden = false; });
+    // deep link from My team ("Lucky five" -> draft.html#lucky): open once, then drop the hash so a reload does not reopen
+    openFromHash();
   }
+  function openFromHash(){
+    if (location.hash !== '#lucky' || !st.ready || isOpen()) return;
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    openLucky(document.querySelector('.dr-head [data-lucky-open]'));
+  }
+  window.addEventListener('hashchange', openFromHash);
   F.onChange(function(){ ready(); });
   F.init().then(ready, function(){});
 })();

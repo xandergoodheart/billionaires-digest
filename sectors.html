@@ -14,69 +14,133 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://billionairesdigest.com/og/latest.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F100D'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' text-anchor='middle' fill='%23E3A340'%3EBD%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#07080A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/ui.css">
+<link rel="stylesheet" href="assets/v2/news.css">
 </head>
-<body>
-<div class="topstrip"><div class="wrap">
-  <span id="dateline">Sectors</span>
-  <span id="updated">Follow the money by sector</span>
-</div></div>
-
-<header class="mast"><div class="wrap">
-  <div>
-    <div class="display brand">Billionaires <span>Digest</span></div>
-    <div class="tag">Read the moves of the world's 100 richest like a trading desk</div>
+<body class="v2 nw">
+<!-- v2topbar:start -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="team.html">Play</a>
+      <a href="academy.html">Learn</a>
+      <a href="players.html">Players</a>
+      <a href="index.html" aria-current="true">News</a>
+      <a href="flows.html">Tools</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__search" href="people/">Search</a>
+      <a class="v2-btn v2-btn--primary v2-top__cta" href="team.html">My team</a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
-  <button class="themebtn" id="themebtn" type="button">Switch theme</button>
-</div></header>
-
-<!-- nav:start -->
-<nav class="sitenav" aria-label="Site"><div class="wrap">
-  <a href="index.html">Today</a>
-  <a href="people/">People</a>
-  <a href="companies/">Companies</a>
-  <a href="sectors.html" aria-current="page">Sectors</a>
-  <a href="calendar.html">Calendar</a>
-  <details class="navmore"><summary>Fantasy</summary><ul>
-    <li><a href="team.html">My team</a></li>
-    <li><a href="draft.html">Draft room</a></li>
-    <li><a href="scores.html">Scores</a></li>
-    <li><a href="scores.html#leaderboard">Leaderboard</a></li>
-    <li><a href="leagues.html">Leagues</a></li>
-    <li><a href="book.html">The Book</a></li>
-    <li><a href="play-terms.html">Game rules</a></li>
-  </ul></details>
-  <details class="navmore"><summary>Tools</summary><ul>
-    <li><a href="flows.html">Insider flows &amp; leaderboards</a></li>
-    <li><a href="quarterly.html">What their funds bought</a></li>
-    <li><a href="copycat.html">Copycat portfolio</a></li>
-    <li><a href="network.html">Who invests with whom</a></li>
-    <li><a href="compare.html">Compare two billionaires</a></li>
-    <li><a href="property.html">Where they buy</a></li>
-    <li><a href="guides/filings-101/">Filings 101</a></li>
-  </ul></details>
-  <a href="archive.html">Archive</a>
-  <a href="about.html">About</a>
-</div></nav>
-<!-- nav:end -->
+</header>
+<nav class="v2-subtabs" aria-label="News">
+  <div class="v2-wrap v2-subtabs__in">
+    <ul class="v2-subtabs__list">
+      <li><a href="index.html">Today</a></li>
+      <li><a href="people/">People</a></li>
+      <li><a href="companies/">Companies</a></li>
+      <li><a href="sectors.html" aria-current="page">Sectors</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+      <li><a href="archive.html">Archive</a></li>
+    </ul>
+    <span class="v2-subtabs__label">The Digest</span>
+  </div>
+</nav>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="team.html">Play</a>
+        <ul>
+          <li><a href="team.html">My team</a></li>
+          <li><a href="draft.html">Draft room</a></li>
+          <li><a href="scores.html">Scores</a></li>
+          <li><a href="leagues.html">Leagues</a></li>
+          <li><a href="book.html">The Book</a></li>
+          <li><a href="moves.html">Next Moves</a></li>
+          <li><a href="play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="academy.html">Learn</a>
+        <ul>
+          <li><a href="academy.html">Academy</a></li>
+          <li><a href="life.html">Billionaire Life</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="players.html">Players</a></li>
+      <li><a class="v2-menu__top" href="index.html" aria-current="true">News</a>
+        <ul>
+          <li><a href="index.html">Today</a></li>
+          <li><a href="people/">People</a></li>
+          <li><a href="companies/">Companies</a></li>
+          <li><a href="sectors.html" aria-current="page">Sectors</a></li>
+          <li><a href="calendar.html">Calendar</a></li>
+          <li><a href="archive.html">Archive</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="flows.html">Tools</a>
+        <ul>
+          <li><a href="flows.html">Insider flows</a></li>
+          <li><a href="quarterly.html">What their funds bought</a></li>
+          <li><a href="copycat.html">Copycat portfolio</a></li>
+          <li><a href="network.html">Who invests with whom</a></li>
+          <li><a href="compare.html">Compare two</a></li>
+          <li><a href="property.html">Where they buy</a></li>
+          <li><a href="guides/filings-101/">Filings 101</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+<!-- v2topbar:end -->
+<div id="main" class="nw-main" tabindex="-1">
+<div class="nw-ledbar"><p class="wrap nw-led"><span id="dateline">Sectors</span><span id="updated">Follow the money by sector</span></p></div>
 
 <main id="app">
-  <div class="wrap pagehead"><h1 class="serif">Sectors</h1><p>Loading sectors…</p></div>
+  <div class="wrap pagehead"><span class="nw-kicker">The Digest · Sectors</span><h1 class="serif">Sectors</h1><p>Loading sectors…</p></div>
 </main>
 
-<!-- footer:start -->
-<footer><div class="wrap">
-  <span>Billionaires Digest · billionairesdigest.com</span>
-  <span class="footlinks"><a href="about.html">About</a> · <a href="about.html#corrections">Corrections</a> · <a href="about.html#sponsor">Sponsor the brief</a> · <a href="calendar.ics">Calendar feed (calendar.ics)</a></span>
-  <span>For information only · not financial advice</span>
-</div></footer>
-<!-- footer:end -->
+</div>
+
+<!-- v2tabs:start -->
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="team.html">Play</a>
+  <a href="academy.html">Learn</a>
+  <a href="players.html">Players</a>
+  <a href="index.html" aria-current="true">News</a>
+</nav>
+<!-- v2tabs:end -->
+<!-- v2footer:start -->
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="about.html#corrections">Corrections</a>
+      <a href="play-terms.html">Game rules</a>
+      <a href="about.html#sponsor">Sponsor the brief</a>
+      <a href="calendar.ics">Calendar feed</a>
+    </nav>
+  </div>
+</footer>
+<!-- v2footer:end -->
 
 <script src="assets/common.js"></script>
+<script src="assets/v2/chrome.js"></script>
 <script>
 (function(){
   BD.initTheme();
@@ -124,6 +188,7 @@
     document.title = TITLE;
     app.textContent = '';
     var head = el('div', 'wrap pagehead');
+    head.appendChild(el('span', 'nw-kicker', 'The Digest · Sectors'));
     head.appendChild(el('h1', 'serif', 'Sectors'));
     head.appendChild(el('p', null, 'Where the top 100 have their money, and how many moves each sector saw this week.'));
     app.appendChild(head);

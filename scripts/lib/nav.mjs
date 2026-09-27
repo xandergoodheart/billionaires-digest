@@ -76,19 +76,18 @@ export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navm
 // and the v2 footer. Pages opt in with <!-- v2topbar:start --> / <!-- v2tabs:start --> / <!-- v2footer:start -->
 // markers (scripts/sync-nav.mjs). Behavior of the MENU sheet lives in assets/v2/chrome.js. v1 NAV above is unchanged.
 
-// Top-level sections. Links point at the best existing page until the v2 screen exists.
+// Top-level sections (Phase 3). The leaderboard lives in Scores, so there is no separate Rankings section.
 export const NAV_V2 = [
-  { key: 'fantasy', label: 'Fantasy', href: 'team.html' },
-  { key: 'life', label: 'Life', href: 'life.html' },
+  { key: 'play', label: 'Play', href: 'team.html' },
+  { key: 'learn', label: 'Learn', href: 'academy.html' },
   { key: 'players', label: 'Players', href: 'players.html' },
-  { key: 'rankings', label: 'Rankings', href: 'scores.html#leaderboard' },   // until the v2 Rankings screen exists
-  { key: 'calendar', label: 'Calendar', href: 'calendar.html' },
-  { key: 'news', label: 'News', href: 'index.html' }
+  { key: 'news', label: 'News', href: 'index.html' },
+  { key: 'tools', label: 'Tools', href: 'flows.html' }
 ];
 
-// Sub-tabs per section, with the small right-side label.
+// Sub-tabs per section, with the small right-side label. Players has no sub-tabs.
 export const SUBNAV_V2 = {
-  fantasy: {
+  play: {
     label: 'Billionaire Fantasy League',
     items: [
       { key: 'team', label: 'My team', href: 'team.html' },
@@ -100,17 +99,40 @@ export const SUBNAV_V2 = {
       { key: 'rules', label: 'Rules', href: 'play-terms.html' }
     ]
   },
-  life: {
-    label: 'Billionaire Life',
+  learn: {
+    label: 'Billionaires Digest Academy',
     items: [
-      { key: 'hub', label: 'All billionaires', href: 'life.html' },
-      { key: 'academy', label: 'Academy', href: 'academy.html' }
+      { key: 'academy', label: 'Academy', href: 'academy.html' },
+      { key: 'hub', label: 'Billionaire Life', href: 'life.html' }
+    ]
+  },
+  news: {
+    label: 'The Digest',
+    items: [
+      { key: 'today', label: 'Today', href: 'index.html' },
+      { key: 'people', label: 'People', href: 'people/' },
+      { key: 'companies', label: 'Companies', href: 'companies/' },
+      { key: 'sectors', label: 'Sectors', href: 'sectors.html' },
+      { key: 'calendar', label: 'Calendar', href: 'calendar.html' },
+      { key: 'archive', label: 'Archive', href: 'archive.html' }
+    ]
+  },
+  tools: {
+    label: 'Tools',
+    items: [
+      { key: 'flows', label: 'Insider flows', href: 'flows.html' },
+      { key: 'quarterly', label: 'What their funds bought', href: 'quarterly.html' },
+      { key: 'copycat', label: 'Copycat portfolio', href: 'copycat.html' },
+      { key: 'network', label: 'Who invests with whom', href: 'network.html' },
+      { key: 'compare', label: 'Compare two', href: 'compare.html' },
+      { key: 'property', label: 'Where they buy', href: 'property.html' },
+      { key: 'filings101', label: 'Filings 101', href: 'guides/filings-101/' }
     ]
   }
 };
 
-// Phone bottom tab bar (four sections). Life is reachable from the phone MENU sheet (it lists every NAV_V2 section).
-export const BOTTOM_V2 = ['fantasy', 'players', 'rankings', 'news'];
+// Phone bottom tab bar (four sections). Tools is reachable from the phone MENU sheet (it lists every NAV_V2 section).
+export const BOTTOM_V2 = ['play', 'learn', 'players', 'news'];
 
 const topItem = key => NAV_V2.find(n => n.key === key) || null;
 
@@ -190,6 +212,8 @@ export function renderFooterV2({ absolute = false } = {}) {
       <a href="${u('about.html')}">About</a>
       <a href="${u('about.html')}#corrections">Corrections</a>
       <a href="${u('play-terms.html')}">Game rules</a>
+      <a href="${u('about.html')}#sponsor">Sponsor the brief</a>
+      <a href="${u('calendar.ics')}">Calendar feed</a>
     </nav>
   </div>
 </footer>`;

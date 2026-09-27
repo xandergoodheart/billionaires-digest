@@ -24,21 +24,33 @@ const ACTIVE = {
 
 // v2 page file -> [top section key, sub-tab key]
 const V2_ACTIVE = {
-  'team.html': ['fantasy', 'team'],
-  'draft.html': ['fantasy', 'draft'],
-  'design.html': ['fantasy', null],
-  'scores.html': ['fantasy', 'scores'],
-  'leagues.html': ['fantasy', 'leagues'],
-  'book.html': ['fantasy', 'book'],
-  'moves.html': ['fantasy', 'moves'],
-  'play-terms.html': ['fantasy', 'rules'],
-  'fantasy.html': ['fantasy', 'team'],
-  'leaderboard.html': ['fantasy', 'scores'],
+  'team.html': ['play', 'team'],
+  'draft.html': ['play', 'draft'],
+  'scores.html': ['play', 'scores'],
+  'leaderboard.html': ['play', 'scores'],
+  'fantasy.html': ['play', 'team'],
+  'leagues.html': ['play', 'leagues'],
+  'book.html': ['play', 'book'],
+  'moves.html': ['play', 'moves'],
+  'play-terms.html': ['play', 'rules'],
+  'markets.html': ['play', 'moves'],
+  'design.html': ['play', null],
+  'academy.html': ['learn', 'academy'],
+  'life.html': ['learn', 'hub'],
+  'life-play.html': ['learn', 'hub'],
   'players.html': ['players', null],
   'player.html': ['players', null],
-  'life.html': ['life', 'hub'],
-  'life-play.html': ['life', 'hub'],
-  'academy.html': ['life', 'academy']
+  'index.html': ['news', 'today'],
+  'sectors.html': ['news', 'sectors'],
+  'calendar.html': ['news', 'calendar'],
+  'archive.html': ['news', 'archive'],
+  'about.html': ['news', null],
+  'flows.html': ['tools', 'flows'],
+  'quarterly.html': ['tools', 'quarterly'],
+  'copycat.html': ['tools', 'copycat'],
+  'network.html': ['tools', 'network'],
+  'compare.html': ['tools', 'compare'],
+  'property.html': ['tools', 'property']
 };
 
 // v2 blocks are only replaced between existing markers (never inserted)

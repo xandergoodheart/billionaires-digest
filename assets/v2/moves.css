@@ -4,43 +4,25 @@
    times; none with prefers-reduced-motion. */
 
 .mv-page {
-  --mv-bg: #07080A;
-  --mv-panel: #121418;
-  --mv-panel-2: #0B0C0F;
-  --mv-gold: #F5C542;
-  --mv-gold-2: #FFE08A;
-  --mv-gold-dk: #8E6B1C;
+  --mv-bg: var(--felt);
+  --mv-panel: var(--panel);
+  --mv-panel-2: var(--panel-2);
+  --mv-gold: var(--gold);
+  --mv-gold-2: var(--gold-2);
+  --mv-gold-dk: var(--gold-dk);
   --mv-red: #FF5A52;
-  --mv-red-dk: #D62D27;
-  --mv-green: #39E07A;
-  --mv-text: #F4F1E8;
+  --mv-red-dk: var(--brand);
+  --mv-green: var(--positive);
+  --mv-text: var(--text);
   --mv-muted: #C4BEAE;
   --mv-line: #2E2A1E;
-  --mv-brass: linear-gradient(145deg, #FBEAB0 0%, #B98E32 22%, #F5C542 45%, #7A5A1A 70%, #E9C766 100%);
-  --mv-chrome: linear-gradient(145deg, #F4F6F8 0%, #8C949D 25%, #E9EDF1 48%, #5F6770 72%, #D5DAE0 100%);
-  background-color: var(--mv-bg);
-  background-image:
-    radial-gradient(ellipse 90% 1200px at 50% 0%, rgba(40, 70, 52, .38) 0%, rgba(7, 8, 10, 0) 70%),
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, .012) 0 2px, rgba(0, 0, 0, .02) 2px 4px);
+  --mv-brass: var(--brass);
+  --mv-chrome: var(--chrome);
   color: var(--mv-text);
 }
-.mv-page :focus-visible { outline: 3px solid var(--mv-gold-2); outline-offset: 3px; }
-.mv-page a { color: var(--mv-gold-2); text-underline-offset: 2px; }
+.mv-page main a:not(.mv-btn):not(.v2-btn) { color: var(--mv-gold-2); text-underline-offset: 2px; }
 
-/* chrome, darkened for the game room */
-.mv-page .v2-top { background: #000; box-shadow: inset 0 -2px 0 var(--mv-gold-dk); }
-.mv-page .v2-subtabs { background: #0B0C0F; border-bottom: 1px solid var(--mv-line); }
-.mv-page .v2-subtabs__list a { color: var(--mv-muted); }
-.mv-page .v2-subtabs__list a:hover, .mv-page .v2-subtabs__list a[aria-current] { color: #fff; }
-.mv-page .v2-subtabs__list a[aria-current]::after { background: var(--mv-gold); }
-.mv-page .v2-subtabs__label { color: var(--mv-gold); }
-.mv-page .v2-foot { background: #000; border-top: 2px solid var(--mv-gold-dk); }
-.mv-page .v2-foot a { color: #fff; }
-@media (max-width: 767px) {
-  .mv-page .v2-tabs { background: #000; border-top-color: var(--mv-line); }
-  .mv-page .v2-tabs a { color: var(--mv-muted); }
-  .mv-page .v2-tabs a[aria-current] { color: var(--mv-gold); box-shadow: inset 0 3px 0 var(--mv-gold); }
-}
+/* chrome: casino style comes from ui.css */
 
 .mv { min-width: 0; }
 
