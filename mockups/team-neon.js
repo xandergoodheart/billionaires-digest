@@ -9,6 +9,14 @@
    Motion: sign flicker, letter light-up, count-up, card power-on, gauge fill, one burst. Each runs once; none with reduced motion. */
 (function(){
   var F = window.BDFantasyStore, C = window.BDFantasyCore, BD = window.BD;
+  // DEMO mode (?demo=1): a read-only sample team for shared links. It replaces the working draft only and is
+  // never written to storage; the store's saving calls are switched off on this page while it is on.
+  var DEMO = /(?:^|[?&])demo=1(?:&|$)/.test((window.location && window.location.search) || '');
+  var DEMO_TEAM = { picks: ['jensen-huang', 'warren-buffett', 'eyal-ofer', 'melinda-french-gates', 'len-blavatnik'], captain: 'eyal-ofer' };
+  if (DEMO && F){
+    var demoOff = function(){ return { ok: false, text: 'Demo team: read only.', errors: [], persisted: false, sync: null }; };
+    ['persist', 'saveDraft', 'saveTeam', 'importTeams', 'addPick', 'removePick', 'setCaptain', 'clearPicks'].forEach(function(k){ if (F[k]) F[k] = demoOff; });
+  }
   if (!F || !C || !BD) return;
   var DATA = '../data/fantasy/';
   var MINUS = '−';
@@ -158,7 +166,7 @@
         arr(S.draftWk.draftable).forEach(function(p){ S.people[p.slug] = p; });
         arr(S.sbWk && S.sbWk.draftable).forEach(function(p){ S.people[p.slug] = S.people[p.slug] || p; });
         // working roster, exactly as BDFantasyStore.restoreRoster (saved draft-week team, else the unsaved draft)
-        var src = store.teams[dw] || store.draft || { picks: [] }, sal = S.draftWk.salaries || {};
+        var src = DEMO ? DEMO_TEAM : (store.teams[dw] || store.draft || { picks: [] }), sal = S.draftWk.salaries || {};
         S.picks = arr(src.picks).filter(function(s){ return sal[s] != null; }).slice(0, C.PICKS);
         S.captain = S.picks.indexOf(src.captain) >= 0 ? src.captain : (S.picks[0] || null);
         S.loaded = true;
@@ -219,6 +227,12 @@
   function renderHero(v){
     var S = F.state, box = clear($('heroin')), hero = $('hero');
     hero.removeAttribute('aria-busy');
+    if (DEMO){
+      var demo = el('p', 'ne-demo');
+      demo.appendChild(document.createTextNode('Demo team \u2014 '));
+      demo.appendChild(link(null, 'pick your own in the Draft room', '../draft.html'));
+      box.appendChild(demo);
+    }
     var weekId = v.mode === 'scoring' ? v.wk.week : S.draftWeek;
     var top = el('div', 'ne-hero__top');
     top.appendChild(el('span', 'ne-kicker', fmt.weekTitle(weekId)));

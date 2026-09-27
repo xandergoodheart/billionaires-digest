@@ -571,3 +571,7 @@
   .fm-dlg__name { font-size: 26px; }
   .fm-dlg__stats dd { font-size: 20px; }
 }
+
+/* DEMO mode label (?demo=1) */
+.fm-demo { margin: 0 auto 10px; padding: 6px 12px; border: 2px solid var(--fm-gold); border-radius: 8px; display: table; font-size: var(--fs-sm); font-weight: 700; color: var(--fm-cream); background: var(--fm-ink); text-align: center; }
+.fm-demo a { color: var(--fm-gold); text-decoration: underline; text-underline-offset: 2px; }

@@ -548,3 +548,7 @@
   .sa-dlg__stats dd { font-size: 22px; }
   .sa-btn--big { font-size: 22px; }
 }
+
+/* DEMO mode label (?demo=1) */
+.sa-demo { margin: 0 auto 10px; padding: 6px 14px; border: 2px solid var(--sa-gold); border-radius: 999px; display: table; font-size: var(--fs-sm); font-weight: 700; color: var(--sa-text); background: var(--sa-ink); text-align: center; }
+.sa-demo a { color: var(--sa-gold); text-decoration: underline; text-underline-offset: 2px; }

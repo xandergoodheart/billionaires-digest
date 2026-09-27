@@ -460,3 +460,7 @@
   .vp-btn { letter-spacing: .1em; }
   .vp-btn--big { font-size: 19px; }
 }
+
+/* DEMO mode label (?demo=1) */
+.vp-demo { margin: 0 0 10px; padding: 6px 14px; border: 1px solid var(--vp-line); border-radius: 999px; display: inline-block; font-size: var(--fs-sm); color: var(--vp-ivory); background: rgba(90, 14, 30, .55); letter-spacing: .02em; }
+.vp-demo a { color: var(--vp-gold); text-decoration: underline; text-underline-offset: 2px; }

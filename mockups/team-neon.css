@@ -488,3 +488,7 @@
   .ne-dlg__stats dd { font-size: 22px; }
   .ne-btn--big { font-size: 22px; }
 }
+
+/* DEMO mode label (?demo=1) */
+.ne-demo { margin: 0 auto 10px; padding: 6px 12px; border: 1px solid var(--ne-cyan); border-radius: 999px; display: table; font-size: var(--fs-sm); font-weight: 700; color: var(--ne-text); background: rgba(12, 8, 35, .85); text-align: center; }
+.ne-demo a { color: var(--ne-cyan-core); text-decoration: underline; text-underline-offset: 2px; }
