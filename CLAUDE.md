@@ -27,7 +27,8 @@ Owner works in plain language; keep explanations short and non-technical.
 ## Rules (from the owner)
 - Never invent a story, number, quote, date or URL. Every fact links its source. Summarize in our own words.
 - Facts in "The move"; opinion only in AI read / why / bear / memo. Plain language, no hype.
-- Keep "For information only · not financial advice". Game is play money only: no purchases, cash-out or prizes.
+- Keep "For information only · not financial advice".
+- Money (owner decision 2026-09-27): real-money play is a goal. The live game stays play money (and its published terms say so) until a licensed/legal route is chosen after legal review — e.g. partnering with licensed operators, or licensed paid-entry contests. Never skip or weaken legally required age, identity, location or responsible-gambling checks, and never use deceptive mechanics (fake near-misses, fake winner feeds, false countdowns). See docs/GAMIFICATION-RESEARCH.md.
 - Real estate at city/area level only; no addresses, no tracking people's movements or family members.
 - No photos of real people and no company logos in art; v2 uses illustrated portraits (style must be approved first).
 - Ask before deleting anything, before actions that cost money, and before publishing anything new outward.
