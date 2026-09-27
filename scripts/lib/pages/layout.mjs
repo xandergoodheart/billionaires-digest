@@ -1,5 +1,6 @@
-// Page shell for the static pages: v2 casino chrome (top bar + sub-tabs, phone tabs, footer from scripts/lib/nav.mjs),
-// the LED status line, and assets/v2/news.css. Content is server-rendered; the only script is the MENU sheet (chrome.js).
+// Page shell for the static pages: v2 chrome (top bar + sub-tabs, phone tabs, footer from scripts/lib/nav.mjs; the
+// footer also loads the scores ticker), the status line, and assets/v2/news.css (newsroom look). Content is
+// server-rendered; the only page script is the MENU sheet (chrome.js).
 
 import { esc, ldJson, SITE } from './util.mjs';
 import { renderTopbarV2, renderBottomTabsV2, renderFooterV2 } from '../nav.mjs';

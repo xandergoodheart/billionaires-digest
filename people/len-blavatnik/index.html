@@ -29,6 +29,7 @@
 </head>
 <body class="v2 nw">
 <a class="v2-skip" href="#main">Skip to content</a>
+<div class="v2-ticker" data-ticker hidden></div>
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
     <a class="v2-mark" href="/"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
@@ -40,14 +41,16 @@
       <a href="/flows.html">Tools</a>
     </nav>
     <div class="v2-top__right">
-      <a class="v2-top__search" href="/people/">Search</a>
-      <a class="v2-btn v2-btn--primary v2-top__cta" href="/team.html">My team</a>
+      <a class="v2-top__act v2-top__act--draft" href="/draft.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Draft</span></a>
+      <a class="v2-top__act v2-top__search" href="/people/"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span>Search</span></a>
+      <a class="v2-top__act v2-top__act--team" href="/team.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>My team</span></a>
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
 </header>
 <nav class="v2-subtabs" aria-label="News">
   <div class="v2-wrap v2-subtabs__in">
+    <span class="v2-subtabs__label">The Digest</span>
     <ul class="v2-subtabs__list">
       <li><a href="/news.html">Today</a></li>
       <li><a href="/people/" aria-current="page">People</a></li>
@@ -56,7 +59,6 @@
       <li><a href="/calendar.html">Calendar</a></li>
       <li><a href="/archive.html">Archive</a></li>
     </ul>
-    <span class="v2-subtabs__label">The Digest</span>
   </div>
 </nav>
 <div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
@@ -110,7 +112,7 @@
 <main id="main" class="nw-main" tabindex="-1">
 <nav class="wrap crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/people/">People</a></li><li><span aria-current="page">Len Blavatnik</span></li></ol></nav>
 <div class="wrap pp">
-<section class="pcard" aria-label="Profile: Len Blavatnik">
+<section class="pcard pcard--player" aria-label="Profile: Len Blavatnik">
   <div class="pchead">
     <div class="pcwho">
       <div class="pcrank">#71 of 100 · <a href="/sectors.html#media">Media</a></div>
@@ -152,10 +154,6 @@
 <footer class="v2-foot">
   <div class="v2-wrap v2-foot__in">
     <a class="v2-mark v2-mark--sm" href="/"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
-    <div class="v2-foot__notes">
-      <p>For information only · not financial advice</p>
-      <p>Play money only: no purchases, cash-out or prizes.</p>
-    </div>
     <nav class="v2-foot__links" aria-label="Footer">
       <a href="/about.html">About</a>
       <a href="/about.html#corrections">Corrections</a>
@@ -163,8 +161,13 @@
       <a href="/about.html#sponsor">Sponsor the brief</a>
       <a href="/calendar.ics">Calendar feed</a>
     </nav>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
   </div>
 </footer>
+<script src="/assets/v2/ticker.js" defer></script>
 
 <script src="/assets/v2/chrome.js"></script>
 </body>

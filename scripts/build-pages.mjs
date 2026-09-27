@@ -129,7 +129,7 @@ export async function buildPages(root = '.') {
 
     const body = `${bc.html}
 <div class="wrap pp">
-<section class="pcard" aria-label="${esc('Profile: ' + name)}">
+<section class="pcard pcard--player" aria-label="${esc('Profile: ' + name)}">
   <div class="pchead">
     <div class="pcwho">
       <div class="pcrank">#${esc(ip.rank)} of ${people.length} · <a href="${esc(sectorHref(sector))}">${esc(sector)}</a></div>

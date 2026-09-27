@@ -1,60 +1,72 @@
-/* Billionaires Digest v2: design tokens. Phase 3 (owner decision 2026-09-27): the whole site lives in the casino
-   arcade world (reference: mockups/team-arcade.*). ONE token set, always dark: near-black felt, brass/gold frames,
-   neon red (brand #D62D27 family) and neon green for gains. There is no light theme.
-   Contrast (on --surface #121418): --text 16:1, --muted 9:1, --gold 11:1, --brand-ink 5.9:1, --positive 11:1,
-   --negative 5.9:1. White on --brand buttons 4.9:1. Dark ink on gold buttons 10:1. */
+/* Billionaires Digest v3 (Track A): design tokens, sports-network look.
+   Light canvas with white cards, black top bar and a dark scores ticker, thin separators, dense type, red accents.
+   Dark mode follows the system setting (prefers-color-scheme) unless <html data-theme="light"> forces light;
+   <html data-theme="dark"> forces dark.
+   Contrast, light (on --surface #FFF / --canvas #EDEEF0): --text 17:1, --muted 6.6:1 / 5.7:1, --brand-ink 5.9:1,
+   --positive 5.6:1, --link 6.4:1. White on --brand buttons 4.9:1.
+   Contrast, dark (on --surface #1D1F22 / --canvas #121314): --text 14:1, --muted 7:1, --brand-ink 5.3:1,
+   --positive 7.6:1, --link 7.2:1.
+   The old casino token names (--gold, --felt, --brass …) are kept as aliases so any page CSS that still uses them
+   renders in the new look instead of breaking. */
 :root {
-  /* casino palette */
-  --felt: #07080A;             /* page */
-  --felt-glow: rgba(40, 70, 52, .38);
-  --panel: #121418;            /* cabinet panel top */
-  --panel-2: #0B0C0F;          /* cabinet panel bottom */
-  --gold: #F5C542;
-  --gold-2: #FFE08A;           /* light gold: small text, links, focus accents */
-  --gold-dk: #8E6B1C;          /* trim, rules */
-  --gold-ink: #2A1D00;         /* text on gold */
-  --neon-red: #FF3B3B;         /* glow, lamps */
-  --neon-green: #39E07A;
-  --cyan: #5CE1FF;             /* focus ring */
-  --brass: linear-gradient(145deg, #FBEAB0 0%, #B98E32 22%, #F5C542 45%, #7A5A1A 70%, #E9C766 100%);
-  --chrome: linear-gradient(145deg, #F4F6F8 0%, #8C949D 25%, #E9EDF1 48%, #5F6770 72%, #D5DAE0 100%);
-  --gold-btn: linear-gradient(180deg, #FFE9A0 0%, #F5C542 45%, #C9971F 100%);
-  --red-btn: linear-gradient(180deg, #F0554F 0%, #D62D27 50%, #A81E19 100%);
-
-  /* brand palette (names kept so every page CSS keeps working; values are the dark casino set) */
-  --ink: #0B0C0F;              /* dark ink: text on light plates, gold buttons and coins */
-  --canvas: #07080A;
-  --surface: #121418;
+  /* brand palette */
+  --ink: #121417;              /* main text */
+  --canvas: #EDEEF0;           /* page */
+  --surface: #FFFFFF;          /* cards */
+  --surface-2: #F6F7F8;        /* table heads, sunken rows */
   --brand: #D62D27;            /* backgrounds (buttons, badges) with white text */
-  --brand-ink: #FF5A52;        /* brand red as TEXT on dark */
-  --positive: #39E07A;
-  --muted: #BDB6A4;
-  --line: #3A3220;             /* gold-brown rule */
-  --line-2: #8C7A4A;           /* input and control borders (3:1 on dark) */
-  --focus: #5CE1FF;
-  --warning: #FFC862;
+  --brand-ink: #C1231E;        /* brand red as TEXT */
+  --positive: #08764A;
+  --muted: #555C66;
+  --line: #DCDFE3;             /* thin separators */
+  --line-2: #8A919B;           /* input and control borders (3:1) */
+  --focus: #2359C4;
+  --warning: #8A5200;
+  --link: #1F56B8;
 
   /* derived */
-  --ink-2: #1A0E0D;            /* hero cabinet inner (dark red-black) */
-  --ink-3: #2A2618;            /* rules and pills on dark */
+  --ink-2: #16181B;            /* dark hero / score card (both themes) */
+  --ink-3: #2C2F34;            /* rules on dark */
   --on-ink: #FFFFFF;
-  --on-ink-muted: #BDB6A4;
+  --on-ink-muted: #B9BFC7;
   --brand-hover: #B8231E;
-  --brand-tint: #3A1715;
-  --positive-tint: #0E2E1C;
-  --negative: #FF5A52;
-  --info-tint: #0F1B2A;
-  --info-ink: #8CC8FF;
-  --disabled-bg: #24262B;
-  --disabled-ink: #8F897B;
-  --dim: #6F6A5E;              /* decorative only (never for text that matters) */
+  --brand-tint: #FBE9E8;
+  --positive-tint: #E4F3EC;
+  --negative: #C1231E;
+  --info-tint: #E8EEF9;
+  --info-ink: #1F56B8;
+  --warning-tint: #FFF4DE;
+  --disabled-bg: #E3E6EA;
+  --disabled-ink: #5F6670;
+  --dim: #9AA1AA;              /* decorative only */
+  --shadow: 0 1px 2px rgba(16, 18, 20, .08), 0 0 0 1px rgba(16, 18, 20, .04);
 
   /* semantic */
   --bg: var(--canvas);
   --card: var(--surface);
-  --text: #F4F1E8;
+  --text: var(--ink);
   --text-muted: var(--muted);
-  --bar: #000000;              /* top bar and footer */
+  --bar: #0B0B0C;              /* top bar and footer */
+  --ticker: #1B1C1E;           /* scores ticker strip */
+  --ticker-2: #34363A;         /* ticker separators */
+  --subbar: #FFFFFF;           /* sub-tab bar */
+
+  /* legacy casino aliases (restyled; do not use in new code) */
+  --felt: var(--canvas);
+  --felt-glow: transparent;
+  --panel: var(--surface);
+  --panel-2: var(--surface);
+  --gold: var(--text);
+  --gold-2: var(--brand-ink);
+  --gold-dk: var(--line);
+  --gold-ink: #FFFFFF;
+  --neon-red: var(--brand);
+  --neon-green: var(--positive);
+  --cyan: var(--focus);
+  --brass: linear-gradient(var(--line), var(--line));
+  --chrome: linear-gradient(var(--line), var(--line));
+  --gold-btn: linear-gradient(var(--brand), var(--brand));
+  --red-btn: linear-gradient(var(--brand), var(--brand));
 
   /* type */
   --font-display: 'Barlow Condensed', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
@@ -62,12 +74,12 @@
   --fw-display: 800;
   --fs-xs: 12px;
   --fs-sm: 13px;
-  --fs-md: 16px;
-  --fs-lg: 20px;
-  --fs-xl: 28px;
-  --fs-2xl: 40px;
-  --fs-3xl: 56px;
-  --fs-hero: 104px;
+  --fs-md: 15px;
+  --fs-lg: 18px;
+  --fs-xl: 24px;
+  --fs-2xl: 34px;
+  --fs-3xl: 48px;
+  --fs-hero: 88px;
 
   /* spacing: 8px unit */
   --s-1: 4px;
@@ -80,31 +92,98 @@
   --s6: 64px;
 
   /* layout */
-  --radius: 4px;
-  --radius-panel: 14px;
-  --max: 1440px;
-  --gutter: 24px;
-  --margin: 40px;
+  --radius: 6px;
+  --radius-card: 10px;
+  --radius-panel: 10px;
+  --max: 1280px;
+  --gutter: 16px;
+  --margin: 24px;
   --margin-mobile: 16px;
   --tap: 44px;
-  --topbar-h: 76px;
+  --topbar-h: 56px;
   --tabs-h: 60px;
 
   /* motion */
-  --t-fast: 150ms;
-  --t-base: 200ms;
+  --t-fast: 120ms;
+  --t-base: 180ms;
   --ease: cubic-bezier(.2, .7, .3, 1);
 
+  color-scheme: light;
+}
+
+/* dark set: forced with data-theme="dark" … */
+:root[data-theme="dark"] {
+  --ink: #F1F2F4;
+  --canvas: #121314;
+  --surface: #1D1F22;
+  --surface-2: #25282C;
+  --brand-ink: #FF6B64;
+  --positive: #3CC985;
+  --muted: #A9B0B9;
+  --line: #33373C;
+  --line-2: #7C848E;
+  --focus: #8AB4FF;
+  --warning: #FFC862;
+  --link: #8AB4FF;
+  --ink-2: #0B0C0D;
+  --ink-3: #33373C;
+  --brand-tint: #3A1715;
+  --positive-tint: #10301F;
+  --negative: #FF6B64;
+  --info-tint: #17233A;
+  --info-ink: #8AB4FF;
+  --warning-tint: #2E2410;
+  --disabled-bg: #2A2D31;
+  --disabled-ink: #A0A7B0;
+  --dim: #5E646C;
+  --shadow: 0 0 0 1px rgba(255, 255, 255, .05);
+  --bar: #000000;
+  --ticker: #0E0F10;
+  --ticker-2: #2E3034;
+  --subbar: #1D1F22;
   color-scheme: dark;
+}
+/* … or by the system setting (unless data-theme="light") */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #F1F2F4;
+    --canvas: #121314;
+    --surface: #1D1F22;
+    --surface-2: #25282C;
+    --brand-ink: #FF6B64;
+    --positive: #3CC985;
+    --muted: #A9B0B9;
+    --line: #33373C;
+    --line-2: #7C848E;
+    --focus: #8AB4FF;
+    --warning: #FFC862;
+    --link: #8AB4FF;
+    --ink-2: #0B0C0D;
+    --ink-3: #33373C;
+    --brand-tint: #3A1715;
+    --positive-tint: #10301F;
+    --negative: #FF6B64;
+    --info-tint: #17233A;
+    --info-ink: #8AB4FF;
+    --warning-tint: #2E2410;
+    --disabled-bg: #2A2D31;
+    --disabled-ink: #A0A7B0;
+    --dim: #5E646C;
+    --shadow: 0 0 0 1px rgba(255, 255, 255, .05);
+    --bar: #000000;
+    --ticker: #0E0F10;
+    --ticker-2: #2E3034;
+    --subbar: #1D1F22;
+    color-scheme: dark;
+  }
 }
 
 @media (max-width: 767px) {
   :root {
     --margin: 16px;
-    --topbar-h: 60px;
-    --fs-hero: 72px;
-    --fs-3xl: 40px;
-    --fs-2xl: 32px;
-    --radius-panel: 12px;
+    --topbar-h: 52px;
+    --fs-hero: 64px;
+    --fs-3xl: 36px;
+    --fs-2xl: 28px;
   }
 }

@@ -11,7 +11,7 @@ test('navKeysV2: generated page sections', () => {
   assert.deepEqual(navKeysV2('/other/'), [null, null]);
 });
 
-test('page: v2 casino chrome, no v1 chrome, content and SEO kept', () => {
+test('page: v2 chrome + newsroom stylesheet, no v1 chrome, content and SEO kept', () => {
   const html = page({
     title: 'T & co', description: 'D', path: '/people/x/', ogImage: 'https://billionairesdigest.com/og/latest.png',
     jsonLd: [{ '@type': 'Person', name: 'X' }], dateline: 'People · #1 of 100', updated: 'Net worths as of Sep 1, 2026',

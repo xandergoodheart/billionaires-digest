@@ -175,7 +175,9 @@ test('Play is the front door (index.html, "/" absolute); News lives at news.html
   assert.ok(top.includes('<a href="index.html" aria-current="true">Play</a>'));
   assert.ok(top.includes('<a href="news.html">News</a>'));
   assert.ok(rel.includes('<a class="v2-mark" href="index.html">'));
-  assert.ok(rel.includes('<a class="v2-btn v2-btn--primary v2-top__cta" href="team.html">My team</a>'));
+  assert.ok(/<a class="v2-top__act v2-top__act--team" href="team.html">[\s\S]*?<span>My team<\/span><\/a>/.test(rel));
+  assert.ok(/<a class="v2-top__act v2-top__act--draft" href="draft.html">[\s\S]*?<span>Draft<\/span><\/a>/.test(rel));
+  assert.ok(/<a class="v2-top__act v2-top__search" href="people\/">[\s\S]*?<span>Search<\/span><\/a>/.test(rel));
   assert.equal((rel.match(/aria-current="page"/g) || []).length, 0);
   const news = renderTopbarV2('news', 'today');
   const sub = news.slice(news.indexOf('<nav class="v2-subtabs"'));
@@ -190,4 +192,15 @@ test('Play is the front door (index.html, "/" absolute); News lives at news.html
   assert.ok(renderFooterV2().includes('<a class="v2-mark v2-mark--sm" href="index.html">'));
   assert.ok(renderFooterV2({ absolute: true }).includes('<a class="v2-mark v2-mark--sm" href="/">'));
   assert.ok(renderNav('today').includes('<a href="news.html" aria-current="page">Today</a>'));
+});
+
+test('scores ticker: empty hidden container first in the chrome, script loaded by the footer', () => {
+  const html = renderTopbarV2('play', 'team');
+  assert.ok(html.includes('<div class="v2-ticker" data-ticker hidden></div>'));
+  assert.ok(html.indexOf('v2-skip') < html.indexOf('v2-ticker') && html.indexOf('v2-ticker') < html.indexOf('<header class="v2-top"'));
+  assert.ok(renderFooterV2().includes('<script src="assets/v2/ticker.js" defer></script>'));
+  assert.ok(renderFooterV2({ absolute: true }).includes('<script src="/assets/v2/ticker.js" defer></script>'));
+  // sub-tab bar: section label comes before the tabs
+  const sub = html.slice(html.indexOf('<nav class="v2-subtabs"'));
+  assert.ok(sub.indexOf('v2-subtabs__label') < sub.indexOf('v2-subtabs__list'));
 });

@@ -16,7 +16,8 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://billionairesdigest.com/og/2026-09-27.png">
-<meta name="theme-color" content="#07080A">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +30,7 @@
 <body class="v2">
 <!-- v2topbar:start -->
 <a class="v2-skip" href="#main">Skip to content</a>
+<div class="v2-ticker" data-ticker hidden></div>
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
     <a class="v2-mark" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
@@ -40,14 +42,16 @@
       <a href="flows.html">Tools</a>
     </nav>
     <div class="v2-top__right">
-      <a class="v2-top__search" href="people/">Search</a>
-      <a class="v2-btn v2-btn--primary v2-top__cta" href="team.html">My team</a>
+      <a class="v2-top__act v2-top__act--draft" href="draft.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Draft</span></a>
+      <a class="v2-top__act v2-top__search" href="people/"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span>Search</span></a>
+      <a class="v2-top__act v2-top__act--team" href="team.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>My team</span></a>
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
 </header>
 <nav class="v2-subtabs" aria-label="Play">
   <div class="v2-wrap v2-subtabs__in">
+    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
     <ul class="v2-subtabs__list">
       <li><a href="team.html">My team</a></li>
       <li><a href="draft.html">Draft room</a></li>
@@ -57,7 +61,6 @@
       <li><a href="moves.html">Next Moves</a></li>
       <li><a href="play-terms.html">Rules</a></li>
     </ul>
-    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
   </div>
 </nav>
 <div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
@@ -111,86 +114,79 @@
 <main id="main" class="v2-main hm-main" tabindex="-1">
   <div class="v2-wrap">
     <p class="v2-banner" id="testclock" hidden></p>
-    <p class="v2-play">Play money · no prizes · not financial advice</p>
+    <h1 class="v2-sr">Billionaires Digest: play the billionaires</h1>
 
-    <section class="hm-hero" id="hero" aria-labelledby="hmh">
-      <span class="v2-bulbs" aria-hidden="true"></span>
-      <div class="hm-hero__in">
-        <div class="hm-hero__pitch">
-          <span class="v2-kicker">Billionaire Fantasy League</span>
-          <h1 class="hm-hero__h" id="hmh">Play the billionaires</h1>
-          <p class="hm-hero__dek">Draft five of the world's richest. Score on their real stock moves. Play money.</p>
-        </div>
-        <div class="hm-hero__team" id="hmteam" aria-busy="true">
-          <p class="v2-loading">Checking for your team…</p>
-          <span class="v2-skel v2-skel--lg"></span>
-        </div>
+    <div class="hm-layout">
+      <!-- center column: scoreboard, today's lede, story grid -->
+      <div class="hm-center">
+        <section class="hm-board" id="hero" aria-labelledby="boardh">
+          <h2 class="v2-sr" id="boardh">Featured scoreboard</h2>
+          <div id="hmteam" aria-busy="true">
+            <p class="v2-loading hm-board__loading">Checking for your team…</p>
+          </div>
+        </section>
+
+        <article class="hm-lede" id="lede" aria-labelledby="ledeh">
+          <div id="ledebody">
+            <span class="hm-lede__kick">Today's lede</span>
+            <h2 class="hm-lede__h" id="ledeh">Today's edition</h2>
+            <p class="v2-loading">Loading today's edition…</p>
+          </div>
+        </article>
+
+        <section class="hm-stories" aria-labelledby="storiesh">
+          <div class="hm-sec__head">
+            <h2 class="v2-h2" id="storiesh">In today's edition</h2>
+            <a class="hm-sec__more" href="news.html">All stories</a>
+          </div>
+          <ul class="hm-grid" id="storygrid"><li class="hm-story"><span class="v2-skel"></span><span class="v2-skel"></span></li></ul>
+        </section>
+        <p class="v2-play v2-play--big">Play money · no prizes · not financial advice</p>
       </div>
-      <span class="v2-bulbs" aria-hidden="true"></span>
-    </section>
 
-    <section class="hm-games" aria-labelledby="gamesh">
-      <h2 class="v2-h2 hm-games__h" id="gamesh">Pick a game</h2>
-      <ul class="hm-tiles">
-        <li class="hm-tile v2-card" id="t-team">
-          <span class="hm-tile__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></span>
-          <h3 class="hm-tile__h"><a class="hm-tile__link" href="team.html">My team</a></h3>
-          <p class="hm-tile__desc">Your five, your captain and this week's score against the S&amp;P 500.</p>
-          <div class="hm-tile__live" id="d-team"><span class="v2-skel"></span></div>
-        </li>
-        <li class="hm-tile v2-card" id="t-draft">
-          <span class="hm-tile__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 4h16v4H4zM4 10h7v10H4zM13 10h7v4h-7zM13 16h7v4h-7z"/></svg></span>
-          <h3 class="hm-tile__h"><a class="hm-tile__link" href="draft.html">Draft room</a></h3>
-          <p class="hm-tile__desc">Pick five billionaires under a 100-point cap and name a captain.</p>
-          <div class="hm-tile__live" id="d-draft"><span class="v2-skel"></span></div>
-        </li>
-        <li class="hm-tile v2-card hm-tile--wide" id="t-moves">
-          <span class="hm-tile__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3 17l5-5 4 4 8-8v5h2V4h-9v2h5l-6 6-4-4-7 7z"/></svg></span>
-          <h3 class="hm-tile__h"><a class="hm-tile__link" href="moves.html">Next Moves</a></h3>
-          <p class="hm-tile__desc">Yes/no calls on their next business moves, settled only from public SEC filings.</p>
-          <div class="hm-tile__live" id="d-moves"><span class="v2-skel"></span><span class="v2-skel"></span></div>
-        </li>
-        <li class="hm-tile v2-card" id="t-book">
-          <span class="hm-tile__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 3h11a3 3 0 013 3v15H8a3 3 0 01-3-3zm3 13a1 1 0 000 2h9v-2zM8 7v2h8V7zm0 4v2h6v-2z"/></svg></span>
-          <h3 class="hm-tile__h"><a class="hm-tile__link" href="book.html">The Book</a></h3>
-          <p class="hm-tile__desc">Play-money odds on the fantasy week: matchups, props and races.</p>
-          <div class="hm-tile__live" id="d-book"><span class="v2-skel"></span></div>
-        </li>
-        <li class="hm-tile v2-card" id="t-leagues">
-          <span class="hm-tile__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 11a3.5 3.5 0 110-7 3.5 3.5 0 010 7zm8 0a3 3 0 110-6 3 3 0 010 6zM2 20c0-3.3 2.7-6 6-6s6 2.7 6 6zm13 0c0-2-.7-3.8-1.9-5.2A5 5 0 0122 19.5v.5z"/></svg></span>
-          <h3 class="hm-tile__h"><a class="hm-tile__link" href="leagues.html">Leagues</a></h3>
-          <p class="hm-tile__desc">Private leagues with friends, joined with an invite code.</p>
-          <div class="hm-tile__live" id="d-leagues"><span class="v2-skel"></span></div>
-        </li>
-        <li class="hm-tile v2-card" id="t-scores">
-          <span class="hm-tile__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 20V10h4v10zm6 0V4h4v16zm6 0v-7h4v7z"/></svg></span>
-          <h3 class="hm-tile__h"><a class="hm-tile__link" href="scores.html">Scores</a></h3>
-          <p class="hm-tile__desc">Your week day by day, your season record and the leaderboard.</p>
-          <div class="hm-tile__live" id="d-scores"><span class="v2-skel"></span></div>
-        </li>
-      </ul>
-    </section>
+      <!-- right rail: headlines, Next Moves odds -->
+      <aside class="hm-right" aria-label="Headlines and odds">
+        <section class="v2-card hm-heads" aria-labelledby="headsh">
+          <h2 class="hm-rail__h" id="headsh"><span class="hm-rail__ico" aria-hidden="true"></span>Top Headlines</h2>
+          <ul class="hm-heads__list" id="headlines"><li><span class="v2-skel"></span></li><li><span class="v2-skel"></span></li></ul>
+        </section>
+        <section class="v2-card hm-odds" aria-labelledby="oddsh">
+          <div class="hm-odds__top">
+            <h2 class="hm-rail__h" id="oddsh">Next Moves</h2>
+            <span class="v2-pill">Play money</span>
+          </div>
+          <div id="d-moves"><span class="v2-skel"></span><span class="v2-skel"></span></div>
+          <a class="v2-btn v2-btn--ghost v2-btn--block hm-odds__btn" href="moves.html">See all markets</a>
+        </section>
+      </aside>
 
-    <div class="hm-row">
-      <section class="v2-card hm-lede" id="lede" aria-labelledby="ledeh">
-        <span class="v2-kicker v2-kicker--red">Today's lede · The Digest</span>
-        <div id="ledebody">
-          <h2 class="hm-lede__h" id="ledeh">Today's edition</h2>
-          <p class="v2-loading">Loading today's edition…</p>
-        </div>
-        <a class="v2-btn v2-btn--ghost hm-lede__btn" href="news.html">Read today's edition</a>
-      </section>
-      <section class="v2-card v2-card--tint hm-learn" aria-labelledby="learnh">
-        <span class="v2-kicker">Learn</span>
-        <h2 class="hm-learn__h" id="learnh">How the richest think</h2>
-        <ul class="hm-learn__list">
-          <li><a class="hm-learn__link" href="academy.html"><span class="hm-learn__t">Billionaires Digest Academy</span><span class="hm-learn__d">Each billionaire's principles, a quiz and a glossary of money terms.</span></a></li>
-          <li><a class="hm-learn__link" href="life.html"><span class="hm-learn__t">Billionaire Life</span><span class="hm-learn__d">Face their real decisions and see if you would have matched them.</span></a></li>
-        </ul>
-      </section>
+      <!-- left rail: promo, quick links -->
+      <aside class="hm-left" aria-label="Quick links">
+        <section class="hm-promo" aria-labelledby="promoh">
+          <h2 class="hm-promo__h" id="promoh"><span class="hm-promo__r">All of Billionaires Digest.</span> <span>One place.</span></h2>
+          <p class="hm-promo__p">Fantasy, odds, lessons and the daily brief. Free, play money only.</p>
+          <a class="v2-btn v2-btn--light hm-promo__btn" href="draft.html">Draft your team</a>
+        </section>
+        <nav class="v2-card hm-links" aria-labelledby="playlh">
+          <h2 class="hm-rail__h" id="playlh">Play</h2>
+          <ul class="hm-links__list">
+            <li><a href="team.html"><span class="hm-li hm-li--team" aria-hidden="true"></span>My team</a></li>
+            <li><a href="draft.html"><span class="hm-li hm-li--draft" aria-hidden="true"></span>Draft room</a></li>
+            <li><a href="moves.html"><span class="hm-li hm-li--moves" aria-hidden="true"></span>Next Moves</a></li>
+            <li><a href="book.html"><span class="hm-li hm-li--book" aria-hidden="true"></span>The Book</a></li>
+            <li><a href="leagues.html"><span class="hm-li hm-li--leagues" aria-hidden="true"></span>Leagues</a></li>
+            <li><a href="scores.html"><span class="hm-li hm-li--scores" aria-hidden="true"></span>Scores</a></li>
+          </ul>
+        </nav>
+        <nav class="v2-card hm-links" aria-labelledby="learnlh">
+          <h2 class="hm-rail__h" id="learnlh">Learn</h2>
+          <ul class="hm-links__list">
+            <li><a href="academy.html"><span class="hm-li hm-li--academy" aria-hidden="true"></span>Academy</a></li>
+            <li><a href="life.html"><span class="hm-li hm-li--life" aria-hidden="true"></span>Billionaire Life</a></li>
+          </ul>
+        </nav>
+      </aside>
     </div>
-
-    <p class="v2-play v2-play--big">Play money · no prizes · not financial advice</p>
   </div>
 </main>
 
@@ -208,10 +204,6 @@
 <footer class="v2-foot">
   <div class="v2-wrap v2-foot__in">
     <a class="v2-mark v2-mark--sm" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
-    <div class="v2-foot__notes">
-      <p>For information only · not financial advice</p>
-      <p>Play money only: no purchases, cash-out or prizes.</p>
-    </div>
     <nav class="v2-foot__links" aria-label="Footer">
       <a href="about.html">About</a>
       <a href="about.html#corrections">Corrections</a>
@@ -219,8 +211,13 @@
       <a href="about.html#sponsor">Sponsor the brief</a>
       <a href="calendar.ics">Calendar feed</a>
     </nav>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
   </div>
 </footer>
+<script src="assets/v2/ticker.js" defer></script>
 <!-- v2footer:end -->
 
 <script src="assets/common.js"></script>

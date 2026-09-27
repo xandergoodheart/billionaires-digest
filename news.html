@@ -29,6 +29,7 @@
 
 <!-- v2topbar:start -->
 <a class="v2-skip" href="#main">Skip to content</a>
+<div class="v2-ticker" data-ticker hidden></div>
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
     <a class="v2-mark" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
@@ -40,14 +41,16 @@
       <a href="flows.html">Tools</a>
     </nav>
     <div class="v2-top__right">
-      <a class="v2-top__search" href="people/">Search</a>
-      <a class="v2-btn v2-btn--primary v2-top__cta" href="team.html">My team</a>
+      <a class="v2-top__act v2-top__act--draft" href="draft.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Draft</span></a>
+      <a class="v2-top__act v2-top__search" href="people/"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span>Search</span></a>
+      <a class="v2-top__act v2-top__act--team" href="team.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>My team</span></a>
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
 </header>
 <nav class="v2-subtabs" aria-label="News">
   <div class="v2-wrap v2-subtabs__in">
+    <span class="v2-subtabs__label">The Digest</span>
     <ul class="v2-subtabs__list">
       <li><a href="news.html" aria-current="page">Today</a></li>
       <li><a href="people/">People</a></li>
@@ -56,7 +59,6 @@
       <li><a href="calendar.html">Calendar</a></li>
       <li><a href="archive.html">Archive</a></li>
     </ul>
-    <span class="v2-subtabs__label">The Digest</span>
   </div>
 </nav>
 <div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
@@ -107,23 +109,37 @@
 </div>
 <!-- v2topbar:end -->
 <div id="main" class="nw-main" tabindex="-1">
-<div class="nw-ledbar"><p class="wrap nw-led"><span id="dateline">Loading today's digest…</span><span id="updated"></span></p></div>
-
-<header class="nw-head nw-head--slim">
-  <span class="nw-kicker">The Digest · Today's edition</span>
-  <p class="nw-title nw-title--sm">Follow the money</p>
-  <p>Read the moves of the world's 100 richest like a trading desk.</p>
-</header>
-
 <div class="tape" id="tape" hidden><div class="wrap" id="tapeinner"></div></div>
 
-<main id="app">
-  <div class="wrap empty" id="empty">
-    <img class="pressart" src="assets/art/press.jpg" alt="" width="640" height="358" loading="eager" decoding="async">
-    <div class="display big">TODAY'S EDITION IS ON THE PRESS</div>
-    <p id="emptymsg">Loading today’s edition…</p>
-  </div>
-</main>
+<div class="wrap nw-grid">
+  <section class="nw-today" aria-labelledby="todayh">
+    <h2 class="nw-rtitle" id="todayh">Today's edition</h2>
+    <p class="nw-date" id="dateline">Loading today's digest…</p>
+    <p class="nw-upd" id="updated"></p>
+    <p class="nw-tag">Follow the money. Read the moves of the world's 100 richest like a trading desk.</p>
+    <nav aria-label="Sections of the Digest">
+      <ul class="nw-quick">
+        <li><a href="people/">People</a></li>
+        <li><a href="companies/">Companies</a></li>
+        <li><a href="sectors.html">Sectors</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="archive.html">Archive</a></li>
+        <li><a href="flows.html">Tools</a></li>
+      </ul>
+    </nav>
+  </section>
+
+  <main id="app" class="nw-center">
+    <div class="empty" id="empty">
+      <img class="pressart" src="assets/art/press.jpg" alt="" width="640" height="358" loading="eager" decoding="async">
+      <div class="display big">TODAY'S EDITION IS ON THE PRESS</div>
+      <p id="emptymsg">Loading today’s edition…</p>
+    </div>
+  </main>
+
+  <div class="nw-lrail" id="railleft"></div>
+  <aside class="nw-rrail side" id="railright" aria-label="Top headlines and the day's boxes"></aside>
+</div>
 
 </div>
 
@@ -139,10 +155,6 @@
 <footer class="v2-foot">
   <div class="v2-wrap v2-foot__in">
     <a class="v2-mark v2-mark--sm" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
-    <div class="v2-foot__notes">
-      <p>For information only · not financial advice</p>
-      <p>Play money only: no purchases, cash-out or prizes.</p>
-    </div>
     <nav class="v2-foot__links" aria-label="Footer">
       <a href="about.html">About</a>
       <a href="about.html#corrections">Corrections</a>
@@ -150,8 +162,13 @@
       <a href="about.html#sponsor">Sponsor the brief</a>
       <a href="calendar.ics">Calendar feed</a>
     </nav>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
   </div>
 </footer>
+<script src="assets/v2/ticker.js" defer></script>
 <!-- v2footer:end -->
 
 <script src="assets/common.js"></script>
@@ -788,7 +805,9 @@
     var d = digest;
     BD.setStories(d.stories);
     var app = document.getElementById('app');
-    app.textContent = '';
+    var railL = document.getElementById('railleft'), railR = document.getElementById('railright');
+    app.textContent = ''; railL.textContent = ''; railR.textContent = '';
+    var allStories = arr(d.stories);
     document.getElementById('dateline').textContent = d.date || 'Today';
     document.getElementById('updated').textContent = d.updated ? ('Updated ' + d.updated) : '';
 
@@ -804,12 +823,40 @@
 
     // lede
     var lede = BD.renderLede(d);
-    if (lede) app.appendChild(lede);
+    if (lede){
+      // the lede's facts come from the edition story with the same headline (exact match only; nothing invented)
+      var ledeIdx = -1;
+      for (var li = 0; li < allStories.length; li++){
+        if (allStories[li] && d.lede && allStories[li].headline && allStories[li].headline === d.lede.headline){ ledeIdx = li; break; }
+      }
+      var ls = ledeIdx >= 0 ? allStories[ledeIdx] : null;
+      if (ls && (ls.move || safeUrl(ls.url))){
+        var lf = el('div', 'nw-ledefoot');
+        if (ls.move){
+          var lq = el('div', 'quad'), lm = el('div', 'q-move');
+          lm.appendChild(el('h4', null, 'The move')); lm.appendChild(el('p', null, ls.move));
+          lq.appendChild(lm); lf.appendChild(lq);
+        }
+        var lsrc = el('div', 'src');
+        lsrc.appendChild(el('span', null, 'Source · ' + (ls.source || 'Unlisted')));
+        var lu2 = safeUrl(ls.url);
+        if (lu2){ var lo = el('a', null, 'Read original ↗'); lo.href = lu2; lo.target = '_blank'; lo.rel = 'noopener noreferrer'; lsrc.appendChild(lo); }
+        var lj = el('a', 'nw-jump', 'Full story ↓'); lj.href = '#story-' + (ledeIdx + 1);
+        lj.addEventListener('click', function(e){ e.preventDefault(); goStory(ledeIdx); });
+        lsrc.appendChild(lj);
+        lf.appendChild(lsrc);
+        lede.firstChild.appendChild(lf);
+      }
+      app.appendChild(lede);
+    }
 
-    // top 10
+    // top 10 (left rail on wide screens)
     if (top.length){
       var ts = el('section', 'topten'), tw = el('div', 'wrap');
-      tw.appendChild(el('div', 'label', 'Top 10 · tap a name for their moves')).style.paddingBottom = '10px';
+      ts.setAttribute('aria-labelledby', 'toptenh');
+      var tth = el('h2', 'nw-rtitle', 'Net worth · Top 10'); tth.id = 'toptenh';
+      tw.appendChild(tth);
+      tw.appendChild(el('div', 'label', 'Tap a name for their moves')).style.padding = '6px 0 4px';
       var grid = el('div', 'tengrid');
       top.forEach(function(p, i){
         var c = el('button', 'person'); c.type = 'button';
@@ -830,7 +877,7 @@
       });
       tw.appendChild(grid);
       if (d.top10AsOf) tw.appendChild(el('div', 'asof', d.top10AsOf));
-      ts.appendChild(tw); app.appendChild(ts);
+      ts.appendChild(tw); railL.appendChild(ts);
     }
 
     // main
@@ -863,7 +910,10 @@
 
     if (activePerson && !todayStories.length) feed.appendChild(el('p', 'note', 'No moves from ' + activePerson + " in today's edition."));
     todayStories.filter(function(s){ return activeSector === 'All' || s.sector === activeSector; }).forEach(function(s){
-      feed.appendChild(renderStory(s));
+      var art = renderStory(s);
+      var si = allStories.indexOf(s);
+      if (si >= 0) art.id = 'story-' + (si + 1);
+      feed.appendChild(art);
     });
 
     if (activePerson){
@@ -874,7 +924,26 @@
     }
     mw.appendChild(feed);
 
-    var side = el('aside', 'side');
+    // right rail: Top Headlines (every story in the edition) then the day's boxes
+    var side = railR;
+    if (allStories.length){
+      var hb = el('section', 'box nw-heads');
+      hb.setAttribute('aria-labelledby', 'headsh');
+      var hh = el('h3', 'serif', 'Top Headlines'); hh.id = 'headsh';
+      hb.appendChild(hh);
+      var hl = el('ol', 'nw-headlist');
+      allStories.forEach(function(s, i){
+        if (!s || !s.headline) return;
+        var li = el('li'), a = el('a');
+        a.href = '#story-' + (i + 1);
+        if (s.who) a.appendChild(el('span', 'nw-headwho', s.who));
+        a.appendChild(document.createTextNode(s.headline));
+        a.addEventListener('click', function(e){ e.preventDefault(); goStory(i); });
+        li.appendChild(a); hl.appendChild(li);
+      });
+      hb.appendChild(hl);
+      side.appendChild(hb);
+    }
     if (d.ledger && d.ledger.headline){
       var lg = el('div', 'box strong ledger');
       lg.appendChild(el('div', 'display mark', 'THE LEDGER'));
@@ -917,14 +986,33 @@
       var b = BD.listBox(x[0], x[1], x[2]);
       if (b) side.appendChild(b);
     });
-    mw.appendChild(side);
     ms.appendChild(mw); app.appendChild(ms);
+  }
+
+  // jump to a story in the feed (Top Headlines, lede). Clears filters first if the story is hidden.
+  function goStory(i){
+    var t = document.getElementById('story-' + (i + 1));
+    if (!t){
+      activeSector = 'All';
+      if (activePerson){ activePerson = null; render(); syncHash(); }
+      else render();
+      t = document.getElementById('story-' + (i + 1));
+    }
+    if (!t) return;
+    var prev = document.querySelector('.story.nw-hit');
+    if (prev) prev.className = prev.className.replace(/\s*nw-hit/, '');
+    t.className += ' nw-hit';
+    t.scrollIntoView({ block: 'start', behavior: BD.reducedMotion() ? 'auto' : 'smooth' });
+    var h = t.querySelector('h3');
+    if (h){ h.tabIndex = -1; try { h.focus({ preventScroll: true }); } catch(e){ h.focus(); } }
   }
 
   function showEmpty(msg){
     var app = document.getElementById('app');
     app.textContent = '';
-    var e = el('div', 'wrap empty');
+    document.getElementById('railleft').textContent = '';
+    document.getElementById('railright').textContent = '';
+    var e = el('div', 'empty');
     var pa = el('img', 'pressart'); pa.src = 'assets/art/press.jpg'; pa.alt = ''; pa.width = 640; pa.height = 358;
     pa.setAttribute('loading', 'eager'); pa.setAttribute('decoding', 'async');
     e.appendChild(pa);

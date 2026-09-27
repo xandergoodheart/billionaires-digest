@@ -1,12 +1,14 @@
-/* Billionaires Digest v2: My team (team.html), casino arcade (port of mockups/team-arcade.*). ES5, UI only.
+/* Billionaires Digest v3: My team (team.html), sports-network look (approved concept 06). ES5, UI only.
    State and rules come from BDFantasyStore (assets/v2/fantasy-store.js) and BDFantasyCore. Real data only:
    when there is no team or no scored day yet, the page says so instead of showing numbers.
-   Game layer uses only real or transparently derived facts:
+   No team in this browser -> the fantasy landing (Draft your team / Create a league / Join a league / Lucky five).
+   With a team: dark score card vs the S&P 500, starting five table, season (streak, XP, badges, coins),
+   next round, team news, leagues.
      streak, badges  <- BDFantasyStore.pure.seasonRecord over finished real weeks you saved a team for
      XP / level      <- weeks played x100 + weeks beat the S&P 500 x50; a level every 500 XP (formula shown on the page)
      coins           <- the online game (BDFantasyStore.me()) only when signed in; otherwise "Sign in" text
-   The close-up face is one made-up cartoon (portrait placeholder), never a real person. Play money only, no prizes.
-   Motion (odometer roll, reel roll, bulb chase, win burst) runs once per page load; none with reduced motion. */
+   The profile preview shows initials (or an approved illustrated portrait from BDPortraits), never a photo.
+   Play money only, no prizes. */
 (function(){
   var F = window.BDFantasyStore, C = window.BDFantasyCore;
   var el = BD.el, arr = BD.arr;
@@ -15,33 +17,11 @@
   var XP_WEEK = 100, XP_WIN = 50, XP_LEVEL = 500;
   var $ = function(id){ return document.getElementById(id); };
 
-  // One generic, original cartoon tycoon (same drawing as the Lucky five close-up). Eyes swap to "$" when zoomed.
-  var FACE = '<svg class="tm-svg" viewBox="0 0 120 120" aria-hidden="true" focusable="false">' +
-    '<rect x="36" y="4" width="48" height="30" rx="3" fill="#13171C"/>' +
-    '<rect x="36" y="24" width="48" height="7" fill="#D62D27"/>' +
-    '<rect x="24" y="31" width="72" height="7" rx="3.5" fill="#13171C"/>' +
-    '<circle cx="25" cy="68" r="8" fill="#F1CB98" stroke="#13171C" stroke-width="3"/>' +
-    '<circle cx="95" cy="68" r="8" fill="#F1CB98" stroke="#13171C" stroke-width="3"/>' +
-    '<ellipse cx="60" cy="70" rx="35" ry="33" fill="#F1CB98" stroke="#13171C" stroke-width="3"/>' +
-    '<path d="M36 50 q9 -6 18 -1 M66 49 q9 -5 18 1" stroke="#13171C" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
-    '<circle cx="46" cy="62" r="10" fill="#FFFFFF" stroke="#13171C" stroke-width="2.5"/>' +
-    '<circle cx="74" cy="62" r="10" fill="#FFFFFF" stroke="#13171C" stroke-width="2.5"/>' +
-    '<g class="tm-pupil"><circle cx="47" cy="63" r="4.5" fill="#13171C"/><circle cx="75" cy="63" r="4.5" fill="#13171C"/>' +
-    '<circle cx="48.5" cy="61.5" r="1.4" fill="#FFFFFF"/><circle cx="76.5" cy="61.5" r="1.4" fill="#FFFFFF"/></g>' +
-    '<g class="tm-dollar" font-family="Barlow Condensed, Arial Narrow, Arial, sans-serif" font-weight="800" font-size="19" text-anchor="middle" fill="#08764A">' +
-    '<text x="46" y="69">$</text><text x="74" y="69">$</text></g>' +
-    '<circle cx="36" cy="80" r="5" fill="#E8918A" opacity=".45"/><circle cx="84" cy="80" r="5" fill="#E8918A" opacity=".45"/>' +
-    '<path d="M60 70 q-3 6 0 9" stroke="#13171C" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
-    '<path d="M42 86 q9 -8 18 -1 q9 -7 18 1" stroke="#13171C" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
-    '<path d="M50 93 q10 7 20 0" stroke="#13171C" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-    '</svg>';
-
   // ---- small helpers ----
   function clear(n){ while (n.firstChild) n.removeChild(n.firstChild); return n; }
   function signedTxt(n){ return n > 0 ? '+' + n : (n < 0 ? MINUS + Math.abs(n) : '0'); }
   function plainTxt(n){ return n < 0 ? MINUS + Math.abs(n) : String(n); }
   function numCls(n){ return n > 0 ? 'v2-pos' : (n < 0 ? 'v2-neg' : 'v2-zero'); }
-  function reduced(){ return BD.reducedMotion(); }
   function link(cls, text, href){ var a = el('a', cls, text); a.href = href; return a; }
   var liveT = null;
   function say(t){ var n = $('live'); n.textContent = ''; clearTimeout(liveT); liveT = setTimeout(function(){ n.textContent = t; }, 40); }
@@ -65,59 +45,20 @@
     if (team.captain && p.indexOf(team.captain) > 0){ p.splice(p.indexOf(team.captain), 1); p.unshift(team.captain); }
     return p;
   }
+  function tickerOf(p){ var h = arr(p && p.holdings)[0]; return h && h.ticker ? h.ticker : ''; }
   // portraits: only plain site-relative paths from window.BDPortraits (empty until the style is approved)
   function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
   function portrait(slug){
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
-    return p ? { img: safePath(p.img), dollar: safePath(p.dollar) } : { img: null, dollar: null };
+    return p ? { img: safePath(p.img) } : { img: null };
   }
-  function plate(p){
+  function plate(p, cls){
     var pic = portrait(p.slug);
-    var a = el('span', 'v2-av tm-plate', pic.img ? '' : BD.initials(p.name));
+    var a = el('span', 'v2-av ' + (cls || ''), pic.img ? '' : BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     a.setAttribute('aria-hidden', 'true');
     if (pic.img){ var im = el('img'); im.src = pic.img; im.alt = ''; a.appendChild(im); }
     return a;
-  }
-
-  // ---- odometer: each digit is a strip 0-9 0-9 that rolls to its value; the real value is in text for screen readers.
-  // Rolls only on the first render of the page (rolled flag); re-renders (sign-in, etc.) set the digits directly.
-  var rolled = false;
-  function odometer(box, value, signed, srText){
-    clear(box);
-    var txt = value == null ? '—' : (signed ? signedTxt(value) : plainTxt(value));
-    box.appendChild(el('span', 'v2-sr', srText || txt));
-    var vis = el('span', 'v2-odo__digits num');
-    vis.setAttribute('aria-hidden', 'true');
-    var strips = [];
-    if (value == null){ // unlit counter: blank windows, no number (the text next to it says why)
-      for (var b = 0; b < 4; b++) vis.appendChild(el('span', 'v2-odo__ch v2-odo__blank', ''));
-    } else {
-      for (var i = 0; i < txt.length; i++){
-        var ch = txt.charAt(i);
-        if (/[0-9]/.test(ch)){
-          var col = el('span', 'v2-odo__col'), strip = el('span', 'v2-odo__strip');
-          for (var k = 0; k < 20; k++) strip.appendChild(el('span', 'v2-odo__d', String(k % 10)));
-          col.appendChild(strip); vis.appendChild(col);
-          strips.push({ s: strip, to: 10 + (+ch) });
-        } else vis.appendChild(el('span', 'v2-odo__ch', ch));
-      }
-    }
-    box.appendChild(vis);
-    if (rolled || reduced()){ strips.forEach(function(x){ x.s.style.transform = 'translateY(' + (-x.to) + 'em)'; }); return; }
-    void vis.offsetWidth;
-    strips.forEach(function(x, j){
-      x.s.style.transition = 'transform ' + (1100 + j * 260) + 'ms cubic-bezier(.2,.75,.25,1.02) ' + (j * 90) + 'ms';
-      x.s.style.transform = 'translateY(' + (-x.to) + 'em)';
-    });
-  }
-
-  // ---- marquee bulbs: one short chase on load, never with reduced motion ----
-  function chaseBulbs(){
-    if (reduced()) return;
-    var rows = document.querySelectorAll('.tm-jackpot .v2-bulbs');
-    Array.prototype.forEach.call(rows, function(r){ r.classList.add('is-chasing'); });
-    setTimeout(function(){ Array.prototype.forEach.call(rows, function(r){ r.classList.remove('is-chasing'); }); }, 3800);
   }
 
   // ---- which team the page shows ----
@@ -136,85 +77,90 @@
 
   function teamName(){ var me = F.me(); return me && me.nickname ? me.nickname : 'Your team'; }
   function bench(v){ return v.mode === 'scoring' && v.any && v.wk.benchmarks && typeof v.wk.benchmarks.spy === 'number' ? v.wk.benchmarks.spy : null; }
-  // lamp: the result in words (never color alone)
+  // result in words (never color alone)
   function lamp(v){
-    if (v.mode === 'none') return { word: 'No team yet', cls: 'is-off', win: false };
-    if (v.mode === 'upcoming') return { word: 'Ready', cls: 'is-off', win: false };
-    if (!v.any) return { word: 'Waiting for scores', cls: 'is-off', win: false };
+    if (v.mode === 'none') return { word: 'No team yet', cls: 'is-off' };
+    if (v.mode === 'upcoming') return { word: 'Ready', cls: 'is-off' };
+    if (!v.any) return { word: 'Waiting for scores', cls: 'is-off' };
     var bm = bench(v);
-    if (bm == null) return { word: 'No benchmark yet', cls: 'is-off', win: false };
+    if (bm == null) return { word: 'No benchmark yet', cls: 'is-off' };
     var diff = v.res.total - bm, over = F.weekOver(v.wk);
-    if (diff > 0) return { word: over ? 'Win' : 'Leading', cls: 'is-win', win: true };
-    if (diff < 0) return { word: over ? 'Loss' : 'Trailing', cls: 'is-loss', win: false };
-    return { word: 'Tied', cls: 'is-off', win: false };
+    if (diff > 0) return { word: over ? 'Win' : 'Leading', cls: 'is-win' };
+    if (diff < 0) return { word: over ? 'Loss' : 'Trailing', cls: 'is-loss' };
+    return { word: 'Tied', cls: 'is-off' };
   }
   function scoringNote(v){
-    if (v.mode === 'none') return 'No team yet. Draft five billionaires before the next lock.';
     if (v.any){
       if (v.team.lateFrom) return 'Late entry: scoring from ' + fmt.dayLabel(v.team.lateFrom) + '.';
       if (v.wk.practice) return 'Practice week: your working draft scores here. It does not count for your streak or XP.';
       return '';
     }
-    // upcoming: the draft week itself (its salaries may come from a fallback week file)
     var start = v.mode === 'upcoming' ? C.weekInfo(v.weekId).start : ((v.team && v.team.lateFrom) || v.wk.start);
     if (!start) return '';
     if (F.now() < C.nyToUtc(start, 9, 30)) return (v.mode === 'upcoming' ? 'Starts ' : 'Scoring starts ') + weekdayLong(start) + ', ' + fmt.shortDate(start) + ' · 9:30 AM ET';
     return 'The first scores arrive after the market closes.';
   }
-  function statusPill(v){
-    if (v.mode === 'none') return null;
-    var t, live = false;
-    if (v.mode === 'upcoming') t = C.isPractice(v.weekId) ? 'Practice' : 'Upcoming';
-    else if (v.wk.practice) t = F.weekOver(v.wk) ? 'Practice · final' : 'Practice';
-    else if (F.weekOver(v.wk)) t = 'Final';
-    else if (v.any){ t = 'Live · through ' + fmt.dayLabel(v.res.scored[v.res.scored.length - 1]); live = true; }
-    else { t = 'Live'; live = true; }
-    return el('span', 'v2-pill' + (live ? ' v2-pill--live' : ''), t);
+  function statusText(v){
+    if (v.mode === 'upcoming') return { t: C.isPractice(v.weekId) ? 'Practice' : 'Upcoming', live: false };
+    if (v.wk.practice) return { t: F.weekOver(v.wk) ? 'Practice · final' : 'Practice', live: false };
+    if (F.weekOver(v.wk)) return { t: 'Final', live: false };
+    if (v.any) return { t: 'Live · through ' + fmt.dayLabel(v.res.scored[v.res.scored.length - 1]), live: true };
+    return { t: 'Live', live: true };
   }
 
-  // ---- hero: weekly jackpot ----
+  // ---- landing (no team) vs team view ----
+  function showLanding(on){
+    $('landing').hidden = !on;
+    $('landmore').hidden = !on;
+    $('teamview').hidden = on;
+    $('playline').hidden = on;
+  }
+  function renderLandingNext(){
+    var S = F.state, p = clear($('landnext'));
+    if (!S.draftWeek) return;
+    var info = C.weekInfo(S.draftWeek);
+    p.appendChild(document.createTextNode('Next lineup lock: ' + fmt.weekTitle(S.draftWeek) + ' · ' + nyFmt(info.locksAt, { weekday: 'long' }) + ' ' + nyFmt(info.locksAt, { hour: 'numeric', minute: '2-digit' }) + ' ET. '));
+    p.appendChild(link(null, 'Read the rules', 'play-terms.html'));
+  }
+
+  // ---- hero: dark score card vs the S&P 500 ----
   function renderHero(v){
-    var S = F.state, box = clear($('heroin')), hero = $('hero');
+    var box = clear($('heroin')), hero = $('hero');
     hero.removeAttribute('aria-busy');
-    var weekId = v.mode === 'scoring' ? v.wk.week : S.draftWeek;
-    var top = el('div', 'tm-jackpot__top');
-    top.appendChild(el('span', 'v2-kicker', 'Weekly jackpot · ' + fmt.weekTitle(weekId)));
-    var pill = statusPill(v);
-    if (pill) top.appendChild(pill);
+    var weekId = v.mode === 'scoring' ? v.wk.week : F.state.draftWeek;
+    var top = el('div', 'tm-score__top');
+    top.appendChild(el('span', 'tm-score__k', 'Your team / ' + fmt.weekTitle(weekId)));
+    var st = statusText(v);
+    top.appendChild(el('span', 'v2-pill' + (st.live ? ' v2-pill--live' : ''), st.t));
     box.appendChild(top);
-    var h = el('h1', 'tm-jackpot__name', teamName()); h.id = 'teamname';
-    box.appendChild(h);
-
-    var grid = el('div', 'tm-jackpot__grid');
+    var grid = el('div', 'tm-score__grid');
+    var left = el('div', 'tm-score__main');
+    var h = el('h1', 'tm-score__name', teamName()); h.id = 'teamname';
+    left.appendChild(h);
     var total = v.any ? v.res.total : null;
-    var main = el('div', 'tm-meter tm-meter--main');
-    main.appendChild(el('span', 'tm-meter__k', 'Team total · fantasy points'));
-    var odo = el('div', 'v2-odo v2-odo--big v2-odo--gold ' + (total == null ? 'v2-zero' : numCls(total)));
-    main.appendChild(odo);
-    grid.appendChild(main);
+    var row = el('div', 'tm-score__row');
+    var big = el('span', 'tm-score__big num', total == null ? '—' : plainTxt(total));
+    row.appendChild(big);
+    row.appendChild(el('span', 'tm-score__unit', total == null ? 'No points yet' : 'Fantasy points'));
+    left.appendChild(row);
+    grid.appendChild(left);
 
-    var L = lamp(v);
-    var lampBox = el('div', 'v2-lamp ' + L.cls);
-    lampBox.appendChild(el('span', 'v2-lamp__k', 'Result'));
-    lampBox.appendChild(el('span', 'v2-lamp__word', L.word));
-    grid.appendChild(lampBox);
-
-    var side = el('div', 'tm-meter tm-meter--vs');
-    side.appendChild(el('span', 'tm-meter__k', 'Vs S&P 500'));
+    var right = el('div', 'tm-score__vs');
+    right.appendChild(el('span', 'tm-score__k', 'Vs S&P 500 benchmark'));
     var bm = bench(v), diff = bm == null ? null : total - bm;
-    var odo2 = el('div', 'v2-odo v2-odo--mid ' + (diff == null ? 'v2-zero' : numCls(diff)));
-    side.appendChild(odo2);
-    side.appendChild(el('span', 'tm-meter__sub', bm == null
+    right.appendChild(el('span', 'tm-score__diff num ' + (diff == null ? 'v2-zero' : numCls(diff)), diff == null ? '—' : signedTxt(diff)));
+    right.appendChild(el('span', 'tm-score__sub', bm == null
       ? (v.mode === 'scoring' && v.any ? 'No S&P 500 quotes saved for these days yet.' : 'The benchmark starts with the first scored day.')
-      : 'S&P 500 scored ' + plainTxt(bm) + ' fantasy points'));
-    grid.appendChild(side);
+      : 'Benchmark: ' + plainTxt(bm) + ' fantasy points'));
+    var L = lamp(v);
+    var lb = el('span', 'v2-lamp ' + L.cls);
+    lb.appendChild(el('span', 'v2-lamp__k', 'Result'));
+    lb.appendChild(el('span', 'v2-lamp__word', L.word));
+    right.appendChild(lb);
+    grid.appendChild(right);
     box.appendChild(grid);
-
     var note = scoringNote(v);
-    if (note) box.appendChild(el('p', 'tm-jackpot__note', note));
-
-    odometer(odo, total, false, total == null ? 'No team points yet' : 'Team total: ' + plainTxt(total) + ' fantasy points');
-    odometer(odo2, diff, true, diff == null ? 'Versus S&P 500: no comparison yet' : 'Versus S&P 500: ' + signedTxt(diff) + ' points');
+    if (note) box.appendChild(el('p', 'tm-score__note', note));
     return L;
   }
 
@@ -236,89 +182,74 @@
     strip.hidden = false;
   }
 
-  // ---- starting five: slot-reel cards ----
+  // ---- starting five: table ----
   function renderFive(v){
     var body = clear($('fivebody')), meta = $('capmeta');
-    $('fivehint').hidden = v.mode === 'none';
-    if (v.mode === 'none'){
-      meta.textContent = '';
-      var e = el('div', 'tm-empty');
-      for (var i = 0; i < 5; i++){
-        var ph = el('div', 'tm-empty__slot');
-        ph.setAttribute('aria-hidden', 'true');
-        ph.appendChild(el('span', 'tm-empty__q', '?'));
-        e.appendChild(ph);
-      }
-      body.appendChild(e);
-      var t = el('div', 'tm-empty__txt');
-      t.appendChild(el('h3', 'v2-h3', 'Five empty reels'));
-      t.appendChild(el('p', null, 'Pick five billionaires under a ' + C.CAP + '-point cap and choose a captain, who scores 1.5 times. Your team scores on their real, disclosed stock holdings each trading day.'));
-      var b = el('div', 'v2-btnrow');
-      b.appendChild(link('v2-btn v2-btn--gold', 'Go to the Draft room', 'draft.html'));
-      b.appendChild(link('v2-btn v2-btn--secondary', 'Lucky five', 'draft.html#lucky'));
-      t.appendChild(b);
-      body.appendChild(t);
-      return;
-    }
+    $('fivehint').hidden = false;
     var sal = (v.wk && v.wk.salaries) || {};
     var used = 0, missing = false;
     v.team.picks.forEach(function(s){ if (typeof sal[s] === 'number') used += sal[s]; else missing = true; });
     meta.textContent = (missing ? '—' : used) + ' / ' + C.CAP + ' cap used';
 
-    var ul = el('ul', 'tm-reels');
-    ul.setAttribute('aria-label', 'Your starting five for ' + fmt.weekName(v.mode === 'scoring' ? v.wk.week : v.weekId) + (v.any ? '' : '. No scored days yet.'));
-    orderedPicks(v.team).forEach(function(slug, i){
+    var wrap = el('div', 'tm-tablewrap');
+    var t = el('table', 'v2-table tm-table');
+    var cap = el('caption', 'v2-sr', 'Your starting five for ' + fmt.weekName(v.mode === 'scoring' ? v.wk.week : v.weekId) + (v.any ? '' : '. No scored days yet.'));
+    t.appendChild(cap);
+    var thead = el('thead'), hr = el('tr');
+    [['Player', ''], ['Cap', 'n'], ['Base pts', 'n'], ['Mult', 'n tm-hide-sm'], ['Team pts', 'n']].forEach(function(c){
+      var th = el('th', c[1] || null, c[0]); th.scope = 'col'; hr.appendChild(th);
+    });
+    thead.appendChild(hr); t.appendChild(thead);
+    var tb = el('tbody');
+    orderedPicks(v.team).forEach(function(slug){
       var p = F.person(slug), isC = slug === v.team.captain;
       var base = v.any ? v.res.baseBySlug[slug] : null;
       var pts = v.any ? v.res.bySlug[slug] : null;
-      var li = el('li', 'tm-reel' + (isC ? ' is-captain' : ''));
-      li.style.setProperty('--i', String(i));
-      var btn = el('button', 'tm-reel__btn');
-      btn.type = 'button';
-      btn.setAttribute('data-slug', slug);
-      btn.setAttribute('aria-haspopup', 'dialog');
-      btn.setAttribute('aria-label', 'Close-up of ' + p.name + (isC ? ', captain, scores 1.5 times' : '') +
-        '. Cap ' + (typeof sal[slug] === 'number' ? sal[slug] : 'unknown') +
-        (base == null ? '. No points yet.' : '. Base ' + signedTxt(base) + ' points, team ' + signedTxt(pts) + ' points.'));
-      var win = el('span', 'tm-reel__window');
-      win.appendChild(plate(p));
-      btn.appendChild(win);
-      if (isC) btn.appendChild(el('span', 'tm-capt', '×' + C.CAPTAIN_MULT + ' Captain'));
-      btn.appendChild(el('span', 'tm-reel__name', p.name));
-      btn.appendChild(el('span', 'tm-reel__sector', p.sector || 'Other'));
-      var chips = el('span', 'tm-reel__chips');
-      chips.appendChild(el('span', 'tm-chip num', 'Cap ' + (typeof sal[slug] === 'number' ? sal[slug] : '—')));
-      chips.appendChild(el('span', 'tm-chip num', 'Base ' + (base == null ? '—' : signedTxt(base))));
-      btn.appendChild(chips);
-      var coin = el('span', 'tm-coin');
-      coin.appendChild(el('span', 'tm-coin__v num ' + (pts == null ? 'v2-zero' : numCls(pts)), pts == null ? '—' : signedTxt(pts)));
-      coin.appendChild(el('span', 'tm-coin__k', 'team pts'));
-      btn.appendChild(coin);
-      li.appendChild(btn);
-      ul.appendChild(li);
+      var tr = el('tr', isC ? 'is-captain' : null);
+      var th = el('th'); th.scope = 'row';
+      var cell = el('div', 'v2-player');
+      cell.appendChild(plate(p, 'v2-av--sm'));
+      var txt = el('span', 'v2-player__txt');
+      var b = el('button', 'tm-name', p.name);
+      b.type = 'button';
+      b.setAttribute('data-slug', slug);
+      b.setAttribute('aria-haspopup', 'dialog');
+      txt.appendChild(b);
+      txt.appendChild(el('span', 'v2-player__sub', [tickerOf(p), p.sector || 'Other'].filter(Boolean).join(' · ')));
+      cell.appendChild(txt);
+      if (isC){ var c = el('span', 'v2-badge-c', 'C'); c.title = 'Captain, scores ' + C.CAPTAIN_MULT + ' times'; c.appendChild(el('span', 'v2-sr', ' captain')); cell.appendChild(c); }
+      th.appendChild(cell);
+      tr.appendChild(th);
+      tr.appendChild(el('td', 'n', typeof sal[slug] === 'number' ? String(sal[slug]) : '—'));
+      tr.appendChild(el('td', 'n ' + (base == null ? 'v2-zero' : numCls(base)), base == null ? '—' : signedTxt(base)));
+      tr.appendChild(el('td', 'n tm-hide-sm', isC ? C.CAPTAIN_MULT + 'x' : '1x'));
+      tr.appendChild(el('td', 'n v2-strong ' + (pts == null ? 'v2-zero' : numCls(pts)), pts == null ? '—' : signedTxt(pts)));
+      tb.appendChild(tr);
     });
-    body.appendChild(ul);
-    if (!rolled && !reduced()){
-      ul.classList.add('is-rolling');
-      setTimeout(function(){ ul.classList.remove('is-rolling'); }, 2200);
-    }
+    t.appendChild(tb);
+    wrap.appendChild(t);
+    body.appendChild(wrap);
   }
 
-  // ---- next spin: lock countdown ----
+  // ---- next round: lock countdown ----
   var cdTimer = null;
   function renderNext(){
     var S = F.state, body = clear($('nextbody'));
     var info = C.weekInfo(S.draftWeek);
+    body.appendChild(el('p', 'tm-next__when', nyFmt(info.locksAt, { weekday: 'long' }) + ' / ' + nyFmt(info.locksAt, { hour: 'numeric', minute: '2-digit' }) + ' ET'));
     var cd = el('p', 'tm-next__cd');
-    cd.appendChild(el('span', 'tm-next__k', 'Next spin locks in'));
+    cd.appendChild(el('span', 'tm-next__k', fmt.weekTitle(S.draftWeek) + ' locks in '));
     var v = el('span', 'tm-next__v num'); v.id = 'countdown';
     cd.appendChild(v);
     body.appendChild(cd);
-    body.appendChild(el('p', 'tm-next__when', fmt.weekTitle(S.draftWeek) + ' · ' + nyFmt(info.locksAt, { weekday: 'long' }) + ' ' + nyFmt(info.locksAt, { hour: 'numeric', minute: '2-digit' }) + ' ET'));
+    body.appendChild(el('p', 'tm-small', 'Set your next roster before the lock.'));
     var saved = F.store().teams[S.draftWeek];
-    body.appendChild(link('v2-btn v2-btn--gold v2-btn--big v2-btn--block', saved ? 'Edit next week\'s team' : 'Set next week\'s team', 'draft.html'));
-    body.appendChild(link('v2-btn v2-btn--secondary v2-btn--block', 'Lucky five', 'draft.html#lucky'));
-    body.appendChild(el('p', 'tm-small', 'Lucky five spins a random team that fits the cap. It opens in the Draft room and never saves by itself.'));
+    body.appendChild(link('v2-btn v2-btn--primary v2-btn--block', saved ? 'Edit next week\'s team' : 'Set next week\'s team', 'draft.html'));
+    var p = el('p', 'tm-small tm-next__lucky');
+    p.appendChild(document.createTextNode('Feeling lucky? '));
+    p.appendChild(link('tm-link', 'Try Lucky five', 'draft.html#lucky'));
+    p.appendChild(document.createTextNode(': a random team that fits the cap, opened in the Draft room. It never saves by itself.'));
+    body.appendChild(p);
     tick();
     if (!cdTimer) cdTimer = setInterval(tick, 20000);
   }
@@ -328,7 +259,7 @@
     var info = C.weekInfo(S.draftWeek), t = F.now();
     var locked = t >= info.locksAt;
     cd.className = 'tm-next__v num' + (locked ? ' is-locked' : '');
-    cd.textContent = locked ? fmt.weekTitle(S.draftWeek) + ' has locked. Reload the page for the next round.' : span(info.locksAt - t);
+    cd.textContent = locked ? 'now. Reload the page for the next round.' : span(info.locksAt - t);
   }
 
   // ---- season record (finished real weeks with a saved team) -> streak, XP, badges ----
@@ -532,62 +463,35 @@
     body.appendChild(link('v2-btn v2-btn--secondary', 'Standings and invites', 'leagues.html'));
   }
 
-  // ---- celebration: one short coin burst, never looping, never with reduced motion ----
-  function celebrate(){
-    if (reduced()) return;
-    var box = clear($('burst'));
-    var colors = ['#F5C542', '#FFE08A', '#FF3B3B', '#39E07A', '#FFFFFF'];
-    for (var i = 0; i < 36; i++){
-      var c = el('span', 'tm-burst__p' + (i % 3 === 0 ? ' is-coin' : ''));
-      c.style.left = (5 + Math.random() * 90) + '%';
-      c.style.background = i % 3 === 0 ? '' : colors[i % colors.length];
-      c.style.animationDelay = Math.round(Math.random() * 500) + 'ms';
-      c.style.animationDuration = (1400 + Math.round(Math.random() * 900)) + 'ms';
-      c.style.setProperty('--dx', Math.round(Math.random() * 160 - 80) + 'px');
-      c.style.setProperty('--rot', Math.round(Math.random() * 720 - 360) + 'deg');
-      box.appendChild(c);
-    }
-    box.classList.add('is-on');
-    setTimeout(function(){ box.classList.remove('is-on'); clear(box); }, 3200);
-  }
-
-  // ---- close-up dialog ($ eyes) ----
-  var dlg = $('closeup'), lastFocus = null, cuT = [], curView = null;
+  // ---- profile preview dialog ----
+  var dlg = $('closeup'), lastFocus = null, curView = null;
   function dlgFocusables(){
     return Array.prototype.filter.call(dlg.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])'), function(n){ return n.getClientRects().length > 0; });
   }
   function openCloseup(slug, from){
-    var v = curView, p = F.person(slug), zoom = $('cu-zoom'), face = clear($('cu-face')), pic = portrait(slug);
+    var v = curView, p = F.person(slug), face = clear($('cu-face'));
     var sal = (v && v.wk && v.wk.salaries) || {};
     var isC = v && v.team && v.team.captain === slug;
     lastFocus = from || document.activeElement;
-    var src = pic.dollar || pic.img, cartoon = !src;
-    if (cartoon) face.innerHTML = FACE;
-    else { var im = el('img', 'tm-zoom__img'); im.src = src; im.alt = ''; face.appendChild(im); }
-    $('cu-kick').textContent = cartoon ? 'Close-up · Portrait coming soon' : 'Close-up';
-    $('cu-name').textContent = p.name + (isC ? ' · Captain' : '');
+    face.appendChild(plate(p, 'v2-av--lg'));
+    $('cu-kick').textContent = isC ? 'Player profile · Captain (' + C.CAPTAIN_MULT + 'x)' : 'Player profile';
+    $('cu-name').textContent = p.name;
+    $('cu-sector').textContent = p.sector || 'Other';
     $('cu-cap').textContent = typeof sal[slug] === 'number' ? String(sal[slug]) : '—';
     var pts = v && v.any ? v.res.bySlug[slug] : null;
     var ptd = clear($('cu-pts'));
     if (pts == null) ptd.appendChild(el('span', 'v2-zero', 'No points yet'));
     else ptd.appendChild(el('span', numCls(pts), signedTxt(pts)));
     $('cu-ptsk').textContent = 'Team pts this week' + (v && v.wk && v.wk.practice ? ' (practice)' : '');
-    $('cu-sector').textContent = p.sector || 'Other';
+    var hold = arr(p.holdings).map(function(h){ return h.ticker; }).filter(Boolean).slice(0, 4);
+    $('cu-hold').textContent = hold.length ? hold.join(', ') : '—';
     $('cu-link').href = personHref(slug);
-    cuT.forEach(clearTimeout); cuT = [];
-    zoom.className = 'tm-zoom' + (cartoon ? ' is-cartoon' : ' is-portrait');
     dlg.removeAttribute('hidden');
     document.documentElement.classList.add('v2-lock');
     $('cu-close').focus();
-    if (reduced()){ zoom.className += ' is-zoomed is-rich is-static'; return; }
-    void zoom.offsetWidth;
-    cuT.push(setTimeout(function(){ zoom.classList.add('is-zoomed'); }, 30));
-    cuT.push(setTimeout(function(){ zoom.classList.add('is-rich'); zoom.classList.add('is-sparkle'); }, 720));
-    cuT.push(setTimeout(function(){ zoom.classList.remove('is-sparkle'); }, 2200));
   }
   function closeCloseup(){
     if (dlg.hasAttribute('hidden')) return;
-    cuT.forEach(clearTimeout); cuT = [];
     dlg.setAttribute('hidden', '');
     document.documentElement.classList.remove('v2-lock');
     clear($('cu-face'));
@@ -607,7 +511,7 @@
     else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   });
   $('fivebody').addEventListener('click', function(e){
-    var b = e.target.closest && e.target.closest('.tm-reel__btn');
+    var b = e.target.closest && e.target.closest('.tm-name');
     if (b) openCloseup(b.getAttribute('data-slug'), b);
   });
   // "How XP works" link: move focus to the note so keyboard and screen-reader users land on it
@@ -622,23 +526,26 @@
   function renderAll(){
     var v = view();
     curView = v;
+    if (v.mode === 'none'){
+      showLanding(true);
+      renderLandingNext();
+      $('scorestrip').hidden = true;
+      say('No team in this browser yet. Draft your team, create a league or join one.');
+      return;
+    }
+    showLanding(false);
     var L = renderHero(v);
     renderStrip(v); renderFive(v); renderNext(); renderLevel(); renderBadges(v); renderCoins(); renderNews(v); renderLeagues();
-    var first = !rolled;
-    rolled = true;
     var tot = v.any ? v.res.total : null;
     say(teamName() + '. ' + (tot == null ? 'No team points yet.' : 'Team total ' + plainTxt(tot) + ' fantasy points. Result: ' + L.word + '.'));
-    if (first){
-      chaseBulbs();
-      if (L.win) setTimeout(celebrate, 1400);
-    }
   }
   function fail(){
+    showLanding(false);
     var box = clear($('heroin'));
     $('hero').removeAttribute('aria-busy');
-    box.appendChild(el('span', 'v2-kicker', 'Weekly jackpot'));
-    var h = el('h1', 'tm-jackpot__name', 'Your team'); h.id = 'teamname'; box.appendChild(h);
-    box.appendChild(el('p', 'tm-jackpot__note', 'The game data is not available right now. Try again later.'));
+    box.appendChild(el('span', 'tm-score__k', 'Your team'));
+    var h = el('h1', 'tm-score__name', 'Your team'); h.id = 'teamname'; box.appendChild(h);
+    box.appendChild(el('p', 'tm-score__note', 'The game data is not available right now. Try again later.'));
     var r = el('button', 'v2-btn v2-btn--ghost', 'Try again'); r.type = 'button';
     r.addEventListener('click', function(){ location.reload(); });
     box.appendChild(r);
@@ -656,11 +563,11 @@
 
   F.onChange(function(kind){
     if (!F.state.loaded) { if (kind === 'online') renderLeagues(); return; }
-    if (kind === 'online'){ var h = $('teamname'); if (h) h.textContent = teamName(); renderLeagues(); renderCoins(); }
+    if (kind === 'online'){ var h = $('teamname'); if (h && curView && curView.mode !== 'none') h.textContent = teamName(); renderLeagues(); renderCoins(); }
   });
 
   BD.getJson('digest.json').then(function(d){ digest = d; digestState = 'ok'; }, function(){ digestState = 'error'; })
-    .then(function(){ if (F.state.loaded) renderNews(view()); });
+    .then(function(){ if (F.state.loaded && curView && curView.mode !== 'none') renderNews(view()); });
 
   renderLeagues();
   F.init().then(function(){ return loadSeason(); }).then(function(){ renderAll(); }, function(err){ if (window.console) console.warn(err); fail(); });

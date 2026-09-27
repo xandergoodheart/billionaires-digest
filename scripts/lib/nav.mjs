@@ -137,8 +137,17 @@ export const BOTTOM_V2 = ['play', 'learn', 'players', 'news'];
 
 const topItem = key => NAV_V2.find(n => n.key === key) || null;
 
+// Icons for the top-bar actions (original line drawings; no brand icons).
+const ICON = {
+  team: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+  draft: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
+  search: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>'
+};
+
 // Top bar + sub-tabs + phone MENU sheet. topKey: NAV_V2 key (or null); subKey: sub-tab key of that section (or null).
 // Active section: aria-current="true"; active sub-tab (the page itself): aria-current="page".
+// The scores ticker is an empty, hidden container here; assets/v2/ticker.js (loaded by renderFooterV2) fills it
+// from real data and shows it, or leaves it hidden when the data is missing.
 export function renderTopbarV2(topKey, subKey, { absolute = false } = {}) {
   const u = h => escHtml(url(h, absolute));
   const sec = cur2 => cur2 ? ' aria-current="true"' : '';
@@ -146,6 +155,7 @@ export function renderTopbarV2(topKey, subKey, { absolute = false } = {}) {
   const top = NAV_V2.map(n => `      <a href="${u(n.href)}"${sec(n.key === topKey)}>${escHtml(n.label)}</a>`).join('\n');
   const mark = `<a class="v2-mark" href="${u('index.html')}"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>`;
   let out = `<a class="v2-skip" href="#main">Skip to content</a>
+<div class="v2-ticker" data-ticker hidden></div>
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
     ${mark}
@@ -153,8 +163,9 @@ export function renderTopbarV2(topKey, subKey, { absolute = false } = {}) {
 ${top}
     </nav>
     <div class="v2-top__right">
-      <a class="v2-top__search" href="${u('people/')}">Search</a>
-      <a class="v2-btn v2-btn--primary v2-top__cta" href="${u('team.html')}">My team</a>
+      <a class="v2-top__act v2-top__act--draft" href="${u('draft.html')}">${ICON.draft}<span>Draft</span></a>
+      <a class="v2-top__act v2-top__search" href="${u('people/')}">${ICON.search}<span>Search</span></a>
+      <a class="v2-top__act v2-top__act--team" href="${u('team.html')}">${ICON.team}<span>My team</span></a>
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
@@ -164,10 +175,10 @@ ${top}
     out += `
 <nav class="v2-subtabs" aria-label="${escHtml(topItem(topKey).label)}">
   <div class="v2-wrap v2-subtabs__in">
+    <span class="v2-subtabs__label">${escHtml(sub.label)}</span>
     <ul class="v2-subtabs__list">
 ${items}
     </ul>
-    <span class="v2-subtabs__label">${escHtml(sub.label)}</span>
   </div>
 </nav>`;
   }
@@ -193,22 +204,20 @@ ${menu}
   return out;
 }
 
-// Phone bottom tab bar (hidden on desktop by CSS).
+// Phone bottom tab bar (hidden on desktop by CSS; icons are CSS masks in ui.css, in this order).
 export function renderBottomTabsV2(topKey, { absolute = false } = {}) {
   const items = BOTTOM_V2.map(k => topItem(k)).map(n =>
     `  <a href="${escHtml(url(n.href, absolute))}"${n.key === topKey ? ' aria-current="true"' : ''}>${escHtml(n.label)}</a>`).join('\n');
   return `<nav class="v2-tabs" aria-label="Sections">\n${items}\n</nav>`;
 }
 
+// Footer. Also loads assets/v2/ticker.js (deferred), so every page with the v2 footer gets the scores ticker,
+// including generated pages (scripts/lib/pages/layout.mjs renders this with absolute links).
 export function renderFooterV2({ absolute = false } = {}) {
   const u = h => escHtml(url(h, absolute));
   return `<footer class="v2-foot">
   <div class="v2-wrap v2-foot__in">
     <a class="v2-mark v2-mark--sm" href="${u('index.html')}"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
-    <div class="v2-foot__notes">
-      <p>For information only · not financial advice</p>
-      <p>Play money only: no purchases, cash-out or prizes.</p>
-    </div>
     <nav class="v2-foot__links" aria-label="Footer">
       <a href="${u('about.html')}">About</a>
       <a href="${u('about.html')}#corrections">Corrections</a>
@@ -216,6 +225,11 @@ export function renderFooterV2({ absolute = false } = {}) {
       <a href="${u('about.html')}#sponsor">Sponsor the brief</a>
       <a href="${u('calendar.ics')}">Calendar feed</a>
     </nav>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
   </div>
-</footer>`;
+</footer>
+<script src="${u('assets/v2/ticker.js')}" defer></script>`;
 }
