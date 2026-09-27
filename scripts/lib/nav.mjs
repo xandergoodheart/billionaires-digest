@@ -79,6 +79,7 @@ export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navm
 // Top-level sections. Links point at the best existing page until the v2 screen exists.
 export const NAV_V2 = [
   { key: 'fantasy', label: 'Fantasy', href: 'team.html' },
+  { key: 'life', label: 'Life', href: 'life.html' },
   { key: 'players', label: 'Players', href: 'players.html' },
   { key: 'rankings', label: 'Rankings', href: 'scores.html#leaderboard' },   // until the v2 Rankings screen exists
   { key: 'calendar', label: 'Calendar', href: 'calendar.html' },
@@ -97,10 +98,16 @@ export const SUBNAV_V2 = {
       { key: 'book', label: 'The Book', href: 'book.html' },
       { key: 'rules', label: 'Rules', href: 'play-terms.html' }
     ]
+  },
+  life: {
+    label: 'Billionaire Life',
+    items: [
+      { key: 'hub', label: 'All billionaires', href: 'life.html' }
+    ]
   }
 };
 
-// Phone bottom tab bar (four sections).
+// Phone bottom tab bar (four sections). Life is reachable from the phone MENU sheet (it lists every NAV_V2 section).
 export const BOTTOM_V2 = ['fantasy', 'players', 'rankings', 'news'];
 
 const topItem = key => NAV_V2.find(n => n.key === key) || null;

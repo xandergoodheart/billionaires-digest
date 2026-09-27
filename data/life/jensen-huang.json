@@ -1,0 +1,252 @@
+{
+  "prototype": true,
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Jensen Huang",
+    "slug": "jensen-huang",
+    "initials": "JH",
+    "role": "Co-founder and CEO of NVIDIA",
+    "bio": "Co-founded NVIDIA in 1993 and has been its CEO ever since. Before that he worked at chipmaker LSI Logic from 1985 to 1993. Engineering degrees from Oregon State and Stanford.",
+    "bioSource": {
+      "title": "Jensen Huang, executive biography",
+      "url": "https://www.nvidia.com/en-us/about-nvidia/board-of-directors/jensen-huang/",
+      "publisher": "NVIDIA",
+      "date": ""
+    }
+  },
+  "decisions": [
+    {
+      "id": "found",
+      "year": "1993",
+      "category": "founding",
+      "title": "The safe job or the startup?",
+      "situation": "You have spent eight years at chipmaker LSI Logic, including running its Coreware business unit. You and two engineer friends see a chance to bring 3D graphics to games and multimedia with a company of your own.",
+      "options": [
+        {
+          "id": "stay",
+          "label": "Stay at LSI Logic and keep climbing",
+          "real": false
+        },
+        {
+          "id": "found",
+          "label": "Quit and co-found the graphics chip company",
+          "real": true
+        },
+        {
+          "id": "advise",
+          "label": "Back the idea part-time, keep the day job",
+          "real": false
+        }
+      ],
+      "actual": "He left LSI Logic and co-founded NVIDIA in 1993 with Chris Malachowsky and Curtis Priem, aiming 3D graphics at gaming and multimedia.",
+      "outcome": "He has been NVIDIA's president and CEO since day one. NVIDIA says it invented the GPU in 1999. In fiscal 2026 the company reported $215.9 billion in revenue.",
+      "sources": [
+        {
+          "title": "NVIDIA corporate timeline",
+          "url": "https://www.nvidia.com/en-us/about-nvidia/corporate-timeline/",
+          "publisher": "NVIDIA",
+          "date": ""
+        },
+        {
+          "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "publisher": "SEC EDGAR",
+          "date": "2026"
+        },
+        {
+          "title": "NVIDIA results for fourth quarter and fiscal 2026",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026",
+          "publisher": "NVIDIA Newsroom",
+          "date": "2026-02-25"
+        }
+      ]
+    },
+    {
+      "id": "cuda",
+      "year": "2006",
+      "category": "product",
+      "title": "Open the graphics chip to everyone?",
+      "situation": "Your company sells graphics chips to gamers. Your new GeForce 8800 has 128 small processors inside. Rival ATI already offers a way to use graphics chips for science work, and some observers doubt it matters.",
+      "options": [
+        {
+          "id": "games",
+          "label": "Stay focused on games; that's the market",
+          "real": false
+        },
+        {
+          "id": "cuda",
+          "label": "Launch a C toolkit so anyone can program the GPU",
+          "real": true
+        },
+        {
+          "id": "wait",
+          "label": "Wait and see if ATI's approach takes off",
+          "real": false
+        }
+      ],
+      "actual": "In November 2006 NVIDIA launched CUDA, a way to program its GPUs in the C language for science and engineering work, alongside the GeForce 8800.",
+      "outcome": "In 2012 the AlexNet neural network, trained on NVIDIA GPUs, won the ImageNet image-recognition contest; NVIDIA calls that the start of modern AI. CUDA is still the foundation of NVIDIA's software today.",
+      "sources": [
+        {
+          "title": "Nvidia sails to CUDA in bid to stem ATI's Stream",
+          "url": "https://www.theregister.com/on-prem/2006/11/08/nvidia-sails-to-cuda-in-bid-to-stem-atis-stream/1334930",
+          "publisher": "The Register",
+          "date": "2006-11-08"
+        },
+        {
+          "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "publisher": "SEC EDGAR",
+          "date": "2026"
+        }
+      ]
+    },
+    {
+      "id": "dgx",
+      "year": "2016",
+      "category": "product",
+      "title": "Who gets the first AI supercomputer?",
+      "situation": "You have built DGX-1, a box made for AI with eight GPUs and a $129,000 list price. A new nonprofit research lab called OpenAI wants serious computing power.",
+      "options": [
+        {
+          "id": "sell",
+          "label": "Sell the first units to big paying customers",
+          "real": false
+        },
+        {
+          "id": "give",
+          "label": "Personally deliver one to the young AI lab",
+          "real": true
+        },
+        {
+          "id": "keep",
+          "label": "Keep it in-house for your own research",
+          "real": false
+        }
+      ],
+      "actual": "In August 2016 he hand-delivered a DGX-1 to OpenAI in San Francisco; Fortune reports it was donated. OpenAI said it would use it for research such as generative models.",
+      "outcome": "AI became NVIDIA's main business. In fiscal 2026 its Data Center revenue rose 68% to a record $193.7 billion.",
+      "sources": [
+        {
+          "title": "NVIDIA delivers DGX-1 supercomputer in a box to OpenAI",
+          "url": "https://www.top500.org/news/nvidia-delivers-dgx-1-supercomputer-in-a-box-to-openai/",
+          "publisher": "TOP500",
+          "date": "2016-08-15"
+        },
+        {
+          "title": "The story behind the hand delivery of the first AI supercomputer",
+          "url": "https://fortune.com/2024/02/22/jensen-huang-elon-musk-openai-first-ai-supercomputer-sam-altman/",
+          "publisher": "Fortune",
+          "date": "2024-02-22"
+        },
+        {
+          "title": "NVIDIA results for fourth quarter and fiscal 2026",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026",
+          "publisher": "NVIDIA Newsroom",
+          "date": "2026-02-25"
+        }
+      ]
+    },
+    {
+      "id": "arm",
+      "year": "2022",
+      "category": "deal",
+      "title": "Fight regulators for Arm, or walk away?",
+      "situation": "In 2020 you agreed to buy chip designer Arm from SoftBank in a deal valued at $40 billion, and paid money up front. It needs approval in the UK, China, the EU and the US. In December 2021 the US FTC sued to block it.",
+      "options": [
+        {
+          "id": "fight",
+          "label": "Fight it out in court",
+          "real": false
+        },
+        {
+          "id": "walk",
+          "label": "Call off the deal and keep the Arm license",
+          "real": true
+        },
+        {
+          "id": "shrink",
+          "label": "Offer big concessions to win approval",
+          "real": false
+        }
+      ],
+      "actual": "In February 2022 NVIDIA and SoftBank ended the deal, citing major regulatory obstacles. NVIDIA kept its 20-year Arm license.",
+      "outcome": "SoftBank kept NVIDIA's $1.25 billion prepayment, and NVIDIA booked a $1.36 billion charge. The FTC said a company dropping a vertical merger it was fighting in court had not happened in many years. Arm prepared to go public instead.",
+      "sources": [
+        {
+          "title": "NVIDIA to acquire Arm for $40 billion",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-to-acquire-arm-for-40-billion-creating-worlds-premier-computing-company-for-the-age-of-ai",
+          "publisher": "NVIDIA Newsroom",
+          "date": "2020-09-13"
+        },
+        {
+          "title": "NVIDIA Form 8-K on termination of the Arm deal",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000005/nvda-20220208.htm",
+          "publisher": "SEC EDGAR",
+          "date": "2022-02-08"
+        },
+        {
+          "title": "Statement on termination of Nvidia's attempted acquisition of Arm",
+          "url": "https://www.ftc.gov/news-events/news/press-releases/2022/02/statement-regarding-termination-nvidia-corps-attempted-acquisition-arm-ltd",
+          "publisher": "US Federal Trade Commission",
+          "date": "2022-02"
+        }
+      ]
+    },
+    {
+      "id": "osu",
+      "year": "2022",
+      "category": "giving",
+      "title": "What do you give back?",
+      "situation": "You and your wife Lori met as engineering students at Oregon State University. The university is planning a $200 million research center built around an AI supercomputer.",
+      "options": [
+        {
+          "id": "gift",
+          "label": "Make a $50 million gift to your old university",
+          "real": true
+        },
+        {
+          "id": "later",
+          "label": "Hold off and give later through your foundation",
+          "real": false
+        },
+        {
+          "id": "none",
+          "label": "Keep the money in the business",
+          "real": false
+        }
+      ],
+      "actual": "In October 2022 the Huangs gave $50 million to the OSU Foundation, part of $100 million in gifts to launch the center, which carries their names.",
+      "outcome": "Ground was broken on April 12, 2024 for the Jen-Hsun Huang and Lori Mills Huang Collaborative Innovation Complex, a $213 million, 143,000-square-foot building for AI, materials science and robotics research.",
+      "sources": [
+        {
+          "title": "$50 million gift by NVIDIA founder and spouse helps launch OSU research center",
+          "url": "https://news.oregonstate.edu/news/50-million-gift-nvidia-founder-and-spouse-helps-launch-oregon-state-university-research-center",
+          "publisher": "Oregon State University",
+          "date": "2022-10-14"
+        },
+        {
+          "title": "OSU celebrates groundbreaking of the Huang Complex",
+          "url": "https://www.fororegonstate.org/stay-informed/impact-stories/detail/Huang_Complex_groundbreaking",
+          "publisher": "Oregon State University Foundation",
+          "date": "2024-04"
+        }
+      ]
+    }
+  ],
+  "ranks": [
+    {
+      "min": 5,
+      "title": "Leather-jacket legend"
+    },
+    {
+      "min": 3,
+      "title": "Rising founder"
+    },
+    {
+      "min": 0,
+      "title": "Keep your day job"
+    }
+  ]
+}

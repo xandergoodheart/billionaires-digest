@@ -1,0 +1,116 @@
+{
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Mark Zuckerberg",
+    "slug": "mark-zuckerberg",
+    "initials": "MZ",
+    "role": "Founder, Chairman and CEO of Meta Platforms",
+    "bio": "Founded the company now called Meta in 2004 and has been its CEO ever since; chairman of its board since 2012. He attended Harvard University, where he studied computer science.",
+    "bioSource": {
+      "title": "Meta Platforms 2026 proxy statement (director biography)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm",
+      "publisher": "SEC EDGAR",
+      "date": "2026-04-16"
+    }
+  },
+  "decisions": [
+    {
+      "id": "instagram",
+      "year": "2012",
+      "category": "deal",
+      "title": "Buy the hot photo app?",
+      "situation": "Your social network is eight years old and sharing photos is one of the main reasons people use it. A small San Francisco startup, Instagram, has a mobile photo-sharing app that millions of people love.",
+      "options": [
+        { "id": "build", "label": "Build your own mobile photo features instead", "real": false },
+        { "id": "buy", "label": "Buy Instagram for about $1 billion and let it run on its own", "real": true },
+        { "id": "stake", "label": "Take a small stake and see how it grows", "real": false }
+      ],
+      "actual": "On April 9, 2012 Facebook agreed to buy Instagram for about $1 billion in cash and Facebook shares. He promised to keep growing Instagram as its own app rather than fold it into Facebook, and called it the first time the company had bought a product with so many users.",
+      "outcome": "In December 2020 the FTC sued, arguing the Instagram and WhatsApp deals were used to protect a monopoly. After a trial in 2025, the court ruled in Meta's favor on November 18, 2025; the FTC filed an appeal on January 20, 2026 (as of Meta's report for the quarter ended June 30, 2026).",
+      "sources": [
+        { "title": "Facebook to Acquire Instagram", "url": "https://about.fb.com/news/2012/04/facebook-to-acquire-instagram/", "publisher": "Meta Newsroom", "date": "2012-04-09" },
+        { "title": "FTC Sues Facebook for Illegal Monopolization", "url": "https://www.ftc.gov/news-events/news/press-releases/2020/12/ftc-sues-facebook-illegal-monopolization", "publisher": "Federal Trade Commission", "date": "2020-12-09" },
+        { "title": "Meta quarterly report (Form 10-Q), quarter ended June 30, 2026", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "publisher": "SEC EDGAR", "date": "2026-07-29" }
+      ]
+    },
+    {
+      "id": "whatsapp",
+      "year": "2014",
+      "category": "deal",
+      "title": "Pay up for a messaging app?",
+      "situation": "WhatsApp, a messaging app based in Mountain View, has over 450 million monthly users and is adding more than 1 million new registered users a day. It makes very little money.",
+      "options": [
+        { "id": "compete", "label": "Push your own Messenger app harder instead", "real": false },
+        { "id": "partner", "label": "Offer WhatsApp a partnership, not a purchase", "real": false },
+        { "id": "buy", "label": "Buy WhatsApp for about $16 billion plus $3 billion in staff stock", "real": true }
+      ],
+      "actual": "On February 19, 2014 Facebook agreed to buy WhatsApp for about $16 billion ($4 billion cash and about $12 billion in shares), plus $3 billion in restricted stock for its founders and staff. WhatsApp kept its brand and co-founder Jan Koum joined Facebook's board. The deal closed in October 2014.",
+      "outcome": "The FTC later counted the deal at $19 billion and challenged it together with Instagram; the court ruled for Meta in November 2025 and the FTC has appealed. Meta's apps reached 3.58 billion daily active people on average in December 2025.",
+      "sources": [
+        { "title": "Facebook to Acquire WhatsApp", "url": "https://about.fb.com/news/2014/02/facebook-to-acquire-whatsapp/", "publisher": "Meta Newsroom", "date": "2014-02-19" },
+        { "title": "Facebook annual report (Form 10-K), 2014", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680115000006/fb-12312014x10k.htm", "publisher": "SEC EDGAR", "date": "2015" },
+        { "title": "FTC Sues Facebook for Illegal Monopolization", "url": "https://www.ftc.gov/news-events/news/press-releases/2020/12/ftc-sues-facebook-illegal-monopolization", "publisher": "Federal Trade Commission", "date": "2020-12-09" },
+        { "title": "Meta annual report (Form 10-K), 2025", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm", "publisher": "SEC EDGAR", "date": "2026-01-29" }
+      ]
+    },
+    {
+      "id": "giving",
+      "year": "2015",
+      "category": "giving",
+      "title": "What to do with the fortune?",
+      "situation": "You own roughly 4 million Class A and 419 million Class B Facebook shares, worth about $45 billion. You want to fund work on things like disease and education, but you also want to keep control of the company.",
+      "options": [
+        { "id": "foundation", "label": "Give a slice each year to a classic charity foundation", "real": false },
+        { "id": "pledge", "label": "Pledge 99% of your shares to a new organization you control", "real": true },
+        { "id": "later", "label": "Hold the shares and decide on giving later in life", "real": false }
+      ],
+      "actual": "On December 1, 2015 he and Priscilla Chan said they would give 99% of their Facebook shares, then worth about $45 billion, over their lifetimes through the new Chan Zuckerberg Initiative, an LLC he controls. Facebook's filing said he planned to sell or give no more than $1 billion of stock a year for the next three years and keep majority voting control.",
+      "outcome": "On November 6, 2025 the couple said their Biohub science group would go 'all in' on combining AI with biology to help cure or prevent disease. He still held 60.8% of Meta's voting power as of April 1, 2026, much of it through Chan Zuckerberg holding companies.",
+      "sources": [
+        { "title": "Facebook current report (Form 8-K), December 1, 2015", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680115000035/form8kdec2015.htm", "publisher": "SEC EDGAR", "date": "2015-12-01" },
+        { "title": "Mark Zuckerberg Says He Plans to Give Away 99 Percent of His Facebook Shares", "url": "https://www.nbcnews.com/tech/social-media/mark-zuckerberg-says-he-plans-give-away-99-percent-his-n472371", "publisher": "NBC News", "date": "2015-12-01" },
+        { "title": "Biohub launches first large-scale scientific initiative combining frontier AI with frontier biology", "url": "https://biohub.org/news/ai-biology-cure-disease/", "publisher": "Biohub (Chan Zuckerberg Initiative)", "date": "2025-11-06" },
+        { "title": "Meta Platforms 2026 proxy statement", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm", "publisher": "SEC EDGAR", "date": "2026-04-16" }
+      ]
+    },
+    {
+      "id": "meta",
+      "year": "2021",
+      "category": "product",
+      "title": "Rename the company after the future?",
+      "situation": "Your company is named after its first app, but it now runs several apps plus Quest virtual-reality headsets. You believe the next big platform will be an immersive, shared online world: the metaverse.",
+      "options": [
+        { "id": "keep", "label": "Keep the Facebook name and treat VR as a side project", "real": false },
+        { "id": "meta", "label": "Rename the company Meta and make the metaverse its focus", "real": true },
+        { "id": "spin", "label": "Spin VR off into a separate company", "real": false }
+      ],
+      "actual": "On October 28, 2021, at the Connect conference, he introduced Meta as the new company brand, with a focus on bringing the metaverse to life. The company also announced a $150 million investment in immersive learning.",
+      "outcome": "The name stuck, but the bet is costly: the Reality Labs unit lost $19.19 billion in 2025, up from $17.73 billion in 2024. Meta now puts much of its spending into AI: in its report for the quarter ended June 30, 2026 it expected $130 billion to $145 billion of capital spending in 2026 to support its AI efforts and core business, up from $115 billion to $135 billion in its annual report.",
+      "sources": [
+        { "title": "Introducing Meta: A Social Technology Company", "url": "https://about.fb.com/news/2021/10/facebook-company-is-now-meta/", "publisher": "Meta Newsroom", "date": "2021-10-28" },
+        { "title": "Meta annual report (Form 10-K), 2025", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm", "publisher": "SEC EDGAR", "date": "2026-01-29" },
+        { "title": "Meta quarterly report (Form 10-Q), quarter ended June 30, 2026", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm", "publisher": "SEC EDGAR", "date": "2026-07-29" }
+      ]
+    },
+    {
+      "id": "efficiency",
+      "year": "2023",
+      "category": "money",
+      "title": "Cut again, or hold steady?",
+      "situation": "In November 2022 you cut about 13% of staff, more than 11,000 people. Business is still difficult and you have named 2023 the 'Year of Efficiency'.",
+      "options": [
+        { "id": "hold", "label": "Stop at one round of layoffs and protect morale", "real": false },
+        { "id": "cut", "label": "Cut about 10,000 more jobs and flatten the company", "real": true },
+        { "id": "pause", "label": "Freeze hiring only and wait for growth to return", "real": false }
+      ],
+      "actual": "On March 14, 2023 he told employees Meta would shrink by about 10,000 more people, close about 5,000 open roles it had not filled, flatten management layers and cancel lower-priority projects. Affected employees were told between March and May 2023.",
+      "outcome": "Meta's net income rose to $39.10 billion in 2023 from $23.20 billion in 2022, and headcount was 67,317 at the end of 2023, down 22%. On February 1, 2024 Meta announced its first-ever cash dividend.",
+      "sources": [
+        { "title": "Mark Zuckerberg's Message to Meta Employees", "url": "https://about.fb.com/news/2022/11/mark-zuckerberg-layoff-message-to-employees/", "publisher": "Meta Newsroom", "date": "2022-11-09" },
+        { "title": "Update on Meta's Year of Efficiency", "url": "https://about.fb.com/news/2023/03/mark-zuckerberg-meta-year-of-efficiency/", "publisher": "Meta Newsroom", "date": "2023-03-14" },
+        { "title": "Meta annual report (Form 10-K), 2023", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm", "publisher": "SEC EDGAR", "date": "2024-02-02" }
+      ]
+    }
+  ]
+}

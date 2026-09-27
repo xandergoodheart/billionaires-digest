@@ -1,0 +1,114 @@
+{
+  "prototype": true,
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Larry Ellison",
+    "slug": "larry-ellison",
+    "initials": "LE",
+    "role": "Co-founder, executive chairman and CTO of Oracle",
+    "bio": "Founded Oracle in 1977 and ran it as CEO until September 2014. Since then he has been Oracle's executive chairman and chief technology officer.",
+    "bioSource": {
+      "title": "Larry Ellison, executive biography",
+      "url": "https://www.oracle.com/corporate/executives/larry-ellison/",
+      "publisher": "Oracle",
+      "date": ""
+    }
+  },
+  "decisions": [
+    {
+      "id": "found",
+      "year": "1977",
+      "category": "founding",
+      "title": "Bet on an idea nobody is selling?",
+      "situation": "You work at Ampex. In an IBM research journal you find a paper describing a working prototype of a relational database. You show it to coworkers Bob Miner and Ed Oates, and learn that no company has committed to turning the idea into a product.",
+      "options": [
+        { "id": "stay", "label": "Keep your steady job and let IBM build it", "real": false },
+        { "id": "found", "label": "Start a company with your coworkers to sell it first", "real": true },
+        { "id": "consult", "label": "Do database consulting on the side instead", "real": false }
+      ],
+      "actual": "In 1977 he, Bob Miner and Ed Oates founded Software Development Laboratories, the company that became Oracle. In 1979 it released Oracle Version 2, which Oracle calls the first commercial SQL relational database, and renamed itself Relational Software Inc.",
+      "outcome": "Oracle went public in March 1986 at $15 a share. As of December 31, 2023 he beneficially owned about 41.8% of Oracle's stock, according to his SEC filing.",
+      "sources": [
+        { "title": "Defying Conventional Wisdom (Oracle 30th anniversary timeline)", "url": "https://www.oracle.com/us/corporate/profit/p27anniv-timeline-151918.pdf", "publisher": "Oracle Profit magazine", "date": "2007-05" },
+        { "title": "Oracle CEO Larry Ellison steps down, Catz and Hurd named CEOs", "url": "https://www.cnbc.com/2014/09/18/oracle-ceo-larry-ellison-steps-down-will-be-replaced-by-mark-hurd-and-safra-catz.html", "publisher": "CNBC", "date": "2014-09-18" },
+        { "title": "Schedule 13G/A, Lawrence Joseph Ellison, Oracle Corporation (Amendment No. 33)", "url": "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm", "publisher": "SEC EDGAR", "date": "2024" }
+      ]
+    },
+    {
+      "id": "peoplesoft",
+      "year": "2004",
+      "category": "deal",
+      "title": "Raise the bid or walk away?",
+      "situation": "In June 2003 you launched a hostile takeover of rival PeopleSoft to take on SAP in business software. About 18 months later the fight is still going. PeopleSoft's board has rejected your all-cash offer of $24 a share as too low.",
+      "options": [
+        { "id": "walk", "label": "Walk away and build your own apps business", "real": false },
+        { "id": "raise", "label": "Raise the offer about 10% to $26.50 a share", "real": true },
+        { "id": "wait", "label": "Hold at $24 and wait for shareholders to cave", "real": false }
+      ],
+      "actual": "Oracle raised its offer to $26.50 a share, about $10.3 billion, and PeopleSoft's board agreed on December 13, 2004. Oracle completed the merger on January 7, 2005.",
+      "outcome": "The AP reported the deal brought Oracle about 12,750 PeopleSoft customers and nearly $3 billion in annual revenue, making it the second-largest business applications maker behind SAP.",
+      "sources": [
+        { "title": "Oracle Buys PeopleSoft", "url": "https://www.oracle.com/corporate/pressrelease/oracle-buys-peoplesoft-121304.html", "publisher": "Oracle", "date": "2004-12-13" },
+        { "title": "Oracle to acquire PeopleSoft for $10.3 billion", "url": "https://www.nbcnews.com/id/wbna6705516", "publisher": "Associated Press (via NBC News)", "date": "2004-12-13" },
+        { "title": "Oracle Corporation annual report (Form 10-K), fiscal 2007", "url": "https://www.sec.gov/Archives/edgar/data/1341439/000095013407014478/f31530e10vk.htm", "publisher": "SEC EDGAR", "date": "2007" }
+      ]
+    },
+    {
+      "id": "sun",
+      "year": "2009",
+      "category": "deal",
+      "title": "A software company buying hardware?",
+      "situation": "Oracle sells software. Sun Microsystems, a partner for more than 20 years, owns Java, which your fastest-growing business is built on, and Solaris, the leading system for running your database. Sun is available.",
+      "options": [
+        { "id": "partner", "label": "Stay partners and stick to software", "real": false },
+        { "id": "buy", "label": "Buy Sun for $9.50 a share in cash", "real": true },
+        { "id": "java", "label": "Try to license or buy only Java", "real": false }
+      ],
+      "actual": "On April 20, 2009 Oracle agreed to buy Sun for $9.50 a share, about $7.4 billion. He said Oracle could now engineer whole systems, from applications down to disk. The deal closed on January 26, 2010, at a total price of $7.3 billion.",
+      "outcome": "Oracle entered the hardware systems business and gained Java and Solaris. Oracle's annual report said revenue covered by Sun's internal controls was 10% of Oracle's total revenue for the fiscal year ended May 31, 2010, Sun's first (partial) year inside Oracle.",
+      "sources": [
+        { "title": "Oracle to Buy Sun (joint press release)", "url": "https://www.sec.gov/Archives/edgar/data/709519/000119312509082650/dex991.htm", "publisher": "SEC EDGAR", "date": "2009-04-20" },
+        { "title": "Oracle Completes Acquisition of Sun", "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312510015241/dex991.htm", "publisher": "SEC EDGAR", "date": "2010-01-27" },
+        { "title": "Oracle Corporation annual report (Form 10-K), fiscal 2010", "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312510151896/d10k.htm", "publisher": "SEC EDGAR", "date": "2010" }
+      ]
+    },
+    {
+      "id": "cto",
+      "year": "2014",
+      "category": "product",
+      "title": "Keep the CEO title?",
+      "situation": "You have run Oracle as CEO since you founded it in 1977. Your two presidents, Safra Catz and Mark Hurd, already run finance and sales. You want to keep working full time, but on the technology.",
+      "options": [
+        { "id": "stay", "label": "Stay CEO and keep everything as it is", "real": false },
+        { "id": "cto", "label": "Hand the CEO job to both presidents and become chairman and CTO", "real": true },
+        { "id": "retire", "label": "Retire and pick one successor", "real": false }
+      ],
+      "actual": "On September 18, 2014 Oracle's board made him executive chairman and chief technology officer and named both Catz and Hurd CEO. All software and hardware engineering kept reporting to him.",
+      "outcome": "Catz and Hurd began reporting to the board instead of to him. As of this check, Oracle still lists him as executive chairman and CTO.",
+      "sources": [
+        { "title": "Oracle Board Appoints Larry Ellison Executive Chairman and CTO (Form 8-K exhibit)", "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312514350215/d793532dex991.htm", "publisher": "SEC EDGAR", "date": "2014-09-18" },
+        { "title": "Oracle CEO Larry Ellison steps down, Catz and Hurd named CEOs", "url": "https://www.cnbc.com/2014/09/18/oracle-ceo-larry-ellison-steps-down-will-be-replaced-by-mark-hurd-and-safra-catz.html", "publisher": "CNBC", "date": "2014-09-18" },
+        { "title": "Larry Ellison, executive biography", "url": "https://www.oracle.com/corporate/executives/larry-ellison/", "publisher": "Oracle", "date": "" }
+      ]
+    },
+    {
+      "id": "stargate",
+      "year": "2025",
+      "category": "deal",
+      "title": "Go all-in on AI data centers?",
+      "situation": "Oracle rents out cloud computing. OpenAI and SoftBank are forming a new company to build AI infrastructure in the United States on a huge scale, and want Oracle as a partner.",
+      "options": [
+        { "id": "join", "label": "Join the venture and start building data centers", "real": true },
+        { "id": "rent", "label": "Just rent spare capacity to AI labs", "real": false },
+        { "id": "skip", "label": "Stay out; the costs are too big", "real": false }
+      ],
+      "actual": "On January 21, 2025 he joined President Trump, SoftBank's Masayoshi Son and OpenAI's Sam Altman at the White House to unveil Stargate, with an initial $100 billion and up to $500 billion planned over four years. He said the first data centers in Texas were already being built.",
+      "outcome": "In July 2025 OpenAI and Oracle agreed to develop up to 4.5 gigawatts of additional Stargate capacity, a partnership the companies put at more than $300 billion over five years. As of September 23, 2025 the flagship site in Abilene, Texas was running on Oracle's cloud.",
+      "sources": [
+        { "title": "Trump announces AI infrastructure investment backed by Oracle, OpenAI and SoftBank", "url": "https://www.cnbc.com/2025/01/21/trump-ai-openai-oracle-softbank.html", "publisher": "CNBC", "date": "2025-01-21" },
+        { "title": "OpenAI, Oracle, and SoftBank expand Stargate with five new AI data center sites", "url": "https://group.softbank/en/news/press/20250924", "publisher": "SoftBank Group", "date": "2025-09-24" }
+      ]
+    }
+  ]
+}

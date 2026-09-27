@@ -1,0 +1,111 @@
+{
+  "prototype": true,
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Bill Gates",
+    "slug": "bill-gates",
+    "initials": "BG",
+    "role": "Co-founder of Microsoft; chair of the Gates Foundation",
+    "bio": "Co-founded Microsoft with Paul Allen in 1975 and built it into a leading software company. In 2008 he moved to working full-time at the Gates Foundation, which he chairs. He also founded Breakthrough Energy, which backs climate technology.",
+    "bioSource": {
+      "title": "Bill Gates, foundation leadership biography",
+      "url": "https://www.gatesfoundation.org/about/leadership/bill-gates",
+      "publisher": "Gates Foundation",
+      "date": ""
+    }
+  },
+  "decisions": [
+    {
+      "id": "harvard",
+      "year": "1975",
+      "category": "founding",
+      "title": "Finish Harvard or start a software company?",
+      "situation": "You are a 20-year-old Harvard undergraduate who loves college. Since high school you and your friend Paul Allen have believed small chips will one day put a computer in every home. In 1974 Allen shows you a magazine cover featuring the Altair, a build-it-yourself computer kit from a company called MITS. If you wait, someone else may get there first.",
+      "options": [
+        { "id": "stay", "label": "Finish the degree first, then start something", "real": false },
+        { "id": "found", "label": "Leave school and start the software company now", "real": true },
+        { "id": "sell", "label": "Sell the idea to a computer maker and go back to class", "real": false }
+      ],
+      "actual": "He co-launched Microsoft with Allen in 1975, first based in Albuquerque, New Mexico. He spent the first year torn between the company and his dorm room, going back to Harvard for two more semesters in 1976 while trying to run Microsoft from afar.",
+      "outcome": "He never finished his degree. He was Microsoft's first CEO and stayed in the job until 2000, leading it to become a worldwide leader in software.",
+      "sources": [
+        { "title": "Bill Gates regretted leaving Harvard: I spent Microsoft's first year trying to get a friend to 'take charge,' so I could return", "url": "https://www.cnbc.com/2025/02/14/bill-gates-i-regretted-leaving-harvard-university-to-start-microsoft.html", "publisher": "CNBC", "date": "2025-02-14" },
+        { "title": "Bill Gates, foundation leadership biography", "url": "https://www.gatesfoundation.org/about/leadership/bill-gates", "publisher": "Gates Foundation", "date": "" }
+      ]
+    },
+    {
+      "id": "dos",
+      "year": "1980",
+      "category": "deal",
+      "title": "Sell IBM the software, or just license it?",
+      "situation": "IBM is building a personal computer and already has your small company writing a BASIC program for it. Now IBM wants you to supply the operating system too. The problem: you don't have one. Another firm, Seattle Computer Products, has written one called 86-DOS.",
+      "options": [
+        { "id": "sell", "label": "Build it and sell it to IBM outright for one big fee", "real": false },
+        { "id": "license", "label": "License it to IBM but keep the rights to sell it to others", "real": true },
+        { "id": "pass", "label": "Say no and stick to programming languages", "real": false }
+      ],
+      "actual": "Microsoft signed with IBM in November 1980 with no operating system in hand. In December 1980 it licensed 86-DOS for a flat $25,000, and the next summer it bought all rights for another $50,000 so it could license the system to makers of IBM-compatible PCs. IBM's PC shipped with the software, as PC DOS 1.0, in August 1981.",
+      "outcome": "Microsoft kept the rights and licensed the system to other computer makers under the name MS-DOS. Version 2.0 shipped in March 1983, both with IBM's PC-XT and to other manufacturers, and MS-DOS kept being updated until the late 1990s.",
+      "sources": [
+        { "title": "Microsoft MS-DOS early source code", "url": "https://computerhistory.org/blog/microsoft-ms-dos-early-source-code/", "publisher": "Computer History Museum", "date": "2014-03-25" }
+      ]
+    },
+    {
+      "id": "ipo",
+      "year": "1986",
+      "category": "money",
+      "title": "Take Microsoft public?",
+      "situation": "To attract managers and programmers, you have been selling them company shares and granting stock options. By 1987 your company expects more than 500 people to own shares, which would force it to register with the SEC anyway, but with too few shares out there for easy trading.",
+      "options": [
+        { "id": "private", "label": "Stay private and limit who can own shares", "real": false },
+        { "id": "ipo", "label": "List on the stock market and sell only a small slice", "real": true },
+        { "id": "sellco", "label": "Sell the company to a bigger tech firm", "real": false }
+      ],
+      "actual": "Microsoft went public on March 13, 1986, at $21 a share; the stock jumped as high as $35.50. The company and its shareholders raised $61 million. Gates, then 30, sold shares worth just $1.6 million and kept a 45% stake, valued at $350 million at the time.",
+      "outcome": "Fortune calculated in March 2026 that $1,000 invested at the IPO price would have grown to about $5.5 million, helped by nine stock splits.",
+      "sources": [
+        { "title": "Inside the deal that made Bill Gates $350,000,000 (1986 cover story, republished)", "url": "https://fortune.com/2011/03/13/inside-the-deal-that-made-bill-gates-350000000/", "publisher": "Fortune", "date": "1986-07-21" },
+        { "title": "Microsoft's IPO turns 40 today. If you invested $1,000 in Microsoft in 1986, you'd have $5.5 million today", "url": "https://fortune.com/2026/03/13/microsofts-ipo-40-years-1000-investment-5-5-million/", "publisher": "Fortune", "date": "2026-03-13" }
+      ]
+    },
+    {
+      "id": "handover",
+      "year": "2006",
+      "category": "giving",
+      "title": "Microsoft or the foundation?",
+      "situation": "You are 50 and chairman of Microsoft, with your longtime partner Steve Ballmer running it as CEO. Your foundation works mainly on global health and education, and it needs more of your time.",
+      "options": [
+        { "id": "stay", "label": "Stay full-time at Microsoft for the long haul", "real": false },
+        { "id": "handover", "label": "Plan a two-year handover, then go full-time at the foundation", "real": true },
+        { "id": "quit", "label": "Leave Microsoft completely, right away", "real": false }
+      ],
+      "actual": "In June 2006 he announced he would leave his day-to-day role at Microsoft within two years to focus on the foundation, while staying on as chairman and an adviser. He made the switch on June 27, 2008.",
+      "outcome": "He stayed Microsoft's chairman until February 4, 2014, and left its board on March 13, 2020, to spend more time on global health, development, education and climate change. Microsoft said he would continue as a technology adviser to CEO Satya Nadella.",
+      "sources": [
+        { "title": "Gates plans gradual exit from Microsoft", "url": "https://www.npr.org/2006/06/16/5490229/gates-plans-gradual-exit-from-microsoft", "publisher": "NPR", "date": "2006-06-16" },
+        { "title": "Microsoft announces change to its board of directors", "url": "https://www.prnewswire.com/news-releases/microsoft-announces-change-to-its-board-of-directors-301023293.html", "publisher": "Microsoft (via PR Newswire)", "date": "2020-03-13" },
+        { "title": "Bill Gates, foundation leadership biography", "url": "https://www.gatesfoundation.org/about/leadership/bill-gates", "publisher": "Gates Foundation", "date": "" }
+      ]
+    },
+    {
+      "id": "spenddown",
+      "year": "2025",
+      "category": "giving",
+      "title": "Keep the foundation forever, or spend it all?",
+      "situation": "Your foundation turns 25. In that time it has given away more than $100 billion. Its charter says it will close 20 years after your death, and its endowment stands at about $77 billion.",
+      "options": [
+        { "id": "keep", "label": "Keep the original plan and close after your death", "real": false },
+        { "id": "spend", "label": "Give away almost everything within 20 years, then shut down", "real": true },
+        { "id": "forever", "label": "Turn it into a permanent endowment that never closes", "real": false }
+      ],
+      "actual": "On May 8, 2025, he announced the foundation would spend more than $200 billion over 20 years, drawn from the endowment and his own future gifts, and close on December 31, 2045. The board changed the charter to match. He said his net worth would fall 99% by 2045.",
+      "outcome": "On January 14, 2026, the foundation's board endorsed a record $9 billion annual payout as part of the plan to close in 2045.",
+      "sources": [
+        { "title": "Gates Foundation will double spending over next 20 years to accelerate progress on saving and improving lives", "url": "https://www.gatesfoundation.org/ideas/media-center/press-releases/2025/05/25th-anniversary-announcement", "publisher": "Gates Foundation", "date": "2025-05-08" },
+        { "title": "Bill Gates announces plan to give 'virtually all' his money away and end the Gates Foundation in 20 years", "url": "https://www.cnn.com/2025/05/08/tech/bill-gates-giving-money-away-20-years", "publisher": "CNN", "date": "2025-05-08" },
+        { "title": "Gates Foundation commits to historic $9 billion annual payout", "url": "https://www.gatesfoundation.org/ideas/media-center/press-releases/2026/01/historic-annual-budget-to-accelerate-mission", "publisher": "Gates Foundation", "date": "2026-01-14" }
+      ]
+    }
+  ]
+}

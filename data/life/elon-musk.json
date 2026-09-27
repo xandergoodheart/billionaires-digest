@@ -1,0 +1,116 @@
+{
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Elon Musk",
+    "slug": "elon-musk",
+    "initials": "EM",
+    "role": "Founder and CEO of SpaceX; CEO of Tesla",
+    "bio": "Co-founded Zip2, sold to Compaq in 1999, then co-founded PayPal, sold to eBay in 2002. Has run SpaceX since May 2002 and been Tesla's CEO since October 2008. Also founded Neuralink and The Boring Company. Degrees in physics and business from the University of Pennsylvania.",
+    "bioSource": {
+      "title": "SpaceX IPO prospectus (Form 424B4), directors and executive officers",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm",
+      "publisher": "SEC EDGAR",
+      "date": "2026-06-12"
+    }
+  },
+  "decisions": [
+    {
+      "id": "xcom",
+      "year": "1999",
+      "category": "founding",
+      "title": "Cash out, or go again?",
+      "situation": "Zip2, the internet software company you co-founded in 1995, is being bought by Compaq. The deal, agreed in February 1999, pays about $307 million in cash. You have worked there as chairman, CEO and chief technology officer at different times.",
+      "options": [
+        { "id": "rest", "label": "Take the money and invest it safely", "real": false },
+        { "id": "found", "label": "Start a new internet company right away", "real": true },
+        { "id": "join", "label": "Stay on at Compaq and run Zip2 there", "real": false }
+      ],
+      "actual": "In March 1999 he founded X.com and became its CEO. A year later, in March 2000, X.com merged with rival Confinity, and the combined company became PayPal.",
+      "outcome": "He was PayPal's CEO from May to September 2000, then left that job but stayed on the board; in September 2001 he owned about 14.2% of the company. In July 2002 eBay agreed to buy PayPal in a stock deal valued at $1.5 billion.",
+      "sources": [
+        { "title": "Compaq quarterly report (Form 10-Q), first quarter 1999", "url": "https://www.sec.gov/Archives/edgar/data/714154/000071415499000013/0000714154-99-000013.txt", "publisher": "SEC EDGAR", "date": "1999-05-14" },
+        { "title": "PayPal registration statement (Form S-1)", "url": "https://www.sec.gov/Archives/edgar/data/1103415/000091205701533855/a2059025zs-1.htm", "publisher": "SEC EDGAR", "date": "2001-09-28" },
+        { "title": "eBay to acquire PayPal (press release filed with the SEC)", "url": "https://www.sec.gov/Archives/edgar/data/1103415/000091205702026650/a2084015zex-99_1.htm", "publisher": "SEC EDGAR", "date": "2002-07-08" }
+      ]
+    },
+    {
+      "id": "spacex",
+      "year": "2002",
+      "category": "founding",
+      "title": "Another web company, or rockets?",
+      "situation": "You are no longer PayPal's CEO but still sit on its board with a large stake. You could build another internet business you already understand. The alternative is space: no private company has ever put a liquid-fuel rocket into orbit.",
+      "options": [
+        { "id": "web", "label": "Start another internet company", "real": false },
+        { "id": "rocket", "label": "Found a rocket company", "real": true },
+        { "id": "vc", "label": "Become an investor in other people's startups", "real": false }
+      ],
+      "actual": "Space Exploration Technologies (SpaceX) was incorporated on March 14, 2002, and he has been its CEO, chief technology officer and chairman since May 2002. Later that year, in October 2002, eBay completed its purchase of PayPal.",
+      "outcome": "With Falcon 1 in 2008, SpaceX became the first private company to put a liquid-fuel rocket into orbit. As of March 31, 2026 it had flown about 650 orbital launches. In June 2026 it went public at $135 a share, a deal CNBC said valued it at $1.77 trillion.",
+      "sources": [
+        { "title": "SpaceX IPO prospectus (Form 424B4)", "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm", "publisher": "SEC EDGAR", "date": "2026-06-12" },
+        { "title": "SpaceX raises $75 billion in record-setting IPO ahead of Nasdaq debut", "url": "https://www.cnbc.com/2026/06/11/spacex-raises-75-billion-in-record-setting-ipo-ahead-of-nasdaq-debut.html", "publisher": "CNBC", "date": "2026-06-11" }
+      ]
+    },
+    {
+      "id": "bridge",
+      "year": "2008",
+      "category": "money",
+      "title": "Put more of your own money in?",
+      "situation": "It is late 2008. You have chaired Tesla since April 2004, and in October 2008 you took over as its CEO just as volume production of the Roadster began. Earlier in the year you had already lent Tesla about $18 million. Now it is raising money again.",
+      "options": [
+        { "id": "stop", "label": "Stop here and let outside investors decide", "real": false },
+        { "id": "double", "label": "Put millions more of your own money into Tesla", "real": true },
+        { "id": "sell", "label": "Look for a big carmaker to buy Tesla", "real": false }
+      ],
+      "actual": "In the December 2008 bridge financing his trust lent Tesla about $20.4 million more. Counting the February 2008 notes and interest, about $41.0 million was later turned into Tesla preferred stock at a 60% discount to what other investors in that round paid.",
+      "outcome": "Also in December 2008, NASA gave SpaceX a $1.6 billion contract for 12 space station cargo missions. Tesla took a $465 million US Department of Energy loan in January 2010 and went public in June 2010 at $17 a share.",
+      "sources": [
+        { "title": "Tesla Motors IPO prospectus (Form 424B4)", "url": "https://www.sec.gov/Archives/edgar/data/1318605/000119312510149105/d424b4.htm", "publisher": "SEC EDGAR", "date": "2010-06-29" },
+        { "title": "Commercial cargo: NASA's management of commercial orbital transportation services and ISS commercial resupply contracts (IG-13-016)", "url": "https://oig.nasa.gov/wp-content/uploads/2024/02/IG-13-016.pdf", "publisher": "NASA Office of Inspector General", "date": "2013-06-13" }
+      ]
+    },
+    {
+      "id": "model3",
+      "year": "2016",
+      "category": "product",
+      "title": "Speed up after 325,000 orders?",
+      "situation": "Tesla has started taking deposits for Model 3, a mass-market car with a $35,000 base price. In the first week it received more than 325,000 reservations, about $14 billion in implied sales. You already have a plan to build 500,000 cars across all models, but it is years away.",
+      "options": [
+        { "id": "keep", "label": "Keep the original, safer timeline", "real": false },
+        { "id": "accelerate", "label": "Pull the 500,000-car plan two years forward", "real": true },
+        { "id": "cap", "label": "Close reservations until the factory is ready", "real": false }
+      ],
+      "actual": "In May 2016 Tesla moved its 500,000-car build plan up two years to 2018. It said 2016 capital spending would be about 50% above its earlier $1.5 billion guidance and that it would likely need more money.",
+      "outcome": "Model 3 deliveries began in July 2017, and Tesla said the production ramp was hard. In 2025 Tesla delivered 1,585,279 Model 3 and Model Y vehicles, out of 1,636,129 in total.",
+      "sources": [
+        { "title": "Tesla first quarter 2016 update (Exhibit 99.1)", "url": "https://www.sec.gov/Archives/edgar/data/1318605/000119312516577582/d158845dex991.htm", "publisher": "SEC EDGAR", "date": "2016-05-04" },
+        { "title": "Tesla annual report (Form 10-K), 2017", "url": "https://www.sec.gov/Archives/edgar/data/1318605/000156459018002956/tsla-10k_20171231.htm", "publisher": "SEC EDGAR", "date": "2018-02-23" },
+        { "title": "Tesla fourth quarter 2025 production, deliveries and deployments (Exhibit 99.1)", "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026000016/exhibit9914.htm", "publisher": "SEC EDGAR", "date": "2026-01-02" }
+      ]
+    },
+    {
+      "id": "twitter",
+      "year": "2022",
+      "category": "deal",
+      "title": "Fight in court, or buy Twitter after all?",
+      "situation": "In April 2022 you agreed to buy Twitter for $54.20 a share in cash, about $44 billion and a 38% premium. On July 8 you sent notice that you were ending the deal. Twitter sued you in Delaware's Chancery Court, and a trial is coming.",
+      "options": [
+        { "id": "trial", "label": "Go to trial and try to walk away", "real": false },
+        { "id": "close", "label": "Close the deal at the original price", "real": true },
+        { "id": "cut", "label": "Push for a lower price", "real": false }
+      ],
+      "actual": "On October 3, 2022 his advisers told Twitter he would close on the original terms if the court paused the case. The purchase closed on October 27, 2022, and shareholders received $54.20 a share.",
+      "outcome": "He renamed Twitter X and merged it into his AI company xAI in March 2025. In February 2026 SpaceX bought xAI in a deal CNBC said valued xAI at $250 billion. In March 2026 a San Francisco jury found two of his May 2022 tweets about the deal materially false or misleading, but found no scheme to defraud; his lawyers said they would appeal. As of that date, plaintiffs estimated damages of up to $2.6 billion.",
+      "sources": [
+        { "title": "Elon Musk to acquire Twitter (press release filed with the SEC)", "url": "https://www.sec.gov/Archives/edgar/data/1418091/000119312522117720/d319190dex991.htm", "publisher": "SEC EDGAR", "date": "2022-04-25" },
+        { "title": "Elon Musk Schedule 13D/A: notice terminating the merger agreement", "url": "https://www.sec.gov/Archives/edgar/data/1418091/000110465922078413/tm2220599d1_sc13da.htm", "publisher": "SEC EDGAR", "date": "2022-07-08" },
+        { "title": "Elon Musk Schedule 13D/A: letter on proceeding to closing", "url": "https://www.sec.gov/Archives/edgar/data/1418091/000110465922105787/tm2227435d1_sc13da.htm", "publisher": "SEC EDGAR", "date": "2022-10-04" },
+        { "title": "Elon Musk Schedule 13D/A: merger completed", "url": "https://www.sec.gov/Archives/edgar/data/1418091/000110465922113051/tm2229215d1_sc13da.htm", "publisher": "SEC EDGAR", "date": "2022-10-31" },
+        { "title": "SpaceX IPO prospectus (Form 424B4)", "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm", "publisher": "SEC EDGAR", "date": "2026-06-12" },
+        { "title": "Musk's xAI, SpaceX combo is the biggest merger of all time, valued at $1.25 trillion", "url": "https://www.cnbc.com/2026/02/03/musk-xai-spacex-biggest-merger-ever.html", "publisher": "CNBC", "date": "2026-02-03" },
+        { "title": "Elon Musk misled Twitter investors ahead of $44 billion acquisition, jury says", "url": "https://www.cnbc.com/2026/03/20/elon-musk-determined-to-be-liable-for-misleading-twitter-investors.html", "publisher": "CNBC", "date": "2026-03-20" }
+      ]
+    }
+  ]
+}
