@@ -138,7 +138,11 @@
   function loadLive(){
     if (!acct.enabled || !S.week || !BDGame.bookWeek) return Promise.resolve();
     return BDGame.bookWeek(S.week).then(function(rows){
-      if (rows && rows.length) setEvents(fromDb(rows), 'db');
+      if (!rows || !rows.length) return;
+      // the database wins for events it has; events only in the published file stay listed
+      var live = fromDb(rows), have = {};
+      live.forEach(function(e){ have[e.id] = true; });
+      setEvents(live.concat(fromFile(S.file || {}).filter(function(e){ return !have[e.id]; })), 'db');
     }, function(){ /* keep the published odds */ });
   }
 

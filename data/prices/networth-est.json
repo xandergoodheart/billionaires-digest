@@ -1,24 +1,8 @@
 {
   "generated": "2026-09-26T13:51:49.888Z",
-  "method": "Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are at least 25% of the person's Forbes net worth.",
+  "method": "Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are at least 25% of the person's Forbes net worth. For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's Walmart stake), the estimate is the published net worth × that stock's daily % change.",
   "minCoverage": 0.25,
   "people": {
-    "alice-walton": {
-      "estDailyChange": 7895839,
-      "partial": true,
-      "holdings": [
-        {
-          "ticker": "WMT",
-          "shares": 20245740,
-          "change": 0.39,
-          "estChange": 7895839,
-          "shareText": "20,245,740 shares",
-          "source": "https://www.sec.gov/Archives/edgar/data/1219112/000114036125002729/xslSCHEDULE_13G_X01/primary_doc.xml"
-        }
-      ],
-      "coveredValue": 2186135005,
-      "coverage": 0.018
-    },
     "andreas-von-bechtolsheim-family": {
       "estDailyChange": 156229912,
       "partial": true,
@@ -435,22 +419,6 @@
       "coveredValue": 15777556897,
       "coverage": 0.081
     },
-    "jim-walton-family": {
-      "estDailyChange": 12293335,
-      "partial": true,
-      "holdings": [
-        {
-          "ticker": "WMT",
-          "shares": 31521372,
-          "change": 0.39,
-          "estChange": 12293335,
-          "shareText": "31,521,372 shares",
-          "source": "https://www.sec.gov/Archives/edgar/data/1219112/000114036125002729/xslSCHEDULE_13G_X01/primary_doc.xml"
-        }
-      ],
-      "coveredValue": 3403677749,
-      "coverage": 0.026
-    },
     "lakshmi-mittal": {
       "estDailyChange": -204091538,
       "partial": true,
@@ -747,22 +715,6 @@
       "coveredValue": 379336207,
       "coverage": 0.01
     },
-    "rob-walton-family": {
-      "estDailyChange": 2741527,
-      "partial": true,
-      "holdings": [
-        {
-          "ticker": "WMT",
-          "shares": 7029557,
-          "change": 0.39,
-          "estChange": 2741527,
-          "shareText": "7,029,557 shares",
-          "source": "https://www.sec.gov/Archives/edgar/data/1219112/000114036125002729/xslSCHEDULE_13G_X01/primary_doc.xml"
-        }
-      ],
-      "coveredValue": 759051565,
-      "coverage": 0.006
-    },
     "sergey-brin": {
       "estDailyChange": 1303407384,
       "partial": true,
@@ -852,9 +804,17 @@
       "coverage": 0.002
     },
     "warren-buffett": {
-      "estDailyChange": 349,
+      "estDailyChange": -130733164,
       "partial": true,
       "holdings": [
+        {
+          "ticker": "BRK.A",
+          "shares": 188290,
+          "change": -694.32,
+          "estChange": -130733513,
+          "shareText": "188,290 Class A",
+          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
+        },
         {
           "ticker": "BRK.B",
           "shares": 1162,
@@ -864,8 +824,68 @@
           "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
         }
       ],
-      "coveredValue": 587368,
-      "coverage": 0
+      "coveredValue": 142819621855,
+      "coverage": 0.993
+    },
+    "alice-walton": {
+      "estDailyChange": 429925000,
+      "partial": true,
+      "method": "worth",
+      "holdings": [
+        {
+          "ticker": "WMT",
+          "basis": "worth",
+          "change": 0.39,
+          "changePct": 0.3625,
+          "estChange": 429925000,
+          "shareText": "net worth × Walmart price move",
+          "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+          "refClose": 107.98,
+          "refDate": "2026-09-25"
+        }
+      ],
+      "coveredValue": 118600000000,
+      "coverage": 1
+    },
+    "jim-walton-family": {
+      "estDailyChange": 466900000,
+      "partial": true,
+      "method": "worth",
+      "holdings": [
+        {
+          "ticker": "WMT",
+          "basis": "worth",
+          "change": 0.39,
+          "changePct": 0.3625,
+          "estChange": 466900000,
+          "shareText": "net worth × Walmart price move",
+          "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+          "refClose": 107.98,
+          "refDate": "2026-09-25"
+        }
+      ],
+      "coveredValue": 128800000000,
+      "coverage": 1
+    },
+    "rob-walton-family": {
+      "estDailyChange": 478500000,
+      "partial": true,
+      "method": "worth",
+      "holdings": [
+        {
+          "ticker": "WMT",
+          "basis": "worth",
+          "change": 0.39,
+          "changePct": 0.3625,
+          "estChange": 478500000,
+          "shareText": "net worth × Walmart price move",
+          "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
+          "refClose": 107.98,
+          "refDate": "2026-09-25"
+        }
+      ],
+      "coveredValue": 132000000000,
+      "coverage": 1
     }
   },
   "excluded": [
