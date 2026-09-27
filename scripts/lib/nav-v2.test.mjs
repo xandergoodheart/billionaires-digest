@@ -8,7 +8,7 @@ const currentLinks = (html, attr) => [...html.matchAll(new RegExp(`<a [^>]*${att
 test('NAV_V2: five sections, play sub-tabs', () => {
   assert.deepEqual(NAV_V2.map((n) => n.key), ['play', 'learn', 'players', 'news', 'tools']);
   assert.deepEqual(NAV_V2.map((n) => n.label), ['Play', 'Learn', 'Players', 'News', 'Tools']);
-  assert.deepEqual(NAV_V2.map((n) => n.href), ['team.html', 'academy.html', 'players.html', 'index.html', 'flows.html']);
+  assert.deepEqual(NAV_V2.map((n) => n.href), ['index.html', 'academy.html', 'players.html', 'news.html', 'flows.html']);
   assert.deepEqual(SUBNAV_V2.play.items.map((i) => i.label), ['My team', 'Draft room', 'Scores', 'Leagues', 'The Book', 'Next Moves', 'Rules']);
   assert.equal(SUBNAV_V2.play.label, 'Billionaire Fantasy League');
   assert.deepEqual(BOTTOM_V2, ['play', 'learn', 'players', 'news']);
@@ -45,7 +45,7 @@ test('renderTopbarV2: draft sub-tab, and no sub-tab marked when subKey is null',
 
 test('renderTopbarV2: relative and absolute links', () => {
   const rel = renderTopbarV2('play', 'team');
-  assert.ok(rel.includes('href="team.html"') && rel.includes('href="players.html"') && rel.includes('href="index.html"'));
+  assert.ok(rel.includes('href="team.html"') && rel.includes('href="players.html"') && rel.includes('href="index.html"') && rel.includes('href="news.html"'));
   const abs = renderTopbarV2('play', 'team', { absolute: true });
   assert.ok(abs.includes('href="/team.html"') && abs.includes('href="/players.html"') && abs.includes('href="/"'));
   assert.ok(abs.includes('href="/scores.html"'));
@@ -70,7 +70,7 @@ test('renderBottomTabsV2: four tabs, active marked', () => {
   assert.deepEqual([...html.matchAll(/<a [^>]*>([^<]*)<\/a>/g)].map((m) => m[1]), ['Play', 'Learn', 'Players', 'News']);
   assert.deepEqual(currentLinks(html, 'aria-current="true"'), ['Play']);
   assert.deepEqual(currentLinks(renderBottomTabsV2('news'), 'aria-current'), ['News']);
-  assert.ok(renderBottomTabsV2('play', { absolute: true }).includes('href="/team.html"'));
+  assert.ok(renderBottomTabsV2('play', { absolute: true }).includes('href="/"'));
 });
 
 test('renderFooterV2: disclaimers and links', () => {
@@ -167,4 +167,27 @@ test('News and Tools sections: sub-tabs, absolute links for generated pages', ()
   assert.deepEqual(currentLinks(top, 'aria-current="true"'), ['Tools']);
   assert.ok(!BOTTOM_V2.includes('tools'));
   assert.ok(!renderBottomTabsV2('tools').includes('aria-current'));
+});
+
+test('Play is the front door (index.html, "/" absolute); News lives at news.html', () => {
+  const rel = renderTopbarV2('play', null);
+  const top = rel.slice(rel.indexOf('<nav class="v2-topnav"'), rel.indexOf('</nav>'));
+  assert.ok(top.includes('<a href="index.html" aria-current="true">Play</a>'));
+  assert.ok(top.includes('<a href="news.html">News</a>'));
+  assert.ok(rel.includes('<a class="v2-mark" href="index.html">'));
+  assert.ok(rel.includes('<a class="v2-btn v2-btn--primary v2-top__cta" href="team.html">My team</a>'));
+  assert.equal((rel.match(/aria-current="page"/g) || []).length, 0);
+  const news = renderTopbarV2('news', 'today');
+  const sub = news.slice(news.indexOf('<nav class="v2-subtabs"'));
+  assert.ok(sub.slice(0, sub.indexOf('</nav>')).includes('<a href="news.html" aria-current="page">Today</a>'));
+  assert.ok(news.includes('<a class="v2-menu__top" href="news.html" aria-current="true">News</a>'));
+  const abs = renderTopbarV2('news', 'people', { absolute: true });
+  assert.ok(abs.includes('<a class="v2-mark" href="/">'));
+  assert.ok(abs.includes('<a href="/">Play</a>') && abs.includes('href="/news.html"'));
+  assert.ok(!abs.includes('href="/index.html"'));
+  const tabs = renderBottomTabsV2('play');
+  assert.ok(tabs.includes('<a href="index.html" aria-current="true">Play</a>') && tabs.includes('<a href="news.html">News</a>'));
+  assert.ok(renderFooterV2().includes('<a class="v2-mark v2-mark--sm" href="index.html">'));
+  assert.ok(renderFooterV2({ absolute: true }).includes('<a class="v2-mark v2-mark--sm" href="/">'));
+  assert.ok(renderNav('today').includes('<a href="news.html" aria-current="page">Today</a>'));
 });

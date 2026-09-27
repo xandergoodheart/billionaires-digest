@@ -32,3 +32,22 @@ test('renderOg and renderCardOg return PNGs', async () => {
   assert.deepEqual(a.subarray(0, 4), PNG);
   assert.deepEqual(b.subarray(0, 4), PNG);
 });
+
+test('updateOgMeta edits the front page (index.html) tags in place; news.html uses the static latest.png', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { fileURLToPath } = await import('node:url');
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const html = await readFile(root + 'index.html', 'utf8');
+  const count = (h, re) => (h.match(re) || []).length;
+  for (const re of [/<meta property="og:image" content="[^"]*">/g, /<meta name="twitter:card" content="summary_large_image">/g, /<meta name="twitter:image" content="[^"]*">/g]) {
+    assert.equal(count(html, re), 1, String(re));
+  }
+  const out = updateOgMeta(html, 'https://billionairesdigest.com/og/2030-01-02.png');
+  assert.equal(count(out, /og\/2030-01-02\.png/g), 2);
+  // only the two image URLs changed: no tag was inserted
+  assert.equal(out.split('\n').length, html.split('\n').length);
+  assert.equal(out.replace(/og\/[^"]+\.png/g, 'X'), html.replace(/og\/[^"]+\.png/g, 'X'));
+  const news = await readFile(root + 'news.html', 'utf8');
+  assert.match(news, /<meta property="og:image" content="https:\/\/billionairesdigest\.com\/og\/latest\.png">/);
+  assert.match(news, /<meta name="twitter:image" content="https:\/\/billionairesdigest\.com\/og\/latest\.png">/);
+});

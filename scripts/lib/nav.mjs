@@ -4,7 +4,7 @@
 
 // key: used for aria-current. href: relative to the site root, no leading slash.
 export const NAV = [
-  { key: 'today', label: 'Today', href: 'index.html' },
+  { key: 'today', label: 'Today', href: 'news.html' },
   { key: 'people', label: 'People', href: 'people/' },
   { key: 'companies', label: 'Companies', href: 'companies/' },
   { key: 'sectors', label: 'Sectors', href: 'sectors.html' },
@@ -77,11 +77,12 @@ export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navm
 // markers (scripts/sync-nav.mjs). Behavior of the MENU sheet lives in assets/v2/chrome.js. v1 NAV above is unchanged.
 
 // Top-level sections (Phase 3). The leaderboard lives in Scores, so there is no separate Rankings section.
+// Play is the site's front door (index.html, "/" on generated pages); the daily edition lives at news.html.
 export const NAV_V2 = [
-  { key: 'play', label: 'Play', href: 'team.html' },
+  { key: 'play', label: 'Play', href: 'index.html' },
   { key: 'learn', label: 'Learn', href: 'academy.html' },
   { key: 'players', label: 'Players', href: 'players.html' },
-  { key: 'news', label: 'News', href: 'index.html' },
+  { key: 'news', label: 'News', href: 'news.html' },
   { key: 'tools', label: 'Tools', href: 'flows.html' }
 ];
 
@@ -109,7 +110,7 @@ export const SUBNAV_V2 = {
   news: {
     label: 'The Digest',
     items: [
-      { key: 'today', label: 'Today', href: 'index.html' },
+      { key: 'today', label: 'Today', href: 'news.html' },
       { key: 'people', label: 'People', href: 'people/' },
       { key: 'companies', label: 'Companies', href: 'companies/' },
       { key: 'sectors', label: 'Sectors', href: 'sectors.html' },
@@ -143,7 +144,7 @@ export function renderTopbarV2(topKey, subKey, { absolute = false } = {}) {
   const sec = cur2 => cur2 ? ' aria-current="true"' : '';
   const sub = topKey && SUBNAV_V2[topKey] ? SUBNAV_V2[topKey] : null;
   const top = NAV_V2.map(n => `      <a href="${u(n.href)}"${sec(n.key === topKey)}>${escHtml(n.label)}</a>`).join('\n');
-  const mark = `<a class="v2-mark" href="${u('team.html')}"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>`;
+  const mark = `<a class="v2-mark" href="${u('index.html')}"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>`;
   let out = `<a class="v2-skip" href="#main">Skip to content</a>
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
@@ -203,7 +204,7 @@ export function renderFooterV2({ absolute = false } = {}) {
   const u = h => escHtml(url(h, absolute));
   return `<footer class="v2-foot">
   <div class="v2-wrap v2-foot__in">
-    <a class="v2-mark v2-mark--sm" href="${u('team.html')}"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <a class="v2-mark v2-mark--sm" href="${u('index.html')}"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
     <div class="v2-foot__notes">
       <p>For information only · not financial advice</p>
       <p>Play money only: no purchases, cash-out or prizes.</p>

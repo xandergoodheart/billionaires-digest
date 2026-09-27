@@ -16,7 +16,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 // page file -> active nav key
 const ACTIVE = {
-  'index.html': 'today', 'sectors.html': 'sectors', 'calendar.html': 'calendar', 'fantasy.html': 'fantasy', 'archive.html': 'archive', 'about.html': 'about',
+  'news.html': 'today', 'sectors.html': 'sectors', 'calendar.html': 'calendar', 'fantasy.html': 'fantasy', 'archive.html': 'archive', 'about.html': 'about',
   'flows.html': 'flows', 'quarterly.html': 'quarterly', 'copycat.html': 'copycat', 'network.html': 'network',
   'compare.html': 'compare', 'property.html': 'property',
   'leaderboard.html': 'leaderboard', 'leagues.html': 'leagues', 'markets.html': 'markets', 'book.html': 'book', 'play-terms.html': 'playterms'
@@ -40,7 +40,8 @@ const V2_ACTIVE = {
   'life-play.html': ['learn', 'hub'],
   'players.html': ['players', null],
   'player.html': ['players', null],
-  'index.html': ['news', 'today'],
+  'index.html': ['play', null],
+  'news.html': ['news', 'today'],
   'sectors.html': ['news', 'sectors'],
   'calendar.html': ['news', 'calendar'],
   'archive.html': ['news', 'archive'],
