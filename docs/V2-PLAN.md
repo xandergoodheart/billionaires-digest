@@ -66,3 +66,11 @@ The ENTIRE site moves to the gamified casino look (v1 served its purpose). Defau
 owner may swap in a variation (A2–A5) later. Order: Billionaire Life + Next Moves (in progress) → restyle all v2 game pages
 → News/home, People/Players, Companies, Calendar, Tools, Archive, generated pages (build-pages layout) in the same world.
 Facts, sourcing and "not financial advice" rules unchanged. Real money only via a licensed route (see CLAUDE.md).
+
+## Growth roadmap (from docs/BUSINESS-LESSONS.md, 2026-09-27)
+Top 5, in order: (1) free morning email built from the daily edition; (2) "Guess the Move" daily mini-game from real
+filings, shareable grid, streak with 2 freezes; (3) follow-a-billionaire alerts (reason to make an account);
+(4) referral rewards (cosmetic / play-coins only); (5) weekly recap share cards + play-money odds inside stories.
+Later: social leagues + chat, Academy XP leagues, embeddable widgets, sponsor slots, Plus tier (never buys game advantages).
+Guardrails: no Robinhood-style nudges near real stocks; 18+ gate on The Book / Next Moves; play-coins never worth money;
+real money only via a separate licensed partner.
