@@ -60,3 +60,9 @@ Fantasy section is done first. Game pages on the v2 branch are converted IN PLAC
   `assets/v2/game.css` (v2 versions of the shared g-/gp-/bk- classes; v1 game CSS not loaded).
 - Rules: `play-terms.html` in v2 chrome + "How it works" (moved from v1 fantasy.html How tab), wording unchanged.
 - Draft room gains v1's team code (copy / paste a team between browsers).
+
+## Phase 3 — whole site in the casino/game style (owner decision 2026-09-27)
+The ENTIRE site moves to the gamified casino look (v1 served its purpose). Default style: casino arcade (mockups/team-arcade),
+owner may swap in a variation (A2–A5) later. Order: Billionaire Life + Next Moves (in progress) → restyle all v2 game pages
+→ News/home, People/Players, Companies, Calendar, Tools, Archive, generated pages (build-pages layout) in the same world.
+Facts, sourcing and "not financial advice" rules unchanged. Real money only via a licensed route (see CLAUDE.md).
