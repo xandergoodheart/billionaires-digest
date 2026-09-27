@@ -96,13 +96,15 @@ export const SUBNAV_V2 = {
       { key: 'scores', label: 'Scores', href: 'scores.html' },
       { key: 'leagues', label: 'Leagues', href: 'leagues.html' },
       { key: 'book', label: 'The Book', href: 'book.html' },
+      { key: 'moves', label: 'Next Moves', href: 'moves.html' },
       { key: 'rules', label: 'Rules', href: 'play-terms.html' }
     ]
   },
   life: {
     label: 'Billionaire Life',
     items: [
-      { key: 'hub', label: 'All billionaires', href: 'life.html' }
+      { key: 'hub', label: 'All billionaires', href: 'life.html' },
+      { key: 'academy', label: 'Academy', href: 'academy.html' }
     ]
   }
 };

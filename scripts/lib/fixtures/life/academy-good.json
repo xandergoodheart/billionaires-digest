@@ -1,0 +1,21 @@
+{
+  "note": "Fixture for scripts/lib/life.test.mjs: Academy fields overlaid on a copy of a real life file. Not real data.",
+  "school": {
+    "name": "Fixture school",
+    "tagline": "Fixture tagline.",
+    "principles": [
+      { "id": "alpha", "name": "Alpha principle", "summary": "Fixture summary A.", "sources": [ { "title": "Fixture A", "url": "https://example.com/a", "publisher": "Example", "date": "" } ] },
+      { "id": "beta", "name": "Beta principle", "summary": "Fixture summary B.", "sources": [ { "title": "Fixture B", "url": "https://example.com/b", "publisher": "Example", "date": "2020" } ] },
+      { "id": "gamma", "name": "Gamma principle", "summary": "Fixture summary C.", "sources": [ { "title": "Fixture C", "url": "https://example.com/c", "publisher": "Example" } ] }
+    ]
+  },
+  "glossary": [
+    { "id": "term-one", "term": "Term one", "definition": "Fixture definition one.", "source": { "title": "Fixture T1", "url": "https://example.com/t1", "publisher": "Example", "date": "" } },
+    { "id": "term-two", "term": "Another term", "definition": "Fixture definition two.", "source": { "title": "Fixture T2", "url": "https://example.com/t2", "publisher": "Example", "date": "" } }
+  ],
+  "lessons": {
+    "found": { "principle": "alpha", "takeaway": "Fixture takeaway 1.", "watchOut": "Fixture watch-out 1.", "terms": ["term-one"] },
+    "cuda": { "principle": "beta", "takeaway": "Fixture takeaway 2.", "watchOut": "Fixture watch-out 2.", "terms": [] },
+    "dgx": { "principle": "gamma", "takeaway": "Fixture takeaway 3.", "watchOut": "Fixture watch-out 3." }
+  }
+}

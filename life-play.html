@@ -39,6 +39,7 @@
   <div class="v2-wrap v2-subtabs__in">
     <ul class="v2-subtabs__list">
       <li><a href="life.html" aria-current="page">All billionaires</a></li>
+      <li><a href="academy.html">Academy</a></li>
     </ul>
     <span class="v2-subtabs__label">Billionaire Life</span>
   </div>
@@ -57,11 +58,13 @@
           <li><a href="scores.html">Scores</a></li>
           <li><a href="leagues.html">Leagues</a></li>
           <li><a href="book.html">The Book</a></li>
+          <li><a href="moves.html">Next Moves</a></li>
           <li><a href="play-terms.html">Rules</a></li>
         </ul></li>
       <li><a class="v2-menu__top" href="life.html" aria-current="true">Life</a>
         <ul>
           <li><a href="life.html" aria-current="page">All billionaires</a></li>
+          <li><a href="academy.html">Academy</a></li>
         </ul></li>
       <li><a class="v2-menu__top" href="players.html">Players</a></li>
       <li><a class="v2-menu__top" href="scores.html#leaderboard">Rankings</a></li>
@@ -149,6 +152,17 @@
           <p id="actual"></p>
           <h3 class="lf-h3">How it turned out</h3>
           <p id="outcome"></p>
+          <div class="lf-lesson" id="lf-lesson" hidden>
+            <h3 class="lf-lesson__k">The lesson</h3>
+            <p class="lf-lesson__pr" id="lf-lesson-pr"></p>
+            <p class="lf-lesson__take" id="lf-lesson-take"></p>
+            <p class="lf-lesson__watch" id="lf-lesson-watch"></p>
+            <div class="lf-lesson__srcs" id="lf-lesson-srcs" hidden>
+              <p class="lf-lesson__srck">Lesson sources</p>
+              <ul class="lf-src lf-lesson__src" id="lf-lesson-src"></ul>
+            </div>
+            <div class="lf-terms" id="lf-lesson-terms" hidden></div>
+          </div>
           <h3 class="lf-h3 lf-h3--sm">Sources</h3>
           <ul class="lf-src" id="src"></ul>
           <button type="button" class="lf-btn lf-btn--gold lf-btn--big" id="next">Next decision</button>
@@ -180,6 +194,18 @@
           <p class="lf-back lf-back--end"><a class="lf-link" href="life.html">All billionaires</a></p>
         </div>
       </div>
+      <section class="lf-school" id="lf-school" aria-labelledby="lf-schoolh" hidden>
+        <p class="lf-kicker"><span data-academy-name>Academy</span></p>
+        <h3 class="lf-h2 lf-school__h" id="lf-schoolh">School</h3>
+        <p class="lf-school__tag" id="lf-school-tag"></p>
+        <div class="lf-diploma" id="lf-diploma" hidden></div>
+        <p class="lf-unlock" id="lf-unlock"></p>
+        <h4 class="lf-h3" id="lf-school-prh">Principles you met</h4>
+        <ul class="lf-princ" id="lf-school-pr"></ul>
+        <div class="lf-quiz" id="lf-quiz"></div>
+        <p class="lf-school__note">Education, not investment advice. Principles are summarized from their own words and reputable sources.</p>
+        <p class="lf-back lf-back--end"><a class="lf-link" href="academy.html"><span>All schools in the <span data-academy-name>Academy</span></span></a></p>
+      </section>
       <h3 class="lf-h2">Your recap</h3>
       <ol class="lf-recap" id="recap"></ol>
     </section>

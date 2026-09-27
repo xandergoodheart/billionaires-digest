@@ -7,7 +7,7 @@ const currentLinks = (html, attr) => [...html.matchAll(new RegExp(`<a [^>]*${att
 
 test('NAV_V2: six sections, fantasy sub-tabs', () => {
   assert.deepEqual(NAV_V2.map((n) => n.key), ['fantasy', 'life', 'players', 'rankings', 'calendar', 'news']);
-  assert.deepEqual(SUBNAV_V2.fantasy.items.map((i) => i.label), ['My team', 'Draft room', 'Scores', 'Leagues', 'The Book', 'Rules']);
+  assert.deepEqual(SUBNAV_V2.fantasy.items.map((i) => i.label), ['My team', 'Draft room', 'Scores', 'Leagues', 'The Book', 'Next Moves', 'Rules']);
   assert.equal(SUBNAV_V2.fantasy.label, 'Billionaire Fantasy League');
   assert.deepEqual(BOTTOM_V2, ['fantasy', 'players', 'rankings', 'news']);
 });
@@ -87,7 +87,7 @@ test('v1 renderNav is unchanged by the v2 additions', () => {
 test('NAV_V2 links: Scores sub-tab and Rankings point at scores.html', () => {
   assert.equal(SUBNAV_V2.fantasy.items.find((i) => i.key === 'scores').href, 'scores.html');
   assert.equal(NAV_V2.find((n) => n.key === 'rankings').href, 'scores.html#leaderboard');
-  assert.deepEqual(SUBNAV_V2.fantasy.items.map((i) => i.key), ['team', 'draft', 'scores', 'leagues', 'book', 'rules']);
+  assert.deepEqual(SUBNAV_V2.fantasy.items.map((i) => i.key), ['team', 'draft', 'scores', 'leagues', 'book', 'moves', 'rules']);
 });
 
 test('v1 Fantasy menu links into the v2 section', () => {
@@ -115,11 +115,14 @@ test('Players section: v2 players.html in the top bar, phone menu and bottom tab
   assert.ok(renderBottomTabsV2('fantasy', { absolute: true }).includes('href="/players.html"'));
 });
 
-test('Life section: top bar, one sub-tab, phone menu; not in the bottom tabs', () => {
+test('Life section: top bar, two sub-tabs (hub + Academy), phone menu; not in the bottom tabs', () => {
   assert.equal(NAV_V2.find((n) => n.key === 'life').href, 'life.html');
   assert.equal(NAV_V2.find((n) => n.key === 'life').label, 'Life');
   assert.equal(SUBNAV_V2.life.label, 'Billionaire Life');
-  assert.deepEqual(SUBNAV_V2.life.items, [{ key: 'hub', label: 'All billionaires', href: 'life.html' }]);
+  assert.deepEqual(SUBNAV_V2.life.items, [
+    { key: 'hub', label: 'All billionaires', href: 'life.html' },
+    { key: 'academy', label: 'Academy', href: 'academy.html' }
+  ]);
   const html = renderTopbarV2('life', 'hub');
   const top = html.slice(html.indexOf('<nav class="v2-topnav"'), html.indexOf('</nav>'));
   assert.deepEqual(currentLinks(top, 'aria-current="true"'), ['Life']);
@@ -135,4 +138,18 @@ test('Life section: top bar, one sub-tab, phone menu; not in the bottom tabs', (
   assert.ok(renderTopbarV2('life', 'hub', { absolute: true }).includes('href="/life.html"'));
   assert.ok(!BOTTOM_V2.includes('life'));
   assert.ok(!renderBottomTabsV2('life').includes('aria-current'));
+});
+
+test('Academy page: Life section active, Academy sub-tab is the current page', () => {
+  const html = renderTopbarV2('life', 'academy');
+  const top = html.slice(html.indexOf('<nav class="v2-topnav"'), html.indexOf('</nav>'));
+  assert.deepEqual(currentLinks(top, 'aria-current="true"'), ['Life']);
+  const sub = html.slice(html.indexOf('<nav class="v2-subtabs"'));
+  const subNav = sub.slice(0, sub.indexOf('</nav>'));
+  assert.ok(subNav.includes('<a href="academy.html" aria-current="page">Academy</a>'));
+  assert.deepEqual(currentLinks(subNav, 'aria-current="page"'), ['Academy']);
+  const menu = html.slice(html.indexOf('id="v2-menu"'));
+  assert.deepEqual(currentLinks(menu, 'aria-current="page"'), ['Academy']);
+  assert.ok(renderTopbarV2('fantasy', 'team').includes('<li><a href="academy.html">Academy</a></li>'));
+  assert.ok(renderTopbarV2('life', 'academy', { absolute: true }).includes('href="/academy.html"'));
 });

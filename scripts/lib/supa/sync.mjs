@@ -13,12 +13,17 @@
 //      voided once they are PRICE_GIVE_UP_DAYS late)     -> settle_book_events (only the events passed)
 //      once Friday's data is in, settle from our files    -> settle_book (results from lib/book/settle.mjs); it voids every
 //      unsettled selection of the week, so it waits until no price market of the week is still waiting on a close
+//   7. Next Moves (OFF by default; GAME_MOVES_MARKETS=1 turns it on, needs 0004_moves.sql)
+//      open markets from data/moves/markets.json         -> create_market + set_market_start_odds
+//      resolve them from data/moves/resolved.json        -> resolve_market (see moves-sync.mjs)
+//      Step 5 leaves Next Moves markets (slugs starting mv-) alone either way; v1 insider_buy markets resolve as before.
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { makeRest } from './rest.mjs';
 import { nyDate, nyWeekday, addDays } from './time.mjs';
 import { generateMarkets, resolveMarket, weekTotals, isPBuy, GIVE_UP_DAYS } from './markets.mjs';
 import { settleBook, isPriceEvent, priceEventState } from '../book/settle.mjs';
+import { syncMoves, movesEnabled, isMovesMarket } from './moves-sync.mjs';
 
 // The Book replaced the LMSR markets in the UI: no new markets unless this is turned back on.
 export const LMSR_NEW_MARKETS = false;
@@ -140,6 +145,7 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
   const due = await api.select('markets', `select=slug,kind,params,closes_at,resolves_by,status&status=in.(open,closed)&closes_at=lte.${encodeURIComponent(now.toISOString())}&order=closes_at.asc`);
   const weeksById = Object.fromEntries(data.weeks.map(w => [w.week, w]));
   for (const m of due || []) {
+    if (isMovesMarket(m)) continue;   // Next Moves (slug mv-...) resolve from data/moves/resolved.json (step 7)
     const r = resolveMarket(m, { weeks: weeksById, days: data.days, filingsDoc: data.filingsDoc, now });
     if (!r) { log(`waiting on data: ${m.slug}`); continue; }
     const res = await api.rpc('resolve_market', { p_slug: m.slug, p_outcome: r.outcome, p_note: r.note, p_source_url: r.source_url });
@@ -148,6 +154,9 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
 
   // 6. The Book
   await syncBook({ api, data, now, today, live, summary, log });
+
+  // 7. Next Moves (off unless GAME_MOVES_MARKETS=1)
+  if (movesEnabled(env)) summary.moves = await syncMoves({ api, root, now, log });
 
   log(`Game sync: ${summary.weeks} week(s), ${summary.points} point row(s), settled [${summary.settled.join(', ')}], ` +
     `closed ${summary.closed}, opened ${summary.created.length}, resolved ${summary.resolved.length}; ` +

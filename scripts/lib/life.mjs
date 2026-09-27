@@ -38,6 +38,20 @@ function checkSource(s, where, errors) {
   if (s.date != null && typeof s.date !== 'string') errors.push(`${where}.date must be a string`);
 }
 
+// Optional education fields ("Academy") live beside the game data and never make a person unplayable:
+// school, glossary and decisions[].lesson are checked by validateEducation() instead of validateLife().
+const EDU_TOP = new Set(['school', 'glossary']);
+function withoutEducation(data) {
+  if (!isObj(data)) return data;
+  const out = {};
+  for (const k of Object.keys(data)) if (!EDU_TOP.has(k)) out[k] = data[k];
+  if (Array.isArray(data.decisions)) out.decisions = data.decisions.map((d) => {
+    if (!isObj(d) || !('lesson' in d)) return d;
+    const c = { ...d }; delete c.lesson; return c;
+  });
+  return out;
+}
+
 // Validate one parsed life file. slug: expected slug from the filename. peopleSlugs: Set of slugs in data/people/index.json.
 // Returns { ok, errors: [string] }.
 export function validateLife(data, { slug, peopleSlugs } = {}) {
@@ -99,8 +113,126 @@ export function validateLife(data, { slug, peopleSlugs } = {}) {
     });
   }
 
-  errors.push(...emptyStrings(data, '', []));
+  errors.push(...emptyStrings(withoutEducation(data), '', []));
   return { ok: errors.length === 0, errors: [...new Set(errors)] };
+}
+
+function sourceErrors(s, where) { const e = []; checkSource(s, where, e); return e; }
+
+// Validate the optional education fields of a life file that already passed validateLife().
+// Invalid pieces are dropped (with a warning), never fatal:
+//   - a glossary entry with a problem is dropped on its own;
+//   - a school with any problem is dropped whole (and then every lesson, since lessons point at its principles);
+//   - a lesson with a problem (unknown principle, unknown term, missing text) is dropped on its own;
+//   - optional lesson.sources entries that are not valid sources (https url, title, publisher) are dropped one by one.
+// Returns { school: object|null, glossary: [entry], lessons: { decisionId: lesson }, warnings: [string] }.
+export function validateEducation(data) {
+  const warnings = [];
+  const out = { school: null, glossary: [], lessons: {}, warnings };
+  if (!isObj(data)) return out;
+
+  // glossary
+  const gloss = new Map();
+  if (data.glossary != null) {
+    if (!Array.isArray(data.glossary)) warnings.push('glossary must be a list (dropped)');
+    else data.glossary.forEach((g, i) => {
+      const w = isObj(g) && nonEmpty(g.id) ? `glossary[${i}] (${g.id})` : `glossary[${i}]`;
+      const e = [];
+      if (!isObj(g)) e.push('not an object');
+      else {
+        if (!nonEmpty(g.id) || !SLUG_RE.test(g.id)) e.push('id must be kebab-case');
+        else if (gloss.has(g.id)) e.push('duplicate id');
+        if (!nonEmpty(g.term)) e.push('term missing');
+        if (!nonEmpty(g.definition)) e.push('definition missing');
+        e.push(...sourceErrors(g.source, 'source'));
+      }
+      if (e.length) { warnings.push(`${w} dropped: ${e.join('; ')}`); return; }
+      const entry = { id: g.id, term: g.term, definition: g.definition, source: g.source };
+      gloss.set(g.id, entry);
+      out.glossary.push(entry);
+    });
+  }
+
+  // school
+  if (data.school != null) {
+    const s = data.school, e = [];
+    if (!isObj(s)) e.push('not an object');
+    else {
+      if (!nonEmpty(s.name)) e.push('name missing');
+      if (!nonEmpty(s.tagline)) e.push('tagline missing');
+      if (!Array.isArray(s.principles) || s.principles.length < 3 || s.principles.length > 4) e.push('needs 3-4 principles');
+      if (Array.isArray(s.principles)) {
+        const ids = new Set();
+        s.principles.forEach((p, i) => {
+          const w = isObj(p) && nonEmpty(p.id) ? `principles[${i}] (${p.id})` : `principles[${i}]`;
+          if (!isObj(p)) { e.push(`${w}: not an object`); return; }
+          if (!nonEmpty(p.id) || !SLUG_RE.test(p.id)) e.push(`${w}.id must be kebab-case`);
+          else if (ids.has(p.id)) e.push(`${w}: duplicate id`);
+          else ids.add(p.id);
+          if (!nonEmpty(p.name)) e.push(`${w}.name missing`);
+          if (!nonEmpty(p.summary)) e.push(`${w}.summary missing`);
+          if (!Array.isArray(p.sources) || !p.sources.length) e.push(`${w}: needs at least one source`);
+          else p.sources.forEach((src, j) => e.push(...sourceErrors(src, `${w}.sources[${j}]`)));
+        });
+      }
+    }
+    if (e.length) warnings.push(`school dropped: ${e.join('; ')}`);
+    else out.school = {
+      name: s.name, tagline: s.tagline,
+      principles: s.principles.map((p) => ({ id: p.id, name: p.name, summary: p.summary, sources: p.sources }))
+    };
+  }
+
+  // lessons
+  const pids = new Set(out.school ? out.school.principles.map((p) => p.id) : []);
+  (Array.isArray(data.decisions) ? data.decisions : []).forEach((d, i) => {
+    if (!isObj(d) || d.lesson == null) return;
+    const l = d.lesson, w = `decisions[${i}]${nonEmpty(d.id) ? ` (${d.id})` : ''}.lesson`, e = [];
+    if (!isObj(l)) e.push('not an object');
+    else {
+      if (!out.school) e.push('no valid school');
+      else if (!pids.has(l.principle)) e.push(`principle "${l.principle}" is not a principle id of the school`);
+      if (!nonEmpty(l.takeaway)) e.push('takeaway missing');
+      if (!nonEmpty(l.watchOut)) e.push('watchOut missing');
+      if (l.terms != null) {
+        if (!Array.isArray(l.terms) || l.terms.length > 3) e.push('terms must be a list of 0-3 glossary ids');
+        else l.terms.forEach((t) => { if (!gloss.has(t)) e.push(`term "${t}" is not in the glossary`); });
+      }
+    }
+    if (e.length) { warnings.push(`${w} dropped: ${e.join('; ')}`); return; }
+    // optional lesson.sources: bad entries are dropped one by one, the lesson stays
+    let sources = [];
+    if (l.sources != null) {
+      if (!Array.isArray(l.sources)) warnings.push(`${w}.sources must be a list (dropped)`);
+      else l.sources.forEach((src, j) => {
+        const se = sourceErrors(src, `${w}.sources[${j}]`);
+        if (se.length) warnings.push(`${w}.sources[${j}] dropped: ${se.join('; ')}`);
+        else sources.push(src);
+      });
+    }
+    const lesson = { principle: l.principle, takeaway: l.takeaway, watchOut: l.watchOut, terms: Array.isArray(l.terms) ? [...new Set(l.terms)] : [] };
+    if (sources.length) lesson.sources = sources;
+    out.lessons[d.id] = lesson;
+  });
+  return out;
+}
+
+// Merge per-person glossaries into one list for data/life/glossary.json.
+// people: [{ slug, name, edu: validateEducation() result }] in roster order. Same id -> first definition wins.
+// usedBy: people whose (valid) lessons use the term; definedBy: people whose glossary lists it.
+export function mergeGlossary(people) {
+  const byId = new Map();
+  for (const p of people) {
+    const used = new Set();
+    for (const l of Object.values(p.edu.lessons)) for (const t of l.terms) used.add(t);
+    for (const g of p.edu.glossary) {
+      if (!byId.has(g.id)) byId.set(g.id, { ...g, usedBy: [], definedBy: [] });
+      const m = byId.get(g.id);
+      if (!m.definedBy.some((x) => x.slug === p.slug)) m.definedBy.push({ slug: p.slug, name: p.name });
+      if (used.has(g.id) && !m.usedBy.some((x) => x.slug === p.slug)) m.usedBy.push({ slug: p.slug, name: p.name });
+    }
+  }
+  return [...byId.values()].sort((a, b) => a.term.localeCompare(b.term, 'en', { sensitivity: 'base' }) || a.id.localeCompare(b.id));
 }
 
 // One roster row for data/life/index.json. peopleBySlug: Map slug -> data/people/index.json entry.
@@ -121,31 +253,57 @@ export function rosterEntry(data, peopleBySlug) {
   };
 }
 
+// roster row + school block (only when the person has a valid school)
+function rosterWithSchool(data, peopleBySlug, edu) {
+  const r = rosterEntry(data, peopleBySlug);
+  if (edu && edu.school) {
+    r.school = edu.school;
+    r.lessons = Object.keys(edu.lessons).length;
+  }
+  return r;
+}
+
 // files: [{ file: 'jensen-huang.json', data?: parsed, error?: 'parse error text' }]
 // people: data/people/index.json object ({ people: [...] }).
-// Returns { index, skipped: [{ file, errors }] }. Roster order follows the people index rank, then name.
+// Returns { index, skipped: [{ file, errors }], warnings: [{ file, warnings }], glossary }.
+// Roster order follows the people index rank, then name. Invalid optional Academy fields only produce warnings.
 export function buildLifeIndex(files, people) {
   const list = Array.isArray(people && people.people) ? people.people : [];
   const bySlug = new Map(list.map((x) => [x.slug, x]));
   const rank = new Map(list.map((x, i) => [x.slug, i]));
   const roster = [];
   const skipped = [];
+  const warnings = [];
+  const edus = new Map();
   for (const f of files) {
     const slug = String(f.file).replace(/\.json$/, '');
     if (f.error) { skipped.push({ file: f.file, errors: [`could not read JSON: ${f.error}`] }); continue; }
     const v = validateLife(f.data, { slug, peopleSlugs: new Set(bySlug.keys()) });
     if (!v.ok) { skipped.push({ file: f.file, errors: v.errors }); continue; }
-    roster.push(rosterEntry(f.data, bySlug));
+    const edu = validateEducation(f.data);
+    if (edu.warnings.length) warnings.push({ file: f.file, warnings: edu.warnings });
+    edus.set(f.data.person.slug, edu);
+    roster.push(rosterWithSchool(f.data, bySlug, edu));
   }
   roster.sort((a, b) => (rank.get(a.slug) ?? 1e9) - (rank.get(b.slug) ?? 1e9) || a.name.localeCompare(b.name));
   const checked = roster.map((r) => r.checked).filter(Boolean).sort();
+  const terms = mergeGlossary(roster.map((r) => ({ slug: r.slug, name: r.name, edu: edus.get(r.slug) })));
+  const updated = checked.length ? checked[checked.length - 1] : null;
   return {
     index: {
       note: 'Billionaire Life roster, built by scripts/build-life.mjs from data/life/<slug>.json. Only files that pass validation are listed.',
-      updated: checked.length ? checked[checked.length - 1] : null,
+      updated,
       count: roster.length,
+      schools: roster.filter((r) => r.school).length,
       people: roster
     },
-    skipped
+    skipped,
+    warnings,
+    glossary: {
+      note: 'Billionaires Digest Academy glossary, built by scripts/build-life.mjs from the glossary in each data/life/<slug>.json. Same id: first definition kept (roster order).',
+      updated,
+      count: terms.length,
+      terms
+    }
   };
 }
