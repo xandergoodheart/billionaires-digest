@@ -112,11 +112,24 @@
       <div class="dr-head__side">
         <span class="v2-pill" id="weekpill">Loading…</span>
         <a class="dr-head__rules" href="play-terms.html">Rules</a>
+      </div>
+      <div class="dr-tools" id="tools" role="group" aria-label="Draft tools" hidden>
+        <button type="button" class="v2-btn v2-btn--primary dr-tool" id="autofill" aria-describedby="autofill-hint">Auto-fill best team</button>
+        <span class="v2-sr" id="autofill-hint">Fills your open spots with the players who have the highest recent average points per day that fit under the cap. Keeps your current picks. Does not save.</span>
         <div class="lk-entry" hidden>
           <button type="button" class="v2-btn v2-btn--secondary lk-entry__btn" data-lucky-open aria-haspopup="dialog" aria-controls="lucky" aria-describedby="lk-hint">Lucky five</button>
           <span class="lk-entry__hint" id="lk-hint">Spin a random team under the cap</span>
         </div>
+        <button type="button" class="v2-btn v2-btn--ghost dr-tool" id="clearbtn">Clear</button>
       </div>
+      <div class="dr-confirm" id="clearconfirm" role="group" aria-labelledby="clearconfirm-t" hidden>
+        <p class="dr-confirm__t" id="clearconfirm-t"></p>
+        <div class="dr-confirm__row">
+          <button type="button" class="v2-btn v2-btn--primary v2-btn--sm" id="clearyes">Yes, clear picks</button>
+          <button type="button" class="v2-btn v2-btn--ghost v2-btn--sm" id="clearno">Cancel</button>
+        </div>
+      </div>
+      <p class="dr-toolmsg" id="toolmsg" hidden></p>
     </header>
 
     <div id="notices"></div>
@@ -132,19 +145,18 @@
     <div class="v2-grid dr-grid">
       <section class="v2-card span-8 dr-pool" aria-labelledby="poolh">
         <h2 class="v2-sr" id="poolh">Player pool</h2>
+        <div class="dr-tabs" id="sectabs" role="tablist" aria-label="Sectors"></div>
         <div class="dr-filters">
           <div class="dr-filter dr-filter--q">
             <label class="v2-sr" for="q">Search players or companies</label>
             <input class="v2-input" id="q" type="search" placeholder="Search players or companies" autocomplete="off" spellcheck="false">
           </div>
           <div class="dr-filter">
-            <label class="v2-sr" for="sector">Sector</label>
-            <select class="v2-select" id="sector"><option value="">All sectors</option></select>
-          </div>
-          <div class="dr-filter">
             <label class="v2-sr" for="sort">Sort players</label>
             <select class="v2-select" id="sort">
               <option value="pts">Sort: week points</option>
+              <option value="value">Sort: best value (points per cap)</option>
+              <option value="avg">Sort: recent average</option>
               <option value="capdesc">Sort: cap, high first</option>
               <option value="capasc">Sort: cap, low first</option>
               <option value="rank">Sort: Forbes rank</option>
@@ -152,28 +164,35 @@
             </select>
           </div>
         </div>
+        <div id="poolpanel" role="tabpanel" aria-labelledby="sectab-all">
         <table class="v2-table dr-table">
           <caption class="v2-sr" id="poolcap">Players you can draft</caption>
           <thead>
             <tr>
+              <th scope="col" class="dr-th-q"><span class="v2-sr">Queue</span></th>
               <th scope="col">Player</th>
+              <th scope="col" class="dr-th-form" id="formhead">Form</th>
               <th scope="col" class="n" id="ptshead">Week pts</th>
+              <th scope="col" class="n" id="avghead">Avg</th>
               <th scope="col" class="n">Cap</th>
               <th scope="col" class="dr-th-status">Status</th>
             </tr>
           </thead>
           <tbody id="pool">
-            <tr><td colspan="4"><p class="v2-loading">Loading the player pool…</p></td></tr>
+            <tr><td colspan="7"><p class="v2-loading">Loading the player pool…</p></td></tr>
           </tbody>
         </table>
+        </div>
         <p class="dr-foot" id="poolfoot"></p>
+        <p class="dr-foot dr-foot--value" id="valuefoot"></p>
         <details class="dr-nd" id="notdraftable" hidden>
           <summary id="ndsum"></summary>
           <ul id="ndlist"></ul>
         </details>
       </section>
 
-      <aside class="span-4 dr-side" aria-labelledby="fiveh">
+      <aside class="span-4 dr-side" aria-label="Your queue and starting five">
+        <section class="dr-queue" id="queuebox" aria-labelledby="queueh-side"></section>
         <div class="dr-panel" id="sidepanel"></div>
       </aside>
     </div>
@@ -194,11 +213,31 @@
       <span class="dr-sheet__title" id="sheeth">Your team</span>
       <button type="button" class="dr-sheet__close" id="sheetclose">Close</button>
     </div>
-    <div class="lk-entry lk-entry--sheet" hidden>
-      <button type="button" class="v2-btn lk-entry__btn" data-lucky-open data-lucky-sheet aria-haspopup="dialog" aria-controls="lucky" aria-describedby="lk-hint-sheet">Lucky five</button>
-      <span class="lk-entry__hint" id="lk-hint-sheet">Spin a random team under the cap</span>
+    <div class="dr-sheet__tabs" role="tablist" aria-label="Your team and queue">
+      <button type="button" class="dr-sheet__tab" role="tab" id="stab-team" aria-controls="spanel-team" aria-selected="true" data-stab="team">Team</button>
+      <button type="button" class="dr-sheet__tab" role="tab" id="stab-queue" aria-controls="spanel-queue" aria-selected="false" tabindex="-1" data-stab="queue">Queue <span class="num" id="stabq"></span></button>
     </div>
-    <div class="dr-panel" id="sheetpanel"></div>
+    <div id="spanel-team" role="tabpanel" aria-labelledby="stab-team">
+      <div class="lk-entry lk-entry--sheet" hidden>
+        <button type="button" class="v2-btn lk-entry__btn" data-lucky-open data-lucky-sheet aria-haspopup="dialog" aria-controls="lucky" aria-describedby="lk-hint-sheet">Lucky five</button>
+        <span class="lk-entry__hint" id="lk-hint-sheet">Spin a random team under the cap</span>
+      </div>
+      <div class="dr-panel" id="sheetpanel"></div>
+    </div>
+    <div id="spanel-queue" role="tabpanel" aria-labelledby="stab-queue" hidden>
+      <section class="dr-queue dr-queue--sheet" id="sheetqueue" aria-labelledby="queueh-sheet"></section>
+    </div>
+  </div>
+</div>
+
+<!-- player card: slide-in panel (desktop right side, phone bottom sheet) -->
+<div class="dr-card" id="pcard" role="dialog" aria-modal="true" aria-labelledby="pcard-name" hidden>
+  <div class="dr-card__panel" tabindex="-1">
+    <div class="dr-card__head">
+      <span class="dr-card__kick">Player card</span>
+      <button type="button" class="dr-card__close" id="pcardclose">Close</button>
+    </div>
+    <div class="dr-card__body" id="pcardbody"></div>
   </div>
 </div>
 
@@ -237,6 +276,8 @@
 <script src="assets/account.js"></script>
 <script src="assets/fantasy-core.js"></script>
 <script src="assets/v2/fantasy-store.js"></script>
+<script src="assets/v2/players-core.js"></script>
+<script src="assets/v2/draft-core.js"></script>
 <script src="assets/v2/chrome.js"></script>
 <script src="assets/v2/draft.js"></script>
 <script src="assets/v2/portraits.js"></script>

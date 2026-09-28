@@ -1,41 +1,49 @@
-/* Billionaires Digest v2: Draft room (draft.html). ES5, UI only.
+/* Billionaires Digest v3: Draft room (draft.html). ES5, UI only.
    All roster state and rules come from BDFantasyStore (assets/v2/fantasy-store.js), which keeps v1's storage,
-   working draft, save and late-entry behavior. Real data only. Game only: play money, no prizes. */
+   working draft, save and late-entry behavior. Pure helpers (value score, auto-fill, recent form, queue) live in
+   BDDraftCore (assets/v2/draft-core.js, tested in node). ESPN-style extras: sector tabs, player card drawer,
+   best value, a queue (watchlist, this browser only), cap meter, auto-fill and a recent-form sparkline.
+   Real data only: numbers come from the fantasy week files, data/people/index.json and digest.json.
+   Game only: play money, no prizes. */
 (function(){
-  var F = window.BDFantasyStore, C = window.BDFantasyCore;
+  var F = window.BDFantasyStore, C = window.BDFantasyCore, P = window.BDPlayersCore, DC = window.BDDraftCore;
   var el = BD.el, arr = BD.arr, fmt = F.fmt;
   var MINUS = '−';
   var WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five'];
   var FKEY = 'bd-v2-draft-filters';
+  var QKEY = 'bd-draft-queue-v1';
+  var NS = 'http://www.w3.org/2000/svg';
   var $ = function(id){ return document.getElementById(id); };
   var mqPhone = window.matchMedia ? window.matchMedia('(max-width: 767px)') : { matches: false };
 
-  var UI = { q: '', sector: '', sort: 'pts', saveMsg: null, syncMsg: null, code: '', codeMsg: null };
+  var UI = { q: '', sector: '', sort: 'pts', saveMsg: null, syncMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
   try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; } } catch (e) {}
   function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort })); } catch (e) {} }
 
+  // extra data for the player card (loaded next to the store; the page works without them)
+  var X = { people: 'loading', digest: null, digestState: 'loading' };
+
   // ---- helpers ----
   function clear(n){ while (n.firstChild) n.removeChild(n.firstChild); return n; }
+  function txt(s){ return document.createTextNode(s); }
   function signedTxt(n){ return n > 0 ? '+' + n : (n < 0 ? MINUS + Math.abs(n) : '0'); }
   function plainTxt(n){ return n < 0 ? MINUS + Math.abs(n) : String(n); }
   function numCls(n){ return n > 0 ? 'v2-pos' : (n < 0 ? 'v2-neg' : 'v2-zero'); }
   function link(cls, text, href){ var a = el('a', cls, text); a.href = href; return a; }
   function btn(cls, text){ var b = el('button', cls, text); b.type = 'button'; return b; }
   function sr(text){ return el('span', 'v2-sr', text); }
+  function svgEl(tag, attrs, text){ var n = document.createElementNS(NS, tag); for (var k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; return n; }
   function say(t){ var n = $('live'); n.textContent = ''; setTimeout(function(){ n.textContent = t; }, 30); }
   function surname(name){ var ws = String(name || '').replace(/\s*&\s*family\s*$/i, '').trim().split(/\s+/); return ws[ws.length - 1] || ''; }
+  function visibleEl(n){ return !!n && document.contains(n) && n.getClientRects().length > 0; }
   function nyFmt(ms, opts){
     try { opts.timeZone = 'America/New_York'; return new Intl.DateTimeFormat('en-US', opts).format(new Date(ms)); }
     catch (e) { return new Date(ms).toUTCString(); }
   }
   function lockWhen(){ var ms = C.weekInfo(F.state.draftWeek).locksAt; return nyFmt(ms, { weekday: 'long' }) + ' ' + nyFmt(ms, { hour: 'numeric', minute: '2-digit' }) + ' ET'; }
-  function tickerList(p){
-    var seen = {}, out = [];
-    arr(p.holdings).forEach(function(h){ if (h && h.ticker && !seen[h.ticker]){ seen[h.ticker] = 1; out.push(h.ticker); } });
-    return out;
-  }
-  function avatar(p){
-    var a = el('span', 'v2-av', BD.initials(p.name));
+  function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
+  function avatar(p, cls){
+    var a = el('span', 'v2-av' + (cls ? ' ' + cls : ''), BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     a.setAttribute('aria-hidden', 'true');
     return a;
@@ -43,7 +51,45 @@
   function pool(){ return arr(F.state.draftWk && F.state.draftWk.draftable); }
   function sal(slug){ var s = F.salaries()[slug]; return typeof s === 'number' ? s : null; }
   function weekPts(slug){ return F.weekPoints(F.state.sbWk, slug); }
+  function avgOf(slug){ var a = F.stat(slug).avg; return typeof a === 'number' && isFinite(a) ? a : null; }
+  function avgR(slug){ var a = avgOf(slug); return a == null ? null : Math.round(a); }
+  function valOf(slug){ return DC.valueScore(avgOf(slug), weekPts(slug), sal(slug)); }
+  function valNum(slug){ var v = valOf(slug); return v ? v.value : null; }
+  function formOf(slug){ return DC.formSeries(F.state.sparkDates, F.stat(slug).series, 5); }
   function spotsLeft(){ return C.PICKS - F.state.picks.length; }
+  function inPool(slug){ return pool().some(function(p){ return p.slug === slug; }); }
+  function dayShort(d){ return fmt.DAYN[C.weekday(d)] + ' ' + (+d.slice(8, 10)); }
+  function valTxt(v){ return (v.value < 0 ? MINUS : '') + Math.abs(v.value).toFixed(2); }
+  var VALUE_RULE = 'Value = recent average points per day ÷ cap cost (week points ÷ cap cost when there is no recent average).';
+
+  // ---- queue (watchlist): localStorage, this browser only ----
+  var queue = [];
+  function loadQueue(){
+    var raw = null;
+    try { raw = JSON.parse(localStorage.getItem(QKEY) || '[]'); } catch (e) { raw = []; }
+    var known = {}; pool().forEach(function(p){ known[p.slug] = 1; });
+    queue = DC.cleanQueue(raw, known);
+  }
+  function keepQueue(){ try { localStorage.setItem(QKEY, JSON.stringify(queue)); } catch (e) {} }
+  function queued(slug){ return queue.indexOf(slug) >= 0; }
+  function toggleQueue(slug){
+    queue = DC.toggleQueue(queue, slug);
+    keepQueue();
+    return queued(slug);
+  }
+  var STAR = 'M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z';
+  function starBtn(p, cls, withText){
+    var on = queued(p.slug);
+    var b = btn('dr-star' + (on ? ' is-on' : '') + (cls ? ' ' + cls : ''), null);
+    var svg = svgEl('svg', { viewBox: '0 0 24 24', 'aria-hidden': 'true', focusable: 'false', 'class': 'dr-star__i' });
+    svg.appendChild(svgEl('path', { d: STAR }));
+    b.appendChild(svg);
+    if (withText) b.appendChild(el('span', 'dr-star__t', on ? 'In your queue' : 'Add to queue'));
+    if (!withText){ b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.setAttribute('aria-label', 'Queue ' + p.name); }
+    b.title = on ? 'In your queue (press to remove)' : 'Add to your queue';
+    b.setAttribute('data-star', p.slug);
+    return b;
+  }
 
   // ---- roster status (shared by stats bar, panel, phone bar) ----
   function status(){
@@ -77,7 +123,7 @@
       var mine = F.store().teams[lw], from = C.lateFrom(t);
       var p = el('p', 'dr-notice dr-notice--soft');
       p.appendChild(el('strong', null, fmt.weekTitle(lw) + ' is locked and live. '));
-      p.appendChild(document.createTextNode('You are building for ' + fmt.weekName(S.draftWeek) + '. ' +
+      p.appendChild(txt('You are building for ' + fmt.weekName(S.draftWeek) + '. ' +
         (mine ? 'Your lineup for ' + fmt.weekName(lw) + ' is in: follow it on My team.' :
           (from ? 'Late entry: your first save also enters this week, scoring from ' + fmt.dayLabel(from) + '.' : 'No trading days are left this week for a late entry.'))));
       box.appendChild(p);
@@ -87,7 +133,7 @@
     var st = status();
     $('st-sel').textContent = st.n + ' / ' + C.PICKS;
     var cap = clear($('st-cap'));
-    cap.appendChild(document.createTextNode(st.used + ' / ' + C.CAP));
+    cap.appendChild(txt(st.used + ' / ' + C.CAP));
     cap.className = 'dr-stat__v num' + (st.over ? ' v2-neg' : '');
     if (st.over) cap.appendChild(el('small', 'dr-stat__over', 'over by ' + st.over));
     var rem = $('st-rem');
@@ -99,51 +145,123 @@
     nx.className = 'dr-next' + (st.saved ? ' dr-next--ok' : '');
   }
 
-  // ---- filters ----
+  // ---- sector tabs (ARIA tablist: arrow keys, Home / End; automatic activation) ----
+  var sectorList = [];
+  function tabId(s){ return 'sectab-' + (s ? BD.sectorSlug(s) : 'all'); }
   function renderSectors(){
-    var have = {}, sel = $('sector');
-    pool().forEach(function(p){ have[p.sector || 'Other'] = 1; });
+    var have = {}, count = {}, box = clear($('sectabs'));
+    pool().forEach(function(p){ var s = p.sector || 'Other'; have[s] = 1; count[s] = (count[s] || 0) + 1; });
     var list = BD.SECTORS.filter(function(s){ return have[s]; });
     Object.keys(have).forEach(function(s){ if (list.indexOf(s) < 0) list.push(s); });
-    while (sel.options.length > 1) sel.remove(1);
-    list.forEach(function(s){ var o = el('option', null, s); o.value = s; sel.appendChild(o); });
+    sectorList = [''].concat(list);
     if (list.indexOf(UI.sector) < 0) UI.sector = '';
-    sel.value = UI.sector;
+    sectorList.forEach(function(s){
+      var b = btn('dr-tab', s || 'All');
+      b.id = tabId(s);
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-controls', 'poolpanel');
+      b.setAttribute('data-sector', s);
+      b.appendChild(el('span', 'dr-tab__n num', String(s ? count[s] : pool().length)));
+      b.lastChild.setAttribute('aria-hidden', 'true');
+      var cnt = s ? count[s] : pool().length;
+      b.appendChild(sr(' (' + cnt + (cnt === 1 ? ' player)' : ' players)')));
+      box.appendChild(b);
+    });
+    syncTabs(false);
     $('sort').value = UI.sort;
     if ($('sort').value !== UI.sort){ UI.sort = 'pts'; $('sort').value = 'pts'; }
     $('q').value = UI.q;
   }
-  function matches(p, q){
-    if (!q) return true;
-    var hay = [p.name, p.sector].concat(arr(p.holdings).map(function(h){ return (h.ticker || '') + ' ' + (h.name || ''); })).join(' ');
-    var H = BD.norm(hay), words = BD.norm(q).split(' ');
-    for (var i = 0; i < words.length; i++) if (words[i] && H.indexOf(words[i]) < 0) return false;
-    return true;
+  function syncTabs(focus){
+    sectorList.forEach(function(s){
+      var b = $(tabId(s)), on = s === UI.sector;
+      if (!b) return;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+      if (on && focus) b.focus();
+      if (on && b.scrollIntoView && b.parentNode.scrollWidth > b.parentNode.clientWidth){
+        var par = b.parentNode, l = b.offsetLeft - par.offsetLeft, r = l + b.offsetWidth;
+        if (l < par.scrollLeft) par.scrollLeft = l - 8;
+        else if (r > par.scrollLeft + par.clientWidth) par.scrollLeft = r - par.clientWidth + 8;
+      }
+    });
+    $('poolpanel').setAttribute('aria-labelledby', tabId(UI.sector));
   }
+  function setSector(s, focus){
+    UI.sector = s; keepFilters(); syncTabs(focus); renderPool();
+  }
+  $('sectabs').addEventListener('keydown', function(e){
+    var i = sectorList.indexOf(UI.sector), j = null, n = sectorList.length;
+    if (e.key === 'ArrowRight' || e.key === 'Right') j = (i + 1) % n;
+    else if (e.key === 'ArrowLeft' || e.key === 'Left') j = (i - 1 + n) % n;
+    else if (e.key === 'Home') j = 0;
+    else if (e.key === 'End') j = n - 1;
+    if (j == null) return;
+    e.preventDefault();
+    setSector(sectorList[j], true);
+  });
+
+  // ---- filters + sort ----
   function visible(){
-    var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && matches(p, UI.q); });
-    function byName(a, b){ return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0); }
-    function byRank(a, b){ return (a.rank || 999) - (b.rank || 999); }
-    var cmp = {
-      pts: function(a, b){ var x = weekPts(a.slug), y = weekPts(b.slug); if (x == null && y == null) return byRank(a, b); if (x == null) return 1; if (y == null) return -1; return y - x || byRank(a, b); },
-      capdesc: function(a, b){ return (sal(b.slug) || 0) - (sal(a.slug) || 0) || byRank(a, b); },
-      capasc: function(a, b){ return (sal(a.slug) || 0) - (sal(b.slug) || 0) || byRank(a, b); },
-      rank: byRank,
-      name: byName
-    }[UI.sort] || byRank;
-    return list.slice().sort(cmp);
+    var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && P.matches(p, UI.q); });
+    if (UI.sort === 'value') return P.sortPlayers(list, 'avg', { avg: valNum });
+    return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: avgOf, cap: sal });
+  }
+
+  // ---- recent form sparkline (same numbers as the player card chart) ----
+  var sparkMax = 1;
+  function computeSparkMax(){
+    var m = 0;
+    pool().forEach(function(p){ formOf(p.slug).forEach(function(x){ if (x.points != null && Math.abs(x.points) > m) m = Math.abs(x.points); }); });
+    sparkMax = m || 1;
+  }
+  function formWords(series){
+    return series.map(function(x){ return dayShort(x.date) + ' ' + (x.points == null ? 'no score' : signedTxt(x.points)); }).join(', ');
+  }
+  function spark(p){
+    var series = formOf(p.slug);
+    if (!series.length || !series.some(function(x){ return x.points != null; })){
+      var e = el('span', 'dr-spark__none', '—');
+      e.setAttribute('aria-hidden', 'true');
+      var w0 = el('span', 'dr-spark'); w0.appendChild(e); w0.appendChild(sr('No scored days yet'));
+      return w0;
+    }
+    var W = 62, H = 28, mid = H / 2, half = 12, slot = W / 5, bw = 8;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, 'class': 'dr-spark__svg', role: 'img', 'aria-label': 'Recent form: ' + formWords(series) + '.' });
+    svg.appendChild(svgEl('line', { x1: 0, x2: W, y1: mid, y2: mid, 'class': 'dr-spark__zero' }));
+    var off = 5 - series.length;
+    series.forEach(function(x, i){
+      var cx = slot * (i + off) + slot / 2;
+      if (x.points == null){ svg.appendChild(svgEl('rect', { x: cx - bw / 2, y: mid - 1, width: bw, height: 2, 'class': 'dr-spark__nil' })); return; }
+      var h = Math.max(2, Math.abs(x.points) / sparkMax * half);
+      svg.appendChild(svgEl('rect', { x: cx - bw / 2, y: x.points >= 0 ? mid - h : mid, width: bw, height: h, 'class': x.points > 0 ? 'dr-spark__pos' : (x.points < 0 ? 'dr-spark__neg' : 'dr-spark__nil') }));
+    });
+    var w = el('span', 'dr-spark'); w.appendChild(svg);
+    return w;
   }
 
   // ---- pool table ----
+  var COLS = 7;
   function renderPool(){
     var S = F.state, body = clear($('pool')), list = visible(), all = pool();
     var wkName = S.sbWk ? fmt.weekName(S.sbWk.week) : null;
     var ph = clear($('ptshead'));
-    ph.appendChild(document.createTextNode('Week pts'));
+    ph.appendChild(txt('Week pts'));
     ph.title = wkName ? 'Points so far in ' + wkName : 'No scored week yet';
     ph.appendChild(sr(wkName ? ' (points so far in ' + wkName + ')' : ' (no scored week yet)'));
+    var ah = clear($('avghead'));
+    ah.appendChild(txt('Avg'));
+    ah.title = 'Recent average points per scored day';
+    ah.appendChild(sr(' (recent average points per scored day)'));
+    var fh = clear($('formhead'));
+    fh.appendChild(txt('Form'));
+    fh.title = 'Points on each of the last ' + S.sparkDates.length + ' scored days';
+    fh.appendChild(sr(' (points on the last ' + S.sparkDates.length + ' scored days)'));
+    computeSparkMax();
+    var anyValue = all.some(function(p){ var v = valOf(p.slug); return v && v.value > 0; });
+    var top = anyValue ? DC.topValue(list.map(function(p){ return { slug: p.slug, value: valNum(p.slug) }; }), 5) : [];
     if (!list.length){
-      var tr0 = el('tr'), td0 = el('td'); td0.colSpan = 4;
+      var tr0 = el('tr'), td0 = el('td'); td0.colSpan = COLS;
       var e = el('div', 'v2-empty');
       e.appendChild(el('p', null, 'No players match ' + (UI.q ? '"' + UI.q + '"' : 'this filter') + (UI.sector ? ' in ' + UI.sector : '') + '.'));
       var rb = btn('v2-btn v2-btn--ghost v2-btn--sm', 'Clear search and filters'); rb.setAttribute('data-reset', '1');
@@ -153,16 +271,44 @@
     list.forEach(function(p){
       var picked = S.picks.indexOf(p.slug) >= 0;
       var tr = el('tr', picked ? 'is-picked' : null);
+      var tdQ = el('td', 'dr-c-q');
+      tdQ.appendChild(starBtn(p));
+      tr.appendChild(tdQ);
       var tdP = el('td', 'dr-c-player');
       var pl = el('div', 'v2-player');
       pl.appendChild(avatar(p));
       var tx = el('div', 'v2-player__txt');
-      tx.appendChild(link('v2-player__name', p.name, 'player.html?p=' + encodeURIComponent(p.slug)));
-      var tk = tickerList(p).slice(0, 2).join(' · ');
-      tx.appendChild(el('span', 'v2-player__sub', (tk ? tk + ' / ' : '') + (p.sector || 'Other')));
+      var nb = btn('v2-player__name dr-name', p.name);
+      nb.setAttribute('data-card', p.slug);
+      nb.setAttribute('aria-haspopup', 'dialog');
+      nb.appendChild(sr(': open player card'));
+      tx.appendChild(nb);
+      var tk = P.tickers(p).slice(0, 2).join(' · ');
+      var sub = el('span', 'v2-player__sub', (tk ? tk + ' / ' : '') + (p.sector || 'Other'));
+      tx.appendChild(sub);
+      var ti = top.indexOf(p.slug);
+      if (ti >= 0){
+        var v = valOf(p.slug);
+        var bdg = el('span', 'dr-valbadge', 'Value');
+        bdg.title = 'No. ' + (ti + 1) + ' value in this view: ' + valTxt(v) + ' points per cap point. ' + VALUE_RULE;
+        bdg.appendChild(sr(' (number ' + (ti + 1) + ' value in this view, ' + valTxt(v) + ' points per cap point)'));
+        tx.appendChild(bdg);
+      }
+      // phone only: the week / avg / cap numbers as one line under the name (the table cells are hidden there)
+      var w0 = weekPts(p.slug), a0 = avgR(p.slug), s0 = sal(p.slug), pm = el('span', 'dr-pmeta');
+      [['Week', w0 == null ? '—' : signedTxt(w0), w0 == null ? '' : numCls(w0)], ['Avg', a0 == null ? '—' : signedTxt(a0), a0 == null ? '' : numCls(a0)], ['Cap', s0 == null ? '—' : String(s0), '']].forEach(function(m){
+        var it = el('span', 'dr-pmeta__i');
+        it.appendChild(txt(m[0] + ' '));
+        it.appendChild(el('b', m[2] || null, m[1]));
+        pm.appendChild(it);
+      });
+      tx.appendChild(pm);
       pl.appendChild(tx); tdP.appendChild(pl); tr.appendChild(tdP);
+      var tdF = el('td', 'dr-c-form'); tdF.appendChild(spark(p)); tr.appendChild(tdF);
       var w = weekPts(p.slug);
       var tdW = el('td', 'n dr-c-pts' + (w == null ? '' : ' ' + numCls(w)), w == null ? '—' : signedTxt(w)); tdW.setAttribute('data-label', 'Week'); tr.appendChild(tdW);
+      var a = avgR(p.slug);
+      var tdA = el('td', 'n dr-c-avg' + (a == null ? '' : ' ' + numCls(a)), a == null ? '—' : signedTxt(a)); tdA.setAttribute('data-label', 'Avg'); tr.appendChild(tdA);
       var s = sal(p.slug);
       var tdC = el('td', 'n dr-c-cap', s == null ? '—' : String(s)); tdC.setAttribute('data-label', 'Cap'); tr.appendChild(tdC);
       var tdS = el('td', 'dr-c-status');
@@ -186,8 +332,12 @@
       body.appendChild(tr);
     });
     var method = S.draftWk && S.draftWk.salaryMethod;
-    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Forbes rank');
-    $('poolcap').textContent = 'Players you can draft for ' + fmt.weekName(S.draftWeek) + ', ' + list.length + ' shown';
+    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Forbes rank') +
+      ' · Avg = recent average points per scored day · Form = the last ' + (S.sparkDates.length || 0) + ' scored days';
+    $('valuefoot').textContent = anyValue
+      ? VALUE_RULE + ' The top 5 in the current view get a Value badge. Based on recent days only; not a forecast.'
+      : 'No scored days yet, so there are no Value badges and "Best value" sorts by Forbes rank. ' + VALUE_RULE;
+    $('poolcap').textContent = 'Players you can draft for ' + fmt.weekName(S.draftWeek) + (UI.sector ? ', ' + UI.sector : '') + ', ' + list.length + ' shown';
   }
   function renderNotDraftable(){
     var nd = arr(F.state.index && F.state.index.notDraftable), d = $('notdraftable');
@@ -203,13 +353,68 @@
     d.hidden = false;
   }
 
+  // ---- queue panel (desktop: above the starting five; phone: a tab in the team sheet) ----
+  function queueAddBtn(p){
+    var S = F.state, s = sal(p.slug);
+    if (S.picks.indexOf(p.slug) >= 0){ var on = el('span', 'dr-q__on', 'On your team'); return on; }
+    var why = s == null ? 'Not draftable this week' : F.blockReason(p.slug);
+    var b = btn('dr-qadd' + (why ? ' is-blocked' : ''), '+ Add');
+    b.setAttribute('data-qpick', p.slug);
+    if (why){ b.setAttribute('aria-disabled', 'true'); b.setAttribute('data-why', why); b.title = why; b.setAttribute('aria-label', 'Add ' + p.name + ': ' + why); }
+    else b.setAttribute('aria-label', 'Add ' + p.name + ' from your queue, cap ' + s);
+    return b;
+  }
+  function renderQueue(box, key){
+    if (!box) return;
+    clear(box);
+    var head = el('div', 'dr-q__head');
+    var h = el('h2', 'dr-q__h', 'Queue'); h.id = 'queueh-' + key; h.tabIndex = -1;
+    head.appendChild(h);
+    head.appendChild(el('span', 'dr-q__n num', queue.length ? queue.length + (queue.length === 1 ? ' player' : ' players') : ''));
+    box.appendChild(head);
+    if (!queue.length){
+      box.appendChild(el('p', 'dr-q__empty', 'Star players in the pool to line them up here. Your queue is kept in this browser only.'));
+      return;
+    }
+    var ol = el('ol', 'dr-q__list');
+    queue.forEach(function(slug){
+      var p = F.person(slug), li = el('li', 'dr-q__item');
+      var nb = btn('dr-q__name', p.name);
+      nb.setAttribute('data-card', slug); nb.setAttribute('aria-haspopup', 'dialog');
+      nb.appendChild(sr(': open player card'));
+      li.appendChild(nb);
+      var s = sal(slug), a = avgR(slug);
+      li.appendChild(el('span', 'dr-q__meta', 'Cap ' + (s == null ? '—' : s) + ' · Avg ' + (a == null ? '—' : signedTxt(a))));
+      var acts = el('span', 'dr-q__acts');
+      acts.appendChild(queueAddBtn(p));
+      var x = btn('dr-q__x', '×');
+      x.setAttribute('aria-label', 'Remove ' + p.name + ' from your queue');
+      x.setAttribute('data-unqueue', slug);
+      acts.appendChild(x);
+      li.appendChild(acts);
+      ol.appendChild(li);
+    });
+    box.appendChild(ol);
+    box.appendChild(el('p', 'dr-q__foot', 'Kept in this browser only.'));
+  }
+  function renderQueues(){
+    renderQueue($('queuebox'), 'side');
+    if (sheetOpen()) renderQueue($('sheetqueue'), 'sheet');
+    $('stabq').textContent = queue.length ? '(' + queue.length + ')' : '';
+  }
+
   // ---- starting-five panel (rendered into the side column and the phone sheet) ----
-  function orderedPicks(){ return F.state.picks.slice(); }
   function helperLine(){
     var S = F.state, k = spotsLeft(), cap = S.captain ? surname(F.person(S.captain).name) : null;
     var a = k === 0 ? 'Your five is set.' : WORDS[k] + (k === 1 ? ' spot' : ' spots') + ' left.';
     var b = cap ? ' ' + cap + ' is your captain.' : (S.picks.length ? ' Choose a captain.' : ' Your first pick becomes captain.');
     return a + b;
+  }
+  function capWords(st){
+    var lvl = DC.capLevel(st.used, C.CAP);
+    if (lvl === 'over') return { lvl: lvl, lead: 'Over the cap by ' + st.over + '.', text: 'Remove or swap a player to save.' };
+    if (lvl === 'warn') return { lvl: lvl, lead: 'Almost at the cap.', text: 'Remaining: ' + st.left + '.' };
+    return { lvl: lvl, lead: '', text: 'Remaining: ' + st.left + '.' };
   }
   function renderPanel(box, withId){
     var S = F.state, st = status();
@@ -219,13 +424,15 @@
     box.appendChild(h);
     box.appendChild(el('p', 'dr-panel__help', helperLine()));
     var ol = el('ol', 'dr-slots');
-    var picks = orderedPicks();
+    var picks = S.picks.slice();
     for (var i = 0; i < C.PICKS; i++){
       var slug = picks[i], li = el('li', 'dr-slot' + (slug ? '' : ' is-empty'));
       li.appendChild(el('span', 'dr-slot__n', (i < 9 ? '0' : '') + (i + 1)));
-      if (!slug){ li.appendChild(el('span', 'dr-slot__name', 'Choose a player')); ol.appendChild(li); continue; }
+      if (!slug){ li.appendChild(el('span', 'dr-slot__name', 'Empty slot')); ol.appendChild(li); continue; }
       var p = F.person(slug), isC = slug === S.captain;
-      var nm = el('span', 'dr-slot__name', p.name);
+      var nm = btn('dr-slot__name dr-slot__btn', p.name);
+      nm.setAttribute('data-card', slug); nm.setAttribute('aria-haspopup', 'dialog');
+      nm.appendChild(sr(': open player card'));
       li.appendChild(nm);
       if (isC){ var c = el('span', 'v2-badge-c', 'C'); c.title = 'Captain: scores 1.5 times'; c.appendChild(sr(' (captain)')); li.appendChild(c); }
       li.appendChild(el('span', 'dr-slot__sal num', sal(slug) == null ? '—' : String(sal(slug))));
@@ -243,19 +450,30 @@
       ol.appendChild(li);
     }
     box.appendChild(ol);
-    box.appendChild(el('p', 'dr-panel__rule', 'Captain scores ' + C.CAPTAIN_MULT + 'x'));
-    // cap meter
-    var cap = el('div', 'v2-cap dr-cap' + (st.over ? ' v2-cap--over' : ''));
+    box.appendChild(el('p', 'dr-panel__rule', 'C = captain, scores ' + C.CAPTAIN_MULT + 'x'));
+    // cap meter: fills as players are added; warning above 90, error when over (in words too)
+    var cw = capWords(st);
+    var cap = el('div', 'v2-cap dr-cap dr-cap--' + cw.lvl + (st.over ? ' v2-cap--over' : ''));
     var row = el('div', 'v2-cap__row');
     row.appendChild(el('span', 'v2-label', 'Cap used'));
-    row.appendChild(el('span', 'v2-cap__num', st.used + ' / ' + C.CAP + (st.over ? ' · over by ' + st.over : '')));
+    row.appendChild(el('span', 'v2-cap__num', st.used + ' / ' + C.CAP));
     cap.appendChild(row);
     var bar = el('div', 'v2-cap__bar'); bar.setAttribute('role', 'img');
-    bar.setAttribute('aria-label', st.used + ' of ' + C.CAP + ' cap used' + (st.over ? ', over by ' + st.over : ''));
+    bar.setAttribute('aria-label', st.used + ' of ' + C.CAP + ' cap used. ' + (cw.lead ? cw.lead + ' ' : '') + cw.text);
     var fill = el('div', 'v2-cap__fill'); fill.style.width = Math.min(100, Math.round(st.used / C.CAP * 100)) + '%';
-    bar.appendChild(fill); cap.appendChild(bar); box.appendChild(cap);
+    bar.appendChild(fill); cap.appendChild(bar);
+    var cwp = el('p', 'dr-cap__words');
+    if (cw.lead) cwp.appendChild(el('strong', null, cw.lead + ' '));
+    cwp.appendChild(txt(cw.text));
+    cap.appendChild(cwp);
+    box.appendChild(cap);
     var proj = S.picks.length ? F.projection() : null;
-    if (proj != null) box.appendChild(el('p', 'dr-panel__proj', 'Recent average: ' + plainTxt(proj) + ' pts/day (captain counted ' + C.CAPTAIN_MULT + 'x)'));
+    if (proj != null){
+      var pr = el('p', 'dr-panel__proj');
+      pr.appendChild(el('strong', null, 'Recent average: ' + signedTxt(proj) + ' points per day'));
+      pr.appendChild(txt(' for these picks, captain counted ' + C.CAPTAIN_MULT + 'x. From recent scored days; not a forecast.'));
+      box.appendChild(pr);
+    } else if (S.picks.length) box.appendChild(el('p', 'dr-panel__proj', 'Recent average: no scored days yet for these picks.'));
     var sb = btn('v2-btn v2-btn--primary v2-btn--block dr-save', st.save);
     sb.setAttribute('data-save', '1');
     if (!st.valid || st.saved) sb.disabled = true;
@@ -322,7 +540,7 @@
     else if (F.dirty()) line.textContent = 'Save your team to sync it online.';
     else if (F.isSynced(S.draftWeek)) line.textContent = 'Online leaderboard has this team.';
     else {
-      line.appendChild(document.createTextNode('Not synced online yet. '));
+      line.appendChild(txt('Not synced online yet. '));
       var b = btn('v2-link', 'Sync now'); b.setAttribute('data-sync', '1');
       b.setAttribute('aria-label', 'Sync this saved team to the online leaderboard');
       line.appendChild(b);
@@ -339,37 +557,264 @@
   function renderSide(){
     renderPanel($('sidepanel'), true);
     if (sheetOpen()) renderPanel($('sheetpanel'), false);
+    renderQueues();
     renderBar();
   }
-  function renderAll(){ renderStats(); renderPool(); renderSide(); }
+  function renderAll(){ renderStats(); renderPool(); renderSide(); if (cardOpen()) renderCard(true); }
 
-  // ---- phone sheet: focus trap, Escape, return focus ----
+  // ---- player card drawer: dialog, focus trap, Escape, focus return ----
+  var card = { slug: null, scope: null, opener: null };
+  function cardOpen(){ return !$('pcard').hidden; }
+  function cardFocusables(){
+    var root = $('pcard').querySelector('.dr-card__panel');
+    return Array.prototype.filter.call(root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])'), function(n){ return n.getClientRects().length > 0; });
+  }
+  function scopeOf(n){
+    var ids = ['pool', 'queuebox', 'sidepanel', 'sheetpanel', 'sheetqueue'];
+    for (var i = 0; i < ids.length; i++){ var r = $(ids[i]); if (r && r.contains(n)) return ids[i]; }
+    return null;
+  }
+  function openCard(slug, from){
+    card.slug = slug; card.opener = from || document.activeElement; card.scope = scopeOf(card.opener);
+    renderCard(false);
+    $('pcard').hidden = false;
+    document.documentElement.classList.add('v2-lock');
+    var panel = $('pcard').querySelector('.dr-card__panel');
+    panel.scrollTop = 0;
+    $('pcardclose').focus();
+  }
+  function closeCard(){
+    if (!cardOpen()) return;
+    $('pcard').hidden = true;
+    clear($('pcardbody'));
+    if (!sheetOpen()) document.documentElement.classList.remove('v2-lock');
+    var back = null, sel = '[data-card="' + card.slug + '"]';
+    if (card.scope && $(card.scope)){ var n = $(card.scope).querySelector(sel); if (visibleEl(n)) back = n; }
+    if (!back && visibleEl(card.opener)) back = card.opener;
+    if (!back){ var any = document.querySelector('#pool ' + sel); back = visibleEl(any) ? any : $('q'); }
+    back.focus();
+    card.slug = null; card.opener = null;
+  }
+  document.addEventListener('keydown', function(e){
+    if (!cardOpen()) return;
+    if (e.key === 'Escape' || e.key === 'Esc'){ e.preventDefault(); closeCard(); return; }
+    if (e.key !== 'Tab') return;
+    var f = cardFocusables(), panel = $('pcard').querySelector('.dr-card__panel');
+    if (!f.length){ e.preventDefault(); panel.focus(); return; }
+    var first = f[0], last = f[f.length - 1];
+    if (!panel.contains(document.activeElement) || document.activeElement === panel){ e.preventDefault(); (e.shiftKey ? last : first).focus(); }
+    else if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+  function cardFact(dl, k, v, cls, sub){
+    var d = el('div', 'dr-fact');
+    d.appendChild(el('dt', 'dr-fact__k', k));
+    var dd = el('dd', 'dr-fact__v num' + (cls ? ' ' + cls : ''), v);
+    if (sub) dd.appendChild(el('span', 'dr-fact__sub', sub));
+    d.appendChild(dd);
+    dl.appendChild(d);
+  }
+  function cardChart(series, name){
+    var W = 300, H = 132, top = 22, bottom = 34, n = series.length;
+    var maxPos = 0, maxNeg = 0;
+    series.forEach(function(x){ if (x.points != null){ if (x.points > maxPos) maxPos = x.points; if (x.points < maxNeg) maxNeg = x.points; } });
+    var span = (maxPos - maxNeg) || 1, plotH = H - top - bottom;
+    var zeroY = (maxPos === 0 && maxNeg === 0) ? top + plotH / 2 : top + plotH * (maxPos / span);
+    var slot = W / 5, bw = Math.min(34, slot * 0.55), off = 5 - n;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, 'class': 'dr-chart__svg', 'aria-hidden': 'true', focusable: 'false' });
+    svg.appendChild(svgEl('line', { x1: 0, x2: W, y1: zeroY, y2: zeroY, 'class': 'dr-chart__zero' }));
+    series.forEach(function(x, i){
+      var cx = slot * (i + off) + slot / 2;
+      if (x.points != null && x.points !== 0){
+        var hgt = Math.max(2, Math.abs(x.points) / span * plotH);
+        var y = x.points > 0 ? zeroY - hgt : zeroY;
+        svg.appendChild(svgEl('rect', { x: cx - bw / 2, y: y, width: bw, height: hgt, 'class': x.points > 0 ? 'dr-chart__pos' : 'dr-chart__neg' }));
+        svg.appendChild(svgEl('text', { x: cx, y: x.points > 0 ? y - 6 : y + hgt + 14, 'text-anchor': 'middle', 'class': 'dr-chart__val' }, signedTxt(x.points)));
+      } else {
+        svg.appendChild(svgEl('text', { x: cx, y: zeroY - 6, 'text-anchor': 'middle', 'class': 'dr-chart__val' }, x.points == null ? 'no score' : '0'));
+      }
+      svg.appendChild(svgEl('text', { x: cx, y: H - 6, 'text-anchor': 'middle', 'class': 'dr-chart__day' }, dayShort(x.date)));
+    });
+    var wrap = el('figure', 'dr-chart');
+    wrap.appendChild(svg);
+    var cap = el('figcaption', 'dr-chart__k', 'Points on the last ' + (n === 1 ? 'scored day' : n + ' scored days') + ', before the captain bonus');
+    wrap.appendChild(cap);
+    var ul = el('ul', 'v2-sr');
+    series.forEach(function(x){ ul.appendChild(el('li', null, fmt.dayLabel(x.date) + ': ' + (x.points == null ? 'no score' : signedTxt(x.points) + ' points'))); });
+    wrap.appendChild(ul);
+    return wrap;
+  }
+  function cardSection(title){
+    var s = el('section', 'dr-card__sec');
+    s.appendChild(el('h3', 'dr-card__h', title));
+    return s;
+  }
+  function renderCard(keepFocus){
+    var slug = card.slug, body = $('pcardbody');
+    if (!slug) return;
+    var focusKey = null;
+    if (keepFocus && body.contains(document.activeElement)){
+      var ae = document.activeElement;
+      ['data-card-pick', 'data-card-cap', 'data-star'].forEach(function(k){ if (ae.hasAttribute(k)) focusKey = k; });
+    }
+    clear(body);
+    var S = F.state, p = F.person(slug), picked = S.picks.indexOf(slug) >= 0, isC = S.captain === slug;
+    var ix = X.people === 'ok' ? BD.indexBySlug(slug) : null;
+    // head: portrait (approved illustration) or initials plate
+    var head = el('div', 'dr-card__top');
+    var pics = window.BDPortraits, pic = pics && Object.prototype.hasOwnProperty.call(pics, slug) ? safePath(pics[slug] && pics[slug].img) : null;
+    var av = avatar(p, 'v2-av--lg dr-card__av');
+    if (pic){ var im = el('img'); im.src = pic; im.alt = ''; av.appendChild(im); }
+    head.appendChild(av);
+    var ht = el('div', 'dr-card__id');
+    var h = el('h2', 'dr-card__name', p.name); h.id = 'pcard-name';
+    ht.appendChild(h);
+    var tks = P.tickers(p);
+    ht.appendChild(el('p', 'dr-card__sub', (p.sector || 'Other') + (tks.length ? ' · ' + tks.slice(0, 3).join(' · ') : '')));
+    if (picked) ht.appendChild(el('span', 'v2-pill dr-card__pill', isC ? 'On your team · Captain' : 'On your team'));
+    head.appendChild(ht);
+    body.appendChild(head);
+    // actions
+    var acts = el('div', 'dr-card__acts');
+    var s = sal(slug), b;
+    if (picked){
+      b = btn('v2-btn v2-btn--selected dr-card__btn', 'Remove from team');
+      b.setAttribute('aria-label', 'Remove ' + p.name + ' from your team');
+    } else {
+      var why = s == null ? 'Not draftable this week' : F.blockReason(slug);
+      b = btn('v2-btn v2-btn--primary dr-card__btn' + (why ? ' is-blocked' : ''), '+ Add to team');
+      if (why){ b.setAttribute('aria-disabled', 'true'); b.setAttribute('data-why', why); b.setAttribute('aria-label', 'Add ' + p.name + ': ' + why); }
+      else b.setAttribute('aria-label', 'Add ' + p.name + ' to your team, cap ' + s);
+    }
+    b.setAttribute('data-card-pick', slug);
+    acts.appendChild(b);
+    var cb = btn('v2-btn v2-btn--secondary dr-card__btn' + (isC ? ' is-on' : ''), isC ? 'Captain' : 'Make captain');
+    cb.setAttribute('data-card-cap', slug);
+    cb.setAttribute('aria-pressed', isC ? 'true' : 'false');
+    if (!picked){ cb.setAttribute('aria-disabled', 'true'); cb.setAttribute('data-why', 'Add ' + surname(p.name) + ' to your team first'); cb.title = 'Add to your team first'; }
+    acts.appendChild(cb);
+    acts.appendChild(starBtn(p, 'dr-star--text', true));
+    body.appendChild(acts);
+    if (b.getAttribute('data-why')) body.appendChild(el('p', 'dr-card__why', b.getAttribute('data-why') === 'Lineup full' ? 'Your five is full. Remove someone first.' : b.getAttribute('data-why') + '.'));
+    // facts
+    var dl = el('dl', 'dr-facts');
+    var r = ix && typeof ix.rank === 'number' ? ix.rank : (typeof p.rank === 'number' ? p.rank : null);
+    cardFact(dl, 'Forbes rank', r == null ? '—' : 'No. ' + r);
+    cardFact(dl, 'Net worth', ix && ix.worth ? ix.worth : '—', '', X.people === 'loading' ? 'loading…' : '');
+    cardFact(dl, 'Cap cost', s == null ? '—' : String(s), '', s == null ? 'not draftable' : 'of ' + C.CAP);
+    var w = weekPts(slug), wkLabel = S.sbWk ? (S.sbWk.practice ? 'practice week' : fmt.weekTitle(S.sbWk.week)) : 'no scored week';
+    cardFact(dl, 'Week pts', w == null ? '—' : signedTxt(w), w == null ? '' : numCls(w), wkLabel);
+    var a = avgR(slug), st = F.stat(slug);
+    cardFact(dl, 'Recent avg', a == null ? '—' : signedTxt(a), a == null ? '' : numCls(a), a == null ? 'no scored days' : 'pts/day over ' + st.n + (st.n === 1 ? ' day' : ' days'));
+    var v = valOf(slug);
+    cardFact(dl, 'Value', v ? valTxt(v) : '—', '', v ? 'pts per cap point' + (v.basis === 'week' ? ' (week pts)' : '') : 'no points yet');
+    body.appendChild(dl);
+    var pix = X.people === 'ok' ? BD.getPeople() : null;
+    if (ix && pix && pix.sourceUrl && BD.safeUrl(pix.sourceUrl)){
+      var src = el('p', 'dr-card__src');
+      src.appendChild(txt('Rank and net worth: '));
+      var sa = link(null, (pix.source || 'Source') + (pix.asOf ? ', ' + BD.fmtDate(BD.isoOf(pix.asOf)) : ''), BD.safeUrl(pix.sourceUrl));
+      sa.target = '_blank'; sa.rel = 'noopener noreferrer'; sa.appendChild(sr(' (opens in a new tab)'));
+      src.appendChild(sa);
+      body.appendChild(src);
+    }
+    // recent form
+    var fs = cardSection('Recent form');
+    var series = formOf(slug);
+    if (!series.some(function(x){ return x.points != null; })) fs.appendChild(el('p', 'dr-card__empty', 'No scored days yet. Points show here after the first trading day of a week.'));
+    else fs.appendChild(cardChart(series, p.name));
+    body.appendChild(fs);
+    // holdings
+    var hs = cardSection('Holdings that score');
+    var hold = arr(p.holdings).filter(function(x){ return x && x.ticker; });
+    if (!hold.length) hs.appendChild(el('p', 'dr-card__empty', 'No listed holdings in this week\'s file.'));
+    else {
+      var ul = el('ul', 'dr-hold');
+      hold.forEach(function(x){
+        var li = el('li');
+        li.appendChild(el('span', 'dr-hold__t', x.ticker));
+        li.appendChild(el('span', 'dr-hold__n', x.name || ''));
+        li.appendChild(el('span', 'dr-hold__w num', P.weightPct(x.weight)));
+        ul.appendChild(li);
+      });
+      hs.appendChild(ul);
+      hs.appendChild(el('p', 'dr-card__note', 'Weights from this week\'s game file.'));
+    }
+    body.appendChild(hs);
+    // stories
+    var ns = cardSection('In the news');
+    if (X.digestState === 'loading') ns.appendChild(el('p', 'v2-loading', 'Loading the latest edition…'));
+    else if (!X.digest) ns.appendChild(el('p', 'dr-card__empty', 'The latest edition is not available right now.'));
+    else {
+      var iso = BD.isoFromLong(X.digest.date);
+      var items = arr(X.digest.stories).filter(function(x){ return x && x.headline && BD.storyMatches(x, p.name); }).slice(0, 3);
+      if (!items.length) ns.appendChild(el('p', 'dr-card__empty', 'No stories about ' + p.name + ' in the latest edition' + (iso ? ' (' + BD.fmtDate(iso) + ')' : '') + '.'));
+      else {
+        var nl = el('ul', 'dr-news');
+        items.forEach(function(x){
+          var li = el('li');
+          var u = BD.safeUrl(x.url);
+          if (u){ var na = link('dr-news__h', x.headline, u); na.target = '_blank'; na.rel = 'noopener noreferrer'; na.appendChild(sr(' (opens the source in a new tab)')); li.appendChild(na); }
+          else li.appendChild(el('span', 'dr-news__h', x.headline));
+          if (x.source) li.appendChild(el('span', 'dr-news__src', 'Source · ' + x.source));
+          nl.appendChild(li);
+        });
+        ns.appendChild(nl);
+        if (iso) ns.appendChild(el('p', 'dr-card__note', 'From the ' + BD.fmtDate(iso) + ' edition.'));
+      }
+    }
+    body.appendChild(ns);
+    var foot = el('p', 'dr-card__foot');
+    foot.appendChild(link('dr-card__more', 'Full player page', 'player.html?p=' + encodeURIComponent(slug)));
+    body.appendChild(foot);
+    body.appendChild(el('p', 'dr-card__note', 'Play money · not financial advice'));
+    if (focusKey){ var fn = body.querySelector('[' + focusKey + ']'); if (fn) fn.focus(); else $('pcardclose').focus(); }
+  }
+
+  // ---- phone sheet: tabs, focus trap, Escape, return focus ----
   var sheetOpener = null;
   function sheetOpen(){ return !$('sheet').hidden; }
   function sheetFocusables(){
     var root = $('sheet').querySelector('.dr-sheet__panel');
-    return Array.prototype.filter.call(root.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])'), function(n){ return n.getClientRects().length > 0; });
+    return Array.prototype.filter.call(root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])'), function(n){ return n.getClientRects().length > 0; });
   }
-  function openSheet(){
+  function showSheetTab(key, focus){
+    UI.sheetTab = key;
+    ['team', 'queue'].forEach(function(k){
+      var t = $('stab-' + k), on = k === key;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      $('spanel-' + k).hidden = !on;
+    });
+    if (key === 'queue') renderQueue($('sheetqueue'), 'sheet');
+    if (focus) $('stab-' + key).focus();
+  }
+  function openSheet(tab){
     sheetOpener = document.activeElement;
     $('sheet').hidden = false;
     renderPanel($('sheetpanel'), false);
+    renderQueue($('sheetqueue'), 'sheet');
+    showSheetTab(tab || 'team', false);
     document.documentElement.classList.add('v2-lock');
     $('barbtn').setAttribute('aria-expanded', 'true');
-    var f = sheetFocusables();
-    ($('sheetclose') || f[0]).focus();
+    ($('sheetclose') || sheetFocusables()[0]).focus();
   }
   function closeSheet(noFocus){
     if (!sheetOpen()) return;
     $('sheet').hidden = true;
-    clear($('sheetpanel'));
+    clear($('sheetpanel')); clear($('sheetqueue'));
     document.documentElement.classList.remove('v2-lock');
     $('barbtn').setAttribute('aria-expanded', 'false');
-    if (!noFocus){ var back = sheetOpener && document.contains(sheetOpener) && sheetOpener.getClientRects().length ? sheetOpener : $('barbtn'); back.focus(); }
+    if (!noFocus){ var back = visibleEl(sheetOpener) ? sheetOpener : $('barbtn'); back.focus(); }
   }
   document.addEventListener('keydown', function(e){
-    if (!sheetOpen()) return;
+    if (!sheetOpen() || cardOpen() || e.defaultPrevented) return;
     if (e.key === 'Escape' || e.key === 'Esc'){ e.preventDefault(); closeSheet(); return; }
+    if (e.target && e.target.getAttribute && e.target.getAttribute('data-stab') && /^(Arrow)?(Left|Right)$|^Home$|^End$/.test(e.key)){
+      e.preventDefault();
+      showSheetTab(e.key === 'Home' ? 'team' : (e.key === 'End' ? 'queue' : (UI.sheetTab === 'team' ? 'queue' : 'team')), true);
+      return;
+    }
     if (e.key !== 'Tab') return;
     var f = sheetFocusables(), panel = $('sheet').querySelector('.dr-sheet__panel');
     if (!f.length){ e.preventDefault(); panel.focus(); return; }
@@ -381,13 +826,65 @@
   function onMq(){ if (!mqPhone.matches) closeSheet(true); }
   if (mqPhone.addEventListener) mqPhone.addEventListener('change', onMq); else if (mqPhone.addListener) mqPhone.addListener(onMq);
 
+  // ---- draft tools: auto-fill, clear ----
+  function toolMsg(text){ var m = $('toolmsg'); m.textContent = text; m.hidden = !text; }
+  function doAutoFill(){
+    var S = F.state;
+    hideClearConfirm(true);
+    var r = DC.autoFill({
+      pool: pool().filter(function(p){ return sal(p.slug) != null; }).map(function(p){ return { slug: p.slug, cap: sal(p.slug), avg: avgOf(p.slug) }; }),
+      picks: S.picks.slice(), captain: S.captain, cap: C.CAP, slots: C.PICKS
+    });
+    var msg;
+    if (!r.ok){
+      msg = {
+        full: 'Your five is already full. Remove a player to auto-fill a spot.',
+        over: 'Your picks are over the cap by ' + (F.capUsed() - C.CAP) + '. Remove a player first.',
+        nodata: 'Auto-fill needs recent scored days, and there are none yet.',
+        nofit: 'No set of players fits your open spots under the ' + plainTxt(C.CAP - F.capUsed()) + ' cap left. Remove a pricier player first.'
+      }[r.reason] || 'Auto-fill could not build a team.';
+      toolMsg(msg); say(msg);
+      return;
+    }
+    r.add.forEach(function(s){ F.addPick(s); });
+    if (r.captain && F.state.picks.indexOf(r.captain) >= 0 && F.state.captain !== r.captain) F.setCaptain(r.captain);
+    var added = r.add.filter(function(s){ return F.state.picks.indexOf(s) >= 0; });
+    if (added.length !== r.add.length){ msg = 'Auto-fill could not add every player. Try again.'; toolMsg(msg); say(msg); return; }
+    var proj = F.projection();
+    msg = 'Auto-filled ' + added.length + (added.length === 1 ? ' player: ' : ' players: ') + added.map(function(s){ return F.person(s).name; }).join(', ') + '. ' +
+      'Captain: ' + F.person(F.state.captain).name + '. Cap used ' + F.capUsed() + ' of ' + C.CAP + '. ' +
+      (proj != null ? 'Recent average ' + signedTxt(proj) + ' points per day. ' : '') + 'Not saved yet: press Save team to lock it in.';
+    toolMsg(msg); say(msg);
+  }
+  function showClearConfirm(){
+    var t = F.savedTeam();
+    $('clearconfirm-t').textContent = 'Clear all ' + F.state.picks.length + ' picks from your draft? Your saved team for ' + fmt.weekName(F.state.draftWeek) + ' stays saved until you press Save team again.';
+    $('clearconfirm').hidden = false;
+    $('clearyes').focus();
+    return t;
+  }
+  function hideClearConfirm(silent){
+    if ($('clearconfirm').hidden) return;
+    $('clearconfirm').hidden = true;
+    if (!silent) $('clearbtn').focus();
+  }
+  function doClear(){
+    var r = F.clearPicks();
+    UI.saveMsg = null;
+    hideClearConfirm(true);
+    toolMsg(r.text); say(r.text);
+    $('clearbtn').focus();
+  }
+  $('clearconfirm').addEventListener('keydown', function(e){ if (e.key === 'Escape' || e.key === 'Esc'){ e.preventDefault(); hideClearConfirm(); } });
+
   // ---- actions ----
   function focusSel(scope, sel){
-    var n = scope.querySelector(sel);
-    if (n && !n.disabled){ n.focus(); return true; }
+    var n = scope && scope.querySelector(sel);
+    if (n && !n.disabled && visibleEl(n)){ n.focus(); return true; }
     return false;
   }
   function panelScope(from){ return from && from.closest && from.closest('#sheetpanel') ? $('sheetpanel') : $('sidepanel'); }
+  function queueScope(from){ return from && from.closest && from.closest('#sheetqueue') ? $('sheetqueue') : $('queuebox'); }
   function afterPanelRemove(scope){
     if (!focusSel(scope, '[data-remove]')){ var h = scope.querySelector('.dr-panel__h'); if (h) h.focus(); }
   }
@@ -401,20 +898,70 @@
     if (!focusSel(scope, '.dr-msg__link')) focusSel(scope, '.dr-panel__h');
     if (r.sync) r.sync.then(function(res){ if (res && res.text){ UI.syncMsg = res; renderSide(); say(res.text); } });
   }
+  function togglePick(s, b){
+    var r;
+    if (b.getAttribute('aria-disabled') === 'true'){ say('Cannot add ' + F.person(s).name + ': ' + b.getAttribute('data-why') + '.'); return false; }
+    if (F.state.picks.indexOf(s) >= 0){ r = F.removePick(s); if (r.ok) say(changeLine('Removed ' + F.person(s).name + '.')); }
+    else { r = F.addPick(s); if (r.ok) say(changeLine('Added ' + F.person(s).name + '.') + (F.state.captain === s ? ' Captain.' : '')); }
+    UI.saveMsg = null;
+    return true;
+  }
+  function starToggle(s, b){
+    var on = toggleQueue(s);
+    renderPool(); renderQueues();
+    if (cardOpen()) renderCard(false);
+    say(on ? F.person(s).name + ' added to your queue. ' + queue.length + ' queued.' : F.person(s).name + ' removed from your queue. ' + queue.length + ' queued.');
+    return on;
+  }
   document.addEventListener('click', function(e){
     var t = e.target;
     if (t === $('sheet')){ closeSheet(); return; }
+    if (t === $('pcard')){ closeCard(); return; }
     var b = t.closest ? t.closest('button') : null;
     if (!b) return;
     if (b.id === 'barbtn'){ openSheet(); return; }
     if (b.id === 'sheetclose'){ closeSheet(); return; }
+    if (b.id === 'pcardclose'){ closeCard(); return; }
+    if (b.id === 'autofill'){ doAutoFill(); return; }
+    if (b.id === 'clearbtn'){
+      if (!F.state.picks.length){ toolMsg('No picks to clear.'); say('No picks to clear.'); return; }
+      if (F.savedTeam()) showClearConfirm(); else doClear();
+      return;
+    }
+    if (b.id === 'clearyes'){ doClear(); return; }
+    if (b.id === 'clearno'){ hideClearConfirm(); return; }
     if (b.disabled) return;
     var s, r;
+    if ((s = b.getAttribute('data-stab'))){ showSheetTab(s, false); return; }
+    if ((s = b.getAttribute('data-sector')) !== null && b.getAttribute('role') === 'tab'){ setSector(s, false); return; }
+    if ((s = b.getAttribute('data-card'))){ openCard(s, b); return; }
+    if ((s = b.getAttribute('data-card-pick'))){ togglePick(s, b); var cp = $('pcardbody').querySelector('[data-card-pick]'); if (cp) cp.focus(); return; }
+    if ((s = b.getAttribute('data-card-cap'))){
+      if (b.getAttribute('aria-disabled') === 'true'){ say(b.getAttribute('data-why') + '.'); return; }
+      r = F.setCaptain(s); if (r.ok){ UI.saveMsg = null; say(r.text); }
+      var cc = $('pcardbody').querySelector('[data-card-cap]'); if (cc) cc.focus();
+      return;
+    }
+    if ((s = b.getAttribute('data-star'))){
+      var inCard = $('pcard').contains(b);
+      starToggle(s, b);
+      if (inCard) focusSel($('pcardbody'), '[data-star]'); else focusSel($('pool'), '[data-star="' + s + '"]');
+      return;
+    }
+    if ((s = b.getAttribute('data-unqueue'))){
+      var qs = queueScope(b), idx = queue.indexOf(s);
+      starToggle(s, b);
+      var items = qs.querySelectorAll('[data-unqueue]');
+      if (items.length) items[Math.min(idx, items.length - 1)].focus(); else { var qh = qs.querySelector('.dr-q__h'); if (qh) qh.focus(); }
+      return;
+    }
+    if ((s = b.getAttribute('data-qpick'))){
+      var qsc = queueScope(b);
+      if (togglePick(s, b)) { if (!focusSel(qsc, '[data-qpick]')) { var qh2 = qsc.querySelector('.dr-q__h'); if (qh2) qh2.focus(); } }
+      return;
+    }
     if ((s = b.getAttribute('data-pick'))){
-      if (b.getAttribute('aria-disabled') === 'true'){ say('Cannot add ' + F.person(s).name + ': ' + b.getAttribute('data-why') + '.'); return; }
-      if (F.state.picks.indexOf(s) >= 0){ r = F.removePick(s); if (r.ok) say(changeLine('Removed ' + F.person(s).name + '.')); }
-      else { r = F.addPick(s); if (r.ok) say(changeLine('Added ' + F.person(s).name + '.') + (F.state.captain === s ? ' Captain.' : '')); }
-      UI.saveMsg = null;
+      togglePick(s, b);
       focusSel($('pool'), '[data-pick="' + s + '"]');
       return;
     }
@@ -444,7 +991,7 @@
       return;
     }
     if (b.hasAttribute('data-reset')){
-      UI.q = ''; UI.sector = ''; keepFilters(); $('q').value = ''; $('sector').value = ''; renderPool(); $('q').focus();
+      UI.q = ''; $('q').value = ''; setSector('', false); $('q').focus();
     }
   });
   document.addEventListener('input', function(e){ if (e.target && e.target.hasAttribute && e.target.hasAttribute('data-code-in')) UI.code = e.target.value; });
@@ -460,7 +1007,6 @@
   });
   var qt = null;
   $('q').addEventListener('input', function(){ var v = this.value; clearTimeout(qt); qt = setTimeout(function(){ UI.q = v; keepFilters(); renderPool(); }, 120); });
-  $('sector').addEventListener('change', function(){ UI.sector = this.value; keepFilters(); renderPool(); });
   $('sort').addEventListener('change', function(){ UI.sort = this.value; keepFilters(); renderPool(); });
 
   F.onChange(function(kind){
@@ -472,7 +1018,7 @@
   // ---- load ----
   function fail(){
     $('weekpill').textContent = 'Data unavailable';
-    var body = clear($('pool')), tr = el('tr'), td = el('td'); td.colSpan = 4;
+    var body = clear($('pool')), tr = el('tr'), td = el('td'); td.colSpan = COLS;
     td.appendChild(el('p', 'v2-msg v2-msg--bad', 'The player pool is not available right now. Try again later.'));
     var rb = btn('v2-btn v2-btn--ghost v2-btn--sm', 'Try again'); rb.addEventListener('click', function(){ location.reload(); });
     td.appendChild(rb); tr.appendChild(td); body.appendChild(tr);
@@ -480,9 +1026,14 @@
     say('The player pool is not available right now.');
   }
   if (F.testClock() != null){ var tcb = $('testclock'); tcb.hidden = false; tcb.textContent = 'Test clock (for testing only): ' + new Date(F.now()).toISOString(); }
+  // player card extras: Forbes rank / net worth and the latest edition (never block the draft)
+  BD.loadPeople().then(function(){ X.people = 'ok'; }, function(){ X.people = 'error'; }).then(function(){ if (cardOpen()) renderCard(true); });
+  BD.getJson('digest.json').then(function(d){ X.digest = d; X.digestState = 'ok'; }, function(){ X.digestState = 'error'; }).then(function(){ if (cardOpen()) renderCard(true); });
   F.init().then(function(){
     if (!F.state.draftWk){ fail(); return; }
+    loadQueue();
     renderHead(); renderNotices(); renderSectors(); renderNotDraftable(); renderAll();
+    $('tools').hidden = false;
     document.body.classList.add('dr-ready');
   }, function(err){ if (window.console) console.warn(err); fail(); });
 })();
