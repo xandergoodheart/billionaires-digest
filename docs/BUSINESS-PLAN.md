@@ -32,7 +32,9 @@ Other companies' numbers link a source. Our own numbers are `[FILL IN: …]` or 
 
 Also: B2B white-label leagues for brokerages, fintechs and finance media; video IP; data.
 
-**The crux, in one line.** Paid-entry, cash-prize contests scored on stock prices do **not** get fantasy-sports protection. The SEC already fined a "fantasy sports for stocks" app, Forcerank, for offering illegal security-based swaps in 2016 ([SEC](https://www.sec.gov/news/pressrelease/2016-216.html)). So the realistic real-money route is a federally regulated exchange partner, not our own paid contests. See section B0.
+**The crux, in one line.** Paid-entry, cash-prize contests scored on stock prices do **not** get fantasy-sports protection. The SEC already fined a "fantasy sports for stocks" app, Forcerank, for offering illegal security-based swaps in 2016 ([SEC](https://www.sec.gov/news/pressrelease/2016-216.html)). So paid contests scored on stock prices are out, and a regulated exchange partner is one real-money route (section B0).
+
+**Our legal position: business is a sport.** Business people are business athletes, and their business acts (deals, filings, launches, raises) are the stat line. Paid contests would use person-first scoring only, with no stock-price points, and follow the federal fantasy-contest rules. The position is untested and needs a lawyer's written opinion first (section B0.5).
 
 **The crypto answer: no.** No token, no crypto prize pools, no crypto network (section C).
 
@@ -297,9 +299,10 @@ The Book (on `origin/v3`, `scripts/lib/book/pricing.mjs`) prices these play-mone
 
 | Route | Could it work? | Why |
 |---|---|---|
+| **P. Our own skill-based paid contests on person-first scoring**, in dominant-factor states, after a legal opinion (and ideally regulator comfort) | **Our chosen position.** Defensible if the product matches it; needs sign-off | No stock-price points. Multiple business athletes across multiple events. Fixed prizes. Sourced, rule-based stats. Designed to meet the UIGEA conditions. Skill proven with free-play data first. Full argument, weak points and plan in B0.5 |
 | **A. Regulated exchange partner** (Kalshi, Polymarket US, Robinhood's exchange) lists markets like "Which billionaire gains most this week?" and we supply the audience, stats and brand | **Most plausible** | These exchanges already list billionaire markets. Kalshi has a "wealthiest person in the world" market and Polymarket has "richest person on December 31, 2026" ([Kalshi](https://kalshi.com/markets/kxwealthy/wealthiest-person-in-world/kxwealthy-25), [Polymarket](https://polymarket.com/event/richest-person-on-december-31-2026)). Exchanges can list new contracts by self-certifying them under CFTC Rule 40.2 ([CFTC listing procedures](https://www.cftc.gov/IndustryOversight/ContractsProducts/ListingProcedures/index.htm)). In July 2026 the CFTC warned against broad, template-style certifications ([CFTC advisory](https://www.cftc.gov/PressRoom/PressReleases/9273-26)). **Open question:** contracts tied to *individual stocks* may count as security-based swaps and need the SEC too. Kalshi's proposed single-stock perpetuals need both SEC and CFTC approval ([Benzinga](https://www.benzinga.com/markets/prediction-markets/26/09/61733955/kalshi-eyes-24-7-leveraged-bets-on-tsla-nvda-and-aapl-with-new-perpetual-futures-push-report)). Markets on published net-worth rankings (Forbes, Bloomberg) exist today. The partner decides what to list. **Event-settled contracts (e.g. "insider buy by Friday") are the easiest. Price-settled single-person ones carry the SEC question.** We earn an affiliate fee or revenue share, show "BD fair odds" as research, and never hold money. |
 | **B. Licensed paid fantasy (DFS) through a licensed operator, in states whose definitions fit** | **Unlikely** | Most state definitions are about athletes and sports (NY above). Even where the wording is looser (VA), the Forcerank theory still applies federally, because payouts turn on stock values. Person-first scoring (option B) could make the argument stronger. It would not make it settled. |
-| **C. Run our own paid-entry contests** (like GameStock, which advertises cash stock tournaments from $5 entry, [App Store](https://apps.apple.com/us/app/gamestock-trading-tournaments/id6751907522)) | **High risk. Don't.** | That is the Forcerank fact pattern. GameStock's compliance page doesn't state its legal basis ([GameStock](https://gamestock.com/compliance)). That some company does it doesn't make it legal. |
+| **C. Run our own paid-entry contests scored on stock prices** (like GameStock, which advertises cash stock tournaments from $5 entry, [App Store](https://apps.apple.com/us/app/gamestock-trading-tournaments/id6751907522)) | **High risk. Don't.** | That is the Forcerank fact pattern. GameStock's compliance page doesn't state its legal basis ([GameStock](https://gamestock.com/compliance)). That some company does it doesn't make it legal. |
 | **D. Friends' league dues through an escrow service** (LeagueSafe-style) | **Unclear. Lawyer question.** | LeagueSafe holds dues for season-long sports leagues and pays out by commissioner vote ([LeagueSafe](https://www.leaguesafe.com/), [LeagueSafe fees](https://help.leaguesafe.com/hc/en-us/articles/217117406-What-are-the-fees-on-LeagueSafe)). Stock-scored payouts may still be swaps, and state social-gambling rules vary. Don't offer this before sign-off. |
 | **E. Free-entry prize contests** paid for by sponsors | **Yes, with proper rules** | No purchase is needed to enter, so there is no "consideration," the pay-to-play element. New York and Florida require registration and a bond when total prizes exceed $5,000 ([Klein Moynihan](https://kleinmoynihan.com/sweepstakes-registration-and-bonding-requirements-2/)). California's AB 831 targets dual-currency, casino-style online sweepstakes and exempts ordinary promotions tied to bona fide sales ([ZwillGen](https://www.zwillgen.com/gaming/californias-ab-831-bans-sweepstakes-casinos-expands-liability-vendors/), [FKKS](https://advertisinglaw.fkks.com/post/102lrox/california-bans-online-sweepstakes-casinos)). Ask the lawyer whether a free contest with no product sale fits that exemption. |
 | **F. Offshore or non-US markets** | **Not a way around US law** | Offering event contracts to US players from outside the rules is exactly what Polymarket was penalized for ([CFTC](https://www.cftc.gov/PressRoom/PressReleases/8478-22)). A licensed non-US launch would be a separate business, under that country's rules. |
@@ -314,6 +317,94 @@ The Book (on `origin/v3`, `scripts/lib/book/pricing.mjs`) prices these play-mone
 **A caution on the "business athletes" label.** Calling them athletes is branding. Regulators and courts look at how the game actually works, meaning what the payout is based on, so the label doesn't change the legal answer. State fantasy laws that mention "athletes" mean sports competitors. New York's definition speaks of "athletic events and athletes" and "human competitors on sports teams and in sports events" ([N.Y. PML § 1401](https://codes.findlaw.com/ny/racing-parimutuel-wagering-and-breeding-law/pml-sect-1401.html)). The positive side: person-first scoring (option B) is what makes the athlete comparison real, because an athlete's stats are things they do.
 
 **Bottom line.** Plan the business so it survives if Route A never happens. Make Route A the prize to pursue. Don't touch Route C.
+
+### B0.5. Our legal position: business is a sport
+
+*This is the company's stated position. It is untested. A lawyer must sign off before any paid contest. This is not legal advice.*
+
+**1. The position**
+
+Running a business is a performance, one to one with a sport. A founder or CEO wakes up and makes decisions that move their company: sends the email, signs the deal, ships the product, raises the round. An athlete does the same when they wake up and score a goal. Business people are **business athletes**, and their business acts are the **stat line**. A fantasy contest on those stats is a game of skill on the real-world performance of individuals, just like daily fantasy sports.
+
+**2. The legal hooks that support it**
+
+**a. The federal fantasy carve-out already reaches beyond athletes.**
+- The UIGEA excludes fantasy contests whose outcomes are "determined predominantly by accumulated statistical results of the performance of individuals (athletes in the case of sports events) in multiple real-world sporting or other events" ([31 U.S.C. § 5362(1)(E)(ix)](https://www.law.cornell.edu/uscode/text/31/5362)).
+- Two parts of that text help us:
+  - The parenthetical limits "athletes" to *sports* events.
+  - The phrase "or other events" covers events that aren't sports.
+- Read together, the text contemplates fantasy contests on individuals who aren't athletes, in events that aren't sports. That is our argument, not a court holding.
+- We would design every paid contest to meet all of the UIGEA conditions (same source):
+  - (I) All prizes are set and announced in advance, and their value does not depend on the number of entrants or the fees paid.
+  - (II) Winning outcomes reflect participants' relative knowledge and skill. They are determined predominantly by the accumulated stats of **multiple individuals** across **multiple real-world events**.
+  - (III) No outcome rests on the score or performance of any single team, or solely on any single performance by one individual in one event.
+- The UIGEA carve-out doesn't make a game legal by itself (B0). It removes one federal barrier. State law still decides.
+
+**b. Skill.**
+- Drafting, setting the lineup, choosing the captain, working waivers and making trades are all skill decisions.
+- **We will prove skill with our own free-play data before any paid launch,** rather than assume it. Two tests:
+  - **Skill persistence.** Do the same players finish near the top season after season, or first half vs second half?
+  - **Top vs random.** How do real players' lineups compare with random lineups drawn from the same pool?
+- There is published precedent for the method. An MIT and University of Toronto study of FanDuel contests (2013–14 seasons) compared players' first-half and second-half results. Persistence is the hallmark of skill, and it found "the signal for skill in the data is very clear." The study appeared in *SIAM Review* ([MIT News](https://news.mit.edu/2018/hosoi-study-skill-fantasy-sports-1107)). It found basketball and baseball more skill-driven than hockey and football.
+- Other academic work uses similar persistence tests. It is cited as found in a secondary summary; we have not verified it: Haugh and Singal on DFS, and O'Brien, Gleeson and O'Sullivan on Fantasy Premier League ([arXiv survey](https://arxiv.org/html/2512.18467v1)).
+
+**c. Names and public stats.** Using real people's names and public performance stats in fantasy games was protected by the First Amendment in *C.B.C. v. MLB Advanced Media* (8th Cir. 2007) ([Justia](https://law.justia.com/cases/federal/appellate-courts/ca8/06-3358/063357p-2011-02-25.html)).
+
+**d. Contest, not swap.**
+- Sports DFS contests are fixed-prize skill contests among players. The SEC and CFTC have not treated them as swaps. That is our reading; we found no federal action treating sports DFS as a swap.
+- Our argument: when the stat line is a person's *business acts*, our contest is the same kind of thing.
+- **The counterexample is Forcerank** ([SEC](https://www.sec.gov/news/pressrelease/2016-216.html)). Forcerank paid players for predicting how securities' **prices** would rank.
+- **The line we draw:** we pay on the **accumulated business-performance stats of individuals**, not on price. The line only holds if the product has no price-based payouts (rule 3 below).
+
+**3. The design rules that make the position true in the product**
+
+The argument holds only if the product matches it. **Person-first scoring is the default, and the only, scoring for any paid contest.**
+
+- **What scores: business acts and their direct, reported results.** Each must be sourced.
+  - Deals and acquisitions announced.
+  - Funding raised (a Form D, or a round reported by named outlets).
+  - Products launched.
+  - Companies founded.
+  - S-1 or IPO filings.
+  - Insider buys and sells (Form 4).
+  - 13D/13G stakes.
+  - 13F moves by their vehicles.
+  - Key hires.
+  - Philanthropy pledges.
+  - For public-company leaders, reported operating results from filings, such as revenue growth or earnings vs guidance.
+    - **Counter-risk for this category:** a security-based swap can be based on "the occurrence, nonoccurrence, or extent of the occurrence of an event relating to a single issuer … provided that such event directly affects the financial statements, financial condition, or financial obligations of the issuer" ([15 U.S.C. § 78c(a)(68)(A)(ii)(III)](https://www.law.cornell.edu/uscode/text/15/78c)).
+    - Earnings-based stats sit close to that line. The lawyer must rule on this category before it is used in paid play.
+- **No stock-price points in paid contests.** Price stays in the free game only, if at all.
+- **No single-person or single-event outcomes.** Every paid contest scores multiple business athletes across multiple events. Prizes are fixed in advance.
+- **Every stat is rule-based and sourced.**
+  - The digest's sourcing standard becomes the official stat-keeping, like a league's official scorer.
+  - We publish a rulebook (what counts, how many points, which sources qualify) and a stat-correction policy (how and when a stat is fixed, and a cutoff after which results are final).
+- **The Founders league is the cleanest fit.** Private companies have no daily stock price, so there is nothing to strip out.
+
+**4. Weak points, and how we answer each**
+
+| Weak point | Our answer |
+|---|---|
+| It's novel and untested | Say so. Get a written legal opinion before any paid contest, and ideally regulator comfort (step 5) |
+| State fantasy statutes that say "athletes" and sports events (e.g. NY, [PML § 1401](https://codes.findlaw.com/ny/racing-parimutuel-wagering-and-breeding-law/pml-sect-1401.html)) | We don't rely on those statutes. We rely on general skill-vs-chance law in states that use the dominant-factor test. We avoid NY-type states until the law is clarified |
+| Forcerank and securities law | No price-based payouts in paid contests, plus a securities-law opinion. The earnings category waits for a ruling |
+| States that treat any chance as gambling ([Lexology](https://www.lexology.com/library/detail.aspx?g=0a16536c-4f6f-48ed-966f-a8d43b676f10)) | Skip them |
+| Editorial judgment in the stats | Fixed, published rules and sources. No discretion on game day. A public correction log |
+
+**5. How we make it defensible (the plan)**
+1. **A formal written legal opinion** from gaming counsel and securities/derivatives counsel, on this exact product and rulebook.
+2. **Consider asking regulators for comfort.**
+   - **SEC:** a staff no-action letter is a staff statement that it would not recommend enforcement "based on the facts and representations" in the request ([Investor.gov](https://www.investor.gov/introduction-investing/investing-basics/glossary/no-action-letters), [SEC Trading and Markets letters](https://www.sec.gov/rules-regulations/no-action-interpretive-exemptive-letters/division-trading-markets-no-action)).
+   - **CFTC:** staff no-action, interpretive and exemptive letters are requested under CFTC Regulation 140.99 ([CFTC staff letters](https://www.cftc.gov/LawRegulation/CFTCStaffLetters/index.htm)).
+   - These letters bind only the staff and the specific facts. They are comfort, not law.
+3. **Launch paid play state by state,** only where the state uses the dominant-factor test and has no contrary law or ruling.
+4. **Run free play first** to build the skill evidence (2b).
+5. **Operate like a licensed contest operator:**
+   - 18+ or 21+ where required, geolocation, KYC and responsible-play tools.
+   - Fixed-prize contests only.
+   - No house-banked bets (The Book stays play money).
+   - Player funds held the way counsel directs.
+6. **Legal budget:** `[FILL IN: quotes for the opinion(s) and any regulator request]`.
 
 ### B1. Stage 1, now: free league + sponsors + League Pass
 
@@ -343,6 +434,10 @@ The Book (on `origin/v3`, `scripts/lib/book/pricing.mjs`) prices these play-mone
 - **Why it matters:** it makes the free league feel like "real stakes" without anyone paying to play, and sponsors pay for it.
 
 ### B3. Stage 3, only if the crux clears: real-money play through a licensed route
+
+Two routes, side by side:
+- **Route P, our position (B0.5).** Our own skill-based, fixed-prize paid contests on person-first scoring. Only in dominant-factor states, only after a written legal opinion, and ideally with regulator comfort. The Founders league fits best. We would carry the operator duties: KYC, age, geolocation, responsible play, and holding player funds as counsel directs.
+- **Route A, the exchange partner** (below).
 
 - **Most likely shape (Route A).** A regulated exchange partner lists weekly "billionaire" markets that mirror our league, e.g. "Top-scoring billionaire this week" or "Will X's holdings beat the S&P 500 this week?"
   - We are the official stats and media partner. Players click through to the partner's own platform.
@@ -676,7 +771,7 @@ For $250k–$500k over 18 months, a suggested split (assumption):
 5. **Days 14–30: seed 25 leagues by hand.** Friends, coworkers, the real estate network and 3–5 finance creators.
 6. **Days 14–45: research layer as the stats feed.** Launch the free daily email positioned as "your league's stats": the day's biggest movers among draftable billionaires and new filings on your roster. Put a sign-up box on every game page.
 7. **Days 21–60: Season 1 hype.** Two shorts a week: draft-night reveal, matchday recap, trash-talk bits. Every one points to "start a league."
-8. **Days 30–60: lawyer consultation on the crux** (E1 list item 1) and on prize contests. Bring both scoring versions (today's and option B) and The Book's market list. Get the answers in writing.
+8. **Days 30–60: lawyer consultation on the crux** (E1 list item 1) and on prize contests. Bring both scoring versions (today's and option B) and The Book's market list. **Ask for a written opinion on our position, "business is a sport" (section B0.5), for person-first paid contests.** Get the answers in writing.
 9. **Days 30–60: sponsor pitch.** Build a "Billionaire Bowl presented by …" deck (audience, leagues, formats, rules) and pitch 20 fintech, finance-media and consumer brands. No betting or crypto-exchange sponsors yet.
 10. **Days 45–75: League Pass on Stripe Billing plus Tax.** Commissioner tools, advanced SEC stats, draft kit, cosmetics. Never pay-to-win.
 11. **Days 60–90:** if the lawyer sees a path for Route A, send exploratory emails to 2–3 regulated exchanges (Kalshi, Polymarket US, Robinhood's exchange) proposing weekly billionaire markets with us as the stats and media partner. Sign nothing without counsel.
@@ -796,3 +891,4 @@ For $250k–$500k over 18 months, a suggested split (assumption):
 18. **Bigger leagues.** Grow leagues to 10–12 teams once the scoreable pool grows (e.g. 80 scoreable → 12 × 6)?
 19. **Scoring for the lawyer.** Which scoring do you want the lawyer to review: today's price-based scoring, person-first (option B), or both?
 20. **League types.** Which league types, and in what order?
+21. **Paid-contest scoring.** Approve person-first scoring as the only scoring for paid contests?
