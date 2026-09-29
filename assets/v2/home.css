@@ -55,7 +55,7 @@
 .hm-board__loading { margin: var(--s1) 0; }
 .hm-sb__head { display: flex; justify-content: space-between; align-items: center; gap: var(--s1); }
 .hm-sb__kick { font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
-.hm-sb__more, .hm-sec__more { display: inline-flex; align-items: center; min-height: var(--tap); color: var(--link); font-size: var(--fs-sm); font-weight: 700; text-decoration: none; }
+.hm-sb__more, .hm-sec__more { display: inline-flex; align-items: center; white-space: nowrap; flex: none; min-height: var(--tap); color: var(--link); font-size: var(--fs-sm); font-weight: 700; text-decoration: none; }
 .hm-sb__more:hover, .hm-sec__more:hover { text-decoration: underline; }
 .hm-sb { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s2); padding: 4px 0 12px; border-bottom: 1px solid var(--line); }
 .hm-sb__side { display: flex; align-items: center; gap: var(--s1); min-width: 0; }
@@ -145,3 +145,63 @@
 .hm-mv__close { display: block; margin-top: 6px; font-size: var(--fs-xs); color: var(--text-muted); }
 .hm-mv__fine { font-size: var(--fs-xs); color: var(--text-muted); margin: 10px 0 12px; }
 .hm-odds__btn { margin-top: 4px; }
+
+/* ---------- v3 fantasy home: hero banner ---------- */
+.hm-hero {
+  position: relative; overflow: hidden; isolation: isolate; border-radius: var(--radius-card); background: #0B0B0C; color: #fff;
+  min-height: 300px; display: flex; align-items: flex-end; margin-bottom: var(--gutter); box-shadow: var(--shadow);
+}
+.hm-hero__img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+.hm-hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top, rgba(8, 9, 10, .94) 0%, rgba(8, 9, 10, .72) 38%, rgba(8, 9, 10, .18) 75%, rgba(8, 9, 10, .05) 100%),
+              linear-gradient(to right, rgba(8, 9, 10, .7) 0%, rgba(8, 9, 10, 0) 60%);
+}
+.hm-hero__in { padding: var(--s3); max-width: 680px; }
+.hm-hero__kick { display: inline-block; background: var(--brand); color: #fff; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 3px 8px; border-radius: 3px; margin-bottom: 10px; }
+.hm-hero__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 60px; line-height: .95; margin: 0 0 10px; color: #fff; text-shadow: 0 2px 12px rgba(0, 0, 0, .5); }
+.hm-hero__sub { font-size: var(--fs-lg); color: #E1E4E8; margin: 0 0 var(--s1); max-width: 52ch; }
+.hm-hero :focus-visible { outline-color: #8AB4FF; }
+@media (max-width: 767px) {
+  .hm-hero { min-height: 340px; }
+  .hm-hero__img { object-position: 50% 30%; }
+  .hm-hero__in { padding: var(--s2) var(--s1); }
+  .hm-hero__h { font-size: 38px; }
+  .hm-hero__sub { font-size: var(--fs-md); }
+  .hm-hero__btn { width: 100%; }
+}
+
+/* ---------- your franchise (scoreboard card additions) ---------- */
+.hm-sb__pts { display: block; font-size: var(--fs-sm); font-weight: 400; color: var(--text-muted); }
+.hm-fr__empty { padding: 4px 0 var(--s1); }
+.hm-fr__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 30px; line-height: 1; margin: 4px 0 6px; }
+.hm-fr__p { margin: 0 0 12px; color: var(--text-muted); }
+.hm-fr__book { border-top: 1px solid var(--line); padding-top: 4px; }
+.hm-sb--last { border-bottom: 0; padding-bottom: 0; }
+
+/* ---------- how to play ---------- */
+.hm-sec__head--card { border-bottom-width: 1px; border-bottom-color: var(--line); align-items: flex-start; }
+.hm-how__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+@media (min-width: 768px) and (max-width: 1023px) { .hm-how__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s1); } }
+.hm-how__i { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
+.hm-how__n { flex: none; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 32px; line-height: 1; color: var(--brand-ink); }
+.hm-how__h { font-size: var(--fs-md); font-weight: 700; line-height: 1.25; margin: 2px 0 2px; }
+.hm-how__p { margin: 0; font-size: var(--fs-sm); color: var(--text-muted); }
+
+/* ---------- From the Digest ---------- */
+.hm-story__n { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 16px; color: var(--text); margin-right: 8px; letter-spacing: 0; }
+.hm-stories__foot { margin: 12px 0 0; font-size: var(--fs-sm); }
+.hm-stories__foot a { color: var(--link); font-weight: 600; }
+
+/* ---------- players to watch ---------- */
+.hm-watch__k { margin: 2px 0 0; font-size: var(--fs-sm); color: var(--text-muted); }
+.hm-watch__list { list-style: none; margin: 0; padding: 0; }
+.hm-watch__i { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.hm-watch__i:last-child { border-bottom: 0; }
+.hm-watch__rank { flex: none; width: 1.4em; text-align: center; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 22px; color: var(--text-muted); }
+.hm-watch__i .v2-av { flex: none; }
+.hm-watch__i .v2-player__txt { min-width: 0; }
+.hm-watch__i .v2-player__name { display: inline; }
+.hm-watch__i .v2-player__name:hover { text-decoration: underline; text-underline-offset: 2px; }
+.hm-watch__sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hm-watch__pts { flex: none; margin-left: auto; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 24px; }

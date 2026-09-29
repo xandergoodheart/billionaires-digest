@@ -155,9 +155,20 @@
         </section>
 
         <section class="v2-card tm-five" id="five" aria-labelledby="fiveh">
-          <div class="v2-card__head"><h2 class="v2-h2" id="fiveh">Your starting five</h2><span class="v2-card__meta" id="capmeta"></span></div>
+          <div class="v2-card__head"><h2 class="v2-h2" id="fiveh">The box score</h2><span class="v2-card__meta" id="capmeta"></span></div>
           <div id="fivebody"><span class="v2-skel"></span><span class="v2-skel"></span><span class="v2-skel"></span></div>
-          <p class="tm-hint" id="fivehint" hidden>Select a name for a quick profile.</p>
+          <p class="tm-hint" id="fivehint" hidden>Select a name for the player dossier. Base pts are before the captain bonus; team pts count your captain 1.5 times.</p>
+        </section>
+
+        <section class="v2-card tm-replay" id="replay" aria-labelledby="replayh" hidden>
+          <div class="v2-card__head"><h2 class="v2-h2" id="replayh">Play the week</h2><span class="v2-card__meta">Replay</span></div>
+          <p class="tm-replay__note">Replay of real market days, not a forecast. Step through the week and watch the score build.</p>
+          <div id="replaybody"></div>
+        </section>
+
+        <section class="v2-card tm-bench" id="bench" aria-labelledby="benchh" hidden>
+          <div class="v2-card__head"><h2 class="v2-h2" id="benchh">The benchmark</h2><span class="v2-card__meta" id="benchmeta"></span></div>
+          <div id="benchbody"></div>
         </section>
 
         <section class="v2-card tm-season" id="season" aria-labelledby="seasonh">
@@ -256,6 +267,7 @@
 <script src="assets/v2/chrome.js"></script>
 <script src="assets/v2/dossier-core.js"></script>
 <script src="assets/v2/dossier.js"></script>
+<script src="assets/v2/week-core.js"></script>
 <script src="assets/v2/team.js"></script>
 </body>
 </html>

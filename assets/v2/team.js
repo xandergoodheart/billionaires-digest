@@ -2,15 +2,17 @@
    State and rules come from BDFantasyStore (assets/v2/fantasy-store.js) and BDFantasyCore. Real data only:
    when there is no team or no scored day yet, the page says so instead of showing numbers.
    No team in this browser -> the fantasy landing (Draft your team / Create a league / Join a league / Lucky five).
-   With a team: dark score card vs the S&P 500, starting five table, season (streak, XP, badges, coins),
-   next round, team news, leagues.
+   With a team: dark score card vs the S&P 500 with a day-by-day running-total chart, the box score (base and team
+   points, captain applied), "Play the week" replay of the real scored days, the benchmark card, season (streak, XP,
+   badges, coins), next round, team news, leagues.
+     chart, replay, benchmark <- BDWeekCore (assets/v2/week-core.js) over BDFantasyStore.teamWeek; a replay, never a forecast
      streak, badges  <- BDFantasyStore.pure.seasonRecord over finished real weeks you saved a team for
      XP / level      <- weeks played x100 + weeks beat the S&P 500 x50; a level every 500 XP (formula shown on the page)
      coins           <- the online game (BDFantasyStore.me()) only when signed in; otherwise "Sign in" text
    The profile preview shows initials (or an approved illustrated portrait from BDPortraits), never a photo.
    Play money only, no prizes. */
 (function(){
-  var F = window.BDFantasyStore, C = window.BDFantasyCore;
+  var F = window.BDFantasyStore, C = window.BDFantasyCore, W = window.BDWeekCore;
   var el = BD.el, arr = BD.arr;
   var fmt = F.fmt;
   var MINUS = '−';
@@ -159,9 +161,201 @@
     right.appendChild(lb);
     grid.appendChild(right);
     box.appendChild(grid);
+    if (W && v.mode === 'scoring' && v.any) box.appendChild(chart(v));
     var note = scoringNote(v);
     if (note) box.appendChild(el('p', 'tm-score__note', note));
     return L;
+  }
+
+  // ---- day-by-day chart: running total after each scored day, Monday to Friday; unplayed days are empty slots ----
+  var curSlots = [];
+  function chart(v){
+    var slots = W.weekSlots(v.wk, v.res.byDay), sc = W.barScale(slots);
+    curSlots = slots;
+    var box = el('div', 'tm-chart');
+    box.setAttribute('role', 'group');
+    box.setAttribute('aria-labelledby', 'charth');
+    var k = el('p', 'tm-chart__k', 'Day by day · running total'); k.id = 'charth';
+    box.appendChild(k);
+    var plot = el('div', 'tm-chart__plot'); plot.id = 'chartplot';
+    plot.setAttribute('aria-hidden', 'true');
+    var zero = el('span', 'tm-chart__zero'); zero.style.top = (sc.pos * 100) + '%';
+    plot.appendChild(zero);
+    var axis = el('div', 'tm-chart__axis');
+    axis.setAttribute('aria-hidden', 'true');
+    slots.forEach(function(s, i){
+      var b = sc.bars[i];
+      var col = el('div', 'tm-chart__col is-' + s.state);
+      col.setAttribute('data-date', s.date);
+      var up = el('div', 'tm-chart__up'), down = el('div', 'tm-chart__down');
+      up.style.height = (sc.pos * 100) + '%';
+      down.style.height = (sc.neg * 100) + '%';
+      if (s.state === 'scored'){
+        var bar = el('span', 'tm-chart__bar ' + (b.up ? 'is-up' : 'is-down'));
+        bar.style.height = b.pct + '%';
+        (b.up ? up : down).appendChild(bar);
+      }
+      col.appendChild(up); col.appendChild(down);
+      plot.appendChild(col);
+      var ax = el('div', 'tm-chart__ax is-' + s.state);
+      ax.setAttribute('data-date', s.date);
+      ax.appendChild(el('span', 'tm-chart__dow', s.dow));
+      ax.appendChild(el('span', 'tm-chart__v num', s.state === 'scored' ? signedTxt(s.running) : (s.state === 'late' ? 'Late' : '—')));
+      axis.appendChild(ax);
+    });
+    box.appendChild(plot);
+    box.appendChild(axis);
+    // the same numbers for screen readers
+    var t = el('table', 'v2-sr');
+    t.appendChild(el('caption', null, 'Running total by day, ' + fmt.weekName(v.wk.week)));
+    var hr = el('tr');
+    ['Day', 'Team points that day', 'Running total'].forEach(function(h){ var th = el('th', null, h); th.scope = 'col'; hr.appendChild(th); });
+    var th0 = el('thead'); th0.appendChild(hr); t.appendChild(th0);
+    var tb = el('tbody');
+    slots.forEach(function(s){
+      var tr = el('tr');
+      var th = el('th', null, s.dayName + ', ' + fmt.shortDate(s.date)); th.scope = 'row'; tr.appendChild(th);
+      if (s.state === 'scored'){ tr.appendChild(el('td', null, signedTxt(s.points))); tr.appendChild(el('td', null, signedTxt(s.running))); }
+      else { var td = el('td', null, s.state === 'late' ? 'Before your late entry, not counted' : 'Not scored'); td.colSpan = 2; tr.appendChild(td); }
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    box.appendChild(t);
+    return box;
+  }
+  // replay highlight: past days full, the replayed day marked, later days dimmed (step 0 = no highlight)
+  function markChart(step){
+    var plot = $('chartplot');
+    if (!plot) return;
+    var sc = W.scored(curSlots), dates = {};
+    sc.forEach(function(s, i){ dates[s.date] = i + 1; });
+    plot.parentNode.className = 'tm-chart' + (step > 0 ? ' is-replaying' : '');
+    Array.prototype.forEach.call(plot.parentNode.querySelectorAll('[data-date]'), function(n){
+      var k = dates[n.getAttribute('data-date')];
+      n.classList.remove('is-now', 'is-ahead', 'is-past');
+      if (!step || !k) return;
+      n.classList.add(k === step ? 'is-now' : (k > step ? 'is-ahead' : 'is-past'));
+    });
+  }
+
+  // ---- play the week: replay the real scored days one at a time ----
+  var rp = { step: 0, v: null };
+  function renderReplay(v){
+    var sec = $('replay'), body = clear($('replaybody'));
+    var sc = W && v.mode === 'scoring' && v.any ? W.scored(curSlots) : [];
+    if (sc.length < 2){ sec.hidden = true; rp.v = null; return; }
+    rp.v = v; rp.step = 0;
+    var days = el('div', 'tm-replay__days');
+    days.setAttribute('role', 'group');
+    days.setAttribute('aria-label', 'Replay a day');
+    var last = curSlots.indexOf(sc[sc.length - 1]);
+    curSlots.forEach(function(s, i){
+      var k = sc.indexOf(s) + 1;
+      if (k > 0){
+        var b = el('button', 'tm-replay__day');
+        b.type = 'button';
+        b.setAttribute('data-step', String(k));
+        b.setAttribute('aria-label', 'Day ' + k + ': ' + s.dayName + ', ' + fmt.shortDate(s.date));
+        b.setAttribute('aria-pressed', 'false');
+        b.appendChild(el('span', 'tm-replay__dn num', String(k)));
+        b.appendChild(el('span', 'tm-replay__dw', s.dow));
+        days.appendChild(b);
+      } else if (i > last){
+        var off = el('span', 'tm-replay__day is-off');
+        off.setAttribute('aria-hidden', 'true');
+        off.appendChild(el('span', 'tm-replay__dn', '·'));
+        off.appendChild(el('span', 'tm-replay__dw', s.dow));
+        days.appendChild(off);
+      }
+    });
+    body.appendChild(days);
+    var mini = el('div', 'tm-replay__mini'); mini.id = 'rpmini';
+    body.appendChild(mini);
+    var ctl = el('div', 'tm-replay__ctl');
+    var next = el('button', 'v2-btn v2-btn--primary v2-btn--sm', 'Next day'); next.type = 'button'; next.id = 'rpnext';
+    var again = el('button', 'v2-btn v2-btn--ghost v2-btn--sm', 'Replay from ' + sc[0].dayName); again.type = 'button'; again.id = 'rpagain';
+    ctl.appendChild(next); ctl.appendChild(again);
+    body.appendChild(ctl);
+    sec.hidden = false;
+    replayTo(0, false);
+  }
+  function replayTo(step, announce){
+    var v = rp.v;
+    if (!v) return;
+    var r = W.replayAt(curSlots, step);
+    rp.step = r.step;
+    var mini = clear($('rpmini'));
+    if (!r.step){
+      mini.appendChild(el('span', 'tm-replay__k', 'Before the first day'));
+      mini.appendChild(el('span', 'tm-replay__big num v2-zero', '0'));
+      mini.appendChild(el('p', 'tm-replay__line', 'Press Next day to replay ' + r.first.dayName + ', ' + fmt.shortDate(r.first.date) + '.'));
+    } else {
+      var d = r.day;
+      mini.appendChild(el('span', 'tm-replay__k', 'After ' + d.dayName + ', ' + fmt.shortDate(d.date) + ' · day ' + r.step + ' of ' + r.n));
+      var big = el('span', 'tm-replay__big num ' + numCls(r.running), plainTxt(r.running));
+      big.appendChild(el('span', 'tm-replay__unit', ' pts total'));
+      mini.appendChild(big);
+      var line = el('p', 'tm-replay__line');
+      line.appendChild(document.createTextNode('That day: '));
+      line.appendChild(el('strong', numCls(r.points), signedTxt(r.points)));
+      var best = W.topOfDay(v.res.perDay[d.date], orderedPicks(v.team));
+      if (best){
+        line.appendChild(document.createTextNode(' · Best on the day: ' + surname(F.person(best.slug).name) + ' '));
+        line.appendChild(el('strong', numCls(best.points), signedTxt(best.points)));
+      }
+      mini.appendChild(line);
+    }
+    Array.prototype.forEach.call($('replaybody').querySelectorAll('button[data-step]'), function(b){
+      var on = +b.getAttribute('data-step') === r.step;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.classList.toggle('is-on', on);
+    });
+    var next = $('rpnext');
+    if (r.done){ next.setAttribute('aria-disabled', 'true'); next.textContent = 'No more scored days'; }
+    else { next.removeAttribute('aria-disabled'); next.textContent = 'Next day'; }
+    markChart(r.step);
+    if (announce){
+      say(r.step ? 'Day ' + r.step + ' of ' + r.n + ', ' + r.day.dayName + ': ' + signedTxt(r.points) + ' that day, ' + plainTxt(r.running) + ' points total.' + (r.done ? ' That is the last scored day.' : '') : 'Replay reset.');
+    }
+  }
+  $('replay').addEventListener('click', function(e){
+    var t = e.target.closest ? e.target.closest('button') : null;
+    if (!t || !rp.v) return;
+    if (t.id === 'rpnext'){
+      if (t.getAttribute('aria-disabled') === 'true'){ say('That is the last scored day. Press Replay to start again.'); return; }
+      replayTo(W.nextStep(rp.step, W.scored(curSlots).length), true);
+    } else if (t.id === 'rpagain') replayTo(1, true);
+    else if (t.hasAttribute('data-step')) replayTo(+t.getAttribute('data-step'), true);
+  });
+
+  // ---- the benchmark: your team vs the S&P 500 for the week ----
+  function renderBench(v){
+    var sec = $('bench'), body = clear($('benchbody'));
+    if (v.mode !== 'scoring' || !W){ sec.hidden = true; return; }
+    $('benchmeta').textContent = fmt.weekTitle(v.wk.week);
+    var total = v.any ? v.res.total : null, bm = bench(v), vs = W.versus(total, bm);
+    var grid = el('div', 'tm-bench__grid');
+    [['Your team', total, vs && vs.lead === 'ahead'], ['S&P 500', bm, vs && vs.lead === 'behind']].forEach(function(x){
+      var c = el('div', 'tm-bench__cell' + (x[2] ? ' is-win' : ''));
+      c.appendChild(el('span', 'tm-bench__k', x[0]));
+      c.appendChild(el('span', 'tm-bench__v num', x[1] == null ? '—' : plainTxt(x[1])));
+      c.appendChild(el('span', 'v2-sr', x[1] == null ? ' no points yet' : ' fantasy points'));
+      grid.appendChild(c);
+    });
+    body.appendChild(grid);
+    var over = F.weekOver(v.wk), line = el('p', 'tm-bench__diff');
+    if (vs){
+      var word = vs.lead === 'ahead' ? (over ? 'Won by ' : 'Ahead by ') : (vs.lead === 'behind' ? (over ? 'Lost by ' : 'Behind by ') : 'Level');
+      line.appendChild(el('strong', numCls(vs.diff), signedTxt(vs.diff)));
+      line.appendChild(document.createTextNode(' vs the S&P 500 · ' + word + (vs.lead === 'level' ? '' : Math.abs(vs.diff) + (Math.abs(vs.diff) === 1 ? ' point' : ' points')) + (over ? '' : ' so far')));
+    } else {
+      line.textContent = v.any ? 'No S&P 500 quotes saved for these days yet.' : 'The benchmark starts with the first scored day.';
+    }
+    body.appendChild(line);
+    if (v.team.lateFrom) body.appendChild(el('p', 'tm-small', 'Late entry: your team scores from ' + fmt.dayLabel(v.team.lateFrom) + '; the S&P 500 counts every scored day of the week.'));
+    if (v.wk.practice) body.appendChild(el('p', 'tm-small', 'Practice week: it does not count for your season record.'));
+    body.appendChild(link('v2-btn v2-btn--ghost v2-btn--sm tm-bench__btn', 'See the leaderboard', 'scores.html#leaderboard'));
+    sec.hidden = false;
   }
 
   // ---- score strip (phone) ----
@@ -227,8 +421,20 @@
       tb.appendChild(tr);
     });
     t.appendChild(tb);
+    if (v.any){
+      var baseSum = 0;
+      v.team.picks.forEach(function(s){ baseSum += v.res.baseBySlug[s] || 0; });
+      var tf = el('tfoot'), fr = el('tr', 'tm-total');
+      var fth = el('th', null, 'Total'); fth.scope = 'row'; fr.appendChild(fth);
+      fr.appendChild(el('td', 'n', missing ? '—' : String(used)));
+      fr.appendChild(el('td', 'n ' + numCls(baseSum), signedTxt(baseSum)));
+      fr.appendChild(el('td', 'n tm-hide-sm', ''));
+      fr.appendChild(el('td', 'n v2-strong ' + numCls(v.res.total), signedTxt(v.res.total)));
+      tf.appendChild(fr); t.appendChild(tf);
+    }
     wrap.appendChild(t);
     body.appendChild(wrap);
+    $('fivehint').textContent = 'Select a name for the player dossier. Base pts are before the captain bonus; team pts count your captain ' + C.CAPTAIN_MULT + ' times.';
   }
 
   // ---- next round: lock countdown ----
@@ -540,7 +746,7 @@
     }
     showLanding(false);
     var L = renderHero(v);
-    renderStrip(v); renderFive(v); renderNext(); renderLevel(); renderBadges(v); renderCoins(); renderNews(v); renderLeagues();
+    renderStrip(v); renderFive(v); renderReplay(v); renderBench(v); renderNext(); renderLevel(); renderBadges(v); renderCoins(); renderNews(v); renderLeagues();
     var tot = v.any ? v.res.total : null;
     say(teamName() + '. ' + (tot == null ? 'No team points yet.' : 'Team total ' + plainTxt(tot) + ' fantasy points. Result: ' + L.word + '.'));
   }
@@ -555,6 +761,7 @@
     r.addEventListener('click', function(){ location.reload(); });
     box.appendChild(r);
     clear($('fivebody')).appendChild(el('p', 'v2-msg', 'Your team will show here when the game data loads.'));
+    $('replay').hidden = true; $('bench').hidden = true;
     clear($('nextbody')).appendChild(el('p', 'v2-msg', 'Lineups lock every Monday at 9:30 AM ET.'));
     ['levelbody', 'badgebody'].forEach(function(id){ clear($(id)).appendChild(el('p', 'v2-msg', 'Not available right now.')); });
     clear($('newsbody')).appendChild(el('p', 'v2-msg', 'Not available right now.'));

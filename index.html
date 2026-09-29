@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="assets/v2/tokens.css">
 <link rel="stylesheet" href="assets/v2/ui.css">
 <link rel="stylesheet" href="assets/v2/home.css">
+<link rel="stylesheet" href="assets/v2/dossier.css">
 </head>
 <body class="v2">
 <!-- v2topbar:start -->
@@ -114,16 +115,32 @@
 <main id="main" class="v2-main hm-main" tabindex="-1">
   <div class="v2-wrap">
     <p class="v2-banner" id="testclock" hidden></p>
-    <h1 class="v2-sr">Billionaires Digest: play the billionaires</h1>
+    <section class="hm-hero" aria-labelledby="heroh">
+      <img class="hm-hero__img" src="assets/art/realistic/hero-fantasy.webp" alt="" width="1600" height="896" fetchpriority="high">
+      <div class="hm-hero__in">
+        <span class="hm-hero__kick">Billionaire Fantasy League</span>
+        <h1 class="hm-hero__h" id="heroh"><span class="v2-sr">Billionaires Digest: play the billionaires. </span>All the ego. None of the equity.</h1>
+        <p class="hm-hero__sub">Draft five of the world's richest people and score on their real stock moves. Play money only, no prizes.</p>
+        <a class="v2-btn v2-btn--primary v2-btn--big hm-hero__btn" href="draft.html">Go to the Draft room</a>
+      </div>
+    </section>
 
     <div class="hm-layout">
       <!-- center column: scoreboard, today's lede, story grid -->
       <div class="hm-center">
         <section class="hm-board" id="hero" aria-labelledby="boardh">
-          <h2 class="v2-sr" id="boardh">Featured scoreboard</h2>
+          <h2 class="v2-sr" id="boardh">Your franchise</h2>
           <div id="hmteam" aria-busy="true">
             <p class="v2-loading hm-board__loading">Checking for your team…</p>
           </div>
+        </section>
+
+        <section class="v2-card hm-how" aria-labelledby="howh">
+          <div class="hm-sec__head hm-sec__head--card">
+            <h2 class="v2-h2" id="howh">How to play</h2>
+            <a class="hm-sec__more" href="play-terms.html">Full rules</a>
+          </div>
+          <ol class="hm-how__list" id="howlist"></ol>
         </section>
 
         <article class="hm-lede" id="lede" aria-labelledby="ledeh">
@@ -134,12 +151,24 @@
           </div>
         </article>
 
-        <section class="hm-stories" aria-labelledby="storiesh">
+        <section class="hm-stories" id="digestsec" aria-labelledby="storiesh">
           <div class="hm-sec__head">
-            <h2 class="v2-h2" id="storiesh">In today's edition</h2>
+            <h2 class="v2-h2" id="storiesh">From the Digest</h2>
             <a class="hm-sec__more" href="news.html">All stories</a>
           </div>
-          <ul class="hm-grid" id="storygrid"><li class="hm-story"><span class="v2-skel"></span><span class="v2-skel"></span></li></ul>
+          <ol class="hm-grid" id="storygrid"><li class="hm-story"><span class="v2-skel"></span><span class="v2-skel"></span></li></ol>
+          <p class="hm-stories__foot" id="storyfoot" hidden></p>
+        </section>
+
+        <section class="v2-card hm-watch" id="watchsec" aria-labelledby="watchh" hidden>
+          <div class="hm-sec__head hm-sec__head--card">
+            <div>
+              <h2 class="v2-h2" id="watchh">Players to watch</h2>
+              <p class="hm-watch__k" id="watchk"></p>
+            </div>
+            <a class="hm-sec__more" href="players.html">Full board <span aria-hidden="true">→</span></a>
+          </div>
+          <ol class="hm-watch__list" id="watchlist"></ol>
         </section>
         <p class="v2-play v2-play--big">Play money · no prizes · not financial advice</p>
       </div>
@@ -227,6 +256,9 @@
 <script src="assets/fantasy-core.js"></script>
 <script src="assets/v2/fantasy-store.js"></script>
 <script src="assets/v2/chrome.js"></script>
+<script src="assets/v2/week-core.js"></script>
+<script src="assets/v2/dossier-core.js"></script>
+<script src="assets/v2/dossier.js"></script>
 <script src="assets/v2/home.js"></script>
 </body>
 </html>
