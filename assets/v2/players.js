@@ -29,10 +29,18 @@
   function sr(text){ return el('span', 'v2-sr', text); }
   function say(t){ var n = $('live'); n.textContent = ''; setTimeout(function(){ n.textContent = t; }, 30); }
   function playerHref(slug){ return 'player.html?p=' + encodeURIComponent(slug); }
+  // portraits: plain site-relative paths from window.BDPortraits, else the casino mystery player (window.BDPortraitFallback)
+  function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 && u.indexOf('//') !== 0 ? u : null; }
+  function portraitSrc(slug){
+    var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
+    return (p && safePath(p.img)) || safePath(window.BDPortraitFallback);
+  }
   function avatar(p){
-    var a = el('span', 'v2-av', BD.initials(p.name));
+    var src = portraitSrc(p.slug);
+    var a = el('span', 'v2-av', src ? '' : BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     a.setAttribute('aria-hidden', 'true');
+    if (src){ var im = el('img'); im.src = src; im.alt = ''; im.setAttribute('decoding', 'async'); a.appendChild(im); }
     return a;
   }
   function pool(){ return arr(F.state.draftWk && F.state.draftWk.draftable); }

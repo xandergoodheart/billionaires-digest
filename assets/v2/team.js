@@ -65,18 +65,20 @@
     if (team.captain && p.indexOf(team.captain) > 0){ p.splice(p.indexOf(team.captain), 1); p.unshift(team.captain); }
     return p;
   }
-  // portraits: only plain site-relative paths from window.BDPortraits (empty until the style is approved)
-  function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
+  // portraits: only plain site-relative paths from window.BDPortraits; people without one get the casino mystery
+  // player (window.BDPortraitFallback) on the plate. The close-up uses only real portraits (the fallback has no $ eyes).
+  function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 && u.indexOf('//') !== 0 ? u : null; }
   function portrait(slug){
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
     return p ? { img: safePath(p.img), dollar: safePath(p.dollar) } : { img: null, dollar: null };
   }
+  function portraitSrc(slug){ return portrait(slug).img || safePath(window.BDPortraitFallback); }
   function plate(p){
-    var pic = portrait(p.slug);
-    var a = el('span', 'v2-av tm-plate', pic.img ? '' : BD.initials(p.name));
+    var src = portraitSrc(p.slug);
+    var a = el('span', 'v2-av tm-plate', src ? '' : BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     a.setAttribute('aria-hidden', 'true');
-    if (pic.img){ var im = el('img'); im.src = pic.img; im.alt = ''; a.appendChild(im); }
+    if (src){ var im = el('img'); im.src = src; im.alt = ''; a.appendChild(im); }
     return a;
   }
 

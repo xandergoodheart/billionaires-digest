@@ -3,7 +3,7 @@
    VALID team (five distinct draftable players, total cap cost <= 100 on the real draft-week salaries; captain = the
    highest cap cost). Hold keeps a reel. "Use this team" puts the five into the working draft through the Draft
    room's own BDFantasyStore (already initialised by draft.js; no separate data loading) and never saves by itself.
-   Reels show the initials sector plate, or an approved illustrated portrait from window.BDPortraits (empty for now).
+   Reels show the approved casino cartoon portrait from window.BDPortraits, else the casino mystery player, else initials.
    The close-up's cartoon face is one made-up tycoon, never a real person. Play money only, no prizes. */
 (function(){
   var F = window.BDFantasyStore, C = window.BDFantasyCore, BD = window.BD;
@@ -51,12 +51,14 @@
   // the Draft room's live region (draft.js uses the same one)
   var liveT = null;
   function say(t){ var n = $('live'); if (!n) return; n.textContent = ''; clearTimeout(liveT); liveT = setTimeout(function(){ n.textContent = t; }, 40); }
-  // portraits: only plain site-relative paths from window.BDPortraits (empty until the style is approved)
-  function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
+  // portraits: only plain site-relative paths from window.BDPortraits; people without one get the casino mystery
+  // player (window.BDPortraitFallback) on the plate. The close-up uses only real portraits (the fallback has no $ eyes).
+  function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 && u.indexOf('//') !== 0 ? u : null; }
   function portrait(slug){
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
     return p ? { img: safePath(p.img), dollar: safePath(p.dollar) } : { img: null, dollar: null };
   }
+  function portraitSrc(slug){ return portrait(slug).img || safePath(window.BDPortraitFallback); }
 
   // ---- dialog markup (built once) ----
   var dlg, panel, cu, reelsBox, spinBtn, lever, useBtn, confirmBox, yesBtn, noBtn, capV, ptsV, note, weekSub, heldNote;
@@ -211,7 +213,7 @@
 
   // ---- reels ----
   function plate(slug){
-    var p = person(slug), pic = portrait(slug).img;
+    var p = person(slug), pic = portraitSrc(slug);
     var a = el('span', 'v2-av lk-av', pic ? null : BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     if (pic){ var im = el('img'); im.src = pic; im.alt = ''; im.setAttribute('decoding', 'async'); a.appendChild(im); }

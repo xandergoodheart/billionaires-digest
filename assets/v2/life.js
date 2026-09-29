@@ -49,6 +49,19 @@
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
     return p ? safePath(p.img) : null;
   }
+  // approved portrait, else the casino mystery player (window.BDPortraitFallback)
+  function portraitSrc(slug){ return portrait(slug) || safePath(window.BDPortraitFallback); }
+  // realistic scene per decision (assets/life/realistic/<slug>-<n>.webp) and school crests, only for these people
+  var SCENES = { 'bill-gates': 5, 'elon-musk': 5, 'jeff-bezos': 5, 'jensen-huang': 5, 'larry-ellison': 5, 'mark-zuckerberg': 5, 'michael-dell': 5, 'warren-buffett': 5 };
+  function crest(slug, cls){
+    if (!own(SCENES, slug)) return null;
+    var w = el('span', 'lf-crest' + (cls ? ' ' + cls : ''));
+    w.setAttribute('aria-hidden', 'true');
+    var im = el('img'); im.src = 'assets/academy/realistic/crest-' + slug + '.webp'; im.alt = ''; im.width = 64; im.height = 64;
+    im.setAttribute('loading', 'lazy'); im.setAttribute('decoding', 'async');
+    w.appendChild(im);
+    return w;
+  }
   function nonEmpty(x){ return typeof x === 'string' && x.replace(/\s+/g, '') !== ''; }
   function today(){ return new Date().toISOString().slice(0, 10); }
   function applyAcademyName(){ Array.prototype.forEach.call(document.querySelectorAll('[data-academy-name]'), function(n){ n.textContent = ACADEMY_NAME; }); }
@@ -122,13 +135,13 @@
     return { prev: prev, rec: rec, newBest: !!prev && score > prev.best && of === prev.of, first: !prev, saved: saved };
   }
 
-  // ---------- plate: approved portrait, else initials on the sector plate ----------
+  // ---------- plate: approved portrait, else the casino mystery player, else initials on the sector plate ----------
   function plate(entry, cls){
     var av = el('span', 'v2-av lf-plate' + (cls ? ' ' + cls : ''));
     av.setAttribute('aria-hidden', 'true');
     av.setAttribute('data-sector', BD.sectorSlug(entry.sector || 'Other'));
     av.appendChild(el('span', 'lf-plate__ini', entry.initials || BD.initials(entry.name)));
-    var img = portrait(entry.slug);
+    var img = portraitSrc(entry.slug);
     if (img){ var im = el('img'); im.src = img; im.alt = ''; im.width = 256; im.height = 256; im.setAttribute('loading', 'lazy'); im.setAttribute('decoding', 'async'); av.appendChild(im); av.classList.add('has-img'); }
     return av;
   }
@@ -282,8 +295,8 @@
     document.title = 'Play as ' + p.name + ' · Billionaire Life · Billionaires Digest';
     $('introh').textContent = 'Play as ' + p.name;
     var pic = clear($('lf-pic'));
-    var img = portrait(p.slug);
-    if (img){ var im = el('img', 'lf-char__img'); im.src = img; im.alt = ''; im.width = 256; im.height = 256; pic.appendChild(im); $('lf-soon').hidden = true; }
+    var img = portraitSrc(p.slug);
+    if (img){ var im = el('img', 'lf-char__img'); im.src = img; im.alt = ''; im.width = 256; im.height = 256; pic.appendChild(im); if (portrait(p.slug)) $('lf-soon').hidden = true; }
     else pic.appendChild(el('span', 'lf-char__init', p.initials || entry.initials || BD.initials(p.name)));
     $('role').textContent = p.role;
     var bio = clear($('bio'));
@@ -325,6 +338,16 @@
   function renderTurn(){
     var d = data.decisions[turn];
     busy = false;
+    var front = $('front'), oldScene = front.querySelector('.lf-scene');
+    if (oldScene) front.removeChild(oldScene);
+    var slug = data.person.slug;
+    if (own(SCENES, slug) && turn < SCENES[slug]){
+      var fig = el('figure', 'lf-scene');
+      var sim = el('img'); sim.src = 'assets/life/realistic/' + slug + '-' + (turn + 1) + '.webp'; sim.alt = '';
+      sim.setAttribute('loading', 'lazy'); sim.setAttribute('decoding', 'async');
+      fig.appendChild(sim);
+      front.insertBefore(fig, front.firstChild);
+    }
     $('turnno').textContent = 'Decision ' + (turn + 1) + ' of ' + data.decisions.length;
     var tag = clear($('lf-tag'));
     tag.appendChild(el('span', 'lf-card__year', String(d.year)));
@@ -669,6 +692,10 @@
     closePop(false);
     if (!school){ box.hidden = true; return; }
     box.hidden = false;
+    var oldCrest = box.querySelector('.lf-school__crest');
+    if (oldCrest) box.removeChild(oldCrest);
+    var cr = crest(data.person.slug, 'lf-school__crest');
+    if (cr) box.insertBefore(cr, box.firstChild);
     $('lf-schoolh').textContent = 'School of ' + data.person.name + ': ' + school.name;
     $('lf-school-tag').textContent = school.tagline;
     var met = {}, L = lessonsPlayed();
@@ -835,6 +862,8 @@
     ht.appendChild(h);
     ht.appendChild(el('p', 'ac-card__who', 'School of ' + p.name));
     head.appendChild(ht);
+    var cr = crest(p.slug, 'ac-card__crest');
+    if (cr) head.appendChild(cr);
     li.appendChild(head);
     li.appendChild(el('p', 'ac-card__tag', sc.tagline));
     var ul = el('ul', 'lf-princ ac-card__pr');

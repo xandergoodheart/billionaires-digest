@@ -52,6 +52,12 @@
     return sec;
   }
   function empty(text){ return el('p', 'v2-msg pp-empty', text); }
+  // portraits: plain site-relative paths from window.BDPortraits, else the casino mystery player (window.BDPortraitFallback)
+  function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 && u.indexOf('//') !== 0 ? u : null; }
+  function portraitSrc(s){
+    var PT = window.BDPortraits, p = PT && Object.prototype.hasOwnProperty.call(PT, s) ? PT[s] : null;
+    return (p && safePath(p.img)) || safePath(window.BDPortraitFallback);
+  }
 
   // ---- which player ----
   var slug = (function(){
@@ -118,11 +124,13 @@
   function renderHero(){
     var hero = el('section', 'pp-hero');
     hero.setAttribute('aria-labelledby', 'pname');
-    // portrait slot: initials on a sector plate until the illustrated portraits are approved
+    // portrait slot: casino cartoon portrait, else the casino mystery player, else initials on a sector plate
     var art = el('div', 'pp-hero__art');
-    var av = el('span', 'v2-av pp-av', BD.initials(name()));
+    var src = portraitSrc(slug);
+    var av = el('span', 'v2-av pp-av', src ? '' : BD.initials(name()));
     av.setAttribute('data-sector', BD.sectorSlug(sector()));
     av.setAttribute('aria-hidden', 'true');
+    if (src){ var im = el('img'); im.src = src; im.alt = ''; im.setAttribute('decoding', 'async'); av.appendChild(im); }
     art.appendChild(av);
     hero.appendChild(art);
 

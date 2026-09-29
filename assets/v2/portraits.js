@@ -1,8 +1,74 @@
-/* Billionaires Digest v2: illustrated portrait lookup. ES5, one global: BDPortraits.
-   slug -> { img: 'path to the portrait', dollar: 'path to the "$ eyes" close-up version' } (both optional, site-relative).
-   EMPTY on purpose: portraits are added only after the owner approves the illustrated style. Until then every
-   page falls back to the initials sector plate (and Lucky five's close-up to its generic cartoon face).
-   Never photos of real people, never company logos. */
+/* Billionaires Digest v2: portrait lookup. ES5, two globals: BDPortraits, BDPortraitFallback.
+   slug -> { img: 'path to the portrait', dollar: 'path to the "$ eyes" close-up version' } (site-relative).
+   Casino cartoon avatars (style B, approved by the owner): green felt with a gold circle; the dollar version has $-sign eyes.
+   Never photos of real people, never company logos. People without a portrait get the casino mystery player
+   (BDPortraitFallback); Lucky five / My team close-ups keep their generic cartoon face for them. */
 (function(root){
-  root.BDPortraits = root.BDPortraits || {};
+  var P = root.BDPortraits = root.BDPortraits || {};
+  P['abigail-johnson'] = { img: 'assets/portraits/abigail-johnson.webp', dollar: 'assets/portraits/abigail-johnson-dollar.webp' };
+  P['alice-walton'] = { img: 'assets/portraits/alice-walton.webp', dollar: 'assets/portraits/alice-walton-dollar.webp' };
+  P['aliko-dangote'] = { img: 'assets/portraits/aliko-dangote.webp', dollar: 'assets/portraits/aliko-dangote-dollar.webp' };
+  P['amancio-ortega'] = { img: 'assets/portraits/amancio-ortega.webp', dollar: 'assets/portraits/amancio-ortega-dollar.webp' };
+  P['andreas-von-bechtolsheim-family'] = { img: 'assets/portraits/andreas-von-bechtolsheim-family.webp', dollar: 'assets/portraits/andreas-von-bechtolsheim-family-dollar.webp' };
+  P['bernard-arnault-family'] = { img: 'assets/portraits/bernard-arnault-family.webp', dollar: 'assets/portraits/bernard-arnault-family-dollar.webp' };
+  P['bill-gates'] = { img: 'assets/portraits/bill-gates.webp', dollar: 'assets/portraits/bill-gates-dollar.webp' };
+  P['carlos-slim-helu-family'] = { img: 'assets/portraits/carlos-slim-helu-family.webp', dollar: 'assets/portraits/carlos-slim-helu-family-dollar.webp' };
+  P['changpeng-zhao'] = { img: 'assets/portraits/changpeng-zhao.webp', dollar: 'assets/portraits/changpeng-zhao-dollar.webp' };
+  P['charles-koch-family'] = { img: 'assets/portraits/charles-koch-family.webp', dollar: 'assets/portraits/charles-koch-family-dollar.webp' };
+  P['colin-huang'] = { img: 'assets/portraits/colin-huang.webp', dollar: 'assets/portraits/colin-huang-dollar.webp' };
+  P['cyrus-poonawalla'] = { img: 'assets/portraits/cyrus-poonawalla.webp', dollar: 'assets/portraits/cyrus-poonawalla-dollar.webp' };
+  P['david-tepper'] = { img: 'assets/portraits/david-tepper.webp', dollar: 'assets/portraits/david-tepper-dollar.webp' };
+  P['dilip-shanghvi'] = { img: 'assets/portraits/dilip-shanghvi.webp', dollar: 'assets/portraits/dilip-shanghvi-dollar.webp' };
+  P['eduardo-saverin'] = { img: 'assets/portraits/eduardo-saverin.webp', dollar: 'assets/portraits/eduardo-saverin-dollar.webp' };
+  P['elon-musk'] = { img: 'assets/portraits/elon-musk.webp', dollar: 'assets/portraits/elon-musk-dollar.webp' };
+  P['eric-schmidt'] = { img: 'assets/portraits/eric-schmidt.webp', dollar: 'assets/portraits/eric-schmidt-dollar.webp' };
+  P['francois-pinault-family'] = { img: 'assets/portraits/francois-pinault-family.webp', dollar: 'assets/portraits/francois-pinault-family-dollar.webp' };
+  P['francoise-bettencourt-meyers-family'] = { img: 'assets/portraits/francoise-bettencourt-meyers-family.webp', dollar: 'assets/portraits/francoise-bettencourt-meyers-family-dollar.webp' };
+  P['gautam-adani'] = { img: 'assets/portraits/gautam-adani.webp', dollar: 'assets/portraits/gautam-adani-dollar.webp' };
+  P['gina-rinehart'] = { img: 'assets/portraits/gina-rinehart.webp', dollar: 'assets/portraits/gina-rinehart-dollar.webp' };
+  P['giovanni-ferrero'] = { img: 'assets/portraits/giovanni-ferrero.webp', dollar: 'assets/portraits/giovanni-ferrero-dollar.webp' };
+  P['greg-brockman'] = { img: 'assets/portraits/greg-brockman.webp', dollar: 'assets/portraits/greg-brockman-dollar.webp' };
+  P['henry-samueli'] = { img: 'assets/portraits/henry-samueli.webp', dollar: 'assets/portraits/henry-samueli-dollar.webp' };
+  P['israel-englander'] = { img: 'assets/portraits/israel-englander.webp', dollar: 'assets/portraits/israel-englander-dollar.webp' };
+  P['jack-ma'] = { img: 'assets/portraits/jack-ma.webp', dollar: 'assets/portraits/jack-ma-dollar.webp' };
+  P['jay-y-lee'] = { img: 'assets/portraits/jay-y-lee.webp', dollar: 'assets/portraits/jay-y-lee-dollar.webp' };
+  P['jeff-bezos'] = { img: 'assets/portraits/jeff-bezos.webp', dollar: 'assets/portraits/jeff-bezos-dollar.webp' };
+  P['jeff-yass'] = { img: 'assets/portraits/jeff-yass.webp', dollar: 'assets/portraits/jeff-yass-dollar.webp' };
+  P['jensen-huang'] = { img: 'assets/portraits/jensen-huang.webp', dollar: 'assets/portraits/jensen-huang-dollar.webp' };
+  P['jim-walton-family'] = { img: 'assets/portraits/jim-walton-family.webp', dollar: 'assets/portraits/jim-walton-family-dollar.webp' };
+  P['ken-griffin'] = { img: 'assets/portraits/ken-griffin.webp', dollar: 'assets/portraits/ken-griffin-dollar.webp' };
+  P['lakshmi-mittal'] = { img: 'assets/portraits/lakshmi-mittal.webp', dollar: 'assets/portraits/lakshmi-mittal-dollar.webp' };
+  P['larry-ellison'] = { img: 'assets/portraits/larry-ellison.webp', dollar: 'assets/portraits/larry-ellison-dollar.webp' };
+  P['larry-page'] = { img: 'assets/portraits/larry-page.webp', dollar: 'assets/portraits/larry-page-dollar.webp' };
+  P['len-blavatnik'] = { img: 'assets/portraits/len-blavatnik.webp', dollar: 'assets/portraits/len-blavatnik-dollar.webp' };
+  P['li-ka-shing'] = { img: 'assets/portraits/li-ka-shing.webp', dollar: 'assets/portraits/li-ka-shing-dollar.webp' };
+  P['ma-huateng'] = { img: 'assets/portraits/ma-huateng.webp', dollar: 'assets/portraits/ma-huateng-dollar.webp' };
+  P['mackenzie-scott'] = { img: 'assets/portraits/mackenzie-scott.webp', dollar: 'assets/portraits/mackenzie-scott-dollar.webp' };
+  P['mark-mateschitz'] = { img: 'assets/portraits/mark-mateschitz.webp', dollar: 'assets/portraits/mark-mateschitz-dollar.webp' };
+  P['mark-zuckerberg'] = { img: 'assets/portraits/mark-zuckerberg.webp', dollar: 'assets/portraits/mark-zuckerberg-dollar.webp' };
+  P['masayoshi-son'] = { img: 'assets/portraits/masayoshi-son.webp', dollar: 'assets/portraits/masayoshi-son-dollar.webp' };
+  P['melinda-french-gates'] = { img: 'assets/portraits/melinda-french-gates.webp', dollar: 'assets/portraits/melinda-french-gates-dollar.webp' };
+  P['michael-bloomberg'] = { img: 'assets/portraits/michael-bloomberg.webp', dollar: 'assets/portraits/michael-bloomberg-dollar.webp' };
+  P['michael-dell'] = { img: 'assets/portraits/michael-dell.webp', dollar: 'assets/portraits/michael-dell-dollar.webp' };
+  P['miriam-adelson-family'] = { img: 'assets/portraits/miriam-adelson-family.webp', dollar: 'assets/portraits/miriam-adelson-family-dollar.webp' };
+  P['mukesh-ambani'] = { img: 'assets/portraits/mukesh-ambani.webp', dollar: 'assets/portraits/mukesh-ambani-dollar.webp' };
+  P['paolo-ardoino'] = { img: 'assets/portraits/paolo-ardoino.webp', dollar: 'assets/portraits/paolo-ardoino-dollar.webp' };
+  P['peter-thiel'] = { img: 'assets/portraits/peter-thiel.webp', dollar: 'assets/portraits/peter-thiel-dollar.webp' };
+  P['pham-nhat-vuong'] = { img: 'assets/portraits/pham-nhat-vuong.webp', dollar: 'assets/portraits/pham-nhat-vuong-dollar.webp' };
+  P['rob-walton-family'] = { img: 'assets/portraits/rob-walton-family.webp', dollar: 'assets/portraits/rob-walton-family-dollar.webp' };
+  P['robert-pera'] = { img: 'assets/portraits/robert-pera.webp', dollar: 'assets/portraits/robert-pera-dollar.webp' };
+  P['robin-zeng'] = { img: 'assets/portraits/robin-zeng.webp', dollar: 'assets/portraits/robin-zeng-dollar.webp' };
+  P['savitri-jindal-family'] = { img: 'assets/portraits/savitri-jindal-family.webp', dollar: 'assets/portraits/savitri-jindal-family-dollar.webp' };
+  P['sergey-brin'] = { img: 'assets/portraits/sergey-brin.webp', dollar: 'assets/portraits/sergey-brin-dollar.webp' };
+  P['shiv-nadar'] = { img: 'assets/portraits/shiv-nadar.webp', dollar: 'assets/portraits/shiv-nadar-dollar.webp' };
+  P['stanley-kroenke'] = { img: 'assets/portraits/stanley-kroenke.webp', dollar: 'assets/portraits/stanley-kroenke-dollar.webp' };
+  P['stephen-schwarzman'] = { img: 'assets/portraits/stephen-schwarzman.webp', dollar: 'assets/portraits/stephen-schwarzman-dollar.webp' };
+  P['steve-ballmer'] = { img: 'assets/portraits/steve-ballmer.webp', dollar: 'assets/portraits/steve-ballmer-dollar.webp' };
+  P['steve-cohen'] = { img: 'assets/portraits/steve-cohen.webp', dollar: 'assets/portraits/steve-cohen-dollar.webp' };
+  P['tadashi-yanai-family'] = { img: 'assets/portraits/tadashi-yanai-family.webp', dollar: 'assets/portraits/tadashi-yanai-family-dollar.webp' };
+  P['thomas-peterffy'] = { img: 'assets/portraits/thomas-peterffy.webp', dollar: 'assets/portraits/thomas-peterffy-dollar.webp' };
+  P['warren-buffett'] = { img: 'assets/portraits/warren-buffett.webp', dollar: 'assets/portraits/warren-buffett-dollar.webp' };
+  P['william-ding'] = { img: 'assets/portraits/william-ding.webp', dollar: 'assets/portraits/william-ding-dollar.webp' };
+  P['zhang-yiming'] = { img: 'assets/portraits/zhang-yiming.webp', dollar: 'assets/portraits/zhang-yiming-dollar.webp' };
+  root.BDPortraitFallback = 'assets/portraits/casino-mystery.webp';
 })(typeof window !== 'undefined' ? window : globalThis);
