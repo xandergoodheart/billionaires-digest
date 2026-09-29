@@ -70,4 +70,6 @@
   P['warren-buffett'] = { img: 'assets/portraits/real/warren-buffett.webp' };
   P['william-ding'] = { img: 'assets/portraits/real/william-ding.webp' };
   P['zhang-yiming'] = { img: 'assets/portraits/real/zhang-yiming.webp' };
+  // people without a portrait: generic grey silhouette (like a sports site's default headshot), never an invented face
+  root.BDPortraitFallback = 'assets/portraits/silhouette.webp';
 })(typeof window !== 'undefined' ? window : globalThis);

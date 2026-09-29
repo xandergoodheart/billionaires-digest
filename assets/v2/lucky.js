@@ -55,7 +55,7 @@
   function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
   function portrait(slug){
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
-    return p ? { img: safePath(p.img), dollar: safePath(p.dollar) } : { img: null, dollar: null };
+    return p ? { img: safePath(p.img), dollar: safePath(p.dollar) } : { img: safePath(window.BDPortraitFallback), dollar: null };
   }
 
   // ---- dialog markup (built once) ----
@@ -212,7 +212,7 @@
   // ---- reels ----
   function plate(slug){
     var p = person(slug), pic = portrait(slug).img;
-    var a = el('span', 'v2-av lk-av', pic ? null : BD.initials(p.name));
+    var a = el('span', 'v2-av lk-av' + (pic ? ' v2-av--pic' : ''), pic ? null : BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     if (pic){ var im = el('img'); im.src = pic; im.alt = ''; im.setAttribute('decoding', 'async'); a.appendChild(im); }
     return a;

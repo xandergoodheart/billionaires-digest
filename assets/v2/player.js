@@ -72,7 +72,7 @@
   function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
   function portraitSrc(s){
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, s) ? P[s] : null;
-    return p ? safePath(p.img) : null;
+    return p ? safePath(p.img) : safePath(window.BDPortraitFallback);
   }
   function draftPool(){ return arr(F.state.draftWk && F.state.draftWk.draftable); }
   function weekPts(){ return F.weekPoints(F.state.sbWk, slug); }

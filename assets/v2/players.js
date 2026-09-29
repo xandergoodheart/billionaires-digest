@@ -33,7 +33,7 @@
   function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
   function portraitSrc(slug){
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
-    return p ? safePath(p.img) : null;
+    return p ? safePath(p.img) : safePath(window.BDPortraitFallback);
   }
   function avatar(p){
     var pic = portraitSrc(p.slug);
