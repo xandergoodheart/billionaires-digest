@@ -1,7 +1,8 @@
 /* Billionaires Digest v3: Draft room (draft.html). ES5, UI only.
    All roster state and rules come from BDFantasyStore (assets/v2/fantasy-store.js), which keeps v1's storage,
    working draft, save and late-entry behavior. Pure helpers (value score, auto-fill, recent form, queue) live in
-   BDDraftCore (assets/v2/draft-core.js, tested in node). ESPN-style extras: sector tabs, player card drawer,
+   BDDraftCore (assets/v2/draft-core.js, tested in node). ESPN-style extras: sector tabs, the player dossier pop-up
+   (assets/v2/dossier.js, with this page's Add / Remove / Make captain / Queue actions),
    best value, a queue (watchlist, this browser only), cap meter, auto-fill and a recent-form sparkline.
    Real data only: numbers come from the fantasy week files, data/people/index.json and digest.json.
    Game only: play money, no prizes. */
@@ -19,9 +20,6 @@
   var UI = { q: '', sector: '', sort: 'pts', saveMsg: null, syncMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
   try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; } } catch (e) {}
   function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort })); } catch (e) {} }
-
-  // extra data for the player card (loaded next to the store; the page works without them)
-  var X = { people: 'loading', digest: null, digestState: 'loading' };
 
   // ---- helpers ----
   function clear(n){ while (n.firstChild) n.removeChild(n.firstChild); return n; }
@@ -287,11 +285,13 @@
       var nb = btn('v2-player__name dr-name', p.name);
       nb.setAttribute('data-card', p.slug);
       nb.setAttribute('aria-haspopup', 'dialog');
-      nb.appendChild(sr(': open player card'));
+      nb.appendChild(sr(': open player dossier'));
       tx.appendChild(nb);
       var tk = P.tickers(p).slice(0, 2).join(' · ');
       var sub = el('span', 'v2-player__sub', (tk ? tk + ' / ' : '') + (p.sector || 'Other'));
       tx.appendChild(sub);
+      var nk = window.BDDossier ? window.BDDossier.nickname(p.slug) : null;
+      if (nk) tx.appendChild(el('span', 'v2-nick', nk));
       var ti = top.indexOf(p.slug);
       if (ti >= 0){
         var v = valOf(p.slug);
@@ -387,7 +387,7 @@
       var p = F.person(slug), li = el('li', 'dr-q__item');
       var nb = btn('dr-q__name', p.name);
       nb.setAttribute('data-card', slug); nb.setAttribute('aria-haspopup', 'dialog');
-      nb.appendChild(sr(': open player card'));
+      nb.appendChild(sr(': open player dossier'));
       li.appendChild(nb);
       var s = sal(slug), a = avgR(slug);
       li.appendChild(el('span', 'dr-q__meta', 'Cap ' + (s == null ? '—' : s) + ' · Avg ' + (a == null ? '—' : signedTxt(a))));
@@ -438,7 +438,7 @@
       var p = F.person(slug), isC = slug === S.captain;
       var nm = btn('dr-slot__name dr-slot__btn', p.name);
       nm.setAttribute('data-card', slug); nm.setAttribute('aria-haspopup', 'dialog');
-      nm.appendChild(sr(': open player card'));
+      nm.appendChild(sr(': open player dossier'));
       li.appendChild(nm);
       if (isC){ var c = el('span', 'v2-badge-c', 'C'); c.title = 'Captain: scores 1.5 times'; c.appendChild(sr(' (captain)')); li.appendChild(c); }
       li.appendChild(el('span', 'dr-slot__sal num', sal(slug) == null ? '—' : String(sal(slug))));
@@ -566,212 +566,48 @@
     renderQueues();
     renderBar();
   }
-  function renderAll(){ renderStats(); renderPool(); renderSide(); if (cardOpen()) renderCard(true); }
+  function renderAll(){ renderStats(); renderPool(); renderSide(); if (cardOpen()) window.BDDossier.refresh(); }
 
-  // ---- player card drawer: dialog, focus trap, Escape, focus return ----
-  var card = { slug: null, scope: null, opener: null };
-  function cardOpen(){ return !$('pcard').hidden; }
-  function cardFocusables(){
-    var root = $('pcard').querySelector('.dr-card__panel');
-    return Array.prototype.filter.call(root.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),[tabindex]:not([tabindex="-1"])'), function(n){ return n.getClientRects().length > 0; });
-  }
+  // ---- player card: the shared player dossier (assets/v2/dossier.js) with the Draft room's actions ----
+  function cardOpen(){ return !!(window.BDDossier && window.BDDossier.isOpen()); }
   function scopeOf(n){
     var ids = ['pool', 'queuebox', 'sidepanel', 'sheetpanel', 'sheetqueue'];
     for (var i = 0; i < ids.length; i++){ var r = $(ids[i]); if (r && r.contains(n)) return ids[i]; }
     return null;
   }
-  function openCard(slug, from){
-    card.slug = slug; card.opener = from || document.activeElement; card.scope = scopeOf(card.opener);
-    renderCard(false);
-    $('pcard').hidden = false;
-    document.documentElement.classList.add('v2-lock');
-    var panel = $('pcard').querySelector('.dr-card__panel');
-    panel.scrollTop = 0;
-    $('pcardclose').focus();
-  }
-  function closeCard(){
-    if (!cardOpen()) return;
-    $('pcard').hidden = true;
-    clear($('pcardbody'));
-    if (!sheetOpen()) document.documentElement.classList.remove('v2-lock');
-    var back = null, sel = '[data-card="' + card.slug + '"]';
-    if (card.scope && $(card.scope)){ var n = $(card.scope).querySelector(sel); if (visibleEl(n)) back = n; }
-    if (!back && visibleEl(card.opener)) back = card.opener;
-    if (!back){ var any = document.querySelector('#pool ' + sel); back = visibleEl(any) ? any : $('q'); }
-    back.focus();
-    card.slug = null; card.opener = null;
-  }
-  document.addEventListener('keydown', function(e){
-    if (!cardOpen()) return;
-    if (e.key === 'Escape' || e.key === 'Esc'){ e.preventDefault(); closeCard(); return; }
-    if (e.key !== 'Tab') return;
-    var f = cardFocusables(), panel = $('pcard').querySelector('.dr-card__panel');
-    if (!f.length){ e.preventDefault(); panel.focus(); return; }
-    var first = f[0], last = f[f.length - 1];
-    if (!panel.contains(document.activeElement) || document.activeElement === panel){ e.preventDefault(); (e.shiftKey ? last : first).focus(); }
-    else if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-  });
-  function cardFact(dl, k, v, cls, sub){
-    var d = el('div', 'dr-fact');
-    d.appendChild(el('dt', 'dr-fact__k', k));
-    var dd = el('dd', 'dr-fact__v num' + (cls ? ' ' + cls : ''), v);
-    if (sub) dd.appendChild(el('span', 'dr-fact__sub', sub));
-    d.appendChild(dd);
-    dl.appendChild(d);
-  }
-  function cardChart(series, name){
-    var W = 300, H = 132, top = 22, bottom = 34, n = series.length;
-    var maxPos = 0, maxNeg = 0;
-    series.forEach(function(x){ if (x.points != null){ if (x.points > maxPos) maxPos = x.points; if (x.points < maxNeg) maxNeg = x.points; } });
-    var span = (maxPos - maxNeg) || 1, plotH = H - top - bottom;
-    var zeroY = (maxPos === 0 && maxNeg === 0) ? top + plotH / 2 : top + plotH * (maxPos / span);
-    var slot = W / 5, bw = Math.min(34, slot * 0.55), off = 5 - n;
-    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, 'class': 'dr-chart__svg', 'aria-hidden': 'true', focusable: 'false' });
-    svg.appendChild(svgEl('line', { x1: 0, x2: W, y1: zeroY, y2: zeroY, 'class': 'dr-chart__zero' }));
-    series.forEach(function(x, i){
-      var cx = slot * (i + off) + slot / 2;
-      if (x.points != null && x.points !== 0){
-        var hgt = Math.max(2, Math.abs(x.points) / span * plotH);
-        var y = x.points > 0 ? zeroY - hgt : zeroY;
-        svg.appendChild(svgEl('rect', { x: cx - bw / 2, y: y, width: bw, height: hgt, 'class': x.points > 0 ? 'dr-chart__pos' : 'dr-chart__neg' }));
-        svg.appendChild(svgEl('text', { x: cx, y: x.points > 0 ? y - 6 : y + hgt + 14, 'text-anchor': 'middle', 'class': 'dr-chart__val' }, signedTxt(x.points)));
-      } else {
-        svg.appendChild(svgEl('text', { x: cx, y: zeroY - 6, 'text-anchor': 'middle', 'class': 'dr-chart__val' }, x.points == null ? 'no score' : '0'));
-      }
-      svg.appendChild(svgEl('text', { x: cx, y: H - 6, 'text-anchor': 'middle', 'class': 'dr-chart__day' }, dayShort(x.date)));
-    });
-    var wrap = el('figure', 'dr-chart');
-    wrap.appendChild(svg);
-    var cap = el('figcaption', 'dr-chart__k', 'Points on the last ' + (n === 1 ? 'scored day' : n + ' scored days') + ', before the captain bonus');
-    wrap.appendChild(cap);
-    var ul = el('ul', 'v2-sr');
-    series.forEach(function(x){ ul.appendChild(el('li', null, fmt.dayLabel(x.date) + ': ' + (x.points == null ? 'no score' : signedTxt(x.points) + ' points'))); });
-    wrap.appendChild(ul);
-    return wrap;
-  }
-  function cardSection(title){
-    var s = el('section', 'dr-card__sec');
-    s.appendChild(el('h3', 'dr-card__h', title));
-    return s;
-  }
-  function renderCard(keepFocus){
-    var slug = card.slug, body = $('pcardbody');
-    if (!slug) return;
-    var focusKey = null;
-    if (keepFocus && body.contains(document.activeElement)){
-      var ae = document.activeElement;
-      ['data-card-pick', 'data-card-cap', 'data-star'].forEach(function(k){ if (ae.hasAttribute(k)) focusKey = k; });
-    }
-    clear(body);
-    var S = F.state, p = F.person(slug), picked = S.picks.indexOf(slug) >= 0, isC = S.captain === slug;
-    var ix = X.people === 'ok' ? BD.indexBySlug(slug) : null;
-    // head: portrait (approved painted illustration, added by avatar()) or initials plate
-    var head = el('div', 'dr-card__top');
-    head.appendChild(avatar(p, 'v2-av--lg dr-card__av'));
-    var ht = el('div', 'dr-card__id');
-    var h = el('h2', 'dr-card__name', p.name); h.id = 'pcard-name';
-    ht.appendChild(h);
-    var tks = P.tickers(p);
-    ht.appendChild(el('p', 'dr-card__sub', (p.sector || 'Other') + (tks.length ? ' · ' + tks.slice(0, 3).join(' · ') : '')));
-    if (picked) ht.appendChild(el('span', 'v2-pill dr-card__pill', isC ? 'On your team · Captain' : 'On your team'));
-    head.appendChild(ht);
-    body.appendChild(head);
-    // actions
-    var acts = el('div', 'dr-card__acts');
-    var s = sal(slug), b;
-    if (picked){
-      b = btn('v2-btn v2-btn--selected dr-card__btn', 'Remove from team');
-      b.setAttribute('aria-label', 'Remove ' + p.name + ' from your team');
-    } else {
+  function cardActions(slug){
+    var S = F.state, p = F.person(slug), picked = S.picks.indexOf(slug) >= 0, isC = S.captain === slug, s = sal(slug), list = [];
+    if (picked) list.push({ key: 'pick', label: 'Remove from team', variant: 'selected', ariaLabel: 'Remove ' + p.name + ' from your team', onClick: cardPick });
+    else {
       var why = s == null ? 'Not draftable this week' : F.blockReason(slug);
-      b = btn('v2-btn v2-btn--primary dr-card__btn' + (why ? ' is-blocked' : ''), '+ Add to team');
-      if (why){ b.setAttribute('aria-disabled', 'true'); b.setAttribute('data-why', why); b.setAttribute('aria-label', 'Add ' + p.name + ': ' + why); }
-      else b.setAttribute('aria-label', 'Add ' + p.name + ' to your team, cap ' + s);
+      list.push({ key: 'pick', label: '+ Add to team', variant: 'primary', why: why, note: why === 'Lineup full' ? 'Your five is full. Remove someone first.' : (why ? why + '.' : ''),
+        ariaLabel: why ? 'Add ' + p.name + ': ' + why : 'Add ' + p.name + ' to your team, cap ' + s, onClick: cardPick });
     }
-    b.setAttribute('data-card-pick', slug);
-    acts.appendChild(b);
-    var cb = btn('v2-btn v2-btn--secondary dr-card__btn' + (isC ? ' is-on' : ''), isC ? 'Captain' : 'Make captain');
-    cb.setAttribute('data-card-cap', slug);
-    cb.setAttribute('aria-pressed', isC ? 'true' : 'false');
-    if (!picked){ cb.setAttribute('aria-disabled', 'true'); cb.setAttribute('data-why', 'Add ' + surname(p.name) + ' to your team first'); cb.title = 'Add to your team first'; }
-    acts.appendChild(cb);
-    acts.appendChild(starBtn(p, 'dr-star--text', true));
-    body.appendChild(acts);
-    if (b.getAttribute('data-why')) body.appendChild(el('p', 'dr-card__why', b.getAttribute('data-why') === 'Lineup full' ? 'Your five is full. Remove someone first.' : b.getAttribute('data-why') + '.'));
-    // facts
-    var dl = el('dl', 'dr-facts');
-    var r = ix && typeof ix.rank === 'number' ? ix.rank : (typeof p.rank === 'number' ? p.rank : null);
-    cardFact(dl, 'Forbes rank', r == null ? '—' : 'No. ' + r);
-    cardFact(dl, 'Net worth', ix && ix.worth ? ix.worth : '—', '', X.people === 'loading' ? 'loading…' : '');
-    cardFact(dl, 'Cap cost', s == null ? '—' : String(s), '', s == null ? 'not draftable' : 'of ' + C.CAP);
-    var w = weekPts(slug), wkLabel = S.sbWk ? (S.sbWk.practice ? 'practice week' : fmt.weekTitle(S.sbWk.week)) : 'no scored week';
-    cardFact(dl, 'Week pts', w == null ? '—' : signedTxt(w), w == null ? '' : numCls(w), wkLabel);
-    var a = avgR(slug), st = F.stat(slug);
-    cardFact(dl, 'Recent avg', a == null ? '—' : signedTxt(a), a == null ? '' : numCls(a), a == null ? 'no scored days' : 'pts/day over ' + st.n + (st.n === 1 ? ' day' : ' days'));
-    var v = valOf(slug);
-    cardFact(dl, 'Value', v ? valTxt(v) : '—', '', v ? 'pts per cap point' + (v.basis === 'week' ? ' (week pts)' : '') : 'no points yet');
-    body.appendChild(dl);
-    var pix = X.people === 'ok' ? BD.getPeople() : null;
-    if (ix && pix && pix.sourceUrl && BD.safeUrl(pix.sourceUrl)){
-      var src = el('p', 'dr-card__src');
-      src.appendChild(txt('Rank and net worth: '));
-      var sa = link(null, (pix.source || 'Source') + (pix.asOf ? ', ' + BD.fmtDate(BD.isoOf(pix.asOf)) : ''), BD.safeUrl(pix.sourceUrl));
-      sa.target = '_blank'; sa.rel = 'noopener noreferrer'; sa.appendChild(sr(' (opens in a new tab)'));
-      src.appendChild(sa);
-      body.appendChild(src);
-    }
-    // recent form
-    var fs = cardSection('Recent form');
-    var series = formOf(slug);
-    if (!series.some(function(x){ return x.points != null; })) fs.appendChild(el('p', 'dr-card__empty', 'No scored days yet. Points show here after the first trading day of a week.'));
-    else fs.appendChild(cardChart(series, p.name));
-    body.appendChild(fs);
-    // holdings
-    var hs = cardSection('Holdings that score');
-    var hold = arr(p.holdings).filter(function(x){ return x && x.ticker; });
-    if (!hold.length) hs.appendChild(el('p', 'dr-card__empty', 'No listed holdings in this week\'s file.'));
-    else {
-      var ul = el('ul', 'dr-hold');
-      hold.forEach(function(x){
-        var li = el('li');
-        li.appendChild(el('span', 'dr-hold__t', x.ticker));
-        li.appendChild(el('span', 'dr-hold__n', x.name || ''));
-        li.appendChild(el('span', 'dr-hold__w num', P.weightPct(x.weight)));
-        ul.appendChild(li);
-      });
-      hs.appendChild(ul);
-      hs.appendChild(el('p', 'dr-card__note', 'Weights from this week\'s game file.'));
-    }
-    body.appendChild(hs);
-    // stories
-    var ns = cardSection('In the news');
-    if (X.digestState === 'loading') ns.appendChild(el('p', 'v2-loading', 'Loading the latest edition…'));
-    else if (!X.digest) ns.appendChild(el('p', 'dr-card__empty', 'The latest edition is not available right now.'));
-    else {
-      var iso = BD.isoFromLong(X.digest.date);
-      var items = arr(X.digest.stories).filter(function(x){ return x && x.headline && BD.storyMatches(x, p.name); }).slice(0, 3);
-      if (!items.length) ns.appendChild(el('p', 'dr-card__empty', 'No stories about ' + p.name + ' in the latest edition' + (iso ? ' (' + BD.fmtDate(iso) + ')' : '') + '.'));
-      else {
-        var nl = el('ul', 'dr-news');
-        items.forEach(function(x){
-          var li = el('li');
-          var u = BD.safeUrl(x.url);
-          if (u){ var na = link('dr-news__h', x.headline, u); na.target = '_blank'; na.rel = 'noopener noreferrer'; na.appendChild(sr(' (opens the source in a new tab)')); li.appendChild(na); }
-          else li.appendChild(el('span', 'dr-news__h', x.headline));
-          if (x.source) li.appendChild(el('span', 'dr-news__src', 'Source · ' + x.source));
-          nl.appendChild(li);
-        });
-        ns.appendChild(nl);
-        if (iso) ns.appendChild(el('p', 'dr-card__note', 'From the ' + BD.fmtDate(iso) + ' edition.'));
+    var capWhy = picked ? '' : 'Add ' + surname(p.name) + ' to your team first';
+    list.push({ key: 'cap', label: isC ? 'Captain' : 'Make captain', variant: 'secondary', pressed: isC, why: capWhy, note: capWhy ? capWhy + '.' : '', ariaLabel: 'Make ' + p.name + ' captain', onClick: cardCap });
+    var q = queued(slug);
+    list.push({ key: 'queue', label: q ? 'In your queue' : 'Add to queue', variant: 'ghost', pressed: q, ariaLabel: 'Queue ' + p.name, onClick: cardQueue });
+    return list;
+  }
+  function cardPick(slug, b){ togglePick(slug, b); }
+  function cardCap(slug, b){
+    if (b.getAttribute('aria-disabled') === 'true'){ say(b.getAttribute('data-why') + '.'); return; }
+    var r = F.setCaptain(slug); if (r.ok){ UI.saveMsg = null; say(r.text); }
+  }
+  function cardQueue(slug){ starToggle(slug); }
+  function openCard(slug, from){
+    var opener = from || document.activeElement, scope = scopeOf(opener);
+    if (!window.BDDossier){ location.href = 'player.html?p=' + encodeURIComponent(slug); return; }
+    window.BDDossier.open(slug, {
+      opener: opener, showTeam: true, actions: cardActions,
+      restoreFocus: function(){
+        var sel = '[data-card="' + slug + '"]';
+        if (scope && $(scope)){ var n = $(scope).querySelector(sel); if (visibleEl(n)) return n; }
+        if (visibleEl(opener)) return opener;
+        var any = document.querySelector('#pool ' + sel);
+        return visibleEl(any) ? any : $('q');
       }
-    }
-    body.appendChild(ns);
-    var foot = el('p', 'dr-card__foot');
-    foot.appendChild(link('dr-card__more', 'Full player page', 'player.html?p=' + encodeURIComponent(slug)));
-    body.appendChild(foot);
-    body.appendChild(el('p', 'dr-card__note', 'Play money · not financial advice'));
-    if (focusKey){ var fn = body.querySelector('[' + focusKey + ']'); if (fn) fn.focus(); else $('pcardclose').focus(); }
+    });
   }
 
   // ---- phone sheet: tabs, focus trap, Escape, return focus ----
@@ -909,22 +745,20 @@
     UI.saveMsg = null;
     return true;
   }
-  function starToggle(s, b){
+  function starToggle(s){
     var on = toggleQueue(s);
     renderPool(); renderQueues();
-    if (cardOpen()) renderCard(false);
+    if (cardOpen()) window.BDDossier.refresh();
     say(on ? F.person(s).name + ' added to your queue. ' + queue.length + ' queued.' : F.person(s).name + ' removed from your queue. ' + queue.length + ' queued.');
     return on;
   }
   document.addEventListener('click', function(e){
     var t = e.target;
     if (t === $('sheet')){ closeSheet(); return; }
-    if (t === $('pcard')){ closeCard(); return; }
     var b = t.closest ? t.closest('button') : null;
     if (!b) return;
     if (b.id === 'barbtn'){ openSheet(); return; }
     if (b.id === 'sheetclose'){ closeSheet(); return; }
-    if (b.id === 'pcardclose'){ closeCard(); return; }
     if (b.id === 'autofill'){ doAutoFill(); return; }
     if (b.id === 'clearbtn'){
       if (!F.state.picks.length){ toolMsg('No picks to clear.'); say('No picks to clear.'); return; }
@@ -938,22 +772,14 @@
     if ((s = b.getAttribute('data-stab'))){ showSheetTab(s, false); return; }
     if ((s = b.getAttribute('data-sector')) !== null && b.getAttribute('role') === 'tab'){ setSector(s, false); return; }
     if ((s = b.getAttribute('data-card'))){ openCard(s, b); return; }
-    if ((s = b.getAttribute('data-card-pick'))){ togglePick(s, b); var cp = $('pcardbody').querySelector('[data-card-pick]'); if (cp) cp.focus(); return; }
-    if ((s = b.getAttribute('data-card-cap'))){
-      if (b.getAttribute('aria-disabled') === 'true'){ say(b.getAttribute('data-why') + '.'); return; }
-      r = F.setCaptain(s); if (r.ok){ UI.saveMsg = null; say(r.text); }
-      var cc = $('pcardbody').querySelector('[data-card-cap]'); if (cc) cc.focus();
-      return;
-    }
     if ((s = b.getAttribute('data-star'))){
-      var inCard = $('pcard').contains(b);
-      starToggle(s, b);
-      if (inCard) focusSel($('pcardbody'), '[data-star]'); else focusSel($('pool'), '[data-star="' + s + '"]');
+      starToggle(s);
+      focusSel($('pool'), '[data-star="' + s + '"]');
       return;
     }
     if ((s = b.getAttribute('data-unqueue'))){
       var qs = queueScope(b), idx = queue.indexOf(s);
-      starToggle(s, b);
+      starToggle(s);
       var items = qs.querySelectorAll('[data-unqueue]');
       if (items.length) items[Math.min(idx, items.length - 1)].focus(); else { var qh = qs.querySelector('.dr-q__h'); if (qh) qh.focus(); }
       return;
@@ -1029,9 +855,8 @@
     say('The player pool is not available right now.');
   }
   if (F.testClock() != null){ var tcb = $('testclock'); tcb.hidden = false; tcb.textContent = 'Test clock (for testing only): ' + new Date(F.now()).toISOString(); }
-  // player card extras: Forbes rank / net worth and the latest edition (never block the draft)
-  BD.loadPeople().then(function(){ X.people = 'ok'; }, function(){ X.people = 'error'; }).then(function(){ if (cardOpen()) renderCard(true); });
-  BD.getJson('digest.json').then(function(d){ X.digest = d; X.digestState = 'ok'; }, function(){ X.digestState = 'error'; }).then(function(){ if (cardOpen()) renderCard(true); });
+  // nicknames under the names in the pool (a playful label we write; the list works without it)
+  if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x && F.state.loaded && F.state.draftWk) renderPool(); });
   F.init().then(function(){
     if (!F.state.draftWk){ fail(); return; }
     loadQueue();

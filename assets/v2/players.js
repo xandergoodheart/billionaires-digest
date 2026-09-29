@@ -29,6 +29,12 @@
   function sr(text){ return el('span', 'v2-sr', text); }
   function say(t){ var n = $('live'); n.textContent = ''; setTimeout(function(){ n.textContent = t; }, 30); }
   function playerHref(slug){ return 'player.html?p=' + encodeURIComponent(slug); }
+  // name: a link to the player page; a plain click opens the player dossier (assets/v2/dossier.js) instead
+  function nameLink(p){
+    var a = link('v2-player__name', p.name, playerHref(p.slug));
+    if (window.BDDossier){ a.setAttribute('data-dossier', p.slug); a.setAttribute('aria-haspopup', 'dialog'); }
+    return a;
+  }
   // portraits: only plain site-relative paths from window.BDPortraits (assets/v2/portraits.js)
   function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
   function portraitSrc(slug){
@@ -124,9 +130,11 @@
       var pl = el('div', 'v2-player');
       pl.appendChild(avatar(p));
       var tx = el('div', 'v2-player__txt');
-      tx.appendChild(link('v2-player__name', p.name, playerHref(p.slug)));
+      tx.appendChild(nameLink(p));
       var tk = P.tickers(p).slice(0, 2).join(' · ');
       tx.appendChild(el('span', 'v2-player__sub', (tk ? tk + ' / ' : '') + (p.sector || 'Other')));
+      var nk = window.BDDossier ? window.BDDossier.nickname(p.slug) : null;
+      if (nk) tx.appendChild(el('span', 'v2-nick', nk));
       if (mine[p.slug]) tx.appendChild(el('span', 'pl-mark', 'In your team'));
       pl.appendChild(tx); tdP.appendChild(pl); tr.appendChild(tdP);
       var w = weekPts(p.slug);
@@ -220,5 +228,6 @@
     if (!F.state.draftWk){ fail(); return; }
     renderHead(); renderNotices(); renderSectors(); renderAll();
     people.then(renderNotDraftable);
+    if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x) renderPool(); });
   }, function(err){ if (window.console) console.warn(err); fail(); });
 })();

@@ -510,9 +510,14 @@
     else if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
   });
+  // player names open the shared player dossier (assets/v2/dossier.js) for the week shown; the small profile
+  // preview above is the fallback when that script is missing
   $('fivebody').addEventListener('click', function(e){
     var b = e.target.closest && e.target.closest('.tm-name');
-    if (b) openCloseup(b.getAttribute('data-slug'), b);
+    if (!b) return;
+    var slug = b.getAttribute('data-slug');
+    if (window.BDDossier) window.BDDossier.open(slug, { opener: b, week: curView && curView.wk ? curView.wk : null });
+    else openCloseup(slug, b);
   });
   // "How XP works" link: move focus to the note so keyboard and screen-reader users land on it
   document.addEventListener('click', function(e){

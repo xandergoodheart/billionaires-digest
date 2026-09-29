@@ -263,7 +263,12 @@
       var pl = el('div', 'v2-player sc-who');
       pl.appendChild(avatar(p));
       var tx = el('div', 'v2-player__txt');
-      if (withLink) tx.appendChild(link('v2-player__name', p.name, personHref(slug)));
+      if (withLink){
+        // a link to the player page; a plain click opens the player dossier (assets/v2/dossier.js)
+        var nl = link('v2-player__name', p.name, personHref(slug));
+        if (window.BDDossier){ nl.setAttribute('data-dossier', slug); nl.setAttribute('aria-haspopup', 'dialog'); if (wk && wk.week) nl.setAttribute('data-dossier-week', wk.week); }
+        tx.appendChild(nl);
+      }
       else tx.appendChild(el('span', 'v2-player__name', p.name));
       if (slug === captain) tx.appendChild(el('span', 'v2-player__sub', 'Captain · ' + C.CAPTAIN_MULT + 'x'));
       pl.appendChild(tx);

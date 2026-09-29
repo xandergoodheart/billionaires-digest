@@ -1,0 +1,136 @@
+/* Billionaires Digest v3: player dossier pop-up (assets/v2/dossier.js). Loaded after ui.css on draft.html,
+   players.html, team.html and scores.html. Desktop: a panel on the right; phone (< 768px): a bottom sheet.
+   Same look as the Draft room player card it replaces (dark head, display-type name, thin rules). */
+.dz { position: fixed; inset: 0; z-index: 97; background: rgba(0, 0, 0, .55); }
+.dz[hidden] { display: none; }
+.dz__panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(520px, 100%);
+  display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--card); color: var(--text); box-shadow: -12px 0 40px rgba(0, 0, 0, .35);
+  animation: dz-in var(--t-base) var(--ease);
+}
+@keyframes dz-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.dz__panel:focus { outline: none; }
+
+/* dark head (.v2-dark gives the dark-surface text colors and focus rings; its card radius and shadow are undone) */
+.dz .dz__bar, .dz .dz__head { border-radius: 0; box-shadow: none; }
+.dz__head { background: var(--ink-2); color: #fff; padding: 0 var(--s2) var(--s1); }
+.dz__bar { position: sticky; top: 0; z-index: 1; padding: 0 var(--s2); background: var(--ink-2); color: #fff; display: flex; align-items: center; justify-content: space-between; gap: var(--s0); min-height: var(--tap); }
+.dz__kick { font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #B9BFC7; }
+.dz__close { min-height: var(--tap); min-width: var(--tap); margin-right: calc(-1 * var(--s0)); padding: 0 var(--s0); background: none; border: 0; color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: var(--fs-sm); cursor: pointer; }
+.dz__close:focus-visible { outline: 2px solid #8AB4FF; outline-offset: -2px; }
+.dz__id { display: flex; align-items: flex-start; gap: var(--s1); padding-top: 4px; }
+.dz-face { --av: 88px; border-radius: 8px; flex: none; }
+.dz__who { min-width: 0; flex: 1 1 auto; }
+.dz__nick { margin: 0 0 2px; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #FFB3AD; }
+.dz__name { margin: 0; font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 34px; line-height: 1; overflow-wrap: anywhere; color: #fff; }
+.dz__co { margin: 6px 0 0; font-weight: 700; font-size: var(--fs-md); color: #fff; }
+.dz__tk { display: inline-block; margin-left: 2px; padding: 1px 7px; border-radius: 4px; background: #2A2D31; border: 1px solid #3A3E44; font-size: var(--fs-xs); letter-spacing: .05em; vertical-align: 1px; }
+.dz__role { margin: 4px 0 0; font-size: var(--fs-sm); color: #B9BFC7; }
+.dz__on { display: inline-block; margin-top: 6px; padding: 1px 8px; border-radius: 4px; background: #10301F; color: #3CC985; border: 1px solid #3CC985; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+
+.dz__body { flex: 1 0 auto; padding: 0 var(--s2) var(--s1); }
+
+/* four stats */
+.dz-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; border-bottom: 1px solid var(--line); }
+.dz-stat { padding: 10px 6px 10px 0; min-width: 0; }
+.dz-stat + .dz-stat { padding-left: 8px; border-left: 1px solid var(--line); }
+.dz-stat__k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+.dz-stat__v { margin: 2px 0 0; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 26px; line-height: 1.05; }
+.dz-stat__sub { display: block; font-family: var(--font-body); font-weight: 400; font-size: 11px; line-height: 1.25; color: var(--text-muted); }
+
+/* sections */
+.dz-sec { margin-top: var(--s1); }
+.dz-sec__h { margin: 0 0 var(--s0); padding-bottom: 4px; border-bottom: 2px solid var(--text); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.dz-sec__h--red { color: var(--brand-ink); border-bottom-color: var(--brand-ink); }
+.dz-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--s1); margin: 0; }
+.dz-fact { padding: 8px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.dz-fact__k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+.dz-fact__v { margin: 2px 0 0; font-weight: 700; font-size: var(--fs-md); overflow-wrap: anywhere; }
+.dz-fact__sub { display: block; font-weight: 400; font-size: var(--fs-xs); color: var(--text-muted); }
+.dz-src { margin: 6px 0 0; font-size: var(--fs-xs); color: var(--text-muted); }
+.dz-src a { color: var(--link); }
+
+/* tabs (ARIA tablist) */
+.dz-tabs { display: flex; gap: 0; margin-top: var(--s2); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.dz-tabs::-webkit-scrollbar { display: none; }
+.dz-tab { position: relative; flex: 0 0 auto; min-height: var(--tap); padding: 0 14px; background: none; border: 0; color: var(--text-muted); font-family: var(--font-body); font-weight: 700; font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: .05em; cursor: pointer; }
+.dz-tab:first-child { padding-left: 0; }
+.dz-tab[aria-selected="true"] { color: var(--text); }
+.dz-tab[aria-selected="true"]::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 3px; background: var(--brand); }
+.dz-tab:first-child[aria-selected="true"]::after { left: 0; }
+.dz-tab:focus-visible { outline-offset: -3px; }
+.dz-panel { padding-top: var(--s1); }
+.dz-panel:focus-visible { outline-offset: 2px; }
+.dz-panel[hidden] { display: none; }
+.dz-empty { margin: 0 0 var(--s0); font-size: var(--fs-sm); color: var(--text-muted); }
+.dz-note { margin: 6px 0 0; font-size: var(--fs-xs); color: var(--text-muted); }
+.dz-note a, .dz-more { color: var(--link); font-weight: 700; }
+
+/* game log: the math row */
+.dz-math { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); }
+.dz-math__s { position: relative; padding: 10px 12px; min-width: 0; }
+.dz-math__s + .dz-math__s { border-left: 1px solid var(--line); }
+.dz-math__s + .dz-math__s::before { content: '→'; position: absolute; left: -9px; top: 50%; transform: translateY(-50%); width: 16px; text-align: center; background: var(--card); color: var(--text-muted); font-size: 12px; line-height: 1; }
+.dz-math__k { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); }
+.dz-math__v { display: block; margin-top: 2px; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 26px; line-height: 1.05; }
+.dz-math__sub { display: block; font-size: 11px; color: var(--text-muted); }
+
+/* tables */
+.dz-scroll { overflow-x: auto; margin-top: var(--s1); }
+.dz-scroll:focus-visible { outline-offset: 2px; }
+.dz-table { font-size: var(--fs-sm); }
+.dz-table th { font-size: 11px; }
+.dz-table tbody th { font-size: var(--fs-sm); font-weight: 700; text-transform: none; letter-spacing: 0; color: var(--text); text-align: left; white-space: nowrap; }
+.dz-table td.n { font-size: var(--fs-sm); }
+.dz-table__sub { display: block; font-size: 11px; font-weight: 400; color: var(--text-muted); }
+.dz-co__meta { display: block; margin-top: 2px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-muted); white-space: normal; }
+.dz-co thead th { vertical-align: bottom; }
+.dz-tip { margin-top: var(--s1); padding: 10px 12px; border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: var(--radius); background: var(--surface-2); font-size: var(--fs-sm); }
+.dz-tip p { margin: 2px 0 0; color: var(--text-muted); }
+
+/* scouting report */
+.dz-sub + .dz-sub { margin-top: var(--s1); }
+.dz-sub__h { margin: 0 0 4px; font-size: var(--fs-sm); font-weight: 700; }
+.dz-list { list-style: none; margin: 0; padding: 0; }
+.dz-list li { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: var(--fs-sm); line-height: 1.35; }
+.dz-list__h { display: block; font-weight: 700; color: var(--text); }
+a.dz-list__h, .dz-list__src { color: var(--link); }
+.dz-list__src { font-weight: 600; }
+.dz-list__sub { display: block; font-size: var(--fs-xs); color: var(--text-muted); }
+.dz-links { list-style: none; margin: 0; padding: 0; }
+.dz-links li { border-bottom: 1px solid var(--line); }
+.dz-links a { display: flex; align-items: center; min-height: var(--tap); }
+
+/* footer actions (sticky so they stay in reach) */
+.dz__foot { position: sticky; bottom: 0; padding: 10px var(--s2) calc(10px + env(safe-area-inset-bottom)); background: var(--card); border-top: 1px solid var(--line); }
+.dz__acts { display: flex; flex-wrap: wrap; gap: var(--s0); }
+.dz__btn { flex: 1 1 auto; padding-left: 14px; padding-right: 14px; }
+.dz__btn.is-on { background: var(--brand); border-color: var(--brand); color: #fff; }
+.dz__why { margin: 6px 0 0; font-size: var(--fs-sm); color: var(--text-muted); }
+.dz__note { margin: 6px 0 0; font-size: 11px; color: var(--text-muted); }
+
+/* nickname line in player lists (Draft room, Players) */
+.v2-nick { display: block; margin-top: 1px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--brand-ink); }
+
+@media (max-width: 767px) {
+  .dz__panel {
+    top: auto; left: 0; width: 100%; max-height: 92vh; border-radius: 14px 14px 0 0;
+    animation-name: dz-up;
+  }
+  .dz .dz__bar { border-radius: 14px 14px 0 0; padding: 0 var(--s1); }
+  .dz__head { padding: 0 var(--s1) var(--s1); }
+  .dz__body { padding: 0 var(--s1) var(--s1); }
+  .dz__foot { padding-left: var(--s1); padding-right: var(--s1); }
+  .dz-face { --av: 72px; }
+  .dz__name { font-size: 28px; }
+  .dz-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dz-stat:nth-child(3) { padding-left: 0; border-left: 0; }
+  .dz-stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .dz-stat__v { font-size: 22px; }
+  .dz-math__s { padding: 8px 8px 8px 10px; }
+  .dz-math__v { font-size: 20px; }
+  .dz-facts { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@keyframes dz-up { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .dz__panel { animation: none; } }
