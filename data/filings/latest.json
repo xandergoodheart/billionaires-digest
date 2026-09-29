@@ -1,7 +1,65 @@
 {
-  "generated": "2026-09-28T17:45:54.610Z",
+  "generated": "2026-09-29T16:03:09.319Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0001070844",
+      "filer": "SCHWARZMAN STEPHEN A",
+      "form": "4",
+      "filed": "2026-09-28",
+      "reportDate": "2026-09-24",
+      "accession": "0001193125-26-405400",
+      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/0001193125-26-405400-index.htm",
+      "description": "4",
+      "person": "Stephen Schwarzman",
+      "personSlug": "stephen-schwarzman",
+      "form4": {
+        "issuer": "ARKO Petroleum Corp.",
+        "ticker": "APC",
+        "summary": [
+          {
+            "issuer": "ARKO Petroleum Corp.",
+            "ticker": "APC",
+            "securityTitle": "Class A Common Stock",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 125000,
+            "price": 16.4,
+            "value": 2050248,
+            "direction": "down",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 400,
+            "price": 17.02,
+            "value": 6808,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 124600,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-25",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 124600,
+            "price": 16.4,
+            "value": 2043440,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 0,
+            "direction": "down"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001998523",
       "filer": "Vuong Pham Nhat",
@@ -19,6 +77,192 @@
         "summary": [],
         "transactionCount": 0,
         "transactions": []
+      }
+    },
+    {
+      "cik": "0001273087",
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "form": "SCHEDULE 13G",
+      "filed": "2026-09-28",
+      "accession": "0001104659-26-111444",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926111444/xslSCHEDULE_13G_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926111444/0001104659-26-111444-index.htm",
+      "person": "Israel Englander",
+      "personSlug": "israel-englander"
+    },
+    {
+      "cik": "0001548760",
+      "filer": "Zuckerberg Mark",
+      "form": "4",
+      "filed": "2026-09-28",
+      "reportDate": "2026-09-24",
+      "accession": "0000950103-26-014647",
+      "url": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326014647/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326014647/0000950103-26-014647-index.htm",
+      "description": "FORM 4",
+      "person": "Mark Zuckerberg",
+      "personSlug": "mark-zuckerberg",
+      "form4": {
+        "issuer": "Meta Platforms, Inc.",
+        "ticker": "META",
+        "summary": [
+          {
+            "issuer": "Meta Platforms, Inc.",
+            "ticker": "META",
+            "securityTitle": "Class A Common Stock",
+            "code": "C",
+            "codeLabel": "Conversion",
+            "shares": 17140,
+            "direction": "up",
+            "transactions": 1
+          },
+          {
+            "issuer": "Meta Platforms, Inc.",
+            "ticker": "META",
+            "securityTitle": "Class A Common Stock",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 27474,
+            "price": 777.44,
+            "value": 21359454,
+            "direction": "down",
+            "transactions": 10
+          }
+        ],
+        "transactionCount": 11,
+        "transactions": [
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "C",
+            "codeLabel": "Conversion",
+            "shares": 17140,
+            "price": 0,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 17140,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2093,
+            "price": 775.3906,
+            "value": 1622893,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 15047,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2516,
+            "price": 776.5564,
+            "value": 1953816,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 12531,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 7607,
+            "price": 777.6303,
+            "value": 5915434,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 4924,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 4324,
+            "price": 778.3554,
+            "value": 3365609,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 600,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 600,
+            "price": 779.3263,
+            "value": 467596,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 0,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 1133,
+            "price": 775.3185,
+            "value": 878436,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1229904,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 1769,
+            "price": 776.5624,
+            "value": 1373739,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1228135,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 4810,
+            "price": 777.6616,
+            "value": 3740552,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1223325,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2146,
+            "price": 778.3993,
+            "value": 1670445,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1221179,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 476,
+            "price": 779.2765,
+            "value": 370936,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1220703,
+            "direction": "down"
+          }
+        ]
       }
     },
     {
@@ -10373,14 +10617,7 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1998523/000118518526003006/xslF345X06/ownership.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1998523/000118518526003006/0001185185-26-003006-index.htm",
       "person": "Pham Nhat Vuong",
-      "personSlug": "pham-nhat-vuong",
-      "form4": {
-        "issuer": "VinFast Auto Ltd.",
-        "ticker": "VFS",
-        "summary": [],
-        "transactionCount": 0,
-        "transactions": []
-      }
+      "personSlug": "pham-nhat-vuong"
     },
     {
       "cik": "0001273087",
@@ -10415,148 +10652,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1133206/000159653226000164/0001596532-26-000164-index.htm",
       "description": "PRIMARY DOCUMENT",
       "person": "Andreas von Bechtolsheim & family",
-      "personSlug": "andreas-von-bechtolsheim-family",
-      "form4": {
-        "issuer": "Arista Networks, Inc.",
-        "ticker": "ANET",
-        "summary": [
-          {
-            "issuer": "Arista Networks, Inc.",
-            "ticker": "ANET",
-            "securityTitle": "Common Stock",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 300000,
-            "price": 180.77,
-            "value": 54231399,
-            "direction": "down",
-            "transactions": 10
-          }
-        ],
-        "transactionCount": 10,
-        "transactions": [
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 26765,
-            "price": 176.1777,
-            "value": 4715396,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 182016283,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 14808,
-            "price": 177.2518,
-            "value": 2624745,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 182001475,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 29704,
-            "price": 178.2024,
-            "value": 5293324,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 181971771,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 24764,
-            "price": 179.2528,
-            "value": 4439016,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 181947007,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 31412,
-            "price": 180.1715,
-            "value": 5659547,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 181915595,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 46566,
-            "price": 181.2996,
-            "value": 8442397,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 181869029,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 57677,
-            "price": 182.282,
-            "value": 10513479,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 181811352,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 40873,
-            "price": 183.1529,
-            "value": 7486008,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 181770479,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 20869,
-            "price": 184.1734,
-            "value": 3843515,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 181749610,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-07-14",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 6562,
-            "price": 185.0002,
-            "value": 1213971,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 181743048,
-            "direction": "down"
-          }
-        ]
-      }
+      "personSlug": "andreas-von-bechtolsheim-family"
     },
     {
       "cik": "0001273087",
@@ -11402,50 +11498,6 @@
       "description": "FORM 4",
       "person": "Carlos Slim Helu & family",
       "personSlug": "carlos-slim-helu-family"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G",
-      "filed": "2026-06-30",
-      "accession": "0001104659-26-079425",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926079425/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926079425/0001104659-26-079425-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0002025889",
-      "filer": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
-      "form": "SCHEDULE 13D/A",
-      "filed": "2026-06-30",
-      "accession": "0001104659-26-079298",
-      "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926079298/xslSCHEDULE_13D_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926079298/0001104659-26-079298-index.htm",
-      "person": "Giancarlo Devasini",
-      "personSlug": "giancarlo-devasini"
-    },
-    {
-      "cik": "0002025889",
-      "filer": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
-      "form": "SCHEDULE 13D/A",
-      "filed": "2026-06-30",
-      "accession": "0001104659-26-079298",
-      "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926079298/xslSCHEDULE_13D_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926079298/0001104659-26-079298-index.htm",
-      "person": "Jean-Louis van der Velde",
-      "personSlug": "jean-louis-van-der-velde"
-    },
-    {
-      "cik": "0002025889",
-      "filer": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
-      "form": "SCHEDULE 13D/A",
-      "filed": "2026-06-30",
-      "accession": "0001104659-26-079298",
-      "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926079298/xslSCHEDULE_13D_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926079298/0001104659-26-079298-index.htm",
-      "person": "Paolo Ardoino",
-      "personSlug": "paolo-ardoino"
     }
   ]
 }

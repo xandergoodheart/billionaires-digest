@@ -1,23 +1,23 @@
 {
-  "generated": "2026-09-28",
+  "generated": "2026-09-29",
   "inputs": {
-    "filingsGenerated": "2026-09-28T17:45:54.610Z",
-    "pricesGenerated": "2026-09-28T17:50:14.740Z",
+    "filingsGenerated": "2026-09-29T16:03:09.319Z",
+    "pricesGenerated": "2026-09-29T16:06:38.916Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 4
+    "editions": 5
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 69 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 71 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W29",
       "start": "2026-07-13",
       "end": "2026-07-19",
       "buy": 0,
-      "sell": 54231399,
-      "net": -54231399,
+      "sell": 0,
+      "net": 0,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 1,
+      "sellCount": 0,
       "otherCount": 0,
       "unpriced": 0
     },
@@ -143,12 +143,12 @@
       "start": "2026-09-21",
       "end": "2026-09-27",
       "buy": 141399452,
-      "sell": 308092599,
-      "net": -166693147,
+      "sell": 331502301,
+      "net": -190102849,
       "other": 0,
       "buyCount": 3,
-      "sellCount": 2,
-      "otherCount": 1,
+      "sellCount": 4,
+      "otherCount": 2,
       "unpriced": 0
     },
     {
@@ -166,27 +166,27 @@
     }
   ],
   "last7": {
-    "from": "2026-09-22",
-    "to": "2026-09-28",
+    "from": "2026-09-23",
+    "to": "2026-09-29",
     "buy": 141399452,
-    "sell": 308092599,
-    "net": -166693147,
+    "sell": 331502301,
+    "net": -190102849,
     "other": 0,
     "buyCount": 3,
-    "sellCount": 2,
-    "otherCount": 1,
+    "sellCount": 4,
+    "otherCount": 2,
     "unpriced": 0
   },
   "sectors": [
     {
       "sector": "AI & tech",
       "buy": 1411272365,
-      "sell": 911530447,
-      "net": 499741918,
+      "sell": 878658502,
+      "net": 532613863,
       "other": 9702110,
       "buyCount": 13,
       "sellCount": 7,
-      "otherCount": 8,
+      "otherCount": 9,
       "unpriced": 0
     },
     {
@@ -203,11 +203,11 @@
     {
       "sector": "Finance",
       "buy": 380101885,
-      "sell": 1238809363,
-      "net": -858707478,
+      "sell": 1240859611,
+      "net": -860757726,
       "other": 0,
       "buyCount": 9,
-      "sellCount": 6,
+      "sellCount": 7,
       "otherCount": 6,
       "unpriced": 0
     },
@@ -354,6 +354,47 @@
           "url": "https://www.sec.gov/Archives/edgar/data/2027344/000119312526401380/xslF345X06/ownership.xml"
         }
       ]
+    },
+    {
+      "name": "Mark Zuckerberg",
+      "slug": "mark-zuckerberg",
+      "sector": "AI & tech",
+      "value": 21359454,
+      "count": 1,
+      "filings": [
+        {
+          "date": "2026-09-24",
+          "filed": "2026-09-28",
+          "form": "4",
+          "issuer": "Meta Platforms, Inc.",
+          "ticker": "META",
+          "url": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326014647/xslF345X06/ownership.xml"
+        }
+      ]
+    },
+    {
+      "name": "Stephen Schwarzman",
+      "slug": "stephen-schwarzman",
+      "sector": "Finance",
+      "value": 2050248,
+      "count": 1,
+      "filings": [
+        {
+          "date": "2026-09-24",
+          "filed": "2026-09-28",
+          "form": "4",
+          "issuer": "ARKO Petroleum Corp.",
+          "ticker": "APC",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml"
+        },
+        {
+          "date": "2026-09-23",
+          "filed": "2026-09-24",
+          "form": "4",
+          "issuer": "Blackstone Private Real Estate Credit & Income Fund",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026103146/xslF345X06/ownership.xml"
+        }
+      ]
     }
   ],
   "topBuyers30d": [
@@ -439,6 +480,14 @@
       "count": 1,
       "filings": [
         {
+          "date": "2026-09-24",
+          "filed": "2026-09-28",
+          "form": "4",
+          "issuer": "ARKO Petroleum Corp.",
+          "ticker": "APC",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml"
+        },
+        {
           "date": "2026-09-23",
           "filed": "2026-09-24",
           "form": "4",
@@ -500,7 +549,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 69,
+    "form4Filings": 71,
     "form4Parsed": 59,
     "windowDays": 90
   }

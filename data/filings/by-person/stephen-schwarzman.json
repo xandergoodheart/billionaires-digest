@@ -1,9 +1,67 @@
 {
-  "generated": "2026-09-28T17:45:54.610Z",
+  "generated": "2026-09-29T16:03:09.319Z",
   "windowDays": 90,
   "person": "Stephen Schwarzman",
   "personSlug": "stephen-schwarzman",
   "filings": [
+    {
+      "cik": "0001070844",
+      "filer": "SCHWARZMAN STEPHEN A",
+      "form": "4",
+      "filed": "2026-09-28",
+      "reportDate": "2026-09-24",
+      "accession": "0001193125-26-405400",
+      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/0001193125-26-405400-index.htm",
+      "description": "4",
+      "person": "Stephen Schwarzman",
+      "personSlug": "stephen-schwarzman",
+      "form4": {
+        "issuer": "ARKO Petroleum Corp.",
+        "ticker": "APC",
+        "summary": [
+          {
+            "issuer": "ARKO Petroleum Corp.",
+            "ticker": "APC",
+            "securityTitle": "Class A Common Stock",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 125000,
+            "price": 16.4,
+            "value": 2050248,
+            "direction": "down",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-24",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 400,
+            "price": 17.02,
+            "value": 6808,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 124600,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-25",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 124600,
+            "price": 16.4,
+            "value": 2043440,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 0,
+            "direction": "down"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001070844",
       "filer": "SCHWARZMAN STEPHEN A",
