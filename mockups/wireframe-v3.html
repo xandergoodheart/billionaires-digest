@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>v3 wireframe · Mockups · Billionaires Digest</title>
+<style>
+  :root { --ink: #1c1d20; --mid: #6b7079; --soft: #b9bdc4; --box: #e4e6ea; --box2: #d3d6db; --paper: #fff; --bg: #f1f2f4; --note: #c1231e; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
+  .bar { margin: 0; background: #8A5200; color: #fff; text-align: center; font-weight: 600; padding: 8px 16px; }
+  header.top { max-width: 1400px; margin: 0 auto; padding: 20px 16px 4px; }
+  h1 { margin: 0; font-size: 28px; }
+  header.top p { margin: 6px 0 0; color: var(--mid); max-width: 760px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-size: 13px; color: var(--mid); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .row { display: flex; gap: 24px; overflow-x: auto; padding: 16px; max-width: 1400px; margin: 0 auto; align-items: flex-start; }
+  .screen { flex: 0 0 360px; }
+  .screen > h2 { margin: 0 0 8px; font-size: 16px; }
+  .screen > h2 small { display: block; font-weight: 400; color: var(--mid); font-size: 12px; }
+  .phone { background: var(--paper); border: 2px solid var(--ink); border-radius: 22px; overflow: hidden; }
+  .wf { padding: 10px; display: grid; gap: 8px; }
+  .blk { background: var(--box); border-radius: 6px; padding: 8px; position: relative; }
+  .blk.dark { background: #3b3e44; color: #fff; }
+  .blk.dark .l { color: #d6d8dc; }
+  .blk.line { background: none; border: 1.5px dashed var(--soft); }
+  .t { font-weight: 800; text-transform: uppercase; letter-spacing: .02em; font-size: 13px; }
+  .big { font-weight: 800; font-size: 30px; line-height: 1; }
+  .l { color: var(--mid); font-size: 12px; }
+  .ph { background: var(--box2); border-radius: 4px; }
+  .img { background: repeating-linear-gradient(45deg, var(--box2) 0 8px, #caced4 8px 16px); border-radius: 4px; }
+  .face { width: 36px; height: 36px; border-radius: 50%; flex: none; background: var(--box2); }
+  .face.sq { border-radius: 6px; width: 64px; height: 76px; }
+  .hstack { display: flex; align-items: center; gap: 8px; }
+  .grow { flex: 1; min-width: 0; }
+  .btn { display: block; text-align: center; border-radius: 6px; padding: 9px; font-weight: 700; background: var(--ink); color: #fff; font-size: 13px; }
+  .btn.ghost { background: none; border: 1.5px solid var(--ink); color: var(--ink); }
+  .pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 3px; background: var(--box2); text-transform: uppercase; }
+  .pill.ceo { background: #1c1d20; color: #fff; }
+  .pill.bil { background: #fff; border: 1px solid var(--ink); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .tabs { display: flex; gap: 12px; border-bottom: 1.5px solid var(--soft); font-weight: 700; font-size: 12px; }
+  .tabs span { padding: 6px 0; } .tabs span.on { border-bottom: 3px solid var(--ink); }
+  .rowi { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid var(--box2); }
+  .rowi:first-child { border-top: 0; }
+  .n { position: absolute; top: -8px; right: -8px; width: 22px; height: 22px; border-radius: 50%; background: var(--note); color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  .notes { max-width: 1400px; margin: 0 auto; padding: 0 16px 32px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+  .note { background: #fff; border-left: 4px solid var(--note); border-radius: 6px; padding: 10px 12px; }
+  .note b { color: var(--note); }
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 60px; }
+  .bars i { flex: 1; background: #9aa0a8; border-radius: 2px 2px 0 0; }
+  .days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .days span { background: var(--ink); color: #fff; text-align: center; font-weight: 700; padding: 6px 0; border-radius: 4px; }
+  .days span.off { background: var(--box2); color: var(--mid); }
+  .modal { border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; background: #fff; }
+  @media (max-width: 600px) { .screen { flex-basis: 320px; } }
+</style>
+</head>
+<body>
+<p class="bar">WIREFRAME · v3 with the new features, not the final look</p>
+<header class="top">
+  <h1>v3 wireframe: fantasy upgrade</h1>
+  <p>Layout only. Grey boxes are content, striped boxes are images, red circles point to the notes below. Everything is filled with real, sourced data in the build. Faces are our painted portraits (silhouette when we have none).</p>
+  <div class="legend"><span><span class="pill bil">Billionaire</span> top-100 billionaire</span><span><span class="pill ceo">CEO</span> big-company CEO (new)</span></div>
+</header>
+
+<div class="row">
+  <!-- 1 FANTASY HOME -->
+  <section class="screen" aria-label="Fantasy home">
+    <h2>1 · Fantasy home<small>Play tab front page</small></h2>
+    <div class="phone"><div class="wf">
+      <div class="blk dark hstack"><span class="t">BD</span><span class="grow l">Fantasy · Draft room · My team · Leaderboard</span></div>
+      <div class="blk hstack"><span class="t">Scoreboard</span><span class="grow"></span><span class="face" style="width:22px;height:22px"></span><span class="l">NVDA +128</span><span class="n">1</span></div>
+      <div class="blk dark" style="padding:0"><div class="img" style="height:120px;border-radius:6px 6px 0 0"></div><div style="padding:10px"><div class="big" style="font-size:24px">ALL THE EGO. NONE OF THE EQUITY.</div></div><span class="n">2</span></div>
+      <div class="blk"><div class="l">YOUR FRANCHISE</div><div class="t" style="font-size:18px">Team name</div><div class="big">+364</div><div class="l">this week's points</div><div style="height:6px"></div><span class="btn">Go to my team</span><div class="l" style="text-align:center;margin-top:4px">Edit your starting five</div><span class="n">3</span></div>
+      <div class="blk"><div class="rowi"><b>01</b><span class="grow">Make your picks · five people, 100 cap</span></div><div class="rowi"><b>02</b><span class="grow">Name your captain · 1.5×</span></div><div class="rowi"><b>03</b><span class="grow">Watch the week play out</span></div></div>
+      <div class="blk"><div class="t">From the Digest</div><div class="rowi"><b>01</b><span class="grow">Story headline + one line</span></div><div class="rowi"><b>02</b><span class="grow">Story headline + one line</span></div><div class="rowi"><b>03</b><span class="grow">Story headline + one line</span></div><span class="n">4</span></div>
+      <div class="blk"><div class="t">Players to watch</div>
+        <div class="rowi"><b>1</b><span class="face"></span><span class="grow">Name <span class="pill bil">B</span><br><span class="l">Company · TICK · cap</span></span><b>+128</b></div>
+        <div class="rowi"><b>2</b><span class="face"></span><span class="grow">Name <span class="pill ceo">CEO</span><br><span class="l">Company · TICK · cap</span></span><b>+96</b></div>
+        <div class="rowi"><b>3</b><span class="face"></span><span class="grow">Name<br><span class="l">Company · TICK · cap</span></span><b>+74</b></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 2 DRAFT ROOM -->
+  <section class="screen" aria-label="Draft room">
+    <h2>2 · Draft room<small>pick five, captain, save</small></h2>
+    <div class="phone"><div class="wf">
+      <div class="big" style="font-size:24px">DRAFT YOUR BOARDROOM.</div>
+      <div class="grid2" style="grid-template-columns:1fr 1fr 1fr"><div class="blk l">✓ Pick five</div><div class="blk l">✓ Captain</div><div class="blk l">3 Save</div></div>
+      <div class="blk dark grid4" style="grid-template-columns:repeat(3,1fr)"><div><div class="l">PICKS</div><b>5/5</b></div><div><div class="l">CAP LEFT</div><b>2/100</b></div><div><div class="l">CAPTAIN</div><b>1.5×</b></div></div>
+      <span class="btn">Your roster · 5/5 ↓</span>
+      <div class="blk"><div class="ph" style="height:30px"></div><div class="grid2" style="margin-top:6px"><div class="ph" style="height:26px"></div><div class="ph" style="height:26px"></div></div><div class="l" style="margin-top:6px">Filters: sector · Billionaires / CEOs / All · sort · fits my cap</div><span class="n">5</span></div>
+      <div class="blk">
+        <div class="rowi"><span class="face sq" style="width:44px;height:52px"></span><span class="grow"><b>Name</b> <span class="pill bil">B</span><br><span class="l">Company · TICK</span><br><span class="l" style="color:var(--note);font-weight:700">THE NICKNAME</span></span><span><b>+128</b><br><span class="l">cap 26</span></span><span class="pill">Remove</span></div>
+        <div class="rowi"><span class="face sq" style="width:44px;height:52px"></span><span class="grow"><b>Name</b> <span class="pill ceo">CEO</span><br><span class="l">Company · TICK</span><br><span class="l" style="color:var(--note);font-weight:700">THE NICKNAME</span></span><span><b>+96</b><br><span class="l">cap 22</span></span><span class="pill">Add</span></div>
+        <div class="rowi"><span class="face sq" style="width:44px;height:52px"></span><span class="grow"><b>Name</b><br><span class="l">Company · TICK</span><br><span class="l" style="color:var(--note);font-weight:700">THE NICKNAME</span></span><span><b>+82</b><br><span class="l">cap 18</span></span><span class="pill">Full</span></div>
+        <span class="n">6</span>
+      </div>
+      <div class="blk"><div class="t">The starting five</div>
+        <div class="rowi"><b>01</b><span class="face"></span><span class="grow">Name<br><span class="pill" style="background:#1c1d20;color:#fff">C Captain 1.5×</span></span><b>26</b><span>×</span></div>
+        <div class="rowi"><b>02</b><span class="face"></span><span class="grow">Name<br><span class="pill">C Make captain</span></span><b>22</b><span>×</span></div>
+        <div class="rowi"><b>03</b><span class="face"></span><span class="grow">Name<br><span class="pill">C Make captain</span></span><b>22</b><span>×</span></div>
+        <div class="ph" style="height:30px;margin-top:6px"></div><div class="l">Team name · 98 of 100 cap</div><div class="ph" style="height:6px;margin:4px 0 8px"></div>
+        <span class="btn">Save team &amp; see scores</span>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 3 PLAYER DOSSIER -->
+  <section class="screen" aria-label="Player dossier">
+    <h2>3 · Player dossier<small>opens from any name, any page</small></h2>
+    <div class="modal"><div class="wf">
+      <div class="blk dark"><div class="hstack"><span class="l">PLAYER DOSSIER</span><span class="grow"></span><span class="pill">×</span></div>
+        <div class="hstack" style="margin-top:8px;align-items:flex-start"><span class="face sq"></span><span class="grow"><span class="l" style="color:#ffb3ad">THE NICKNAME</span><div class="big" style="font-size:24px">NAME</div><div>Company <span class="pill">TICK</span></div><div class="l">Role · sector</div></span></div><span class="n">7</span></div>
+      <div class="blk grid4"><div><div class="l">WEEK PTS</div><b>+128</b></div><div><div class="l">SEASON</div><b>+128</b></div><div><div class="l">RANK</div><b>#1</b></div><div><div class="l">COST</div><b>26</b></div></div>
+      <div class="blk"><div class="t" style="color:var(--note)">Tale of the tape</div><div class="grid2" style="margin-top:6px"><div><div class="l">CEO since</div><b>1993</b></div><div><div class="l">Sector</div><b>Technology</b></div><div><div class="l">Market cap</div><b>$ real</b></div><div><div class="l">Employees</div><b>real</b></div></div><div class="l" style="margin-top:6px">Source link · as-of date</div><span class="n">8</span></div>
+      <div class="tabs"><span class="on">Game log</span><span>Company stats</span><span>Scouting report</span></div>
+      <div class="blk"><div class="hstack"><div class="grow"><div class="l">Stock return</div><b>+12.8%</b></div>→<div class="grow"><div class="l">Base pts</div><b>+128</b></div>→<div class="grow"><div class="l">If captain</div><b>+192</b></div></div><span class="n">9</span></div>
+      <div class="blk"><div class="rowi"><span class="grow">Monday</span><b>+22</b><span class="l">+33</span></div><div class="rowi"><span class="grow">Tuesday</span><b>−8</b><span class="l">−12</span></div><div class="rowi"><span class="grow">…Friday</span><b>+41</b><span class="l">+62</span></div></div>
+      <div class="grid2"><span class="btn ghost">Make captain</span><span class="btn ghost">Remove</span></div>
+    </div></div>
+  </section>
+
+  <!-- 4 COMPANY STATS + SCOUTING -->
+  <section class="screen" aria-label="Company stats and scouting report tabs">
+    <h2>4 · Dossier tabs<small>Company stats · Scouting report</small></h2>
+    <div class="modal"><div class="wf">
+      <div class="tabs"><span>Game log</span><span class="on">Company stats</span><span>Scouting report</span></div>
+      <div class="blk"><div class="t">Company box score</div><div class="grid2" style="margin-top:6px"><div class="blk line"><div class="l">Latest quarter</div><b>dates from filing</b></div><div class="blk line"><div class="l">Last 12 months</div><b>dates from filing</b></div></div>
+        <div class="rowi"><span class="grow">Revenue</span><b>$ · $</b></div><div class="rowi"><span class="grow">Net income</span><b>$ · $</b></div><div class="rowi"><span class="grow">Diluted EPS</span><b>$ · $</b></div><div class="rowi"><span class="grow">Revenue growth</span><b>% · %</b></div><div class="rowi"><span class="grow">Net margin</span><b>% · %</b></div>
+        <div class="l">Source: SEC filing (10-Q / 10-K) · link</div><span class="n">10</span></div>
+      <div class="blk line"><b>Scouting stats. Zero bonus points.</b><div class="l">Profit helps you judge a pick; the score follows the stock.</div></div>
+      <div class="tabs"><span>Game log</span><span>Company stats</span><span class="on">Scouting report</span></div>
+      <div class="blk"><div class="t">Scouting report</div><div class="ph" style="height:10px;margin:6px 0"></div><div class="ph" style="height:10px;width:80%"></div><div class="l" style="margin-top:6px">Latest moves (filings) · recent news from the Digest · Billionaire Life link · Next Moves markets</div><span class="n">11</span></div>
+    </div></div>
+  </section>
+
+  <!-- 5 MY TEAM -->
+  <section class="screen" aria-label="My team">
+    <h2>5 · My team<small>score, box score, replay, benchmark</small></h2>
+    <div class="phone"><div class="wf">
+      <div class="big" style="font-size:22px">TEAM NAME</div><span class="btn ghost" style="width:120px">Edit roster</span>
+      <div class="blk dark"><div class="l">THIS WEEK</div><div class="big">+364 <span class="l">pts</span></div><div class="l">+64 vs S&amp;P 500 · 98/100 cap</div><div class="bars" style="margin-top:8px"><i style="height:15%"></i><i style="height:12%"></i><i style="height:45%"></i><i style="height:62%"></i><i style="height:100%"></i></div><div class="grid5 l" style="text-align:center"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span></div><span class="n">12</span></div>
+      <div class="blk"><div class="t">The box score</div>
+        <div class="rowi"><span class="face"></span><span class="grow">Name · C 1.5×</span><span class="l">+128</span><b>+192</b></div>
+        <div class="rowi"><span class="face"></span><span class="grow">Name</span><span class="l">+96</span><b>+96</b></div>
+        <div class="rowi"><span class="face"></span><span class="grow">Name</span><span class="l">−18</span><b>−18</b></div>
+        <div class="rowi"><b class="grow">TOTAL</b><b>+364</b></div></div>
+      <div class="blk"><div class="t">Play the week</div><div class="l">Replay each market day and watch the score build.</div><div class="days" style="margin-top:6px"><span>1</span><span>2</span><span>3</span><span class="off">4</span><span class="off">5</span></div><div style="height:6px"></div><span class="btn">Next day</span><span class="n">13</span></div>
+      <div class="blk"><div class="t">The benchmark</div><div class="grid2"><div><div class="l">Your team</div><div class="big" style="font-size:22px">+364</div></div><div><div class="l">S&amp;P 500</div><div class="big" style="font-size:22px">+300</div></div></div><span class="btn ghost" style="margin-top:6px">See the leaderboard</span><span class="n">14</span></div>
+    </div></div>
+  </section>
+</div>
+
+<section class="notes" aria-label="Notes">
+  <div class="note"><b>1</b> Scoreboard strip (already in v3): live leaders across the top of every game page.</div>
+  <div class="note"><b>2</b> Hero banner: realistic art (no people), bold line. Swappable per week.</div>
+  <div class="note"><b>3</b> Your franchise card: your saved team's real points this week; empty state asks you to draft.</div>
+  <div class="note"><b>4</b> From the Digest: the day's real stories that involve players, linked to the edition.</div>
+  <div class="note"><b>5</b> New filter: Billionaires / CEOs / All. CEOs get a CEO badge everywhere.</div>
+  <div class="note"><b>6</b> Player rows gain a nickname line ("The Leather Jacket"). Nicknames are playful labels we write, never invented facts.</div>
+  <div class="note"><b>7</b> Player dossier: one pop-up used on every page (Draft room, Players, My team, Scores).</div>
+  <div class="note"><b>8</b> Tale of the tape: role start year, sector, market cap, employees. Each item sourced and dated.</div>
+  <div class="note"><b>9</b> Game log: shows the math. Stock return → base points (1% = 10 pts) → captain 1.5×, then day by day.</div>
+  <div class="note"><b>10</b> Company stats: real numbers from the latest SEC 10-Q/10-K with their dates. No made-up figures.</div>
+  <div class="note"><b>11</b> Scouting report: their latest filings, Digest stories, Billionaire Life game and Next Moves markets.</div>
+  <div class="note"><b>12</b> Score card: points this week vs the S&amp;P 500, with a day-by-day bar chart.</div>
+  <div class="note"><b>13</b> Play the week: replay the real days one at a time (fun reveal, not a forecast).</div>
+  <div class="note"><b>14</b> Benchmark: your team vs the market, link to the leaderboard.</div>
+  <div class="note"><b>CEOs</b> Adding big-company CEOs (e.g. Lisa Su, Satya Nadella, Tim Cook, Sundar Pichai, Andy Jassy, Mary Barra, Tobias Lütke): each needs a sourced profile, painted portrait, stock to score and a cap cost. I'll propose the list for your OK first.</div>
+</section>
+</body>
+</html>
