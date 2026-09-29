@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pick a portrait style · Mockups · Billionaires Digest</title>
+<meta property="og:title" content="Billionaires Digest · pick a portrait style">
+<meta property="og:description" content="Two illustrated portrait styles for the game, with the $-eyes close-up. Prototype.">
+<meta property="og:image" content="https://billionaires-digest.pages.dev/og/v2-preview.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --gold: #F5C542; --brass: #B8912F; --ink: #07080A; --soft: #C9BFA3; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: radial-gradient(ellipse at top, #10261a 0%, #07080A 70%) fixed; color: #F4EBD0; font: 16px/1.45 Barlow, Arial, sans-serif; }
+  .bar { margin: 0; background: #8A5200; color: #fff; text-align: center; font-weight: 600; font-size: 14px; padding: 8px 16px; }
+  header { max-width: 960px; margin: 0 auto; padding: 24px 16px 8px; text-align: center; }
+  h1 { margin: 0; font: 800 36px/1 "Barlow Condensed", Arial Narrow, sans-serif; text-transform: uppercase; color: var(--gold); }
+  header p { margin: 10px auto 0; max-width: 620px; color: var(--soft); }
+  .grid { max-width: 960px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .opt { background: #0d0f12; border: 3px solid var(--brass); border-radius: 18px; padding: 18px; box-shadow: 0 0 0 2px #000 inset, 0 10px 30px rgba(0,0,0,.5); }
+  .opt h2 { margin: 0 0 4px; font: 800 26px/1 "Barlow Condensed", Arial Narrow, sans-serif; text-transform: uppercase; color: var(--gold); }
+  .opt .sub { margin: 0 0 14px; color: var(--soft); font-size: 15px; }
+  .reel { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; text-align: left; border-radius: 14px; color: inherit; font: inherit; }
+  .reel:focus-visible { outline: 3px solid #5CE1FF; outline-offset: 3px; }
+  .window { display: block; width: 100%; position: relative; overflow: hidden; border-radius: 12px; border: 4px solid #d9d9d9; background: #000; aspect-ratio: 1 / 1;
+    box-shadow: inset 0 0 0 2px #777, 0 0 0 3px var(--brass); }
+  .window img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease, opacity .25s ease; }
+  .window .dollar { opacity: 0; }
+  .reel[aria-pressed="true"] .window img { transform: scale(2.1) translateY(12%); }
+  .reel[aria-pressed="true"] .window .dollar { opacity: 1; }
+  .reel[aria-pressed="true"] .window .plain { opacity: 0; }
+  .plate { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+  .name { font: 800 22px/1 "Barlow Condensed", Arial Narrow, sans-serif; text-transform: uppercase; }
+  .chip { background: #111; border: 1px solid var(--brass); color: var(--gold); border-radius: 6px; padding: 4px 8px; font-weight: 700; font-size: 14px; }
+  .cap { background: #D62D27; color: #fff; border-radius: 6px; padding: 4px 8px; font-weight: 700; font-size: 13px; margin-left: 6px; }
+  .hint { margin: 10px 0 0; font-size: 14px; color: var(--soft); }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .pair figure { margin: 0; }
+  .pair img { width: 100%; border-radius: 10px; border: 2px solid #333; display: block; }
+  .pair figcaption { font-size: 13px; color: var(--soft); margin-top: 4px; text-align: center; }
+  footer { text-align: center; color: var(--soft); font-size: 13px; padding: 12px 16px 32px; letter-spacing: .04em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { .window img { transition: none; } }
+</style>
+</head>
+<body>
+<p class="bar">MOCKUP · portrait style test, not part of the site yet</p>
+<header>
+  <h1>Pick a portrait style</h1>
+  <p>One billionaire, finished in both styles the way all 100 would look. Tap a card for the $-eyes close-up (the $ version is an edit of the same portrait, so the face always matches).</p>
+</header>
+<main class="grid">
+  <section class="opt" aria-labelledby="h-a">
+    <h2 id="h-a">Style A · Sports card</h2>
+    <p class="sub">Bold ink, halftone, gold and red on dark. More realistic, editorial.</p>
+    <button class="reel" type="button" aria-pressed="false" aria-label="Jensen Huang, style A. Tap for the close-up">
+      <span class="window"><img class="plain" src="portrait-test/huang-a.webp" alt=""><img class="dollar" src="portrait-test/huang-a-dollar.webp" alt=""></span>
+      <span class="plate"><span class="name">Jensen Huang</span><span><span class="chip">CAP 26</span><span class="cap">×1.5 C</span></span></span>
+    </button>
+    <p class="hint">Tap the card to zoom in; tap again to go back.</p>
+    <div class="pair"><figure><img src="portrait-test/huang-a.webp" alt="Style A portrait of Jensen Huang, illustrated"><figcaption>Card portrait</figcaption></figure><figure><img src="portrait-test/huang-a-dollar.webp" alt="Style A portrait with glowing dollar-sign eyes"><figcaption>$ eyes</figcaption></figure></div>
+  </section>
+  <section class="opt" aria-labelledby="h-b">
+    <h2 id="h-b">Style B · Casino game avatar</h2>
+    <p class="sub">Rounded cartoon, big head, green felt and a gold coin. More playful.</p>
+    <button class="reel" type="button" aria-pressed="false" aria-label="Jensen Huang, style B. Tap for the close-up">
+      <span class="window"><img class="plain" src="portrait-test/huang-b.webp" alt=""><img class="dollar" src="portrait-test/huang-b-dollar.webp" alt=""></span>
+      <span class="plate"><span class="name">Jensen Huang</span><span><span class="chip">CAP 26</span><span class="cap">×1.5 C</span></span></span>
+    </button>
+    <p class="hint">Tap the card to zoom in; tap again to go back.</p>
+    <div class="pair"><figure><img src="portrait-test/huang-b.webp" alt="Style B portrait of Jensen Huang, cartoon"><figcaption>Card portrait</figcaption></figure><figure><img src="portrait-test/huang-b-dollar.webp" alt="Style B portrait with glowing dollar-sign eyes"><figcaption>$ eyes</figcaption></figure></div>
+  </section>
+</main>
+<footer>Illustrated portraits · no photos · play money · not financial advice</footer>
+<script>
+(function(){
+  var b = document.querySelectorAll('.reel');
+  for (var i = 0; i < b.length; i++) b[i].addEventListener('click', function(){
+    this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+  });
+})();
+</script>
+</body>
+</html>

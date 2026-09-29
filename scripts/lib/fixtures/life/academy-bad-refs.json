@@ -1,0 +1,15 @@
+{
+  "note": "Fixture for scripts/lib/life.test.mjs: bad Academy references overlaid on a copy of a real life file. Not real data.",
+  "glossary": [
+    { "id": "term-one", "term": "Term one", "definition": "Fixture definition one.", "source": { "title": "Fixture T1", "url": "https://example.com/t1", "publisher": "Example", "date": "" } },
+    { "id": "plain-http", "term": "Plain http", "definition": "Source is not https.", "source": { "title": "Fixture", "url": "http://example.com/x", "publisher": "Example", "date": "" } },
+    { "id": "Not Kebab", "term": "Bad id", "definition": "Fixture.", "source": { "title": "Fixture", "url": "https://example.com/y", "publisher": "Example", "date": "" } },
+    { "id": "term-one", "term": "Term one again", "definition": "Duplicate.", "source": { "title": "Fixture", "url": "https://example.com/z", "publisher": "Example", "date": "" } }
+  ],
+  "lessons": {
+    "found": { "principle": "delta", "takeaway": "Unknown principle.", "watchOut": "Fixture." },
+    "cuda": { "principle": "beta", "takeaway": "Unknown term.", "watchOut": "Fixture.", "terms": ["plain-http"] },
+    "dgx": { "principle": "gamma", "takeaway": "", "watchOut": "Fixture." },
+    "arm": { "principle": "alpha", "takeaway": "Fine.", "watchOut": "Fine.", "terms": ["term-one"] }
+  }
+}

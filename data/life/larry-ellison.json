@@ -1,0 +1,442 @@
+{
+  "prototype": true,
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Larry Ellison",
+    "slug": "larry-ellison",
+    "initials": "LE",
+    "role": "Co-founder, executive chairman and CTO of Oracle",
+    "bio": "Founded Oracle in 1977 and ran it as CEO until September 2014. Since then he has been Oracle's executive chairman and chief technology officer.",
+    "bioSource": {
+      "title": "Larry Ellison, executive biography",
+      "url": "https://www.oracle.com/corporate/executives/larry-ellison/",
+      "publisher": "Oracle",
+      "date": ""
+    }
+  },
+  "school": {
+    "name": "Own the whole stack",
+    "tagline": "Sell new technology first, buy up rivals, and control every layer of the system you sell.",
+    "principles": [
+      {
+        "id": "ship-first",
+        "name": "Commercialize the idea first",
+        "summary": "Find a promising idea that no one is selling yet and race to turn it into a product. Oracle's founders built a commercial database from an IBM research paper; Ellison has said innovators must be \"prepared for everyone telling you you're nuts.\"",
+        "sources": [
+          {
+            "title": "Defying Conventional Wisdom (Oracle 30th anniversary timeline)",
+            "url": "https://www.oracle.com/us/corporate/profit/p27anniv-timeline-151918.pdf",
+            "publisher": "Oracle Profit magazine",
+            "date": "2007-05"
+          },
+          {
+            "title": "Oracle's decade of acquisition: Innovative or just well-financed?",
+            "url": "https://www.cio.com/article/280740/enterprise-software-oracle-s-decade-of-acquisition-innovative-or-just-well-financed.html",
+            "publisher": "CIO",
+            "date": "2009-12-14"
+          }
+        ]
+      },
+      {
+        "id": "consolidate",
+        "name": "Grow by buying rivals",
+        "summary": "Ellison predicted that the software industry would shrink to a few giants and used acquisitions to make Oracle one of them. Starting with the hostile PeopleSoft bid, CIO counted 56 Oracle acquisitions through 2009, including the then-pending Sun deal.",
+        "sources": [
+          {
+            "title": "Oracle's decade of acquisition: Innovative or just well-financed?",
+            "url": "https://www.cio.com/article/280740/enterprise-software-oracle-s-decade-of-acquisition-innovative-or-just-well-financed.html",
+            "publisher": "CIO",
+            "date": "2009-12-14"
+          },
+          {
+            "title": "Oracle Buys PeopleSoft",
+            "url": "https://www.oracle.com/corporate/pressrelease/oracle-buys-peoplesoft-121304.html",
+            "publisher": "Oracle",
+            "date": "2004-12-13"
+          }
+        ]
+      },
+      {
+        "id": "full-stack",
+        "name": "Engineer the whole system",
+        "summary": "Instead of selling only software, own the layers underneath it so every piece is designed to fit together. When buying Sun he said Oracle could build integrated systems from \"applications to disk.\"",
+        "sources": [
+          {
+            "title": "Oracle to Buy Sun (joint press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/709519/000119312509082650/dex991.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2009-04-20"
+          }
+        ]
+      },
+      {
+        "id": "infrastructure",
+        "name": "Bet big on infrastructure",
+        "summary": "When computing shifts, build capacity on a huge scale early. Oracle joined the Stargate AI venture in 2025 and agreed to develop gigawatts of new data center capacity for OpenAI, paid for partly with heavy borrowing.",
+        "sources": [
+          {
+            "title": "Trump announces AI infrastructure investment backed by Oracle, OpenAI and SoftBank",
+            "url": "https://www.cnbc.com/2025/01/21/trump-ai-openai-oracle-softbank.html",
+            "publisher": "CNBC",
+            "date": "2025-01-21"
+          },
+          {
+            "title": "OpenAI, Oracle, and SoftBank expand Stargate with five new AI data center sites",
+            "url": "https://group.softbank/en/news/press/20250924",
+            "publisher": "SoftBank Group",
+            "date": "2025-09-24"
+          },
+          {
+            "title": "Oracle Corporation current report (Form 8-K): issuance of $18 billion of notes",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525220445/d31817d8k.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2025-09-26"
+          }
+        ]
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "id": "found",
+      "year": "1977",
+      "category": "founding",
+      "title": "Bet on an idea nobody is selling?",
+      "situation": "You work at Ampex. In an IBM research journal you find a paper describing a working prototype of a relational database. You show it to coworkers Bob Miner and Ed Oates, and learn that no company has committed to turning the idea into a product.",
+      "options": [
+        { "id": "stay", "label": "Keep your steady job and let IBM build it", "real": false },
+        { "id": "found", "label": "Start a company with your coworkers to sell it first", "real": true },
+        { "id": "consult", "label": "Do database consulting on the side instead", "real": false }
+      ],
+      "actual": "In 1977 he, Bob Miner and Ed Oates founded Software Development Laboratories, the company that became Oracle. In 1979 it released Oracle Version 2, which Oracle calls the first commercial SQL relational database, and renamed itself Relational Software Inc.",
+      "outcome": "Oracle went public in March 1986 at $15 a share. As of December 31, 2023 he beneficially owned about 41.8% of Oracle's stock, according to his SEC filing.",
+      "sources": [
+        { "title": "Defying Conventional Wisdom (Oracle 30th anniversary timeline)", "url": "https://www.oracle.com/us/corporate/profit/p27anniv-timeline-151918.pdf", "publisher": "Oracle Profit magazine", "date": "2007-05" },
+        { "title": "Oracle CEO Larry Ellison steps down, Catz and Hurd named CEOs", "url": "https://www.cnbc.com/2014/09/18/oracle-ceo-larry-ellison-steps-down-will-be-replaced-by-mark-hurd-and-safra-catz.html", "publisher": "CNBC", "date": "2014-09-18" },
+        { "title": "Schedule 13G/A, Lawrence Joseph Ellison, Oracle Corporation (Amendment No. 33)", "url": "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm", "publisher": "SEC EDGAR", "date": "2024" }
+      ],
+      "lesson": {
+        "principle": "ship-first",
+        "takeaway": "Being first to sell a technology can matter as much as inventing it. The idea came out of IBM research, but Oracle calls its 1979 release the first commercial SQL relational database.",
+        "watchOut": "Fast growth can outrun controls: in 1990 an internal audit led Oracle to restate earnings for three quarters, it then reported its first-ever quarterly loss, and its stock lost more than $2.7 billion in market value in six months.",
+        "terms": [
+          "relational-database",
+          "ipo"
+        ],
+        "sources": [
+          {
+            "title": "Oracle Stock History: How the Database Innovator Returned to All-Time Highs",
+            "url": "https://www.fool.com/investing/2017/06/19/oracle-stock-history-how-the-database-innovator-re.aspx",
+            "publisher": "The Motley Fool",
+            "date": "2017-06-19"
+          },
+          {
+            "title": "Oracle Corporation (company history)",
+            "url": "https://www.encyclopedia.com/social-sciences-and-law/economics-business-and-labor/businesses-and-occupations/oracle-corp",
+            "publisher": "International Directory of Company Histories (via Encyclopedia.com)",
+            "date": ""
+          }
+        ]
+      }
+    },
+    {
+      "id": "peoplesoft",
+      "year": "2004",
+      "category": "deal",
+      "title": "Raise the bid or walk away?",
+      "situation": "In June 2003 you launched a hostile takeover of rival PeopleSoft to take on SAP in business software. About 18 months later the fight is still going. PeopleSoft's board has rejected your all-cash offer of $24 a share as too low.",
+      "options": [
+        { "id": "walk", "label": "Walk away and build your own apps business", "real": false },
+        { "id": "raise", "label": "Raise the offer about 10% to $26.50 a share", "real": true },
+        { "id": "wait", "label": "Hold at $24 and wait for shareholders to cave", "real": false }
+      ],
+      "actual": "Oracle raised its offer to $26.50 a share, about $10.3 billion, and PeopleSoft's board agreed on December 13, 2004. Oracle completed the merger on January 7, 2005.",
+      "outcome": "The AP reported the deal brought Oracle about 12,750 PeopleSoft customers and nearly $3 billion in annual revenue, making it the second-largest business applications maker behind SAP.",
+      "sources": [
+        { "title": "Oracle Buys PeopleSoft", "url": "https://www.oracle.com/corporate/pressrelease/oracle-buys-peoplesoft-121304.html", "publisher": "Oracle", "date": "2004-12-13" },
+        { "title": "Oracle to acquire PeopleSoft for $10.3 billion", "url": "https://www.nbcnews.com/id/wbna6705516", "publisher": "Associated Press (via NBC News)", "date": "2004-12-13" },
+        { "title": "Oracle Corporation annual report (Form 10-K), fiscal 2007", "url": "https://www.sec.gov/Archives/edgar/data/1341439/000095013407014478/f31530e10vk.htm", "publisher": "SEC EDGAR", "date": "2007" }
+      ],
+      "lesson": {
+        "principle": "consolidate",
+        "takeaway": "Buying a rival can add customers and market position much faster than building them. The AP reported the PeopleSoft deal made Oracle the world's second-largest maker of business applications software, behind SAP.",
+        "watchOut": "Hostile deals can be slow and costly: the U.S. Justice Department and seven states sued to block this one in February 2004, a judge ruled for Oracle that September, and the fight lasted about 18 months.",
+        "terms": [
+          "hostile-takeover",
+          "tender-offer",
+          "antitrust"
+        ],
+        "sources": [
+          {
+            "title": "Oracle to acquire PeopleSoft for $10.3 billion",
+            "url": "https://www.nbcnews.com/id/wbna6705516",
+            "publisher": "Associated Press (via NBC News)",
+            "date": "2004-12-13"
+          },
+          {
+            "title": "Justice Department filing lawsuit to block Oracle's proposed acquisition of PeopleSoft",
+            "url": "https://www.justice.gov/archive/atr/public/press_releases/2004/202575.htm",
+            "publisher": "U.S. Department of Justice",
+            "date": "2004-02-26"
+          },
+          {
+            "title": "Justice Department statement regarding District Court's decision in U.S. v. Oracle",
+            "url": "https://www.justice.gov/archive/opa/pr/2004/September/04_at_608.htm",
+            "publisher": "U.S. Department of Justice",
+            "date": "2004-09-09"
+          },
+          {
+            "title": "Oracle's decade of acquisition: Innovative or just well-financed?",
+            "url": "https://www.cio.com/article/280740/enterprise-software-oracle-s-decade-of-acquisition-innovative-or-just-well-financed.html",
+            "publisher": "CIO",
+            "date": "2009-12-14"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sun",
+      "year": "2009",
+      "category": "deal",
+      "title": "A software company buying hardware?",
+      "situation": "Oracle sells software. Sun Microsystems, a partner for more than 20 years, owns Java, which your fastest-growing business is built on, and Solaris, the leading system for running your database. Sun is available.",
+      "options": [
+        { "id": "partner", "label": "Stay partners and stick to software", "real": false },
+        { "id": "buy", "label": "Buy Sun for $9.50 a share in cash", "real": true },
+        { "id": "java", "label": "Try to license or buy only Java", "real": false }
+      ],
+      "actual": "On April 20, 2009 Oracle agreed to buy Sun for $9.50 a share, about $7.4 billion. He said Oracle could now engineer whole systems, from applications down to disk. The deal closed on January 26, 2010, at a total price of $7.3 billion.",
+      "outcome": "Oracle entered the hardware systems business and gained Java and Solaris. Oracle's annual report said revenue covered by Sun's internal controls was 10% of Oracle's total revenue for the fiscal year ended May 31, 2010, Sun's first (partial) year inside Oracle.",
+      "sources": [
+        { "title": "Oracle to Buy Sun (joint press release)", "url": "https://www.sec.gov/Archives/edgar/data/709519/000119312509082650/dex991.htm", "publisher": "SEC EDGAR", "date": "2009-04-20" },
+        { "title": "Oracle Completes Acquisition of Sun", "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312510015241/dex991.htm", "publisher": "SEC EDGAR", "date": "2010-01-27" },
+        { "title": "Oracle Corporation annual report (Form 10-K), fiscal 2010", "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312510151896/d10k.htm", "publisher": "SEC EDGAR", "date": "2010" }
+      ],
+      "lesson": {
+        "principle": "full-stack",
+        "takeaway": "Owning both hardware and software lets one company design them to work together, but it also turns a software company into a hardware maker with a different kind of business.",
+        "watchOut": "Big deals can stall with regulators: the European Commission opened an in-depth review in September 2009 over the MySQL database and approved the deal only in January 2010, while Ellison said Sun was losing $100 million a month.",
+        "terms": [
+          "merger",
+          "antitrust"
+        ],
+        "sources": [
+          {
+            "title": "EU approves $7.4 billion deal between Oracle and Sun",
+            "url": "https://techcrunch.com/2010/01/21/eu-sun-oracle",
+            "publisher": "TechCrunch",
+            "date": "2010-01-21"
+          },
+          {
+            "title": "Oracle's decade of acquisition: Innovative or just well-financed?",
+            "url": "https://www.cio.com/article/280740/enterprise-software-oracle-s-decade-of-acquisition-innovative-or-just-well-financed.html",
+            "publisher": "CIO",
+            "date": "2009-12-14"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cto",
+      "year": "2014",
+      "category": "product",
+      "title": "Keep the CEO title?",
+      "situation": "You have run Oracle as CEO since you founded it in 1977. Your two presidents, Safra Catz and Mark Hurd, already run finance and sales. You want to keep working full time, but on the technology.",
+      "options": [
+        { "id": "stay", "label": "Stay CEO and keep everything as it is", "real": false },
+        { "id": "cto", "label": "Hand the CEO job to both presidents and become chairman and CTO", "real": true },
+        { "id": "retire", "label": "Retire and pick one successor", "real": false }
+      ],
+      "actual": "On September 18, 2014 Oracle's board made him executive chairman and chief technology officer and named both Catz and Hurd CEO. All software and hardware engineering kept reporting to him.",
+      "outcome": "Catz and Hurd began reporting to the board instead of to him. As of this check, Oracle still lists him as executive chairman and CTO.",
+      "sources": [
+        { "title": "Oracle Board Appoints Larry Ellison Executive Chairman and CTO (Form 8-K exhibit)", "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312514350215/d793532dex991.htm", "publisher": "SEC EDGAR", "date": "2014-09-18" },
+        { "title": "Oracle CEO Larry Ellison steps down, Catz and Hurd named CEOs", "url": "https://www.cnbc.com/2014/09/18/oracle-ceo-larry-ellison-steps-down-will-be-replaced-by-mark-hurd-and-safra-catz.html", "publisher": "CNBC", "date": "2014-09-18" },
+        { "title": "Larry Ellison, executive biography", "url": "https://www.oracle.com/corporate/executives/larry-ellison/", "publisher": "Oracle", "date": "" }
+      ],
+      "lesson": {
+        "principle": "full-stack",
+        "takeaway": "Splitting the top job let him keep leading engineering across software and hardware while one CEO ran manufacturing, finance and legal and the other ran sales and service.",
+        "watchOut": "A leadership split is not a permanent succession plan: Oracle later had a single CEO, Safra Catz, and in September 2025 the board named two new CEOs, Clay Magouyrk and Mike Sicilia, and made Catz executive vice chair.",
+        "terms": [
+          "board-of-directors"
+        ],
+        "sources": [
+          {
+            "title": "Oracle Board Appoints Larry Ellison Executive Chairman and CTO (Form 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312514350215/d793532dex991.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2014-09-18"
+          },
+          {
+            "title": "Oracle Corporation announces promotion of Clay Magouyrk and Mike Sicilia to CEOs (Form 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525210089/d921500dex991.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2025-09-22"
+          },
+          {
+            "title": "Oracle names Clay Magouyrk and Mike Sicilia as co-CEOs",
+            "url": "https://www.cnbc.com/2025/09/22/oracle-names-co-ceos.html",
+            "publisher": "CNBC",
+            "date": "2025-09-22"
+          }
+        ]
+      }
+    },
+    {
+      "id": "stargate",
+      "year": "2025",
+      "category": "deal",
+      "title": "Go all-in on AI data centers?",
+      "situation": "Oracle rents out cloud computing. OpenAI and SoftBank are forming a new company to build AI infrastructure in the United States on a huge scale, and want Oracle as a partner.",
+      "options": [
+        { "id": "join", "label": "Join the venture and start building data centers", "real": true },
+        { "id": "rent", "label": "Just rent spare capacity to AI labs", "real": false },
+        { "id": "skip", "label": "Stay out; the costs are too big", "real": false }
+      ],
+      "actual": "On January 21, 2025 he joined President Trump, SoftBank's Masayoshi Son and OpenAI's Sam Altman at the White House to unveil Stargate, with an initial $100 billion and up to $500 billion planned over four years. He said the first data centers in Texas were already being built.",
+      "outcome": "In July 2025 OpenAI and Oracle agreed to develop up to 4.5 gigawatts of additional Stargate capacity, a partnership the companies put at more than $300 billion over five years. As of September 23, 2025 the flagship site in Abilene, Texas was running on Oracle's cloud.",
+      "sources": [
+        { "title": "Trump announces AI infrastructure investment backed by Oracle, OpenAI and SoftBank", "url": "https://www.cnbc.com/2025/01/21/trump-ai-openai-oracle-softbank.html", "publisher": "CNBC", "date": "2025-01-21" },
+        { "title": "OpenAI, Oracle, and SoftBank expand Stargate with five new AI data center sites", "url": "https://group.softbank/en/news/press/20250924", "publisher": "SoftBank Group", "date": "2025-09-24" }
+      ],
+      "lesson": {
+        "principle": "infrastructure",
+        "takeaway": "Moving early on a huge build-out can win very large contracts, such as OpenAI's multiyear deal to buy computing power from Oracle.",
+        "watchOut": "Building ahead of demand takes borrowed money: Oracle sold $18 billion of bonds in September 2025, and CNBC reported its debt including leases was $111.6 billion as of August 2025, up from $84.5 billion a year earlier (FactSet data).",
+        "terms": [
+          "cloud-computing",
+          "data-center",
+          "bond"
+        ],
+        "sources": [
+          {
+            "title": "Oracle Corporation current report (Form 8-K): issuance of $18 billion of notes",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525220445/d31817d8k.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2025-09-26"
+          },
+          {
+            "title": "Oracle's AI-fueled debt load has investors on edge ahead of quarterly earnings",
+            "url": "https://www.cnbc.com/2025/12/09/oracles-ai-fueled-debt-load-has-investors-on-edge-ahead-of-earnings.html",
+            "publisher": "CNBC",
+            "date": "2025-12-09"
+          }
+        ]
+      }
+    }
+  ],
+  "glossary": [
+    {
+      "id": "relational-database",
+      "term": "Relational database",
+      "definition": "A database that stores information in tables of rows and columns that can be linked to each other, usually searched with the SQL language.",
+      "source": {
+        "title": "What is a relational database?",
+        "url": "https://www.oracle.com/database/what-is-a-relational-database/",
+        "publisher": "Oracle",
+        "date": ""
+      }
+    },
+    {
+      "id": "ipo",
+      "term": "Initial public offering (IPO)",
+      "definition": "When a company first sells its shares to the public.",
+      "source": {
+        "title": "Initial Public Offering (IPO)",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/initial-public-offering-ipo",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "hostile-takeover",
+      "term": "Hostile takeover",
+      "definition": "An attempt to buy a company without the approval of its board of directors, often by going straight to shareholders.",
+      "source": {
+        "title": "Hostile takeover",
+        "url": "https://www.law.cornell.edu/wex/hostile_takeover",
+        "publisher": "Cornell Law School Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "tender-offer",
+      "term": "Tender offer",
+      "definition": "A public offer to buy a large share of a company's stock from its shareholders, usually at a set price and for a limited time.",
+      "source": {
+        "title": "Tender Offer",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/tender-offer",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "antitrust",
+      "term": "Antitrust laws",
+      "definition": "Laws that protect competition, for example by banning mergers whose effect may be to substantially lessen competition. The three core U.S. antitrust laws are the Sherman Act, the Federal Trade Commission Act and the Clayton Act.",
+      "source": {
+        "title": "The Antitrust Laws",
+        "url": "https://www.ftc.gov/advice-guidance/competition-guidance/guide-antitrust-laws/antitrust-laws",
+        "publisher": "Federal Trade Commission",
+        "date": ""
+      }
+    },
+    {
+      "id": "merger",
+      "term": "Merger",
+      "definition": "When two or more companies combine into one. The target company's shareholders usually have to approve it.",
+      "source": {
+        "title": "Mergers",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/mergers",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "board-of-directors",
+      "term": "Board of directors",
+      "definition": "A group of people elected by shareholders to oversee a company's management.",
+      "source": {
+        "title": "Board of Directors",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/board-directors",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "cloud-computing",
+      "term": "Cloud computing",
+      "definition": "Renting computing power, storage and software over a network on demand instead of owning and running the machines yourself.",
+      "source": {
+        "title": "The NIST Definition of Cloud Computing (SP 800-145)",
+        "url": "https://csrc.nist.gov/pubs/sp/800/145/final",
+        "publisher": "National Institute of Standards and Technology",
+        "date": "2011-09"
+      }
+    },
+    {
+      "id": "data-center",
+      "term": "Data center",
+      "definition": "A room, building or campus full of servers, storage and network equipment that runs applications and stores their data.",
+      "source": {
+        "title": "What is a data center?",
+        "url": "https://www.ibm.com/think/topics/data-centers",
+        "publisher": "IBM",
+        "date": ""
+      }
+    },
+    {
+      "id": "bond",
+      "term": "Bond",
+      "definition": "A loan that investors make to a company or government. The borrower promises to pay interest and repay the amount on a set date.",
+      "source": {
+        "title": "Bonds",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    }
+  ]
+}

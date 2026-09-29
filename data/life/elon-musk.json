@@ -1,0 +1,331 @@
+{
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Elon Musk",
+    "slug": "elon-musk",
+    "initials": "EM",
+    "role": "Founder and CEO of SpaceX; CEO of Tesla",
+    "bio": "Co-founded Zip2, sold to Compaq in 1999, then co-founded PayPal, sold to eBay in 2002. Has run SpaceX since May 2002 and been Tesla's CEO since October 2008. Also founded Neuralink and The Boring Company. Degrees in physics and business from the University of Pennsylvania.",
+    "bioSource": {
+      "title": "SpaceX IPO prospectus (Form 424B4), directors and executive officers",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm",
+      "publisher": "SEC EDGAR",
+      "date": "2026-06-12"
+    }
+  },
+  "school": {
+    "name": "First principles, built in-house",
+    "tagline": "Reason from physics, make the key parts yourself, move fast through failure, and back it with your own money.",
+    "principles": [
+      {
+        "id": "first-principles",
+        "name": "First-principles thinking",
+        "summary": "Break a problem down to basic facts and reason up from there, instead of copying what others do. He has said he wanted to \"boil things down to their fundamental truths\" and that a rocket's raw materials were about 2% of its typical price.",
+        "sources": [
+          {
+            "title": "The mind behind Tesla, SpaceX, SolarCity (TED talk)",
+            "url": "https://www.ted.com/talks/elon_musk_the_mind_behind_tesla_spacex_solarcity",
+            "publisher": "TED",
+            "date": "2013-03-19"
+          },
+          {
+            "title": "Elon Musk's mission to Mars",
+            "url": "https://www.wired.com/2012/10/ff-elon-musk-qa/",
+            "publisher": "WIRED",
+            "date": "2012-10-21"
+          }
+        ]
+      },
+      {
+        "id": "vertical",
+        "name": "Vertical integration",
+        "summary": "Make the important parts yourself rather than buying them. SpaceX describes itself as making a significant portion of its parts in-house, including engines, avionics, structures and software, and says about 80% of Starship is made in-house. Tesla's 2010 prospectus said it sold and serviced its cars through its own network, unlike carmakers that typically franchise.",
+        "sources": [
+          {
+            "title": "SpaceX IPO prospectus (Form 424B4)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2026-06-12"
+          },
+          {
+            "title": "Tesla Motors IPO prospectus (Form 424B4)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000119312510149105/d424b4.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2010-06-29"
+          }
+        ]
+      },
+      {
+        "id": "speed",
+        "name": "Iterate fast, accept failure",
+        "summary": "Build, test, break and fix quickly. SpaceX describes a five-step method it calls \"The Algorithm\" and says building in-house lets it \"test, fail, and iterate rapidly\"; Musk has said SpaceX came very close to failure in 2008.",
+        "sources": [
+          {
+            "title": "SpaceX IPO prospectus (Form 424B4)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2026-06-12"
+          },
+          {
+            "title": "The mind behind Tesla, SpaceX, SolarCity (TED talk)",
+            "url": "https://www.ted.com/talks/elon_musk_the_mind_behind_tesla_spacex_solarcity",
+            "publisher": "TED",
+            "date": "2013-03-19"
+          }
+        ]
+      },
+      {
+        "id": "bet-big",
+        "name": "Bet big, with your own money",
+        "summary": "He has put a lot of his own money into his companies. Tesla's 2010 prospectus says he had historically provided a significant amount of its funding, and on the TED stage he joked about turning \"a large fortune into a small one.\"",
+        "sources": [
+          {
+            "title": "Tesla Motors IPO prospectus (Form 424B4)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000119312510149105/d424b4.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2010-06-29"
+          },
+          {
+            "title": "The mind behind Tesla, SpaceX, SolarCity (TED talk)",
+            "url": "https://www.ted.com/talks/elon_musk_the_mind_behind_tesla_spacex_solarcity",
+            "publisher": "TED",
+            "date": "2013-03-19"
+          }
+        ]
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "id": "xcom",
+      "year": "1999",
+      "category": "founding",
+      "title": "Cash out, or go again?",
+      "situation": "Zip2, the internet software company you co-founded in 1995, is being bought by Compaq. The deal, agreed in February 1999, pays about $307 million in cash. You have worked there as chairman, CEO and chief technology officer at different times.",
+      "options": [
+        { "id": "rest", "label": "Take the money and invest it safely", "real": false },
+        { "id": "found", "label": "Start a new internet company right away", "real": true },
+        { "id": "join", "label": "Stay on at Compaq and run Zip2 there", "real": false }
+      ],
+      "actual": "In March 1999 he founded X.com and became its CEO. A year later, in March 2000, X.com merged with rival Confinity, and the combined company became PayPal.",
+      "outcome": "He was PayPal's CEO from May to September 2000, then left that job but stayed on the board; in September 2001 he owned about 14.2% of the company. In July 2002 eBay agreed to buy PayPal in a stock deal valued at $1.5 billion.",
+      "sources": [
+        { "title": "Compaq quarterly report (Form 10-Q), first quarter 1999", "url": "https://www.sec.gov/Archives/edgar/data/714154/000071415499000013/0000714154-99-000013.txt", "publisher": "SEC EDGAR", "date": "1999-05-14" },
+        { "title": "PayPal registration statement (Form S-1)", "url": "https://www.sec.gov/Archives/edgar/data/1103415/000091205701533855/a2059025zs-1.htm", "publisher": "SEC EDGAR", "date": "2001-09-28" },
+        { "title": "eBay to acquire PayPal (press release filed with the SEC)", "url": "https://www.sec.gov/Archives/edgar/data/1103415/000091205702026650/a2084015zex-99_1.htm", "publisher": "SEC EDGAR", "date": "2002-07-08" }
+      ],
+      "lesson": {
+        "principle": "speed",
+        "takeaway": "He treated the Zip2 sale as a restart rather than a finish line, founding X.com within weeks and merging with rival Confinity a year later.",
+        "watchOut": "A fast start did not mean a long stay at the top: PayPal's 2001 filing shows he ran X.com only until December 1999 and was PayPal's CEO just from May to September 2000.",
+        "terms": [
+          "merger"
+        ]
+      }
+    },
+    {
+      "id": "spacex",
+      "year": "2002",
+      "category": "founding",
+      "title": "Another web company, or rockets?",
+      "situation": "You are no longer PayPal's CEO but still sit on its board with a large stake. You could build another internet business you already understand. The alternative is space: no private company has ever put a liquid-fuel rocket into orbit.",
+      "options": [
+        { "id": "web", "label": "Start another internet company", "real": false },
+        { "id": "rocket", "label": "Found a rocket company", "real": true },
+        { "id": "vc", "label": "Become an investor in other people's startups", "real": false }
+      ],
+      "actual": "Space Exploration Technologies (SpaceX) was incorporated on March 14, 2002, and he has been its CEO, chief technology officer and chairman since May 2002. Later that year, in October 2002, eBay completed its purchase of PayPal.",
+      "outcome": "With Falcon 1 in 2008, SpaceX became the first private company to put a liquid-fuel rocket into orbit. As of March 31, 2026 it had flown about 650 orbital launches. In June 2026 it went public at $135 a share, a deal CNBC said valued it at $1.77 trillion.",
+      "sources": [
+        { "title": "SpaceX IPO prospectus (Form 424B4)", "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm", "publisher": "SEC EDGAR", "date": "2026-06-12" },
+        { "title": "SpaceX raises $75 billion in record-setting IPO ahead of Nasdaq debut", "url": "https://www.cnbc.com/2026/06/11/spacex-raises-75-billion-in-record-setting-ipo-ahead-of-nasdaq-debut.html", "publisher": "CNBC", "date": "2026-06-11" }
+      ],
+      "lesson": {
+        "principle": "first-principles",
+        "takeaway": "He started from what a rocket is made of, not what rockets usually cost, and concluded launches could be far cheaper.",
+        "watchOut": "It took six years for Falcon 1 to reach orbit, and Musk later said SpaceX came very close to failure in 2008.",
+        "terms": [
+          "ipo"
+        ]
+      }
+    },
+    {
+      "id": "bridge",
+      "year": "2008",
+      "category": "money",
+      "title": "Put more of your own money in?",
+      "situation": "It is late 2008. You have chaired Tesla since April 2004, and in October 2008 you took over as its CEO just as volume production of the Roadster began. Earlier in the year you had already lent Tesla about $18 million. Now it is raising money again.",
+      "options": [
+        { "id": "stop", "label": "Stop here and let outside investors decide", "real": false },
+        { "id": "double", "label": "Put millions more of your own money into Tesla", "real": true },
+        { "id": "sell", "label": "Look for a big carmaker to buy Tesla", "real": false }
+      ],
+      "actual": "In the December 2008 bridge financing his trust lent Tesla about $20.4 million more. Counting the February 2008 notes and interest, about $41.0 million was later turned into Tesla preferred stock at a 60% discount to what other investors in that round paid.",
+      "outcome": "Also in December 2008, NASA gave SpaceX a $1.6 billion contract for 12 space station cargo missions. Tesla took a $465 million US Department of Energy loan in January 2010 and went public in June 2010 at $17 a share.",
+      "sources": [
+        { "title": "Tesla Motors IPO prospectus (Form 424B4)", "url": "https://www.sec.gov/Archives/edgar/data/1318605/000119312510149105/d424b4.htm", "publisher": "SEC EDGAR", "date": "2010-06-29" },
+        { "title": "Commercial cargo: NASA's management of commercial orbital transportation services and ISS commercial resupply contracts (IG-13-016)", "url": "https://oig.nasa.gov/wp-content/uploads/2024/02/IG-13-016.pdf", "publisher": "NASA Office of Inspector General", "date": "2013-06-13" }
+      ],
+      "lesson": {
+        "principle": "bet-big",
+        "takeaway": "He put more of his own money into Tesla in 2008; those notes later turned into preferred stock at a 60% discount to what other investors in the round paid.",
+        "watchOut": "The risk was real: Tesla lost $82.8 million in 2008, and its 2010 prospectus said the company was highly dependent on Musk's services.",
+        "terms": [
+          "bridge-loan",
+          "convertible-note",
+          "preferred-stock"
+        ]
+      }
+    },
+    {
+      "id": "model3",
+      "year": "2016",
+      "category": "product",
+      "title": "Speed up after 325,000 orders?",
+      "situation": "Tesla has started taking deposits for Model 3, a mass-market car with a $35,000 base price. In the first week it received more than 325,000 reservations, about $14 billion in implied sales. You already have a plan to build 500,000 cars across all models, but it is years away.",
+      "options": [
+        { "id": "keep", "label": "Keep the original, safer timeline", "real": false },
+        { "id": "accelerate", "label": "Pull the 500,000-car plan two years forward", "real": true },
+        { "id": "cap", "label": "Close reservations until the factory is ready", "real": false }
+      ],
+      "actual": "In May 2016 Tesla moved its 500,000-car build plan up two years to 2018. It said 2016 capital spending would be about 50% above its earlier $1.5 billion guidance and that it would likely need more money.",
+      "outcome": "Model 3 deliveries began in July 2017, and Tesla said the production ramp was hard. In 2025 Tesla delivered 1,585,279 Model 3 and Model Y vehicles, out of 1,636,129 in total.",
+      "sources": [
+        { "title": "Tesla first quarter 2016 update (Exhibit 99.1)", "url": "https://www.sec.gov/Archives/edgar/data/1318605/000119312516577582/d158845dex991.htm", "publisher": "SEC EDGAR", "date": "2016-05-04" },
+        { "title": "Tesla annual report (Form 10-K), 2017", "url": "https://www.sec.gov/Archives/edgar/data/1318605/000156459018002956/tsla-10k_20171231.htm", "publisher": "SEC EDGAR", "date": "2018-02-23" },
+        { "title": "Tesla fourth quarter 2025 production, deliveries and deployments (Exhibit 99.1)", "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026000016/exhibit9914.htm", "publisher": "SEC EDGAR", "date": "2026-01-02" }
+      ],
+      "lesson": {
+        "principle": "vertical",
+        "takeaway": "Pulling the plan forward was a bet that Tesla's own factories, including its battery plant, could scale faster than a normal carmaker's timeline.",
+        "watchOut": "Tesla's 2017 annual report said Model 3 output was lower than first expected because of production bottlenecks, mainly the battery module line at Gigafactory 1.",
+        "terms": [
+          "capital-expenditure"
+        ]
+      }
+    },
+    {
+      "id": "twitter",
+      "year": "2022",
+      "category": "deal",
+      "title": "Fight in court, or buy Twitter after all?",
+      "situation": "In April 2022 you agreed to buy Twitter for $54.20 a share in cash, about $44 billion and a 38% premium. On July 8 you sent notice that you were ending the deal. Twitter sued you in Delaware's Chancery Court, and a trial is coming.",
+      "options": [
+        { "id": "trial", "label": "Go to trial and try to walk away", "real": false },
+        { "id": "close", "label": "Close the deal at the original price", "real": true },
+        { "id": "cut", "label": "Push for a lower price", "real": false }
+      ],
+      "actual": "On October 3, 2022 his advisers told Twitter he would close on the original terms if the court paused the case. The purchase closed on October 27, 2022, and shareholders received $54.20 a share.",
+      "outcome": "He renamed Twitter X and merged it into his AI company xAI in March 2025. In February 2026 SpaceX bought xAI in a deal CNBC said valued xAI at $250 billion. In March 2026 a San Francisco jury found two of his May 2022 tweets about the deal materially false or misleading, but found no scheme to defraud; his lawyers said they would appeal. As of that date, plaintiffs estimated damages of up to $2.6 billion.",
+      "sources": [
+        { "title": "Elon Musk to acquire Twitter (press release filed with the SEC)", "url": "https://www.sec.gov/Archives/edgar/data/1418091/000119312522117720/d319190dex991.htm", "publisher": "SEC EDGAR", "date": "2022-04-25" },
+        { "title": "Elon Musk Schedule 13D/A: notice terminating the merger agreement", "url": "https://www.sec.gov/Archives/edgar/data/1418091/000110465922078413/tm2220599d1_sc13da.htm", "publisher": "SEC EDGAR", "date": "2022-07-08" },
+        { "title": "Elon Musk Schedule 13D/A: letter on proceeding to closing", "url": "https://www.sec.gov/Archives/edgar/data/1418091/000110465922105787/tm2227435d1_sc13da.htm", "publisher": "SEC EDGAR", "date": "2022-10-04" },
+        { "title": "Elon Musk Schedule 13D/A: merger completed", "url": "https://www.sec.gov/Archives/edgar/data/1418091/000110465922113051/tm2229215d1_sc13da.htm", "publisher": "SEC EDGAR", "date": "2022-10-31" },
+        { "title": "SpaceX IPO prospectus (Form 424B4)", "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm", "publisher": "SEC EDGAR", "date": "2026-06-12" },
+        { "title": "Musk's xAI, SpaceX combo is the biggest merger of all time, valued at $1.25 trillion", "url": "https://www.cnbc.com/2026/02/03/musk-xai-spacex-biggest-merger-ever.html", "publisher": "CNBC", "date": "2026-02-03" },
+        { "title": "Elon Musk misled Twitter investors ahead of $44 billion acquisition, jury says", "url": "https://www.cnbc.com/2026/03/20/elon-musk-determined-to-be-liable-for-misleading-twitter-investors.html", "publisher": "CNBC", "date": "2026-03-20" }
+      ],
+      "lesson": {
+        "principle": "bet-big",
+        "takeaway": "A signed deal can be harder to leave than to finish: he chose to close at the original price rather than go to trial.",
+        "watchOut": "In March 2026 a San Francisco jury found two of his May 2022 tweets about the deal materially false or misleading, but found no scheme to defraud; his lawyers said they would appeal.",
+        "terms": [
+          "acquisition",
+          "materiality"
+        ]
+      }
+    }
+  ],
+  "glossary": [
+    {
+      "id": "merger",
+      "term": "Merger",
+      "definition": "When two companies combine into one; usually one company absorbs the other and takes on its assets and debts.",
+      "source": {
+        "title": "Merger",
+        "url": "https://www.law.cornell.edu/wex/merger",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "ipo",
+      "term": "IPO (initial public offering)",
+      "definition": "Generally, the first time a company sells its shares to the public.",
+      "source": {
+        "title": "Initial public offering (IPO)",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/initial-public-offering-ipo",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "bridge-loan",
+      "term": "Bridge loan",
+      "definition": "Short-term borrowing that covers a company's needs until longer-term money arrives. It usually costs more than regular loans.",
+      "source": {
+        "title": "Bridge loan",
+        "url": "https://corporatefinanceinstitute.com/resources/commercial-lending/bridge-loan/",
+        "publisher": "Corporate Finance Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "convertible-note",
+      "term": "Convertible note",
+      "definition": "A loan to a company that can later turn into shares instead of being paid back in cash. Startups often raise early money this way.",
+      "source": {
+        "title": "Convertible note",
+        "url": "https://corporatefinanceinstitute.com/resources/valuation/convertible-note/",
+        "publisher": "Corporate Finance Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "preferred-stock",
+      "term": "Preferred stock",
+      "definition": "Shares that rank ahead of common stock for dividends and other payouts, including if the company is wound up, though they often carry no voting rights.",
+      "source": {
+        "title": "Preferred stock",
+        "url": "https://www.law.cornell.edu/wex/preferred_stock",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "capital-expenditure",
+      "term": "Capital expenditure (capex)",
+      "definition": "Money a company spends to buy, upgrade or maintain long-lasting assets such as factories and equipment.",
+      "source": {
+        "title": "Capital expenditure",
+        "url": "https://www.law.cornell.edu/wex/capital_expenditure",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "acquisition",
+      "term": "Acquisition",
+      "definition": "When one company or person buys another business or its assets through a deal or contract.",
+      "source": {
+        "title": "Acquisition",
+        "url": "https://www.law.cornell.edu/wex/acquisition",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "materiality",
+      "term": "Materiality",
+      "definition": "How significant a piece of information is to a legal question. Calling a statement materially false means the error was about something important, not a minor detail.",
+      "source": {
+        "title": "Materiality",
+        "url": "https://www.law.cornell.edu/wex/materiality",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    }
+  ]
+}

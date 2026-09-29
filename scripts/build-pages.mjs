@@ -129,7 +129,7 @@ export async function buildPages(root = '.') {
 
     const body = `${bc.html}
 <div class="wrap pp">
-<section class="pcard" aria-label="${esc('Profile: ' + name)}">
+<section class="pcard pcard--player" aria-label="${esc('Profile: ' + name)}">
   <div class="pchead">
     <div class="pcwho">
       <div class="pcrank">#${esc(ip.rank)} of ${people.length} · <a href="${esc(sectorHref(sector))}">${esc(sector)}</a></div>
@@ -143,7 +143,7 @@ export async function buildPages(root = '.') {
     <div class="pcval">${esc(worth || '—')}</div>
     <div class="pcsub">${esc(srcShort + (asOfText ? ' · as of ' + asOfText : ''))}</div>
   </div>
-  <a class="livelink" href="/#person=${esc(encodeURIComponent(ip.slug))}">Open the live card →</a>
+  <a class="livelink" href="/news.html#person=${esc(encodeURIComponent(ip.slug))}">Open the live card →</a>
 </section>
 <section class="ppsec" aria-labelledby="moves"><h2 class="sech2 serif" id="moves">Latest moves</h2>
 ${movesHtml}
@@ -408,7 +408,7 @@ ${side}
 
   // ---- sitemap.xml + robots.txt ----
   const newest = editions.length ? editions[0].iso : null;
-  const top = [['/', newest], ['/archive.html', newest], ['/sectors.html', maxIso([newest, indexIso])], ['/about.html', null]];
+  const top = [['/', newest], ['/news.html', newest], ['/archive.html', newest], ['/sectors.html', maxIso([newest, indexIso])], ['/about.html', null]];
   const peopleIdx = sitemap.findIndex(x => x[0] === '/people/');
   const entries = [
     ...top,

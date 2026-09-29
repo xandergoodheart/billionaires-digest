@@ -213,16 +213,43 @@ export const tierSalary = (pos) => TIERS.find(([upTo]) => pos <= upTo)[1];
 export const ADJUST_MIN_WEEKS = 4;
 export const ADJUST_MAX = 4;
 
-// draftable: [{ slug, rank }] sorted or not. history: [{ totals: { slug: points } }] of recent finished real weeks.
-// Returns { salaries: { slug: salary }, adjusted: boolean }.
+// ---- CEOs (data/ceos/index.json): business leaders who are not on the top-100 billionaire list ----
+// A CEO plays on one holding, their company's stock, at full weight. No Forbes rank.
+export const CEO_METHOD = 'company stock';
+export const CEO_SALARY_NOTE = 'CEOs start at the pool\'s median cost';
+export const isCeo = (p) => !!p && p.type === 'ceo';
+export function ceoPlayer(c) {
+  return {
+    slug: c.slug, name: c.name, rank: null, sector: c.sector || 'Other', type: 'ceo', method: CEO_METHOD,
+    holdings: [{ ticker: c.ticker, name: c.company, weight: 1, tier: 'leads' }],
+  };
+}
+// Median of a list of salaries, rounded to a whole number (null for an empty list).
+export function medianSalary(values) {
+  const v = (values ?? []).filter((x) => typeof x === 'number' && Number.isFinite(x)).sort((a, b) => a - b);
+  if (!v.length) return null;
+  const mid = Math.floor(v.length / 2);
+  return Math.round(v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2);
+}
+
+// draftable: [{ slug, rank, type? }] sorted or not. history: [{ totals: { slug: points } }] of recent finished real weeks.
+// Billionaires: Forbes-rank tiers among the billionaires in the pool. CEOs (type "ceo", no rank): the median of those
+// billionaire tier salaries. Then everyone (billionaires and CEOs together) gets the same ±ADJUST_MAX by recent points
+// percentile once there are ADJUST_MIN_WEEKS finished real weeks, and ensureFeasible runs.
+// Returns { salaries: { slug: salary }, adjusted: boolean, ceoBase: number|null }.
 export function computeSalaries(draftable, history = []) {
-  const sorted = [...draftable].sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999) || a.slug.localeCompare(b.slug));
+  const byRank = (a, b) => (a.rank ?? 999) - (b.rank ?? 999) || a.slug.localeCompare(b.slug);
+  const sorted = draftable.filter((p) => !isCeo(p)).sort(byRank);
+  const ceos = draftable.filter(isCeo).sort((a, b) => a.slug.localeCompare(b.slug));
   const salaries = {};
   sorted.forEach((p, i) => { salaries[p.slug] = tierSalary(i + 1); });
+  const ceoBase = ceos.length ? (medianSalary(sorted.map((p) => salaries[p.slug])) ?? tierSalary(Infinity)) : null;
+  for (const c of ceos) salaries[c.slug] = ceoBase;
+  const everyone = [...sorted, ...ceos];
   let adjusted = false;
   const recent = history.slice(-ADJUST_MIN_WEEKS);
-  if (recent.length >= ADJUST_MIN_WEEKS && sorted.length > 1) {
-    const avg = sorted.map((p) => ({ slug: p.slug, v: recent.reduce((s, w) => s + (w.totals?.[p.slug] ?? 0), 0) / recent.length }));
+  if (recent.length >= ADJUST_MIN_WEEKS && everyone.length > 1) {
+    const avg = everyone.map((p) => ({ slug: p.slug, v: recent.reduce((s, w) => s + (w.totals?.[p.slug] ?? 0), 0) / recent.length }));
     const ordered = [...avg].sort((a, b) => a.v - b.v);
     for (const a of avg) {
       const below = ordered.filter((x) => x.v < a.v).length, same = ordered.filter((x) => x.v === a.v).length;
@@ -233,7 +260,7 @@ export function computeSalaries(draftable, history = []) {
     adjusted = true;
   }
   ensureFeasible(salaries);
-  return { salaries, adjusted };
+  return { salaries, adjusted, ceoBase };
 }
 
 // Make sure the five cheapest fit under the cap; if not, lower the most expensive salaries one point at a time.
@@ -251,7 +278,8 @@ export function ensureFeasible(salaries, cap = core.CAP, size = core.PICKS) {
 }
 
 // Top 5 richest benchmark: draftable ranks 1–5, captain = the richest.
+// CEOs are not in it (no Forbes rank).
 export function top5Team(draftable) {
-  const sorted = [...draftable].sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999) || a.slug.localeCompare(b.slug)).slice(0, core.PICKS);
+  const sorted = draftable.filter((p) => !isCeo(p)).sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999) || a.slug.localeCompare(b.slug)).slice(0, core.PICKS);
   return { picks: sorted.map((p) => p.slug), captain: sorted[0]?.slug ?? null };
 }

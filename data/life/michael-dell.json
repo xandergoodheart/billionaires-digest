@@ -1,0 +1,374 @@
+{
+  "prototype": true,
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Michael Dell",
+    "slug": "michael-dell",
+    "initials": "MD",
+    "role": "Founder, Chairman and CEO of Dell Technologies",
+    "bio": "Started Dell in 1984 in a University of Texas dorm room. He was CEO from 1984 until July 2004 and took the job back in January 2007. In 1998 he set up MSD Capital (now DFO Management) to manage his family's money, and in 1999 the Michael & Susan Dell Foundation.",
+    "bioSource": {
+      "title": "Dell Technologies proxy statement (Schedule 14A), 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571996/000119312526226734/d132444ddef14a.htm",
+      "publisher": "SEC EDGAR",
+      "date": "2026-05-15"
+    }
+  },
+  "school": {
+    "name": "Cut out the middleman",
+    "tagline": "Sell straight to customers, run lean, and reshape the company itself when the stock market gets in the way.",
+    "principles": [
+      {
+        "id": "direct",
+        "name": "Sell direct",
+        "summary": "Build computers to order and sell them straight to buyers instead of through stores. Skipping the middleman let a dorm-room start-up undercut IBM's prices.",
+        "sources": [
+          {
+            "title": "Michael S. Dell, profile",
+            "url": "https://achievement.org/achiever/michael-dell/",
+            "publisher": "Academy of Achievement",
+            "date": ""
+          },
+          {
+            "title": "Dell to sell computers at Wal-Mart",
+            "url": "https://www.nbcnews.com/id/wbna18846045",
+            "publisher": "Associated Press (via NBC News)",
+            "date": "2007-05-24"
+          }
+        ]
+      },
+      {
+        "id": "lean",
+        "name": "Run lean with shared information",
+        "summary": "Buy parts only for orders already in hand so little inventory sits around. Harvard Business Review's 1998 interview with him, \"The Power of Virtual Integration,\" describes how selling direct and building to order cut out the reseller.",
+        "sources": [
+          {
+            "title": "Michael S. Dell, profile",
+            "url": "https://achievement.org/achiever/michael-dell/",
+            "publisher": "Academy of Achievement",
+            "date": ""
+          },
+          {
+            "title": "The Power of Virtual Integration: An Interview with Dell Computer's Michael Dell",
+            "url": "https://hbr.org/1998/03/the-power-of-virtual-integration-an-interview-with-dell-computers-michael-dell",
+            "publisher": "Harvard Business Review",
+            "date": "1998-03"
+          }
+        ]
+      },
+      {
+        "id": "long-term",
+        "name": "Play the long game in private",
+        "summary": "He argued that public markets pushed Dell toward short-term results, so he took it private in 2013 to invest for the long run. He wrote that it let the team focus on customers in a way not always possible while meeting \"the quarterly demands of Wall Street.\"",
+        "sources": [
+          {
+            "title": "Going Private Is Paying Off for Dell (op-ed by Michael Dell, first published in The Wall Street Journal)",
+            "url": "https://i.dell.com/sites/content/corporate/corp-comm/en/Pages/WSJOpEd24Nov14.pdf",
+            "publisher": "Dell",
+            "date": "2014-11-24"
+          },
+          {
+            "title": "Dell enters into agreement to be acquired by Michael Dell and Silver Lake (Form 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/826083/000119312513038969/d480650dex991.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2013-02-05"
+          }
+        ]
+      },
+      {
+        "id": "structure",
+        "name": "Use deal structure as a tool",
+        "summary": "Shape the financing to fit the goal: borrow heavily and pay partly in tracking stock to buy EMC, then spin off VMware and use a special dividend to pay down debt.",
+        "sources": [
+          {
+            "title": "Michael S. Dell, MSD Partners and Silver Lake lead transaction to combine Dell and EMC (EMC Form 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/790070/000119312515342168/d84913dex995.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2015-10-12"
+          },
+          {
+            "title": "Dell Technologies annual report (Form 10-K), fiscal 2017",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199617000004/delltechnologiesfy1710k.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2017-03-31"
+          },
+          {
+            "title": "Dell Technologies announces completion of VMware spin-off (Form 8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571996/000119312521315488/d146470dex991.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2021-11-01"
+          }
+        ]
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "id": "found",
+      "year": "1984",
+      "category": "founding",
+      "title": "Pre-med student or computer seller?",
+      "situation": "You are a freshman at the University of Texas, supposedly on a pre-med track, but you are selling computer gear out of your dorm room. You think you can beat IBM's prices by building PCs to order and selling straight to buyers, skipping the stores.",
+      "options": [
+        { "id": "school", "label": "Finish the degree, keep the business as a hobby", "real": false },
+        { "id": "direct", "label": "Leave college and sell custom PCs direct to customers", "real": true },
+        { "id": "retail", "label": "Pitch your PCs to computer stores to sell for you", "real": false }
+      ],
+      "actual": "He started the company in 1984 with $1,000, built on selling computers directly to customers with no middleman, and left college after his freshman year to run it full time.",
+      "outcome": "In 1992 he became the youngest CEO ever of a Fortune 500 company. Dell Technologies still describes itself as founded in a UT dorm room in 1984.",
+      "sources": [
+        { "title": "Michael S. Dell, profile", "url": "https://achievement.org/achiever/michael-dell/", "publisher": "Academy of Achievement", "date": "" },
+        { "title": "Michael Dell assumes duties as CEO of Dell Inc. (press release, Form 8-K exhibit)", "url": "https://www.sec.gov/Archives/edgar/data/826083/000095013407002027/d43276exv99w1.htm", "publisher": "SEC EDGAR", "date": "2007-01-31" },
+        { "title": "Dell Technologies proxy statement (Schedule 14A), 2026", "url": "https://www.sec.gov/Archives/edgar/data/1571996/000119312526226734/d132444ddef14a.htm", "publisher": "SEC EDGAR", "date": "2026-05-15" }
+      ],
+      "lesson": {
+        "principle": "direct",
+        "takeaway": "Removing a step between maker and buyer can cut costs and let a small newcomer compete on price with industry giants.",
+        "watchOut": "Winning models can age: in 2007, while losing sales to Hewlett-Packard, Dell announced it would sell two desktop models in about 3,000 Walmart stores, a departure from its direct-sales tradition.",
+        "terms": [],
+        "sources": [
+          {
+            "title": "Dell to sell computers at Wal-Mart",
+            "url": "https://www.nbcnews.com/id/wbna18846045",
+            "publisher": "Associated Press (via NBC News)",
+            "date": "2007-05-24"
+          }
+        ]
+      }
+    },
+    {
+      "id": "private",
+      "year": "2013",
+      "category": "deal",
+      "title": "Stay on the stock market or go private?",
+      "situation": "You took back the CEO job in January 2007 after the company warned its results would miss forecasts. Years into a turnaround plan, you believe it will still take more time, investment and patience, and could be better supported as a private company.",
+      "options": [
+        { "id": "stay", "label": "Stay public and push the turnaround quarter by quarter", "real": false },
+        { "id": "buyout", "label": "Team up with an investment firm to buy the company", "real": true },
+        { "id": "sell", "label": "Look for a bigger company to buy Dell", "real": false }
+      ],
+      "actual": "In August 2012 he approached Dell's board about taking the company private. In February 2013 Dell agreed to be bought by him and Silver Lake for $13.65 a share, about $24.4 billion, with a $2 billion loan from Microsoft in the financing. He put in his own shares plus extra cash.",
+      "outcome": "After a raised offer, the buyout closed on October 29, 2013 at $13.75 a share in cash, plus a $0.13 special dividend. Dell's Class C shares began regular trading on the New York Stock Exchange under the symbol DELL on December 28, 2018.",
+      "sources": [
+        { "title": "Michael Dell assumes duties as CEO of Dell Inc. (press release, Form 8-K exhibit)", "url": "https://www.sec.gov/Archives/edgar/data/826083/000095013407002027/d43276exv99w1.htm", "publisher": "SEC EDGAR", "date": "2007-01-31" },
+        { "title": "Dell enters into agreement to be acquired by Michael Dell and Silver Lake (Form 8-K exhibit)", "url": "https://www.sec.gov/Archives/edgar/data/826083/000119312513038969/d480650dex991.htm", "publisher": "SEC EDGAR", "date": "2013-02-05" },
+        { "title": "Dell Inc. current report (Form 8-K): completion of merger", "url": "https://www.sec.gov/Archives/edgar/data/826083/000119312513416110/d619138d8k.htm", "publisher": "SEC EDGAR", "date": "2013-10-29" },
+        { "title": "Dell Technologies annual report (Form 10-K), fiscal 2019", "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199619000008/delltechnologiesfy1910k.htm", "publisher": "SEC EDGAR", "date": "2019-03-29" }
+      ],
+      "lesson": {
+        "principle": "long-term",
+        "takeaway": "Going private can give managers room to make long-term bets without the pressure of quarterly stock-market expectations.",
+        "watchOut": "Management-led buyouts can be challenged in court on price: in 2016 a Delaware court found Dell's fair value was $17.62 a share versus the $13.75 paid, though Delaware's Supreme Court reversed and sent back that ruling in December 2017.",
+        "terms": [
+          "going-private",
+          "leveraged-buyout",
+          "special-dividend"
+        ],
+        "sources": [
+          {
+            "title": "Delaware Supreme Court reverses Dell's merger appraisal price bump",
+            "url": "https://www.cooley.com/news/insight/2017/2017-12-19-delaware-supreme-court-reverses-dells-merger-appraisal-price-bump",
+            "publisher": "Cooley LLP",
+            "date": "2017-12-19"
+          }
+        ]
+      }
+    },
+    {
+      "id": "emc",
+      "year": "2015",
+      "category": "deal",
+      "title": "Bet big on data storage?",
+      "situation": "Your company is now private and mostly known for PCs and servers. Storage leader EMC, which holds a large economic interest in publicly traded software maker VMware, could make you a much larger player in data centers and cloud computing.",
+      "options": [
+        { "id": "small", "label": "Buy a few small storage startups instead", "real": false },
+        { "id": "emc", "label": "Buy EMC in one giant deal, keeping VMware listed", "real": true },
+        { "id": "partner", "label": "Sign a sales partnership with EMC, no merger", "real": false }
+      ],
+      "actual": "On October 12, 2015, Dell, together with its owners (him, MSD Partners and Silver Lake), agreed to buy EMC for $24.05 a share in cash plus tracking stock tied to VMware. Using an illustrative VMware price, the deal was valued at about $67 billion, and VMware was to stay a public company.",
+      "outcome": "The deal closed on September 7, 2016, and the combined company took the name Dell Technologies.",
+      "sources": [
+        { "title": "Michael S. Dell, MSD Partners and Silver Lake lead transaction to combine Dell and EMC (EMC Form 8-K exhibit)", "url": "https://www.sec.gov/Archives/edgar/data/790070/000119312515342168/d84913dex995.htm", "publisher": "SEC EDGAR", "date": "2015-10-12" },
+        { "title": "EMC Corp. current report (Form 8-K): completion of merger", "url": "https://www.sec.gov/Archives/edgar/data/790070/000119312516706576/d258881d8k.htm", "publisher": "SEC EDGAR", "date": "2016-09-07" }
+      ],
+      "lesson": {
+        "principle": "structure",
+        "takeaway": "Creative payment terms, like tracking stock tied to VMware, can make a giant purchase possible without paying the whole price in cash.",
+        "watchOut": "Borrowing big leaves a heavy load: to pay for EMC, Dell issued $45.9 billion in new debt, and its total debt was about $50.4 billion (principal) as of February 3, 2017.",
+        "terms": [
+          "merger",
+          "tracking-stock"
+        ],
+        "sources": [
+          {
+            "title": "Dell Technologies annual report (Form 10-K), fiscal 2017",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199617000004/delltechnologiesfy1710k.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2017-03-31"
+          }
+        ]
+      }
+    },
+    {
+      "id": "vmware",
+      "year": "2021",
+      "category": "money",
+      "title": "Keep VMware or let it go?",
+      "situation": "Your company owns about 81% of VMware, a valuable software business, but your company also carries a lot of debt, and owning part of another public company makes its structure complicated.",
+      "options": [
+        { "id": "keep", "label": "Keep the VMware stake as a crown jewel", "real": false },
+        { "id": "spin", "label": "Spin VMware off to shareholders and use a big dividend to cut debt", "real": true },
+        { "id": "buyrest", "label": "Buy the rest of VMware and fold it in", "real": false }
+      ],
+      "actual": "In April 2021 Dell Technologies announced it would spin off its 81% stake in VMware. VMware would pay an $11.5 to $12 billion special dividend, of which Dell expected about $9.3 to $9.7 billion, earmarked to pay down debt.",
+      "outcome": "The spin-off was completed on November 1, 2021. VMware paid an $11.5 billion special dividend, of which Dell received $9.3 billion for debt paydown, and Dell said it had received investment grade ratings from all three major agencies. The two companies kept a commercial agreement.",
+      "sources": [
+        { "title": "Dell Technologies announces planned VMware spin-off (Form 8-K exhibit)", "url": "https://www.sec.gov/Archives/edgar/data/1571996/000119312521116271/d142017dex991.htm", "publisher": "SEC EDGAR", "date": "2021-04-14" },
+        { "title": "Dell Technologies announces completion of VMware spin-off (Form 8-K exhibit)", "url": "https://www.sec.gov/Archives/edgar/data/1571996/000119312521315488/d146470dex991.htm", "publisher": "SEC EDGAR", "date": "2021-11-01" }
+      ],
+      "lesson": {
+        "principle": "structure",
+        "takeaway": "Spinning off a stake can simplify a company, and a special dividend paid on the way out can raise cash to cut debt.",
+        "watchOut": "Letting go means giving up control: once independent, VMware agreed in May 2022 to be bought by Broadcom, which completed the purchase on November 22, 2023.",
+        "terms": [
+          "spin-off",
+          "special-dividend",
+          "investment-grade"
+        ],
+        "sources": [
+          {
+            "title": "Broadcom Inc. current report (Form 8-K): completion of VMware acquisition",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000114036123054354/ef20015100_form8k.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2023-11-22"
+          }
+        ]
+      }
+    },
+    {
+      "id": "kids",
+      "year": "2025",
+      "category": "giving",
+      "title": "How to give billions to kids?",
+      "situation": "A new 2025 federal law creates 'Trump accounts', investment accounts for children, and gives $1,000 to babies born from 2025 through 2028. Older children get nothing from the government.",
+      "options": [
+        { "id": "found", "label": "Give through your foundation's usual programs", "real": false },
+        { "id": "seed", "label": "Put $250 into the accounts of millions of older kids", "real": true },
+        { "id": "scholar", "label": "Fund college scholarships instead", "real": false }
+      ],
+      "actual": "On December 2, 2025, he and his wife pledged $6.25 billion to put $250 into the accounts of about 25 million children aged 10 and under, born before 2025, in ZIP codes with a median income of $150,000 or less. Dell Technologies also said it would match the $1,000 federal grant for its employees' new children.",
+      "outcome": "Invest America, the nonprofit partnered with the Dells, called it the largest gift ever aimed at American children. Parents were set to be able to open and add to the accounts starting July 4, 2026 (as reported in December 2025).",
+      "sources": [
+        { "title": "Michael and Susan Dell to donate $6.25 billion to fund 'Trump accounts' for 25 million U.S. kids", "url": "https://www.cnbc.com/2025/12/02/michael-susan-dell-trump-accounts.html", "publisher": "CNBC", "date": "2025-12-02" },
+        { "title": "Michael and Susan Dell pledge $6.25 billion to fund 'Trump Accounts'", "url": "https://www.npr.org/2025/12/03/nx-s1-5628402/michael-and-susan-dell-pledge-6-25-billion-to-fund-trump-accounts", "publisher": "NPR", "date": "2025-12-03" }
+      ],
+      "lesson": {
+        "principle": "long-term",
+        "takeaway": "Seeding an account early gives money many years to stay invested, which is the idea behind putting small sums in children's accounts.",
+        "watchOut": "The money is locked up and growth is not guaranteed: Trump account funds generally can't be withdrawn before age 18, and CNBC noted some forecasts see lower U.S. stock returns over the next decade.",
+        "terms": [
+          "trump-account"
+        ],
+        "sources": [
+          {
+            "title": "Trump Accounts for kids launched July 4: What parents need to know",
+            "url": "https://www.cnbc.com/2026/07/01/trump-accounts-launch-july-4.html",
+            "publisher": "CNBC",
+            "date": "2026-07-01"
+          }
+        ]
+      }
+    }
+  ],
+  "glossary": [
+    {
+      "id": "going-private",
+      "term": "Going private",
+      "definition": "When a public company's shares stop being widely held or listed, often because a buyer purchases them, so it can stop reporting to the SEC as a public company.",
+      "source": {
+        "title": "Going Private",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/going-private",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "leveraged-buyout",
+      "term": "Leveraged buyout (LBO)",
+      "definition": "Buying a company with debt paying for a large part of the price, with the bought company's own assets serving as collateral.",
+      "source": {
+        "title": "What Is a Leveraged Buyout?",
+        "url": "https://www.fool.com/terms/l/leveraged-buyout/",
+        "publisher": "The Motley Fool",
+        "date": ""
+      }
+    },
+    {
+      "id": "special-dividend",
+      "term": "Special dividend",
+      "definition": "A dividend paid one time, usually larger than a regular dividend, often when a company has a large amount of excess cash.",
+      "source": {
+        "title": "Special Dividend: Definition",
+        "url": "https://www.fool.com/terms/s/special-dividends",
+        "publisher": "The Motley Fool",
+        "date": ""
+      }
+    },
+    {
+      "id": "merger",
+      "term": "Merger",
+      "definition": "When two or more companies combine into one. The target company's shareholders usually have to approve it.",
+      "source": {
+        "title": "Mergers",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/mergers",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "tracking-stock",
+      "term": "Tracking stock",
+      "definition": "A class of shares designed to follow the results of one part of a company rather than the company as a whole.",
+      "source": {
+        "title": "Tracking Stock: Definition, Benefits, Risks, Example",
+        "url": "https://www.fool.com/terms/t/tracking-stock/",
+        "publisher": "The Motley Fool",
+        "date": ""
+      }
+    },
+    {
+      "id": "spin-off",
+      "term": "Spin-off",
+      "definition": "When a parent company hands out shares of a unit to its own shareholders so that unit becomes a separate, independent company.",
+      "source": {
+        "title": "Spin-Offs",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/spin-offs",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "investment-grade",
+      "term": "Investment grade",
+      "definition": "A credit rating of BBB (S&P, Fitch) or Baa (Moody's) or higher, meaning rating agencies see a lower risk the borrower will default. Such borrowers usually pay lower interest.",
+      "source": {
+        "title": "Investment-grade Bond (or High-grade Bond)",
+        "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/investment-grade-bond-or-high-grade-bond",
+        "publisher": "SEC Investor.gov",
+        "date": ""
+      }
+    },
+    {
+      "id": "trump-account",
+      "term": "Trump account",
+      "definition": "A U.S. investment account for children created by federal law. It works much like an IRA, is invested in U.S. stock funds, and money generally can't be taken out before age 18.",
+      "source": {
+        "title": "Trump Accounts for kids launched July 4: What parents need to know",
+        "url": "https://www.cnbc.com/2026/07/01/trump-accounts-launch-july-4.html",
+        "publisher": "CNBC",
+        "date": "2026-07-01"
+      }
+    }
+  ]
+}

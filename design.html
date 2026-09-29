@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Design system · Billionaires Digest v2</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Billionaires Digest style guide, sports-network look: tokens, type, buttons, scoreboard pieces, tables, panels and navigation. Internal page.">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/ui.css">
+<style>
+  .dg-sec { margin-bottom: var(--gutter); }
+  .dg-sec > .v2-card__head { margin-bottom: var(--s2); }
+  .dg-row { display: flex; flex-wrap: wrap; gap: var(--s1); align-items: center; }
+  .dg-row + .dg-row { margin-top: var(--s2); }
+  .dg-sw { width: 160px; }
+  .dg-sw__chip { height: 72px; border-radius: 8px; border: 1px solid var(--line-2); }
+  .dg-sw b { display: block; margin-top: 6px; font-size: var(--fs-sm); }
+  .dg-sw code { font-size: var(--fs-xs); color: var(--text-muted); }
+  .dg-type > * + * { margin-top: var(--s1); }
+  .dg-note { font-size: var(--fs-sm); color: var(--text-muted); margin-top: var(--s1); }
+  .dg-dark { background: var(--bar); padding: var(--s2); border-radius: var(--radius-card); }
+  .dg-av { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: var(--fs-xs); color: var(--text-muted); width: 88px; text-align: center; }
+  .dg-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--s2); }
+  .dg-counters { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: flex-end; }
+  .dg-scroll { overflow-x: auto; max-width: 100%; }
+  .dg-led { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--s2); }
+  @media (max-width: 767px) { .dg-sw { width: calc(50% - 8px); } }
+</style>
+</head>
+<body class="v2">
+<!-- v2topbar:start -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<div class="v2-ticker" data-ticker hidden></div>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="index.html" aria-current="true">Play</a>
+      <a href="academy.html">Learn</a>
+      <a href="players.html">Players</a>
+      <a href="news.html">News</a>
+      <a href="flows.html">Tools</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__act v2-top__act--draft" href="draft.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Draft</span></a>
+      <a class="v2-top__act v2-top__search" href="people/"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span>Search</span></a>
+      <a class="v2-top__act v2-top__act--team" href="team.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>My team</span></a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
+  </div>
+</header>
+<nav class="v2-subtabs" aria-label="Play">
+  <div class="v2-wrap v2-subtabs__in">
+    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
+    <ul class="v2-subtabs__list">
+      <li><a href="team.html">My team</a></li>
+      <li><a href="draft.html">Draft room</a></li>
+      <li><a href="scores.html">Scores</a></li>
+      <li><a href="leagues.html">Leagues</a></li>
+      <li><a href="book.html">The Book</a></li>
+      <li><a href="moves.html">Next Moves</a></li>
+      <li><a href="play-terms.html">Rules</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="index.html" aria-current="true">Play</a>
+        <ul>
+          <li><a href="team.html">My team</a></li>
+          <li><a href="draft.html">Draft room</a></li>
+          <li><a href="scores.html">Scores</a></li>
+          <li><a href="leagues.html">Leagues</a></li>
+          <li><a href="book.html">The Book</a></li>
+          <li><a href="moves.html">Next Moves</a></li>
+          <li><a href="play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="academy.html">Learn</a>
+        <ul>
+          <li><a href="academy.html">Academy</a></li>
+          <li><a href="life.html">Billionaire Life</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="players.html">Players</a></li>
+      <li><a class="v2-menu__top" href="news.html">News</a>
+        <ul>
+          <li><a href="news.html">Today</a></li>
+          <li><a href="people/">People</a></li>
+          <li><a href="companies/">Companies</a></li>
+          <li><a href="sectors.html">Sectors</a></li>
+          <li><a href="calendar.html">Calendar</a></li>
+          <li><a href="archive.html">Archive</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="flows.html">Tools</a>
+        <ul>
+          <li><a href="flows.html">Insider flows</a></li>
+          <li><a href="quarterly.html">What their funds bought</a></li>
+          <li><a href="copycat.html">Copycat portfolio</a></li>
+          <li><a href="network.html">Who invests with whom</a></li>
+          <li><a href="compare.html">Compare two</a></li>
+          <li><a href="property.html">Where they buy</a></li>
+          <li><a href="guides/filings-101/">Filings 101</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+<!-- v2topbar:end -->
+
+<main id="main" class="v2-main" tabindex="-1">
+  <div class="v2-wrap">
+    <section class="v2-card dg-sec" aria-labelledby="h-intro">
+      <span class="v2-kicker">Internal · not linked</span>
+      <h1 class="v2-h1" id="h-intro" style="margin:8px 0 16px">Design system</h1>
+      <p class="v2-lede">v3 sports-network look: a light canvas with white cards and thin rules, a black top bar under a dark scores ticker, bold condensed headlines, red accents. Dark mode follows the system setting. Sample text and numbers on this page are placeholders, not data.</p>
+      <p class="v2-play" style="text-align:left;margin:0">Play money · no prizes · not financial advice</p>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-mark">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-mark">Wordmark</h2></div>
+      <div class="dg-dark dg-row">
+        <a class="v2-mark" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+        <a class="v2-mark v2-mark--sm" href="team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+      </div>
+      <p class="dg-note">Built in HTML and CSS: red square with a white "BD", name in white Barlow Condensed 800 on the black bar. Not an image, no logos.</p>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-color">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-color">Color</h2><span class="v2-card__meta">tokens.css</span></div>
+      <div class="dg-row">
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--canvas)"></div><b>Canvas (page)</b><code>#EDEEF0 · dark #121314</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--surface)"></div><b>Card</b><code>#FFFFFF · dark #1D1F22</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--bar)"></div><b>Top bar</b><code>#0B0B0C</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--ticker)"></div><b>Ticker</b><code>#1B1C1E</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--ink-2)"></div><b>Scoreboard card</b><code>#16181B</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--brand)"></div><b>Brand red</b><code>#D62D27</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--brand-ink)"></div><b>Red text</b><code>#C1231E · dark #FF6B64</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--positive)"></div><b>Up (green)</b><code>#08764A · dark #3CC985</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--text)"></div><b>Text</b><code>#121417 · dark #F1F2F4</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--muted)"></div><b>Muted</b><code>#555C66 · dark #A9B0B9</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--line)"></div><b>Rule</b><code>#DCDFE3 · dark #33373C</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--focus)"></div><b>Focus</b><code>#2359C4 · dark #8AB4FF</code></div>
+      </div>
+      <div class="dg-row">
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--link)"></div><b>Link</b><code>--link</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--surface-2)"></div><b>Sunken</b><code>--surface-2</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--positive-tint)"></div><b>Green tint</b><code>--positive-tint</code></div>
+        <div class="dg-sw"><div class="dg-sw__chip" style="background:var(--brand-tint)"></div><b>Red tint</b><code>--brand-tint</code></div>
+      </div>
+      <p class="dg-note">Up is green with "+", down is red with "−". Color is never the only signal. Every text color passes AA on cards and canvas in both themes (see tokens.css for the ratios).</p>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-type">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-type">Type</h2></div>
+      <div class="dg-type">
+        <p class="v2-hero-num">128</p>
+        <p class="v2-h1">Page title 48 · condensed 800, uppercase</p>
+        <p class="v2-h2">Section title 22 · uppercase</p>
+        <p class="v2-h3">Heading 18</p>
+        <span class="v2-kicker">Kicker · 12 bold uppercase, muted</span> <span class="v2-kicker v2-kicker--red">Red kicker</span>
+        <p class="v2-lede">Lede 18 · Barlow 400, muted.</p>
+        <p>Body 15 · Barlow 400. Plain language, no hype. <strong>Barlow 700 for emphasis.</strong></p>
+        <p class="v2-label">Label · 12 bold uppercase</p>
+        <p class="num">Tabular numbers: 1,234 · 567 · 89</p>
+        <p class="v2-play" style="text-align:left">Play-money line · keep on every game page</p>
+      </div>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-btn">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-btn">Buttons</h2></div>
+      <div class="dg-row">
+        <button type="button" class="v2-btn v2-btn--primary">Set next week's team</button>
+        <button type="button" class="v2-btn v2-btn--light" style="background:#16181B;color:#fff;border-color:#16181B">Light (on dark)</button>
+        <button type="button" class="v2-btn v2-btn--secondary">+ Add</button>
+        <button type="button" class="v2-btn v2-btn--selected" aria-pressed="true">Selected</button>
+        <button type="button" class="v2-btn v2-btn--ghost">Ghost</button>
+        <button type="button" class="v2-btn v2-btn--primary" disabled>Disabled</button>
+      </div>
+      <div class="dg-row">
+        <button type="button" class="v2-btn v2-btn--primary v2-btn--big">Big primary</button>
+        <button type="button" class="v2-btn v2-btn--secondary v2-btn--sm">+ Add</button>
+        <button type="button" class="v2-btn v2-btn--selected v2-btn--sm">Selected</button>
+        <button type="button" class="v2-link">Text link button</button>
+      </div>
+      <p class="dg-note">Pill buttons: solid red for the main action, outline for secondary. Minimum 44px tall. Tab to any control to see the 3px focus ring.</p>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-badge">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-badge">Badges and pills</h2></div>
+      <div class="dg-row">
+        <span class="v2-badge-c" aria-label="Captain">C</span>
+        <span class="v2-pill">Final</span>
+        <span class="v2-pill v2-pill--live">Live · through Thu</span>
+        <span class="v2-pill v2-pill--light">Practice</span>
+        <span class="v2-tag">Sample tag</span>
+        <span class="v2-kicker">Surname / Story type</span>
+      </div>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-casino">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-casino">Scoreboard pieces</h2><span class="v2-card__meta">Sample</span></div>
+      <p class="v2-label">Scoreboard numbers · .v2-odo (value in text for screen readers; digits may roll once)</p>
+      <div class="dg-counters">
+        <span class="v2-odo v2-odo--mid v2-odo--gold"><span class="v2-sr">128</span><span class="v2-odo__digits num" aria-hidden="true"><span class="v2-odo__col"><span class="v2-odo__strip" style="transform:translateY(-11em)"><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span></span></span><span class="v2-odo__col"><span class="v2-odo__strip" style="transform:translateY(-12em)"><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span></span></span><span class="v2-odo__col"><span class="v2-odo__strip" style="transform:translateY(-18em)"><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span></span></span></span></span>
+        <span class="v2-odo v2-odo--sm v2-pos"><span class="v2-sr">+12</span><span class="v2-odo__digits num" aria-hidden="true"><span class="v2-odo__ch">+</span><span class="v2-odo__col"><span class="v2-odo__strip" style="transform:translateY(-11em)"><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span></span></span><span class="v2-odo__col"><span class="v2-odo__strip" style="transform:translateY(-12em)"><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span></span></span></span></span>
+        <span class="v2-odo v2-odo--sm v2-neg"><span class="v2-sr">−8</span><span class="v2-odo__digits num" aria-hidden="true"><span class="v2-odo__ch">−</span><span class="v2-odo__col"><span class="v2-odo__strip" style="transform:translateY(-18em)"><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span><span class="v2-odo__d">0</span><span class="v2-odo__d">1</span><span class="v2-odo__d">2</span><span class="v2-odo__d">3</span><span class="v2-odo__d">4</span><span class="v2-odo__d">5</span><span class="v2-odo__d">6</span><span class="v2-odo__d">7</span><span class="v2-odo__d">8</span><span class="v2-odo__d">9</span></span></span></span></span>
+      </div>
+      <p class="v2-label" style="margin-top:24px">Result status · .v2-lamp (the word carries the meaning)</p>
+      <div class="dg-row">
+        <div class="v2-lamp is-win"><span class="v2-lamp__k">Result</span><span class="v2-lamp__word">Win</span></div>
+        <div class="v2-lamp is-loss"><span class="v2-lamp__k">Result</span><span class="v2-lamp__word">Loss</span></div>
+        <div class="v2-lamp is-off"><span class="v2-lamp__k">Result</span><span class="v2-lamp__word">Waiting</span></div>
+      </div>
+      <p class="v2-label" style="margin-top:24px">Stats bar · .v2-led</p>
+      <div class="v2-led dg-led">
+        <div><span class="v2-led__k">Selected</span><span class="v2-led__v">3/5</span></div>
+        <div><span class="v2-led__k">Cap used</span><span class="v2-led__v">62</span></div>
+        <div><span class="v2-led__k">Change</span><span class="v2-led__v v2-pos">+4</span></div>
+      </div>
+      <p class="dg-note">The scores ticker at the top of every page is filled by assets/v2/ticker.js from real Book matchups. Motion is short and optional, never with reduced motion.</p>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-table">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-table">Table</h2><span class="v2-card__meta">Sample</span></div>
+      <div class="dg-scroll" tabindex="0" role="region" aria-label="Sample table">
+      <table class="v2-table">
+        <caption class="v2-sr">Sample table with placeholder rows</caption>
+        <thead><tr><th scope="col">Player</th><th scope="col" class="n">Cap</th><th scope="col" class="n">Base pts</th><th scope="col" class="n">Multiplier</th><th scope="col" class="n">Team pts</th></tr></thead>
+        <tbody>
+          <tr><td><div class="v2-player"><span class="v2-av" data-sector="ai-tech" aria-hidden="true">SR</span><div class="v2-player__txt"><span class="v2-player__name">Sample row one</span><span class="v2-player__sub">TICK</span></div><span class="v2-badge-c" aria-label="Captain">C</span></div></td><td class="n">20</td><td class="n v2-pos">+10</td><td class="n"><span class="v2-small">1.5x</span></td><td class="n v2-strong v2-pos">+15</td></tr>
+          <tr><td><div class="v2-player"><span class="v2-av" data-sector="finance" aria-hidden="true">SR</span><div class="v2-player__txt"><span class="v2-player__name">Sample row two</span><span class="v2-player__sub">TICK</span></div></div></td><td class="n">15</td><td class="n v2-neg">−4</td><td class="n"><span class="v2-small">1x</span></td><td class="n v2-strong v2-neg">−4</td></tr>
+          <tr><td><div class="v2-player"><span class="v2-av" data-sector="energy" aria-hidden="true">SR</span><div class="v2-player__txt"><span class="v2-player__name">Sample row three</span><span class="v2-player__sub">TICK</span></div></div></td><td class="n">10</td><td class="n v2-zero">0</td><td class="n"><span class="v2-small">1x</span></td><td class="n v2-strong v2-zero">0</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="dg-note">Dense rows, thin rules, small uppercase headers, numbers right-aligned and tabular.</p>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-av">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-av">Avatars</h2></div>
+      <div class="dg-row">
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="ai-tech" aria-hidden="true">AT</span>AI &amp; tech</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="finance" aria-hidden="true">FI</span>Finance</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="aerospace" aria-hidden="true">AE</span>Aerospace</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="luxury-retail" aria-hidden="true">LR</span>Luxury &amp; retail</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="real-estate" aria-hidden="true">RE</span>Real estate</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="energy" aria-hidden="true">EN</span>Energy</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="media" aria-hidden="true">ME</span>Media</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="autos" aria-hidden="true">AU</span>Autos</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="industrials" aria-hidden="true">IN</span>Industrials</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="health" aria-hidden="true">HE</span>Health</div>
+        <div class="dg-av"><span class="v2-av v2-av--lg" data-sector="other" aria-hidden="true">OT</span>Other</div>
+      </div>
+      <p class="dg-note">Initials on a round sector plate until the illustrated portrait style is approved. The avatar takes an optional &lt;img&gt; child that covers the plate.</p>
+    </section>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-stat">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-stat">Stat blocks and cap meter</h2><span class="v2-card__meta">Sample</span></div>
+      <div class="v2-stats">
+        <div class="v2-stat"><span class="v2-stat__label">Sample stat</span><span class="v2-stat__value">128</span></div>
+        <div class="v2-stat"><span class="v2-stat__label">Sample change</span><span class="v2-stat__value v2-pos">+12</span></div>
+        <div class="v2-stat"><span class="v2-stat__label">Sample drop</span><span class="v2-stat__value v2-neg">−8</span></div>
+      </div>
+      <div class="dg-row" style="display:block;max-width:420px">
+        <div class="v2-cap">
+          <div class="v2-cap__row"><span class="v2-label">Cap used</span><span class="v2-cap__num">62 / 100</span></div>
+          <div class="v2-cap__bar" role="img" aria-label="62 of 100 cap used"><div class="v2-cap__fill" style="width:62%"></div></div>
+        </div>
+      </div>
+      <div class="dg-row" style="display:block;max-width:420px">
+        <div class="v2-cap v2-cap--over">
+          <div class="v2-cap__row"><span class="v2-label">Cap used · over</span><span class="v2-cap__num">108 / 100</span></div>
+          <div class="v2-cap__bar" role="img" aria-label="108 of 100 cap used, over by 8"><div class="v2-cap__fill" style="width:100%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="v2-grid dg-sec">
+      <section class="v2-hero span-8" aria-labelledby="h-hero">
+        <span class="v2-kicker">Your team / Sample week</span>
+        <h2 class="v2-h1" id="h-hero" style="margin:16px 0;color:#fff">Scoreboard card</h2>
+        <p class="v2-hero-num">—</p>
+        <p class="v2-label" style="margin-top:8px">Dark card in both themes (.v2-hero)</p>
+      </section>
+      <section class="v2-card span-4" aria-labelledby="h-card">
+        <div class="v2-card__head"><h2 class="v2-h2" id="h-card">Card</h2><span class="v2-card__meta">Right label</span></div>
+        <p>White card (dark in dark mode), 10px radius, thin rule under the heading.</p>
+      </section>
+      <section class="v2-card v2-card--tint span-6" aria-labelledby="h-tint">
+        <span class="v2-kicker">Tint panel</span>
+        <h2 class="v2-h2" id="h-tint" style="margin:8px 0 16px">Play against your friends.</h2>
+        <p class="v2-lede">Soft blue panel for invitations and secondary content.</p>
+      </section>
+      <section class="v2-card span-6" aria-labelledby="h-empty">
+        <div class="v2-empty">
+          <h2 class="v2-h2" id="h-empty">Empty state</h2>
+          <p>Say plainly what is missing and what to do next. Never show made-up numbers.</p>
+          <a class="v2-btn v2-btn--primary" href="draft.html">Primary action</a>
+        </div>
+      </section>
+    </div>
+
+    <section class="v2-card dg-sec" aria-labelledby="h-form">
+      <div class="v2-card__head"><h2 class="v2-h2" id="h-form">Form controls</h2></div>
+      <div class="dg-form">
+        <div class="v2-field"><label for="dg-q">Search players</label><input class="v2-input" id="dg-q" type="search" placeholder="Name or ticker"></div>
+        <div class="v2-field"><label for="dg-s">Sector</label><select class="v2-select" id="dg-s"><option>All sectors</option><option>AI &amp; tech</option><option>Finance</option></select></div>
+        <div class="v2-field"><label for="dg-d">Disabled</label><input class="v2-input" id="dg-d" type="text" value="Not editable" disabled></div>
+      </div>
+      <p class="v2-msg" style="margin-top:16px">Helper message.</p>
+      <p class="v2-msg v2-msg--bad">Error message: say what went wrong and how to fix it.</p>
+      <p class="v2-banner">Warning banner, e.g. the test clock.</p>
+    </section>
+  </div>
+</main>
+
+<!-- v2tabs:start -->
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="index.html" aria-current="true">Play</a>
+  <a href="academy.html">Learn</a>
+  <a href="players.html">Players</a>
+  <a href="news.html">News</a>
+</nav>
+<!-- v2tabs:end -->
+<!-- v2footer:start -->
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="about.html#corrections">Corrections</a>
+      <a href="play-terms.html">Game rules</a>
+      <a href="about.html#sponsor">Sponsor the brief</a>
+      <a href="calendar.ics">Calendar feed</a>
+    </nav>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+  </div>
+</footer>
+<script src="assets/v2/ticker.js" defer></script>
+<!-- v2footer:end -->
+
+<script src="assets/v2/chrome.js"></script>
+</body>
+</html>

@@ -1,0 +1,1521 @@
+{
+  "title": "Next Moves",
+  "note": "Yes/no markets on billionaires' next business moves, created and resolved only from public SEC filings in our data. Starting odds come from each person's own filing history (50% when the history is too thin).",
+  "asOf": "2026-09-27T15:44:52.856Z",
+  "playMoney": "Play money only. Coins have no cash value: no purchases, cash-out or prizes. Not financial advice.",
+  "sources": {
+    "filings": {
+      "file": "data/filings/latest.json",
+      "generated": "2026-09-27T14:47:02.980Z",
+      "windowDays": 90
+    },
+    "thirteenF": {
+      "files": "data/13f/*.json",
+      "generated": "2026-09-25T06:00:47.768Z"
+    }
+  },
+  "skipped": [
+    {
+      "template": "rank_hold",
+      "reason": "We keep only the current Forbes real-time list (data/people/index.json, one asOf), no dated history, so there is no way to compute a base rate or to check the rank on a past date."
+    }
+  ],
+  "markets": [
+    {
+      "slug": "mv-13f-2026-q4-fmr-llc-67066g104",
+      "kind": "fund_move",
+      "person": {
+        "slug": "abigail-johnson",
+        "name": "Abigail Johnson"
+      },
+      "question": "Will FMR LLC's 13F for the quarter ending Dec 31, 2026 show fewer Nvidia Corporation shares than the 1,026,051,548 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "abigail-johnson",
+        "name": "Abigail Johnson",
+        "filer": "fmr-llc",
+        "filerName": "FMR LLC",
+        "cik": "0000315066",
+        "cusip": "67066G104",
+        "holding": "Nvidia Corporation",
+        "baseShares": 1026051548,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/315066/000031506626002260/0000315066-26-002260-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.2,
+      "baseRate": {
+        "prob": 0.2,
+        "thin": false,
+        "hit": 2,
+        "known": 10,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), FMR LLC cut 2 of the 10 top-10 holdings we could check. So this starts at 20%."
+      },
+      "rule": "YES if FMR LLC's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Nvidia Corporation (CUSIP 67066G104) than the 1,026,051,548 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "FMR LLC 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000315066&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/315066/000031506626002260/0000315066-26-002260-index.htm",
+        "data": "data/13f/fmr-llc.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-sell-2026-10-andreas-von-bechtolsheim-family-anet",
+      "kind": "insider_sell",
+      "person": {
+        "slug": "andreas-von-bechtolsheim-family",
+        "name": "Andreas von Bechtolsheim & family"
+      },
+      "question": "Will Andreas von Bechtolsheim & family report selling ANET stock (Form 4, code S) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "andreas-von-bechtolsheim-family",
+        "name": "Andreas von Bechtolsheim & family",
+        "code": "S",
+        "ticker": "ANET",
+        "issuer": "Arista Networks, Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0001133206",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001133206&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-09-17"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.9,
+      "baseRate": {
+        "prob": 0.9,
+        "thin": false,
+        "hit": 4,
+        "known": 10,
+        "unit": "week",
+        "text": "In 4 of the last 10 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Andreas von Bechtolsheim & family reported at least one ANET sale (code S). Over a 31-day window that points to about 90%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports a sale (transaction code S) of ANET stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Andreas von Bechtolsheim & family",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001133206&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-size-2026-10-andreas-von-bechtolsheim-family-anet",
+      "kind": "sale_size",
+      "person": {
+        "slug": "andreas-von-bechtolsheim-family",
+        "name": "Andreas von Bechtolsheim & family"
+      },
+      "question": "Will Andreas von Bechtolsheim & family's reported sales of ANET stock (Form 4, code S) add up to more than $100 million in October 2026?",
+      "params": {
+        "slug": "andreas-von-bechtolsheim-family",
+        "name": "Andreas von Bechtolsheim & family",
+        "code": "S",
+        "ticker": "ANET",
+        "issuer": "Arista Networks, Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "line": 100000000,
+        "cik": "0001133206",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001133206&type=4&dateb=&owner=include&count=40"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.5,
+      "baseRate": {
+        "prob": 0.5,
+        "thin": true,
+        "hit": 0,
+        "known": 1,
+        "unit": "month",
+        "text": "We only have 1 complete month of Form 4 history, fewer than the 6 needed to set odds from history, so this starts at 50%. The line is Andreas von Bechtolsheim & family's recent pace: $315.1 million of reported ANET sales over the 12 weeks we have, about $116.3 million per 31-day month, rounded to $100 million."
+      },
+      "rule": "We add up shares × price for every ANET sale (code S) this person reports on Form 4 with a trade date from Oct 1, 2026 to Oct 31, 2026 (the same trade reported by two joint filers counts once). YES if the total is more than $100 million. Trading closes Oct 31, 2026 at 4:00 PM New York time; we check 5 days later. If a Form 4 from that period cannot be read and the total is not already over the line, the market is void.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Andreas von Bechtolsheim & family",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001133206&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-buy-2026-10-bill-gates-rsg",
+      "kind": "insider_buy",
+      "person": {
+        "slug": "bill-gates",
+        "name": "Bill Gates"
+      },
+      "question": "Will Bill Gates report buying RSG stock (Form 4, code P) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "bill-gates",
+        "name": "Bill Gates",
+        "code": "P",
+        "ticker": "RSG",
+        "issuer": "Republic Services, Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0000902012",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000902012&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-09-11"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.91,
+      "baseRate": {
+        "prob": 0.91,
+        "thin": false,
+        "hit": 5,
+        "known": 12,
+        "unit": "week",
+        "text": "In 5 of the last 12 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Bill Gates reported at least one RSG open-market buy (code P). Over a 31-day window that points to about 91%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports an open-market buy (transaction code P) of RSG stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Bill Gates",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000902012&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-gates-foundation-trust-084670702",
+      "kind": "fund_move",
+      "person": {
+        "slug": "bill-gates",
+        "name": "Bill Gates"
+      },
+      "question": "Will Gates Foundation Trust's 13F for the quarter ending Dec 31, 2026 show fewer Berkshire Hathaway Inc Del (CL B New) shares than the 14,689,844 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "bill-gates",
+        "name": "Bill Gates",
+        "filer": "gates-foundation-trust",
+        "filerName": "Gates Foundation Trust",
+        "cik": "0001166559",
+        "cusip": "084670702",
+        "holding": "Berkshire Hathaway Inc Del (CL B New)",
+        "baseShares": 14689844,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/0001104659-26-097175-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.2,
+      "baseRate": {
+        "prob": 0.2,
+        "thin": false,
+        "hit": 2,
+        "known": 10,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Gates Foundation Trust cut 2 of the 10 top-10 holdings we could check. So this starts at 20%."
+      },
+      "rule": "YES if Gates Foundation Trust's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Berkshire Hathaway Inc Del (CL B New) (CUSIP 084670702) than the 14,689,844 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Gates Foundation Trust 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001166559&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/0001104659-26-097175-index.htm",
+        "data": "data/13f/gates-foundation-trust.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-sell-2026-10-carlos-slim-helu-family-pbf",
+      "kind": "insider_sell",
+      "person": {
+        "slug": "carlos-slim-helu-family",
+        "name": "Carlos Slim Helu & family"
+      },
+      "question": "Will Carlos Slim Helu & family report selling PBF stock (Form 4, code S) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "carlos-slim-helu-family",
+        "name": "Carlos Slim Helu & family",
+        "code": "S",
+        "ticker": "PBF",
+        "issuer": "PBF Energy Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0001273693",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001273693&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-09-11"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.95,
+      "baseRate": {
+        "prob": 0.95,
+        "thin": false,
+        "hit": 6,
+        "known": 9,
+        "unit": "week",
+        "text": "In 6 of the last 9 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Carlos Slim Helu & family reported at least one PBF sale (code S). Over a 31-day window that points to about 99%, capped at 95% so the market stays open."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports a sale (transaction code S) of PBF stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Carlos Slim Helu & family",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001273693&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-size-2026-10-carlos-slim-helu-family-pbf",
+      "kind": "sale_size",
+      "person": {
+        "slug": "carlos-slim-helu-family",
+        "name": "Carlos Slim Helu & family"
+      },
+      "question": "Will Carlos Slim Helu & family's reported sales of PBF stock (Form 4, code S) add up to more than $50 million in October 2026?",
+      "params": {
+        "slug": "carlos-slim-helu-family",
+        "name": "Carlos Slim Helu & family",
+        "code": "S",
+        "ticker": "PBF",
+        "issuer": "PBF Energy Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "line": 50000000,
+        "cik": "0001273693",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001273693&type=4&dateb=&owner=include&count=40"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.5,
+      "baseRate": {
+        "prob": 0.5,
+        "thin": true,
+        "hit": 0,
+        "known": 1,
+        "unit": "month",
+        "text": "We only have 1 complete month of Form 4 history, fewer than the 6 needed to set odds from history, so this starts at 50%. The line is Carlos Slim Helu & family's recent pace: $144.5 million of reported PBF sales over the 12 weeks we have, about $53.3 million per 31-day month, rounded to $50 million."
+      },
+      "rule": "We add up shares × price for every PBF sale (code S) this person reports on Form 4 with a trade date from Oct 1, 2026 to Oct 31, 2026 (the same trade reported by two joint filers counts once). YES if the total is more than $50 million. Trading closes Oct 31, 2026 at 4:00 PM New York time; we check 5 days later. If a Form 4 from that period cannot be read and the total is not already over the line, the market is void.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Carlos Slim Helu & family",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001273693&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-koch-inc-573874104",
+      "kind": "fund_move",
+      "person": {
+        "slug": "charles-koch-family",
+        "name": "Charles Koch & family"
+      },
+      "question": "Will Koch, Inc.'s 13F for the quarter ending Dec 31, 2026 show fewer Marvell Technology Inc shares than the 1,000,000 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "charles-koch-family",
+        "name": "Charles Koch & family",
+        "filer": "koch-inc",
+        "filerName": "Koch, Inc.",
+        "cik": "0002027344",
+        "cusip": "573874104",
+        "holding": "Marvell Technology Inc",
+        "baseShares": 1000000,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/0002027344-26-000005-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.2,
+      "baseRate": {
+        "prob": 0.2,
+        "thin": false,
+        "hit": 2,
+        "known": 10,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Koch, Inc. cut 2 of the 10 top-10 holdings we could check. So this starts at 20%."
+      },
+      "rule": "YES if Koch, Inc.'s 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Marvell Technology Inc (CUSIP 573874104) than the 1,000,000 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Koch, Inc. 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002027344&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/0002027344-26-000005-index.htm",
+        "data": "data/13f/koch-inc.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-appaloosa-lp-023135106",
+      "kind": "fund_move",
+      "person": {
+        "slug": "david-tepper",
+        "name": "David Tepper"
+      },
+      "question": "Will Appaloosa LP's 13F for the quarter ending Dec 31, 2026 show fewer Amazon Com Inc shares than the 5,000,000 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "david-tepper",
+        "name": "David Tepper",
+        "filer": "appaloosa-lp",
+        "filerName": "Appaloosa LP",
+        "cik": "0001656456",
+        "cusip": "023135106",
+        "holding": "Amazon Com Inc",
+        "baseShares": 5000000,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1656456/000165645626000003/0001656456-26-000003-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.1,
+      "baseRate": {
+        "prob": 0.1,
+        "thin": false,
+        "hit": 1,
+        "known": 10,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Appaloosa LP cut 1 of the 10 top-10 holdings we could check. So this starts at 10%."
+      },
+      "rule": "YES if Appaloosa LP's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Amazon Com Inc (CUSIP 023135106) than the 5,000,000 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Appaloosa LP 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001656456&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1656456/000165645626000003/0001656456-26-000003-index.htm",
+        "data": "data/13f/appaloosa-lp.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-buy-2026-10-giancarlo-devasini-gold",
+      "kind": "insider_buy",
+      "person": {
+        "slug": "giancarlo-devasini",
+        "name": "Giancarlo Devasini"
+      },
+      "question": "Will Giancarlo Devasini report buying GOLD stock (Form 4, code P) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "giancarlo-devasini",
+        "name": "Giancarlo Devasini",
+        "code": "P",
+        "ticker": "GOLD",
+        "issuer": "Gold.com, Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0002050373",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002050373&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-09-03"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.32,
+      "baseRate": {
+        "prob": 0.32,
+        "thin": false,
+        "hit": 1,
+        "known": 12,
+        "unit": "week",
+        "text": "In 1 of the last 12 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Giancarlo Devasini reported at least one GOLD open-market buy (code P). Over a 31-day window that points to about 32%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports an open-market buy (transaction code P) of GOLD stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Giancarlo Devasini",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002050373&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-hancock-prospecting-pty-ltd-84615q103",
+      "kind": "fund_move",
+      "person": {
+        "slug": "gina-rinehart",
+        "name": "Gina Rinehart"
+      },
+      "question": "Will Hancock Prospecting Pty Ltd's 13F for the quarter ending Dec 31, 2026 show fewer Space Exploration Techn Corp (Class A Com STK) shares than the 8,000,000 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "gina-rinehart",
+        "name": "Gina Rinehart",
+        "filer": "hancock-prospecting-pty-ltd",
+        "filerName": "Hancock Prospecting Pty Ltd",
+        "cik": "0002017993",
+        "cusip": "84615Q103",
+        "holding": "Space Exploration Techn Corp (Class A Com STK)",
+        "baseShares": 8000000,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/0001213900-26-089481-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.05,
+      "baseRate": {
+        "prob": 0.05,
+        "thin": false,
+        "hit": 0,
+        "known": 10,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Hancock Prospecting Pty Ltd cut 0 of the 10 top-10 holdings we could check. So this starts at 5% (capped between 5% and 95%)."
+      },
+      "rule": "YES if Hancock Prospecting Pty Ltd's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Space Exploration Techn Corp (Class A Com STK) (CUSIP 84615Q103) than the 8,000,000 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Hancock Prospecting Pty Ltd 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002017993&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/0001213900-26-089481-index.htm",
+        "data": "data/13f/hancock-prospecting-pty-ltd.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-millennium-management-llc-84615q103",
+      "kind": "fund_move",
+      "person": {
+        "slug": "israel-englander",
+        "name": "Israel Englander"
+      },
+      "question": "Will Millennium Management LLC's 13F for the quarter ending Dec 31, 2026 show fewer Space Exploration Techn Corp (Class A Com STK) shares than the 17,604,863 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "israel-englander",
+        "name": "Israel Englander",
+        "filer": "millennium-management-llc",
+        "filerName": "Millennium Management LLC",
+        "cik": "0001273087",
+        "cusip": "84615Q103",
+        "holding": "Space Exploration Techn Corp (Class A Com STK)",
+        "baseShares": 17604863,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000127308726000007/0001273087-26-000007-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.05,
+      "baseRate": {
+        "prob": 0.05,
+        "thin": false,
+        "hit": 0,
+        "known": 8,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Millennium Management LLC cut 0 of the 8 top-10 holdings we could check. So this starts at 5% (capped between 5% and 95%)."
+      },
+      "rule": "YES if Millennium Management LLC's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Space Exploration Techn Corp (Class A Com STK) (CUSIP 84615Q103) than the 17,604,863 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Millennium Management LLC 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001273087&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1273087/000127308726000007/0001273087-26-000007-index.htm",
+        "data": "data/13f/millennium-management-llc.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-buy-2026-10-jean-louis-van-der-velde-gold",
+      "kind": "insider_buy",
+      "person": {
+        "slug": "jean-louis-van-der-velde",
+        "name": "Jean-Louis van der Velde"
+      },
+      "question": "Will Jean-Louis van der Velde report buying GOLD stock (Form 4, code P) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "jean-louis-van-der-velde",
+        "name": "Jean-Louis van der Velde",
+        "code": "P",
+        "ticker": "GOLD",
+        "issuer": "Gold.com, Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0002025889",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002025889&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-09-03"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.32,
+      "baseRate": {
+        "prob": 0.32,
+        "thin": false,
+        "hit": 1,
+        "known": 12,
+        "unit": "week",
+        "text": "In 1 of the last 12 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Jean-Louis van der Velde reported at least one GOLD open-market buy (code P). Over a 31-day window that points to about 32%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports an open-market buy (transaction code P) of GOLD stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Jean-Louis van der Velde",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002025889&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-sell-2026-10-jeff-bezos-amzn",
+      "kind": "insider_sell",
+      "person": {
+        "slug": "jeff-bezos",
+        "name": "Jeff Bezos"
+      },
+      "question": "Will Jeff Bezos report selling AMZN stock (Form 4, code S) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "jeff-bezos",
+        "name": "Jeff Bezos",
+        "code": "S",
+        "ticker": "AMZN",
+        "issuer": "Amazon Com Inc",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0001043298",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001043298&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-08-03"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.32,
+      "baseRate": {
+        "prob": 0.32,
+        "thin": false,
+        "hit": 1,
+        "known": 12,
+        "unit": "week",
+        "text": "In 1 of the last 12 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Jeff Bezos reported at least one AMZN sale (code S). Over a 31-day window that points to about 32%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports a sale (transaction code S) of AMZN stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Jeff Bezos",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001043298&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-size-2026-10-jeff-bezos-amzn",
+      "kind": "sale_size",
+      "person": {
+        "slug": "jeff-bezos",
+        "name": "Jeff Bezos"
+      },
+      "question": "Will Jeff Bezos's reported sales of AMZN stock (Form 4, code S) add up to more than $100 million in October 2026?",
+      "params": {
+        "slug": "jeff-bezos",
+        "name": "Jeff Bezos",
+        "code": "S",
+        "ticker": "AMZN",
+        "issuer": "Amazon Com Inc",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "line": 100000000,
+        "cik": "0001043298",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001043298&type=4&dateb=&owner=include&count=40"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.5,
+      "baseRate": {
+        "prob": 0.5,
+        "thin": true,
+        "hit": 0,
+        "known": 2,
+        "unit": "month",
+        "text": "We only have 2 complete months of Form 4 history, fewer than the 6 needed to set odds from history, so this starts at 50%. The line is Jeff Bezos's recent pace: $346.5 million of reported AMZN sales over the 12 weeks we have, about $127.9 million per 31-day month, rounded to $100 million."
+      },
+      "rule": "We add up shares × price for every AMZN sale (code S) this person reports on Form 4 with a trade date from Oct 1, 2026 to Oct 31, 2026 (the same trade reported by two joint filers counts once). YES if the total is more than $100 million. Trading closes Oct 31, 2026 at 4:00 PM New York time; we check 5 days later. If a Form 4 from that period cannot be read and the total is not already over the line, the market is void.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Jeff Bezos",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001043298&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-heights-capital-management-inc-g3643j108",
+      "kind": "fund_move",
+      "person": {
+        "slug": "jeff-yass",
+        "name": "Jeff Yass"
+      },
+      "question": "Will Heights Capital Management, Inc's 13F for the quarter ending Dec 31, 2026 show fewer Flutter Entmt PLC (SHS) shares than the 294,180 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "jeff-yass",
+        "name": "Jeff Yass",
+        "filer": "heights-capital-management-inc",
+        "filerName": "Heights Capital Management, Inc",
+        "cik": "0001081698",
+        "cusip": "G3643J108",
+        "holding": "Flutter Entmt PLC (SHS)",
+        "baseShares": 294180,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1081698/000108169826000008/0001081698-26-000008-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.13,
+      "baseRate": {
+        "prob": 0.13,
+        "thin": false,
+        "hit": 1,
+        "known": 8,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Heights Capital Management, Inc cut 1 of the 8 top-10 holdings we could check. So this starts at 13%."
+      },
+      "rule": "YES if Heights Capital Management, Inc's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Flutter Entmt PLC (SHS) (CUSIP G3643J108) than the 294,180 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Heights Capital Management, Inc 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001081698&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1081698/000108169826000008/0001081698-26-000008-index.htm",
+        "data": "data/13f/heights-capital-management-inc.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-susquehanna-international-group-llp-67066g104",
+      "kind": "fund_move",
+      "person": {
+        "slug": "jeff-yass",
+        "name": "Jeff Yass"
+      },
+      "question": "Will Susquehanna International Group, LLP's 13F for the quarter ending Dec 31, 2026 show fewer Nvidia Corporation shares than the 20,815,494 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "jeff-yass",
+        "name": "Jeff Yass",
+        "filer": "susquehanna-international-group-llp",
+        "filerName": "Susquehanna International Group, LLP",
+        "cik": "0001446194",
+        "cusip": "67066G104",
+        "holding": "Nvidia Corporation",
+        "baseShares": 20815494,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1446194/000144619426000008/0001446194-26-000008-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.63,
+      "baseRate": {
+        "prob": 0.63,
+        "thin": false,
+        "hit": 5,
+        "known": 8,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Susquehanna International Group, LLP cut 5 of the 8 top-10 holdings we could check. So this starts at 63%."
+      },
+      "rule": "YES if Susquehanna International Group, LLP's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Nvidia Corporation (CUSIP 67066G104) than the 20,815,494 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Susquehanna International Group, LLP 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001446194&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1446194/000144619426000008/0001446194-26-000008-index.htm",
+        "data": "data/13f/susquehanna-international-group-llp.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-citadel-advisors-llc-023135106",
+      "kind": "fund_move",
+      "person": {
+        "slug": "ken-griffin",
+        "name": "Ken Griffin"
+      },
+      "question": "Will Citadel Advisors LLC's 13F for the quarter ending Dec 31, 2026 show fewer Amazon Com Inc shares than the 10,882,003 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "ken-griffin",
+        "name": "Ken Griffin",
+        "filer": "citadel-advisors-llc",
+        "filerName": "Citadel Advisors LLC",
+        "cik": "0001423053",
+        "cusip": "023135106",
+        "holding": "Amazon Com Inc",
+        "baseShares": 10882003,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1423053/000110465926104387/0001104659-26-104387-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.6,
+      "baseRate": {
+        "prob": 0.6,
+        "thin": false,
+        "hit": 3,
+        "known": 5,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Citadel Advisors LLC cut 3 of the 5 top-10 holdings we could check. So this starts at 60%."
+      },
+      "rule": "YES if Citadel Advisors LLC's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Amazon Com Inc (CUSIP 023135106) than the 10,882,003 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Citadel Advisors LLC 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001423053&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1423053/000110465926104387/0001104659-26-104387-index.htm",
+        "data": "data/13f/citadel-advisors-llc.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-sell-2026-10-lyndal-stephens-greth-family-fang",
+      "kind": "insider_sell",
+      "person": {
+        "slug": "lyndal-stephens-greth-family",
+        "name": "Lyndal Stephens Greth & family"
+      },
+      "question": "Will Lyndal Stephens Greth & family report selling FANG stock (Form 4, code S) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "lyndal-stephens-greth-family",
+        "name": "Lyndal Stephens Greth & family",
+        "code": "S",
+        "ticker": "FANG",
+        "issuer": "Diamondback Energy, Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0002021141",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002021141&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-09-16"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.32,
+      "baseRate": {
+        "prob": 0.32,
+        "thin": false,
+        "hit": 1,
+        "known": 12,
+        "unit": "week",
+        "text": "In 1 of the last 12 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Lyndal Stephens Greth & family reported at least one FANG sale (code S). Over a 31-day window that points to about 32%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports a sale (transaction code S) of FANG stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Lyndal Stephens Greth & family",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002021141&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-size-2026-10-lyndal-stephens-greth-family-fang",
+      "kind": "sale_size",
+      "person": {
+        "slug": "lyndal-stephens-greth-family",
+        "name": "Lyndal Stephens Greth & family"
+      },
+      "question": "Will Lyndal Stephens Greth & family's reported sales of FANG stock (Form 4, code S) add up to more than $500 million in October 2026?",
+      "params": {
+        "slug": "lyndal-stephens-greth-family",
+        "name": "Lyndal Stephens Greth & family",
+        "code": "S",
+        "ticker": "FANG",
+        "issuer": "Diamondback Energy, Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "line": 500000000,
+        "cik": "0002021141",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002021141&type=4&dateb=&owner=include&count=40"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.5,
+      "baseRate": {
+        "prob": 0.5,
+        "thin": true,
+        "hit": 0,
+        "known": 2,
+        "unit": "month",
+        "text": "We only have 2 complete months of Form 4 history, fewer than the 6 needed to set odds from history, so this starts at 50%. The line is Lyndal Stephens Greth & family's recent pace: $1.9 billion of reported FANG sales over the 12 weeks we have, about $687.8 million per 31-day month, rounded to $500 million."
+      },
+      "rule": "We add up shares × price for every FANG sale (code S) this person reports on Form 4 with a trade date from Oct 1, 2026 to Oct 31, 2026 (the same trade reported by two joint filers counts once). YES if the total is more than $500 million. Trading closes Oct 31, 2026 at 4:00 PM New York time; we check 5 days later. If a Form 4 from that period cannot be read and the total is not already over the line, the market is void.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Lyndal Stephens Greth & family",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002021141&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-euclidean-capital-llc-68622p109",
+      "kind": "fund_move",
+      "person": {
+        "slug": "marilyn-simons-family",
+        "name": "Marilyn Simons & family"
+      },
+      "question": "Will Euclidean Capital LLC's 13F for the quarter ending Dec 31, 2026 show fewer Oric Pharmaceuticals Inc shares than the 989,410 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "marilyn-simons-family",
+        "name": "Marilyn Simons & family",
+        "filer": "euclidean-capital-llc",
+        "filerName": "Euclidean Capital LLC",
+        "cik": "0001825034",
+        "cusip": "68622P109",
+        "holding": "Oric Pharmaceuticals Inc",
+        "baseShares": 989410,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1825034/000101297526000776/0001012975-26-000776-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.05,
+      "baseRate": {
+        "prob": 0.05,
+        "thin": false,
+        "hit": 0,
+        "known": 10,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Euclidean Capital LLC cut 0 of the 10 top-10 holdings we could check. So this starts at 5% (capped between 5% and 95%)."
+      },
+      "rule": "YES if Euclidean Capital LLC's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Oric Pharmaceuticals Inc (CUSIP 68622P109) than the 989,410 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Euclidean Capital LLC 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001825034&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1825034/000101297526000776/0001012975-26-000776-index.htm",
+        "data": "data/13f/euclidean-capital-llc.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-chan-zuckerberg-initiative-llc-46434g103",
+      "kind": "fund_move",
+      "person": {
+        "slug": "mark-zuckerberg",
+        "name": "Mark Zuckerberg"
+      },
+      "question": "Will Chan Zuckerberg Initiative, LLC's 13F for the quarter ending Dec 31, 2026 show fewer Ishares Inc (Core Msci Emkt) shares than the 706,019 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "mark-zuckerberg",
+        "name": "Mark Zuckerberg",
+        "filer": "chan-zuckerberg-initiative-llc",
+        "filerName": "Chan Zuckerberg Initiative, LLC",
+        "cik": "0001997453",
+        "cusip": "46434G103",
+        "holding": "Ishares Inc (Core Msci Emkt)",
+        "baseShares": 706019,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1997453/000119312526350680/0001193125-26-350680-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.5,
+      "baseRate": {
+        "prob": 0.5,
+        "thin": true,
+        "hit": 0,
+        "known": 1,
+        "unit": "holding",
+        "text": "We could check only 1 of Chan Zuckerberg Initiative, LLC's top holdings in its last 13F, too few to set odds from history, so this starts at 50%."
+      },
+      "rule": "YES if Chan Zuckerberg Initiative, LLC's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Ishares Inc (Core Msci Emkt) (CUSIP 46434G103) than the 706,019 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Chan Zuckerberg Initiative, LLC 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001997453&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1997453/000119312526350680/0001193125-26-350680-index.htm",
+        "data": "data/13f/chan-zuckerberg-initiative-llc.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-softbank-group-corp-458140100",
+      "kind": "fund_move",
+      "person": {
+        "slug": "masayoshi-son",
+        "name": "Masayoshi Son"
+      },
+      "question": "Will Softbank Group Corp.'s 13F for the quarter ending Dec 31, 2026 show fewer Intel Corp shares than the 86,956,522 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "masayoshi-son",
+        "name": "Masayoshi Son",
+        "filer": "softbank-group-corp",
+        "filerName": "Softbank Group Corp.",
+        "cik": "0001065521",
+        "cusip": "458140100",
+        "holding": "Intel Corp",
+        "baseShares": 86956522,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/0001062993-26-004387-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.1,
+      "baseRate": {
+        "prob": 0.1,
+        "thin": false,
+        "hit": 1,
+        "known": 10,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Softbank Group Corp. cut 1 of the 10 top-10 holdings we could check. So this starts at 10%."
+      },
+      "rule": "YES if Softbank Group Corp.'s 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Intel Corp (CUSIP 458140100) than the 86,956,522 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Softbank Group Corp. 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001065521&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/0001062993-26-004387-index.htm",
+        "data": "data/13f/softbank-group-corp.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-msd-capital-l-p-78646v107",
+      "kind": "fund_move",
+      "person": {
+        "slug": "michael-dell",
+        "name": "Michael Dell"
+      },
+      "question": "Will MSD Capital, L.P.'s 13F for the quarter ending Dec 31, 2026 show fewer Safehold Inc shares than the 5,782,745 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "michael-dell",
+        "name": "Michael Dell",
+        "filer": "msd-capital-l-p",
+        "filerName": "MSD Capital, L.P.",
+        "cik": "0001105497",
+        "cusip": "78646V107",
+        "holding": "Safehold Inc",
+        "baseShares": 5782745,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1105497/000110465926097244/0001104659-26-097244-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.5,
+      "baseRate": {
+        "prob": 0.5,
+        "thin": true,
+        "hit": 1,
+        "known": 3,
+        "unit": "holding",
+        "text": "We could check only 3 of MSD Capital, L.P.'s top holdings in its last 13F, too few to set odds from history, so this starts at 50%."
+      },
+      "rule": "YES if MSD Capital, L.P.'s 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Safehold Inc (CUSIP 78646V107) than the 5,782,745 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "MSD Capital, L.P. 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001105497&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1105497/000110465926097244/0001104659-26-097244-index.htm",
+        "data": "data/13f/msd-capital-l-p.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-buy-2026-10-paolo-ardoino-gold",
+      "kind": "insider_buy",
+      "person": {
+        "slug": "paolo-ardoino",
+        "name": "Paolo Ardoino"
+      },
+      "question": "Will Paolo Ardoino report buying GOLD stock (Form 4, code P) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "paolo-ardoino",
+        "name": "Paolo Ardoino",
+        "code": "P",
+        "ticker": "GOLD",
+        "issuer": "Gold.com, Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0002025889",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002025889&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-09-03"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.32,
+      "baseRate": {
+        "prob": 0.32,
+        "thin": false,
+        "hit": 1,
+        "known": 12,
+        "unit": "week",
+        "text": "In 1 of the last 12 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Paolo Ardoino reported at least one GOLD open-market buy (code P). Over a 31-day window that points to about 32%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports an open-market buy (transaction code P) of GOLD stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Paolo Ardoino",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002025889&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-sell-2026-10-stephen-schwarzman-jmke",
+      "kind": "insider_sell",
+      "person": {
+        "slug": "stephen-schwarzman",
+        "name": "Stephen Schwarzman"
+      },
+      "question": "Will Stephen Schwarzman report selling JMKE stock (Form 4, code S) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "stephen-schwarzman",
+        "name": "Stephen Schwarzman",
+        "code": "S",
+        "ticker": "JMKE",
+        "issuer": "Jersey Mike's Subs Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0001070844",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001070844&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-08-25"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.55,
+      "baseRate": {
+        "prob": 0.55,
+        "thin": false,
+        "hit": 2,
+        "known": 12,
+        "unit": "week",
+        "text": "In 2 of the last 12 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Stephen Schwarzman reported at least one JMKE sale (code S). Over a 31-day window that points to about 55%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports a sale (transaction code S) of JMKE stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Stephen Schwarzman",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001070844&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-size-2026-10-stephen-schwarzman-jmke",
+      "kind": "sale_size",
+      "person": {
+        "slug": "stephen-schwarzman",
+        "name": "Stephen Schwarzman"
+      },
+      "question": "Will Stephen Schwarzman's reported sales of JMKE stock (Form 4, code S) add up to more than $200 million in October 2026?",
+      "params": {
+        "slug": "stephen-schwarzman",
+        "name": "Stephen Schwarzman",
+        "code": "S",
+        "ticker": "JMKE",
+        "issuer": "Jersey Mike's Subs Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "line": 200000000,
+        "cik": "0001070844",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001070844&type=4&dateb=&owner=include&count=40"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.5,
+      "baseRate": {
+        "prob": 0.5,
+        "thin": true,
+        "hit": 0,
+        "known": 2,
+        "unit": "month",
+        "text": "We only have 2 complete months of Form 4 history, fewer than the 6 needed to set odds from history, so this starts at 50%. The line is Stephen Schwarzman's recent pace: $705.1 million of reported JMKE sales over the 12 weeks we have, about $260.2 million per 31-day month, rounded to $200 million."
+      },
+      "rule": "We add up shares × price for every JMKE sale (code S) this person reports on Form 4 with a trade date from Oct 1, 2026 to Oct 31, 2026 (the same trade reported by two joint filers counts once). YES if the total is more than $200 million. Trading closes Oct 31, 2026 at 4:00 PM New York time; we check 5 days later. If a Form 4 from that period cannot be read and the total is not already over the line, the market is void.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Stephen Schwarzman",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001070844&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-point72-asset-management-l-p-g25457105",
+      "kind": "fund_move",
+      "person": {
+        "slug": "steve-cohen",
+        "name": "Steve Cohen"
+      },
+      "question": "Will Point72 Asset Management, L.P.'s 13F for the quarter ending Dec 31, 2026 show fewer Credo Technology Group Holdi (Ordinary Shares) shares than the 6,153,132 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "steve-cohen",
+        "name": "Steve Cohen",
+        "filer": "point72-asset-management-l-p",
+        "filerName": "Point72 Asset Management, L.P.",
+        "cik": "0001603466",
+        "cusip": "G25457105",
+        "holding": "Credo Technology Group Holdi (Ordinary Shares)",
+        "baseShares": 6153132,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1603466/000091957426005520/0000919574-26-005520-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.33,
+      "baseRate": {
+        "prob": 0.33,
+        "thin": false,
+        "hit": 2,
+        "known": 6,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Point72 Asset Management, L.P. cut 2 of the 6 top-10 holdings we could check. So this starts at 33%."
+      },
+      "rule": "YES if Point72 Asset Management, L.P.'s 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Credo Technology Group Holdi (Ordinary Shares) (CUSIP G25457105) than the 6,153,132 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Point72 Asset Management, L.P. 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001603466&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1603466/000091957426005520/0000919574-26-005520-index.htm",
+        "data": "data/13f/point72-asset-management-l-p.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-j-safra-asset-management-corp-46090e103",
+      "kind": "fund_move",
+      "person": {
+        "slug": "vicky-safra-family",
+        "name": "Vicky Safra & family"
+      },
+      "question": "Will J.Safra Asset Management Corp's 13F for the quarter ending Dec 31, 2026 show fewer Invesco QQQ Trust (Unit Ser 1) shares than the 369,769 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "vicky-safra-family",
+        "name": "Vicky Safra & family",
+        "filer": "j-safra-asset-management-corp",
+        "filerName": "J.Safra Asset Management Corp",
+        "cik": "0001535293",
+        "cusip": "46090E103",
+        "holding": "Invesco QQQ Trust (Unit Ser 1)",
+        "baseShares": 369769,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1535293/000153529326000005/0001535293-26-000005-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.71,
+      "baseRate": {
+        "prob": 0.71,
+        "thin": false,
+        "hit": 5,
+        "known": 7,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), J.Safra Asset Management Corp cut 5 of the 7 top-10 holdings we could check. So this starts at 71%."
+      },
+      "rule": "YES if J.Safra Asset Management Corp's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Invesco QQQ Trust (Unit Ser 1) (CUSIP 46090E103) than the 369,769 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "J.Safra Asset Management Corp 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001535293&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1535293/000153529326000005/0001535293-26-000005-index.htm",
+        "data": "data/13f/j-safra-asset-management-corp.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-j-safra-sarasin-holding-ag-67066g104",
+      "kind": "fund_move",
+      "person": {
+        "slug": "vicky-safra-family",
+        "name": "Vicky Safra & family"
+      },
+      "question": "Will J. Safra Sarasin Holding AG's 13F for the quarter ending Dec 31, 2026 show fewer Nvidia Corporation shares than the 1,785,568 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "vicky-safra-family",
+        "name": "Vicky Safra & family",
+        "filer": "j-safra-sarasin-holding-ag",
+        "filerName": "J. Safra Sarasin Holding AG",
+        "cik": "0001890222",
+        "cusip": "67066G104",
+        "holding": "Nvidia Corporation",
+        "baseShares": 1785568,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1890222/000189022226000004/0001890222-26-000004-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.25,
+      "baseRate": {
+        "prob": 0.25,
+        "thin": false,
+        "hit": 2,
+        "known": 8,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), J. Safra Sarasin Holding AG cut 2 of the 8 top-10 holdings we could check. So this starts at 25%."
+      },
+      "rule": "YES if J. Safra Sarasin Holding AG's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Nvidia Corporation (CUSIP 67066G104) than the 1,785,568 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "J. Safra Sarasin Holding AG 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001890222&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1890222/000189022226000004/0001890222-26-000004-index.htm",
+        "data": "data/13f/j-safra-sarasin-holding-ag.json"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-sell-2026-10-warren-buffett-dva",
+      "kind": "insider_sell",
+      "person": {
+        "slug": "warren-buffett",
+        "name": "Warren Buffett"
+      },
+      "question": "Will Warren Buffett report selling DVA stock (Form 4, code S) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "warren-buffett",
+        "name": "Warren Buffett",
+        "code": "S",
+        "ticker": "DVA",
+        "issuer": "Davita Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0000315090",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000315090&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-07-31"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.34,
+      "baseRate": {
+        "prob": 0.34,
+        "thin": false,
+        "hit": 1,
+        "known": 11,
+        "unit": "week",
+        "text": "In 1 of the last 11 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Warren Buffett reported at least one DVA sale (code S). Over a 31-day window that points to about 34%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports a sale (transaction code S) of DVA stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Warren Buffett",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000315090&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-buy-2026-10-warren-buffett-len",
+      "kind": "insider_buy",
+      "person": {
+        "slug": "warren-buffett",
+        "name": "Warren Buffett"
+      },
+      "question": "Will Warren Buffett report buying LEN stock (Form 4, code P) with a trade date between Oct 1, 2026 and Oct 31, 2026?",
+      "params": {
+        "slug": "warren-buffett",
+        "name": "Warren Buffett",
+        "code": "P",
+        "ticker": "LEN",
+        "issuer": "Lennar Corp",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "cik": "0000315090",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000315090&type=4&dateb=&owner=include&count=40",
+        "lastTrade": "2026-09-18"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.34,
+      "baseRate": {
+        "prob": 0.34,
+        "thin": false,
+        "hit": 1,
+        "known": 11,
+        "unit": "week",
+        "text": "In 1 of the last 11 weeks we can check (Jun 29, 2026 to Sep 20, 2026), Warren Buffett reported at least one LEN open-market buy (code P). Over a 31-day window that points to about 34%."
+      },
+      "rule": "YES if a Form 4 on SEC EDGAR from this person reports an open-market buy (transaction code P) of LEN stock with a trade date from Oct 1, 2026 to Oct 31, 2026. Trading closes Oct 31, 2026 at 4:00 PM New York time. We check 5 days after the window ends, because a Form 4 can be filed up to 2 business days after the trade. If a Form 4 from that period cannot be read and no qualifying trade is found, the market is void and stakes come back.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Warren Buffett",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000315090&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-size-2026-10-warren-buffett-dva",
+      "kind": "sale_size",
+      "person": {
+        "slug": "warren-buffett",
+        "name": "Warren Buffett"
+      },
+      "question": "Will Warren Buffett's reported sales of DVA stock (Form 4, code S) add up to more than $10 million in October 2026?",
+      "params": {
+        "slug": "warren-buffett",
+        "name": "Warren Buffett",
+        "code": "S",
+        "ticker": "DVA",
+        "issuer": "Davita Inc.",
+        "from": "2026-10-01",
+        "to": "2026-10-31",
+        "window": "2026-10",
+        "line": 10000000,
+        "cik": "0000315090",
+        "edgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000315090&type=4&dateb=&owner=include&count=40"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-10-31T20:00:00.000Z",
+      "resolves_by": "2026-11-06T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.5,
+      "baseRate": {
+        "prob": 0.5,
+        "thin": true,
+        "hit": 0,
+        "known": 1,
+        "unit": "month",
+        "text": "We only have 1 complete month of Form 4 history, fewer than the 6 needed to set odds from history, so this starts at 50%. The line is Warren Buffett's recent pace: $36.5 million of reported DVA sales over the 12 weeks we have, about $13.5 million per 31-day month, rounded to $10 million."
+      },
+      "rule": "We add up shares × price for every DVA sale (code S) this person reports on Form 4 with a trade date from Oct 1, 2026 to Oct 31, 2026 (the same trade reported by two joint filers counts once). YES if the total is more than $10 million. Trading closes Oct 31, 2026 at 4:00 PM New York time; we check 5 days later. If a Form 4 from that period cannot be read and the total is not already over the line, the market is void.",
+      "source": {
+        "label": "SEC EDGAR Form 4 filings for Warren Buffett",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000315090&type=4&dateb=&owner=include&count=40",
+        "data": "data/filings/latest.json",
+        "historyFrom": "2026-06-28",
+        "historyTo": "2026-09-21"
+      },
+      "status": "open"
+    },
+    {
+      "slug": "mv-13f-2026-q4-berkshire-hathaway-inc-037833100",
+      "kind": "fund_move",
+      "person": {
+        "slug": "warren-buffett",
+        "name": "Warren Buffett"
+      },
+      "question": "Will Berkshire Hathaway Inc's 13F for the quarter ending Dec 31, 2026 show fewer Apple Inc shares than the 227,917,808 it reported for Jun 30, 2026?",
+      "params": {
+        "slug": "warren-buffett",
+        "name": "Warren Buffett",
+        "filer": "berkshire-hathaway-inc",
+        "filerName": "Berkshire Hathaway Inc",
+        "cik": "0001067983",
+        "cusip": "037833100",
+        "holding": "Apple Inc",
+        "baseShares": 227917808,
+        "basePeriod": "2026-06-30",
+        "baseUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/0001193125-26-352200-index.htm",
+        "targetPeriod": "2026-12-31",
+        "window": "2026-q4"
+      },
+      "opens_at": "2026-09-27T08:21:59.028Z",
+      "closes_at": "2026-12-31T21:00:00.000Z",
+      "resolves_by": "2027-02-16T04:59:00.000Z",
+      "b": 100,
+      "startProb": 0.1,
+      "baseRate": {
+        "prob": 0.1,
+        "thin": false,
+        "hit": 1,
+        "known": 10,
+        "unit": "holding",
+        "text": "In its last 13F (Jun 30, 2026 against Mar 31, 2026), Berkshire Hathaway Inc cut 1 of the 10 top-10 holdings we could check. So this starts at 10%."
+      },
+      "rule": "YES if Berkshire Hathaway Inc's 13F-HR for the quarter ending Dec 31, 2026 reports fewer shares of Apple Inc (CUSIP 037833100) than the 227,917,808 in its Jun 30, 2026 filing; selling the whole position counts as fewer. Share counts are compared as reported, so a stock split counts as a change. Trading closes Dec 31, 2026 at 4:00 PM New York time, when the quarter ends; the filing is due 45 days later. If our copy of the filing cannot show the holding's share count, or the filing never arrives, the market is void.",
+      "source": {
+        "label": "Berkshire Hathaway Inc 13F-HR filings on SEC EDGAR",
+        "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001067983&type=13F-HR&dateb=&owner=include&count=40",
+        "baseFiling": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526352200/0001193125-26-352200-index.htm",
+        "data": "data/13f/berkshire-hathaway-inc.json"
+      },
+      "status": "open"
+    }
+  ]
+}

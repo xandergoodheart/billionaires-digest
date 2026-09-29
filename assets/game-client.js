@@ -198,6 +198,8 @@
   G.placeBet = function(ids, stake, decimals){ return rpc('place_bet', { p_selection_ids: ids, p_stake: stake, p_expected_decimal: decimals }); };
   G.myBets = function(limit){ return rpc('my_bets', { p_limit: limit || 100 }); };
   G.bookLeaderboard = function(week, limit){ return rpc('book_leaderboard', { p_week: week || null, p_limit: limit || 100 }); };
+  // Season table (0003_book_wealth.sql): rank, nickname, bets, staked, net, roi, is_me; players with 10+ settled bets.
+  G.bookSeasonLeaderboard = function(limit){ return rpc('book_season_leaderboard', { p_limit: limit || 100 }); };
 
   // LMSR math, the same formulas as the database (for previews; the server has the final say).
   var L = {};

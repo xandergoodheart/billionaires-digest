@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My team, casino variation A5: Mobile slots app (mockup) · Billionaire Fantasy League · Billionaires Digest</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Design mockup, casino variation A5: My team as a mobile slots game. Play money only.">
+<meta name="theme-color" content="#2A0B5E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="../assets/v2/tokens.css">
+<link rel="stylesheet" href="../assets/v2/ui.css">
+<link rel="stylesheet" href="team-slotsapp.css">
+</head>
+<body class="v2 sa-page">
+<!-- Mockup only: not linked from the site. Chrome below is a static copy of team.html (no sync-nav markers). -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<div class="sa-mockbar">
+  <p><strong>MOCKUP</strong> — casino variation A5: Mobile slots app</p>
+  <nav class="sa-mockbar__nav" aria-label="Mockup options">
+    <a href="team-arcade.html">Option A (original)</a>
+    <a href="index.html">All mockups</a>
+  </nav>
+</div>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="../team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="../team.html" aria-current="true">Fantasy</a>
+      <a href="../players.html">Players</a>
+      <a href="../scores.html#leaderboard">Rankings</a>
+      <a href="../calendar.html">Calendar</a>
+      <a href="../index.html">News</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__search" href="../people/">Search</a>
+      <a class="v2-btn v2-btn--primary v2-top__cta" href="../team.html">My team</a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
+  </div>
+</header>
+<nav class="v2-subtabs" aria-label="Fantasy">
+  <div class="v2-wrap v2-subtabs__in">
+    <ul class="v2-subtabs__list">
+      <li><a href="team-slotsapp.html" aria-current="page">My team</a></li>
+      <li><a href="../draft.html">Draft room</a></li>
+      <li><a href="../scores.html">Scores</a></li>
+      <li><a href="../leagues.html">Leagues</a></li>
+      <li><a href="../book.html">The Book</a></li>
+      <li><a href="../play-terms.html">Rules</a></li>
+    </ul>
+    <span class="v2-subtabs__label">Billionaire Fantasy League</span>
+  </div>
+</nav>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="../team.html" aria-current="true">Fantasy</a>
+        <ul>
+          <li><a href="team-slotsapp.html" aria-current="page">My team</a></li>
+          <li><a href="../draft.html">Draft room</a></li>
+          <li><a href="../scores.html">Scores</a></li>
+          <li><a href="../leagues.html">Leagues</a></li>
+          <li><a href="../book.html">The Book</a></li>
+          <li><a href="../play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="../players.html">Players</a></li>
+      <li><a class="v2-menu__top" href="../scores.html#leaderboard">Rankings</a></li>
+      <li><a class="v2-menu__top" href="../calendar.html">Calendar</a></li>
+      <li><a class="v2-menu__top" href="../index.html">News</a></li>
+      <li><a class="v2-menu__top" href="../people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+
+<main id="main" class="v2-main sa-main" tabindex="-1">
+  <div class="v2-wrap">
+
+    <div class="sa-hud" id="hud" aria-label="Your game status" role="group">
+      <div class="sa-hud__lvl" id="hudlvl"><span class="sa-hud__load">Level …</span></div>
+      <div class="sa-hud__streak" id="hudstreak"></div>
+      <div class="sa-hud__coins" id="hudcoins"></div>
+    </div>
+    <p class="sa-play">Play money · no prizes · not financial advice</p>
+
+    <section class="sa-hero" id="hero" aria-labelledby="teamname" aria-busy="true">
+      <div class="sa-hero__rays" aria-hidden="true"></div>
+      <div class="sa-hero__in" id="heroin">
+        <span class="sa-kicker">This week's spin</span>
+        <h1 class="sa-hero__name" id="teamname">Your team</h1>
+        <p class="sa-loading">Loading your team…</p>
+      </div>
+    </section>
+
+    <section class="sa-card sa-five" aria-labelledby="fiveh">
+      <div class="sa-card__head">
+        <h2 class="sa-h2" id="fiveh">Your starting five</h2>
+        <span class="sa-pill" id="capmeta"></span>
+      </div>
+      <p class="sa-hint" id="fivehint" hidden>Tap a player for the close-up.</p>
+      <div id="fivebody"><p class="sa-loading">Loading…</p></div>
+    </section>
+
+    <div class="sa-row">
+      <section class="sa-spin" id="spin" aria-labelledby="nexth">
+        <div id="nextbody"><h2 class="sa-spin__title" id="nexth">Spin again</h2><p class="sa-loading">Loading…</p></div>
+      </section>
+      <section class="sa-card sa-level" aria-labelledby="levelh">
+        <h2 class="sa-h2" id="levelh">Level and streak</h2>
+        <div id="levelbody"><p class="sa-loading">Loading…</p></div>
+      </section>
+      <section class="sa-card sa-collect" aria-labelledby="trophyh">
+        <h2 class="sa-h2" id="trophyh">Collection</h2>
+        <div id="badgebody"><p class="sa-loading">Loading…</p></div>
+        <div class="sa-coins" id="coinbody"></div>
+      </section>
+    </div>
+
+    <p class="sa-foot-note" id="xpnote">How XP works: 100 XP for every finished week you played, plus 50 XP for every week your team beat the S&amp;P 500. Every 500 XP is one level. The practice week does not count. Badges come only from your real season record.</p>
+    <p class="sa-play sa-play--big">Play money · no prizes · not financial advice</p>
+  </div>
+</main>
+
+<div class="sa-dlg" id="closeup" role="dialog" aria-modal="true" aria-labelledby="cu-name" hidden>
+  <div class="sa-dlg__panel">
+    <div class="sa-zoom" id="cu-zoom" aria-hidden="true">
+      <div class="sa-zoom__face" id="cu-face"></div>
+      <span class="sa-spark sa-spark--1"></span>
+      <span class="sa-spark sa-spark--2"></span>
+      <span class="sa-spark sa-spark--3"></span>
+      <span class="sa-spark sa-spark--4"></span>
+    </div>
+    <p class="sa-dlg__kick" id="cu-kick">Close-up</p>
+    <h2 class="sa-dlg__name" id="cu-name"></h2>
+    <dl class="sa-dlg__stats">
+      <div><dt>Cap</dt><dd class="num" id="cu-cap"></dd></div>
+      <div><dt id="cu-ptsk">Team pts this week</dt><dd class="num" id="cu-pts"></dd></div>
+      <div><dt>Sector</dt><dd class="sa-dlg__sector" id="cu-sector"></dd></div>
+    </dl>
+    <p class="sa-dlg__note">Play money · no prizes · not financial advice</p>
+    <div class="sa-dlg__btns">
+      <a class="sa-btn sa-btn--blue" id="cu-link" href="../players.html">Player page</a>
+      <button type="button" class="sa-btn sa-btn--green" id="cu-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="sa-burst" id="burst" aria-hidden="true"></div>
+<div class="v2-sr" id="live" role="status" aria-live="polite"></div>
+
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="../team.html" aria-current="true">Fantasy</a>
+  <a href="../players.html">Players</a>
+  <a href="../scores.html#leaderboard">Rankings</a>
+  <a href="../index.html">News</a>
+</nav>
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="../team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <div class="v2-foot__notes">
+      <p>Play money · no prizes · not financial advice</p>
+      <p>For information only · not financial advice. Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="../about.html">About</a>
+      <a href="../about.html#corrections">Corrections</a>
+      <a href="../play-terms.html">Game rules</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/common.js"></script>
+<script src="../assets/game-client.js"></script>
+<script src="../assets/account.js"></script>
+<script src="../assets/fantasy-core.js"></script>
+<script src="../assets/v2/fantasy-store.js"></script>
+<script src="../assets/v2/portraits.js"></script>
+<script src="../assets/v2/chrome.js"></script>
+<script src="team-slotsapp.js"></script>
+</body>
+</html>

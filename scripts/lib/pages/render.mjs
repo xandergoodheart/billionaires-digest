@@ -5,18 +5,16 @@ import {
   esc, safeUrl, arr, str, dirClass, arrow, joinBits, initials, fmtDate, monYear, clip,
   fmtShares, fmtUsd, fmtPrice, sectorArt, sectorHref
 } from './util.mjs';
+import { portraitFor } from './portraits.mjs';
 
 const EXT = 'target="_blank" rel="noopener noreferrer"';
 
-// ---- sector-plate avatar (matches BD.avatar) ----
-// size: px number or CSS length (then pass iniPx)
+// ---- face-only avatar (matches BD.avatar with assets/v2/portraits.js): painted portrait, else grey silhouette ----
+// size: px number or CSS length. sector, iniPx and ini are kept for callers but no longer drawn.
 export function avatar(name, sector, size, iniPx, ini) {
-  const fs = iniPx || (typeof size === 'number' ? Math.max(11, Math.round(size * 0.19)) : 11);
-  const drop = Math.round(fs * 0.5);
   const av = typeof size === 'number' ? size + 'px' : String(size);
-  return `<span class="av" aria-hidden="true" style="--av:${esc(av)};margin-bottom:${drop + 2}px">` +
-    `<span class="avimg" style="background-image:url('${esc(sectorArt(sector))}')"></span>` +
-    `<span class="avini" style="font-size:${fs}px;bottom:${-drop}px">${esc(ini || initials(name))}</span></span>`;
+  return `<span class="av av--face" aria-hidden="true" style="--av:${esc(av)}">` +
+    `<img class="avface" src="${esc(portraitFor(name))}" alt="" loading="lazy" decoding="async"></span>`;
 }
 
 // ---- story card (matches BD.renderStory) ----

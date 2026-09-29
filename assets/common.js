@@ -133,7 +133,7 @@
     'Health': ['health','healthcare','pharma','pharmaceutical','pharmaceuticals','biotech','biotechnology','vaccine','vaccines','hospital','hospitals','medical','medicine','medicines','drug','drugs','therapeutics','clinic','clinics','diagnostics','life sciences','novo','moderna'],
     'Other': []
   };
-  function sectorArt(s){ return 'assets/art/sector-' + (SECTOR_ART[s] || 'other') + '.jpg'; }
+  function sectorArt(s){ return 'assets/art/realistic/sector-' + (SECTOR_ART[s] || 'other') + '.webp'; }
   function sectorSlug(s){ return slug(s); }
   function sectorFromSlug(sl){ for (var i = 0; i < SECTORS.length; i++){ if (sectorSlug(SECTORS[i]) === sl) return SECTORS[i]; } return null; }
   function sectorHref(s){ return 'sectors.html#' + sectorSlug(s); }
@@ -279,8 +279,21 @@
 
   // ---- sector-plate avatar ----
   // person: { name, ini?, sector? }. size: px number, or a CSS length (then pass iniPx).
+  // With assets/v2/portraits.js loaded (window.BDPortraitFor), it shows only a face: the painted portrait, else the grey silhouette.
   BD.avatar = function(person, size, iniPx){
     var p = person || {};
+    var face = typeof window.BDPortraitFor === 'function' ? window.BDPortraitFor(p.slug || p.name) : null;
+    if (typeof face === 'string' && /^[A-Za-z0-9_\-.\/]+$/.test(face) && face.indexOf('..') < 0 && face.slice(0, 2) !== '//'){
+      var fw = el('span', 'av av--face');
+      fw.setAttribute('aria-hidden', 'true');
+      fw.style.setProperty('--av', typeof size === 'number' ? size + 'px' : String(size));
+      var fi = document.createElement('img');
+      fi.className = 'avface';
+      fi.setAttribute('src', face);
+      fi.setAttribute('alt', '');
+      fw.appendChild(fi);
+      return fw;
+    }
     var sector = p.sector || BD.personSector(p.name);
     var wrap = el('span', 'av');
     wrap.setAttribute('aria-hidden', 'true');
@@ -403,13 +416,46 @@
 
   // ---- Nav menus (details.navmore: Fantasy, Tools): close on Escape and outside click; one open at a time.
   // On phones the nav is one swipeable row: scroll the active item into view, fade the edges that can still scroll.
+  // Phones (iOS Safari) do not reliably paint a list inside the scrolling row or inside <details>, so on phones the
+  // open menu is copied into one body-level panel (#navpanel) placed just under the nav; outside click, Escape,
+  // page scroll or resize close it. Desktop keeps the plain dropdown.
   // Works without JS as plain <details> and a plain scrolling row. Same code as NAV_JS in scripts/lib/nav.mjs.
   BD.initNavMore = function(){
-    var d = document.querySelectorAll('details.navmore');
+    var d = document.querySelectorAll('details.navmore'), nav = document.querySelector('.sitenav');
+    var mq = w.matchMedia ? w.matchMedia('(max-width: 699.98px)') : null, panel = null, cur = null, y0 = 0;
     function closeAll(ex){ for (var i = 0; i < d.length; i++) if (d[i] !== ex) d[i].removeAttribute('open'); }
+    function hidePanel(){
+      if (panel) { panel.hidden = true; while (panel.firstChild) panel.removeChild(panel.firstChild); }
+      var s = cur && cur.querySelector('summary');
+      if (s) { s.removeAttribute('aria-expanded'); s.removeAttribute('aria-controls'); }
+      cur = null;
+    }
+    function closeCur(){ var el = cur; hidePanel(); if (el) el.removeAttribute('open'); }
+    function showPanel(el){
+      var ul = el.querySelector('ul'), s = el.querySelector('summary');
+      hidePanel();
+      if (!ul) return;
+      if (!panel) {
+        panel = document.createElement('div');
+        panel.className = 'navpanel'; panel.id = 'navpanel'; panel.setAttribute('role', 'region'); panel.hidden = true;
+        document.body.appendChild(panel);
+      }
+      panel.setAttribute('aria-label', (s ? s.textContent.replace(/\s+/g, ' ').replace(/^ | $/g, '') : 'Site') + ' menu');
+      panel.appendChild(ul.cloneNode(true));
+      panel.style.top = Math.round(nav ? nav.getBoundingClientRect().bottom : 0) + 'px';
+      panel.hidden = false;
+      cur = el; y0 = w.pageYOffset || 0;
+      if (s) { s.setAttribute('aria-expanded', 'true'); s.setAttribute('aria-controls', 'navpanel'); }
+    }
+    function onScroll(){ if (cur && Math.abs((w.pageYOffset || 0) - y0) > 2) closeCur(); }
+    function onResize(){ if (cur) closeCur(); }
     if (d.length) {
+      document.documentElement.className += ' js-navpanel';
       document.addEventListener('click', function(e){
-        for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open') && !d[i].contains(e.target)) d[i].removeAttribute('open');
+        var t = e.target;
+        if (panel && panel.contains(t)) return;
+        if (cur && !cur.contains(t)) closeCur();
+        for (var i = 0; i < d.length; i++) if (d[i].hasAttribute('open') && !d[i].contains(t)) d[i].removeAttribute('open');
       });
       document.addEventListener('keydown', function(e){
         if (e.key !== 'Escape' && e.key !== 'Esc') return;
@@ -417,10 +463,16 @@
           d[i].removeAttribute('open');
           var s = d[i].querySelector('summary'); if (s) s.focus();
         }
+        hidePanel();
       });
-      for (var j = 0; j < d.length; j++) d[j].addEventListener('toggle', function(){ if (this.open) closeAll(this); });
+      for (var j = 0; j < d.length; j++) d[j].addEventListener('toggle', function(){
+        if (this.open) { closeAll(this); if (mq && mq.matches) showPanel(this); }
+        else if (this === cur) hidePanel();
+      });
+      w.addEventListener('scroll', onScroll, { passive: true });
+      w.addEventListener('resize', onResize);
     }
-    var nav = document.querySelector('.sitenav'), row = nav && nav.querySelector('.wrap');
+    var row = nav && nav.querySelector('.wrap');
     if (!row) return;
     function fades(){
       var max = row.scrollWidth - row.clientWidth;

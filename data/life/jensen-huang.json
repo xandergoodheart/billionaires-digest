@@ -1,0 +1,459 @@
+{
+  "prototype": true,
+  "note": "Billionaire Life prototype. Every date and number below appears in at least one cited source. Situations and outcomes are summarized in our own words and simplified. Alternatives are generic choices for the game, not claims about what he considered.",
+  "checked": "2026-09-27",
+  "person": {
+    "name": "Jensen Huang",
+    "slug": "jensen-huang",
+    "initials": "JH",
+    "role": "Co-founder and CEO of NVIDIA",
+    "bio": "Co-founded NVIDIA in 1993 and has been its CEO ever since. Before that he worked at chipmaker LSI Logic from 1985 to 1993. Engineering degrees from Oregon State and Stanford.",
+    "bioSource": {
+      "title": "Jensen Huang, executive biography",
+      "url": "https://www.nvidia.com/en-us/about-nvidia/board-of-directors/jensen-huang/",
+      "publisher": "NVIDIA",
+      "date": ""
+    }
+  },
+  "school": {
+    "name": "Build the market before it exists",
+    "tagline": "Bet early on new kinds of computing, build the whole platform, and treat setbacks as fuel.",
+    "principles": [
+      {
+        "id": "zero-billion",
+        "name": "Zero-billion-dollar markets",
+        "summary": "Huang likes markets that do not exist yet, because where there are no customers there are also no competitors. He told Caltech graduates NVIDIA went looking for such markets after early products were pushed out of the markets they had entered.",
+        "sources": [
+          {
+            "title": "Jensen Huang tells Caltech grads to pursue 'zero-billion-dollar markets'",
+            "url": "https://www.tomshardware.com/tech-industry/jensen-huang-tells-caltech-grads-to-pursue-zero-billion-dollar-markets-hopes-to-inspire-the-next-big-tech-leaders",
+            "publisher": "Tom's Hardware",
+            "date": "2024-06-16"
+          }
+        ]
+      },
+      {
+        "id": "accelerated",
+        "name": "Accelerated computing, full stack",
+        "summary": "His case is that ordinary processors stopped speeding up at the old pace, so big gains now come from GPUs paired with specialized software. He called NVIDIA's CUDA-X software libraries \"the treasure of our company.\"",
+        "sources": [
+          {
+            "title": "NVIDIA GTC Washington, DC: live updates",
+            "url": "https://blogs.nvidia.com/blog/nvidia-gtc-washington-dc-2025-news/",
+            "publisher": "NVIDIA Blog",
+            "date": "2025-10-28"
+          },
+          {
+            "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2026"
+          }
+        ]
+      },
+      {
+        "id": "conviction",
+        "name": "Reasoned conviction, welcome setbacks",
+        "summary": "Believe in something unconventional, as long as it is informed and reasoned, then commit to it. He argues that setbacks and hardship build character and resilience, and told Stanford students he wished them \"ample doses of pain and suffering.\"",
+        "sources": [
+          {
+            "title": "Caltech honors graduates at 130th commencement ceremony",
+            "url": "https://www.caltech.edu/about/news/caltech-commencement-2024",
+            "publisher": "Caltech",
+            "date": "2024-06-14"
+          },
+          {
+            "title": "Nvidia's Jensen Huang: The incredible future of AI",
+            "url": "https://siepr.stanford.edu/news/nvidias-jensen-huang-incredible-future-ai",
+            "publisher": "Stanford Institute for Economic Policy Research",
+            "date": "2024-03-07"
+          }
+        ]
+      },
+      {
+        "id": "open-org",
+        "name": "Flat and transparent",
+        "summary": "Huang has had dozens of direct reports (55, per Fortune in 2024) and no one-on-one meetings with them, so everyone hears the same information. He says the aim is agility: information should flow as fast as possible.",
+        "sources": [
+          {
+            "title": "Jensen Huang's no one-on-one meetings rule for his 55 direct reports",
+            "url": "https://fortune.com/2024/06/12/nvidia-ceo-jensen-huang-meeting-rule/",
+            "publisher": "Fortune",
+            "date": "2024-06-12"
+          }
+        ]
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "id": "found",
+      "year": "1993",
+      "category": "founding",
+      "title": "The safe job or the startup?",
+      "situation": "You have spent eight years at chipmaker LSI Logic, including running its Coreware business unit. You and two engineer friends see a chance to bring 3D graphics to games and multimedia with a company of your own.",
+      "options": [
+        {
+          "id": "stay",
+          "label": "Stay at LSI Logic and keep climbing",
+          "real": false
+        },
+        {
+          "id": "found",
+          "label": "Quit and co-found the graphics chip company",
+          "real": true
+        },
+        {
+          "id": "advise",
+          "label": "Back the idea part-time, keep the day job",
+          "real": false
+        }
+      ],
+      "actual": "He left LSI Logic and co-founded NVIDIA in 1993 with Chris Malachowsky and Curtis Priem, aiming 3D graphics at gaming and multimedia.",
+      "outcome": "He has been NVIDIA's president and CEO since day one. NVIDIA says it invented the GPU in 1999. In fiscal 2026 the company reported $215.9 billion in revenue.",
+      "sources": [
+        {
+          "title": "NVIDIA corporate timeline",
+          "url": "https://www.nvidia.com/en-us/about-nvidia/corporate-timeline/",
+          "publisher": "NVIDIA",
+          "date": ""
+        },
+        {
+          "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "publisher": "SEC EDGAR",
+          "date": "2026"
+        },
+        {
+          "title": "NVIDIA results for fourth quarter and fiscal 2026",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026",
+          "publisher": "NVIDIA Newsroom",
+          "date": "2026-02-25"
+        }
+      ],
+      "lesson": {
+        "principle": "conviction",
+        "takeaway": "Leaving a secure job was a specific, reasoned bet: bringing 3D graphics to games and multimedia.",
+        "watchOut": "Early wins did not last on their own: Huang has said NVIDIA's early products could be hits and then get \"kicked out of those markets\" a year later.",
+        "terms": [
+          "fiscal-year"
+        ],
+        "sources": [
+          {
+            "title": "Jensen Huang tells Caltech grads to pursue 'zero-billion-dollar markets'",
+            "url": "https://www.tomshardware.com/tech-industry/jensen-huang-tells-caltech-grads-to-pursue-zero-billion-dollar-markets-hopes-to-inspire-the-next-big-tech-leaders",
+            "publisher": "Tom's Hardware",
+            "date": "2024-06-16"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cuda",
+      "year": "2006",
+      "category": "product",
+      "title": "Open the graphics chip to everyone?",
+      "situation": "Your company sells graphics chips to gamers. Your new GeForce 8800 has 128 small processors inside. Rival ATI already offers a way to use graphics chips for science work, and some observers doubt it matters.",
+      "options": [
+        {
+          "id": "games",
+          "label": "Stay focused on games; that's the market",
+          "real": false
+        },
+        {
+          "id": "cuda",
+          "label": "Launch a C toolkit so anyone can program the GPU",
+          "real": true
+        },
+        {
+          "id": "wait",
+          "label": "Wait and see if ATI's approach takes off",
+          "real": false
+        }
+      ],
+      "actual": "In November 2006 NVIDIA launched CUDA, a way to program its GPUs in the C language for science and engineering work, alongside the GeForce 8800.",
+      "outcome": "In 2012 the AlexNet neural network, trained on NVIDIA GPUs, won the ImageNet image-recognition contest; NVIDIA calls that the start of modern AI. CUDA is still the foundation of NVIDIA's software today.",
+      "sources": [
+        {
+          "title": "Nvidia sails to CUDA in bid to stem ATI's Stream",
+          "url": "https://www.theregister.com/on-prem/2006/11/08/nvidia-sails-to-cuda-in-bid-to-stem-atis-stream/1334930",
+          "publisher": "The Register",
+          "date": "2006-11-08"
+        },
+        {
+          "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "publisher": "SEC EDGAR",
+          "date": "2026"
+        }
+      ],
+      "lesson": {
+        "principle": "zero-billion",
+        "takeaway": "CUDA opened GPUs to scientists years before AI made that market large: NVIDIA built the tools first and let customers arrive later.",
+        "watchOut": "A lead attracts challengers: NVIDIA's fiscal 2026 annual report says some customers can build their own solutions to replace its products, and lists Alphabet, Amazon and Microsoft among companies with in-house AI computing.",
+        "terms": [
+          "gpu",
+          "platform"
+        ]
+      }
+    },
+    {
+      "id": "dgx",
+      "year": "2016",
+      "category": "product",
+      "title": "Who gets the first AI supercomputer?",
+      "situation": "You have built DGX-1, a box made for AI with eight GPUs and a $129,000 list price. A new nonprofit research lab called OpenAI wants serious computing power.",
+      "options": [
+        {
+          "id": "sell",
+          "label": "Sell the first units to big paying customers",
+          "real": false
+        },
+        {
+          "id": "give",
+          "label": "Personally deliver one to the young AI lab",
+          "real": true
+        },
+        {
+          "id": "keep",
+          "label": "Keep it in-house for your own research",
+          "real": false
+        }
+      ],
+      "actual": "In August 2016 he hand-delivered a DGX-1 to OpenAI in San Francisco; Fortune reports it was donated. OpenAI said it would use it for research such as generative models.",
+      "outcome": "AI became NVIDIA's main business. In fiscal 2026 its Data Center revenue rose 68% to a record $193.7 billion.",
+      "sources": [
+        {
+          "title": "NVIDIA delivers DGX-1 supercomputer in a box to OpenAI",
+          "url": "https://www.top500.org/news/nvidia-delivers-dgx-1-supercomputer-in-a-box-to-openai/",
+          "publisher": "TOP500",
+          "date": "2016-08-15"
+        },
+        {
+          "title": "The story behind the hand delivery of the first AI supercomputer",
+          "url": "https://fortune.com/2024/02/22/jensen-huang-elon-musk-openai-first-ai-supercomputer-sam-altman/",
+          "publisher": "Fortune",
+          "date": "2024-02-22"
+        },
+        {
+          "title": "NVIDIA results for fourth quarter and fiscal 2026",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2026",
+          "publisher": "NVIDIA Newsroom",
+          "date": "2026-02-25"
+        }
+      ],
+      "lesson": {
+        "principle": "accelerated",
+        "takeaway": "DGX-1 packaged chips and software into one complete AI system, and getting it to researchers early was a bet on who would drive future demand.",
+        "watchOut": "Revenue became concentrated: in fiscal 2026 two direct customers made up 22% and 14% of NVIDIA's revenue, according to its annual report.",
+        "terms": [
+          "accelerated-computing",
+          "gpu"
+        ],
+        "sources": [
+          {
+            "title": "NVIDIA annual report (Form 10-K), fiscal 2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "publisher": "SEC EDGAR",
+            "date": "2026"
+          }
+        ]
+      }
+    },
+    {
+      "id": "arm",
+      "year": "2022",
+      "category": "deal",
+      "title": "Fight regulators for Arm, or walk away?",
+      "situation": "In 2020 you agreed to buy chip designer Arm from SoftBank in a deal valued at $40 billion, and paid money up front. It needs approval in the UK, China, the EU and the US. In December 2021 the US FTC sued to block it.",
+      "options": [
+        {
+          "id": "fight",
+          "label": "Fight it out in court",
+          "real": false
+        },
+        {
+          "id": "walk",
+          "label": "Call off the deal and keep the Arm license",
+          "real": true
+        },
+        {
+          "id": "shrink",
+          "label": "Offer big concessions to win approval",
+          "real": false
+        }
+      ],
+      "actual": "In February 2022 NVIDIA and SoftBank ended the deal, citing major regulatory obstacles. NVIDIA kept its 20-year Arm license.",
+      "outcome": "SoftBank kept NVIDIA's $1.25 billion prepayment, and NVIDIA booked a $1.36 billion charge. The FTC said a company dropping a vertical merger it was fighting in court had not happened in many years. Arm prepared to go public instead.",
+      "sources": [
+        {
+          "title": "NVIDIA to acquire Arm for $40 billion",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-to-acquire-arm-for-40-billion-creating-worlds-premier-computing-company-for-the-age-of-ai",
+          "publisher": "NVIDIA Newsroom",
+          "date": "2020-09-13"
+        },
+        {
+          "title": "NVIDIA Form 8-K on termination of the Arm deal",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000005/nvda-20220208.htm",
+          "publisher": "SEC EDGAR",
+          "date": "2022-02-08"
+        },
+        {
+          "title": "Statement on termination of Nvidia's attempted acquisition of Arm",
+          "url": "https://www.ftc.gov/news-events/news/press-releases/2022/02/statement-regarding-termination-nvidia-corps-attempted-acquisition-arm-ltd",
+          "publisher": "US Federal Trade Commission",
+          "date": "2022-02"
+        }
+      ],
+      "lesson": {
+        "principle": "conviction",
+        "takeaway": "Huang talks about seeing setbacks as new opportunities; walking away ended a costly regulatory fight while NVIDIA kept its 20-year Arm license.",
+        "watchOut": "Walking away was not free: SoftBank kept NVIDIA's $1.25 billion prepayment and NVIDIA booked a $1.36 billion charge.",
+        "terms": [
+          "acquisition",
+          "antitrust",
+          "vertical-merger"
+        ]
+      }
+    },
+    {
+      "id": "osu",
+      "year": "2022",
+      "category": "giving",
+      "title": "What do you give back?",
+      "situation": "You and your wife Lori met as engineering students at Oregon State University. The university is planning a $200 million research center built around an AI supercomputer.",
+      "options": [
+        {
+          "id": "gift",
+          "label": "Make a $50 million gift to your old university",
+          "real": true
+        },
+        {
+          "id": "later",
+          "label": "Hold off and give later through your foundation",
+          "real": false
+        },
+        {
+          "id": "none",
+          "label": "Keep the money in the business",
+          "real": false
+        }
+      ],
+      "actual": "In October 2022 the Huangs gave $50 million to the OSU Foundation, part of $100 million in gifts to launch the center, which carries their names.",
+      "outcome": "Ground was broken on April 12, 2024 for the Jen-Hsun Huang and Lori Mills Huang Collaborative Innovation Complex, a $213 million, 143,000-square-foot building for AI, materials science and robotics research.",
+      "sources": [
+        {
+          "title": "$50 million gift by NVIDIA founder and spouse helps launch OSU research center",
+          "url": "https://news.oregonstate.edu/news/50-million-gift-nvidia-founder-and-spouse-helps-launch-oregon-state-university-research-center",
+          "publisher": "Oregon State University",
+          "date": "2022-10-14"
+        },
+        {
+          "title": "OSU celebrates groundbreaking of the Huang Complex",
+          "url": "https://www.fororegonstate.org/stay-informed/impact-stories/detail/Huang_Complex_groundbreaking",
+          "publisher": "Oregon State University Foundation",
+          "date": "2024-04"
+        }
+      ],
+      "lesson": {
+        "principle": "accelerated",
+        "takeaway": "The gift backs a research center built around an AI supercomputer, bringing the kind of computing his company champions into university science.",
+        "watchOut": "Big projects drift: the center was announced as a $200 million project in 2022 and was described as a $213 million facility at its 2024 groundbreaking.",
+        "terms": []
+      }
+    }
+  ],
+  "ranks": [
+    {
+      "min": 5,
+      "title": "Leather-jacket legend"
+    },
+    {
+      "min": 3,
+      "title": "Rising founder"
+    },
+    {
+      "min": 0,
+      "title": "Keep your day job"
+    }
+  ],
+  "glossary": [
+    {
+      "id": "fiscal-year",
+      "term": "Fiscal year",
+      "definition": "A company's 12-month accounting year, which can end in a month other than December. NVIDIA's fiscal 2026, for example, ended in January 2026.",
+      "source": {
+        "title": "Tax years",
+        "url": "https://www.irs.gov/businesses/small-businesses-self-employed/tax-years",
+        "publisher": "IRS",
+        "date": ""
+      }
+    },
+    {
+      "id": "gpu",
+      "term": "GPU (graphics processing unit)",
+      "definition": "A chip with hundreds of cores that can handle thousands of tasks at once. Built first for graphics, GPUs are now also key to supercomputers and AI.",
+      "source": {
+        "title": "What's the difference between a CPU and a GPU?",
+        "url": "https://blogs.nvidia.com/blog/whats-the-difference-between-a-cpu-and-a-gpu/",
+        "publisher": "NVIDIA Blog",
+        "date": "2009-12-16"
+      }
+    },
+    {
+      "id": "platform",
+      "term": "Platform",
+      "definition": "A base of hardware and software tools that other developers build their own products on. NVIDIA describes CUDA as its platform for accelerated computing.",
+      "source": {
+        "title": "CUDA platform for accelerated computing",
+        "url": "https://developer.nvidia.com/cuda-zone",
+        "publisher": "NVIDIA Developer",
+        "date": ""
+      }
+    },
+    {
+      "id": "accelerated-computing",
+      "term": "Accelerated computing",
+      "definition": "Using special chips such as GPUs alongside a regular processor to run heavy, parallel work much faster than the regular processor could alone.",
+      "source": {
+        "title": "What is accelerated computing?",
+        "url": "https://blogs.nvidia.com/blog/what-is-accelerated-computing/",
+        "publisher": "NVIDIA Blog",
+        "date": "2021-09-01"
+      }
+    },
+    {
+      "id": "acquisition",
+      "term": "Acquisition",
+      "definition": "When one company buys another business or its assets through a deal or contract.",
+      "source": {
+        "title": "Acquisition",
+        "url": "https://www.law.cornell.edu/wex/acquisition",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "antitrust",
+      "term": "Antitrust",
+      "definition": "Laws and enforcement meant to stop monopolies and other practices that harm competition. In the US, federal laws such as the Sherman Act and the Clayton Act, which covers mergers, set these rules.",
+      "source": {
+        "title": "Antitrust",
+        "url": "https://www.law.cornell.edu/wex/antitrust",
+        "publisher": "Cornell Law School, Legal Information Institute",
+        "date": ""
+      }
+    },
+    {
+      "id": "vertical-merger",
+      "term": "Vertical merger",
+      "definition": "A deal joining companies at different steps of the same supply chain, such as a chipmaker buying a supplier of chip designs. Regulators can worry that the buyer would gain control over something its rivals rely on.",
+      "source": {
+        "title": "FTC sues to block $40 billion semiconductor chip merger",
+        "url": "https://www.ftc.gov/news-events/news/press-releases/2021/12/ftc-sues-block-40-billion-semiconductor-chip-merger",
+        "publisher": "US Federal Trade Commission",
+        "date": "2021-12-02"
+      }
+    }
+  ]
+}

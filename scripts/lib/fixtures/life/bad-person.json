@@ -1,0 +1,34 @@
+{
+  "checked": "27-09-2026",
+  "person": { "name": "Test Person", "slug": "someone-else", "role": "", "bio": "Fixture for scripts/lib/life.test.mjs. Not real data." },
+  "decisions": [
+    {
+      "id": "one",
+      "year": "nineteen",
+      "category": "gossip",
+      "title": "Bad decision card",
+      "situation": "Two real options, only two options, and a source that is not https.",
+      "options": [
+        { "id": "a", "label": "Option A", "real": true },
+        { "id": "b", "label": "Option B", "real": true }
+      ],
+      "actual": "Fixture.",
+      "outcome": "Fixture.",
+      "sources": [ { "title": "Plain http link", "url": "http://example.com/x", "publisher": "Example", "date": "" } ]
+    },
+    {
+      "id": "one",
+      "year": 2001,
+      "title": "No sources",
+      "situation": "Fixture.",
+      "options": [
+        { "id": "a", "label": "A", "real": false },
+        { "id": "b", "label": "B", "real": false },
+        { "id": "c", "label": "C", "real": false }
+      ],
+      "actual": "Fixture.",
+      "outcome": "Fixture.",
+      "sources": []
+    }
+  ]
+}

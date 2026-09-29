@@ -9,7 +9,7 @@
   "cap": 100,
   "picks": 5,
   "captainMultiplier": 1.5,
-  "salaryMethod": "Forbes-rank tiers among draftable",
+  "salaryMethod": "Forbes-rank tiers among draftable; CEOs start at the pool's median cost",
   "salaries": {
     "elon-musk": 30,
     "jeff-bezos": 30,
@@ -65,7 +65,22 @@
     "dilip-shanghvi": 10,
     "gina-rinehart": 10,
     "vicky-safra-family": 10,
-    "francois-pinault-family": 10
+    "francois-pinault-family": 10,
+    "andy-jassy": 18,
+    "brian-chesky": 18,
+    "daniel-ek": 18,
+    "dara-khosrowshahi": 18,
+    "hock-tan": 18,
+    "jamie-dimon": 18,
+    "jane-fraser": 18,
+    "lisa-su": 18,
+    "marc-benioff": 18,
+    "mary-barra": 18,
+    "satya-nadella": 18,
+    "shantanu-narayen": 18,
+    "sundar-pichai": 18,
+    "tim-cook": 18,
+    "tobias-lutke": 18
   },
   "draftable": [
     {
@@ -1482,6 +1497,246 @@
           "adr": true
         }
       ]
+    },
+    {
+      "slug": "andy-jassy",
+      "name": "Andy Jassy",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "AMZN",
+          "name": "Amazon.com, Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "brian-chesky",
+      "name": "Brian Chesky",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "ABNB",
+          "name": "Airbnb, Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "daniel-ek",
+      "name": "Daniel Ek",
+      "rank": null,
+      "sector": "Media",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "SPOT",
+          "name": "Spotify Technology S.A.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "dara-khosrowshahi",
+      "name": "Dara Khosrowshahi",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "UBER",
+          "name": "Uber Technologies, Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "hock-tan",
+      "name": "Hock Tan",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "jamie-dimon",
+      "name": "Jamie Dimon",
+      "rank": null,
+      "sector": "Finance",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "JPM",
+          "name": "JPMorgan Chase & Co.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "jane-fraser",
+      "name": "Jane Fraser",
+      "rank": null,
+      "sector": "Finance",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "C",
+          "name": "Citigroup Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "lisa-su",
+      "name": "Lisa Su",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "AMD",
+          "name": "Advanced Micro Devices, Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "marc-benioff",
+      "name": "Marc Benioff",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "CRM",
+          "name": "Salesforce, Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "mary-barra",
+      "name": "Mary Barra",
+      "rank": null,
+      "sector": "Autos",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "GM",
+          "name": "General Motors Company",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "satya-nadella",
+      "name": "Satya Nadella",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "MSFT",
+          "name": "Microsoft Corporation",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "shantanu-narayen",
+      "name": "Shantanu Narayen",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "ADBE",
+          "name": "Adobe Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "sundar-pichai",
+      "name": "Sundar Pichai",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "name": "Alphabet Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "tim-cook",
+      "name": "Tim Cook",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "AAPL",
+          "name": "Apple Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
+    },
+    {
+      "slug": "tobias-lutke",
+      "name": "Tobias Lütke",
+      "rank": null,
+      "sector": "AI & tech",
+      "type": "ceo",
+      "method": "company stock",
+      "holdings": [
+        {
+          "ticker": "SHOP",
+          "name": "Shopify Inc.",
+          "weight": 1,
+          "tier": "leads"
+        }
+      ]
     }
   ],
   "days": [],
@@ -1542,7 +1797,22 @@
     "dilip-shanghvi": 0,
     "gina-rinehart": 0,
     "vicky-safra-family": 0,
-    "francois-pinault-family": 0
+    "francois-pinault-family": 0,
+    "andy-jassy": 0,
+    "brian-chesky": 0,
+    "daniel-ek": 0,
+    "dara-khosrowshahi": 0,
+    "hock-tan": 0,
+    "jamie-dimon": 0,
+    "jane-fraser": 0,
+    "lisa-su": 0,
+    "marc-benioff": 0,
+    "mary-barra": 0,
+    "satya-nadella": 0,
+    "shantanu-narayen": 0,
+    "sundar-pichai": 0,
+    "tim-cook": 0,
+    "tobias-lutke": 0
   },
   "benchmarks": {
     "spy": null,

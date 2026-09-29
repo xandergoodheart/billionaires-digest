@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Players · Billionaire Fantasy League · Billionaires Digest</title>
+<meta name="description" content="Every billionaire you can draft this week in the Billionaire Fantasy League: week points, recent average, cap cost and Forbes rank. A free game with play money only.">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/ui.css">
+<link rel="stylesheet" href="assets/v2/draft.css">
+<link rel="stylesheet" href="assets/v2/players.css">
+<link rel="stylesheet" href="assets/v2/dossier.css">
+</head>
+<body class="v2 v2-playerspage">
+<!-- v2topbar:start -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<div class="v2-ticker" data-ticker hidden></div>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="index.html">Play</a>
+      <a href="academy.html">Learn</a>
+      <a href="players.html" aria-current="true">Players</a>
+      <a href="news.html">News</a>
+      <a href="flows.html">Tools</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__act v2-top__act--draft" href="draft.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Draft</span></a>
+      <a class="v2-top__act v2-top__search" href="people/"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><span>Search</span></a>
+      <a class="v2-top__act v2-top__act--team" href="team.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>My team</span></a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
+  </div>
+</header>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="index.html">Play</a>
+        <ul>
+          <li><a href="team.html">My team</a></li>
+          <li><a href="draft.html">Draft room</a></li>
+          <li><a href="scores.html">Scores</a></li>
+          <li><a href="leagues.html">Leagues</a></li>
+          <li><a href="book.html">The Book</a></li>
+          <li><a href="moves.html">Next Moves</a></li>
+          <li><a href="play-terms.html">Rules</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="academy.html">Learn</a>
+        <ul>
+          <li><a href="academy.html">Academy</a></li>
+          <li><a href="life.html">Billionaire Life</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="players.html" aria-current="true">Players</a></li>
+      <li><a class="v2-menu__top" href="news.html">News</a>
+        <ul>
+          <li><a href="news.html">Today</a></li>
+          <li><a href="people/">People</a></li>
+          <li><a href="companies/">Companies</a></li>
+          <li><a href="sectors.html">Sectors</a></li>
+          <li><a href="calendar.html">Calendar</a></li>
+          <li><a href="archive.html">Archive</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="flows.html">Tools</a>
+        <ul>
+          <li><a href="flows.html">Insider flows</a></li>
+          <li><a href="quarterly.html">What their funds bought</a></li>
+          <li><a href="copycat.html">Copycat portfolio</a></li>
+          <li><a href="network.html">Who invests with whom</a></li>
+          <li><a href="compare.html">Compare two</a></li>
+          <li><a href="property.html">Where they buy</a></li>
+          <li><a href="guides/filings-101/">Filings 101</a></li>
+        </ul></li>
+      <li><a class="v2-menu__top" href="people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+<!-- v2topbar:end -->
+
+<main id="main" class="v2-main" tabindex="-1">
+  <div class="v2-wrap">
+    <p class="v2-play">Play money · no prizes · not financial advice</p>
+    <p class="v2-banner" id="testclock" hidden></p>
+
+    <header class="dr-head pl-head">
+      <h1 class="v2-display dr-head__h">Players</h1>
+      <p class="dr-head__dek">Every billionaire you can draft this week.</p>
+      <div class="dr-head__side">
+        <span class="v2-pill" id="weekpill">Loading…</span>
+        <a class="dr-head__rules" href="draft.html">Draft room</a>
+      </div>
+    </header>
+
+    <div id="notices"></div>
+
+    <section class="pl-mine" id="mine" aria-label="Your draft" hidden></section>
+
+    <section class="v2-card dr-pool pl-pool" aria-labelledby="poolh">
+      <h2 class="v2-sr" id="poolh">Player pool</h2>
+      <div class="v2-seg" id="kindseg" role="group" aria-label="Player type" hidden>
+        <button type="button" class="v2-seg__b" data-kind="" aria-pressed="true">All</button>
+        <button type="button" class="v2-seg__b" data-kind="billionaire" aria-pressed="false">Billionaires</button>
+        <button type="button" class="v2-seg__b" data-kind="ceo" aria-pressed="false">CEOs</button>
+      </div>
+      <div class="dr-filters">
+        <div class="dr-filter dr-filter--q">
+          <label class="v2-sr" for="q">Search by name, ticker, company or sector</label>
+          <input class="v2-input" id="q" type="search" placeholder="Search name, ticker, company or sector" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="dr-filter">
+          <label class="v2-sr" for="sector">Sector</label>
+          <select class="v2-select" id="sector"><option value="">All sectors</option></select>
+        </div>
+        <div class="dr-filter">
+          <label class="v2-sr" for="sort">Sort players</label>
+          <select class="v2-select" id="sort">
+            <option value="pts">Sort: week points</option>
+            <option value="avg">Sort: average points per day</option>
+            <option value="capdesc">Sort: cap, high first</option>
+            <option value="capasc">Sort: cap, low first</option>
+            <option value="rank">Sort: Forbes rank</option>
+            <option value="name">Sort: name</option>
+          </select>
+        </div>
+      </div>
+      <table class="v2-table dr-table pl-table">
+        <caption class="v2-sr" id="poolcap">Players you can draft</caption>
+        <thead>
+          <tr>
+            <th scope="col">Player</th>
+            <th scope="col" class="n" id="ptshead">Week pts</th>
+            <th scope="col" class="n" id="avghead">Avg/day</th>
+            <th scope="col" class="n">Cap</th>
+            <th scope="col" class="n">Forbes</th>
+            <th scope="col" class="pl-th-status">Your team</th>
+          </tr>
+        </thead>
+        <tbody id="pool">
+          <tr><td colspan="6"><p class="v2-loading">Loading the player pool…</p></td></tr>
+        </tbody>
+      </table>
+      <p class="dr-foot" id="poolfoot"></p>
+      <details class="dr-nd" id="notdraftable" hidden>
+        <summary id="ndsum"></summary>
+        <ul id="ndlist"></ul>
+      </details>
+    </section>
+  </div>
+</main>
+
+<div class="v2-sr" id="live" role="status" aria-live="polite"></div>
+
+<!-- v2tabs:start -->
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="index.html">Play</a>
+  <a href="academy.html">Learn</a>
+  <a href="players.html" aria-current="true">Players</a>
+  <a href="news.html">News</a>
+</nav>
+<!-- v2tabs:end -->
+<!-- v2footer:start -->
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="about.html">About</a>
+      <a href="about.html#corrections">Corrections</a>
+      <a href="play-terms.html">Game rules</a>
+      <a href="about.html#sponsor">Sponsor the brief</a>
+      <a href="calendar.ics">Calendar feed</a>
+    </nav>
+    <div class="v2-foot__notes">
+      <p>For information only · not financial advice</p>
+      <p>Play money only: no purchases, cash-out or prizes.</p>
+    </div>
+  </div>
+</footer>
+<script src="assets/v2/ticker.js" defer></script>
+<!-- v2footer:end -->
+
+<script src="assets/common.js"></script>
+<script src="assets/game-client.js"></script>
+<script src="assets/account.js"></script>
+<script src="assets/fantasy-core.js"></script>
+<script src="assets/v2/fantasy-store.js"></script>
+<script src="assets/v2/players-core.js"></script>
+<script src="assets/v2/chrome.js"></script>
+<script src="assets/v2/portraits.js"></script>
+<script src="assets/v2/dossier-core.js"></script>
+<script src="assets/v2/dossier.js"></script>
+<script src="assets/v2/players.js"></script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+/* Billionaires Digest v3: "Lucky five" inside the Draft room (assets/v2/lucky.js). Needs tokens.css + ui.css.
+   Clean dialog: white panel, light reels, one red Spin button (the old lever and marquee bulbs are hidden). Prefix: lk-. */
+
+/* ---------- entry points ---------- */
+.lk-entry { display: inline-flex; align-items: center; gap: var(--s0) 12px; flex-wrap: wrap; }
+.lk-entry[hidden] { display: none; }
+.lk-entry__hint { font-size: var(--fs-sm); color: var(--text-muted); }
+.lk-entry--sheet { display: flex; margin: 0 var(--s1); padding: var(--s0) 0 var(--s1); border-bottom: 1px solid #33373C; }
+.lk-entry--sheet[hidden] { display: none; }
+.lk-entry--sheet .lk-entry__hint { color: #B9BFC7; }
+
+/* ---------- dialog ---------- */
+.lk-dlg {
+  position: fixed; inset: 0; z-index: 95; background: rgba(0, 0, 0, .55);
+  display: flex; align-items: flex-start; justify-content: center; padding: var(--s2) var(--s1);
+  overflow-y: auto; overscroll-behavior: contain;
+}
+.lk-dlg[hidden] { display: none; }
+.lk-panel {
+  width: min(1000px, 100%); margin: auto 0; color: var(--text); background: var(--card);
+  border-radius: var(--radius-card); padding: var(--s2) var(--s3) var(--s3); box-shadow: 0 16px 50px rgba(0, 0, 0, .4);
+}
+.lk-panel:focus { outline: none; }
+.lk-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s1); border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.lk-head__kick { margin: 0; font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 30px; line-height: 1; color: var(--text); }
+.lk-head__close {
+  min-height: var(--tap); min-width: var(--tap); padding: 0 var(--s1); border: 1px solid var(--line-2); border-radius: 999px;
+  background: var(--card); color: var(--text); font-weight: 700; font-size: var(--fs-sm); cursor: pointer;
+}
+.lk-head__close:hover { border-color: var(--text); }
+.lk-dek { margin: 12px 0 var(--s2); color: var(--text-muted); font-size: var(--fs-md); max-width: 720px; }
+.lk-foot { margin: var(--s2) 0 0; color: var(--text-muted); font-size: var(--fs-sm); max-width: 820px; }
+
+/* ---------- machine: a light panel ---------- */
+.lk-cab { --reel-h: 200px; position: relative; }
+.lk-cab__frame { position: relative; border-radius: var(--radius-card); padding: 0; background: var(--surface-2); border: 1px solid var(--line); }
+.lk-cab__frame > * { position: relative; }
+.lk-marquee { text-align: center; padding: 14px 16px 6px; }
+.lk-marquee__title { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 40px; line-height: 1; color: var(--text); margin: 0; }
+.lk-marquee__sub { margin: 4px 0 6px; color: var(--text-muted); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.lk-bulbs { display: none; }
+
+/* body: reels + payout */
+.lk-body { padding: 8px 16px 0; }
+.lk-reels { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; position: relative; }
+.lk-reel { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.lk-window { position: relative; height: var(--reel-h); overflow: hidden; border-radius: var(--radius); background: #FFFFFF; border: 1px solid var(--line); }
+.lk-window.is-held { box-shadow: inset 0 0 0 3px var(--brand); }
+.lk-strip { will-change: transform; }
+.lk-window.is-spinning .lk-strip { filter: blur(1.2px); }
+
+/* card inside a reel: initials sector plate (or approved portrait) + name + cap (reels stay light in both themes) */
+.lk-card {
+  position: relative; height: var(--reel-h); display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px; padding: 10px 8px; text-align: center; min-width: 0; color: #121417;
+}
+.lk-face { display: block; flex: none; padding: 0; border: 0; background: none; border-radius: 50%; line-height: 0; }
+button.lk-face { cursor: zoom-in; min-width: var(--tap); min-height: var(--tap); }
+button.lk-face:hover .lk-av { filter: brightness(.95); }
+.lk-av { --av: 84px; font-size: calc(var(--av) * .36); }
+.lk-card__name { display: block; max-width: 100%; font-weight: 700; font-size: 16px; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lk-card__sector { display: block; max-width: 100%; font-size: var(--fs-xs); color: #555C66; text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lk-card__cap { display: inline-block; margin-top: 2px; background: #16181B; color: #fff; border-radius: 3px; font-weight: 700; font-size: 13px; line-height: 1; padding: 4px 8px; text-transform: uppercase; }
+.lk-card__c {
+  position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; border-radius: 4px;
+  background: var(--brand); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; z-index: 1;
+}
+.lk-card--empty .lk-card__q { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 72px; line-height: 1; color: #C9CED4; }
+.lk-card--empty .lk-card__name { color: #555C66; }
+
+/* per-reel points chip + hold */
+.lk-chip { margin: 0; min-height: 30px; text-align: center; color: var(--text); font-weight: 700; font-size: 16px; line-height: 30px; background: var(--card); border: 1px solid var(--line); border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lk-chip__x { margin-left: 6px; font-size: var(--fs-xs); color: var(--brand-ink); }
+.lk-dlg .is-pos { color: var(--positive); }
+.lk-dlg .is-neg { color: var(--negative); }
+.lk-dlg .is-zero { color: var(--text-muted); }
+.lk-hold { min-height: var(--tap); border: 1px solid var(--line-2); border-radius: 999px; cursor: pointer; background: var(--card); color: var(--text); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; }
+.lk-hold:hover:not([disabled]) { border-color: var(--text); }
+.lk-hold[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+.lk-hold[disabled] { opacity: .5; cursor: not-allowed; }
+.lk-cab :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* payout */
+.lk-payout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; margin-top: 14px; }
+.lk-led { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-width: 0; }
+.lk-led__k { color: var(--text-muted); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.lk-led__v { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 34px; line-height: 1; color: var(--text); white-space: nowrap; }
+.lk-led__v small { font-size: 20px; color: var(--text-muted); }
+.lk-led__none { font-size: 20px; white-space: normal; }
+.lk-payout__note { grid-column: 1 / -1; margin: 0; color: var(--text-muted); font-size: var(--fs-sm); min-height: 1.5em; }
+
+/* controls */
+.lk-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; padding: 14px 16px 16px; }
+.lk-spin { min-height: 52px; min-width: 180px; padding: 0 32px; border-radius: 999px; cursor: pointer; background: var(--brand); border: 1px solid var(--brand); color: #fff; font-weight: 700; font-size: 18px; text-transform: uppercase; letter-spacing: .06em; }
+.lk-spin:hover:not([disabled]) { background: var(--brand-hover); }
+.lk-spin[disabled] { background: var(--disabled-bg); border-color: var(--disabled-bg); color: var(--disabled-ink); cursor: not-allowed; }
+.lk-use { min-height: 52px; }
+.lk-heldnote { margin: -6px 16px 14px; text-align: center; color: var(--brand-ink); font-size: var(--fs-sm); font-weight: 600; }
+.lk-heldnote[hidden] { display: none; }
+
+/* replace-picks confirmation */
+.lk-confirm { margin: 0 16px 16px; padding: var(--s1); border-radius: var(--radius); background: var(--card); border: 1px solid var(--brand); color: var(--text); text-align: center; }
+.lk-confirm[hidden] { display: none; }
+.lk-confirm__q { margin: 0; font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 24px; line-height: 1.05; }
+.lk-confirm__d { margin: 6px 0 var(--s1); color: var(--text-muted); font-size: var(--fs-sm); }
+.lk-confirm__row { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.lk-confirm__row .v2-btn { min-width: 150px; }
+.lk-play { margin: 0; padding: 0 16px 16px; text-align: center; color: var(--text-muted); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+
+/* lever: retired in this look (Spin does the same) */
+.lk-lever { display: none; }
+
+/* ---------- close-up ---------- */
+.lk-cu { position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, .55); display: flex; align-items: center; justify-content: center; padding: var(--s1); }
+.lk-cu[hidden] { display: none; }
+.lk-cu__panel { width: min(420px, 100%); max-height: 100%; overflow-y: auto; color: var(--text); background: var(--card); border-radius: var(--radius-card); padding: var(--s2); text-align: center; box-shadow: 0 16px 50px rgba(0, 0, 0, .4); }
+.lk-zoom { position: relative; height: 200px; border-radius: var(--radius); overflow: hidden; background: #F6F7F8; margin-bottom: var(--s1); }
+.lk-zoom__face { position: absolute; left: 50%; top: 50%; width: 180px; height: 180px; margin: -90px 0 0 -90px; transform-origin: 50% 51.7%; transition: transform .5s cubic-bezier(.3,.7,.2,1); }
+.lk-svg { width: 100%; height: 100%; display: block; }
+.lk-zoom__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lk-zoom.is-cartoon.is-zoomed .lk-zoom__face { transform: translateY(-2px) scale(1.8); }
+.lk-zoom.is-portrait .lk-zoom__face { transform-origin: 50% 45%; }
+.lk-zoom.is-portrait.is-zoomed .lk-zoom__face { transform: scale(1.25); }
+.lk-dollar { opacity: 0; }
+.lk-zoom .lk-dollar { transition: opacity .2s; }
+.lk-zoom .lk-pupil { transition: opacity .15s; }
+.lk-zoom.is-rich .lk-pupil { opacity: 0; }
+.lk-zoom.is-rich .lk-dollar { opacity: 1; }
+.lk-spark { display: none; }
+.lk-zoom.is-static .lk-zoom__face { transition: none; }
+.lk-cu__kick { margin: 0 0 4px; color: var(--brand-ink); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.lk-cu__name { font-size: 32px; margin: 0 0 var(--s1); overflow-wrap: anywhere; color: var(--text); }
+.lk-cu__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0 0 var(--s1); }
+.lk-cu__stats div { background: var(--surface-2); border-radius: var(--radius); padding: 8px 6px; min-width: 0; }
+.lk-cu__stats dt { color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.lk-cu__stats dd { margin: 2px 0 0; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 24px; line-height: 1.05; color: var(--text); overflow-wrap: anywhere; }
+.lk-cu__stats dd.lk-cu__sector { font-size: 16px; }
+.lk-cu__note { color: var(--text-muted); font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin: 0 0 var(--s1); }
+.lk-cu__close { min-width: 160px; }
+.lk-cu :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- tablet / phone ---------- */
+@media (max-width: 900px) {
+  .lk-cab { --reel-h: 176px; }
+  .lk-av { --av: 72px; }
+  .lk-card__name { font-size: 15px; }
+  .lk-panel { padding: var(--s2); }
+}
+@media (max-width: 767px) {
+  .lk-entry__hint { flex-basis: 100%; }
+  .dr-head__side .lk-entry { flex-basis: 100%; }
+}
+@media (max-width: 640px) {
+  .lk-dlg { padding: 0; }
+  .lk-panel { width: 100%; min-height: 100%; margin: 0; border-radius: 0; padding: var(--s1) var(--margin-mobile) var(--s2); box-shadow: none; }
+  .lk-head__kick { font-size: 26px; }
+  .lk-dek { font-size: var(--fs-sm); margin-bottom: var(--s1); }
+  .lk-cab { --reel-h: 142px; }
+  .lk-lever { display: none; } /* phone: the big SPIN button is the lever */
+  .lk-marquee { padding: 12px 10px 6px; }
+  .lk-marquee__title { font-size: 28px; }
+  .lk-marquee__sub { font-size: 11px; }
+  .lk-bulb { width: 7px; height: 7px; }
+  .lk-bulbs { gap: 2px; }
+  .lk-body { padding: 4px 10px 0; }
+  .lk-reels { gap: 4px; }
+  .lk-reel { gap: 4px; }
+  .lk-card { padding: 6px 2px; gap: 3px; }
+  .lk-av { --av: 44px; }
+  .lk-card__name { font-size: 12px; }
+  .lk-card__sector { display: none; }
+  .lk-card__cap { font-size: 14px; padding: 3px 4px; }
+  .lk-card__c { top: 4px; right: 3px; width: 18px; height: 18px; font-size: 13px; }
+  .lk-card--empty .lk-card__q { font-size: 54px; }
+  .lk-chip { font-size: 13px; height: 38px; min-height: 0; line-height: 1.15; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .lk-chip__x { display: block; margin: 0; font-size: 10px; }
+  .lk-hold { font-size: 14px; letter-spacing: .02em; padding: 0; }
+  .lk-payout { grid-template-columns: 1fr; gap: 6px; }
+  .lk-led { padding: 8px 10px; }
+  .lk-led__v { font-size: 30px; }
+  .lk-led__v small { font-size: 17px; }
+  .lk-led__none { font-size: 18px; }
+  .lk-controls { padding: 12px 10px 14px; gap: 10px; }
+  .lk-spin { width: 100%; min-width: 0; }
+  .lk-use { width: 100%; white-space: normal; text-align: center; }
+  .lk-heldnote { margin: -4px 10px 12px; }
+  .lk-confirm { margin: 0 10px 14px; }
+  .lk-confirm__q { font-size: 24px; }
+  .lk-confirm__row .v2-btn { flex: 1 1 120px; min-width: 0; }
+  .lk-play { padding: 0 10px 14px; }
+  .lk-zoom { height: 180px; }
+  .lk-cu__panel { padding: var(--s1); }
+  .lk-cu__name { font-size: 32px; }
+  .lk-cu__stats dd { font-size: 22px; }
+}
+
+/* buttons created by lucky.js without a variant */
+.lk-use { background: var(--card); color: var(--text); border-color: var(--text); }
+.lk-use:hover:not([disabled]) { background: var(--surface-2); }
+.lk-use[disabled] { background: var(--disabled-bg); border-color: var(--disabled-bg); color: var(--disabled-ink); cursor: not-allowed; }
+.lk-confirm__no { background: transparent; border-color: var(--line-2); color: var(--text); }
+.lk-confirm__no:hover { border-color: var(--text); }

@@ -1,110 +1,58 @@
-/* book.html (The Book, play-money odds): page layout only. Prefix: bk-.
-   Components come from assets/game-ui.css (g-); load order: site.css, game-ui.css, game.css, book.css. Both themes work. */
+/* book.html (The Book): v2 add-on for the price markets (Blasts, Ladders, Races), the slip's long-shot caps and the
+   My bets week/season toggle. Loads after assets/v2/tokens.css, ui.css and game.css, which style every other bk- class.
+   Prefix: bk-. Both themes run through the v2 tokens; nothing here animates. */
 
-.bk-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:start}
-@media (min-width:1000px){
-  .bk-layout{grid-template-columns:minmax(0,1fr) 340px}
-  .bk-rail{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto}
+/* tab bar: 8 tabs scroll sideways on phones, inside the column (never the page) */
+.bk-tabs { max-width: 100%; scroll-padding-inline: var(--s2); }
+
+/* folded "How it settles" text on each card */
+.bk-rule { font-size: var(--fs-sm); line-height: 1.5; color: var(--text-muted); }
+.bk-rule summary { cursor: pointer; padding: 6px 0; font-weight: 600; width: max-content; max-width: 100%; }
+.bk-rule summary:hover { color: var(--text); }
+.bk-rule summary:focus-visible, .bk-more summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.bk-rule p { margin: 4px 0 0; }
+
+/* ---------- Blasts ---------- */
+.bk-today { margin-bottom: var(--s2); }
+.bk-today .bk-h3 { margin-top: var(--s2); }
+.bk-boardlist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 6px; }
+.bk-boardlist > li { min-width: 0; }
+.bk-more { margin-top: var(--s3); border-top: 1px solid var(--line); }
+.bk-more summary { cursor: pointer; min-height: var(--tap); display: flex; align-items: center; font-weight: 700; font-size: var(--fs-lg); }
+.bk-more summary::before { content: '+'; display: inline-block; width: 1.2em; font-weight: 700; }
+.bk-more[open] summary::before { content: '\2212'; }
+.bk-more summary::-webkit-details-marker { display: none; }
+.bk-h4 { margin: var(--s2) 0 var(--s1); font-size: var(--fs-lg); font-weight: 700; }
+
+/* ---------- Ladders: rungs downside left, upside right; ranges below ---------- */
+.bk-rungs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 2px repeat(3, minmax(0, 1fr)); gap: 4px; align-items: stretch; }
+.bk-rungs__h { grid-column: 1 / -1; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); }
+.bk-rungs__zero { background: var(--text-muted); border-radius: 1px; margin: 4px 0; }
+.bk-rungs__gap { border: 1px dashed var(--line); border-radius: var(--radius); min-height: var(--tap); }
+.bk-rungs__axis { grid-column: 1 / -1; display: flex; justify-content: space-between; font-size: var(--fs-xs); color: var(--text-muted); }
+.bk-odd--rung { flex-direction: column; justify-content: center; align-items: center; gap: 3px; padding: 6px 2px; text-align: center; min-width: 0; }
+.bk-odd--rung .bk-odd__label { font-size: var(--fs-xs); font-weight: 700; line-height: 1.15; overflow-wrap: anywhere; }
+.bk-odd--rung .bk-odd__price { font-size: 19px; }
+.bk-rungs--range .bk-odd--rung .bk-odd__label { font-weight: 600; }
+
+/* ---------- Races: dollar duels (columns set inline: name, to win, one per alt line) ---------- */
+.bk-grid--duel .bk-grid__h { overflow-wrap: anywhere; }
+.bk-grid--duel .bk-odd { padding: 6px 4px; }
+
+/* ---------- slip: long-shot cap on a leg (dark panel) ---------- */
+.bk-leg__cap { grid-column: 1 / -1; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #F2B84B; padding-right: var(--s0); }
+
+/* ---------- My bets: This week / Season ---------- */
+.bk-toggle { display: inline-flex; margin: 0 0 var(--s1); border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); overflow: hidden; }
+.bk-toggle__btn { min-height: var(--tap); padding: 0 var(--s2); border: 0; background: transparent; color: var(--text-muted); font-family: var(--font-body); font-size: var(--fs-md); font-weight: 700; cursor: pointer; }
+.bk-toggle__btn + .bk-toggle__btn { border-left: 1px solid var(--line); }
+.bk-toggle__btn:hover { color: var(--text); }
+.bk-toggle__btn[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.bk-toggle__btn:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+
+@media (max-width: 767px) {
+  .bk-rungs { gap: 3px; }
+  .bk-odd--rung { padding: 6px 1px; }
+  .bk-odd--rung .bk-odd__price { font-size: 17px; }
+  .bk-grid--duel { gap: 6px 4px; }
 }
-@media (max-width:999px){
-  .bk-rail{display:none}
-  .bk.has-slip{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
-}
-@media (min-width:1000px){ .bk-bar{display:none !important} }
-.bk-main{min-width:0}
-.bk-tabs{margin-bottom:16px}
-.bk-status{margin:0 0 12px}
-.bk-panel{outline:none}
-.bk-panel:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
-.bk-note{margin:0 0 14px;font-size:13px;line-height:1.55;color:var(--muted);max-width:760px}
-
-/* ---------- event cards ---------- */
-.bk-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:12px}
-.bk-list > li{min-width:0}
-.bk-ev{display:flex;flex-direction:column;gap:10px;height:100%;padding:14px 16px}
-.bk-ev__head{display:flex;align-items:baseline;justify-content:space-between;gap:4px 12px;flex-wrap:wrap}
-.bk-ev__title{margin:0;font:600 17px/1.3 var(--g-font-head);overflow-wrap:anywhere}
-.bk-ev__meta{font:500 10px/1.3 var(--g-font-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.bk-ev__foot{margin:0;font-size:12px;line-height:1.5;color:var(--muted)}
-.bk-grid{display:grid;grid-template-columns:minmax(0,1fr) repeat(2,minmax(92px,auto));gap:6px 8px;align-items:center}
-.bk-grid__h{font:500 10px/1.2 var(--g-font-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center}
-.bk-grid__h:first-child{text-align:left}
-.bk-grid__name{font:600 14px/1.3 var(--g-font-ui);overflow-wrap:anywhere;min-width:0}
-.bk-ladder{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
-.bk-picks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:6px}
-
-/* ---------- odds button ---------- */
-.bk-odd{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:var(--g-hit);width:100%;padding:8px 12px;border:1px solid var(--line2);border-radius:var(--g-radius);background:var(--bg);color:var(--text);font:500 13px/1.2 var(--g-font-ui);cursor:pointer;text-align:left;transition:background .12s,border-color .12s,color .12s}
-.bk-odd:hover{border-color:var(--text)}
-.bk-odd:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.bk-odd__label{min-width:0;overflow-wrap:anywhere;color:var(--soft)}
-.bk-odd__price{flex:none;font:400 18px/1 var(--g-font-display);font-variant-numeric:tabular-nums;color:var(--text)}
-.bk-odd--center{justify-content:center}
-.bk-odd[aria-pressed="true"]{background:var(--g-gold);border-color:var(--g-gold);color:var(--g-gold-ink)}
-.bk-odd[aria-pressed="true"] .bk-odd__label,.bk-odd[aria-pressed="true"] .bk-odd__price{color:var(--g-gold-ink)}
-.bk-odd:disabled{cursor:not-allowed;opacity:.55;background:transparent}
-.bk-odd:disabled:hover{border-color:var(--line2)}
-.bk-odd.is-win{border-color:var(--up);box-shadow:inset 0 -3px 0 var(--up)}
-.bk-odd.is-lose{opacity:.45}
-.bk-odd.is-void{border-style:dashed}
-
-/* ---------- futures ---------- */
-.bk-search{display:flex;flex-direction:column;gap:6px;margin:0 0 12px;max-width:420px}
-.bk-futures{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:6px}
-
-/* ---------- bet slip ---------- */
-.bk-slip{padding:16px}
-.bk-slip .g-card__head{margin-bottom:10px}
-.bk-slip__empty{margin:0;font-size:13px;line-height:1.55;color:var(--muted)}
-.bk-slip__list{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:6px}
-.bk-leg{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:6px 8px;padding:8px 0 8px 10px;border-left:3px solid var(--g-gold);background:var(--g-sunk)}
-.bk-leg__text{display:flex;flex-direction:column;min-width:0}
-.bk-leg__ev{font-size:11px;color:var(--muted);line-height:1.35;overflow-wrap:anywhere}
-.bk-leg__pick{font:600 14px/1.3 var(--g-font-ui);overflow-wrap:anywhere}
-.bk-leg__odds{font:400 18px/1 var(--g-font-display);font-variant-numeric:tabular-nums}
-.bk-leg.is-changed{border-left-color:var(--down)}
-.bk-leg__moved{grid-column:1 / -1;font-size:12px;color:var(--down)}
-.bk-leg .g-btn--icon{width:40px;min-width:40px;min-height:40px;font-size:18px;border-color:transparent}
-.bk-mode{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line2);border-radius:var(--g-radius);margin:0 0 12px;padding:0}
-.bk-mode legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-.bk-mode label{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:var(--g-hit);padding:6px 8px;cursor:pointer;font:600 12px/1.2 var(--g-font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);position:relative}
-.bk-mode label + label{border-left:1px solid var(--line)}
-.bk-mode label small{font:400 11px/1.2 var(--g-font-ui);letter-spacing:0;text-transform:none}
-.bk-mode input{position:absolute;opacity:0;pointer-events:none}
-.bk-mode label:has(input:checked){background:var(--text);color:var(--bg)}
-.bk-mode label:has(input:disabled){cursor:not-allowed;opacity:.5}
-.bk-mode label:focus-within{outline:2px solid var(--accent);outline-offset:2px;z-index:1}
-.bk-stake{display:flex;flex-direction:column;gap:6px}
-.bk-stake .g-input{font:400 22px/1.2 var(--g-font-display)}
-.bk-chips{display:flex;flex-wrap:wrap;gap:6px}
-.bk-chips .g-btn{flex:1 1 0;min-width:56px;padding:8px 6px}
-.bk-sum{margin:12px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--g-radius);overflow:hidden}
-.bk-sum > div{background:var(--g-raise);padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
-.bk-sum .g-stat__num{font-size:24px}
-.bk-sum__win .g-stat__num{color:var(--g-gold-text)}
-.bk-slip__foot{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.bk-slip__fine{margin:0;font-size:11px;line-height:1.5;color:var(--muted)}
-.bk-sheet .bk-slip{border:0;background:transparent;padding:0}
-/* the sheet has its own "Bet slip" title: keep this one for screen readers only */
-.bk-sheet .bk-slip .g-card__title{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
-.bk-sheet .bk-slip .g-card__head{justify-content:flex-end}
-
-/* ---------- my bets ---------- */
-.bk-bets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.bk-bet{display:flex;flex-direction:column;gap:8px;padding:14px 16px}
-.bk-bet__head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px}
-.bk-bet__kind{font:600 15px/1.3 var(--g-font-ui)}
-.bk-bet__money{font-size:13px;color:var(--soft)}
-.bk-bet__money b{font-weight:600;color:var(--text)}
-.bk-bet__legs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
-.bk-bet__legs li{display:flex;justify-content:space-between;gap:10px;font-size:13px;line-height:1.4;color:var(--soft);padding:4px 0;border-top:1px solid var(--line)}
-.bk-bet__legs li span:first-child{min-width:0;overflow-wrap:anywhere}
-.bk-res{flex:none;font:600 10px/1.6 var(--g-font-ui);letter-spacing:.1em;text-transform:uppercase}
-.bk-res--win,.bk-res--won{color:var(--up)}
-.bk-res--lose,.bk-res--lost{color:var(--down)}
-.bk-res--void,.bk-res--open{color:var(--muted)}
-.bk-h3{margin:22px 0 10px;font:600 18px/1.25 var(--g-font-head)}
-.bk-h3:first-child{margin-top:0}
-.bk-board{max-width:560px}
-
-@media (prefers-reduced-motion: reduce){ .bk-odd{transition:none} }

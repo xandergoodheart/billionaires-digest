@@ -100,5 +100,5 @@ export function clip(s, max) {
 
 // ---- sectors ----
 const SECTOR_ART = { 'AI & tech': 'ai', 'Finance': 'finance', 'Aerospace': 'aerospace', 'Luxury & retail': 'luxury', 'Real estate': 'realestate', 'Energy': 'energy', 'Media': 'media', 'Autos': 'autos', 'Industrials': 'industrials', 'Health': 'health' };
-export function sectorArt(s) { return '/assets/art/sector-' + (Object.prototype.hasOwnProperty.call(SECTOR_ART, s) ? SECTOR_ART[s] : 'other') + '.jpg'; }
+export function sectorArt(s) { return '/assets/art/realistic/sector-' + (Object.prototype.hasOwnProperty.call(SECTOR_ART, s) ? SECTOR_ART[s] : 'other') + '.webp'; }
 export function sectorHref(s) { return '/sectors.html#' + slug(s); }

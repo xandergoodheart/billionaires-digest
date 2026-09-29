@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Play as Jensen Huang (prototype) · Billionaire Life · Billionaires Digest</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Prototype game: face five real decisions Jensen Huang faced, choose, then see what he actually did. Facts are sourced. Not financial advice.">
+<meta name="theme-color" content="#07080A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%23D62D27'/%3E%3Ctext x='32' y='45' font-family='Barlow Condensed,Arial Narrow,Arial,sans-serif' font-weight='800' font-size='36' text-anchor='middle' fill='%23FFFFFF'%3EBD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/v2/tokens.css">
+<link rel="stylesheet" href="../assets/v2/ui.css">
+<link rel="stylesheet" href="life-huang.css">
+</head>
+<body class="v2 lf-page">
+<!-- Prototype only: not linked from the site. Chrome below is a static copy of the v2 top bar (no sync-nav markers). -->
+<a class="v2-skip" href="#main">Skip to content</a>
+<div class="lf-mockbar">
+  <p><strong>PROTOTYPE</strong> — Billionaire Life (concept)</p>
+  <nav class="lf-mockbar__nav" aria-label="Prototype links">
+    <a href="index.html">All mockups</a>
+  </nav>
+</div>
+<header class="v2-top">
+  <div class="v2-wrap v2-top__in">
+    <a class="v2-mark" href="../team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <nav class="v2-topnav" aria-label="Main">
+      <a href="../team.html" aria-current="true">Fantasy</a>
+      <a href="../players.html">Players</a>
+      <a href="../scores.html#leaderboard">Rankings</a>
+      <a href="../calendar.html">Calendar</a>
+      <a href="../index.html">News</a>
+    </nav>
+    <div class="v2-top__right">
+      <a class="v2-top__search" href="../people/">Search</a>
+      <a class="v2-btn v2-btn--primary v2-top__cta" href="../team.html">My team</a>
+    </div>
+    <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
+  </div>
+</header>
+<div class="v2-menu" id="v2-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="v2-menu__panel" tabindex="-1">
+    <div class="v2-menu__head">
+      <span class="v2-menu__title">Menu</span>
+      <button type="button" class="v2-menu__close" data-menu-close>Close</button>
+    </div>
+    <ul class="v2-menu__list">
+      <li><a class="v2-menu__top" href="../team.html" aria-current="true">Fantasy</a></li>
+      <li><a class="v2-menu__top" href="../players.html">Players</a></li>
+      <li><a class="v2-menu__top" href="../scores.html#leaderboard">Rankings</a></li>
+      <li><a class="v2-menu__top" href="../calendar.html">Calendar</a></li>
+      <li><a class="v2-menu__top" href="../index.html">News</a></li>
+      <li><a class="v2-menu__top" href="../people/">Search</a></li>
+    </ul>
+  </div>
+</div>
+
+<main id="main" class="v2-main lf-main" tabindex="-1">
+  <div class="v2-wrap lf-wrap">
+    <p class="lf-play">Game for fun · facts are sourced · not financial advice</p>
+
+    <!-- Intro -->
+    <section class="lf-screen" id="intro" aria-labelledby="introh">
+      <div class="lf-cab">
+        <div class="lf-cab__in">
+          <span class="lf-kicker">Billionaire Life</span>
+          <h1 class="lf-title" id="introh">Play as Jensen Huang</h1>
+          <div class="lf-char">
+            <div class="lf-char__pic" aria-hidden="true"><span class="lf-char__init" id="initials">JH</span></div>
+            <div class="lf-char__txt">
+              <p class="lf-char__role" id="role">Co-founder and CEO of NVIDIA</p>
+              <p class="lf-char__bio" id="bio">Loading…</p>
+              <p class="lf-char__soon">Portrait coming soon</p>
+            </div>
+          </div>
+          <p class="lf-frame">Real decisions, real outcomes. What-ifs aren't scored in dollars.</p>
+          <p class="lf-how">Five turns. Each one is a real choice he faced. Pick what you would do, then see what he actually did and how it turned out.</p>
+          <button type="button" class="lf-btn lf-btn--gold lf-btn--big" id="start" disabled>Start</button>
+          <details class="lf-about">
+            <summary>About this prototype</summary>
+            <ul>
+              <li>Every date and number comes from a linked source: company filings, NVIDIA's own releases, a US regulator, a university, or news outlets.</li>
+              <li>Situations and outcomes are written in our own words and may be simplified.</li>
+              <li>The other choices on each card are made-up alternatives for the game. They are not claims about what he considered.</li>
+              <li>Scoring only checks whether you picked what he picked. It does not judge whether his choice was right.</li>
+              <li>Fortune tracking comes later (needs price history).</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Turn -->
+    <section class="lf-screen" id="turn" aria-labelledby="turnh" hidden>
+      <div class="lf-hud">
+        <p class="lf-hud__turn" id="turnno">Decision 1 of 5</p>
+        <div class="lf-meter" id="meter" role="img" aria-label="Match meter: 0 of 0">
+        </div>
+        <p class="lf-hud__score" id="scoretxt">0 matches</p>
+      </div>
+      <div class="lf-flip" id="flip">
+        <div class="lf-card lf-card--front" id="front">
+          <p class="lf-card__year" id="year"></p>
+          <h2 class="lf-card__title" id="turnh" tabindex="-1"></h2>
+          <p class="lf-card__sit" id="sit"></p>
+          <p class="lf-card__ask" id="ask">What do you do?</p>
+          <div class="lf-opts" id="opts" role="group" aria-labelledby="ask"></div>
+        </div>
+        <div class="lf-card lf-card--back" id="back" hidden>
+          <div class="lf-verdict" id="verdict" tabindex="-1"></div>
+          <p class="lf-yourpick" id="yourpick"></p>
+          <h3 class="lf-h3">What he actually did</h3>
+          <p id="actual"></p>
+          <h3 class="lf-h3">How it turned out</h3>
+          <p id="outcome"></p>
+          <h3 class="lf-h3 lf-h3--sm">Sources</h3>
+          <ul class="lf-src" id="src"></ul>
+          <button type="button" class="lf-btn lf-btn--gold lf-btn--big" id="next">Next decision</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- End -->
+    <section class="lf-screen" id="end" aria-labelledby="endh" hidden>
+      <div class="lf-cab">
+        <div class="lf-cab__in">
+          <span class="lf-kicker">Game over</span>
+          <h2 class="lf-title" id="endh" tabindex="-1">Your instincts: 0/5 match with Jensen Huang</h2>
+          <p class="lf-rank" id="rank"></p>
+          <p class="lf-rank__note">Rank titles are just for fun. They describe your score, not the real person.</p>
+          <p class="lf-frame">Fortune tracking comes later (needs price history).</p>
+          <button type="button" class="lf-btn lf-btn--gold lf-btn--big" id="again">Play again</button>
+        </div>
+      </div>
+      <h3 class="lf-h2">Your recap</h3>
+      <ol class="lf-recap" id="recap"></ol>
+    </section>
+
+    <p class="lf-foot-note">Billionaire Life is a concept prototype. Real decisions, summarized from the linked sources. Game for fun: no money, no prizes.</p>
+  </div>
+</main>
+
+<div class="v2-sr" id="live" role="status" aria-live="polite"></div>
+
+<nav class="v2-tabs" aria-label="Sections">
+  <a href="../team.html" aria-current="true">Fantasy</a>
+  <a href="../players.html">Players</a>
+  <a href="../scores.html#leaderboard">Rankings</a>
+  <a href="../index.html">News</a>
+</nav>
+<footer class="v2-foot">
+  <div class="v2-wrap v2-foot__in">
+    <a class="v2-mark v2-mark--sm" href="../team.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
+    <div class="v2-foot__notes">
+      <p>Game for fun · facts are sourced · not financial advice</p>
+      <p>For information only · not financial advice.</p>
+    </div>
+    <nav class="v2-foot__links" aria-label="Footer">
+      <a href="../about.html">About</a>
+      <a href="../about.html#corrections">Corrections</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../assets/common.js"></script>
+<script src="../assets/v2/chrome.js"></script>
+<script src="life-huang.js"></script>
+</body>
+</html>

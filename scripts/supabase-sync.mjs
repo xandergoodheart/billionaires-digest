@@ -5,6 +5,7 @@
 //
 //   SUPABASE_URL=... SUPABASE_SERVICE_KEY=... node scripts/supabase-sync.mjs
 //   GAME_FORCE_MARKETS=1 opens this week's markets on a day other than Monday (if they are missing).
+//   GAME_MOVES_MARKETS=1 also opens/resolves the Next Moves markets from data/moves/*.json (off by default; needs 0004_moves.sql, held in supabase/pending until approved).
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { sync } from './lib/supa/sync.mjs';
