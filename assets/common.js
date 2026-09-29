@@ -133,7 +133,7 @@
     'Health': ['health','healthcare','pharma','pharmaceutical','pharmaceuticals','biotech','biotechnology','vaccine','vaccines','hospital','hospitals','medical','medicine','medicines','drug','drugs','therapeutics','clinic','clinics','diagnostics','life sciences','novo','moderna'],
     'Other': []
   };
-  function sectorArt(s){ return 'assets/art/sector-' + (SECTOR_ART[s] || 'other') + '.jpg'; }
+  function sectorArt(s){ return 'assets/art/realistic/sector-' + (SECTOR_ART[s] || 'other') + '.webp'; }
   function sectorSlug(s){ return slug(s); }
   function sectorFromSlug(sl){ for (var i = 0; i < SECTORS.length; i++){ if (sectorSlug(SECTORS[i]) === sl) return SECTORS[i]; } return null; }
   function sectorHref(s){ return 'sectors.html#' + sectorSlug(s); }

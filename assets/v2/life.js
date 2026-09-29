@@ -22,6 +22,9 @@
   var SVGNS = 'http://www.w3.org/2000/svg', XLINK = 'http://www.w3.org/1999/xlink';
   var CAT_LABEL = { founding: 'Founding', product: 'Product', deal: 'Deal', money: 'Money', giving: 'Giving', politics: 'Politics', lifestyle: 'Lifestyle' };
   var TIER_NAME = ['Gold', 'Silver', 'Bronze'];
+  // People with realistic art: scene images assets/life/realistic/<slug>-<n>.webp (n = decision number, 1-based, in the
+  // order of data/life/<slug>.json) and a crest assets/academy/realistic/crest-<slug>.webp. Value = number of scene images.
+  var SCENES = { 'bill-gates': 5, 'elon-musk': 5, 'jeff-bezos': 5, 'jensen-huang': 5, 'larry-ellison': 5, 'mark-zuckerberg': 5, 'michael-dell': 5, 'warren-buffett': 5 };
   var liveT;
 
   // ---------- small helpers ----------
@@ -48,6 +51,25 @@
   function portrait(slug){
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
     return p ? safePath(p.img) : null;
+  }
+  // decorative scene image (alt empty) for decision n (1-based), or null when there is none
+  function sceneFig(slug, n, cls){
+    if (!validSlug(slug) || !own(SCENES, slug) || n < 1 || n > SCENES[slug]) return null;
+    var f = el('figure', cls), im = el('img');
+    im.src = 'assets/life/realistic/' + slug + '-' + n + '.webp'; im.alt = '';
+    im.setAttribute('loading', 'lazy'); im.setAttribute('decoding', 'async');
+    f.appendChild(im);
+    return f;
+  }
+  // decorative school crest (alt empty), or null when there is none
+  function crest(slug, cls){
+    if (!validSlug(slug) || !own(SCENES, slug)) return null;
+    var w = el('span', 'lf-crest' + (cls ? ' ' + cls : '')), im = el('img');
+    w.setAttribute('aria-hidden', 'true');
+    im.src = 'assets/academy/realistic/crest-' + slug + '.webp'; im.alt = ''; im.width = 64; im.height = 64;
+    im.setAttribute('loading', 'lazy'); im.setAttribute('decoding', 'async');
+    w.appendChild(im);
+    return w;
   }
   function nonEmpty(x){ return typeof x === 'string' && x.replace(/\s+/g, '') !== ''; }
   function today(){ return new Date().toISOString().slice(0, 10); }
@@ -175,6 +197,8 @@
 
   function hubCard(p, st, dip){
     var li = el('li', 'lf-hcard');
+    var scene = sceneFig(p.slug, 1, 'lf-hcard__scene');
+    if (scene) li.appendChild(scene);
     var art = el('div', 'lf-hcard__art');
     art.appendChild(plate(p, 'lf-hcard__av'));
     li.appendChild(art);
@@ -325,6 +349,10 @@
   function renderTurn(){
     var d = data.decisions[turn];
     busy = false;
+    var front = $('front'), old = front.querySelector('.lf-scene');
+    if (old) front.removeChild(old);
+    var scene = sceneFig(data.person.slug, turn + 1, 'lf-scene');
+    if (scene) front.insertBefore(scene, front.firstChild);
     $('turnno').textContent = 'Decision ' + (turn + 1) + ' of ' + data.decisions.length;
     var tag = clear($('lf-tag'));
     tag.appendChild(el('span', 'lf-card__year', String(d.year)));
@@ -669,6 +697,10 @@
     closePop(false);
     if (!school){ box.hidden = true; return; }
     box.hidden = false;
+    var oldCr = box.querySelector('.lf-school__crest');
+    if (oldCr) box.removeChild(oldCr);
+    var cr = crest(data.person.slug, 'lf-school__crest');
+    if (cr) box.insertBefore(cr, box.firstChild);
     $('lf-schoolh').textContent = 'School of ' + data.person.name + ': ' + school.name;
     $('lf-school-tag').textContent = school.tagline;
     var met = {}, L = lessonsPlayed();
@@ -835,6 +867,8 @@
     ht.appendChild(h);
     ht.appendChild(el('p', 'ac-card__who', 'School of ' + p.name));
     head.appendChild(ht);
+    var cr = crest(p.slug, 'ac-card__crest');
+    if (cr) head.appendChild(cr);
     li.appendChild(head);
     li.appendChild(el('p', 'ac-card__tag', sc.tagline));
     var ul = el('ul', 'lf-princ ac-card__pr');

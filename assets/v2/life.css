@@ -96,6 +96,8 @@
   background: var(--card);
   border: 1px solid var(--line); box-shadow: var(--shadow);
 }
+.lf-scene{margin:0 0 var(--s2,16px);border-radius:8px;overflow:hidden;aspect-ratio:16/9;background:#1b1c1e}
+.lf-scene img{display:block;width:100%;height:100%;object-fit:cover}
 .lf-card__year {
   display: inline-block; margin: 0; padding: 2px 14px; border-radius: 999px; background: var(--lf-red-dk); color: #fff;
   font-family: var(--font-display); font-weight: var(--fw-display); font-size: 20px; letter-spacing: .06em;
@@ -303,6 +305,8 @@
   background: var(--card);
   border: 1px solid var(--line); box-shadow: var(--shadow);
 }
+.lf-hcard__scene { margin: 0; aspect-ratio: 16 / 9; overflow: hidden; background: #1b1c1e; }
+.lf-hcard__scene img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .lf-hcard__art {
   display: flex; align-items: center; justify-content: center; padding: 22px 0;
   background: var(--lf-cardback); box-shadow: var(--shadow);
@@ -335,10 +339,11 @@ a.lf-btn { text-decoration: none; }
   .lf-hero .lf-title { font-size: 46px; }
   .lf-sub { font-size: var(--fs-lg); }
   .lf-roster { grid-template-columns: minmax(0, 1fr); gap: var(--s1); }
-  .lf-hcard { flex-direction: row; }
+  .lf-hcard { flex-direction: row; flex-wrap: wrap; }
+  .lf-hcard__scene { flex: 0 0 100%; }
   .lf-hcard__art { flex: none; width: 96px; padding: 0; align-items: flex-start; padding-top: 18px; box-shadow: var(--shadow); }
   .lf-hcard__av { --av: 68px; }
-  .lf-hcard__body { padding: 14px 14px 16px; gap: 4px; min-width: 0; }
+  .lf-hcard__body { padding: 14px 14px 16px; gap: 4px; min-width: 0; flex-basis: 0; }
   .lf-hcard__name { font-size: 26px; }
   .lf-hcard__body .lf-hcard__play { margin-top: 10px; min-height: 46px; font-size: 16px; }
   .lf-stats__row { gap: 8px; }
@@ -427,16 +432,18 @@ a.lf-btn { text-decoration: none; }
 .lf-unlock__t { font-weight: 600; }
 
 .lf-diploma {
-  display: flex; align-items: center; gap: var(--s1); margin: var(--s1) 0 0; padding: 14px 18px; border-radius: 14px;
-  background: var(--card); border: 2px solid var(--lf-gold);
+  /* cream paper photo on dark wood (4:3); percentage padding keeps the text on the paper, clear of the wax seal at the bottom */
+  display: flex; align-items: center; justify-content: center; gap: var(--s1); max-width: 560px; aspect-ratio: 4 / 3;
+  margin: var(--s1) auto 0; padding: 11% 12% 24%; border-radius: 8px;
+  background: #3a2616 url('../academy/realistic/diploma.webp') center / cover no-repeat;
   box-shadow: var(--shadow);
 }
 .lf-diploma[hidden] { display: none; }
 .lf-diploma__txt { min-width: 0; }
 .lf-diploma__txt p { margin: 0; }
-.lf-diploma__k { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; letter-spacing: .1em; font-size: 26px; line-height: 1; color: var(--lf-gold); }
-.lf-diploma__name { margin-top: 4px !important; font-weight: 700; color: var(--text); overflow-wrap: anywhere; }
-.lf-diploma__meta { font-size: var(--fs-xs); color: var(--lf-muted); }
+.lf-diploma__k { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; letter-spacing: .1em; font-size: 26px; line-height: 1; color: #7A1A14; }
+.lf-diploma__name { margin-top: 4px !important; font-weight: 700; color: #1E160D; overflow-wrap: anywhere; }
+.lf-diploma__meta { font-size: var(--fs-xs); color: #4A3B2A; }
 .lf-seal { flex: none; width: 36px; height: 36px; }
 .lf-seal--sm { width: 24px; height: 24px; }
 .lf-seal--lg { width: 64px; height: 64px; }
@@ -492,6 +499,17 @@ a.lf-btn { text-decoration: none; }
 }
 .ac-card.has-dip { box-shadow: var(--shadow); }
 .ac-card__head { display: flex; align-items: center; gap: 14px; }
+.ac-card__head .ac-card__crest { margin-left: auto; }
+/* school crest: white-background medallion; multiply hides the white on light cards, a white disc frames it on dark cards */
+.lf-crest { display: block; flex: none; width: 64px; height: 64px; }
+.lf-crest img { display: block; width: 64px; height: 64px; mix-blend-mode: multiply; }
+.lf-school__crest { float: right; margin: 0 0 8px 12px; }
+:root[data-theme="dark"] .lf-crest { width: 72px; height: 72px; padding: 4px; box-sizing: border-box; border-radius: 50%; background: #fff; overflow: hidden; }
+:root[data-theme="dark"] .lf-crest img { mix-blend-mode: normal; border-radius: 50%; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .lf-crest { width: 72px; height: 72px; padding: 4px; box-sizing: border-box; border-radius: 50%; background: #fff; overflow: hidden; }
+  :root:not([data-theme="light"]) .lf-crest img { mix-blend-mode: normal; border-radius: 50%; }
+}
 .ac-card__av { --av: 64px; border-radius: 50%; flex: none; }
 .ac-card__ht { min-width: 0; }
 .ac-card__school { margin: 0; font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 28px; line-height: 1; color: var(--text); overflow-wrap: anywhere; }
@@ -524,7 +542,7 @@ a.lf-btn { text-decoration: none; }
 @media (max-width: 600px) {
   .lf-lesson { padding: 12px 12px 14px; }
   .lf-school { padding: var(--s1); }
-  .lf-diploma { padding: 12px; }
+  .lf-diploma { gap: 12px; }
   .lf-seal--lg { width: 48px; height: 48px; }
   .ac-schools, .ac-gloss { grid-template-columns: minmax(0, 1fr); }
   .ac-card { padding: var(--s1); }
