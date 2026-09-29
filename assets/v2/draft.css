@@ -179,7 +179,7 @@
   .dr-table tbody tr:hover td { background: transparent; }
   .dr-pick { width: 92px; min-height: 52px; padding: 8px 8px; }
   .dr-why { max-width: 92px; }
-  .dr-table .v2-av { display: none; }
+  .dr-table .v2-av { --av: 36px; }
   .dr-table .v2-player { gap: 10px; }
   .dr-nd ul { columns: 1; }
 

@@ -68,6 +68,12 @@
   function sector(){ return (D.pool && D.pool.sector) || (D.idx && D.idx.sector) || (D.nd && D.nd.sector) || 'Other'; }
   function rank(){ var r = (D.idx && D.idx.rank) || (D.pool && D.pool.rank) || (D.nd && D.nd.rank); return typeof r === 'number' ? r : null; }
   function sal(){ var s = F.salaries()[slug]; return typeof s === 'number' ? s : null; }
+  // portraits: only plain site-relative paths from window.BDPortraits (assets/v2/portraits.js)
+  function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
+  function portraitSrc(s){
+    var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, s) ? P[s] : null;
+    return p ? safePath(p.img) : null;
+  }
   function draftPool(){ return arr(F.state.draftWk && F.state.draftWk.draftable); }
   function weekPts(){ return F.weekPoints(F.state.sbWk, slug); }
   function avgPts(){ var a = F.stat(slug).avg; return typeof a === 'number' ? Math.round(a) : null; }
@@ -118,9 +124,15 @@
   function renderHero(){
     var hero = el('section', 'pp-hero');
     hero.setAttribute('aria-labelledby', 'pname');
-    // portrait slot: initials on a sector plate until the illustrated portraits are approved
+    // portrait slot: approved painted headshot, or initials on a sector plate for people without one
     var art = el('div', 'pp-hero__art');
-    var av = el('span', 'v2-av pp-av', BD.initials(name()));
+    var pic = portraitSrc(slug), av;
+    if (pic){
+      av = el('span', 'pp-headshot');
+      var im = el('img'); im.src = pic; im.alt = ''; av.appendChild(im);
+    } else {
+      av = el('span', 'v2-av pp-av', BD.initials(name()));
+    }
     av.setAttribute('data-sector', BD.sectorSlug(sector()));
     av.setAttribute('aria-hidden', 'true');
     art.appendChild(av);

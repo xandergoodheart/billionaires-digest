@@ -42,10 +42,16 @@
   }
   function lockWhen(){ var ms = C.weekInfo(F.state.draftWeek).locksAt; return nyFmt(ms, { weekday: 'long' }) + ' ' + nyFmt(ms, { hour: 'numeric', minute: '2-digit' }) + ' ET'; }
   function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
+  function portraitSrc(slug){
+    var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
+    return p ? safePath(p.img) : null;
+  }
   function avatar(p, cls){
-    var a = el('span', 'v2-av' + (cls ? ' ' + cls : ''), BD.initials(p.name));
+    var pic = portraitSrc(p.slug);
+    var a = el('span', 'v2-av' + (cls ? ' ' + cls : '') + (pic ? ' v2-av--pic' : ''), pic ? '' : BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     a.setAttribute('aria-hidden', 'true');
+    if (pic){ var im = el('img'); im.src = pic; im.alt = ''; a.appendChild(im); }
     return a;
   }
   function pool(){ return arr(F.state.draftWk && F.state.draftWk.draftable); }
@@ -660,12 +666,9 @@
     clear(body);
     var S = F.state, p = F.person(slug), picked = S.picks.indexOf(slug) >= 0, isC = S.captain === slug;
     var ix = X.people === 'ok' ? BD.indexBySlug(slug) : null;
-    // head: portrait (approved illustration) or initials plate
+    // head: portrait (approved painted illustration, added by avatar()) or initials plate
     var head = el('div', 'dr-card__top');
-    var pics = window.BDPortraits, pic = pics && Object.prototype.hasOwnProperty.call(pics, slug) ? safePath(pics[slug] && pics[slug].img) : null;
-    var av = avatar(p, 'v2-av--lg dr-card__av');
-    if (pic){ var im = el('img'); im.src = pic; im.alt = ''; av.appendChild(im); }
-    head.appendChild(av);
+    head.appendChild(avatar(p, 'v2-av--lg dr-card__av'));
     var ht = el('div', 'dr-card__id');
     var h = el('h2', 'dr-card__name', p.name); h.id = 'pcard-name';
     ht.appendChild(h);

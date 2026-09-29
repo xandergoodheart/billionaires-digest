@@ -46,7 +46,7 @@
     return p;
   }
   function tickerOf(p){ var h = arr(p && p.holdings)[0]; return h && h.ticker ? h.ticker : ''; }
-  // portraits: only plain site-relative paths from window.BDPortraits (empty until the style is approved)
+  // portraits: only plain site-relative paths from window.BDPortraits (assets/v2/portraits.js)
   function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
   function portrait(slug){
     var P = window.BDPortraits, p = P && Object.prototype.hasOwnProperty.call(P, slug) ? P[slug] : null;
@@ -54,7 +54,7 @@
   }
   function plate(p, cls){
     var pic = portrait(p.slug);
-    var a = el('span', 'v2-av ' + (cls || ''), pic.img ? '' : BD.initials(p.name));
+    var a = el('span', 'v2-av ' + (cls || '') + (pic.img ? ' v2-av--pic' : ''), pic.img ? '' : BD.initials(p.name));
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     a.setAttribute('aria-hidden', 'true');
     if (pic.img){ var im = el('img'); im.src = pic.img; im.alt = ''; a.appendChild(im); }

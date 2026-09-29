@@ -1,8 +1,73 @@
-/* Billionaires Digest v2: illustrated portrait lookup. ES5, one global: BDPortraits.
-   slug -> { img: 'path to the portrait', dollar: 'path to the "$ eyes" close-up version' } (both optional, site-relative).
-   EMPTY on purpose: portraits are added only after the owner approves the illustrated style. Until then every
-   page falls back to the initials sector plate (and Lucky five's close-up to its generic cartoon face).
-   Never photos of real people, never company logos. */
+/* Billionaires Digest v2: portrait lookup. ES5, one global: BDPortraits.
+   slug -> { img: 'site-relative path to the portrait' }.
+   The owner approved realistic painted illustrations for the ESPN version on 2026-09-29 (painted person on a plain
+   white background, assets/portraits/real/). Still never photos of real people, never company logos.
+   People without a portrait fall back to the initials sector plate. */
 (function(root){
-  root.BDPortraits = root.BDPortraits || {};
+  var P = root.BDPortraits = root.BDPortraits || {};
+  P['abigail-johnson'] = { img: 'assets/portraits/real/abigail-johnson.webp' };
+  P['alice-walton'] = { img: 'assets/portraits/real/alice-walton.webp' };
+  P['aliko-dangote'] = { img: 'assets/portraits/real/aliko-dangote.webp' };
+  P['amancio-ortega'] = { img: 'assets/portraits/real/amancio-ortega.webp' };
+  P['andreas-von-bechtolsheim-family'] = { img: 'assets/portraits/real/andreas-von-bechtolsheim-family.webp' };
+  P['bernard-arnault-family'] = { img: 'assets/portraits/real/bernard-arnault-family.webp' };
+  P['bill-gates'] = { img: 'assets/portraits/real/bill-gates.webp' };
+  P['carlos-slim-helu-family'] = { img: 'assets/portraits/real/carlos-slim-helu-family.webp' };
+  P['changpeng-zhao'] = { img: 'assets/portraits/real/changpeng-zhao.webp' };
+  P['charles-koch-family'] = { img: 'assets/portraits/real/charles-koch-family.webp' };
+  P['colin-huang'] = { img: 'assets/portraits/real/colin-huang.webp' };
+  P['cyrus-poonawalla'] = { img: 'assets/portraits/real/cyrus-poonawalla.webp' };
+  P['david-tepper'] = { img: 'assets/portraits/real/david-tepper.webp' };
+  P['dilip-shanghvi'] = { img: 'assets/portraits/real/dilip-shanghvi.webp' };
+  P['eduardo-saverin'] = { img: 'assets/portraits/real/eduardo-saverin.webp' };
+  P['elon-musk'] = { img: 'assets/portraits/real/elon-musk.webp' };
+  P['eric-schmidt'] = { img: 'assets/portraits/real/eric-schmidt.webp' };
+  P['francois-pinault-family'] = { img: 'assets/portraits/real/francois-pinault-family.webp' };
+  P['francoise-bettencourt-meyers-family'] = { img: 'assets/portraits/real/francoise-bettencourt-meyers-family.webp' };
+  P['gautam-adani'] = { img: 'assets/portraits/real/gautam-adani.webp' };
+  P['gina-rinehart'] = { img: 'assets/portraits/real/gina-rinehart.webp' };
+  P['giovanni-ferrero'] = { img: 'assets/portraits/real/giovanni-ferrero.webp' };
+  P['greg-brockman'] = { img: 'assets/portraits/real/greg-brockman.webp' };
+  P['henry-samueli'] = { img: 'assets/portraits/real/henry-samueli.webp' };
+  P['israel-englander'] = { img: 'assets/portraits/real/israel-englander.webp' };
+  P['jack-ma'] = { img: 'assets/portraits/real/jack-ma.webp' };
+  P['jay-y-lee'] = { img: 'assets/portraits/real/jay-y-lee.webp' };
+  P['jeff-bezos'] = { img: 'assets/portraits/real/jeff-bezos.webp' };
+  P['jeff-yass'] = { img: 'assets/portraits/real/jeff-yass.webp' };
+  P['jensen-huang'] = { img: 'assets/portraits/real/jensen-huang.webp' };
+  P['jim-walton-family'] = { img: 'assets/portraits/real/jim-walton-family.webp' };
+  P['ken-griffin'] = { img: 'assets/portraits/real/ken-griffin.webp' };
+  P['lakshmi-mittal'] = { img: 'assets/portraits/real/lakshmi-mittal.webp' };
+  P['larry-ellison'] = { img: 'assets/portraits/real/larry-ellison.webp' };
+  P['larry-page'] = { img: 'assets/portraits/real/larry-page.webp' };
+  P['len-blavatnik'] = { img: 'assets/portraits/real/len-blavatnik.webp' };
+  P['li-ka-shing'] = { img: 'assets/portraits/real/li-ka-shing.webp' };
+  P['ma-huateng'] = { img: 'assets/portraits/real/ma-huateng.webp' };
+  P['mackenzie-scott'] = { img: 'assets/portraits/real/mackenzie-scott.webp' };
+  P['mark-mateschitz'] = { img: 'assets/portraits/real/mark-mateschitz.webp' };
+  P['mark-zuckerberg'] = { img: 'assets/portraits/real/mark-zuckerberg.webp' };
+  P['masayoshi-son'] = { img: 'assets/portraits/real/masayoshi-son.webp' };
+  P['melinda-french-gates'] = { img: 'assets/portraits/real/melinda-french-gates.webp' };
+  P['michael-bloomberg'] = { img: 'assets/portraits/real/michael-bloomberg.webp' };
+  P['michael-dell'] = { img: 'assets/portraits/real/michael-dell.webp' };
+  P['miriam-adelson-family'] = { img: 'assets/portraits/real/miriam-adelson-family.webp' };
+  P['mukesh-ambani'] = { img: 'assets/portraits/real/mukesh-ambani.webp' };
+  P['paolo-ardoino'] = { img: 'assets/portraits/real/paolo-ardoino.webp' };
+  P['peter-thiel'] = { img: 'assets/portraits/real/peter-thiel.webp' };
+  P['pham-nhat-vuong'] = { img: 'assets/portraits/real/pham-nhat-vuong.webp' };
+  P['rob-walton-family'] = { img: 'assets/portraits/real/rob-walton-family.webp' };
+  P['robert-pera'] = { img: 'assets/portraits/real/robert-pera.webp' };
+  P['robin-zeng'] = { img: 'assets/portraits/real/robin-zeng.webp' };
+  P['savitri-jindal-family'] = { img: 'assets/portraits/real/savitri-jindal-family.webp' };
+  P['sergey-brin'] = { img: 'assets/portraits/real/sergey-brin.webp' };
+  P['shiv-nadar'] = { img: 'assets/portraits/real/shiv-nadar.webp' };
+  P['stanley-kroenke'] = { img: 'assets/portraits/real/stanley-kroenke.webp' };
+  P['stephen-schwarzman'] = { img: 'assets/portraits/real/stephen-schwarzman.webp' };
+  P['steve-ballmer'] = { img: 'assets/portraits/real/steve-ballmer.webp' };
+  P['steve-cohen'] = { img: 'assets/portraits/real/steve-cohen.webp' };
+  P['tadashi-yanai-family'] = { img: 'assets/portraits/real/tadashi-yanai-family.webp' };
+  P['thomas-peterffy'] = { img: 'assets/portraits/real/thomas-peterffy.webp' };
+  P['warren-buffett'] = { img: 'assets/portraits/real/warren-buffett.webp' };
+  P['william-ding'] = { img: 'assets/portraits/real/william-ding.webp' };
+  P['zhang-yiming'] = { img: 'assets/portraits/real/zhang-yiming.webp' };
 })(typeof window !== 'undefined' ? window : globalThis);
