@@ -341,7 +341,7 @@
     var mult = wk && typeof wk.captainMultiplier === 'number' ? wk.captainMultiplier : C.CAPTAIN_MULT;
     var pw = WORDS[picks] || String(picks);
     [
-      ['Make your picks', pw.charAt(0).toUpperCase() + pw.slice(1) + ' people, ' + cap + ' cap. Each player has a cap cost; stay at or under ' + cap + '.'],
+      ['Make your picks', pw.charAt(0).toUpperCase() + pw.slice(1) + ' players, billionaires or big-company CEOs, ' + cap + ' cap. Each player has a cap cost; stay at or under ' + cap + '.'],
       ['Name your captain', 'Your captain scores ' + mult + '× points, good or bad.'],
       ['Watch the week play out', 'Points come from their real stock moves each trading day, head to head with the S&P 500.']
     ].forEach(function(x, i){

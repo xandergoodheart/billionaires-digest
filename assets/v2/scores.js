@@ -139,7 +139,7 @@
     }
     var top = boardTop(box, m.wk);
     if (!m.team){
-      if (m.wk.practice) emptyState(box, 'Pick five to see your matchup', 'Choose five billionaires and a captain in the Draft room. Your practice lineup is scored on the sample days so you can see how the head-to-head works.', true);
+      if (m.wk.practice) emptyState(box, 'Pick five to see your matchup', 'Choose five players (billionaires or big-company CEOs) and a captain in the Draft room. Your practice lineup is scored on the sample days so you can see how the head-to-head works.', true);
       else emptyState(box, 'You are not in this week', 'Save a lineup and it counts from next week' + (C.lateFrom(F.now()) ? ', or right away as a late entry from the next trading day.' : '.'), true);
       return;
     }

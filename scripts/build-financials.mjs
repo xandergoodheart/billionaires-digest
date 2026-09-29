@@ -1,4 +1,5 @@
-// Company financials from SEC XBRL company facts for every ticker in data/people/*.json controls[].
+// Company financials from SEC XBRL company facts for every ticker in data/people/*.json controls[]
+// and every CEO's company ticker in data/ceos/index.json.
 //
 //   node scripts/build-financials.mjs
 //   (User-Agent from SEC_USER_AGENT, default "Billionaires Digest hello@billionairesdigest.com")
@@ -31,16 +32,16 @@ async function secFetch(url) {
 }
 
 // symbol -> { us: boolean, note }
-function collectSymbols(profiles) {
+// ceos: data/ceos/index.json people ({ ticker, exchange }), handled by the same rules as profile controls.
+function collectSymbols(profiles, ceos = []) {
   const out = new Map();
-  for (const p of profiles) {
-    for (const c of p.controls || []) {
-      for (const s of splitTicker(c.ticker, c.exchange)) {
-        const us = isUsListing(s.exchange, s.note);
-        const cur = out.get(s.symbol);
-        if (!cur) out.set(s.symbol, { us, note: s.note });
-        else if (us) cur.us = true;
-      }
+  const entries = [...profiles.flatMap((p) => p.controls || []), ...ceos];
+  for (const c of entries) {
+    for (const s of splitTicker(c.ticker, c.exchange)) {
+      const us = isUsListing(s.exchange, s.note);
+      const cur = out.get(s.symbol);
+      if (!cur) out.set(s.symbol, { us, note: s.note });
+      else if (us) cur.us = true;
     }
   }
   return out;
@@ -48,7 +49,8 @@ function collectSymbols(profiles) {
 
 export async function main() {
   const profiles = await loadProfiles();
-  const symbols = collectSymbols(profiles);
+  const ceoIndex = await readJson(join(ROOT, 'data', 'ceos', 'index.json'), null);
+  const symbols = collectSymbols(profiles, ceoIndex?.people ?? []);
   const map = tickerMap(await secFetch('https://www.sec.gov/files/company_tickers.json'));
   if (!map.size) throw new Error('SEC company_tickers.json was empty');
 

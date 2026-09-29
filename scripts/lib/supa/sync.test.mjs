@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { sync } from './sync.mjs';
+import { sync, loadData } from './sync.mjs';
 import { generateMarkets, resolveMarket, marketTimes } from './markets.mjs';
 import { nyToUtc, nyDate, nyWeekday } from './time.mjs';
 
@@ -232,4 +232,37 @@ test('with GAME_LMSR_MARKETS=1: Monday run uploads, scores live, opens 11 market
     const r2 = await sync({ env, root: dataRoot, now: sat, log: quiet });
     assert.equal(r2.resolved.length, 0);
   }, { GAME_LMSR_MARKETS: '1' });
+});
+
+test('loadData: CEOs from data/ceos/index.json get names and sectors; a billionaire profile with the same slug wins', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'bd-ceos-'));
+  try {
+    const put = async (rel, obj) => { await mkdir(dirname(join(root, rel)), { recursive: true }); await writeFile(join(root, rel), JSON.stringify(obj)); };
+    await put('data/people/b01.json', { slug: 'b01', name: 'Person 01 & family', sector: 'Finance' });
+    await put('data/ceos/index.json', { people: [
+      { slug: 'c01', type: 'ceo', name: 'Ceo One', sector: 'AI & tech', ticker: 'AAA' },
+      { slug: 'c02', type: 'ceo', name: 'Ceo Two', ticker: 'BBB' },
+      { slug: 'b01', type: 'ceo', name: 'Not This One', sector: 'Autos' },
+      { slug: 'c03', type: 'ceo' }
+    ] });
+    const { people } = await loadData(root);
+    assert.deepEqual(people, {
+      b01: { name: 'Person 01', sector: 'Finance' },
+      c01: { name: 'Ceo One', sector: 'AI & tech' },
+      c02: { name: 'Ceo Two', sector: null }
+    });
+    // no CEO file: nothing breaks
+    await rm(join(root, 'data', 'ceos'), { recursive: true, force: true });
+    assert.deepEqual(Object.keys((await loadData(root)).people), ['b01']);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('generateMarkets: CEOs with a sector join the sector markets', () => {
+  const people = {};
+  for (const [sec, list] of Object.entries(SECTOR)) for (const s of list) people[s] = { name: `Person ${s.slice(1)}`, sector: sec };
+  people.c01 = { name: 'Ceo One', sector: 'Autos' }; people.c02 = { name: 'Ceo Two', sector: 'Autos' }; people.c03 = { name: 'Ceo Three', sector: 'Autos' };
+  const week = { ...W40, draftable: [...W40.draftable, 'c01', 'c02', 'c03'] };
+  const specs = generateMarkets({ week, people, filings: FILINGS.filings, prevWeek: W39, now: new Date('2026-09-28T13:00:00Z') });
+  const members = specs.find(m => m.kind === 'sector_top').params.members;
+  assert.deepEqual(members.Autos, ['c01', 'c02', 'c03']);
 });

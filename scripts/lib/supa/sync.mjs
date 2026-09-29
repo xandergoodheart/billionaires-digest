@@ -72,6 +72,12 @@ export async function loadData(root) {
   for (const p of await readJsonDir(join(root, 'data', 'people'))) {
     if (p && p.slug && p.name) people[p.slug] = { name: String(p.name).replace(/\s*&\s*family\s*$/i, ''), sector: p.sector || null };
   }
+  // CEOs (data/ceos/index.json, type "ceo"): same name + sector, so they get proper market names and join sector markets.
+  // A billionaire profile with the same slug wins.
+  const ceoDoc = await optionalJson(join(root, 'data', 'ceos', 'index.json'), { people: [] });
+  for (const c of (ceoDoc && Array.isArray(ceoDoc.people) ? ceoDoc.people : [])) {
+    if (c && c.slug && c.name && !people[c.slug]) people[c.slug] = { name: String(c.name), sector: c.sector || null };
+  }
   return { weeks, days, filingsDoc, people, books, history, opens };
 }
 

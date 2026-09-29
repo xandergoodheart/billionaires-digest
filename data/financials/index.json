@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-29T18:47:46.295Z",
+  "generated": "2026-09-29T19:32:03.046Z",
   "source": "SEC XBRL company facts",
   "tickers": {
     "1038": {
@@ -94,6 +94,71 @@
       "available": false,
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
     },
+    "AAPL": {
+      "available": true,
+      "name": "Apple Inc.",
+      "cik": "0000320193",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=320193&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-03-29",
+        "end": "2026-06-27",
+        "form": "10-Q",
+        "filed": "2026-07-31",
+        "accn": "0000320193-26-000020",
+        "revenue": 109417000000,
+        "netIncome": 29789000000,
+        "epsDiluted": 2.02
+      },
+      "ttm": {
+        "start": "2025-06-29",
+        "end": "2026-06-27",
+        "revenue": 466823000000,
+        "netIncome": 128930000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 16.4,
+      "revenueGrowthTTM": 14.2,
+      "netMarginQ": 27.2,
+      "netMarginTTM": 27.6,
+      "sharesOutstanding": {
+        "value": 14594180000,
+        "asOf": "2026-07-17"
+      }
+    },
+    "ABNB": {
+      "available": true,
+      "name": "Airbnb, Inc.",
+      "cik": "0001559720",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1559720&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-04-01",
+        "end": "2026-06-30",
+        "form": "10-Q",
+        "filed": "2026-08-06",
+        "accn": "0001559720-26-000027",
+        "revenue": 3608000000,
+        "netIncome": 816000000,
+        "epsDiluted": null
+      },
+      "ttm": {
+        "start": "2025-07-01",
+        "end": "2026-06-30",
+        "revenue": 13159000000,
+        "netIncome": 2691000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 16.5,
+      "revenueGrowthTTM": 13.6,
+      "netMarginQ": 22.6,
+      "netMarginTTM": 20.4,
+      "sharesOutstanding": null
+    },
     "ACC": {
       "available": false,
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
@@ -118,9 +183,77 @@
       "available": false,
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
     },
+    "ADBE": {
+      "available": true,
+      "name": "ADOBE INC.",
+      "cik": "0000796343",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=796343&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "Revenues",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-05-30",
+        "end": "2026-08-28",
+        "form": "10-Q",
+        "filed": "2026-09-22",
+        "accn": "0000796343-26-000156",
+        "revenue": 6760000000,
+        "netIncome": 1827000000,
+        "epsDiluted": 4.62
+      },
+      "ttm": {
+        "start": "2025-08-30",
+        "end": "2026-08-28",
+        "revenue": 25970000000,
+        "netIncome": 7284000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 12.9,
+      "revenueGrowthTTM": 12,
+      "netMarginQ": 27,
+      "netMarginTTM": 28,
+      "sharesOutstanding": {
+        "value": 389200000,
+        "asOf": "2026-09-18"
+      }
+    },
     "AMBUJACEM": {
       "available": false,
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
+    },
+    "AMD": {
+      "available": true,
+      "name": "ADVANCED MICRO DEVICES INC",
+      "cik": "0000002488",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=2488&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-03-29",
+        "end": "2026-06-27",
+        "form": "10-Q",
+        "filed": "2026-08-05",
+        "accn": "0000002488-26-000123",
+        "revenue": 11536000000,
+        "netIncome": 2297000000,
+        "epsDiluted": 1.38
+      },
+      "ttm": {
+        "start": "2025-06-29",
+        "end": "2026-06-27",
+        "revenue": 41305000000,
+        "netIncome": 6434000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 50.1,
+      "revenueGrowthTTM": 39.5,
+      "netMarginQ": 19.9,
+      "netMarginTTM": 15.6,
+      "sharesOutstanding": {
+        "value": 1632475042,
+        "asOf": "2026-07-29"
+      }
     },
     "AMX": {
       "available": false,
@@ -348,6 +481,41 @@
         "asOf": "2026-07-31"
       }
     },
+    "C": {
+      "available": true,
+      "name": "Citigroup Inc",
+      "cik": "0000831001",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=831001&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "Revenues",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2025-10-01",
+        "end": "2025-12-31",
+        "form": "10-K",
+        "filed": "2026-02-20",
+        "accn": "0000831001-26-000011",
+        "revenue": 19871000000,
+        "netIncome": 2471000000,
+        "epsDiluted": null,
+        "derived": true
+      },
+      "ttm": {
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "revenue": 85225000000,
+        "netIncome": 14306000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 2.1,
+      "revenueGrowthTTM": 5.6,
+      "netMarginQ": 12.4,
+      "netMarginTTM": 16.8,
+      "sharesOutstanding": {
+        "value": 1749319009,
+        "asOf": "2026-01-31"
+      }
+    },
     "CCU": {
       "available": false,
       "reason": "No US GAAP facts in SEC company facts (likely a foreign filer)."
@@ -355,6 +523,40 @@
     "CDI": {
       "available": false,
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
+    },
+    "CRM": {
+      "available": true,
+      "name": "Salesforce, Inc.",
+      "cik": "0001108524",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1108524&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-05-01",
+        "end": "2026-07-31",
+        "form": "10-Q",
+        "filed": "2026-08-27",
+        "accn": "0001108524-26-000190",
+        "revenue": 11345000000,
+        "netIncome": 3526000000,
+        "epsDiluted": 4.29
+      },
+      "ttm": {
+        "start": "2025-08-01",
+        "end": "2026-07-31",
+        "revenue": 43938000000,
+        "netIncome": 9662000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 10.8,
+      "revenueGrowthTTM": 11.2,
+      "netMarginQ": 31.1,
+      "netMarginTTM": 22,
+      "sharesOutstanding": {
+        "value": 823000000,
+        "asOf": "2026-08-20"
+      }
     },
     "DANGCEM": {
       "available": false,
@@ -474,6 +676,40 @@
     "GFINBURO": {
       "available": false,
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
+    },
+    "GM": {
+      "available": true,
+      "name": "GENERAL MOTORS COMPANY",
+      "cik": "0001467858",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1467858&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "Revenues",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-04-01",
+        "end": "2026-06-30",
+        "form": "10-Q",
+        "filed": "2026-07-21",
+        "accn": "0001467858-26-000051",
+        "revenue": 48026000000,
+        "netIncome": 1305000000,
+        "epsDiluted": 1.41
+      },
+      "ttm": {
+        "start": "2025-07-01",
+        "end": "2026-06-30",
+        "revenue": 185528000000,
+        "netIncome": 1949000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 1.9,
+      "revenueGrowthTTM": -1.1,
+      "netMarginQ": 2.7,
+      "netMarginTTM": 1.1,
+      "sharesOutstanding": {
+        "value": 877451541,
+        "asOf": "2026-07-10"
+      }
     },
     "GMEXICO B": {
       "available": false,
@@ -633,6 +869,40 @@
     "JINDALSTEL": {
       "available": false,
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
+    },
+    "JPM": {
+      "available": true,
+      "name": "JPMORGAN CHASE & CO",
+      "cik": "0000019617",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=19617&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "Revenues",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-04-01",
+        "end": "2026-06-30",
+        "form": "10-Q",
+        "filed": "2026-08-06",
+        "accn": "0001628280-26-054343",
+        "revenue": null,
+        "netIncome": 21155000000,
+        "epsDiluted": 7.7
+      },
+      "ttm": {
+        "start": "2025-07-01",
+        "end": "2026-06-30",
+        "revenue": null,
+        "netIncome": 65067000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": null,
+      "revenueGrowthTTM": null,
+      "netMarginQ": null,
+      "netMarginTTM": null,
+      "sharesOutstanding": {
+        "value": 2658186195,
+        "asOf": "2026-06-30"
+      }
     },
     "JSL": {
       "available": false,
@@ -1064,6 +1334,37 @@
         "asOf": "2026-07-30"
       }
     },
+    "SHOP": {
+      "available": true,
+      "name": "Shopify Inc.",
+      "cik": "0001594805",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1594805&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "Revenues",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-04-01",
+        "end": "2026-06-30",
+        "form": "10-Q",
+        "filed": "2026-08-05",
+        "accn": "0001594805-26-000047",
+        "revenue": 3583000000,
+        "netIncome": 1502000000,
+        "epsDiluted": 1.16
+      },
+      "ttm": {
+        "start": "2025-07-01",
+        "end": "2026-06-30",
+        "revenue": 13269000000,
+        "netIncome": 1928000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 33.7,
+      "revenueGrowthTTM": 32.5,
+      "netMarginQ": 41.9,
+      "netMarginTTM": 14.5,
+      "sharesOutstanding": null
+    },
     "SMSAAM": {
       "available": false,
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
@@ -1092,6 +1393,10 @@
       "netMarginQ": -6.9,
       "netMarginTTM": null,
       "sharesOutstanding": null
+    },
+    "SPOT": {
+      "available": false,
+      "reason": "No US GAAP facts in SEC company facts (likely a foreign filer)."
     },
     "SUNPHARMA": {
       "available": false,
@@ -1141,6 +1446,40 @@
       "sharesOutstanding": {
         "value": 3949547394,
         "asOf": "2026-07-16"
+      }
+    },
+    "UBER": {
+      "available": true,
+      "name": "Uber Technologies, Inc",
+      "cik": "0001543151",
+      "currency": "USD",
+      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1543151&type=10-&dateb=&owner=include&count=40",
+      "revenueConcept": "Revenues",
+      "netIncomeConcept": "NetIncomeLoss",
+      "quarter": {
+        "start": "2026-04-01",
+        "end": "2026-06-30",
+        "form": "10-Q",
+        "filed": "2026-08-05",
+        "accn": "0001543151-26-000032",
+        "revenue": 14191000000,
+        "netIncome": 2394000000,
+        "epsDiluted": 1.17
+      },
+      "ttm": {
+        "start": "2025-07-01",
+        "end": "2026-06-30",
+        "revenue": 55227000000,
+        "netIncome": 9579000000,
+        "epsDiluted": null
+      },
+      "revenueGrowthQ": 12.2,
+      "revenueGrowthTTM": 16.7,
+      "netMarginQ": 16.9,
+      "netMarginTTM": 17.3,
+      "sharesOutstanding": {
+        "value": 2042560121,
+        "asOf": "2026-07-31"
       }
     },
     "UI": {
