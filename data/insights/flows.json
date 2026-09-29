@@ -1,26 +1,13 @@
 {
-  "generated": "2026-09-27",
+  "generated": "2026-09-28",
   "inputs": {
-    "filingsGenerated": "2026-09-27T14:47:02.980Z",
-    "pricesGenerated": "2026-09-27T14:50:28.959Z",
+    "filingsGenerated": "2026-09-28T17:45:54.610Z",
+    "pricesGenerated": "2026-09-28T17:50:14.740Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 3
+    "editions": 4
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 70 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 69 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
-    {
-      "week": "2026-W28",
-      "start": "2026-07-06",
-      "end": "2026-07-12",
-      "buy": 0,
-      "sell": 0,
-      "net": 0,
-      "other": 0,
-      "buyCount": 0,
-      "sellCount": 0,
-      "otherCount": 0,
-      "unpriced": 0
-    },
     {
       "week": "2026-W29",
       "start": "2026-07-13",
@@ -31,7 +18,7 @@
       "other": 0,
       "buyCount": 0,
       "sellCount": 1,
-      "otherCount": 2,
+      "otherCount": 0,
       "unpriced": 0
     },
     {
@@ -163,11 +150,24 @@
       "sellCount": 2,
       "otherCount": 1,
       "unpriced": 0
+    },
+    {
+      "week": "2026-W40",
+      "start": "2026-09-28",
+      "end": "2026-10-04",
+      "buy": 0,
+      "sell": 0,
+      "net": 0,
+      "other": 0,
+      "buyCount": 0,
+      "sellCount": 0,
+      "otherCount": 0,
+      "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-09-21",
-    "to": "2026-09-27",
+    "from": "2026-09-22",
+    "to": "2026-09-28",
     "buy": 141399452,
     "sell": 308092599,
     "net": -166693147,
@@ -208,7 +208,7 @@
       "other": 0,
       "buyCount": 9,
       "sellCount": 6,
-      "otherCount": 8,
+      "otherCount": 6,
       "unpriced": 0
     },
     {
@@ -500,7 +500,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 70,
+    "form4Filings": 69,
     "form4Parsed": 59,
     "windowDays": 90
   }

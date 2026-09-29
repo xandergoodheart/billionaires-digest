@@ -5,8 +5,9 @@ Owner works in plain language; keep explanations short and non-technical.
 
 ## Branches and versions
 - `main` = live v1. Tag `v1.0` + GitHub Release mark the complete v1.
-- `v2` = redesign in progress (see `docs/V2-BRIEF.md` on that branch). Nothing on `v2` is live until merged.
-- Daily automation commits to `main`; merge `main` into `v2` regularly so new data isn't lost.
+- `v3` = the chosen redesign (owner decision 2026-09-29): ESPN-style, all v2 features, realistic painted portraits. Preview: v3.billionaires-digest.pages.dev. Nothing on `v3` is live until merged into `main`.
+- `v2` = casino-style alternative (kept for reference, not the direction). `v2-classic` = older light snapshot.
+- Daily automation commits to `main`; merge `main` into `v3` regularly so new data isn't lost (take main's data files, keep v3's `index.html` Play front page, rebuild generated pages with `node scripts/build-pages.mjs`).
 
 ## Daily pipeline (America/New_York)
 - 5:30 AM `.github/workflows/data.yml` "Morning data": fetch-filings (SEC EDGAR) → fetch-13f (Mondays) → fetch-prices (Finnhub) → build-insights → build-copycat → build-network → build-fantasy → build-book → build-pages → commit.
