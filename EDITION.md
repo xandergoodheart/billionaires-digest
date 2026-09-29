@@ -36,7 +36,7 @@ Build today's Billionaires Digest edition and publish it.
    Include the 'unverified by fetch' list from step 4 (or say it's empty).
 
 Never edit `index.html` (the publish script updates its share-image meta tags; that is the only change), anything in `scripts/`, or workflow files during a daily run.
-(On the v2 site `index.html` is the Play front page and the daily edition page is `news.html`; never edit either during a daily run — `news.html` reads `digest.json`, so publishing the edition is enough.)
+(On the live site since v3 (2026-09-29) `index.html` is the Play front page and the daily edition page is `news.html`; never edit either during a daily run — `news.html` reads `digest.json`, so publishing the edition is enough.)
 
 ## Editorial rules
 Source of truth: `scripts/lib/edition.mjs` `rulesText()`. If you change one, change both.

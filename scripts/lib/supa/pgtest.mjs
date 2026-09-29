@@ -25,9 +25,12 @@ export async function makeDb({ mode = 'no-auto-expose' } = {}) {
   const db = new PGlite({ extensions: { citext } });
   await db.exec(await readFile(STUB, 'utf8'));
   if (mode === 'supabase-defaults') await db.exec(await readFile(DEFAULT_GRANTS, 'utf8'));
-  // every migration in order, like the Game sync workflow; then all of them again (each must be safe to re-apply)
-  const files = (await readdir(MIGRATIONS_DIR)).filter(f => f.endsWith('.sql')).sort();
-  const sqls = await Promise.all(files.map(f => readFile(join(MIGRATIONS_DIR, f), 'utf8')));
+  // every migration in order, like the Game sync workflow, plus the held-back ones in supabase/pending (tested, not
+  // auto-applied); then all of them again (each must be safe to re-apply)
+  const PENDING_DIR = join(ROOT, 'supabase', 'pending');
+  const list = async dir => (await readdir(dir).catch(() => [])).filter(f => f.endsWith('.sql')).map(f => ({ f, dir }));
+  const files = [...await list(MIGRATIONS_DIR), ...await list(PENDING_DIR)].sort((a, b) => a.f.localeCompare(b.f));
+  const sqls = await Promise.all(files.map(x => readFile(join(x.dir, x.f), 'utf8')));
   for (const sql of sqls) await db.exec(sql);
   for (const sql of sqls) await db.exec(sql);
   await db.exec(CLOCK);

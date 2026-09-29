@@ -13,7 +13,7 @@
 //      voided once they are PRICE_GIVE_UP_DAYS late)     -> settle_book_events (only the events passed)
 //      once Friday's data is in, settle from our files    -> settle_book (results from lib/book/settle.mjs); it voids every
 //      unsettled selection of the week, so it waits until no price market of the week is still waiting on a close
-//   7. Next Moves (OFF by default; GAME_MOVES_MARKETS=1 turns it on, needs 0004_moves.sql)
+//   7. Next Moves (OFF by default; GAME_MOVES_MARKETS=1 turns it on, needs 0004_moves.sql, held in supabase/pending until approved)
 //      open markets from data/moves/markets.json         -> create_market + set_market_start_odds
 //      resolve them from data/moves/resolved.json        -> resolve_market (see moves-sync.mjs)
 //      Step 5 leaves Next Moves markets (slugs starting mv-) alone either way; v1 insider_buy markets resolve as before.
