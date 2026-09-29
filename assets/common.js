@@ -279,8 +279,21 @@
 
   // ---- sector-plate avatar ----
   // person: { name, ini?, sector? }. size: px number, or a CSS length (then pass iniPx).
+  // With assets/v2/portraits.js loaded (window.BDPortraitFor), it shows only a face: the painted portrait, else the grey silhouette.
   BD.avatar = function(person, size, iniPx){
     var p = person || {};
+    var face = typeof window.BDPortraitFor === 'function' ? window.BDPortraitFor(p.slug || p.name) : null;
+    if (typeof face === 'string' && /^[A-Za-z0-9_\-.\/]+$/.test(face) && face.indexOf('..') < 0 && face.slice(0, 2) !== '//'){
+      var fw = el('span', 'av av--face');
+      fw.setAttribute('aria-hidden', 'true');
+      fw.style.setProperty('--av', typeof size === 'number' ? size + 'px' : String(size));
+      var fi = document.createElement('img');
+      fi.className = 'avface';
+      fi.setAttribute('src', face);
+      fi.setAttribute('alt', '');
+      fw.appendChild(fi);
+      return fw;
+    }
     var sector = p.sector || BD.personSector(p.name);
     var wrap = el('span', 'av');
     wrap.setAttribute('aria-hidden', 'true');
