@@ -10,7 +10,8 @@
    Needs BD (assets/common.js), BDFantasyCore, BDFantasyStore and BDDossierCore (assets/v2/dossier-core.js);
    BDPortraits (assets/v2/portraits.js) is optional.
    Real data only: every figure comes from the site's data files with its date and source; when a file or field
-   is missing the item is left out or shows "—". Game only: play money, no prizes. Not financial advice. */
+   is missing the item is left out or shows "—". CEOs (data/ceos/index.json) get a CEO version: role and company,
+   bio and sources from that file, no net worth. Game only: play money, no prizes. Not financial advice. */
 (function(){
   var F = window.BDFantasyStore, C = window.BDFantasyCore, K = window.BDDossierCore;
   if (!window.BD || !F || !C || !K) return;
@@ -178,9 +179,12 @@
     return person();
   }
   function primary(){ return K.primaryHolding(poolEntry()) || K.primaryHolding(person()); }
+  // CEO players: a pool entry with type "ceo", a slug in BDCeos (assets/v2/portraits.js) or an entry in data/ceos
+  function isCeo(){ return !!((window.BDIsCeo && (window.BDIsCeo(poolEntry()) || window.BDIsCeo(D.slug))) || ceo()); }
+  function ceo(){ return D.x.ceos && K.ceoEntry ? K.ceoEntry(D.x.ceos, D.slug) : null; /* K.ceo* is missing only in a cached older file */ }
   function control0(){ var p = D.x.prof; var c = p && arr(p.controls).filter(function(e){ return e && e.name; })[0]; return c || null; }
-  function sectorOf(){ var p = person(), ix = BD.indexBySlug(D.slug); return p.sector || (ix && ix.sector) || (D.x.prof && D.x.prof.sector) || 'Other'; }
-  function nameOf(){ var p = person(), ix = BD.indexBySlug(D.slug); return (p && p.name !== D.slug ? p.name : null) || (ix && ix.name) || (D.x.prof && D.x.prof.name) || D.slug; }
+  function sectorOf(){ var p = person(), ix = BD.indexBySlug(D.slug), c = ceo(); return p.sector || (ix && ix.sector) || (D.x.prof && D.x.prof.sector) || (c && c.sector) || 'Other'; }
+  function nameOf(){ var p = person(), ix = BD.indexBySlug(D.slug), c = ceo(); return (p && p.name !== D.slug ? p.name : null) || (ix && ix.name) || (D.x.prof && D.x.prof.name) || (c && c.name) || D.slug; }
 
   function renderId(){
     var box = clear(ui.id), p = person(), pic = portraitSrc(D.slug);
@@ -194,10 +198,13 @@
     var nk = nickname(D.slug);
     if (nk) t.appendChild(el('p', 'dz__nick', nk));
     var h = el('h2', 'dz__name', nameOf()); h.id = 'dz-name';
+    var ceoB = isCeo() && window.BDCeoBadge ? window.BDCeoBadge(D.slug) || window.BDCeoBadge({ type: 'ceo' }) : null;
+    if (ceoB) h.appendChild(ceoB);
     t.appendChild(h);
-    var ph = primary(), c0 = control0();
-    var coName = (ph && ph.name) || (c0 && c0.name) || '';
-    var tk = (ph && ph.ticker) || (c0 && c0.ticker) || '';
+    var ph = primary(), c0 = control0(), cx = ceo();
+    // CEOs: the company is on the role line below, so this line is just the ticker
+    var coName = isCeo() ? '' : ((ph && ph.name) || (c0 && c0.name) || '');
+    var tk = (ph && ph.ticker) || (c0 && c0.ticker) || (cx && cx.ticker) || '';
     if (coName || tk){
       var co = el('p', 'dz__co');
       if (coName) co.appendChild(txt(coName + ' '));
@@ -205,7 +212,8 @@
       t.appendChild(co);
     }
     var role = c0 && str(c0.role);
-    t.appendChild(el('p', 'dz__role', (role ? role + ' · ' : '') + sectorOf()));
+    if (isCeo()){ var rl = K.ceoRoleLine ? K.ceoRoleLine(cx) : ''; t.appendChild(el('p', 'dz__role', rl || (D.x.ceos === undefined ? 'CEO' : sectorOf()))); }
+    else t.appendChild(el('p', 'dz__role', (role ? role + ' · ' : '') + sectorOf()));
     var picked = F.state.picks && F.state.picks.indexOf(D.slug) >= 0;
     if (picked && D.opts.showTeam) t.appendChild(el('span', 'dz__on', F.state.captain === D.slug ? 'On your team · Captain' : 'On your team'));
     box.appendChild(t);
@@ -244,8 +252,48 @@
     d.appendChild(dd);
     dl.appendChild(d);
   }
+  // market cap (est.): SEC share count × latest price, from the files; null when either is missing
+  function capFact(){
+    var x = D.x, ph = primary(), tk = ph && ph.ticker;
+    var fin = tk && x.fin ? K.financials(x.fin, tk) : null;
+    var q = tk && x.prices && x.prices.quotes && has(x.prices.quotes, tk) ? x.prices.quotes[tk] : null;
+    var cap = fin && fin.shares && q ? K.marketCap(fin.shares.value, q.price) : null;
+    if (cap == null) return null;
+    var qd = nyDateOf(q.time) || nyDateOf(x.prices.generated);
+    return { cap: cap, tk: tk, sub: 'SEC share count ' + (dateTxt(fin.shares.asOf) || 'date not stated') + ' × price ' + (qd ? BD.fmtDate(qd) : 'date not stated') + (tk ? ' (' + tk + ')' : '') };
+  }
+  function renderCeoTape(box){
+    var x = D.x, c = ceo();
+    var dl = el('dl', 'dz-facts');
+    if (c && typeof c.roleSince === 'number') fact(dl, 'Role since', String(c.roleSince), str(c.company) ? 'at ' + str(c.company) : '');
+    fact(dl, 'Sector', sectorOf());
+    if (c && str(c.company)) fact(dl, 'Company', str(c.company), [str(c.ticker), str(c.exchange)].filter(Boolean).join(' · '));
+    var cf = capFact();
+    if (cf) fact(dl, 'Market cap (est.)', K.money(cf.cap), cf.sub);
+    box.appendChild(dl);
+    if (x.ceos === undefined){ loading(box, 'Loading the profile…'); return; }
+    if (!c) return;
+    if (str(c.bio)) box.appendChild(el('p', 'dz-note dz-bio', str(c.bio)));
+    var srcs = K.ceoSources ? K.ceoSources(c) : [];
+    var src = el('p', 'dz-src'), bits = 0;
+    if (srcs.length){
+      src.appendChild(txt('Sources: '));
+      srcs.forEach(function(sx, i){
+        if (i) src.appendChild(txt(' · '));
+        var a = ext(null, sx.title + (sx.date ? ' (' + (dateTxt(sx.date) || sx.date) + ')' : ''), sx.url, 'src-ceo-' + i);
+        if (a) src.appendChild(a);
+      });
+      bits++;
+    }
+    if (cf){
+      if (bits) src.appendChild(txt(' · '));
+      src.appendChild(txt('Prices: ' + (x.prices.provider || 'market data') + '; shares: SEC filings')); bits++;
+    }
+    if (bits) box.appendChild(src);
+  }
   function renderTape(){
     var box = clear(ui.tape), x = D.x, c0 = control0(), prof = x.prof;
+    if (isCeo()){ box.appendChild(el('h3', 'dz-sec__h dz-sec__h--red', 'Tale of the tape')); renderCeoTape(box); return; }
     box.appendChild(el('h3', 'dz-sec__h dz-sec__h--red', 'Tale of the tape'));
     var dl = el('dl', 'dz-facts');
     var since = c0 ? K.roleSince(c0.role) : null;
@@ -430,10 +478,22 @@
       if (hs.length > 5) s1.appendChild(el('p', 'dz-note', 'And ' + (hs.length - 5) + ' more on the player page.'));
     }
     box.appendChild(s1);
-    // latest filings (SEC EDGAR, data/filings/by-person)
+    // latest filings (SEC EDGAR, data/filings/by-person); CEOs: a link to their company's filings
     var s2 = el('section', 'dz-sub');
-    s2.appendChild(el('h4', 'dz-sub__h', 'Latest moves (SEC filings)'));
-    if (x.filings === undefined) loading(s2, 'Loading filings…');
+    if (isCeo()){
+      s2.appendChild(el('h4', 'dz-sub__h', 'Company filings'));
+      var fl = K.ceoFilingsLink ? K.ceoFilingsLink(ceo()) : null;
+      if (x.ceos === undefined) loading(s2, 'Loading…');
+      else if (!fl) empty(s2, 'No filings link on file.');
+      else {
+        var cp = el('p', 'dz-note');
+        cp.appendChild(txt((str(ceo().company) || name) + ': '));
+        cp.appendChild(ext('dz-more', fl.label + ' ↗', fl.url, 'ceo-filings'));
+        s2.appendChild(cp);
+        s2.appendChild(el('p', 'dz-note', 'Insider-buy points come from our SEC Form 4 feed, which covers the billionaires only, so CEOs score 0 there for now.'));
+      }
+    }
+    else if (x.filings === undefined) loading(s2, 'Loading filings…');
     else {
       var fls = arr(x.filings && x.filings.filings).filter(function(f){ return f && f.filed; }).sort(function(a, b){ return a.filed < b.filed ? 1 : (a.filed > b.filed ? -1 : 0); }).slice(0, 3);
       if (!fls.length) empty(s2, 'No SEC filings for ' + name + ' in our data' + (x.filings && x.filings.windowDays ? ' (last ' + x.filings.windowDays + ' days)' : '') + '.');
@@ -570,7 +630,9 @@
     peopleIx().then(function(){ return profile(slug); }).then(done('prof'));
     optJson('data/financials/index.json').then(done('fin'));
     BD.loadPrices().then(done('prices'));
-    once('filings:' + slug, function(){ return BD.loadPersonFilings(slug); }).then(done('filings'));
+    optJson('data/ceos/index.json').then(done('ceos'));
+    if (isCeo()) x.filings = null;
+    else once('filings:' + slug, function(){ return BD.loadPersonFilings(slug); }).then(done('filings'));
     optJson('digest.json').then(done('digest'));
     optJson('data/life/index.json').then(done('life'));
     optJson('data/moves/markets.json').then(done('moves'));

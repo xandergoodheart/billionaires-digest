@@ -2,18 +2,23 @@
 //
 //   node scripts/build-fantasy.mjs [--now=2026-09-28T14:00:00Z] [--force-day]
 //
-// Reads data/people, data/prices/latest.json, data/filings/latest.json and archive/<date>.json. Writes:
+// Reads data/people, data/ceos/index.json, data/prices/latest.json, data/filings/latest.json and archive/<date>.json.
+// CEOs (data/ceos) join every week's pool as type "ceo" players on their company stock (see scripts/lib/fantasy.mjs).
+// Writes:
 //   data/fantasy/days/<YYYY-MM-DD>.json  one file per trading day (New York date of the quotes); never duplicated
 //   data/fantasy/weeks/<YYYY-Www>.json   salaries frozen when the week file is first written, days, totals, benchmarks
+//                                        (a week that has not locked yet and has no CEOs gets them appended, with
+//                                        nobody else's salary changed)
 //   data/fantasy/index.json              current and draft week, weeks list, latest day, not-draftable list, news counts
 // Needs no network and no keys. Skips the day file when the quotes are not from a new trading day.
 
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, loadProfiles, readJson, writeJson, adrSet } from './lib/data-common.mjs';
+import { ROOT, loadProfiles, loadCeos, readJson, writeJson, adrSet } from './lib/data-common.mjs';
 import {
   core, BENCHMARK_SYMBOL, personPortfolio, scorePersonDay, tradingDateOf, computeSalaries, top5Team, POINTS, storyMatches,
+  isCeo, ceoPlayer, CEO_SALARY_NOTE,
 } from './lib/fantasy.mjs';
 
 const OUT = join(ROOT, 'data', 'fantasy');
@@ -29,7 +34,9 @@ async function listJson(dir) {
 }
 const round4 = (x) => Math.round(x * 10000) / 10000;
 
-export function buildPool(indexPeople, profiles, quotes) {
+// ceos: data/ceos/index.json people. Every CEO is draftable (their company stock is a US listing; a day without a
+// fresh quote counts 0%, like any stale quote). A CEO slug that is also a billionaire slug is skipped.
+export function buildPool(indexPeople, profiles, quotes, ceos = []) {
   const bySlug = new Map(profiles.map((p) => [p.slug, p]));
   const adrs = adrSet(profiles);
   const draftable = [], notDraftable = [];
@@ -40,12 +47,23 @@ export function buildPool(indexPeople, profiles, quotes) {
     if (!pf.holdings.length) { notDraftable.push({ ...base, reason: 'No daily market price (private wealth)' }); continue; }
     draftable.push({ ...base, method: pf.method, holdings: pf.holdings.map((h) => ({ ticker: h.ticker, name: h.name, weight: round4(h.weight), tier: h.tier, ...(h.adr ? { adr: true } : {}) })) });
   }
+  const taken = new Set(indexPeople.map((p) => p.slug));
+  for (const c of ceos) {
+    if (!c || !c.slug || !c.name || !c.ticker || taken.has(c.slug)) continue;
+    taken.add(c.slug);
+    draftable.push(ceoPlayer(c));
+  }
   return { draftable, notDraftable };
 }
 
 function weekLabel(id) {
   const info = core.weekInfo(id);
   return core.isPractice(id) ? PRACTICE_LABEL : `Week of ${info.start}`;
+}
+
+export function salaryMethodText(adjusted, withCeos) {
+  const base = adjusted ? `Forbes-rank tiers ±${4} by recent points percentile` : 'Forbes-rank tiers among draftable';
+  return withCeos ? `${base}; ${CEO_SALARY_NOTE}` : base;
 }
 
 export function newWeekFile(id, pool, history, createdAt) {
@@ -55,13 +73,30 @@ export function newWeekFile(id, pool, history, createdAt) {
     week: id, label: weekLabel(id), practice: core.isPractice(id),
     start: info.start, end: info.end, locksAt: new Date(info.locksAt).toISOString(),
     createdAt, cap: core.CAP, picks: core.PICKS, captainMultiplier: core.CAPTAIN_MULT,
-    salaryMethod: adjusted ? `Forbes-rank tiers ±${4} by recent points percentile` : 'Forbes-rank tiers among draftable',
+    salaryMethod: salaryMethodText(adjusted, pool.draftable.some(isCeo)),
     salaries,
     draftable: pool.draftable.filter((p) => salaries[p.slug] != null),
     days: [], daily: {}, spyDaily: {}, totals: {},
     benchmarks: { spy: null, top5: null, perfect: null },
     final: false,
   };
+}
+
+// A week file written before CEOs joined: when it has not locked yet (now < locksAt) and is not final, append the
+// CEOs from the pool that it lacks. Their salaries follow the same rule as a new week (computeSalaries on the week's
+// billionaires plus the CEOs, with the same history); nobody already in the file changes salary.
+// Returns { wk, added: [slug] } (wk unchanged when nothing is added).
+export function addCeosToWeek(wk, pool, history, now) {
+  if (!wk || wk.final || !(now < Date.parse(wk.locksAt))) return { wk, added: [] };
+  const have = wk.salaries || {};
+  const missing = pool.draftable.filter((p) => isCeo(p) && have[p.slug] == null);
+  if (!missing.length) return { wk, added: [] };
+  const bill = (wk.draftable || []).filter((p) => p && !isCeo(p) && have[p.slug] != null);
+  const { salaries, adjusted } = computeSalaries([...bill, ...missing], history);
+  const next = { ...wk, salaries: { ...have }, draftable: [...(wk.draftable || [])] };
+  for (const p of missing) { next.salaries[p.slug] = salaries[p.slug]; next.draftable.push(p); }
+  next.salaryMethod = salaryMethodText(adjusted, true);
+  return { wk: next, added: missing.map((p) => p.slug) };
 }
 
 // Recompute days, totals and benchmarks of a week file from the day files.
@@ -112,8 +147,9 @@ async function main() {
   const filings = (await readJson(join(ROOT, 'data', 'filings', 'latest.json'), { filings: [] })).filings ?? [];
   const editions = ((await readJson(join(ROOT, 'archive', 'index.json'), { editions: [] })).editions ?? []).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort();
 
-  const pool = buildPool(indexPeople, profiles, quotes);
-  console.log(`Draftable: ${pool.draftable.length}; not draftable: ${pool.notDraftable.length}`);
+  const ceos = await loadCeos();
+  const pool = buildPool(indexPeople, profiles, quotes, ceos);
+  console.log(`Draftable: ${pool.draftable.length} (${pool.draftable.filter(isCeo).length} CEOs); not draftable: ${pool.notDraftable.length}`);
 
   // ---- day file ----
   const tradingDate = Object.keys(quotes).length ? tradingDateOf(quotes) : null;
@@ -163,6 +199,12 @@ async function main() {
     if (!wk) {
       wk = newWeekFile(id, pool, finishedReal, generated);
       console.log(`New week ${id} (${wk.label}): salaries frozen for ${Object.keys(wk.salaries).length} people.`);
+    } else {
+      const r = addCeosToWeek(wk, pool, finishedReal, now);
+      if (r.added.length) {
+        wk = r.wk;
+        console.log(`Week ${id} has not locked: added ${r.added.length} CEOs (${r.added.map((s) => `${s} ${wk.salaries[s]}`).join(', ')}); other salaries unchanged.`);
+      }
     }
     if (!wk.final || wk.benchmarks?.perfect == null) wk = scoreWeek(wk, dayFiles, todayNy);
     await writeJson(path, wk);

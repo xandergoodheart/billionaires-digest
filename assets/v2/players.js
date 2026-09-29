@@ -9,15 +9,20 @@
   var FKEY = 'bd-v2-players-filters';
   var $ = function(id){ return document.getElementById(id); };
 
-  var UI = { q: '', sector: '', sort: 'pts' };
-  try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; } } catch (e) {}
+  var UI = { q: '', sector: '', sort: 'pts', kind: '' };
+  try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; UI.kind = cleanKind(saved.kind); } } catch (e) {}
   // a link from a player page (players.html?sector=...) or a shared search (?q=...) wins over the kept filters
   (function(){
     var s = location.search || '', m;
     if ((m = /[?&]sector=([^&]*)/.exec(s))){ try { UI.sector = decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (e) {} UI.q = ''; }
     if ((m = /[?&]q=([^&]*)/.exec(s))){ try { UI.q = decodeURIComponent(m[1].replace(/\+/g, ' ')); } catch (e) {} }
   })();
-  function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort })); } catch (e) {} }
+  function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort, kind: UI.kind })); } catch (e) {} }
+  var KIND_WORDS = { '': 'all players', billionaire: 'billionaires', ceo: 'CEOs' };
+  // player type helpers (BDPlayersCore has the tested versions; the fallbacks keep a cached older file working)
+  function kindOf(p){ return P.kindOf ? P.kindOf(p) : (p && p.type === 'ceo' ? 'ceo' : 'billionaire'); }
+  function cleanKind(k){ return P.cleanKind ? P.cleanKind(k) : (k === 'ceo' || k === 'billionaire' ? k : ''); }
+  function typeOk(p){ return !UI.kind || kindOf(p) === UI.kind; }
 
   // ---- helpers ----
   function clear(n){ while (n.firstChild) n.removeChild(n.firstChild); return n; }
@@ -32,6 +37,8 @@
   // name: a link to the player page; a plain click opens the player dossier (assets/v2/dossier.js) instead
   function nameLink(p){
     var a = link('v2-player__name', p.name, playerHref(p.slug));
+    var ceoB = window.BDCeoBadge ? window.BDCeoBadge(p) : null;
+    if (ceoB) a.appendChild(ceoB);
     if (window.BDDossier){ a.setAttribute('data-dossier', p.slug); a.setAttribute('aria-haspopup', 'dialog'); }
     return a;
   }
@@ -94,12 +101,24 @@
     list.forEach(function(s){ var o = el('option', null, s); o.value = s; sel.appendChild(o); });
     if (list.indexOf(UI.sector) < 0) UI.sector = '';
     sel.value = UI.sector;
+    syncKinds();
     $('sort').value = UI.sort;
     if ($('sort').value !== UI.sort){ UI.sort = 'pts'; $('sort').value = 'pts'; }
     $('q').value = UI.q;
   }
+  // player type (All · Billionaires · CEOs): buttons with aria-pressed; shown when the pool has CEOs
+  function syncKinds(){
+    var box = $('kindseg');
+    if (!box) return;
+    var anyCeo = pool().some(function(p){ return kindOf(p) === 'ceo'; });
+    if (!anyCeo) UI.kind = '';
+    box.hidden = !anyCeo;
+    Array.prototype.forEach.call(box.querySelectorAll('[data-kind]'), function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-kind') === UI.kind ? 'true' : 'false');
+    });
+  }
   function visible(){
-    var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && P.matches(p, UI.q); });
+    var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && typeOk(p) && P.matches(p, UI.q); });
     return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: function(s){ return F.stat(s).avg; }, cap: sal });
   }
 
@@ -118,7 +137,7 @@
     if (!list.length){
       var tr0 = el('tr'), td0 = el('td'); td0.colSpan = 6;
       var e = el('div', 'v2-empty');
-      e.appendChild(el('p', null, 'No players match ' + (UI.q ? '"' + UI.q + '"' : 'this filter') + (UI.sector ? ' in ' + UI.sector : '') + '.'));
+      e.appendChild(el('p', null, 'No ' + (UI.kind ? KIND_WORDS[UI.kind] : 'players') + ' match ' + (UI.q ? '"' + UI.q + '"' : 'this filter') + (UI.sector ? ' in ' + UI.sector : '') + '.'));
       var rb = btn('v2-btn v2-btn--ghost v2-btn--sm', 'Clear search and filters'); rb.setAttribute('data-reset', '1');
       e.appendChild(rb);
       td0.appendChild(e); tr0.appendChild(td0); body.appendChild(tr0);
@@ -165,8 +184,8 @@
       body.appendChild(tr);
     });
     var method = S.draftWk && S.draftWk.salaryMethod;
-    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Forbes rank') + ' · Forbes rank: Forbes Real-Time Billionaires';
-    $('poolcap').textContent = 'Players you can draft for ' + fmt.weekName(S.draftWeek) + ', ' + list.length + ' shown';
+    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Forbes rank') + ' · Forbes rank: Forbes Real-Time Billionaires (CEOs have none)';
+    $('poolcap').textContent = 'Players you can draft for ' + fmt.weekName(S.draftWeek) + (UI.kind ? ', ' + KIND_WORDS[UI.kind] : '') + ', ' + list.length + ' shown';
   }
   function renderNotDraftable(){
     var nd = arr(F.state.index && F.state.index.notDraftable), d = $('notdraftable');
@@ -203,13 +222,19 @@
       return;
     }
     if (b.hasAttribute('data-reset')){
-      UI.q = ''; UI.sector = ''; keepFilters(); $('q').value = ''; $('sector').value = ''; renderPool(); $('q').focus();
+      UI.q = ''; UI.sector = ''; UI.kind = ''; keepFilters(); $('q').value = ''; $('sector').value = ''; syncKinds(); renderPool(); $('q').focus();
     }
   });
   var qt = null;
   $('q').addEventListener('input', function(){ var v = this.value; clearTimeout(qt); qt = setTimeout(function(){ UI.q = v; keepFilters(); renderPool(); }, 120); });
   $('sector').addEventListener('change', function(){ UI.sector = this.value; keepFilters(); renderPool(); });
   $('sort').addEventListener('change', function(){ UI.sort = this.value; keepFilters(); renderPool(); });
+  if ($('kindseg')) $('kindseg').addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('[data-kind]') : null;
+    if (!b || !F.state.loaded) return;
+    UI.kind = cleanKind(b.getAttribute('data-kind')); keepFilters(); syncKinds(); renderPool();
+    say('Showing ' + KIND_WORDS[UI.kind] + (UI.sector ? ' in ' + UI.sector : '') + ': ' + visible().length + ' players.');
+  });
 
   F.onChange(function(kind){ if (F.state.loaded && (kind === 'roster' || kind === 'saved')) renderAll(); });
 

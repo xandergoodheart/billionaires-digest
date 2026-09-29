@@ -17,9 +17,14 @@
   var $ = function(id){ return document.getElementById(id); };
   var mqPhone = window.matchMedia ? window.matchMedia('(max-width: 767px)') : { matches: false };
 
-  var UI = { q: '', sector: '', sort: 'pts', saveMsg: null, syncMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
-  try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; } } catch (e) {}
-  function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort })); } catch (e) {} }
+  var UI = { q: '', sector: '', sort: 'pts', kind: '', saveMsg: null, syncMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
+  try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; UI.kind = cleanKind(saved.kind); } } catch (e) {}
+  function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort, kind: UI.kind })); } catch (e) {} }
+  var KIND_WORDS = { '': 'all players', billionaire: 'billionaires', ceo: 'CEOs' };
+  // player type helpers (BDPlayersCore has the tested versions; the fallbacks keep a cached older file working)
+  function kindOf(p){ return P.kindOf ? P.kindOf(p) : (p && p.type === 'ceo' ? 'ceo' : 'billionaire'); }
+  function cleanKind(k){ return P.cleanKind ? P.cleanKind(k) : (k === 'ceo' || k === 'billionaire' ? k : ''); }
+  function typeOk(p){ return !UI.kind || kindOf(p) === UI.kind; }
 
   // ---- helpers ----
   function clear(n){ while (n.firstChild) n.removeChild(n.firstChild); return n; }
@@ -154,7 +159,8 @@
   function tabId(s){ return 'sectab-' + (s ? BD.sectorSlug(s) : 'all'); }
   function renderSectors(){
     var have = {}, count = {}, box = clear($('sectabs'));
-    pool().forEach(function(p){ var s = p.sector || 'Other'; have[s] = 1; count[s] = (count[s] || 0) + 1; });
+    var inKind = 0;
+    pool().forEach(function(p){ var s = p.sector || 'Other'; have[s] = 1; count[s] = count[s] || 0; if (typeOk(p)){ count[s]++; inKind++; } });
     var list = BD.SECTORS.filter(function(s){ return have[s]; });
     Object.keys(have).forEach(function(s){ if (list.indexOf(s) < 0) list.push(s); });
     sectorList = [''].concat(list);
@@ -165,13 +171,14 @@
       b.setAttribute('role', 'tab');
       b.setAttribute('aria-controls', 'poolpanel');
       b.setAttribute('data-sector', s);
-      b.appendChild(el('span', 'dr-tab__n num', String(s ? count[s] : pool().length)));
+      b.appendChild(el('span', 'dr-tab__n num', String(s ? count[s] : inKind)));
       b.lastChild.setAttribute('aria-hidden', 'true');
-      var cnt = s ? count[s] : pool().length;
+      var cnt = s ? count[s] : inKind;
       b.appendChild(sr(' (' + cnt + (cnt === 1 ? ' player)' : ' players)')));
       box.appendChild(b);
     });
     syncTabs(false);
+    syncKinds();
     $('sort').value = UI.sort;
     if ($('sort').value !== UI.sort){ UI.sort = 'pts'; $('sort').value = 'pts'; }
     $('q').value = UI.q;
@@ -194,6 +201,22 @@
   function setSector(s, focus){
     UI.sector = s; keepFilters(); syncTabs(focus); renderPool();
   }
+  // ---- player type (All · Billionaires · CEOs): buttons with aria-pressed; shown when the pool has CEOs ----
+  function syncKinds(){
+    var box = $('kindseg');
+    if (!box) return;
+    var anyCeo = pool().some(function(p){ return kindOf(p) === 'ceo'; });
+    if (!anyCeo) UI.kind = '';
+    box.hidden = !anyCeo;
+    Array.prototype.forEach.call(box.querySelectorAll('[data-kind]'), function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-kind') === UI.kind ? 'true' : 'false');
+    });
+  }
+  function setKind(k){
+    UI.kind = cleanKind(k); keepFilters();
+    renderSectors(); renderPool();
+    say('Showing ' + KIND_WORDS[UI.kind] + (UI.sector ? ' in ' + UI.sector : '') + ': ' + visible().length + ' players.');
+  }
   $('sectabs').addEventListener('keydown', function(e){
     var i = sectorList.indexOf(UI.sector), j = null, n = sectorList.length;
     if (e.key === 'ArrowRight' || e.key === 'Right') j = (i + 1) % n;
@@ -207,7 +230,7 @@
 
   // ---- filters + sort ----
   function visible(){
-    var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && P.matches(p, UI.q); });
+    var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && typeOk(p) && P.matches(p, UI.q); });
     if (UI.sort === 'value') return P.sortPlayers(list, 'avg', { avg: valNum });
     return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: avgOf, cap: sal });
   }
@@ -267,7 +290,7 @@
     if (!list.length){
       var tr0 = el('tr'), td0 = el('td'); td0.colSpan = COLS;
       var e = el('div', 'v2-empty');
-      e.appendChild(el('p', null, 'No players match ' + (UI.q ? '"' + UI.q + '"' : 'this filter') + (UI.sector ? ' in ' + UI.sector : '') + '.'));
+      e.appendChild(el('p', null, 'No ' + (UI.kind ? KIND_WORDS[UI.kind] : 'players') + ' match ' + (UI.q ? '"' + UI.q + '"' : 'this filter') + (UI.sector ? ' in ' + UI.sector : '') + '.'));
       var rb = btn('v2-btn v2-btn--ghost v2-btn--sm', 'Clear search and filters'); rb.setAttribute('data-reset', '1');
       e.appendChild(rb);
       td0.appendChild(e); tr0.appendChild(td0); body.appendChild(tr0);
@@ -285,6 +308,8 @@
       var nb = btn('v2-player__name dr-name', p.name);
       nb.setAttribute('data-card', p.slug);
       nb.setAttribute('aria-haspopup', 'dialog');
+      var ceoB = window.BDCeoBadge ? window.BDCeoBadge(p) : null;
+      if (ceoB) nb.appendChild(ceoB);
       nb.appendChild(sr(': open player dossier'));
       tx.appendChild(nb);
       var tk = P.tickers(p).slice(0, 2).join(' · ');
@@ -343,7 +368,7 @@
     $('valuefoot').textContent = anyValue
       ? VALUE_RULE + ' The top 5 in the current view get a Value badge. Based on recent days only; not a forecast.'
       : 'No scored days yet, so there are no Value badges and "Best value" sorts by Forbes rank. ' + VALUE_RULE;
-    $('poolcap').textContent = 'Players you can draft for ' + fmt.weekName(S.draftWeek) + (UI.sector ? ', ' + UI.sector : '') + ', ' + list.length + ' shown';
+    $('poolcap').textContent = 'Players you can draft for ' + fmt.weekName(S.draftWeek) + (UI.kind ? ', ' + KIND_WORDS[UI.kind] : '') + (UI.sector ? ', ' + UI.sector : '') + ', ' + list.length + ' shown';
   }
   function renderNotDraftable(){
     var nd = arr(F.state.index && F.state.index.notDraftable), d = $('notdraftable');
@@ -820,7 +845,7 @@
       return;
     }
     if (b.hasAttribute('data-reset')){
-      UI.q = ''; $('q').value = ''; setSector('', false); $('q').focus();
+      UI.q = ''; $('q').value = ''; UI.kind = ''; UI.sector = ''; renderSectors(); setSector('', false); $('q').focus();
     }
   });
   document.addEventListener('input', function(e){ if (e.target && e.target.hasAttribute && e.target.hasAttribute('data-code-in')) UI.code = e.target.value; });
@@ -837,6 +862,10 @@
   var qt = null;
   $('q').addEventListener('input', function(){ var v = this.value; clearTimeout(qt); qt = setTimeout(function(){ UI.q = v; keepFilters(); renderPool(); }, 120); });
   $('sort').addEventListener('change', function(){ UI.sort = this.value; keepFilters(); renderPool(); });
+  if ($('kindseg')) $('kindseg').addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('[data-kind]') : null;
+    if (b && F.state.loaded) setKind(b.getAttribute('data-kind'));
+  });
 
   F.onChange(function(kind){
     if (!F.state.loaded) return;

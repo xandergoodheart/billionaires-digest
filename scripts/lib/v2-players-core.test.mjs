@@ -102,3 +102,17 @@ test('pct and weightPct formatting', () => {
   assert.equal(P.weightPct(undefined), '—');
   assert.deepEqual(plain(P.tickers(POOL[1])), ['BBB', 'AAA']);
 });
+
+test('player type filter: all, billionaires, CEOs', () => {
+  const pool = [{ slug: 'b1', rank: 1 }, { slug: 'c1', type: 'ceo', rank: null }, { slug: 'b2', rank: 2, type: undefined }];
+  const pick = (k) => pool.filter((p) => P.typeMatches(p, k)).map((p) => p.slug);
+  assert.deepEqual(pick(''), ['b1', 'c1', 'b2']);
+  assert.deepEqual(pick('billionaire'), ['b1', 'b2']);
+  assert.deepEqual(pick('ceo'), ['c1']);
+  assert.deepEqual(pick('nonsense'), ['b1', 'c1', 'b2']);
+  assert.equal(P.kindOf(pool[1]), 'ceo');
+  assert.equal(P.kindOf(null), 'billionaire');
+  assert.equal(P.cleanKind('ceo'), 'ceo');
+  assert.equal(P.cleanKind('x'), '');
+  assert.equal(P.cleanKind(undefined), '');
+});

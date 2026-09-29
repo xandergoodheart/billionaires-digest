@@ -3,7 +3,8 @@
 //   FINNHUB_API_KEY=... node scripts/fetch-prices.mjs
 //
 // Also quotes the Billionaire Fantasy League symbols (scripts/lib/fantasy.mjs): SPY, name aliases and the
-// curated US ADR lines used for daily returns only.
+// curated US ADR lines used for daily returns only, and the company tickers of the CEOs in data/ceos/index.json
+// (game scoring only; CEOs get no net-worth estimate).
 // Writes data/prices/latest.json, data/prices/history/<SYM>.json (closes), data/prices/opens/<SYM>.json (that session's
 // opening price; The Book's price markets run from an open to a close) and data/prices/networth-est.json.
 // The 5:30 AM quote is the previous session, so its open and close belong to the same New York date.
@@ -13,7 +14,7 @@
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { fantasySymbols } from './lib/fantasy.mjs';
-import { ROOT, MIN_COVERAGE, methodText, loadWealthOverrides, loadProfiles, holdingSymbols, estimateAll, adrSet, worthBySlug, nyDate, readJson, spacer, sleep, writeJson } from './lib/data-common.mjs';
+import { ROOT, MIN_COVERAGE, methodText, loadWealthOverrides, loadProfiles, loadCeos, holdingSymbols, estimateAll, adrSet, worthBySlug, nyDate, readJson, spacer, sleep, writeJson } from './lib/data-common.mjs';
 
 const OUT_DIR = join(ROOT, 'data', 'prices');
 const HISTORY_KEEP = 400;
@@ -37,7 +38,8 @@ async function quote(symbol) {
   }
 }
 
-export function collectSymbols(profiles) {
+// ceos: data/ceos/index.json people; each one's company ticker is quoted too (a plain US listing).
+export function collectSymbols(profiles, ceos = []) {
   const symbols = new Set();
   const skipped = new Map();
   for (const p of profiles) {
@@ -48,6 +50,7 @@ export function collectSymbols(profiles) {
     }
   }
   for (const s of fantasySymbols(profiles)) symbols.add(s);
+  for (const c of ceos) if (c && typeof c.ticker === 'string' && /^[A-Z][A-Z.]{0,5}$/.test(c.ticker)) symbols.add(c.ticker);
   for (const s of symbols) skipped.delete(s);
   return { symbols: [...symbols].sort(), skipped: [...skipped].map(([symbol, reason]) => ({ symbol, reason })) };
 }
@@ -86,7 +89,7 @@ async function main() {
   }
 
   const profiles = await loadProfiles();
-  const { symbols, skipped } = collectSymbols(profiles);
+  const { symbols, skipped } = collectSymbols(profiles, await loadCeos());
   console.log(`US symbols to quote: ${symbols.length}; skipped: ${skipped.length}`);
   for (const s of skipped) console.log(`  skip ${s.symbol}: ${s.reason}`);
 

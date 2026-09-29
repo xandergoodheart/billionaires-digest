@@ -3,9 +3,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   core, resolveHoldingTicker, holdingCandidates, personPortfolio, scorePersonDay, computeSalaries, tierSalary,
-  ensureFeasible, top5Team, tradingDateOf, fantasySymbols, hasInsiderBuy,
+  ensureFeasible, top5Team, tradingDateOf, fantasySymbols, hasInsiderBuy, medianSalary, ceoPlayer, isCeo, CEO_SALARY_NOTE,
 } from './fantasy.mjs';
-import { scoreWeek, newWeekFile } from '../build-fantasy.mjs';
+import { scoreWeek, newWeekFile, buildPool, addCeosToWeek } from '../build-fantasy.mjs';
 
 const q = (changePct, price = 100, time = '2026-09-24T20:00:00.000Z') => ({ price, changePct, time });
 
@@ -284,4 +284,103 @@ test('export / import code round trip', () => {
 test('tradingDateOf uses the New York date of the quotes', () => {
   assert.equal(tradingDateOf({ A: q(1), B: q(1), C: q(1, 1, '2026-09-23T20:00:00.000Z') }), '2026-09-24');
   assert.deepEqual(top5Team([{ slug: 'z', rank: 2 }, { slug: 'y', rank: 1 }]), { picks: ['y', 'z'], captain: 'y' });
+});
+
+// ---------- CEOs ----------
+const CEO_A = { slug: 'ceo-a', name: 'Ann Chief', company: 'Alpha Corp', ticker: 'AAA', sector: 'AI & tech' };
+const CEO_B = { slug: 'ceo-b', name: 'Bo Boss', company: 'Beta Inc', ticker: 'BBB', sector: 'Finance' };
+
+test('medianSalary: odd, even (rounded), empty', () => {
+  assert.equal(medianSalary([30, 7, 14]), 14);
+  assert.equal(medianSalary([18, 22, 14, 30]), 20);
+  assert.equal(medianSalary([18, 19]), 19); // 18.5 rounds up
+  assert.equal(medianSalary([]), null);
+});
+
+test('ceoPlayer: one company holding at full weight, no rank', () => {
+  assert.deepEqual(ceoPlayer(CEO_A), { slug: 'ceo-a', name: 'Ann Chief', rank: null, sector: 'AI & tech', type: 'ceo', method: 'company stock',
+    holdings: [{ ticker: 'AAA', name: 'Alpha Corp', weight: 1, tier: 'leads' }] });
+  assert.equal(isCeo(ceoPlayer(CEO_A)), true);
+  assert.equal(isCeo({ slug: 'x', rank: 1 }), false);
+});
+
+test('CEO salaries: median of the billionaire tiers, billionaires unchanged, same recent-points adjustment', () => {
+  const people = Array.from({ length: 40 }, (_, i) => ({ slug: 's' + String(i).padStart(2, '0'), rank: i + 1 }));
+  const ceos = [ceoPlayer(CEO_B), ceoPlayer(CEO_A)];
+  const plain = computeSalaries(people).salaries;
+  const mixed = computeSalaries([...ceos, ...people]);
+  // tiers for 40: 14×5, 18×15, 22×10, 26×5, 30×5 -> 20th and 21st lowest are 18 and 22 -> median 20
+  assert.equal(mixed.ceoBase, 20);
+  assert.equal(mixed.salaries['ceo-a'], 20);
+  assert.equal(mixed.salaries['ceo-b'], 20);
+  for (const p of people) assert.equal(mixed.salaries[p.slug], plain[p.slug], p.slug);
+  assert.equal(computeSalaries(people).ceoBase, null);
+  // four finished weeks: ceo-a best, ceo-b worst -> +4 / -4 around the median
+  const totals = Object.fromEntries(people.map((p, i) => [p.slug, i * 10]));
+  totals['ceo-a'] = 10000; totals['ceo-b'] = -10000;
+  const adj = computeSalaries([...people, ...ceos], [{ totals }, { totals }, { totals }, { totals }]);
+  assert.equal(adj.adjusted, true);
+  assert.equal(adj.salaries['ceo-a'], 24);
+  assert.equal(adj.salaries['ceo-b'], 16);
+  // CEOs are never in the Top 5 richest benchmark
+  assert.deepEqual(top5Team([...ceos, ...people]).picks, ['s00', 's01', 's02', 's03', 's04']);
+});
+
+test('buildPool adds every CEO as a company-stock player and skips a slug clash', () => {
+  const indexPeople = [{ slug: 'p1', name: 'Pat One', rank: 1, sector: 'Finance' }];
+  const profiles = [{ slug: 'p1', controls: [{ name: 'Pat Co', ticker: 'PPP', exchange: 'NYSE' }] }];
+  const quotes = { PPP: q(1) };
+  const pool = buildPool(indexPeople, profiles, quotes, [CEO_A, { ...CEO_B, slug: 'p1' }]);
+  assert.deepEqual(pool.draftable.map((p) => p.slug), ['p1', 'ceo-a']);
+  assert.equal(pool.draftable[1].type, 'ceo');
+  assert.equal(pool.draftable[1].rank, null);
+  assert.deepEqual(pool.draftable[1].holdings, [{ ticker: 'AAA', name: 'Alpha Corp', weight: 1, tier: 'leads' }]);
+  // no quote for AAA yet: still draftable
+  assert.equal(pool.notDraftable.length, 0);
+  assert.deepEqual(buildPool(indexPeople, profiles, quotes).draftable.map((p) => p.slug), ['p1']);
+});
+
+test('CEO day scoring: company stock return, stories by name, no insider buy without filings', () => {
+  const p = ceoPlayer(CEO_A);
+  const stories = [{ who: 'Ann Chief', headline: 'x' }, { who: 'Someone', people: ['Ann Chief'], headline: 'y' }, { who: 'Other', headline: 'z' }];
+  const r = scorePersonDay({ slug: p.slug, name: p.name, holdings: p.holdings, quotes: { AAA: q(1.5) }, tradingDate: '2026-09-24', filings: [], stories });
+  assert.equal(r.pricePoints, 150);
+  assert.deepEqual(r.bonuses, { insiderBuy: 0, stories: 20 });
+  assert.equal(r.points, 170);
+  const none = scorePersonDay({ slug: p.slug, name: p.name, holdings: p.holdings, quotes: {}, tradingDate: '2026-09-24', filings: [], stories: [] });
+  assert.equal(none.points, 0);
+  assert.equal(none.holdings[0].stale, true);
+});
+
+test('new week file: CEOs in the pool with the salary note', () => {
+  const pool = { draftable: [...['a', 'b', 'c', 'd', 'e', 'f'].map((s, i) => ({ slug: s, name: s, rank: i + 1, holdings: [] })), ceoPlayer(CEO_A)] };
+  const wk = newWeekFile('2026-W41', pool, [], '2026-09-29T00:00:00Z');
+  assert.equal(wk.salaryMethod, 'Forbes-rank tiers among draftable; ' + CEO_SALARY_NOTE);
+  assert.ok(wk.draftable.some((p) => p.slug === 'ceo-a'));
+  assert.equal(typeof wk.salaries['ceo-a'], 'number');
+  const noCeo = newWeekFile('2026-W41', { draftable: pool.draftable.slice(0, 6) }, [], '2026-09-29T00:00:00Z');
+  assert.equal(noCeo.salaryMethod, 'Forbes-rank tiers among draftable');
+});
+
+test('addCeosToWeek: appends CEOs before the lock only, nobody else changes', () => {
+  const bill = Array.from({ length: 40 }, (_, i) => ({ slug: 's' + String(i).padStart(2, '0'), name: 'S' + i, rank: i + 1, holdings: [] }));
+  const wk = newWeekFile('2026-W41', { draftable: bill }, [], '2026-09-28T00:00:00Z');
+  const before = JSON.parse(JSON.stringify(wk));
+  const pool = { draftable: [...bill, ceoPlayer(CEO_A), ceoPlayer(CEO_B)] };
+  const open = Date.parse('2026-10-05T13:29:00Z'), locked = Date.parse('2026-10-05T13:30:00Z');
+  const r = addCeosToWeek(wk, pool, [], open);
+  assert.deepEqual(r.added, ['ceo-a', 'ceo-b']);
+  assert.equal(r.wk.salaries['ceo-a'], 20);
+  for (const p of bill) assert.equal(r.wk.salaries[p.slug], before.salaries[p.slug]);
+  assert.equal(r.wk.draftable.length, 42);
+  assert.equal(r.wk.salaryMethod, 'Forbes-rank tiers among draftable; ' + CEO_SALARY_NOTE);
+  assert.deepEqual(wk, before, 'input week file not mutated');
+  // second run: nothing new
+  assert.deepEqual(addCeosToWeek(r.wk, pool, [], open).added, []);
+  // locked or final weeks keep their frozen pool
+  assert.deepEqual(addCeosToWeek(wk, pool, [], locked).added, []);
+  assert.deepEqual(addCeosToWeek({ ...wk, final: true }, pool, [], open).added, []);
+  // scoreWeek then carries CEO totals
+  const scored = scoreWeek(r.wk, {}, '2026-10-01');
+  assert.equal(scored.totals['ceo-a'], 0);
 });

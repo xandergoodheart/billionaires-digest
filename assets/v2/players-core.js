@@ -18,6 +18,12 @@
     return out;
   }
 
+  // Player type filter: kind '' (all), 'billionaire' or 'ceo'. A pool entry is a CEO when its type is "ceo".
+  var KINDS = ['', 'billionaire', 'ceo'];
+  function kindOf(p){ return p && p.type === 'ceo' ? 'ceo' : 'billionaire'; }
+  function typeMatches(p, kind){ return !kind || KINDS.indexOf(kind) < 0 || kindOf(p) === kind; }
+  function cleanKind(kind){ return KINDS.indexOf(kind) >= 0 ? kind : ''; }
+
   // Search: every word must appear in the name, sector, a ticker or a holding's company name.
   function matches(p, q){
     var words = norm(fold(q)).split(' ').filter(Boolean);
@@ -142,6 +148,7 @@
 
   root.BDPlayersCore = {
     tickers: tickers, matches: matches, sortPlayers: sortPlayers, sectorRank: sectorRank,
+    kindOf: kindOf, typeMatches: typeMatches, cleanKind: cleanKind,
     dailySeries: dailySeries, gameLog: gameLog, pct: pct, weightPct: weightPct
   };
 })(typeof window !== 'undefined' ? window : globalThis);

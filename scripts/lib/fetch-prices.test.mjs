@@ -5,7 +5,8 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { quoteEntry, appendSeries } from '../fetch-prices.mjs';
+import { quoteEntry, appendSeries, collectSymbols } from '../fetch-prices.mjs';
+import { loadProfiles, loadCeos } from './data-common.mjs';
 
 test('quoteEntry keeps the open only when it is a positive number', () => {
   const t = Date.parse('2026-09-25T20:00:00Z') / 1000;
@@ -25,4 +26,17 @@ test('appendSeries: one row per date, replaced on a rerun, sorted, capped', asyn
     await appendSeries(dir, 'BRK.A', '2026-09-25', 751000);          // Saturday's run sees Friday's session again
     assert.deepEqual(JSON.parse(await readFile(join(dir, 'BRK.A.json'), 'utf8')), [['2026-09-24', 749000], ['2026-09-25', 751000]]);
   } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('collectSymbols adds the CEO company tickers and leaves the people symbols as they were', async () => {
+  const profiles = await loadProfiles();
+  const ceos = await loadCeos();
+  assert.ok(ceos.length > 0);
+  const base = collectSymbols(profiles);
+  const withCeos = collectSymbols(profiles, ceos);
+  for (const s of base.symbols) assert.ok(withCeos.symbols.includes(s), s);
+  for (const c of ceos) assert.ok(withCeos.symbols.includes(c.ticker), c.ticker);
+  const added = withCeos.symbols.filter((s) => !base.symbols.includes(s));
+  assert.deepEqual(added, [...new Set(ceos.map((c) => c.ticker))].filter((t) => !base.symbols.includes(t)).sort());
+  assert.deepEqual(collectSymbols([], [{ slug: 'x', name: 'X', ticker: 'bad ticker' }]).symbols, ['SPY']);
 });

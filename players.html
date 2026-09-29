@@ -108,6 +108,11 @@
 
     <section class="v2-card dr-pool pl-pool" aria-labelledby="poolh">
       <h2 class="v2-sr" id="poolh">Player pool</h2>
+      <div class="v2-seg" id="kindseg" role="group" aria-label="Player type" hidden>
+        <button type="button" class="v2-seg__b" data-kind="" aria-pressed="true">All</button>
+        <button type="button" class="v2-seg__b" data-kind="billionaire" aria-pressed="false">Billionaires</button>
+        <button type="button" class="v2-seg__b" data-kind="ceo" aria-pressed="false">CEOs</button>
+      </div>
       <div class="dr-filters">
         <div class="dr-filter dr-filter--q">
           <label class="v2-sr" for="q">Search by name, ticker, company or sector</label>

@@ -266,10 +266,17 @@
       if (withLink){
         // a link to the player page; a plain click opens the player dossier (assets/v2/dossier.js)
         var nl = link('v2-player__name', p.name, personHref(slug));
+        var ceoB = window.BDCeoBadge ? window.BDCeoBadge(p && p.slug ? p : slug) : null;
+        if (ceoB) nl.appendChild(ceoB);
         if (window.BDDossier){ nl.setAttribute('data-dossier', slug); nl.setAttribute('aria-haspopup', 'dialog'); if (wk && wk.week) nl.setAttribute('data-dossier-week', wk.week); }
         tx.appendChild(nl);
       }
-      else tx.appendChild(el('span', 'v2-player__name', p.name));
+      else {
+        var nm = el('span', 'v2-player__name', p.name);
+        var ceoB2 = window.BDCeoBadge ? window.BDCeoBadge(p && p.slug ? p : slug) : null;
+        if (ceoB2) nm.appendChild(ceoB2);
+        tx.appendChild(nm);
+      }
       if (slug === captain) tx.appendChild(el('span', 'v2-player__sub', 'Captain · ' + C.CAPTAIN_MULT + 'x'));
       pl.appendChild(tx);
       if (slug === captain){ var c = el('span', 'v2-badge-c', 'C'); c.title = 'Captain: scores 1.5 times'; c.setAttribute('aria-hidden', 'true'); pl.appendChild(c); }

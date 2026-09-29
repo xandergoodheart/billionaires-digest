@@ -181,6 +181,31 @@
     };
   }
 
+  // ---- CEOs (data/ceos/index.json) ----
+  // The CEO entry for a slug, or null. file: { people: [{ slug, type: 'ceo', name, company, ticker, exchange, role,
+  // roleSince, sector, secCik, bio, sources: [{ title, url, date }] }] }.
+  function ceoEntry(file, slug){
+    var list = arr(file && file.people);
+    for (var i = 0; i < list.length; i++) if (list[i] && list[i].slug === slug) return list[i];
+    return null;
+  }
+  // "Chair and CEO · Advanced Micro Devices, Inc." (either part may be missing; '' when both are).
+  function ceoRoleLine(c){ return c ? [str(c.role), str(c.company)].filter(Boolean).join(' · ') : ''; }
+  // The company's filings: the SEC EDGAR company page when the entry has a 10-digit CIK, else its first https source.
+  // Returns { url, label } or null.
+  function ceoFilingsLink(c){
+    if (!c) return null;
+    var cik = str(c.secCik);
+    if (/^\d{10}$/.test(cik)) return { url: 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=' + cik + '&owner=include&count=40', label: 'SEC filings' };
+    var src = arr(c.sources).filter(function(x){ return x && /^https:\/\//i.test(str(x.url)); })[0];
+    return src ? { url: str(src.url), label: str(src.title) || 'Source' } : null;
+  }
+  // Sources with an https url only, as { title, url, date }.
+  function ceoSources(c){
+    return arr(c && c.sources).filter(function(x){ return x && /^https:\/\//i.test(str(x.url)); })
+      .map(function(x){ return { title: str(x.title) || 'Source', url: str(x.url), date: str(x.date) || null }; });
+  }
+
   // ---- formatting (true minus sign) ----
   function money(n){
     if (!num(n)) return '—';
@@ -210,6 +235,7 @@
     roleSince: roleSince, primaryHolding: primaryHolding, marketCap: marketCap,
     seasonTotals: seasonTotals, seasonRank: seasonRank, weekLog: weekLog, rulesText: rulesText,
     nickname: nickname, financials: financials,
+    ceoEntry: ceoEntry, ceoRoleLine: ceoRoleLine, ceoFilingsLink: ceoFilingsLink, ceoSources: ceoSources,
     money: money, eps: eps, pct: pct, plainPct: plainPct, signed: signed
   };
 })(typeof window !== 'undefined' ? window : globalThis);

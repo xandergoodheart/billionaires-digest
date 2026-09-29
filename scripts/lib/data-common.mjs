@@ -48,6 +48,13 @@ export async function loadProfiles() {
   return out;
 }
 
+// Big-company CEOs in the fantasy game (data/ceos/index.json): [{ slug, type: 'ceo', name, company, ticker, ... }].
+// Missing or unreadable file -> [].
+export async function loadCeos() {
+  const file = await readJson(join(ROOT, 'data', 'ceos', 'index.json'), null);
+  return (Array.isArray(file?.people) ? file.people : []).filter((p) => p && p.slug && p.name);
+}
+
 export function padCik(cik) {
   const digits = String(cik ?? '').replace(/\D/g, '');
   if (!digits || /^0+$/.test(digits)) return null;

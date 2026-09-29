@@ -42,6 +42,8 @@
   // name: a link to the player page; a plain click opens the player dossier (assets/v2/dossier.js) instead
   function nameLink(p, weekId){
     var a = link('v2-player__name', p.name, 'player.html?p=' + encodeURIComponent(p.slug));
+    var ceoB = window.BDCeoBadge ? window.BDCeoBadge(p) : null;
+    if (ceoB) a.appendChild(ceoB);
     if (window.BDDossier){
       a.setAttribute('data-dossier', p.slug); a.setAttribute('aria-haspopup', 'dialog');
       if (weekId) a.setAttribute('data-dossier-week', weekId);

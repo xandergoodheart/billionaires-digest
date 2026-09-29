@@ -6,10 +6,11 @@ import { ROOT } from './data-common.mjs';
 
 const readJson = async (rel) => JSON.parse(await readFile(join(ROOT, rel), 'utf8'));
 
-test('every person has a unique nickname of at most 4 words starting with "The "', async () => {
+test('every person and every CEO has a unique nickname of at most 4 words starting with "The "', async () => {
   const index = await readJson('data/people/index.json');
+  const ceos = await readJson('data/ceos/index.json');
   const nicknames = await readJson('data/fantasy/nicknames.json');
-  const slugs = index.people.map((p) => p.slug);
+  const slugs = index.people.map((p) => p.slug).concat(ceos.people.map((p) => p.slug));
   const seen = new Set();
   for (const slug of slugs) {
     const nick = nicknames[slug];
@@ -21,6 +22,6 @@ test('every person has a unique nickname of at most 4 words starting with "The "
     seen.add(nick.toLowerCase());
   }
   const extra = Object.keys(nicknames).filter((s) => !slugs.includes(s));
-  assert.deepEqual(extra, [], 'nicknames for slugs not in data/people/index.json');
+  assert.deepEqual(extra, [], 'nicknames for slugs not in data/people/index.json or data/ceos/index.json');
   assert.deepEqual(Object.keys(nicknames), [...Object.keys(nicknames)].sort(), 'nicknames.json keys are sorted');
 });

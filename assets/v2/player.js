@@ -1,7 +1,8 @@
 /* Billionaires Digest v2: Player profile (player.html?p=<slug>). ES5, UI only.
    Facts come from data/people/index.json (Forbes rank, net worth), data/people/<slug>.json (sourced profile), the
-   fantasy week and day files (via BDFantasyStore) and the latest digest.json. Nothing is made up: when a field is
-   missing it is left out. "+ Add to team" uses the same store action as the Draft room.
+   fantasy week and day files (via BDFantasyStore) and the latest digest.json. CEOs (not on the billionaire list)
+   come from data/ceos/index.json instead: role, company, bio and sources, no Forbes rank or net worth. Nothing is
+   made up: when a field is missing it is left out. "+ Add to team" uses the same store action as the Draft room.
    Game only: play money, no prizes. Not financial advice. */
 (function(){
   var F = window.BDFantasyStore, C = window.BDFantasyCore, P = window.BDPlayersCore;
@@ -61,11 +62,22 @@
     return /^[a-z0-9][a-z0-9-]{0,80}$/.test(s) ? s : '';
   })();
 
-  var D = { idx: null, peopleIx: null, prof: null, pool: null, nd: null, digest: null, digestState: 'loading' };
+  var D = { idx: null, peopleIx: null, prof: null, pool: null, nd: null, ceo: null, digest: null, digestState: 'loading' };
   var UI = { tab: 'overview', msg: null };
 
-  function name(){ return (D.idx && D.idx.name) || (D.pool && D.pool.name) || (D.nd && D.nd.name) || slug; }
-  function sector(){ return (D.pool && D.pool.sector) || (D.idx && D.idx.sector) || (D.nd && D.nd.sector) || 'Other'; }
+  function name(){ return (D.idx && D.idx.name) || (D.pool && D.pool.name) || (D.nd && D.nd.name) || (D.ceo && D.ceo.name) || slug; }
+  function sector(){ return (D.pool && D.pool.sector) || (D.idx && D.idx.sector) || (D.nd && D.nd.sector) || (D.ceo && D.ceo.sector) || 'Other'; }
+  // a CEO player (data/ceos/index.json, or a pool entry with type "ceo"); billionaires are never CEOs here
+  function isCeo(){ return !D.idx && !!(D.ceo || (window.BDIsCeo && (window.BDIsCeo(D.pool) || window.BDIsCeo(slug)))); }
+  function ceoBadge(){ return isCeo() && window.BDCeoBadge ? (window.BDCeoBadge(slug) || window.BDCeoBadge({ type: 'ceo' })) : null; }
+  function ceoSources(){ return D.ceo && window.BDDossierCore ? window.BDDossierCore.ceoSources(D.ceo) : arr(D.ceo && D.ceo.sources).filter(function(x){ return x && /^https:\/\//i.test(str(x.url)); }); }
+  function ceoFilings(){
+    var c = D.ceo;
+    if (!c) return null;
+    if (/^\d{10}$/.test(str(c.secCik))) return { url: 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=' + str(c.secCik) + '&owner=include&count=40', label: 'SEC filings' };
+    var s0 = ceoSources()[0];
+    return s0 ? { url: s0.url, label: s0.title || 'Source' } : null;
+  }
   function rank(){ var r = (D.idx && D.idx.rank) || (D.pool && D.pool.rank) || (D.nd && D.nd.rank); return typeof r === 'number' ? r : null; }
   function sal(){ var s = F.salaries()[slug]; return typeof s === 'number' ? s : null; }
   // portraits: only plain site-relative paths from window.BDPortraits (assets/v2/portraits.js)
@@ -140,18 +152,23 @@
 
     var main = el('div', 'pp-hero__main');
     var tks = P.tickers(D.pool || {});
+    if (!tks.length && D.ceo && str(D.ceo.ticker)) tks = [str(D.ceo.ticker)];
     if (tks.length){
       var pill = tks.slice(0, 3).join(' · ');
       var first = holdings()[0];
       if (tks.length === 1 && first && first.name) pill += ' / ' + first.name;
+      else if (tks.length === 1 && D.ceo && str(D.ceo.company)) pill += ' / ' + str(D.ceo.company);
       else if (tks.length > 3) pill += ' +' + (tks.length - 3) + ' more';
       main.appendChild(el('span', 'v2-pill pp-hero__pill', pill));
     }
     var h = el('h1', 'v2-display pp-hero__name', name()); h.id = 'pname';
+    var cb = ceoBadge();
+    if (cb) h.appendChild(cb);
     main.appendChild(h);
     var sub = el('p', 'pp-hero__sub');
     var bits = [];
     if (D.idx && D.idx.source) bits.push(D.idx.source);
+    if (isCeo() && D.ceo) bits.push([str(D.ceo.role), str(D.ceo.company)].filter(Boolean).join(' · '));
     bits.push(sector());
     sub.textContent = bits.join(' / ');
     main.appendChild(sub);
@@ -166,6 +183,11 @@
         if (a) fb.appendChild(a);
       }
       main.appendChild(fb);
+    }
+    if (isCeo() && D.ceo && typeof D.ceo.roleSince === 'number'){
+      var since = el('p', 'pp-hero__forbes');
+      since.appendChild(txt('In the role since ' + D.ceo.roleSince + ' · Not on our top-100 billionaire list'));
+      main.appendChild(since);
     }
     hero.appendChild(main);
 
@@ -342,6 +364,18 @@
     } else if (sal() == null){
       scoutItem(ul, 'In the game', function(d){ d.appendChild(txt('Can\'t be drafted this week: ' + ndReason() + '.')); });
     }
+    if (isCeo() && D.ceo){
+      if (str(D.ceo.bio)) scoutItem(ul, 'Who', function(d){
+        d.appendChild(txt(str(D.ceo.bio) + ' '));
+        var s0 = ceoSources()[0], a0 = s0 ? extLink(s0.url) : null;
+        if (a0) d.appendChild(a0);
+      });
+      var fl = ceoFilings();
+      if (fl) scoutItem(ul, 'Company filings', function(d){
+        var a1 = extLink(fl.url, fl.label, 'pp-src');
+        if (a1) d.appendChild(a1);
+      });
+    }
     if (sal() != null) scoutItem(ul, 'Cap cost', function(d){ d.appendChild(txt(sal() + ' of ' + C.CAP + ' this week' + (F.state.draftWk && F.state.draftWk.salaryMethod ? ' (' + F.state.draftWk.salaryMethod + ')' : '') + '.')); });
     // form, only from the data
     var form = [];
@@ -504,7 +538,7 @@
         var tk = el('th', 'pp-hold__tk', h.ticker); tk.scope = 'row'; r.appendChild(tk);
         r.appendChild(el('td', null, h.name || '—'));
         r.appendChild(el('td', 'n', P.weightPct(h.weight)));
-        r.appendChild(el('td', null, h.tier === 'controls' ? 'Controls' : (h.tier === 'stakes' ? 'Stake' : (h.tier || '—'))));
+        r.appendChild(el('td', null, h.tier === 'controls' ? 'Controls' : (h.tier === 'stakes' ? 'Stake' : (h.tier === 'leads' ? 'Company they lead' : (h.tier || '—')))));
         tb.appendChild(r);
       });
       t.appendChild(tb); wrap.appendChild(t); c.appendChild(wrap);
@@ -513,6 +547,22 @@
       note.appendChild(link(null, 'How weights work', 'play-terms.html#how'));
       c.appendChild(note);
       grid.appendChild(c);
+    }
+    if (isCeo() && D.ceo){
+      any = true;
+      var cc = card('ceoco', 'The company they lead'); cc.className += ' span-6';
+      var ulc = el('ul', 'pp-factlist');
+      var fl2 = ceoFilings();
+      factRow(ulc, str(D.ceo.company) || name(), [[str(D.ceo.ticker), str(D.ceo.exchange)].filter(Boolean).join(' · '), str(D.ceo.role), typeof D.ceo.roleSince === 'number' ? 'since ' + D.ceo.roleSince : ''], fl2 ? fl2.url : null);
+      cc.appendChild(ulc); grid.appendChild(cc);
+      var srcs = ceoSources();
+      if (str(D.ceo.bio) || srcs.length){
+        var cs = card('ceosrc', 'Profile and sources', D.ceoAsOf ? 'Checked ' + BD.fmtDate(D.ceoAsOf) : null); cs.className += ' span-6';
+        if (str(D.ceo.bio)) cs.appendChild(el('p', 'pp-note', str(D.ceo.bio)));
+        var uls = el('ul', 'pp-factlist');
+        srcs.forEach(function(x){ factRow(uls, x.title, [x.date ? when(x.date) : ''], x.url); });
+        cs.appendChild(uls); grid.appendChild(cs);
+      }
     }
     if (prof){
       var ctl = arr(prof.controls).filter(function(e){ return e && e.name; });
@@ -580,7 +630,7 @@
     var port = hs.length ? 'Portfolio: ' + hs.slice(0, 4).map(function(h){ return h.ticker + ' ' + P.weightPct(h.weight); }).join(', ') + (hs.length > 4 ? ', and ' + (hs.length - 4) + ' more' : '') + (D.pool.method ? ' (' + D.pool.method + ').' : '.') : '';
     var lastTxt = last && last.returnPct != null && last.pricePoints != null ? ' On ' + fmt.dayLabel(last.date) + ' the portfolio moved ' + P.pct(last.returnPct) + ', so price points were ' + signedTxt(last.pricePoints) + '.' : '';
     rule('Price points', 'The portfolio\'s return that day × 100, rounded. +1.23% is +123; a down day is negative. A quote that did not trade that day counts as 0%.', (port + lastTxt).trim());
-    rule('Insider buy: +' + buyPts, 'For each Form 4 open-market purchase (code P) filed that day.', last ? 'On ' + fmt.dayLabel(last.date) + ': ' + (last.insiderBuy ? signedTxt(last.insiderBuy) : '0') + '.' + (F.stat(slug).buy ? ' Most recent: ' + fmt.dayLabel(F.stat(slug).buy) + '.' : '') : '');
+    rule('Insider buy: +' + buyPts, 'For each Form 4 open-market purchase (code P) filed that day.' + (isCeo() ? ' Our Form 4 feed tracks the billionaires only, so CEOs score 0 here for now.' : ''), last ? 'On ' + fmt.dayLabel(last.date) + ': ' + (last.insiderBuy ? signedTxt(last.insiderBuy) : '0') + '.' + (F.stat(slug).buy ? ' Most recent: ' + fmt.dayLabel(F.stat(slug).buy) + '.' : '') : '');
     rule('Stories: +' + storyPts + ' each', 'For each story about them in that day\'s Digest.', last ? 'On ' + fmt.dayLabel(last.date) + ': ' + (last.stories ? signedTxt(last.stories) : '0') + '.' : '');
     var capTxt = '';
     if (last && last.points != null) capTxt = 'On ' + fmt.dayLabel(last.date) + ': ' + signedTxt(last.points) + ' points, or ' + signedTxt(C.captainPoints(last.points)) + ' as captain.';
@@ -588,7 +638,7 @@
     c.appendChild(ol);
     var s = sal();
     var capP = el('p', 'pp-note');
-    capP.appendChild(txt((s != null ? 'Cap cost this week: ' + s + ' of ' + C.CAP + '. ' : '') + 'Salaries follow Forbes rank among draftable people: ranks 1–5 cost 30, 6–10 cost 26, 11–20 cost 22, 21–35 cost 18, 36–50 cost 14, 51–75 cost 10, 76–100 cost 7. They are frozen when the week opens. After four weeks of results, salaries move up to ±4 by recent form. '));
+    capP.appendChild(txt((s != null ? 'Cap cost this week: ' + s + ' of ' + C.CAP + '. ' : '') + 'Salaries follow Forbes rank among draftable people: ranks 1–5 cost 30, 6–10 cost 26, 11–20 cost 22, 21–35 cost 18, 36–50 cost 14, 51–75 cost 10, 76–100 cost 7. ' + (isCeo() ? 'CEOs have no Forbes rank, so they start at the median cost of the billionaires in that week\'s pool. ' : '') + 'They are frozen when the week opens. After four weeks of results, salaries move up to ±4 by recent form. '));
     capP.appendChild(link(null, 'Full rules', 'play-terms.html#how'));
     c.appendChild(capP);
     panel.appendChild(c);
@@ -650,13 +700,19 @@
     var ip = BD.indexBySlug(slug);
     return ip && ip.hasProfile ? BD.loadProfile(slug).then(null, function(){ return null; }) : null;
   });
-  Promise.all([F.init(), peopleP, profP]).then(function(r){
+  // CEOs (not in data/people): data/ceos/index.json
+  var ceosP = BD.getJson('data/ceos/index.json').then(null, function(){ return null; });
+  Promise.all([F.init(), peopleP, profP, ceosP]).then(function(r){
     D.peopleIx = r[1]; D.prof = r[2];
     D.idx = BD.indexBySlug(slug);
+    if (!D.idx && r[3]){
+      arr(r[3].people).forEach(function(c){ if (c && c.slug === slug) D.ceo = c; });
+      D.ceoAsOf = /^\d{4}-\d{2}-\d{2}$/.test(str(r[3].asOf)) ? str(r[3].asOf) : null;
+    }
     draftPool().forEach(function(p){ if (p.slug === slug) D.pool = p; });
     if (!D.pool && F.state.people[slug]) D.pool = F.state.people[slug];
     arr(F.state.index && F.state.index.notDraftable).forEach(function(p){ if (p && p.slug === slug) D.nd = p; });
-    if (!D.idx && !D.pool && !D.nd){ notFound(); return; }
+    if (!D.idx && !D.pool && !D.nd && !D.ceo){ notFound(); return; }
     D.ready = true;
     renderPage();
   }, function(err){ if (window.console) console.warn(err); fail(); });

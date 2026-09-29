@@ -1,4 +1,5 @@
-/* Billionaires Digest v2: portrait lookup. ES5. Globals: BDPortraits, BDPortraitFallback, BDPortraitNames, BDPortraitFor.
+/* Billionaires Digest v2: portrait lookup. ES5. Globals: BDPortraits, BDPortraitFallback, BDPortraitNames, BDPortraitFor,
+   BDCeos, BDIsCeo, BDCeoBadge (CEO players and their badge).
    slug -> { img: 'site-root path to the portrait' } (starts with / so pages in subfolders work too).
    The owner approved realistic painted illustrations for the ESPN version on 2026-09-29 (painted person on a plain
    white background, assets/portraits/real/). Still never photos of real people, never company logos.
@@ -70,6 +71,22 @@
   P['warren-buffett'] = { img: '/assets/portraits/real/warren-buffett.webp' };
   P['william-ding'] = { img: '/assets/portraits/real/william-ding.webp' };
   P['zhang-yiming'] = { img: '/assets/portraits/real/zhang-yiming.webp' };
+  // big-company CEOs in the game (data/ceos/index.json), painted in the same approved style
+  P['andy-jassy'] = { img: '/assets/portraits/real/andy-jassy.webp' };
+  P['brian-chesky'] = { img: '/assets/portraits/real/brian-chesky.webp' };
+  P['daniel-ek'] = { img: '/assets/portraits/real/daniel-ek.webp' };
+  P['dara-khosrowshahi'] = { img: '/assets/portraits/real/dara-khosrowshahi.webp' };
+  P['hock-tan'] = { img: '/assets/portraits/real/hock-tan.webp' };
+  P['jamie-dimon'] = { img: '/assets/portraits/real/jamie-dimon.webp' };
+  P['jane-fraser'] = { img: '/assets/portraits/real/jane-fraser.webp' };
+  P['lisa-su'] = { img: '/assets/portraits/real/lisa-su.webp' };
+  P['marc-benioff'] = { img: '/assets/portraits/real/marc-benioff.webp' };
+  P['mary-barra'] = { img: '/assets/portraits/real/mary-barra.webp' };
+  P['satya-nadella'] = { img: '/assets/portraits/real/satya-nadella.webp' };
+  P['shantanu-narayen'] = { img: '/assets/portraits/real/shantanu-narayen.webp' };
+  P['sundar-pichai'] = { img: '/assets/portraits/real/sundar-pichai.webp' };
+  P['tim-cook'] = { img: '/assets/portraits/real/tim-cook.webp' };
+  P['tobias-lutke'] = { img: '/assets/portraits/real/tobias-lutke.webp' };
   // people without a portrait: generic grey silhouette (like a sports site's default headshot), never an invented face
   root.BDPortraitFallback = '/assets/portraits/silhouette.webp';
   // name index (generated from data/people/index.json): normalized name -> slug.
@@ -175,6 +192,39 @@
   N['gina rinehart'] = 'gina-rinehart';
   N['vicky safra'] = 'vicky-safra-family';
   N['francois pinault'] = 'francois-pinault-family';
+  // CEOs (data/ceos/index.json)
+  N['andy jassy'] = 'andy-jassy';
+  N['brian chesky'] = 'brian-chesky';
+  N['daniel ek'] = 'daniel-ek';
+  N['dara khosrowshahi'] = 'dara-khosrowshahi';
+  N['hock tan'] = 'hock-tan';
+  N['jamie dimon'] = 'jamie-dimon';
+  N['jane fraser'] = 'jane-fraser';
+  N['lisa su'] = 'lisa-su';
+  N['marc benioff'] = 'marc-benioff';
+  N['mary barra'] = 'mary-barra';
+  N['satya nadella'] = 'satya-nadella';
+  N['shantanu narayen'] = 'shantanu-narayen';
+  N['sundar pichai'] = 'sundar-pichai';
+  N['tim cook'] = 'tim-cook';
+  N['tobias lutke'] = 'tobias-lutke';
+  // CEO players (data/ceos/index.json): slug -> 1. Used for the CEO badge; billionaires get none.
+  var CEO = root.BDCeos = root.BDCeos || {};
+  CEO['andy-jassy'] = 1;
+  CEO['brian-chesky'] = 1;
+  CEO['daniel-ek'] = 1;
+  CEO['dara-khosrowshahi'] = 1;
+  CEO['hock-tan'] = 1;
+  CEO['jamie-dimon'] = 1;
+  CEO['jane-fraser'] = 1;
+  CEO['lisa-su'] = 1;
+  CEO['marc-benioff'] = 1;
+  CEO['mary-barra'] = 1;
+  CEO['satya-nadella'] = 1;
+  CEO['shantanu-narayen'] = 1;
+  CEO['sundar-pichai'] = 1;
+  CEO['tim-cook'] = 1;
+  CEO['tobias-lutke'] = 1;
   function norm(n){
     var t = String(n == null ? '' : n);
     if (t.normalize) t = t.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -188,5 +238,19 @@
     var n = norm(k);
     if (has(N, n) && has(P, N[n]) && P[N[n]] && P[N[n]].img) return P[N[n]].img;
     return root.BDPortraitFallback;
+  };
+  // true for a CEO player: a pool entry with type "ceo", or a slug in BDCeos
+  root.BDIsCeo = function(x){
+    if (x && typeof x === 'object'){ if (x.type === 'ceo') return true; x = x.slug; }
+    return x != null && has(CEO, String(x));
+  };
+  // a small dark "CEO" pill for next to a CEO's name; null for everyone else (and outside a browser)
+  root.BDCeoBadge = function(x){
+    if (!root.BDIsCeo(x) || typeof document === 'undefined') return null;
+    var b = document.createElement('span');
+    b.className = 'v2-ceo';
+    b.textContent = 'CEO';
+    b.title = 'Big-company CEO (not on our top-100 billionaire list)';
+    return b;
   };
 })(typeof window !== 'undefined' ? window : globalThis);

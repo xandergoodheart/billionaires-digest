@@ -186,6 +186,34 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted);
 }
 
+/* CEO badge: a small dark pill next to a CEO player's name (billionaires get none). Inverts on dark surfaces. */
+.v2-ceo {
+  display: inline-block; vertical-align: .15em; margin-left: 6px; padding: 0 6px; border-radius: 999px;
+  background: var(--ink-2); color: #fff; border: 1px solid var(--ink-2);
+  font: 700 10px/16px var(--font-body); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+  text-decoration: none;
+}
+.v2-hero .v2-ceo, .v2-dark .v2-ceo, .pp-hero .v2-ceo { background: #fff; color: #16181B; border-color: #fff; }
+:root[data-theme="dark"] .v2-ceo { background: #F1F2F4; color: #16181B; border-color: #F1F2F4; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .v2-ceo { background: #F1F2F4; color: #16181B; border-color: #F1F2F4; }
+}
+
+/* segmented control (All · Billionaires · CEOs): buttons with aria-pressed in a role="group" */
+.v2-seg { display: inline-flex; flex-wrap: wrap; gap: 0; margin: 0 0 var(--s1); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--surface); }
+.v2-seg__b {
+  min-height: var(--tap); padding: 0 14px; border: 0; border-left: 1px solid var(--line); background: none; cursor: pointer;
+  color: var(--text-muted); font: 600 var(--fs-sm)/1 var(--font-body);
+}
+.v2-seg__b:first-child { border-left: 0; }
+.v2-seg__b:hover { color: var(--text); }
+.v2-seg__b[aria-pressed="true"] { background: var(--ink-2); color: #fff; font-weight: 700; }
+.v2-seg__b:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+:root[data-theme="dark"] .v2-seg__b[aria-pressed="true"] { background: #F1F2F4; color: #16181B; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .v2-seg__b[aria-pressed="true"] { background: #F1F2F4; color: #16181B; }
+}
+
 /* ---------- numbers (sign always in the text; color only adds to it) ---------- */
 .v2-pos { color: var(--positive); }
 .v2-neg { color: var(--negative); }

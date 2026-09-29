@@ -151,3 +151,21 @@ test('formatting: money, EPS and percents with a true minus sign', () => {
   assert.equal(K.signed(0), '0');
   assert.equal(K.signed(null), '—');
 });
+
+test('CEO helpers: entry, role line, filings link (SEC CIK first, else the first https source), sources', () => {
+  const file = { people: [
+    { slug: 'ann', name: 'Ann', company: 'Alpha Corp', role: 'Chair and CEO', secCik: '0000002488', sources: [{ title: 'Proxy', url: 'https://example.com/p', date: '2026-04-01' }, { title: 'Old', url: 'http://example.com/x' }] },
+    { slug: 'bo', name: 'Bo', company: 'Beta', role: '', secCik: null, sources: [{ title: 'Annual report', url: 'https://example.com/ar', date: '2026-09' }] },
+    { slug: 'cy', name: 'Cy', sources: [] },
+  ] };
+  assert.equal(K.ceoEntry(file, 'ann').name, 'Ann');
+  assert.equal(K.ceoEntry(file, 'zed'), null);
+  assert.equal(K.ceoEntry(null, 'ann'), null);
+  assert.equal(K.ceoRoleLine(K.ceoEntry(file, 'ann')), 'Chair and CEO · Alpha Corp');
+  assert.equal(K.ceoRoleLine(K.ceoEntry(file, 'bo')), 'Beta');
+  assert.equal(K.ceoRoleLine(null), '');
+  assert.deepEqual(plain(K.ceoFilingsLink(K.ceoEntry(file, 'ann'))), { url: 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000002488&owner=include&count=40', label: 'SEC filings' });
+  assert.deepEqual(plain(K.ceoFilingsLink(K.ceoEntry(file, 'bo'))), { url: 'https://example.com/ar', label: 'Annual report' });
+  assert.equal(K.ceoFilingsLink(K.ceoEntry(file, 'cy')), null);
+  assert.deepEqual(plain(K.ceoSources(K.ceoEntry(file, 'ann'))), [{ title: 'Proxy', url: 'https://example.com/p', date: '2026-04-01' }]);
+});

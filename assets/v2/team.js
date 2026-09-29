@@ -406,6 +406,8 @@
       var txt = el('span', 'v2-player__txt');
       var b = el('button', 'tm-name', p.name);
       b.type = 'button';
+      var ceoB = window.BDCeoBadge ? window.BDCeoBadge(p && p.slug ? p : slug) : null;
+      if (ceoB) b.appendChild(ceoB);
       b.setAttribute('data-slug', slug);
       b.setAttribute('aria-haspopup', 'dialog');
       txt.appendChild(b);
@@ -682,6 +684,8 @@
     face.appendChild(plate(p, 'v2-av--lg'));
     $('cu-kick').textContent = isC ? 'Player profile · Captain (' + C.CAPTAIN_MULT + 'x)' : 'Player profile';
     $('cu-name').textContent = p.name;
+    var cuB = window.BDCeoBadge ? window.BDCeoBadge(p && p.slug ? p : slug) : null;
+    if (cuB) $('cu-name').appendChild(cuB);
     $('cu-sector').textContent = p.sector || 'Other';
     $('cu-cap').textContent = typeof sal[slug] === 'number' ? String(sal[slug]) : '—';
     var pts = v && v.any ? v.res.bySlug[slug] : null;
