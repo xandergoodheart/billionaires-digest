@@ -1,9 +1,55 @@
 {
-  "generated": "2026-09-29T16:03:09.319Z",
+  "generated": "2026-09-30T16:01:48.817Z",
   "windowDays": 90,
   "person": "Warren Buffett",
   "personSlug": "warren-buffett",
   "filings": [
+    {
+      "cik": "0001067983",
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "form": "4",
+      "filed": "2026-09-29",
+      "reportDate": "2026-09-28",
+      "accession": "0001728451-26-000004",
+      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/xslF345X06/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/0001728451-26-000004-index.htm",
+      "description": "PRIMARY DOCUMENT",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "BERKSHIRE HATHAWAY INC",
+        "ticker": "BRK.A",
+        "summary": [
+          {
+            "issuer": "BERKSHIRE HATHAWAY INC",
+            "ticker": "BRK.A",
+            "securityTitle": "Class B Common Stock",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 39700,
+            "price": 503.09,
+            "value": 19972776,
+            "direction": "down",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-09-28",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 39700,
+            "price": 503.0926,
+            "value": 19972776,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 67608,
+            "direction": "down"
+          }
+        ]
+      }
+    },
     {
       "cik": "0000315090",
       "filer": "BUFFETT WARREN E",

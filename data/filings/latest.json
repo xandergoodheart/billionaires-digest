@@ -1,7 +1,75 @@
 {
-  "generated": "2026-09-29T16:03:09.319Z",
+  "generated": "2026-09-30T16:01:48.817Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0001067983",
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "form": "4",
+      "filed": "2026-09-29",
+      "reportDate": "2026-09-28",
+      "accession": "0001728451-26-000004",
+      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/xslF345X06/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/0001728451-26-000004-index.htm",
+      "description": "PRIMARY DOCUMENT",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "BERKSHIRE HATHAWAY INC",
+        "ticker": "BRK.A",
+        "summary": [
+          {
+            "issuer": "BERKSHIRE HATHAWAY INC",
+            "ticker": "BRK.A",
+            "securityTitle": "Class B Common Stock",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 39700,
+            "price": 503.09,
+            "value": 19972776,
+            "direction": "down",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-09-28",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 39700,
+            "price": 503.0926,
+            "value": 19972776,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 67608,
+            "direction": "down"
+          }
+        ]
+      }
+    },
+    {
+      "cik": "0001273087",
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "form": "SCHEDULE 13G",
+      "filed": "2026-09-29",
+      "accession": "0001104659-26-112041",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926112041/xslSCHEDULE_13G_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926112041/0001104659-26-112041-index.htm",
+      "person": "Israel Englander",
+      "personSlug": "israel-englander"
+    },
+    {
+      "cik": "0001273087",
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "form": "SCHEDULE 13G",
+      "filed": "2026-09-29",
+      "accession": "0001104659-26-112023",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926112023/xslSCHEDULE_13G_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926112023/0001104659-26-112023-index.htm",
+      "person": "Israel Englander",
+      "personSlug": "israel-englander"
+    },
     {
       "cik": "0001070844",
       "filer": "SCHWARZMAN STEPHEN A",
@@ -10494,52 +10562,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126029270/0001140361-26-029270-index.htm",
       "description": "FORM 4",
       "person": "Carlos Slim Helu & family",
-      "personSlug": "carlos-slim-helu-family",
-      "form4": {
-        "issuer": "PBF Energy Inc.",
-        "ticker": "PBF",
-        "summary": [
-          {
-            "issuer": "PBF Energy Inc.",
-            "ticker": "PBF",
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 220000,
-            "price": 63.96,
-            "value": 14072118,
-            "direction": "down",
-            "transactions": 2
-          }
-        ],
-        "transactionCount": 2,
-        "transactions": [
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-20",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 100000,
-            "price": 63.5001,
-            "value": 6350010,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 15612128,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-20",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 120000,
-            "price": 64.3509,
-            "value": 7722108,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 15492128,
-            "direction": "down"
-          }
-        ]
-      }
+      "personSlug": "carlos-slim-helu-family"
     },
     {
       "cik": "0001273087",
@@ -11446,58 +11469,6 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926080162/0001104659-26-080162-index.htm",
       "person": "Paolo Ardoino",
       "personSlug": "paolo-ardoino"
-    },
-    {
-      "cik": "0001133206",
-      "filer": "BECHTOLSHEIM ANDREAS",
-      "form": "144",
-      "filed": "2026-07-01",
-      "accession": "0001958244-26-000415",
-      "url": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000415/xsl144X01/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000415/0001958244-26-000415-index.htm",
-      "person": "Andreas von Bechtolsheim & family",
-      "personSlug": "andreas-von-bechtolsheim-family",
-      "form144": {
-        "issuer": "Arista Networks, Inc.",
-        "issuerCik": "0001596532",
-        "seller": "Andreas Bechtolsheim",
-        "relationships": [
-          "10% Stockholder"
-        ],
-        "securitiesClassTitle": "Common Stock",
-        "shares": 260000,
-        "aggregateMarketValue": 43321200,
-        "approxSaleDate": "2026-07-01",
-        "noticeDate": "2026-07-01",
-        "planAdoptionDates": [
-          "2026-02-20"
-        ]
-      }
-    },
-    {
-      "cik": "0001998523",
-      "filer": "Vuong Pham Nhat",
-      "form": "4",
-      "filed": "2026-07-01",
-      "reportDate": "2026-06-29",
-      "accession": "0001185185-26-002758",
-      "url": "https://www.sec.gov/Archives/edgar/data/1998523/000118518526002758/xslF345X06/ownership.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1998523/000118518526002758/0001185185-26-002758-index.htm",
-      "person": "Pham Nhat Vuong",
-      "personSlug": "pham-nhat-vuong"
-    },
-    {
-      "cik": "0001273693",
-      "filer": "Control Empresarial de Capitales S.A. de C.V.",
-      "form": "4",
-      "filed": "2026-07-01",
-      "reportDate": "2026-06-29",
-      "accession": "0001140361-26-027227",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126027227/xslF345X06/form4.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126027227/0001140361-26-027227-index.htm",
-      "description": "FORM 4",
-      "person": "Carlos Slim Helu & family",
-      "personSlug": "carlos-slim-helu-family"
     }
   ]
 }
