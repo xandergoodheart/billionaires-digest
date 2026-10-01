@@ -1,9 +1,115 @@
 {
-  "generated": "2026-09-30T16:01:48.817Z",
+  "generated": "2026-10-01T16:37:14.775Z",
   "windowDays": 90,
   "person": "Warren Buffett",
   "personSlug": "warren-buffett",
   "filings": [
+    {
+      "cik": "0000315090",
+      "filer": "BUFFETT WARREN E",
+      "form": "4",
+      "filed": "2026-09-30",
+      "reportDate": "2026-09-28",
+      "accession": "0001193125-26-409451",
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526409451/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526409451/0001193125-26-409451-index.htm",
+      "description": "4",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "LENNAR CORP /NEW/",
+        "ticker": "LEN",
+        "summary": [
+          {
+            "issuer": "LENNAR CORP /NEW/",
+            "ticker": "LEN",
+            "securityTitle": "Class A Common Stock",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 656302,
+            "price": 81.6,
+            "value": 53554028,
+            "direction": "up",
+            "transactions": 3
+          },
+          {
+            "issuer": "LENNAR CORP /NEW/",
+            "ticker": "LEN",
+            "securityTitle": "Class B Common Stock",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 4108,
+            "price": 79.98,
+            "value": 328560,
+            "direction": "up",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 5,
+        "transactions": [
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-28",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 5200,
+            "price": 81.96,
+            "value": 426192,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 25383334,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-29",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 12289,
+            "price": 81.95,
+            "value": 1007084,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 25395623,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-09-30",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 638813,
+            "price": 81.59,
+            "value": 52120753,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 26034436,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-09-29",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 100,
+            "price": 80,
+            "value": 8000,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 548992,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-09-30",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 4008,
+            "price": 79.98,
+            "value": 320560,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 553000,
+            "direction": "up"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001067983",
       "filer": "BERKSHIRE HATHAWAY INC",
@@ -701,19 +807,6 @@
       "accession": "0001193125-26-304838",
       "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/xslSCHEDULE_13D_X02/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/0001193125-26-304838-index.htm",
-      "person": "Warren Buffett",
-      "personSlug": "warren-buffett"
-    },
-    {
-      "cik": "0001067983",
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "form": "4",
-      "filed": "2026-07-02",
-      "reportDate": "2026-07-01",
-      "accession": "0001728451-26-000002",
-      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000002/xslF345X06/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000002/0001728451-26-000002-index.htm",
-      "description": "PRIMARY DOCUMENT",
       "person": "Warren Buffett",
       "personSlug": "warren-buffett"
     }

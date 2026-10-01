@@ -1,12 +1,12 @@
 {
-  "generated": "2026-09-30",
+  "generated": "2026-10-01",
   "inputs": {
-    "filingsGenerated": "2026-09-30T16:01:48.817Z",
-    "pricesGenerated": "2026-09-30T16:05:27.066Z",
+    "filingsGenerated": "2026-10-01T16:37:14.775Z",
+    "pricesGenerated": "2026-10-01T16:40:56.224Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 5
+    "editions": 6
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 70 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 71 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W29",
@@ -26,11 +26,11 @@
       "start": "2026-07-20",
       "end": "2026-07-26",
       "buy": 45950172,
-      "sell": 670246,
-      "net": 45279926,
+      "sell": 0,
+      "net": 45950172,
       "other": 0,
       "buyCount": 2,
-      "sellCount": 1,
+      "sellCount": 0,
       "otherCount": 1,
       "unpriced": 0
     },
@@ -155,26 +155,26 @@
       "week": "2026-W40",
       "start": "2026-09-28",
       "end": "2026-10-04",
-      "buy": 0,
-      "sell": 19972776,
-      "net": -19972776,
+      "buy": 53882588,
+      "sell": 31042879,
+      "net": 22839709,
       "other": 0,
-      "buyCount": 0,
-      "sellCount": 1,
+      "buyCount": 2,
+      "sellCount": 2,
       "otherCount": 0,
       "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-09-24",
-    "to": "2026-09-30",
-    "buy": 0,
-    "sell": 43382478,
-    "net": -43382478,
+    "from": "2026-09-25",
+    "to": "2026-10-01",
+    "buy": 53882588,
+    "sell": 31042879,
+    "net": 22839709,
     "other": 0,
-    "buyCount": 0,
-    "sellCount": 3,
-    "otherCount": 1,
+    "buyCount": 2,
+    "sellCount": 2,
+    "otherCount": 0,
     "unpriced": 0
   },
   "sectors": [
@@ -202,23 +202,23 @@
     },
     {
       "sector": "Finance",
-      "buy": 380101885,
-      "sell": 1260832387,
-      "net": -880730502,
+      "buy": 433984473,
+      "sell": 1271902490,
+      "net": -837918017,
       "other": 0,
-      "buyCount": 9,
-      "sellCount": 8,
+      "buyCount": 11,
+      "sellCount": 9,
       "otherCount": 6,
       "unpriced": 0
     },
     {
       "sector": "Media",
       "buy": 0,
-      "sell": 156047010,
-      "net": -156047010,
+      "sell": 155376764,
+      "net": -155376764,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 9,
+      "sellCount": 8,
       "otherCount": 0,
       "unpriced": 0
     },
@@ -381,6 +381,14 @@
       "filings": [
         {
           "date": "2026-09-28",
+          "filed": "2026-09-30",
+          "form": "4",
+          "issuer": "LENNAR CORP /NEW/",
+          "ticker": "LEN",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526409451/xslF345X06/ownership.xml"
+        },
+        {
+          "date": "2026-09-28",
           "filed": "2026-09-29",
           "form": "4",
           "issuer": "BERKSHIRE HATHAWAY INC",
@@ -417,9 +425,17 @@
       "name": "Stephen Schwarzman",
       "slug": "stephen-schwarzman",
       "sector": "Finance",
-      "value": 2050248,
-      "count": 1,
+      "value": 13120351,
+      "count": 2,
       "filings": [
+        {
+          "date": "2026-09-28",
+          "filed": "2026-09-30",
+          "form": "4",
+          "issuer": "Bumble Inc.",
+          "ticker": "BMBL",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526409256/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-09-24",
           "filed": "2026-09-28",
@@ -443,8 +459,8 @@
       "name": "Bill Gates",
       "slug": "bill-gates",
       "sector": "AI & tech",
-      "value": 572705215,
-      "count": 4,
+      "value": 453600324,
+      "count": 3,
       "filings": [
         {
           "date": "2026-09-10",
@@ -469,14 +485,6 @@
           "issuer": "REPUBLIC SERVICES, INC.",
           "ticker": "RSG",
           "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926105908/xslF345X06/tm2624905-1_4seq1.xml"
-        },
-        {
-          "date": "2026-09-01",
-          "filed": "2026-09-03",
-          "form": "4",
-          "issuer": "REPUBLIC SERVICES, INC.",
-          "ticker": "RSG",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926105062/xslF345X06/tm2624729-1_4seq1.xml"
         }
       ]
     },
@@ -484,9 +492,17 @@
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
-      "value": 348777941,
-      "count": 4,
+      "value": 402660529,
+      "count": 6,
       "filings": [
+        {
+          "date": "2026-09-28",
+          "filed": "2026-09-30",
+          "form": "4",
+          "issuer": "LENNAR CORP /NEW/",
+          "ticker": "LEN",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526409451/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-09-28",
           "filed": "2026-09-29",
@@ -528,6 +544,14 @@
       "value": 5016662,
       "count": 1,
       "filings": [
+        {
+          "date": "2026-09-28",
+          "filed": "2026-09-30",
+          "form": "4",
+          "issuer": "Bumble Inc.",
+          "ticker": "BMBL",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526409256/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-09-24",
           "filed": "2026-09-28",
@@ -598,7 +622,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 70,
+    "form4Filings": 71,
     "form4Parsed": 59,
     "windowDays": 90
   }

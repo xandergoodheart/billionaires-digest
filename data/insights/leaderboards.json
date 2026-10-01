@@ -1,151 +1,39 @@
 {
-  "generated": "2026-09-30",
+  "generated": "2026-10-01",
   "inputs": {
-    "filingsGenerated": "2026-09-30T16:01:48.817Z",
-    "pricesGenerated": "2026-09-30T16:05:27.066Z",
+    "filingsGenerated": "2026-10-01T16:37:14.775Z",
+    "pricesGenerated": "2026-10-01T16:40:56.224Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 5
+    "editions": 6
   },
   "gainers": [
     {
-      "name": "Elon Musk",
-      "slug": "elon-musk",
-      "sector": "Aerospace",
-      "estDailyChange": 8867188038,
-      "coverage": 1.308,
-      "holdings": [
-        {
-          "ticker": "TSLA",
-          "shares": 699580882,
-          "change": -2.28,
-          "estChange": -1595044411,
-          "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926075203/0001104659-26-075203-index.htm"
-        },
-        {
-          "ticker": "SPCX",
-          "shares": 6418547515,
-          "change": 1.63,
-          "estChange": 10462232449,
-          "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm"
-        }
-      ]
-    },
-    {
-      "name": "Sergey Brin",
-      "slug": "sergey-brin",
+      "name": "Mark Zuckerberg",
+      "slug": "mark-zuckerberg",
       "sector": "AI & tech",
-      "estDailyChange": 7766258008,
-      "coverage": 0.972,
+      "estDailyChange": 1387805351,
+      "coverage": 0.936,
       "holdings": [
         {
-          "ticker": "GOOGL",
-          "shares": 358939978,
-          "change": 10.78,
-          "estChange": 3869372963,
-          "source": "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html"
-        },
-        {
-          "ticker": "GOOG",
-          "shares": 359159912,
-          "change": 10.85,
-          "estChange": 3896885045,
-          "source": "https://www.sec.gov/Archives/edgar/data/1295032/000119312526345383/ownership.xml"
+          "ticker": "META",
+          "shares": 341823978,
+          "change": 4.06,
+          "estChange": 1387805351,
+          "source": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm"
         }
       ]
     },
-    {
-      "name": "Jeff Bezos",
-      "slug": "jeff-bezos",
-      "sector": "AI & tech",
-      "estDailyChange": 4467042531,
-      "coverage": 0.647,
-      "holdings": [
-        {
-          "ticker": "AMZN",
-          "shares": 950434581,
-          "change": 4.7,
-          "estChange": 4467042531,
-          "source": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm"
-        }
-      ]
-    },
-    {
-      "name": "Michael Dell",
-      "slug": "michael-dell",
-      "sector": "AI & tech",
-      "estDailyChange": 1285865495,
-      "coverage": 0.545,
-      "holdings": [
-        {
-          "ticker": "DELL",
-          "shares": 265674689,
-          "change": 4.84,
-          "estChange": 1285865495,
-          "source": "https://www.sec.gov/Archives/edgar/data/908724/000112329226000125/0001123292-26-000125-index.htm"
-        }
-      ]
-    },
-    {
-      "name": "Eric Schmidt",
-      "slug": "eric-schmidt",
-      "sector": "AI & tech",
-      "estDailyChange": 526156536,
-      "coverage": 0.451,
-      "holdings": [
-        {
-          "ticker": "GOOGL",
-          "shares": 48808584,
-          "change": 10.78,
-          "estChange": 526156536,
-          "source": "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
-        }
-      ]
-    },
-    {
-      "name": "Andreas von Bechtolsheim & family",
-      "slug": "andreas-von-bechtolsheim-family",
-      "sector": "AI & tech",
-      "estDailyChange": 270185847,
-      "coverage": 0.909,
-      "holdings": [
-        {
-          "ticker": "ANET",
-          "shares": 183799896,
-          "change": 1.47,
-          "estChange": 270185847,
-          "source": "https://www.sec.gov/Archives/edgar/data/1596532/000119312526158942/d66465ddef14a.htm"
-        }
-      ]
-    },
-    {
-      "name": "Lyndal Stephens Greth & family",
-      "slug": "lyndal-stephens-greth-family",
-      "sector": "Energy",
-      "estDailyChange": 99384282,
-      "coverage": 0.413,
-      "holdings": [
-        {
-          "ticker": "FANG",
-          "shares": 64957047,
-          "change": 1.53,
-          "estChange": 99384282,
-          "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126037012/primary_doc.xml"
-        }
-      ]
-    }
-  ],
-  "losers": [
     {
       "name": "Rob Walton & family",
       "slug": "rob-walton-family",
       "sector": "Luxury & retail",
-      "estDailyChange": -1297692000,
+      "estDailyChange": 939972000,
       "coverage": 1,
       "holdings": [
         {
           "ticker": "WMT",
-          "change": -1.05,
-          "estChange": -1297692000,
+          "change": 0.74,
+          "estChange": 939972000,
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
         }
       ]
@@ -154,13 +42,13 @@
       "name": "Jim Walton & family",
       "slug": "jim-walton-family",
       "sector": "Luxury & retail",
-      "estDailyChange": -1266232800,
+      "estDailyChange": 917184800,
       "coverage": 1,
       "holdings": [
         {
           "ticker": "WMT",
-          "change": -1.05,
-          "estChange": -1266232800,
+          "change": 0.74,
+          "estChange": 917184800,
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
         }
       ]
@@ -169,164 +57,30 @@
       "name": "Alice Walton",
       "slug": "alice-walton",
       "sector": "Luxury & retail",
-      "estDailyChange": -1165956600,
+      "estDailyChange": 844550600,
       "coverage": 1,
       "holdings": [
         {
           "ticker": "WMT",
-          "change": -1.05,
-          "estChange": -1165956600,
+          "change": 0.74,
+          "estChange": 844550600,
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
         }
       ]
     },
     {
-      "name": "Mark Zuckerberg",
-      "slug": "mark-zuckerberg",
+      "name": "Andreas von Bechtolsheim & family",
+      "slug": "andreas-von-bechtolsheim-family",
       "sector": "AI & tech",
-      "estDailyChange": -714412114,
-      "coverage": 0.945,
+      "estDailyChange": 251805858,
+      "coverage": 0.912,
       "holdings": [
         {
-          "ticker": "META",
-          "shares": 341823978,
-          "change": -2.09,
-          "estChange": -714412114,
-          "source": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm"
-        }
-      ]
-    },
-    {
-      "name": "Warren Buffett",
-      "slug": "warren-buffett",
-      "sector": "Finance",
-      "estDailyChange": -379083954,
-      "coverage": 0.984,
-      "holdings": [
-        {
-          "ticker": "BRK.A",
-          "shares": 188290,
-          "change": -2013.29,
-          "estChange": -379082374,
-          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
-        },
-        {
-          "ticker": "BRK.B",
-          "shares": 1162,
-          "change": -1.36,
-          "estChange": -1580,
-          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
-        }
-      ]
-    },
-    {
-      "name": "Bill Gates",
-      "slug": "bill-gates",
-      "sector": "AI & tech",
-      "estDailyChange": -330745636,
-      "coverage": 0.499,
-      "holdings": [
-        {
-          "ticker": "RSG",
-          "shares": 116166330,
-          "change": -0.72,
-          "estChange": -83639758,
-          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926106327/primary_doc.xml"
-        },
-        {
-          "ticker": "AN",
-          "shares": 7062629,
-          "change": -3.02,
-          "estChange": -21329140,
-          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926055650/primary_doc.xml"
-        },
-        {
-          "ticker": "FMX",
-          "shares": 27887350,
-          "change": -2.14,
-          "estChange": -59678929,
-          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926039230/primary_doc.xml"
-        },
-        {
-          "ticker": "BRK.B",
-          "shares": 14689844,
-          "change": -1.36,
-          "estChange": -19978188,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "CAT",
-          "shares": 6353614,
-          "change": -12.28,
-          "estChange": -78022380,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "CNI",
-          "shares": 51826786,
-          "change": -0.13,
-          "estChange": -6737482,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "WM",
-          "shares": 26720744,
-          "change": -1.91,
-          "estChange": -51036621,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "DE",
-          "shares": 3557378,
-          "change": -0.59,
-          "estChange": -2098853,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "ECL",
-          "shares": 5218044,
-          "change": -1.56,
-          "estChange": -8140149,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "MXF",
-          "shares": 647198,
-          "change": -0.13,
-          "estChange": -84136,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097179/xslSCHEDULE_13G_X02/primary_doc.xml"
-        }
-      ]
-    },
-    {
-      "name": "Lakshmi Mittal",
-      "slug": "lakshmi-mittal",
-      "sector": "Industrials",
-      "estDailyChange": -238106794,
-      "coverage": 0.689,
-      "holdings": [
-        {
-          "ticker": "MT",
-          "shares": 340152563,
-          "change": -0.7,
-          "estChange": -238106794,
-          "source": "https://www.sec.gov/Archives/edgar/data/1243429/000199937126006457/xslSCHEDULE_13D_X02/primary_doc.xml"
-        }
-      ]
-    },
-    {
-      "name": "Henry Samueli",
-      "slug": "henry-samueli",
-      "sector": "AI & tech",
-      "estDailyChange": -153151629,
-      "coverage": 0.911,
-      "holdings": [
-        {
-          "ticker": "AVGO",
-          "shares": 85559569,
-          "change": -1.79,
-          "estChange": -153151629,
-          "source": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526085691/d49254ddef14a.htm"
+          "ticker": "ANET",
+          "shares": 183799896,
+          "change": 1.37,
+          "estChange": 251805858,
+          "source": "https://www.sec.gov/Archives/edgar/data/1596532/000119312526158942/d66465ddef14a.htm"
         }
       ]
     },
@@ -334,64 +88,310 @@
       "name": "Len Blavatnik",
       "slug": "len-blavatnik",
       "sector": "Media",
-      "estDailyChange": -73999094,
-      "coverage": 0.548,
+      "estDailyChange": 145702960,
+      "coverage": 0.55,
       "holdings": [
         {
           "ticker": "WMG",
           "shares": 374517252,
-          "change": -0.04,
-          "estChange": -14980690,
+          "change": 0.1,
+          "estChange": 37451725,
           "source": "https://www.sec.gov/Archives/edgar/data/1319161/000114036126001664/ny20057694x1_def14a.htm"
         },
         {
           "ticker": "LYB",
           "shares": 64435504,
-          "change": -0.18,
-          "estChange": -11598391,
+          "change": -0.07,
+          "estChange": -4510485,
           "source": "https://www.sec.gov/Archives/edgar/data/1489393/000130817926000250/lyb014791-def14a.htm"
         },
         {
           "ticker": "DOCN",
           "shares": 18653451,
-          "change": 1.65,
-          "estChange": 30778194,
+          "change": 3.67,
+          "estChange": 68458165,
           "source": "https://www.sec.gov/Archives/edgar/data/1508226/000119312526337970/primary_doc.xml"
         },
         {
           "ticker": "CHYM",
           "shares": 19601430,
-          "change": 0.31,
-          "estChange": 6076443,
+          "change": 0.2,
+          "estChange": 3920286,
           "source": "https://www.sec.gov/Archives/edgar/data/1508226/000095017025102972/primary_doc.xml"
         },
         {
           "ticker": "CEG",
           "shares": 6276132,
-          "change": -13.31,
-          "estChange": -83535317,
+          "change": 6.2,
+          "estChange": 38912018,
           "source": "https://www.sec.gov/Archives/edgar/data/1868275/000110465926001893/tm2531947-1_s3asr.htm"
         },
         {
           "ticker": "COAG",
           "shares": 4876344,
-          "change": -0.35,
-          "estChange": -1706720,
+          "change": 0.38,
+          "estChange": 1853011,
           "source": "https://www.sec.gov/Archives/edgar/data/2114044/000119312526216973/primary_doc.xml"
         },
         {
           "ticker": "TYGO",
           "shares": 3220645,
-          "change": 0.0813,
-          "estChange": 261838,
+          "change": -0.009,
+          "estChange": -28986,
           "source": "https://www.sec.gov/Archives/edgar/data/1051856/000119312526245631/primary_doc.xml"
         },
         {
           "ticker": "OPEN",
           "shares": 17638714,
-          "change": 0.04,
-          "estChange": 705549,
+          "change": -0.02,
+          "estChange": -352774,
           "source": "https://www.sec.gov/Archives/edgar/data/1508226/000119312525213929/primary_doc.xml"
+        }
+      ]
+    },
+    {
+      "name": "Michael Dell",
+      "slug": "michael-dell",
+      "sector": "AI & tech",
+      "estDailyChange": 138150838,
+      "coverage": 0.539,
+      "holdings": [
+        {
+          "ticker": "DELL",
+          "shares": 265674689,
+          "change": 0.52,
+          "estChange": 138150838,
+          "source": "https://www.sec.gov/Archives/edgar/data/908724/000112329226000125/0001123292-26-000125-index.htm"
+        }
+      ]
+    },
+    {
+      "name": "Warren Buffett",
+      "slug": "warren-buffett",
+      "sector": "Finance",
+      "estDailyChange": 114121685,
+      "coverage": 0.979,
+      "holdings": [
+        {
+          "ticker": "BRK.A",
+          "shares": 188290,
+          "change": 606.09,
+          "estChange": 114120686,
+          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
+        },
+        {
+          "ticker": "BRK.B",
+          "shares": 1162,
+          "change": 0.86,
+          "estChange": 999,
+          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
+        }
+      ]
+    },
+    {
+      "name": "Lyndal Stephens Greth & family",
+      "slug": "lyndal-stephens-greth-family",
+      "sector": "Energy",
+      "estDailyChange": 51316067,
+      "coverage": 0.411,
+      "holdings": [
+        {
+          "ticker": "FANG",
+          "shares": 64957047,
+          "change": 0.79,
+          "estChange": 51316067,
+          "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126037012/primary_doc.xml"
+        }
+      ]
+    }
+  ],
+  "losers": [
+    {
+      "name": "Elon Musk",
+      "slug": "elon-musk",
+      "sector": "Aerospace",
+      "estDailyChange": -4212271077,
+      "coverage": 1.307,
+      "holdings": [
+        {
+          "ticker": "TSLA",
+          "shares": 699580882,
+          "change": 0.86,
+          "estChange": 601639559,
+          "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926075203/0001104659-26-075203-index.htm"
+        },
+        {
+          "ticker": "SPCX",
+          "shares": 6418547515,
+          "change": -0.75,
+          "estChange": -4813910636,
+          "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm"
+        }
+      ]
+    },
+    {
+      "name": "Sergey Brin",
+      "slug": "sergey-brin",
+      "sector": "AI & tech",
+      "estDailyChange": -3845401818,
+      "coverage": 0.936,
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "shares": 358939978,
+          "change": -5.46,
+          "estChange": -1959812280,
+          "source": "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html"
+        },
+        {
+          "ticker": "GOOG",
+          "shares": 359159912,
+          "change": -5.25,
+          "estChange": -1885589538,
+          "source": "https://www.sec.gov/Archives/edgar/data/1295032/000119312526345383/ownership.xml"
+        }
+      ]
+    },
+    {
+      "name": "Jeff Bezos",
+      "slug": "jeff-bezos",
+      "sector": "AI & tech",
+      "estDailyChange": -1330608413,
+      "coverage": 0.638,
+      "holdings": [
+        {
+          "ticker": "AMZN",
+          "shares": 950434581,
+          "change": -1.4,
+          "estChange": -1330608413,
+          "source": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm"
+        }
+      ]
+    },
+    {
+      "name": "Lakshmi Mittal",
+      "slug": "lakshmi-mittal",
+      "sector": "Industrials",
+      "estDailyChange": -1017056163,
+      "coverage": 0.653,
+      "holdings": [
+        {
+          "ticker": "MT",
+          "shares": 340152563,
+          "change": -2.99,
+          "estChange": -1017056163,
+          "source": "https://www.sec.gov/Archives/edgar/data/1243429/000199937126006457/xslSCHEDULE_13D_X02/primary_doc.xml"
+        }
+      ]
+    },
+    {
+      "name": "Eric Schmidt",
+      "slug": "eric-schmidt",
+      "sector": "AI & tech",
+      "estDailyChange": -266494869,
+      "coverage": 0.434,
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "shares": 48808584,
+          "change": -5.46,
+          "estChange": -266494869,
+          "source": "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
+        }
+      ]
+    },
+    {
+      "name": "Henry Samueli",
+      "slug": "henry-samueli",
+      "sector": "AI & tech",
+      "estDailyChange": -244700367,
+      "coverage": 0.898,
+      "holdings": [
+        {
+          "ticker": "AVGO",
+          "shares": 85559569,
+          "change": -2.86,
+          "estChange": -244700367,
+          "source": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526085691/d49254ddef14a.htm"
+        }
+      ]
+    },
+    {
+      "name": "Bill Gates",
+      "slug": "bill-gates",
+      "sector": "AI & tech",
+      "estDailyChange": -220609918,
+      "coverage": 0.494,
+      "holdings": [
+        {
+          "ticker": "RSG",
+          "shares": 116166330,
+          "change": -1.27,
+          "estChange": -147531239,
+          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926106327/primary_doc.xml"
+        },
+        {
+          "ticker": "AN",
+          "shares": 7062629,
+          "change": 6.74,
+          "estChange": 47602119,
+          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926055650/primary_doc.xml"
+        },
+        {
+          "ticker": "FMX",
+          "shares": 27887350,
+          "change": -3.52,
+          "estChange": -98163472,
+          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926039230/primary_doc.xml"
+        },
+        {
+          "ticker": "BRK.B",
+          "shares": 14689844,
+          "change": 0.86,
+          "estChange": 12633266,
+          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
+        },
+        {
+          "ticker": "CAT",
+          "shares": 6353614,
+          "change": 17.52,
+          "estChange": 111315317,
+          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
+        },
+        {
+          "ticker": "CNI",
+          "shares": 51826786,
+          "change": -1.56,
+          "estChange": -80849786,
+          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
+        },
+        {
+          "ticker": "WM",
+          "shares": 26720744,
+          "change": -0.87,
+          "estChange": -23247047,
+          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
+        },
+        {
+          "ticker": "DE",
+          "shares": 3557378,
+          "change": -7.58,
+          "estChange": -26964925,
+          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
+        },
+        {
+          "ticker": "ECL",
+          "shares": 5218044,
+          "change": -2.9,
+          "estChange": -15132328,
+          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
+        },
+        {
+          "ticker": "MXF",
+          "shares": 647198,
+          "change": -0.42,
+          "estChange": -271823,
+          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097179/xslSCHEDULE_13G_X02/primary_doc.xml"
         }
       ]
     },
@@ -399,14 +399,14 @@
       "name": "Larry Ellison",
       "slug": "larry-ellison",
       "sector": "AI & tech",
-      "estDailyChange": -23059647,
-      "coverage": 0.863,
+      "estDailyChange": -126828059,
+      "coverage": 0.86,
       "holdings": [
         {
           "ticker": "ORCL",
           "shares": 1152982353,
-          "change": -0.02,
-          "estChange": -23059647,
+          "change": -0.11,
+          "estChange": -126828059,
           "source": "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm"
         }
       ]
@@ -414,11 +414,45 @@
   ],
   "mostActive": [
     {
+      "name": "Warren Buffett",
+      "slug": "warren-buffett",
+      "sector": "Finance",
+      "transactions": 32,
+      "filingsCount": 5,
+      "filings": [
+        {
+          "filed": "2026-09-30",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526409451/xslF345X06/ownership.xml"
+        },
+        {
+          "filed": "2026-09-29",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/xslF345X06/primary_doc.xml"
+        },
+        {
+          "filed": "2026-09-25",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526403089/xslF345X06/ownership.xml"
+        },
+        {
+          "filed": "2026-09-21",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/xslF345X06/ownership.xml"
+        },
+        {
+          "filed": "2026-09-04",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000003/xslF345X06/primary_doc.xml"
+        }
+      ]
+    },
+    {
       "name": "Bill Gates",
       "slug": "bill-gates",
       "sector": "AI & tech",
-      "transactions": 36,
-      "filingsCount": 5,
+      "transactions": 29,
+      "filingsCount": 4,
       "filings": [
         {
           "filed": "2026-09-14",
@@ -439,40 +473,6 @@
           "filed": "2026-09-03",
           "form": "4",
           "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926105062/xslF345X06/tm2624729-1_4seq1.xml"
-        },
-        {
-          "filed": "2026-09-01",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926104314/xslF345X06/tm2624425-1_4seq1.xml"
-        }
-      ]
-    },
-    {
-      "name": "Warren Buffett",
-      "slug": "warren-buffett",
-      "sector": "Finance",
-      "transactions": 27,
-      "filingsCount": 4,
-      "filings": [
-        {
-          "filed": "2026-09-29",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/xslF345X06/primary_doc.xml"
-        },
-        {
-          "filed": "2026-09-25",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526403089/xslF345X06/ownership.xml"
-        },
-        {
-          "filed": "2026-09-21",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/xslF345X06/ownership.xml"
-        },
-        {
-          "filed": "2026-09-04",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000003/xslF345X06/primary_doc.xml"
         }
       ]
     },
@@ -501,6 +501,30 @@
           "filed": "2026-09-21",
           "form": "4",
           "url": "https://www.sec.gov/Archives/edgar/data/1133206/000159653226000230/xslF345X06/edgardoc.xml"
+        }
+      ]
+    },
+    {
+      "name": "Stephen Schwarzman",
+      "slug": "stephen-schwarzman",
+      "sector": "Finance",
+      "transactions": 11,
+      "filingsCount": 3,
+      "filings": [
+        {
+          "filed": "2026-09-30",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526409256/xslF345X06/ownership.xml"
+        },
+        {
+          "filed": "2026-09-28",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml"
+        },
+        {
+          "filed": "2026-09-24",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026103146/xslF345X06/ownership.xml"
         }
       ]
     },
@@ -544,25 +568,6 @@
           "filed": "2026-09-04",
           "form": "4",
           "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126035790/xslF345X06/form4.xml"
-        }
-      ]
-    },
-    {
-      "name": "Stephen Schwarzman",
-      "slug": "stephen-schwarzman",
-      "sector": "Finance",
-      "transactions": 4,
-      "filingsCount": 2,
-      "filings": [
-        {
-          "filed": "2026-09-28",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml"
-        },
-        {
-          "filed": "2026-09-24",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026103146/xslF345X06/ownership.xml"
         }
       ]
     },
@@ -715,39 +720,6 @@
       ]
     },
     {
-      "name": "Iris Fontbona & family",
-      "slug": "iris-fontbona-family",
-      "sector": "Industrials",
-      "count": 6,
-      "deals": [
-        {
-          "what": "CCU bought Nestlé Chile's 49.9% of Aguas CCU-Nestlé (~Ch$164.6bn), reaching 100%",
-          "date": "2026-06-05",
-          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
-        },
-        {
-          "what": "Quiñenco (via Invexans) sold 2.2m Nexans shares at EUR120.01 (~US$310m), stake 9.2% -> 4.1%",
-          "date": "2026-02-24",
-          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
-        },
-        {
-          "what": "Hapag-Lloyd (30% CSAV) agreed to acquire 100% of ZIM for US$35/share (>US$4bn); subject to regulatory approvals",
-          "date": "2026-02-16",
-          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
-        },
-        {
-          "what": "Leadership changes: Quiñenco CEO Francisco Pérez left to become Chile's Foreign Minister; Macario Valdés named CEO; Andrónico Luksic Lederer Vice Chairman",
-          "date": "2026-02/03",
-          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
-        },
-        {
-          "what": "Quiñenco bought additional 3.4% of SM SAAM, reaching 66.0%",
-          "date": "2025-11",
-          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
-        }
-      ]
-    },
-    {
       "name": "Liang Wenfeng",
       "slug": "liang-wenfeng",
       "sector": "AI & tech",
@@ -814,39 +786,6 @@
       ]
     },
     {
-      "name": "Giancarlo Devasini",
-      "slug": "giancarlo-devasini",
-      "sector": "Finance",
-      "count": 5,
-      "deals": [
-        {
-          "what": "Tether and Fasanara Capital launched $400M private credit fund (StableFund)",
-          "date": "2026-09-09",
-          "source": "https://tether.io/news/"
-        },
-        {
-          "what": "Tether bought 100,000 more Gold.com shares at ~$39.30 on open market",
-          "date": "2026-09-03",
-          "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml"
-        },
-        {
-          "what": "Tether (via TPM) agreed in Feb 4, 2026 PIPE to buy 3,370,787 Gold.com shares at $44.50 (~$150M) in two tranches; first tranche $126.4M closed Feb 6, 2026",
-          "date": "2026-02-04",
-          "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526054687/xslF345X02/ownership.xml"
-        },
-        {
-          "what": "Tether swapped Northern Data AG shares for RUM Group shares under Transaction Support Agreement",
-          "date": "2025-11-10",
-          "source": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926105551/xslF345X06/tm2624697-1_4seq1.xml"
-        },
-        {
-          "what": "Tether reportedly in talks to raise $15-20B for ~3% stake, implying ~$500B valuation (Reuters, via Wikipedia summary)",
-          "date": "2025-09",
-          "source": "https://en.wikipedia.org/wiki/Tether_Limited"
-        }
-      ]
-    },
-    {
       "name": "Idan Ofer",
       "slug": "idan-ofer",
       "sector": "Industrials",
@@ -876,6 +815,39 @@
           "what": "Apollo Sports Capital became majority shareholder of Atletico de Madrid (announced Nov 10, 2025; closed Mar 12, 2026). Quantum Pacific kept substantially all of its stake and is now the second-largest shareholder",
           "date": "2026-03-12",
           "source": "https://ir.apollo.com/news-events/press-releases/detail/612/apollo-sports-capital-completes-transaction-to-become"
+        }
+      ]
+    },
+    {
+      "name": "Iris Fontbona & family",
+      "slug": "iris-fontbona-family",
+      "sector": "Industrials",
+      "count": 5,
+      "deals": [
+        {
+          "what": "CCU bought Nestlé Chile's 49.9% of Aguas CCU-Nestlé (~Ch$164.6bn), reaching 100%",
+          "date": "2026-06-05",
+          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
+        },
+        {
+          "what": "Quiñenco (via Invexans) sold 2.2m Nexans shares at EUR120.01 (~US$310m), stake 9.2% -> 4.1%",
+          "date": "2026-02-24",
+          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
+        },
+        {
+          "what": "Hapag-Lloyd (30% CSAV) agreed to acquire 100% of ZIM for US$35/share (>US$4bn); subject to regulatory approvals",
+          "date": "2026-02-16",
+          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
+        },
+        {
+          "what": "Leadership changes: Quiñenco CEO Francisco Pérez left to become Chile's Foreign Minister; Macario Valdés named CEO; Andrónico Luksic Lederer Vice Chairman",
+          "date": "2026-02/03",
+          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
+        },
+        {
+          "what": "Quiñenco bought additional 3.4% of SM SAAM, reaching 66.0%",
+          "date": "2025-11",
+          "source": "https://www.quinenco.cl/wp-content/uploads/2026/06/Quinenco-Presentation-June-2026.pdf"
         }
       ]
     },
@@ -913,35 +885,68 @@
       ]
     },
     {
-      "name": "Jensen Huang",
-      "slug": "jensen-huang",
-      "sector": "AI & tech",
+      "name": "Lyndal Stephens Greth & family",
+      "slug": "lyndal-stephens-greth-family",
+      "sector": "Energy",
       "count": 5,
       "deals": [
         {
-          "what": "Gift of 438,000 NVDA shares from living trust: 292,000 to Jen-Hsun & Lori Huang Foundation, 146,000 to a donor-advised fund",
-          "date": "2026-09-17",
-          "source": "https://www.sec.gov/Archives/edgar/data/1197649/000119764926000012/wk-form4_1789765856.xml"
+          "what": "SGF FANG sold 9,079,675 Diamondback shares at $205.26 (~$1.86B) under Rule 144 via Morgan Stanley; 30-day lock-up",
+          "date": "2026-09-16",
+          "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126037012/primary_doc.xml"
         },
         {
-          "what": "Nvidia definitive agreement to acquire Hugging Face for ~$11.9B plus up to $1.0B retention equity; close expected 1H 2027",
-          "date": "2026-09-02",
-          "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm"
+          "what": "SGF FANG sold 10,000,000 Diamondback shares at $204.25 (~$2.04B) under Rule 144 via J.P. Morgan; 30-day lock-up",
+          "date": "2026-06-04",
+          "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126024263/primary_doc.xml"
         },
         {
-          "what": "Nvidia residual value guaranties (capped at $105B) for SB Energy's PORTS AI campus in Pike County, Ohio, with OpenAI as tenant; payments from ~2028",
-          "date": "2026-08-17",
-          "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm"
+          "what": "Underwritten secondary offering of 12,650,000 Diamondback shares at $170.19 (~$2.15B) via Evercore, Citigroup and J.P. Morgan; closed Mar 12, 2026; 60-day lock-up",
+          "date": "2026-03-10",
+          "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126009627/primary_doc.xml"
         },
         {
-          "what": "Nvidia non-marketable equity investments rose to $51.2B at 2026-07-26 (from $22.3B in Jan 2026); $25B further equity commitments through FY2031",
-          "date": "2026-07-26",
-          "source": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+          "what": "Diamondback repurchased 1,000,000 shares at $162.88 (Feb 3) and 1,000,000 at $168.99 (Feb 4) from SGF FANG under the repurchase agreement",
+          "date": "2026-02-04",
+          "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126003883/primary_doc.xml"
         },
         {
-          "what": "Nvidia $5B investment in Intel and announced up-to-$100B OpenAI investment (Sept 2025)",
-          "date": "2025-09",
-          "source": "https://en.wikipedia.org/wiki/Nvidia"
+          "what": "Repurchase agreement: Diamondback bought 2,000,000 shares from SGF FANG at $152.59; SGF FANG got the right to sell up to 3,000,000 shares per quarter to Diamondback at prevailing closing prices through Dec 31, 2026",
+          "date": "2025-11-28",
+          "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036125044026/primary_doc.xml"
+        }
+      ]
+    },
+    {
+      "name": "Pham Nhat Vuong",
+      "slug": "pham-nhat-vuong",
+      "sector": "Other",
+      "count": 5,
+      "deals": [
+        {
+          "what": "Agreed to sell 100% of Ngoc Hoi Real Estate Investment (with two minority holders) to VinFast Vietnam for VND30.857tn (~$1.2B), at a discount to independent valuation; 50% at closing, rest within 120 days",
+          "date": "2026-09-15",
+          "source": "https://www.stocktitan.net/sec-filings/VFS/6-k-vin-fast-auto-ltd-current-report-foreign-issuer-5deaefc2c274.html"
+        },
+        {
+          "what": "Approved capital contribution of up to VND10tn (~$396.7M) to VinFast Vietnam via dividend preference shares by end-2026",
+          "date": "2026-09-15",
+          "source": "https://technode.global/2026/09/17/vietnams-ev-manufacturer-vinfast-to-buy-founder-pham-nhat-vuongs-property-firm-for-1-2b/"
+        },
+        {
+          "what": "Founded VinEnergo Holding with VND79.76tn ($3.03B) charter capital; Vuong >66%",
+          "date": "2026-05-25",
+          "source": "https://e.vnexpress.net/news/business/companies/southeast-asia-s-richest-man-pham-nhat-vuong-starts-new-company-with-capital-exceeding-vingroup-s-5077962.html"
+        },
+        {
+          "what": "VinFast to divest Vietnam manufacturing unit VFTP for ~VND13.31tn ($530M) to consortium led by Tuong Lai (asset-light shift); Vuong takes 4.4% of the buyer side",
+          "date": "2026-05-12",
+          "source": "https://theinvestor.vn/vinfast-to-sell-manufacturing-arm-in-530-mln-restructuring-adopts-asset-light-model-d19067.html"
+        },
+        {
+          "what": "Co-founded GSM VN Holding (VND43.3tn / $1.65B) with family and Vingroup",
+          "date": "2026-03",
+          "source": "https://theinvestor.vn/vingroup-pham-nhat-vuong-family-found-165-bln-consultancy-firm-tied-to-gsm-ride-hailing-unit-d18569.html"
         }
       ]
     }
@@ -951,8 +956,22 @@
       "name": "Elon Musk",
       "slug": "elon-musk",
       "sector": "Aerospace",
-      "count": 5,
+      "count": 7,
       "stories": [
+        {
+          "edition": "2026-10-01",
+          "editionUrl": "editions/2026-10-01/",
+          "headline": "Tesla's Cybercab certification deadline arrives under oath",
+          "url": "https://www.teslarati.com/nhtsa-just-escalated-its-tesla-cybercab-investigation-in-a-big-way/",
+          "source": "Teslarati"
+        },
+        {
+          "edition": "2026-10-01",
+          "editionUrl": "editions/2026-10-01/",
+          "headline": "Tesla lines up $30 billion in credit for Cybercab, Semi, Optimus",
+          "url": "https://www.teslarati.com/tesla-snags-30b-fresh-credit-lines-for-expanding-biggest-projects/",
+          "source": "Teslarati"
+        },
         {
           "edition": "2026-09-29",
           "editionUrl": "editions/2026-09-29/",
@@ -973,20 +992,6 @@
           "headline": "SpaceX stacks Starship for its first attempt to reach orbit",
           "url": "https://spaceflightnow.com/2026/09/23/spacex-stack-starship-and-super-heavy-for-first-orbital-flight/",
           "source": "Spaceflight Now"
-        },
-        {
-          "edition": "2026-09-26",
-          "editionUrl": "editions/2026-09-26/",
-          "headline": "US backs Musk's court fight against EU's $137M fine on X",
-          "url": "https://www.france24.com/en/europe/20260925-eu-vows-to-pursue-%E2%82%AC120-million-fine-on-x-after-us-backs-musk-s-court-challenge",
-          "source": "France 24"
-        },
-        {
-          "edition": "2026-09-24",
-          "editionUrl": "editions/2026-09-24/",
-          "headline": "Investors keep betting on Tesla's robotaxi story, not car sales",
-          "url": "https://247wallst.com/investing/2026/09/24/prediction-the-biggest-opportunity-for-tesla-stock-may-be-just-ahead/",
-          "source": "24/7 Wall St."
         }
       ]
     },
@@ -994,8 +999,15 @@
       "name": "Larry Ellison",
       "slug": "larry-ellison",
       "sector": "AI & tech",
-      "count": 5,
+      "count": 6,
       "stories": [
+        {
+          "edition": "2026-10-01",
+          "editionUrl": "editions/2026-10-01/",
+          "headline": "Ellison pledges $9.2 billion more Oracle stock for son's deal",
+          "url": "https://www.investing.com/news/company-news/larry-ellison-adds-92-billion-in-oracle-shares-as-loan-collateral-4918330",
+          "source": "Investing.com"
+        },
         {
           "edition": "2026-09-29",
           "editionUrl": "editions/2026-09-29/",
@@ -1023,13 +1035,6 @@
           "headline": "Ellison pledges $9.2B more Oracle stock as collateral",
           "url": "https://www.investing.com/news/company-news/larry-ellison-adds-92-billion-in-oracle-shares-as-loan-collateral-4918330",
           "source": "Investing.com"
-        },
-        {
-          "edition": "2026-09-24",
-          "editionUrl": "editions/2026-09-24/",
-          "headline": "Paramount's Warner Bros. Discovery deal risks a daily penalty",
-          "url": "https://www.thewrap.com/industry-news/deals-ma/paramount-warner-bros-merger-ticking-fee-explained/",
-          "source": "TheWrap"
         }
       ]
     },
@@ -1037,8 +1042,15 @@
       "name": "Mark Zuckerberg",
       "slug": "mark-zuckerberg",
       "sector": "AI & tech",
-      "count": 5,
+      "count": 6,
       "stories": [
+        {
+          "edition": "2026-10-01",
+          "editionUrl": "editions/2026-10-01/",
+          "headline": "Zuckerberg-linked entities sell $21 million in Meta stock",
+          "url": "https://finbold.com/mark-zuckerberg-makes-monster-meta-stock-sale",
+          "source": "Finbold"
+        },
         {
           "edition": "2026-09-29",
           "editionUrl": "editions/2026-09-29/",
@@ -1066,13 +1078,42 @@
           "headline": "Meta stock jumps 11% in a day on Muse AI buzz",
           "url": "https://www.fool.com/investing/2026/09/24/news-about-muse-drove-1-day-11-jump-in-meta-stock/",
           "source": "The Motley Fool"
+        }
+      ]
+    },
+    {
+      "name": "Bernard Arnault & family",
+      "slug": "bernard-arnault-family",
+      "sector": "Luxury & retail",
+      "count": 4,
+      "stories": [
+        {
+          "edition": "2026-10-01",
+          "editionUrl": "editions/2026-10-01/",
+          "headline": "Arnault family simplifies LVMH holding structure to lock in control",
+          "url": "https://www.businessoffashion.com/news/luxury/arnault-clan-to-change-lvmh-holding-structure-to-ensure-control/",
+          "source": "Business of Fashion"
+        },
+        {
+          "edition": "2026-09-28",
+          "editionUrl": "editions/2026-09-28/",
+          "headline": "Arnault family simplifies LVMH control before generational handoff",
+          "url": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html",
+          "source": "GlobeNewswire"
+        },
+        {
+          "edition": "2026-09-27",
+          "editionUrl": "editions/2026-09-27/",
+          "headline": "Arnault family plans to fold LVMH holding companies into one",
+          "url": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html",
+          "source": "GlobeNewswire"
         },
         {
           "edition": "2026-09-24",
           "editionUrl": "editions/2026-09-24/",
-          "headline": "Zuckerberg turns Meta's AI agent into a toll booth",
-          "url": "https://techcrunch.com/2026/09/23/everything-new-coming-to-metas-ai-agent-muse/",
-          "source": "TechCrunch"
+          "headline": "Arnault family rebuilds LVMH's holding company to lock in control",
+          "url": "https://www.bloomberg.com/news/articles/2026-09-23/arnault-clan-to-change-lvmh-holding-structure-to-ensure-control",
+          "source": "Bloomberg"
         }
       ]
     },
@@ -1185,31 +1226,31 @@
       ]
     },
     {
-      "name": "Bernard Arnault & family",
-      "slug": "bernard-arnault-family",
-      "sector": "Luxury & retail",
+      "name": "Masayoshi Son",
+      "slug": "masayoshi-son",
+      "sector": "AI & tech",
       "count": 3,
       "stories": [
         {
+          "edition": "2026-10-01",
+          "editionUrl": "editions/2026-10-01/",
+          "headline": "SoftBank sells record $11.1 billion junk bond to fund AI bet",
+          "url": "https://www.freemalaysiatoday.com/category/business/2026/09/24/softbank-raises-us-11-1bil-in-world-s-biggest-high-yield-corporate-bond-sale",
+          "source": "Free Malaysia Today"
+        },
+        {
           "edition": "2026-09-28",
           "editionUrl": "editions/2026-09-28/",
-          "headline": "Arnault family simplifies LVMH control before generational handoff",
-          "url": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html",
-          "source": "GlobeNewswire"
+          "headline": "SoftBank sells record $11.1 billion of bonds for its OpenAI bet",
+          "url": "https://www.businesstoday.in/markets/story/softbank-plans-11-billion-junk-bond-sale-to-fuel-multi-billion-dollar-openai-bet-report-556732-2026-09-21",
+          "source": "Business Today"
         },
         {
-          "edition": "2026-09-27",
-          "editionUrl": "editions/2026-09-27/",
-          "headline": "Arnault family plans to fold LVMH holding companies into one",
-          "url": "https://www.globenewswire.com/news-release/2026/09/23/3367722/0/en/christian-dior-the-arnault-family-group-pursues-the-simplification-of-its-corporate-structures.html",
-          "source": "GlobeNewswire"
-        },
-        {
-          "edition": "2026-09-24",
-          "editionUrl": "editions/2026-09-24/",
-          "headline": "Arnault family rebuilds LVMH's holding company to lock in control",
-          "url": "https://www.bloomberg.com/news/articles/2026-09-23/arnault-clan-to-change-lvmh-holding-structure-to-ensure-control",
-          "source": "Bloomberg"
+          "edition": "2026-09-26",
+          "editionUrl": "editions/2026-09-26/",
+          "headline": "SoftBank prices record $11.1B bond for OpenAI stake",
+          "url": "https://americanbazaaronline.com/2026/09/24/softbank-makes-history-with-record-11-1b-high-yield-bond-sale-488764/",
+          "source": "American Bazaar"
         }
       ]
     },
@@ -1263,34 +1304,12 @@
           "source": "Parrot Nigeria"
         }
       ]
-    },
-    {
-      "name": "Masayoshi Son",
-      "slug": "masayoshi-son",
-      "sector": "AI & tech",
-      "count": 2,
-      "stories": [
-        {
-          "edition": "2026-09-28",
-          "editionUrl": "editions/2026-09-28/",
-          "headline": "SoftBank sells record $11.1 billion of bonds for its OpenAI bet",
-          "url": "https://www.businesstoday.in/markets/story/softbank-plans-11-billion-junk-bond-sale-to-fuel-multi-billion-dollar-openai-bet-report-556732-2026-09-21",
-          "source": "Business Today"
-        },
-        {
-          "edition": "2026-09-26",
-          "editionUrl": "editions/2026-09-26/",
-          "headline": "SoftBank prices record $11.1B bond for OpenAI stake",
-          "url": "https://americanbazaaronline.com/2026/09/24/softbank-makes-history-with-record-11-1b-high-yield-bond-sale-488764/",
-          "source": "American Bazaar"
-        }
-      ]
     }
   ],
   "notes": {
     "movers": "Estimated; partial. Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are at least 25% of the person's Forbes net worth. For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's Walmart stake), the estimate is the published net worth × that stock's daily % change.",
     "mostDeals": "Counts profile deal entries dated within the last 12 months (month-only dates count if any part of the month falls in the window). 21 entries without a month-level date were not counted.",
-    "mostMoves": "Stories across 5 archived editions. 1 stories named nobody in the top-100 index."
+    "mostMoves": "Stories across 6 archived editions. 1 stories named nobody in the top-100 index."
   },
   "minCoverage": 0.25
 }
