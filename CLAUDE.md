@@ -1,13 +1,24 @@
+---
+name: claude
+description: Shared project router and working rules for Billionaires Digest agents.
+---
+
 # Billionaires Digest — project guide for Claude
 
 Live site: https://billionairesdigest.com (GitHub Pages, branch `main`, repo root). Static HTML + JSON; no build server.
 Owner works in plain language; keep explanations short and non-technical.
 
 ## Branches and versions
-- `main` = live v1. Tag `v1.0` + GitHub Release mark the complete v1.
-- `v3` = the chosen redesign (owner decision 2026-09-29): ESPN-style, all v2 features, realistic painted portraits. Preview: v3.billionaires-digest.pages.dev. Nothing on `v3` is live until merged into `main`.
-- `v2` = casino-style alternative (kept for reference, not the direction). `v2-classic` = older light snapshot.
-- Daily automation commits to `main`; merge `main` into `v3` regularly so new data isn't lost (take main's data files, keep v3's `index.html` Play front page, rebuild generated pages with `node scripts/build-pages.mjs`).
+- `main` = live v3 (ESPN style), launched 2026-09-29 (previously live v1). Tag `v1.0` marks the historical v1 release.
+- `v3` = launched redesign history (previously an unlaunched preview); do not use it as the current development line.
+- `v2` = casino-style reference; `v2-classic` = older light reference. `mockups/` contains experiments.
+- Daily automation commits to `main`. Human and agent work happens on feature branches from current `main`, reviewed through a pull request; the owner merges. Never commit directly to `main`.
+
+## Shared project memory
+- Read `docs/STATUS.md` and `docs/DECISIONS.md` before working. Historical design briefs do not override later approved decisions.
+- Claude builds the site, data and art; Codex maintains documentation and consistency. The owner approves product decisions.
+- Record the task, branch and start date in STATUS before editing; clear the claim when finished. Do not edit files another agent is actively changing.
+- Update the relevant shared file after approved changes. Proposals and local chat memory are not approved rules by default.
 
 ## Daily pipeline (America/New_York)
 - 5:30 AM `.github/workflows/data.yml` "Morning data": fetch-filings (SEC EDGAR) → fetch-13f (Mondays) → fetch-prices (Finnhub) → build-insights → build-copycat → build-network → build-fantasy → build-book → build-pages → commit.
@@ -31,7 +42,7 @@ Owner works in plain language; keep explanations short and non-technical.
 - Keep "For information only · not financial advice".
 - Money (owner decision 2026-09-27): real-money play is a goal. The live game stays play money (and its published terms say so) until a licensed/legal route is chosen after legal review — e.g. partnering with licensed operators, or licensed paid-entry contests. Never skip or weaken legally required age, identity, location or responsible-gambling checks, and never use deceptive mechanics (fake near-misses, fake winner feeds, false countdowns). See docs/GAMIFICATION-RESEARCH.md.
 - Real estate at city/area level only; no addresses, no tracking people's movements or family members.
-- No photos of real people and no company logos in art; v2 uses illustrated portraits (style must be approved first).
+- Illustrated/painted portraits only: never photos of real people or fake photos, and no company logos. The approved live style is realistic painted portraits, with grey silhouettes for people without one; do not draw private/low-profile people.
 - Ask before deleting anything, before actions that cost money, and before publishing anything new outward.
 - Never put personal email addresses in requests or files.
 
