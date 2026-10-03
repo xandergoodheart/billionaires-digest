@@ -1,8 +1,8 @@
 {
-  "generated": "2026-10-02",
+  "generated": "2026-10-03",
   "inputs": {
-    "filingsGenerated": "2026-10-02T15:55:27.430Z",
-    "pricesGenerated": "2026-10-02T15:59:05.634Z",
+    "filingsGenerated": "2026-10-03T14:23:06.745Z",
+    "pricesGenerated": "2026-10-03T14:26:53.166Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
     "editions": 6
   },
@@ -166,8 +166,8 @@
     }
   ],
   "last7": {
-    "from": "2026-09-26",
-    "to": "2026-10-02",
+    "from": "2026-09-27",
+    "to": "2026-10-03",
     "buy": 53882588,
     "sell": 31042879,
     "net": 22839709,
@@ -402,14 +402,6 @@
           "issuer": "LENNAR CORP /NEW/",
           "ticker": "LEN, LEN.B",
           "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-09-03",
-          "filed": "2026-09-04",
-          "form": "4",
-          "issuer": "BERKSHIRE HATHAWAY INC",
-          "ticker": "BRK.A",
-          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000003/xslF345X06/primary_doc.xml"
         }
       ]
     },
@@ -448,39 +440,6 @@
   ],
   "topBuyers30d": [
     {
-      "name": "Bill Gates",
-      "slug": "bill-gates",
-      "sector": "AI & tech",
-      "value": 453600324,
-      "count": 3,
-      "filings": [
-        {
-          "date": "2026-09-10",
-          "filed": "2026-09-14",
-          "form": "4",
-          "issuer": "REPUBLIC SERVICES, INC.",
-          "ticker": "RSG",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/xslF345X06/tm2625411-1_4seq1.xml"
-        },
-        {
-          "date": "2026-09-08",
-          "filed": "2026-09-10",
-          "form": "4",
-          "issuer": "REPUBLIC SERVICES, INC.",
-          "ticker": "RSG",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926106713/xslF345X06/tm2625157-1_4seq1.xml"
-        },
-        {
-          "date": "2026-09-03",
-          "filed": "2026-09-08",
-          "form": "4",
-          "issuer": "REPUBLIC SERVICES, INC.",
-          "ticker": "RSG",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926105908/xslF345X06/tm2624905-1_4seq1.xml"
-        }
-      ]
-    },
-    {
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
@@ -518,14 +477,31 @@
           "issuer": "LENNAR CORP /NEW/",
           "ticker": "LEN, LEN.B",
           "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/xslF345X06/ownership.xml"
+        }
+      ]
+    },
+    {
+      "name": "Bill Gates",
+      "slug": "bill-gates",
+      "sector": "AI & tech",
+      "value": 288898658,
+      "count": 2,
+      "filings": [
+        {
+          "date": "2026-09-10",
+          "filed": "2026-09-14",
+          "form": "4",
+          "issuer": "REPUBLIC SERVICES, INC.",
+          "ticker": "RSG",
+          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/xslF345X06/tm2625411-1_4seq1.xml"
         },
         {
-          "date": "2026-09-03",
-          "filed": "2026-09-04",
+          "date": "2026-09-08",
+          "filed": "2026-09-10",
           "form": "4",
-          "issuer": "BERKSHIRE HATHAWAY INC",
-          "ticker": "BRK.A",
-          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000003/xslF345X06/primary_doc.xml"
+          "issuer": "REPUBLIC SERVICES, INC.",
+          "ticker": "RSG",
+          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926106713/xslF345X06/tm2625157-1_4seq1.xml"
         }
       ]
     },
@@ -558,57 +534,6 @@
           "form": "4",
           "issuer": "Blackstone Private Real Estate Credit & Income Fund",
           "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026103146/xslF345X06/ownership.xml"
-        }
-      ]
-    },
-    {
-      "name": "Giancarlo Devasini",
-      "slug": "giancarlo-devasini",
-      "sector": "Finance",
-      "value": 3930350,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-09-03",
-          "filed": "2026-09-08",
-          "form": "4",
-          "issuer": "Gold.com, Inc.",
-          "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml"
-        }
-      ]
-    },
-    {
-      "name": "Jean-Louis van der Velde",
-      "slug": "jean-louis-van-der-velde",
-      "sector": "Finance",
-      "value": 3930350,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-09-03",
-          "filed": "2026-09-08",
-          "form": "4",
-          "issuer": "Gold.com, Inc.",
-          "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526385264/xslF345X06/ownership.xml"
-        }
-      ]
-    },
-    {
-      "name": "Paolo Ardoino",
-      "slug": "paolo-ardoino",
-      "sector": "Finance",
-      "value": 3930350,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-09-03",
-          "filed": "2026-09-08",
-          "form": "4",
-          "issuer": "Gold.com, Inc.",
-          "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526385264/xslF345X06/ownership.xml"
         }
       ]
     }

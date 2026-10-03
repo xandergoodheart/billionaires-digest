@@ -1719,7 +1719,19 @@
       "captain": "elon-musk",
       "points": 1133
     },
-    "perfect": null
+    "perfect": {
+      "picks": [
+        "elon-musk",
+        "eyal-ofer",
+        "henry-samueli",
+        "jensen-huang",
+        "robert-pera"
+      ],
+      "captain": "eyal-ofer",
+      "points": 4356,
+      "salary": 98,
+      "method": "exact search (dynamic programming over salary and picks)"
+    }
   },
-  "final": false
+  "final": true
 }
