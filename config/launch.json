@@ -1,0 +1,6 @@
+{
+  "_note": "The ONE launch switch. gate: true hides the game and Tools pages behind an 'Opens Nov 9' card and sends Play to the waitlist landing. To open the game: set gate to false, then run `node scripts/sync-nav.mjs` (and `node scripts/build-pages.mjs` for generated pages) and commit.",
+  "gate": true,
+  "seasonStart": "2026-11-09",
+  "seasonStartLabel": "Monday, Nov 9"
+}

@@ -1,14 +1,19 @@
 // node --test scripts/lib/
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { NAV_V2, SUBNAV_V2, BOTTOM_V2, renderTopbarV2, renderBottomTabsV2, renderFooterV2, renderNav } from './nav.mjs';
+import { readFileSync } from 'node:fs';
+import { NAV_V2, SUBNAV_V2, BOTTOM_V2, renderTopbarV2, renderBottomTabsV2, renderFooterV2, renderNav, navV2, subnavV2, GATED, readGated } from './nav.mjs';
+
+// These tests check the full (open-game) chrome; the launch-gated chrome is tested separately below.
+const U = { gated: false };
+const UA = { absolute: true, gated: false };
 
 const currentLinks = (html, attr) => [...html.matchAll(new RegExp(`<a [^>]*${attr}[^>]*>([^<]*)</a>`, 'g'))].map((m) => m[1]);
 
 test('NAV_V2: five sections, play sub-tabs', () => {
   assert.deepEqual(NAV_V2.map((n) => n.key), ['play', 'learn', 'players', 'news', 'tools']);
   assert.deepEqual(NAV_V2.map((n) => n.label), ['Play', 'Learn', 'Players', 'News', 'Tools']);
-  assert.deepEqual(NAV_V2.map((n) => n.href), ['index.html', 'academy.html', 'players.html', 'news.html', 'flows.html']);
+  assert.deepEqual(NAV_V2.map((n) => n.href), ['play.html', 'academy.html', 'players.html', 'news.html', 'flows.html']);
   assert.deepEqual(SUBNAV_V2.play.items.map((i) => i.label), ['My team', 'Draft room', 'Scores', 'Leagues', 'The Book', 'Next Moves', 'Rules']);
   assert.equal(SUBNAV_V2.play.label, 'Billionaire Fantasy League');
   assert.deepEqual(BOTTOM_V2, ['play', 'learn', 'players', 'news']);
@@ -16,7 +21,7 @@ test('NAV_V2: five sections, play sub-tabs', () => {
 });
 
 test('renderTopbarV2: section aria-current="true", sub-tab aria-current="page"', () => {
-  const html = renderTopbarV2('play', 'team');
+  const html = renderTopbarV2('play', 'team', U);
   const top = html.slice(html.indexOf('<nav class="v2-topnav"'), html.indexOf('</nav>'));
   assert.deepEqual(currentLinks(top, 'aria-current="true"'), ['Play']);
   const sub = html.slice(html.indexOf('<nav class="v2-subtabs"'));
@@ -34,19 +39,19 @@ test('renderTopbarV2: section aria-current="true", sub-tab aria-current="page"',
 });
 
 test('renderTopbarV2: draft sub-tab, and no sub-tab marked when subKey is null', () => {
-  assert.deepEqual(currentLinks(renderTopbarV2('play', 'draft'), 'aria-current="page"'), ['Draft room', 'Draft room']);
-  const none = renderTopbarV2('play', null);
+  assert.deepEqual(currentLinks(renderTopbarV2('play', 'draft', U), 'aria-current="page"'), ['Draft room', 'Draft room']);
+  const none = renderTopbarV2('play', null, U);
   assert.equal((none.match(/aria-current="page"/g) || []).length, 0);
   assert.ok(none.includes('v2-subtabs'));
   // a section without sub-tabs renders no sub-tab bar
-  assert.ok(!renderTopbarV2('players', null).includes('v2-subtabs'));
-  assert.equal((renderTopbarV2(null, null).match(/aria-current/g) || []).length, 0);
+  assert.ok(!renderTopbarV2('players', null, U).includes('v2-subtabs'));
+  assert.equal((renderTopbarV2(null, null, U).match(/aria-current/g) || []).length, 0);
 });
 
 test('renderTopbarV2: relative and absolute links', () => {
-  const rel = renderTopbarV2('play', 'team');
+  const rel = renderTopbarV2('play', 'team', U);
   assert.ok(rel.includes('href="team.html"') && rel.includes('href="players.html"') && rel.includes('href="index.html"') && rel.includes('href="news.html"'));
-  const abs = renderTopbarV2('play', 'team', { absolute: true });
+  const abs = renderTopbarV2('play', 'team', UA);
   assert.ok(abs.includes('href="/team.html"') && abs.includes('href="/players.html"') && abs.includes('href="/"'));
   assert.ok(abs.includes('href="/scores.html"'));
   assert.ok(abs.includes('href="/flows.html"') && abs.includes('href="/guides/filings-101/"') && abs.includes('href="/people/"'));
@@ -54,31 +59,31 @@ test('renderTopbarV2: relative and absolute links', () => {
 });
 
 test('renderTopbarV2: labels are escaped', () => {
-  const html = renderTopbarV2('play', 'team');
+  const html = renderTopbarV2('play', 'team', U);
   assert.ok(!/<a [^>]*>[^<]*&(?!amp;|lt;|gt;|quot;)[^<]*<\/a>/.test(html));
   // SUBNAV label with markup would be escaped
   const saved = SUBNAV_V2.play.label;
   SUBNAV_V2.play.label = 'A <b> & "c"';
   try {
-    const h = renderTopbarV2('play', 'team');
+    const h = renderTopbarV2('play', 'team', U);
     assert.ok(h.includes('A &lt;b&gt; &amp; &quot;c&quot;'));
   } finally { SUBNAV_V2.play.label = saved; }
 });
 
 test('renderBottomTabsV2: four tabs, active marked', () => {
-  const html = renderBottomTabsV2('play');
+  const html = renderBottomTabsV2('play', U);
   assert.deepEqual([...html.matchAll(/<a [^>]*>([^<]*)<\/a>/g)].map((m) => m[1]), ['Play', 'Learn', 'Players', 'News']);
   assert.deepEqual(currentLinks(html, 'aria-current="true"'), ['Play']);
-  assert.deepEqual(currentLinks(renderBottomTabsV2('news'), 'aria-current'), ['News']);
-  assert.ok(renderBottomTabsV2('play', { absolute: true }).includes('href="/"'));
+  assert.deepEqual(currentLinks(renderBottomTabsV2('news', U), 'aria-current'), ['News']);
+  assert.ok(renderBottomTabsV2('play', UA).includes('href="/play.html"'));
 });
 
 test('renderFooterV2: disclaimers and links', () => {
-  const html = renderFooterV2();
+  const html = renderFooterV2(U);
   assert.ok(html.includes('For information only · not financial advice'));
   assert.ok(html.includes('Play money only: no purchases, cash-out or prizes.'));
   assert.ok(html.includes('href="about.html"') && html.includes('href="about.html#corrections"') && html.includes('href="play-terms.html"'));
-  assert.ok(renderFooterV2({ absolute: true }).includes('href="/play-terms.html"'));
+  assert.ok(renderFooterV2(UA).includes('href="/play-terms.html"'));
 });
 
 test('v1 renderNav is unchanged by the v2 additions', () => {
@@ -105,16 +110,16 @@ test('v1 Fantasy menu links into the v2 section', () => {
 test('Players section: v2 players.html in the top bar, phone menu and bottom tabs; no sub-tabs', () => {
   assert.equal(NAV_V2.find((n) => n.key === 'players').href, 'players.html');
   assert.equal(SUBNAV_V2.players, undefined);
-  const html = renderTopbarV2('players', null);
+  const html = renderTopbarV2('players', null, U);
   const top = html.slice(html.indexOf('<nav class="v2-topnav"'), html.indexOf('</nav>'));
   assert.ok(top.includes('<a href="players.html" aria-current="true">Players</a>'));
   const menu = html.slice(html.indexOf('id="v2-menu"'));
   assert.ok(menu.includes('<a class="v2-menu__top" href="players.html" aria-current="true">Players</a>'));
   assert.ok(!html.includes('v2-subtabs'));
-  const tabs = renderBottomTabsV2('players');
+  const tabs = renderBottomTabsV2('players', U);
   assert.ok(tabs.includes('<a href="players.html" aria-current="true">Players</a>'));
   assert.deepEqual(currentLinks(tabs, 'aria-current'), ['Players']);
-  assert.ok(renderBottomTabsV2('play', { absolute: true }).includes('href="/players.html"'));
+  assert.ok(renderBottomTabsV2('play', UA).includes('href="/players.html"'));
 });
 
 test('Learn section: top bar, two sub-tabs (Academy + Billionaire Life), phone menu, bottom tabs', () => {
@@ -125,7 +130,7 @@ test('Learn section: top bar, two sub-tabs (Academy + Billionaire Life), phone m
     { key: 'academy', label: 'Academy', href: 'academy.html' },
     { key: 'hub', label: 'Billionaire Life', href: 'life.html' }
   ]);
-  const html = renderTopbarV2('learn', 'hub');
+  const html = renderTopbarV2('learn', 'hub', U);
   const top = html.slice(html.indexOf('<nav class="v2-topnav"'), html.indexOf('</nav>'));
   assert.deepEqual(currentLinks(top, 'aria-current="true"'), ['Learn']);
   const sub = html.slice(html.indexOf('<nav class="v2-subtabs"'));
@@ -135,13 +140,13 @@ test('Learn section: top bar, two sub-tabs (Academy + Billionaire Life), phone m
   const menu = html.slice(html.indexOf('id="v2-menu"'));
   assert.ok(menu.includes('<a class="v2-menu__top" href="academy.html" aria-current="true">Learn</a>'));
   assert.deepEqual(currentLinks(menu, 'aria-current="page"'), ['Billionaire Life']);
-  assert.ok(renderTopbarV2('play', 'team').includes('<a class="v2-menu__top" href="academy.html">Learn</a>'));
-  assert.ok(renderTopbarV2('learn', 'hub', { absolute: true }).includes('href="/life.html"'));
-  assert.deepEqual(currentLinks(renderBottomTabsV2('learn'), 'aria-current'), ['Learn']);
+  assert.ok(renderTopbarV2('play', 'team', U).includes('<a class="v2-menu__top" href="academy.html">Learn</a>'));
+  assert.ok(renderTopbarV2('learn', 'hub', UA).includes('href="/life.html"'));
+  assert.deepEqual(currentLinks(renderBottomTabsV2('learn', U), 'aria-current'), ['Learn']);
 });
 
 test('Academy page: Learn section active, Academy sub-tab is the current page', () => {
-  const html = renderTopbarV2('learn', 'academy');
+  const html = renderTopbarV2('learn', 'academy', U);
   const top = html.slice(html.indexOf('<nav class="v2-topnav"'), html.indexOf('</nav>'));
   assert.deepEqual(currentLinks(top, 'aria-current="true"'), ['Learn']);
   const sub = html.slice(html.indexOf('<nav class="v2-subtabs"'));
@@ -150,56 +155,119 @@ test('Academy page: Learn section active, Academy sub-tab is the current page', 
   assert.deepEqual(currentLinks(subNav, 'aria-current="page"'), ['Academy']);
   const menu = html.slice(html.indexOf('id="v2-menu"'));
   assert.deepEqual(currentLinks(menu, 'aria-current="page"'), ['Academy']);
-  assert.ok(renderTopbarV2('play', 'team').includes('<li><a href="academy.html">Academy</a></li>'));
-  assert.ok(renderTopbarV2('learn', 'academy', { absolute: true }).includes('href="/academy.html"'));
+  assert.ok(renderTopbarV2('play', 'team', U).includes('<li><a href="academy.html">Academy</a></li>'));
+  assert.ok(renderTopbarV2('learn', 'academy', UA).includes('href="/academy.html"'));
 });
 
 test('News and Tools sections: sub-tabs, absolute links for generated pages', () => {
   assert.deepEqual(SUBNAV_V2.news.items.map((i) => i.key), ['today', 'people', 'companies', 'sectors', 'calendar', 'archive']);
   assert.equal(SUBNAV_V2.news.label, 'The Digest');
   assert.deepEqual(SUBNAV_V2.tools.items.map((i) => i.key), ['flows', 'quarterly', 'copycat', 'network', 'compare', 'property', 'filings101']);
-  const people = renderTopbarV2('news', 'people', { absolute: true });
+  const people = renderTopbarV2('news', 'people', UA);
   const sub = people.slice(people.indexOf('<nav class="v2-subtabs"'));
   assert.ok(sub.slice(0, sub.indexOf('</nav>')).includes('<a href="/people/" aria-current="page">People</a>'));
-  const guide = renderTopbarV2('tools', 'filings101', { absolute: true });
+  const guide = renderTopbarV2('tools', 'filings101', UA);
   assert.ok(guide.includes('<a href="/guides/filings-101/" aria-current="page">Filings 101</a>'));
   const top = guide.slice(guide.indexOf('<nav class="v2-topnav"'), guide.indexOf('</nav>'));
   assert.deepEqual(currentLinks(top, 'aria-current="true"'), ['Tools']);
   assert.ok(!BOTTOM_V2.includes('tools'));
-  assert.ok(!renderBottomTabsV2('tools').includes('aria-current'));
+  assert.ok(!renderBottomTabsV2('tools', U).includes('aria-current'));
 });
 
-test('Play is the front door (index.html, "/" absolute); News lives at news.html', () => {
-  const rel = renderTopbarV2('play', null);
+test('Open game: Play goes to play.html ("/play.html" absolute); the BD mark is the home page; News lives at news.html', () => {
+  const rel = renderTopbarV2('play', null, U);
   const top = rel.slice(rel.indexOf('<nav class="v2-topnav"'), rel.indexOf('</nav>'));
-  assert.ok(top.includes('<a href="index.html" aria-current="true">Play</a>'));
+  assert.ok(top.includes('<a href="play.html" aria-current="true">Play</a>'));
   assert.ok(top.includes('<a href="news.html">News</a>'));
   assert.ok(rel.includes('<a class="v2-mark" href="index.html">'));
   assert.ok(/<a class="v2-top__act v2-top__act--team" href="team.html">[\s\S]*?<span>My team<\/span><\/a>/.test(rel));
   assert.ok(/<a class="v2-top__act v2-top__act--draft" href="draft.html">[\s\S]*?<span>Draft<\/span><\/a>/.test(rel));
   assert.ok(/<a class="v2-top__act v2-top__search" href="people\/">[\s\S]*?<span>Search<\/span><\/a>/.test(rel));
   assert.equal((rel.match(/aria-current="page"/g) || []).length, 0);
-  const news = renderTopbarV2('news', 'today');
+  const news = renderTopbarV2('news', 'today', U);
   const sub = news.slice(news.indexOf('<nav class="v2-subtabs"'));
   assert.ok(sub.slice(0, sub.indexOf('</nav>')).includes('<a href="news.html" aria-current="page">Today</a>'));
   assert.ok(news.includes('<a class="v2-menu__top" href="news.html" aria-current="true">News</a>'));
-  const abs = renderTopbarV2('news', 'people', { absolute: true });
+  const abs = renderTopbarV2('news', 'people', UA);
   assert.ok(abs.includes('<a class="v2-mark" href="/">'));
-  assert.ok(abs.includes('<a href="/">Play</a>') && abs.includes('href="/news.html"'));
+  assert.ok(abs.includes('<a href="/play.html">Play</a>') && abs.includes('href="/news.html"'));
   assert.ok(!abs.includes('href="/index.html"'));
-  const tabs = renderBottomTabsV2('play');
-  assert.ok(tabs.includes('<a href="index.html" aria-current="true">Play</a>') && tabs.includes('<a href="news.html">News</a>'));
-  assert.ok(renderFooterV2().includes('<a class="v2-mark v2-mark--sm" href="index.html">'));
-  assert.ok(renderFooterV2({ absolute: true }).includes('<a class="v2-mark v2-mark--sm" href="/">'));
+  const tabs = renderBottomTabsV2('play', U);
+  assert.ok(tabs.includes('<a href="play.html" aria-current="true">Play</a>') && tabs.includes('<a href="news.html">News</a>'));
+  assert.ok(renderFooterV2(U).includes('<a class="v2-mark v2-mark--sm" href="index.html">'));
+  assert.ok(renderFooterV2(UA).includes('<a class="v2-mark v2-mark--sm" href="/">'));
+  assert.ok(renderFooterV2(U).includes('<a href="privacy.html">Privacy</a>'));
   assert.ok(renderNav('today').includes('<a href="news.html" aria-current="page">Today</a>'));
 });
 
+test('Launch gate: Play points to the waitlist landing, only Rules under Play, Tools hidden', () => {
+  const G = { gated: true };
+  assert.deepEqual(navV2(G).map((n) => n.key), ['play', 'learn', 'players', 'news']);
+  assert.equal(navV2(G).find((n) => n.key === 'play').href, 'index.html');
+  assert.deepEqual(subnavV2('play', G).items.map((i) => i.key), ['rules']);
+  assert.equal(subnavV2('tools', G), null);
+  assert.deepEqual(subnavV2('news', G).items.map((i) => i.key), SUBNAV_V2.news.items.map((i) => i.key));
+  // the full definitions are untouched
+  assert.equal(NAV_V2.length, 5);
+  assert.equal(SUBNAV_V2.play.items.length, 7);
+  const html = renderTopbarV2('play', 'rules', G);
+  const top = html.slice(html.indexOf('<nav class="v2-topnav"'), html.indexOf('</nav>'));
+  assert.ok(top.includes('<a href="index.html" aria-current="true">Play</a>'));
+  assert.ok(!top.includes('Tools') && !top.includes('flows.html'));
+  const subNav = html.slice(html.indexOf('<nav class="v2-subtabs"'));
+  assert.deepEqual(currentLinks(subNav.slice(0, subNav.indexOf('</nav>')), 'aria-current="page"'), ['Rules']);
+  const menu = html.slice(html.indexOf('id="v2-menu"'));
+  for (const h of ['team.html', 'draft.html"', 'scores.html', 'leagues.html', 'book.html', 'moves.html', 'flows.html', 'quarterly.html', 'property.html']) {
+    assert.ok(!menu.includes('href="' + h), 'menu hides ' + h);
+  }
+  assert.ok(menu.includes('<li><a href="play-terms.html" aria-current="page">Rules</a></li>'));
+  // a Tools page while gated: no active section and no sub-tab bar
+  const tools = renderTopbarV2('tools', 'flows', G);
+  assert.ok(!tools.includes('v2-subtabs') && !tools.includes('aria-current'));
+  // generated pages: Play -> "/"
+  const abs = renderTopbarV2('news', 'people', { absolute: true, gated: true });
+  assert.ok(abs.includes('<a href="/">Play</a>') && !abs.includes('/flows.html'));
+  assert.ok(renderBottomTabsV2('play', G).includes('<a href="index.html" aria-current="true">Play</a>'));
+});
+
+test('Launch gate: one "Join the waitlist" action instead of Draft + My team; open game keeps both', () => {
+  const g = renderTopbarV2('news', 'today', { gated: true });
+  const right = g.slice(g.indexOf('<div class="v2-top__right">'), g.indexOf('<button type="button" class="v2-menubtn"'));
+  assert.ok(right.includes('<a class="v2-top__act v2-top__act--team v2-top__act--join" href="index.html"><span>Join the waitlist</span></a>'));
+  assert.ok(!right.includes('draft.html') && !right.includes('team.html') && !right.includes('>Draft<') && !right.includes('My team'));
+  assert.ok(right.includes('href="people/"'));
+  assert.equal((right.match(/Join the waitlist/g) || []).length, 1);
+  assert.ok(renderTopbarV2('news', 'today', { absolute: true, gated: true }).includes('v2-top__act--join" href="/"'));
+  const o = renderTopbarV2('news', 'today', U);
+  assert.ok(o.includes('v2-top__act--draft" href="draft.html"') && o.includes('v2-top__act--team" href="team.html"'));
+  assert.ok(!o.includes('Join the waitlist'));
+});
+
+test('Launch gate: no odds ticker anywhere (no container, no ticker.js); open game unchanged', () => {
+  const G = { gated: true };
+  for (const [t, s] of [['play', 'rules'], ['news', 'today'], ['players', null], ['learn', 'academy'], ['tools', 'flows']]) {
+    assert.ok(!renderTopbarV2(t, s, G).includes('data-ticker'), t);
+  }
+  assert.ok(!renderTopbarV2('news', 'people', { absolute: true, gated: true }).includes('v2-ticker'));
+  assert.ok(!renderFooterV2(G).includes('ticker.js'));
+  assert.ok(!renderFooterV2({ absolute: true, gated: true }).includes('ticker.js'));
+  assert.ok(renderFooterV2(G).trimEnd().endsWith('</footer>'));
+  assert.ok(renderTopbarV2('news', 'today', U).includes('<div class="v2-ticker" data-ticker hidden></div>'));
+  assert.ok(renderFooterV2(U).includes('<script src="assets/v2/ticker.js" defer></script>'));
+});
+
+test('readGated: reads config/launch.json, fails open', () => {
+  assert.equal(typeof GATED, 'boolean');
+  assert.equal(readGated(new URL('../../config/launch.json', import.meta.url)), JSON.parse(readFileSync(new URL('../../config/launch.json', import.meta.url), 'utf8')).gate === true);
+  assert.equal(readGated(new URL('./does-not-exist.json', import.meta.url)), false);
+});
+
 test('scores ticker: empty hidden container first in the chrome, script loaded by the footer', () => {
-  const html = renderTopbarV2('play', 'team');
+  const html = renderTopbarV2('play', 'team', U);
   assert.ok(html.includes('<div class="v2-ticker" data-ticker hidden></div>'));
   assert.ok(html.indexOf('v2-skip') < html.indexOf('v2-ticker') && html.indexOf('v2-ticker') < html.indexOf('<header class="v2-top"'));
-  assert.ok(renderFooterV2().includes('<script src="assets/v2/ticker.js" defer></script>'));
-  assert.ok(renderFooterV2({ absolute: true }).includes('<script src="/assets/v2/ticker.js" defer></script>'));
+  assert.ok(renderFooterV2(U).includes('<script src="assets/v2/ticker.js" defer></script>'));
+  assert.ok(renderFooterV2(UA).includes('<script src="/assets/v2/ticker.js" defer></script>'));
   // sub-tab bar: section label comes before the tabs
   const sub = html.slice(html.indexOf('<nav class="v2-subtabs"'));
   assert.ok(sub.indexOf('v2-subtabs__label') < sub.indexOf('v2-subtabs__list'));

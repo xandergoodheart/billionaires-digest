@@ -10,7 +10,7 @@
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderNav, renderFooter, renderTopbarV2, renderBottomTabsV2, renderFooterV2 } from './lib/nav.mjs';
+import { renderNav, renderFooter, renderTopbarV2, renderBottomTabsV2, renderFooterV2, GATED } from './lib/nav.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -40,7 +40,10 @@ const V2_ACTIVE = {
   'life-play.html': ['learn', 'hub'],
   'players.html': ['players', null],
   'player.html': ['players', null],
-  'index.html': ['play', null],
+  'index.html': ['play', null],     // waitlist landing (Play points here while config/launch.json gate is on)
+  'play.html': ['play', null],      // the game's front page
+  'privacy.html': ['news', null],
+  'unsubscribe.html': ['news', null],
   'news.html': ['news', 'today'],
   'sectors.html': ['news', 'sectors'],
   'calendar.html': ['news', 'calendar'],
@@ -79,6 +82,7 @@ function replaceBlock(html, name, openRe, closeTag, block, file) {
   return html.slice(0, a) + start + '\n' + block + '\n' + html.slice(b);
 }
 
+console.log(`launch gate: ${GATED ? 'ON (game + Tools hidden in the nav)' : 'off'}  (config/launch.json)`);
 let changed = 0;
 const files = (await readdir(ROOT)).filter(f => f.endsWith('.html')).sort();
 for (const f of files) {

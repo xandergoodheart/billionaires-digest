@@ -38,6 +38,8 @@ last_reviewed: 2026-10-03
 
 # Who is editing what
 
+- Claude (2026-10-04): Waitlist launch built on branch `feat/waitlist`, PR awaiting owner review (plan `docs/WAITLIST-PLAN.md`). Claim cleared on handoff. Validation: 328/328 tests; local preview checked (landing mobile, gated draft page, news). Owner actions before/after merge are listed at the end of the plan.
+
 - Claude: implementation, exact task/branch/start date unverified; existing worktree reported as `quirky-ritchie-de3d8d`, branch `v3`. Reconfirm before overlapping.
 - Codex: no active editing claim. Four-file documentation task completed on `codex/shared-status` on 2026-10-03; PR awaits owner merge. Validation: required Node test suite passed, 294 tests, zero failures; diff whitespace check passed.
 

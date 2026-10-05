@@ -17,3 +17,7 @@ language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',
 
 grant usage on schema public, auth to anon, authenticated, service_role;
 grant execute on function auth.uid() to anon, authenticated, service_role;
+
+-- Waitlist (0005) reads the signed-in user's email and whether Supabase Auth has confirmed it.
+alter table auth.users add column if not exists email text;
+alter table auth.users add column if not exists email_confirmed_at timestamptz;
