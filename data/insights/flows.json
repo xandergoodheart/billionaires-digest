@@ -1,22 +1,22 @@
 {
-  "generated": "2026-10-05",
+  "generated": "2026-10-06",
   "inputs": {
-    "filingsGenerated": "2026-10-05T18:43:25.514Z",
-    "pricesGenerated": "2026-10-05T18:47:32.554Z",
+    "filingsGenerated": "2026-10-06T16:07:04.134Z",
+    "pricesGenerated": "2026-10-06T16:10:52.262Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 8
+    "editions": 9
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 69 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 70 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W30",
       "start": "2026-07-20",
       "end": "2026-07-26",
-      "buy": 45950172,
+      "buy": 0,
       "sell": 0,
-      "net": 45950172,
+      "net": 0,
       "other": 0,
-      "buyCount": 2,
+      "buyCount": 0,
       "sellCount": 0,
       "otherCount": 1,
       "unpriced": 0
@@ -142,12 +142,12 @@
       "week": "2026-W40",
       "start": "2026-09-28",
       "end": "2026-10-04",
-      "buy": 53882588,
-      "sell": 31042879,
-      "net": 22839709,
+      "buy": 246517020,
+      "sell": 39242879,
+      "net": 207274141,
       "other": 0,
-      "buyCount": 2,
-      "sellCount": 2,
+      "buyCount": 4,
+      "sellCount": 3,
       "otherCount": 0,
       "unpriced": 0
     },
@@ -166,27 +166,38 @@
     }
   ],
   "last7": {
-    "from": "2026-09-29",
-    "to": "2026-10-05",
-    "buy": 0,
-    "sell": 0,
-    "net": 0,
+    "from": "2026-09-30",
+    "to": "2026-10-06",
+    "buy": 192634432,
+    "sell": 8200000,
+    "net": 184434432,
     "other": 0,
-    "buyCount": 0,
-    "sellCount": 0,
+    "buyCount": 2,
+    "sellCount": 1,
     "otherCount": 0,
     "unpriced": 0
   },
   "sectors": [
     {
       "sector": "AI & tech",
-      "buy": 1411272365,
+      "buy": 1380322193,
       "sell": 878658502,
-      "net": 532613863,
+      "net": 501663691,
       "other": 9702110,
-      "buyCount": 13,
+      "buyCount": 12,
       "sellCount": 7,
       "otherCount": 9,
+      "unpriced": 0
+    },
+    {
+      "sector": "Finance",
+      "buy": 611618905,
+      "sell": 1271902490,
+      "net": -660283585,
+      "other": 0,
+      "buyCount": 12,
+      "sellCount": 9,
+      "otherCount": 6,
       "unpriced": 0
     },
     {
@@ -201,24 +212,13 @@
       "unpriced": 0
     },
     {
-      "sector": "Finance",
-      "buy": 433984473,
-      "sell": 1271902490,
-      "net": -837918017,
-      "other": 0,
-      "buyCount": 11,
-      "sellCount": 9,
-      "otherCount": 6,
-      "unpriced": 0
-    },
-    {
       "sector": "Media",
       "buy": 0,
-      "sell": 155376764,
-      "net": -155376764,
+      "sell": 163576764,
+      "net": -163576764,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 8,
+      "sellCount": 9,
       "otherCount": 0,
       "unpriced": 0
     },
@@ -284,9 +284,17 @@
       "name": "Carlos Slim Helu & family",
       "slug": "carlos-slim-helu-family",
       "sector": "Media",
-      "value": 62500406,
-      "count": 3,
+      "value": 70700406,
+      "count": 4,
       "filings": [
+        {
+          "date": "2026-10-01",
+          "filed": "2026-10-05",
+          "form": "4",
+          "issuer": "PBF Energy Inc.",
+          "ticker": "PBF",
+          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126038666/xslF345X06/form4.xml"
+        },
         {
           "date": "2026-09-15",
           "filed": "2026-09-17",
@@ -372,6 +380,14 @@
       "count": 1,
       "filings": [
         {
+          "date": "2026-10-01",
+          "filed": "2026-10-05",
+          "form": "4",
+          "issuer": "LENNAR CORP /NEW/",
+          "ticker": "LEN",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526414744/xslF345X06/ownership.xml"
+        },
+        {
           "date": "2026-09-28",
           "filed": "2026-09-30",
           "form": "4",
@@ -443,9 +459,17 @@
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
-      "value": 402660529,
-      "count": 6,
+      "value": 595294961,
+      "count": 8,
       "filings": [
+        {
+          "date": "2026-10-01",
+          "filed": "2026-10-05",
+          "form": "4",
+          "issuer": "LENNAR CORP /NEW/",
+          "ticker": "LEN",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526414744/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-09-28",
           "filed": "2026-09-30",
@@ -539,7 +563,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 69,
+    "form4Filings": 70,
     "form4Parsed": 59,
     "windowDays": 90
   }
