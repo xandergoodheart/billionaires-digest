@@ -1,7 +1,151 @@
 {
-  "generated": "2026-10-07T16:46:24.751Z",
+  "generated": "2026-10-08T16:47:09.025Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0001067983",
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "form": "SCHEDULE 13G/A",
+      "filed": "2026-10-07",
+      "accession": "0001193125-26-417254",
+      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526417254/xslSCHEDULE_13G_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526417254/0001193125-26-417254-index.htm",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett"
+    },
+    {
+      "cik": "0001070844",
+      "filer": "SCHWARZMAN STEPHEN A",
+      "form": "3",
+      "filed": "2026-10-07",
+      "reportDate": "2026-09-30",
+      "accession": "0001193125-26-417100",
+      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526417100/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526417100/0001193125-26-417100-index.htm",
+      "description": "3",
+      "person": "Stephen Schwarzman",
+      "personSlug": "stephen-schwarzman"
+    },
+    {
+      "cik": "0001273693",
+      "filer": "Control Empresarial de Capitales S.A. de C.V.",
+      "form": "4",
+      "filed": "2026-10-07",
+      "reportDate": "2026-10-05",
+      "accession": "0001140361-26-038916",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126038916/xslF345X06/form4.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126038916/0001140361-26-038916-index.htm",
+      "description": "FORM 4",
+      "person": "Carlos Slim Helu & family",
+      "personSlug": "carlos-slim-helu-family",
+      "form4": {
+        "issuer": "PBF Energy Inc.",
+        "ticker": "PBF",
+        "summary": [
+          {
+            "issuer": "PBF Energy Inc.",
+            "ticker": "PBF",
+            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 120000,
+            "price": 84.13,
+            "value": 10095096,
+            "direction": "down",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-05",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 120000,
+            "price": 84.1258,
+            "value": 10095096,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 13496127,
+            "direction": "down"
+          }
+        ]
+      }
+    },
+    {
+      "cik": "0001273087",
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "form": "SCHEDULE 13G/A",
+      "filed": "2026-10-07",
+      "accession": "0001104659-26-114423",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926114423/xslSCHEDULE_13G_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926114423/0001104659-26-114423-index.htm",
+      "person": "Israel Englander",
+      "personSlug": "israel-englander"
+    },
+    {
+      "cik": "0001273087",
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "form": "SCHEDULE 13G",
+      "filed": "2026-10-07",
+      "accession": "0001104659-26-114417",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926114417/xslSCHEDULE_13G_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926114417/0001104659-26-114417-index.htm",
+      "person": "Israel Englander",
+      "personSlug": "israel-englander"
+    },
+    {
+      "cik": "0002098271",
+      "filer": "YZILabs Management Ltd.",
+      "form": "4/A",
+      "filed": "2026-10-07",
+      "reportDate": "2026-09-17",
+      "accession": "0000921895-26-002756",
+      "url": "https://www.sec.gov/Archives/edgar/data/2098271/000092189526002756/xslF345X06/form4a14678002_10072026.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2098271/000092189526002756/0000921895-26-002756-index.htm",
+      "description": "OWNERSHIP DOCUMENT",
+      "person": "Changpeng Zhao",
+      "personSlug": "changpeng-zhao",
+      "form4": {
+        "issuer": "BNB Standard Corp",
+        "ticker": "BNC",
+        "summary": [
+          {
+            "issuer": "BNB Standard Corp",
+            "ticker": "BNC",
+            "securityTitle": "Common Stock, par value $0.00001 per share",
+            "code": "X",
+            "codeLabel": "Option exercise (in the money)",
+            "shares": 7599264,
+            "direction": "up",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock, par value $0.00001 per share",
+            "date": "2026-09-17",
+            "code": "X",
+            "codeLabel": "Option exercise (in the money)",
+            "shares": 2180631,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 4331112,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common Stock, par value $0.00001 per share",
+            "date": "2026-09-17",
+            "code": "X",
+            "codeLabel": "Option exercise (in the money)",
+            "shares": 5418633,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 9749745,
+            "direction": "up"
+          }
+        ]
+      }
+    },
     {
       "cik": "0000315066",
       "filer": "FMR LLC",
@@ -10810,79 +10954,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326011908/0000950103-26-011908-index.htm",
       "description": "FORM 4",
       "person": "Mark Zuckerberg",
-      "personSlug": "mark-zuckerberg",
-      "form4": {
-        "issuer": "Meta Platforms, Inc.",
-        "ticker": "META",
-        "summary": [
-          {
-            "issuer": "Meta Platforms, Inc.",
-            "ticker": "META",
-            "securityTitle": "Class A Common Stock",
-            "code": "C",
-            "codeLabel": "Conversion",
-            "shares": 591690,
-            "direction": "up",
-            "transactions": 1
-          },
-          {
-            "issuer": "Meta Platforms, Inc.",
-            "ticker": "META",
-            "securityTitle": "Class A Common Stock",
-            "code": "G",
-            "codeLabel": "Gift",
-            "shares": 591690,
-            "direction": "flat",
-            "transactions": 1
-          },
-          {
-            "issuer": "Meta Platforms, Inc.",
-            "ticker": "META",
-            "securityTitle": "Class A Common Stock",
-            "code": "G",
-            "codeLabel": "Gift",
-            "shares": 591690,
-            "direction": "flat",
-            "transactions": 1
-          }
-        ],
-        "transactionCount": 3,
-        "transactions": [
-          {
-            "securityTitle": "Class A Common Stock",
-            "date": "2026-07-31",
-            "code": "C",
-            "codeLabel": "Conversion",
-            "shares": 591690,
-            "price": 0,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 591690,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Class A Common Stock",
-            "date": "2026-07-31",
-            "code": "G",
-            "codeLabel": "Gift",
-            "shares": 591690,
-            "price": 0,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 0,
-            "direction": "flat"
-          },
-          {
-            "securityTitle": "Class A Common Stock",
-            "date": "2026-07-31",
-            "code": "G",
-            "codeLabel": "Gift",
-            "shares": 591690,
-            "price": 0,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 1231037,
-            "direction": "flat"
-          }
-        ]
-      }
+      "personSlug": "mark-zuckerberg"
     },
     {
       "cik": "0000315066",
@@ -10934,112 +11006,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126030991/0001140361-26-030991-index.htm",
       "description": "FORM 4",
       "person": "Carlos Slim Helu & family",
-      "personSlug": "carlos-slim-helu-family",
-      "form4": {
-        "issuer": "PBF Energy Inc.",
-        "ticker": "PBF",
-        "summary": [
-          {
-            "issuer": "PBF Energy Inc.",
-            "ticker": "PBF",
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 490000,
-            "price": 71.26,
-            "value": 34915768,
-            "direction": "down",
-            "transactions": 7
-          }
-        ],
-        "transactionCount": 7,
-        "transactions": [
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-30",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 1000,
-            "price": 67.425,
-            "value": 67425,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 15481128,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-30",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 51000,
-            "price": 68.9903,
-            "value": 3518505,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 15430128,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-30",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 131912,
-            "price": 70.0625,
-            "value": 9242085,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 15298216,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-30",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 126088,
-            "price": 70.8199,
-            "value": 8929540,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 15172128,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-30",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 70000,
-            "price": 72.3429,
-            "value": 5064003,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 15102128,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-30",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 70000,
-            "price": 73.3429,
-            "value": 5134003,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 15032128,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-07-30",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 40000,
-            "price": 74.0052,
-            "value": 2960208,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 14992128,
-            "direction": "down"
-          }
-        ]
-      }
+      "personSlug": "carlos-slim-helu-family"
     },
     {
       "cik": "0001890222",
@@ -11593,157 +11560,6 @@
       "accession": "0001104659-26-082728",
       "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926082728/xslSCHEDULE_13G_X02/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926082728/0001104659-26-082728-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0001983812",
-      "filer": "LAWRENCE PAGE TRUST II",
-      "form": "144",
-      "filed": "2026-07-09",
-      "accession": "0001968582-26-000714",
-      "url": "https://www.sec.gov/Archives/edgar/data/1983812/000196858226000714/xsl144X01/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983812/000196858226000714/0001968582-26-000714-index.htm",
-      "person": "Larry Page",
-      "personSlug": "larry-page",
-      "form144": {
-        "issuer": "Alphabet, Inc.",
-        "issuerCik": "0001652044",
-        "seller": "The Lawrence Page Trust II",
-        "relationships": [
-          "Affiliate"
-        ],
-        "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
-        "shares": 19360,
-        "aggregateMarketValue": 6975698,
-        "approxSaleDate": "2026-07-09",
-        "lots": [
-          {
-            "securitiesClassTitle": "Class A Common Stock",
-            "shares": 9680,
-            "aggregateMarketValue": 3503385.6,
-            "approxSaleDate": "2026-07-09",
-            "exchange": "NASDAQ"
-          },
-          {
-            "securitiesClassTitle": "Class C Capital Stock",
-            "shares": 9680,
-            "aggregateMarketValue": 3472312.8,
-            "approxSaleDate": "2026-07-09",
-            "exchange": "NASDAQ"
-          }
-        ],
-        "noticeDate": "2026-07-09",
-        "planAdoptionDates": [
-          "2020-11-30"
-        ]
-      }
-    },
-    {
-      "cik": "0001983744",
-      "filer": "LAWRENCE PAGE TRUST III",
-      "form": "144",
-      "filed": "2026-07-09",
-      "accession": "0001968582-26-000713",
-      "url": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226000713/xsl144X01/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226000713/0001968582-26-000713-index.htm",
-      "person": "Larry Page",
-      "personSlug": "larry-page",
-      "form144": {
-        "issuer": "Alphabet, Inc.",
-        "issuerCik": "0001652044",
-        "seller": "The Lawrence Page Trust III",
-        "relationships": [
-          "Affiliate"
-        ],
-        "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
-        "shares": 33760,
-        "aggregateMarketValue": 12164234,
-        "approxSaleDate": "2026-07-09",
-        "lots": [
-          {
-            "securitiesClassTitle": "Class A Common Stock",
-            "shares": 16880,
-            "aggregateMarketValue": 6109209.6,
-            "approxSaleDate": "2026-07-09",
-            "exchange": "NASDAQ"
-          },
-          {
-            "securitiesClassTitle": "Class C Capital Stock",
-            "shares": 16880,
-            "aggregateMarketValue": 6055024.8,
-            "approxSaleDate": "2026-07-09",
-            "exchange": "NASDAQ"
-          }
-        ],
-        "noticeDate": "2026-07-09",
-        "planAdoptionDates": [
-          "2020-11-30"
-        ]
-      }
-    },
-    {
-      "cik": "0001983811",
-      "filer": "LAWRENCE PAGE TRUST",
-      "form": "144",
-      "filed": "2026-07-09",
-      "accession": "0001968582-26-000712",
-      "url": "https://www.sec.gov/Archives/edgar/data/1983811/000196858226000712/xsl144X01/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983811/000196858226000712/0001968582-26-000712-index.htm",
-      "person": "Larry Page",
-      "personSlug": "larry-page",
-      "form144": {
-        "issuer": "Alphabet, Inc.",
-        "issuerCik": "0001652044",
-        "seller": "The Lawrence Page Trust",
-        "relationships": [
-          "Affiliate"
-        ],
-        "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
-        "shares": 450720,
-        "aggregateMarketValue": 162401177,
-        "approxSaleDate": "2026-07-09",
-        "lots": [
-          {
-            "securitiesClassTitle": "Class A Common Stock",
-            "shares": 225360,
-            "aggregateMarketValue": 81562291.2,
-            "approxSaleDate": "2026-07-09",
-            "exchange": "NASDAQ"
-          },
-          {
-            "securitiesClassTitle": "Class C Capital Stock",
-            "shares": 225360,
-            "aggregateMarketValue": 80838885.6,
-            "approxSaleDate": "2026-07-09",
-            "exchange": "NASDAQ"
-          }
-        ],
-        "noticeDate": "2026-07-09",
-        "planAdoptionDates": [
-          "2020-11-30"
-        ]
-      }
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-07-09",
-      "accession": "0001104659-26-082312",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926082312/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926082312/0001104659-26-082312-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-07-09",
-      "accession": "0001104659-26-082311",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926082311/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926082311/0001104659-26-082311-index.htm",
       "person": "Israel Englander",
       "personSlug": "israel-englander"
     }

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-05T18:47:46.378Z",
+  "generated": "2026-10-08T16:51:00.698Z",
   "source": "SEC XBRL company facts",
   "tickers": {
     "1038": {
@@ -1260,29 +1260,8 @@
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
     },
     "PSKY": {
-      "available": true,
-      "name": "Paramount Skydance Corp",
-      "cik": "0002041610",
-      "currency": "USD",
-      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=2041610&type=10-&dateb=&owner=include&count=40",
-      "revenueConcept": "RevenueFromContractWithCustomerExcludingAssessedTax",
-      "netIncomeConcept": "NetIncomeLoss",
-      "quarter": {
-        "start": "2026-04-01",
-        "end": "2026-06-30",
-        "form": "10-Q",
-        "filed": "2026-08-04",
-        "accn": "0002041610-26-000054",
-        "revenue": 6913000000,
-        "netIncome": 41000000,
-        "epsDiluted": 0.04
-      },
-      "ttm": null,
-      "revenueGrowthQ": 0.9,
-      "revenueGrowthTTM": null,
-      "netMarginQ": 0.6,
-      "netMarginTTM": null,
-      "sharesOutstanding": null
+      "available": false,
+      "reason": "Ticker not found in SEC company_tickers.json."
     },
     "QUINENCO": {
       "available": false,

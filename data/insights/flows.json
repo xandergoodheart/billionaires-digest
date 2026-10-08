@@ -1,12 +1,12 @@
 {
-  "generated": "2026-10-07",
+  "generated": "2026-10-08",
   "inputs": {
-    "filingsGenerated": "2026-10-07T16:46:24.751Z",
-    "pricesGenerated": "2026-10-07T16:50:04.623Z",
+    "filingsGenerated": "2026-10-08T16:47:09.025Z",
+    "pricesGenerated": "2026-10-08T16:50:49.927Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 10
+    "editions": 11
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 70 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 71 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W30",
@@ -26,12 +26,12 @@
       "start": "2026-07-27",
       "end": "2026-08-02",
       "buy": 0,
-      "sell": 720279057,
-      "net": -720279057,
+      "sell": 685363289,
+      "net": -685363289,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 3,
-      "otherCount": 4,
+      "sellCount": 2,
+      "otherCount": 2,
       "unpriced": 0
     },
     {
@@ -156,23 +156,23 @@
       "start": "2026-10-05",
       "end": "2026-10-11",
       "buy": 0,
-      "sell": 0,
-      "net": 0,
+      "sell": 10095096,
+      "net": -10095096,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 0,
+      "sellCount": 1,
       "otherCount": 0,
       "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-10-01",
-    "to": "2026-10-07",
-    "buy": 192634432,
-    "sell": 8200000,
-    "net": 184434432,
+    "from": "2026-10-02",
+    "to": "2026-10-08",
+    "buy": 0,
+    "sell": 10095096,
+    "net": -10095096,
     "other": 0,
-    "buyCount": 2,
+    "buyCount": 0,
     "sellCount": 1,
     "otherCount": 0,
     "unpriced": 0
@@ -186,7 +186,7 @@
       "other": 9702110,
       "buyCount": 12,
       "sellCount": 7,
-      "otherCount": 9,
+      "otherCount": 7,
       "unpriced": 0
     },
     {
@@ -214,8 +214,8 @@
     {
       "sector": "Media",
       "buy": 0,
-      "sell": 163576764,
-      "net": -163576764,
+      "sell": 138756092,
+      "net": -138756092,
       "other": 0,
       "buyCount": 0,
       "sellCount": 9,
@@ -284,9 +284,17 @@
       "name": "Carlos Slim Helu & family",
       "slug": "carlos-slim-helu-family",
       "sector": "Media",
-      "value": 70700406,
-      "count": 4,
+      "value": 80795502,
+      "count": 5,
       "filings": [
+        {
+          "date": "2026-10-05",
+          "filed": "2026-10-07",
+          "form": "4",
+          "issuer": "PBF Energy Inc.",
+          "ticker": "PBF",
+          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126038916/xslF345X06/form4.xml"
+        },
         {
           "date": "2026-10-01",
           "filed": "2026-10-05",
@@ -508,8 +516,8 @@
       "name": "Bill Gates",
       "slug": "bill-gates",
       "sector": "AI & tech",
-      "value": 288898658,
-      "count": 2,
+      "value": 129305617,
+      "count": 1,
       "filings": [
         {
           "date": "2026-09-10",
@@ -518,14 +526,6 @@
           "issuer": "REPUBLIC SERVICES, INC.",
           "ticker": "RSG",
           "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/xslF345X06/tm2625411-1_4seq1.xml"
-        },
-        {
-          "date": "2026-09-08",
-          "filed": "2026-09-10",
-          "form": "4",
-          "issuer": "REPUBLIC SERVICES, INC.",
-          "ticker": "RSG",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926106713/xslF345X06/tm2625157-1_4seq1.xml"
         }
       ]
     },
@@ -563,8 +563,8 @@
     }
   ],
   "coverage": {
-    "form4Filings": 70,
-    "form4Parsed": 59,
+    "form4Filings": 71,
+    "form4Parsed": 58,
     "windowDays": 90
   }
 }
