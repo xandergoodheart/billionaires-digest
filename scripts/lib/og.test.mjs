@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { ogSectors, fitHeadline, updateOgMeta, renderCardOg, renderOg } from './og.mjs';
+import { ogSectors, fitHeadline, updateOgMeta, renderCardOg, renderOg, ogTree, cardTree, OG_WIDTH, OG_HEIGHT } from './og.mjs';
 
 const PNG = Buffer.from([0x89, 0x50, 0x4e, 0x47]);
 
@@ -26,11 +26,51 @@ test('updateOgMeta replaces og:image and twitter tags', () => {
   assert.match(out, /twitter:image" content="https:\/\/example.com\/og\/a.png"/);
 });
 
-test('renderOg and renderCardOg return PNGs', async () => {
-  const a = await renderOg({ date: 'Sunday, September 27, 2026', lede: { headline: 'Test headline' }, stories: [{ sector: 'Finance' }] });
-  const b = await renderCardOg({ kicker: 'PROTOTYPE', title: '5 CASINO LOOKS', subtitle: 'play money' });
-  assert.deepEqual(a.subarray(0, 4), PNG);
-  assert.deepEqual(b.subarray(0, 4), PNG);
+// PNG width/height live in the IHDR chunk at bytes 16..24.
+function pngSize(buf) { return { w: buf.readUInt32BE(16), h: buf.readUInt32BE(20) }; }
+const DIGEST = { date: 'Sunday, September 27, 2026', lede: { headline: 'Test headline' }, stories: [{ sector: 'Finance' }, { sector: 'Media' }] };
+const CARD = { kicker: 'PROTOTYPE', title: '5 CASINO LOOKS', subtitle: 'play money' };
+
+test('renderOg and renderCardOg return 1200x630 PNGs', async () => {
+  const a = await renderOg(DIGEST);
+  const b = await renderCardOg(CARD);
+  for (const buf of [a, b]) {
+    assert.deepEqual(buf.subarray(0, 4), PNG);
+    assert.deepEqual(pngSize(buf), { w: 1200, h: 630 });
+  }
+  assert.equal(OG_WIDTH, 1200);
+  assert.equal(OG_HEIGHT, 630);
+});
+
+test('share cards use the ESPN look: no gold/brass/bulbs, black bar, red accent, no images', () => {
+  for (const tree of [ogTree(DIGEST), cardTree(CARD)]) {
+    const json = JSON.stringify(tree);
+    assert.doesNotMatch(json, /#F5C542|#FFE08A|#B8912F|#8E6B1C|#FBEAB0|#B98E32|#7A5A1A|#E9C766|#5A420F|245,\s*197,\s*66|255,\s*224,\s*138/i, 'gold colour found');
+    assert.doesNotMatch(json, /gradient/i, 'gradient found');
+    assert.doesNotMatch(json, /"type":"img"/, 'image found');
+    assert.match(json, /#0B0B0C/i); // top bar
+    assert.match(json, /#D62D27/i); // brand red logo / accent line
+    assert.match(json, /BILLIONAIRES DIGEST/);
+    assert.match(json, /Follow the money/);
+    assert.equal(tree.props.style.width, 1200);
+    assert.equal(tree.props.style.height, 630);
+  }
+});
+
+test('edition card shows the date, kicker, uppercase headline and sector chips', () => {
+  const json = JSON.stringify(ogTree(DIGEST));
+  assert.match(json, /SUNDAY, SEPTEMBER 27, 2026/);
+  assert.match(json, /LEDE OF THE DAY/);
+  assert.match(json, /TEST HEADLINE/);
+  assert.match(json, /"children":"Finance"/);
+  assert.match(json, /"children":"Media"/);
+});
+
+test('edition card headline uses the fitted size', () => {
+  const long = 'Musk, Bezos and Zuckerberg together sell a combined $42.7B of stock in one week as the market wobbles on new';
+  const json = JSON.stringify(ogTree({ lede: { headline: long } }));
+  const fit = fitHeadline(long.toUpperCase().slice(0, 110), { maxWidth: 1040, maxHeight: 216, maxLines: 3 });
+  assert.match(json, new RegExp(`"fontSize":${fit.size},`));
 });
 
 test('updateOgMeta edits the front page (index.html) tags in place; news.html uses the static latest.png', async () => {
