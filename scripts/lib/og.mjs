@@ -1,6 +1,7 @@
 // Open Graph image for an edition: 1200x630 PNG rendered with satori (layout -> SVG)
-// and resvg (SVG -> PNG). Fonts and art are read from assets/ next to this repo.
+// and resvg (SVG -> PNG). Fonts are read from assets/ next to this repo.
 // Used by publish-digest.mjs (after the edition is written) and render-og.mjs (by hand).
+// Style: ESPN-like (black top bar, red accent line, dark card, white condensed headline).
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -15,21 +16,13 @@ export const OG_WIDTH = 1200;
 export const OG_HEIGHT = 630;
 export const SITE_URL = 'https://billionairesdigest.com';
 
-// Casino palette (assets/v2/tokens.css). Text colours are chosen for high contrast on the felt.
-const C = {
-  felt: '#07080A', panel: '#0B0C0F', text: '#F4F1E8', soft: '#DCD5C2', muted: '#BDB6A4',
-  gold: '#F5C542', gold2: '#FFE08A', brass: '#B8912F', goldDk: '#8E6B1C', red: '#D62D27', redInk: '#FF5A52'
+// ESPN-style palette (assets/v2/tokens.css): black top bar, dark card, white display type, brand red accents.
+export const C = {
+  bar: '#0B0B0C', card: '#16181B', rule: '#2C2F34', text: '#FFFFFF', soft: '#B9BFC7', muted: '#9AA1AA',
+  red: '#D62D27', redInk: '#FF5A52'
 };
-const BRASS = 'linear-gradient(145deg, #FBEAB0 0%, #B98E32 22%, #F5C542 45%, #7A5A1A 70%, #E9C766 100%)';
-const RED_BTN = 'linear-gradient(180deg, #F0554F 0%, #D62D27 50%, #A81E19 100%)';
 const DISPLAY = 'Barlow Condensed';
 const BODY = 'Barlow';
-
-const SECTOR_ART = {
-  'AI & tech': 'ai', 'Finance': 'finance', 'Aerospace': 'aerospace', 'Luxury & retail': 'luxury',
-  'Real estate': 'realestate', 'Energy': 'energy', 'Media': 'media', 'Autos': 'autos',
-  'Industrials': 'industrials', 'Health': 'health'
-};
 
 let fontsPromise = null;
 function loadFonts() {
@@ -45,13 +38,6 @@ function loadFonts() {
   }
   return fontsPromise;
 }
-
-async function jpgDataUri(file) {
-  const buf = await readFile(path.join(ASSETS, 'art', file));
-  return `data:image/jpeg;base64,${buf.toString('base64')}`;
-}
-
-function sectorFile(sector) { return `sector-${SECTOR_ART[sector] || 'other'}.jpg`; }
 
 // The first 3 distinct sectors of the edition's stories, in story order.
 export function ogSectors(digest) {
@@ -115,34 +101,23 @@ function h(type, style, ...children) {
   else if (kids.length) props.children = kids;
   return { type, props };
 }
-function img(src, style) { return { type: 'img', props: { src, style, width: style.width, height: style.height } }; }
+// ---- shared ESPN-style pieces ----
+const BAR_H = 96;
+const PAD_X = 48;
 
-// ---- shared casino pieces ----
-const BULBS = 44;
-function bulbRow(pos) {
-  const bulbs = [];
-  for (let i = 0; i < BULBS; i++) {
-    bulbs.push(h('div', { width: 11, height: 11, borderRadius: 6, backgroundColor: C.gold2,
-      boxShadow: '0 0 7px 2px rgba(255,224,138,0.65)' }));
-  }
-  return h('div', { position: 'absolute', left: 30, right: 30, [pos]: 8, height: 11, display: 'flex', justifyContent: 'space-between' }, bulbs);
+function logo(size = 52) {
+  return h('div', { width: size, height: size, borderRadius: 4, backgroundColor: C.red, display: 'flex', alignItems: 'center',
+    justifyContent: 'center', fontFamily: DISPLAY, fontWeight: 800, fontSize: Math.round(size * 0.56), color: C.text, letterSpacing: 0.5 }, 'BD');
 }
 
-function logo(size = 54) {
-  return h('div', { width: size, height: size, borderRadius: Math.round(size * 0.16), backgroundImage: RED_BTN,
-    border: '2px solid #FF8A80', display: 'flex', alignItems: 'center', justifyContent: 'center',
-    fontFamily: DISPLAY, fontWeight: 800, fontSize: Math.round(size * 0.56), color: '#FFFFFF', letterSpacing: 0.5,
-    boxShadow: '0 0 14px rgba(255,59,59,0.45)' }, 'BD');
-}
-
-function masthead(right) {
-  return h('div', { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
+// Near-black top bar: red square logo + wordmark on the left, `right` (date or kicker) on the right.
+function topBar(right) {
+  return h('div', { display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: BAR_H, padding: `0 ${PAD_X}px`,
+    backgroundColor: C.bar },
     h('div', { display: 'flex', alignItems: 'center' },
-      logo(54),
-      h('div', { display: 'flex', marginLeft: 18, fontFamily: DISPLAY, fontWeight: 800, fontSize: 40, lineHeight: 1, letterSpacing: 1.5 },
-        h('span', { color: C.text }, 'BILLIONAIRES'),
-        h('span', { color: C.gold, marginLeft: 10 }, 'DIGEST')
-      )
+      logo(52),
+      h('div', { display: 'flex', marginLeft: 18, fontFamily: DISPLAY, fontWeight: 800, fontSize: 38, lineHeight: 1, letterSpacing: 1.5, color: C.text },
+        'BILLIONAIRES DIGEST')
     ),
     right || null
   );
@@ -153,26 +128,25 @@ function footer(left) {
     left || h('div', { display: 'flex' }),
     h('div', { display: 'flex', fontFamily: BODY, fontWeight: 600, fontSize: 21, letterSpacing: 0.5, color: C.soft },
       h('span', {}, 'billionairesdigest.com'),
-      h('span', { color: C.goldDk, margin: '0 10px' }, '·'),
-      h('span', { color: C.gold }, 'Follow the money')
+      h('span', { color: C.muted, margin: '0 10px' }, '·'),
+      h('span', { color: C.redInk }, 'Follow the money')
     )
   );
 }
 
-// Felt background, brass outer frame, dark bulb band (bulbs top and bottom), thin gold inner frame.
-function cabinet(content) {
-  return h('div', { width: OG_WIDTH, height: OG_HEIGHT, display: 'flex', padding: 16, backgroundColor: C.felt },
-    h('div', { display: 'flex', flexGrow: 1, borderRadius: 26, padding: 6, backgroundImage: BRASS },
-      h('div', { display: 'flex', flexGrow: 1, position: 'relative', borderRadius: 21, backgroundColor: C.panel, padding: '27px 10px' },
-        bulbRow('top'),
-        bulbRow('bottom'),
-        h('div', { display: 'flex', flexGrow: 1, borderRadius: 14, border: `2px solid ${C.brass}`, backgroundColor: C.felt,
-          backgroundImage: 'radial-gradient(ellipse 75% 70% at 50% 42%, rgba(40,70,52,0.40) 0%, rgba(14,20,17,0.35) 55%, rgba(0,0,0,0.85) 100%)' },
-          h('div', { display: 'flex', flexDirection: 'column', flexGrow: 1, padding: '26px 42px 26px' }, content)
-        )
-      )
-    )
+// Full 1200x630 frame: top bar, 6px brand-red accent line, dark card body.
+function frame(right, content) {
+  return h('div', { width: OG_WIDTH, height: OG_HEIGHT, display: 'flex', flexDirection: 'column', backgroundColor: C.card },
+    topBar(right),
+    h('div', { display: 'flex', height: 6, backgroundColor: C.red }),
+    h('div', { display: 'flex', flexDirection: 'column', flexGrow: 1, padding: `34px ${PAD_X}px 36px` }, content)
   );
+}
+
+// Outlined pill with a sector name.
+function chip(label) {
+  return h('div', { display: 'flex', padding: '7px 16px 6px', marginRight: 10, borderRadius: 999, border: `2px solid ${C.soft}`,
+    fontFamily: BODY, fontWeight: 600, fontSize: 15, letterSpacing: 1.5, textTransform: 'uppercase', color: C.text, whiteSpace: 'nowrap' }, label);
 }
 
 async function toPng(root) {
@@ -181,38 +155,34 @@ async function toPng(root) {
   return new Resvg(svg, { fitTo: { mode: 'width', value: OG_WIDTH } }).render().asPng();
 }
 
-// Returns a PNG Buffer (1200x630).
-export async function renderOg(digest) {
+// Layout tree for an edition card (exported for tests).
+export function ogTree(digest) {
   const sectors = ogSectors(digest);
-  const arts = await Promise.all(sectors.map(s => jpgDataUri(sectorFile(s))));
-
   const raw = clip(digest?.lede?.headline || 'Follow the money', 110).toUpperCase();
   const fit = fitHeadline(raw, { maxWidth: 1040, maxHeight: 216, maxLines: 3, lineHeight: 1 });
   const date = String(digest?.date || '').trim().toUpperCase();
 
-  const plates = arts.map((src, i) => h('div', { display: 'flex', flexDirection: 'column', alignItems: 'center', width: 132, marginRight: 8 },
-    img(src, { width: 64, height: 64, borderRadius: 32, border: `3px solid ${C.gold}`, objectFit: 'cover' }),
-    h('div', { display: 'flex', marginTop: 8, fontFamily: BODY, fontWeight: 600, fontSize: 13, letterSpacing: 1.5, textTransform: 'uppercase', color: C.soft, whiteSpace: 'nowrap' }, sectors[i])
-  ));
-
   const content = [
-    masthead(h('div', { display: 'flex', fontFamily: BODY, fontWeight: 600, fontSize: 18, letterSpacing: 2.5, color: C.soft }, date)),
-    h('div', { display: 'flex', height: 2, marginTop: 18, backgroundColor: C.goldDk }),
     h('div', { display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center' },
       h('div', { display: 'flex', alignItems: 'center' },
-        h('div', { width: 12, height: 12, borderRadius: 6, backgroundColor: C.redInk, boxShadow: '0 0 8px 2px rgba(255,59,59,0.7)', marginRight: 12 }),
-        h('div', { display: 'flex', fontFamily: DISPLAY, fontWeight: 800, fontSize: 24, letterSpacing: 4, color: C.gold }, 'LEDE OF THE DAY')
+        h('div', { width: 12, height: 12, borderRadius: 6, backgroundColor: C.red, marginRight: 12 }),
+        h('div', { display: 'flex', fontFamily: DISPLAY, fontWeight: 800, fontSize: 24, letterSpacing: 4, color: C.redInk }, 'LEDE OF THE DAY')
       ),
-      h('div', { display: 'block', marginTop: 10, fontFamily: DISPLAY, fontWeight: 800, fontSize: fit.size, lineHeight: 1,
-        letterSpacing: 0.5, color: C.text, lineClamp: 3, textShadow: '0 2px 0 rgba(0,0,0,0.6)' }, fit.text)
+      h('div', { display: 'block', marginTop: 12, fontFamily: DISPLAY, fontWeight: 800, fontSize: fit.size, lineHeight: 1,
+        letterSpacing: 0.5, color: C.text, lineClamp: 3 }, fit.text)
     ),
-    footer(h('div', { display: 'flex', marginLeft: -34 }, plates))
+    footer(h('div', { display: 'flex' }, sectors.map(chip)))
   ];
-  return toPng(cabinet(content));
+  return frame(h('div', { display: 'flex', fontFamily: BODY, fontWeight: 600, fontSize: 18, letterSpacing: 2.5, color: C.soft }, date), content);
 }
 
-// Static share card in the same cabinet (prototype pages, previews). Returns a PNG Buffer (1200x630).
-export async function renderCardOg({ kicker = '', title = 'BILLIONAIRES DIGEST', subtitle = '' } = {}) {
+// Returns a PNG Buffer (1200x630).
+export async function renderOg(digest) {
+  return toPng(ogTree(digest));
+}
+
+// Layout tree for a static share card (exported for tests).
+export function cardTree({ kicker = '', title = 'BILLIONAIRES DIGEST', subtitle = '' } = {}) {
   const t = String(title).replace(/\s+/g, ' ').trim().toUpperCase();
   // One big line when the title allows it (>= 100px), otherwise up to two lines.
   const one = fitHeadline(t, { maxWidth: 1000, maxHeight: 250, maxLines: 1, sizes: [150, 140, 130, 120, 110, 100], lineHeight: 0.95, spacing: 2 });
@@ -220,20 +190,24 @@ export async function renderCardOg({ kicker = '', title = 'BILLIONAIRES DIGEST',
     sizes: [150, 140, 130, 120, 110, 100, 90, 80, 72], spacing: 2 });
   const sub = clip(subtitle, 150);
   const content = [
-    masthead(kicker
-      ? h('div', { display: 'flex', padding: '7px 16px 6px', borderRadius: 8, backgroundImage: RED_BTN, border: '2px solid #FF8A80',
-          fontFamily: DISPLAY, fontWeight: 800, fontSize: 22, letterSpacing: 3, color: '#FFFFFF' }, String(kicker).toUpperCase())
-      : null),
-    h('div', { display: 'flex', height: 2, marginTop: 18, backgroundColor: C.goldDk }),
     h('div', { display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center', alignItems: 'center' },
       h('div', { display: 'flex', width: 1000, textAlign: 'center', justifyContent: 'center', fontFamily: DISPLAY, fontWeight: 800, fontSize: fit.size,
-        lineHeight: 0.95, letterSpacing: 2, color: C.gold, textShadow: '0 0 24px rgba(245,197,66,0.45), 0 3px 0 #5A420F' }, fit.text),
+        lineHeight: 0.95, letterSpacing: 2, color: C.text }, fit.text),
       sub ? h('div', { display: 'flex', textAlign: 'center', justifyContent: 'center', marginTop: 22, maxWidth: 900,
-        fontFamily: BODY, fontWeight: 600, fontSize: 28, lineHeight: 1.3, color: C.text }, sub) : null
+        fontFamily: BODY, fontWeight: 600, fontSize: 28, lineHeight: 1.3, color: C.soft }, sub) : null
     ),
     footer(h('div', { display: 'flex', fontFamily: BODY, fontWeight: 600, fontSize: 16, letterSpacing: 1.5, color: C.muted }, 'PLAY MONEY · FOR INFORMATION ONLY'))
   ];
-  return toPng(cabinet(content));
+  const right = kicker
+    ? h('div', { display: 'flex', padding: '7px 16px 6px', borderRadius: 4, backgroundColor: C.red,
+        fontFamily: DISPLAY, fontWeight: 800, fontSize: 22, letterSpacing: 3, color: C.text }, String(kicker).toUpperCase())
+    : null;
+  return frame(right, content);
+}
+
+// Static share card in the same frame (prototype pages, previews). Returns a PNG Buffer (1200x630).
+export async function renderCardOg(opts = {}) {
+  return toPng(cardTree(opts));
 }
 
 // ---- meta tags in index.html ----
