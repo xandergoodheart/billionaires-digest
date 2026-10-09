@@ -3,7 +3,7 @@
   "start": "2026-10-12",
   "end": "2026-10-16",
   "locksAt": "2026-10-12T13:30:00.000Z",
-  "generated": "2026-10-08T16:47:09.025Z",
+  "generated": "2026-10-09T16:26:11.412Z",
   "asOf": "2026-10-11",
   "method": "Each person's daily fantasy points are modeled as a normal distribution. The average is the bonus they tend to earn: 10 points per story over the last 20 editions (divided by 20) plus 25 points per insider-buy day (Form 4, code P) over the last 90 days (divided by 63 trading days). Price moves average zero. The spread is 100 x the daily volatility of their holdings: measured from our price history when there are at least 15 daily closes (blended with a sector default until 60), otherwise the sector default (AI & tech 2.2%, Aerospace and Autos 3.0%, Finance 1.3%, Luxury & retail 1.5%, Health and Real estate 1.6%, others 1.8%). The week is the sum of 5 days. People move together: correlation 0.6 in the same sector, 0.3 otherwise, 1.0 when they share a main holding (those pairs never meet head-to-head). Matchups, spreads and over/unders use the normal formula; top scorer and top sector use 20,000 simulated weeks (seeded, so the same data gives the same odds); the insider-buy prop uses the daily buy rate (Poisson). Two-way prices carry a 4.5% house margin (-110 both sides at 50/50), many-way prices 20%. Odds are rounded to the nearest 5 (25 above +1000, 100 above +5000). Price markets (biggest gainer and loser boards, move ladders and ranges, rank races, dollar duels) follow each person's holdings basket (the fantasy weights): its change is modeled as a normal distribution centred on zero with the same daily volatility, times the square root of the trading days for a week, with the same correlations. Dollar markets multiply by tracked stock wealth: share counts from SEC filings times the share price, or, where a family stake is not split in filings, the published net worth moved by that stock. Boards and races use 20,000 simulated outcomes (seeded); ladders, ranges and duels use the normal formula. Ladder rungs and duel lines carry a 4.5% margin each, ranges 12%, boards 20%. Measured from the opening price on the first day to the closing price on the last day; betting closes at the opening bell (9:30 AM New York). Weekly markets run from Monday's open to Friday's close (races compare tracked wealth at Friday's close), daily boards from that day's open to its close. A missing opening or closing price (market holiday or data gap) makes the market void (stake back). Stakes: up to 500 coins; 150 when the combined odds pay 6x or more (decimal 6.0, +500); 50 when they pay 21x or more (decimal 21.0, +2000). Play money only; not a forecast and not advice.",
   "limits": {
@@ -30,7 +30,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -43,11 +43,11 @@
         "method": "worth",
         "worth": 118600000000,
         "ticker": "WMT",
-        "refDate": "2026-10-08",
-        "refClose": 110.54
+        "refDate": "2026-10-09",
+        "refClose": 111.24
       },
       "value0": 118600000000,
-      "value0Date": "2026-10-08",
+      "value0Date": "2026-10-09",
       "wealthNote": "Almost all of this fortune is the family's shared Walmart stake. How it is split between family members isn't disclosed, so we treat the published net worth as moving with Walmart's share price.",
       "wealthSource": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
     },
@@ -57,7 +57,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 9,
+      "closes": 10,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -73,7 +73,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -92,8 +92,8 @@
           "ANET": 183799896
         }
       },
-      "value0": 39406697702,
-      "value0Date": "2026-10-08"
+      "value0": 39664017557,
+      "value0Date": "2026-10-09"
     },
     "andy-jassy": {
       "name": "Andy Jassy",
@@ -101,7 +101,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -117,7 +117,7 @@
       "mu": 2,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 6,
+      "closes": 7,
       "stories": 4,
       "buyDays": 0,
       "basket": [
@@ -137,7 +137,7 @@
       "mu": 4.7619,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 12,
       "basket": [
@@ -201,8 +201,8 @@
           "MXF": 647198
         }
       },
-      "value0": 57471222427,
-      "value0Date": "2026-10-08"
+      "value0": 57655712209,
+      "value0Date": "2026-10-09"
     },
     "brian-chesky": {
       "name": "Brian Chesky",
@@ -210,7 +210,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -226,7 +226,7 @@
       "mu": 1,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 2,
       "buyDays": 0,
       "basket": [
@@ -254,7 +254,7 @@
       "mu": 1.5,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
+      "closes": 12,
       "stories": 3,
       "buyDays": 0,
       "basket": [
@@ -270,7 +270,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 8,
+      "closes": 9,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -310,7 +310,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -326,7 +326,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -342,7 +342,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -358,7 +358,7 @@
       "mu": 0,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -378,7 +378,7 @@
       "mu": 0,
       "sigma": 160,
       "vol": 1.6,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -394,7 +394,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -411,11 +411,11 @@
     "elon-musk": {
       "name": "Elon Musk",
       "sector": "Aerospace",
-      "mu": 6,
+      "mu": 8,
       "sigma": 300,
       "vol": 3,
-      "closes": 11,
-      "stories": 12,
+      "closes": 12,
+      "stories": 16,
       "buyDays": 0,
       "basket": [
         {
@@ -434,8 +434,8 @@
           "SPCX": 6418547515
         }
       },
-      "value0": 1301051439488,
-      "value0Date": "2026-10-08"
+      "value0": 1312948971336,
+      "value0Date": "2026-10-09"
     },
     "eric-schmidt": {
       "name": "Eric Schmidt",
@@ -443,7 +443,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -458,8 +458,8 @@
           "GOOGL": 48808584
         }
       },
-      "value0": 17053719250,
-      "value0Date": "2026-10-08"
+      "value0": 17302643028,
+      "value0Date": "2026-10-09"
     },
     "eyal-ofer": {
       "name": "Eyal Ofer",
@@ -467,7 +467,7 @@
       "mu": 0,
       "sigma": 160,
       "vol": 1.6,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -483,7 +483,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 9,
+      "closes": 10,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -499,7 +499,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 9,
+      "closes": 10,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -515,7 +515,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -531,7 +531,7 @@
       "mu": 0.3968,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 1,
       "basket": [
@@ -551,7 +551,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -583,7 +583,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -598,8 +598,8 @@
           "AVGO": 85559569
         }
       },
-      "value0": 31802491797,
-      "value0Date": "2026-10-08"
+      "value0": 31052134377,
+      "value0Date": "2026-10-09"
     },
     "hock-tan": {
       "name": "Hock Tan",
@@ -607,7 +607,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -623,7 +623,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -643,7 +643,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -663,7 +663,7 @@
       "mu": 1,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 11,
+      "closes": 12,
       "stories": 2,
       "buyDays": 0,
       "basket": [
@@ -679,7 +679,7 @@
       "mu": 0,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -695,7 +695,7 @@
       "mu": 0,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -711,7 +711,7 @@
       "mu": 0.3968,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 1,
       "basket": [
@@ -728,11 +728,11 @@
     "jeff-bezos": {
       "name": "Jeff Bezos",
       "sector": "AI & tech",
-      "mu": 0.5,
+      "mu": 1,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
-      "stories": 1,
+      "closes": 12,
+      "stories": 2,
       "buyDays": 0,
       "basket": [
         {
@@ -746,17 +746,17 @@
           "AMZN": 950434581
         }
       },
-      "value0": 245734860918,
-      "value0Date": "2026-10-08"
+      "value0": 248386573399,
+      "value0Date": "2026-10-09"
     },
     "jensen-huang": {
       "name": "Jensen Huang",
       "sector": "AI & tech",
-      "mu": 3.5,
+      "mu": 4,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
-      "stories": 7,
+      "closes": 12,
+      "stories": 8,
       "buyDays": 0,
       "basket": [
         {
@@ -771,7 +771,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -784,11 +784,11 @@
         "method": "worth",
         "worth": 128800000000,
         "ticker": "WMT",
-        "refDate": "2026-10-08",
-        "refClose": 110.54
+        "refDate": "2026-10-09",
+        "refClose": 111.24
       },
       "value0": 128800000000,
-      "value0Date": "2026-10-08",
+      "value0Date": "2026-10-09",
       "wealthNote": "Almost all of this fortune is the family's shared Walmart stake. How it is split between family members isn't disclosed, so we treat the published net worth as moving with Walmart's share price.",
       "wealthSource": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
     },
@@ -798,7 +798,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -817,8 +817,8 @@
           "MT": 340152563
         }
       },
-      "value0": 20735700240,
-      "value0Date": "2026-10-08"
+      "value0": 21837794545,
+      "value0Date": "2026-10-09"
     },
     "larry-ellison": {
       "name": "Larry Ellison",
@@ -826,7 +826,7 @@
       "mu": 5,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 9,
+      "closes": 10,
       "stories": 10,
       "buyDays": 0,
       "basket": [
@@ -845,8 +845,8 @@
           "ORCL": 1152982353
         }
       },
-      "value0": 157255263126,
-      "value0Date": "2026-10-08"
+      "value0": 163804202891,
+      "value0Date": "2026-10-09"
     },
     "larry-page": {
       "name": "Larry Page",
@@ -854,7 +854,7 @@
       "mu": 0.5,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 1,
       "buyDays": 0,
       "basket": [
@@ -870,7 +870,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -924,8 +924,8 @@
           "OPEN": 17638714
         }
       },
-      "value0": 19567797959,
-      "value0Date": "2026-10-08"
+      "value0": 19889117364,
+      "value0Date": "2026-10-09"
     },
     "li-ka-shing": {
       "name": "Li Ka-shing",
@@ -933,7 +933,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -961,7 +961,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -977,7 +977,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -993,7 +993,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1008,17 +1008,17 @@
           "FANG": 64957047
         }
       },
-      "value0": 12315856111,
-      "value0Date": "2026-10-08"
+      "value0": 12497735843,
+      "value0Date": "2026-10-09"
     },
     "ma-huateng": {
       "name": "Ma Huateng",
       "sector": "AI & tech",
-      "mu": 0.5,
+      "mu": 1,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 7,
-      "stories": 1,
+      "closes": 8,
+      "stories": 2,
       "buyDays": 0,
       "basket": [
         {
@@ -1041,7 +1041,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1057,7 +1057,7 @@
       "mu": 3.5,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 7,
       "buyDays": 0,
       "basket": [
@@ -1072,8 +1072,8 @@
           "META": 341823978
         }
       },
-      "value0": 245162993501,
-      "value0Date": "2026-10-08"
+      "value0": 247535251908,
+      "value0Date": "2026-10-09"
     },
     "mary-barra": {
       "name": "Mary Barra",
@@ -1081,7 +1081,7 @@
       "mu": 0,
       "sigma": 300,
       "vol": 3,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1097,7 +1097,7 @@
       "mu": 3.5,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 7,
+      "closes": 8,
       "stories": 7,
       "buyDays": 0,
       "basket": [
@@ -1149,7 +1149,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1169,7 +1169,7 @@
       "mu": 1.5,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 3,
       "buyDays": 0,
       "basket": [
@@ -1192,8 +1192,8 @@
           "DELL": 265674689
         }
       },
-      "value0": 153767196499,
-      "value0Date": "2026-10-08"
+      "value0": 152903753760,
+      "value0Date": "2026-10-09"
     },
     "miriam-adelson-family": {
       "name": "Miriam Adelson",
@@ -1201,7 +1201,7 @@
       "mu": 0,
       "sigma": 160,
       "vol": 1.6,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1217,7 +1217,7 @@
       "mu": 0.3968,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 1,
       "basket": [
@@ -1237,7 +1237,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1265,7 +1265,7 @@
       "mu": 0,
       "sigma": 180,
       "vol": 1.8,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1281,7 +1281,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1294,11 +1294,11 @@
         "method": "worth",
         "worth": 132000000000,
         "ticker": "WMT",
-        "refDate": "2026-10-08",
-        "refClose": 110.54
+        "refDate": "2026-10-09",
+        "refClose": 111.24
       },
       "value0": 132000000000,
-      "value0Date": "2026-10-08",
+      "value0Date": "2026-10-09",
       "wealthNote": "Almost all of this fortune is the family's shared Walmart stake. How it is split between family members isn't disclosed, so we treat the published net worth as moving with Walmart's share price.",
       "wealthSource": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
     },
@@ -1308,7 +1308,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1324,7 +1324,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1340,7 +1340,7 @@
       "mu": 0.5,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 1,
       "buyDays": 0,
       "basket": [
@@ -1356,8 +1356,8 @@
           "GOOG": 359159912
         }
       },
-      "value0": 249740423451,
-      "value0Date": "2026-10-08"
+      "value0": 253266252124,
+      "value0Date": "2026-10-09"
     },
     "shantanu-narayen": {
       "name": "Shantanu Narayen",
@@ -1365,7 +1365,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1381,7 +1381,7 @@
       "mu": 0.7937,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 2,
       "basket": [
@@ -1417,7 +1417,7 @@
       "mu": 0.5,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 1,
       "buyDays": 0,
       "basket": [
@@ -1433,7 +1433,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1449,7 +1449,7 @@
       "mu": 0,
       "sigma": 150,
       "vol": 1.5,
-      "closes": 9,
+      "closes": 10,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1465,7 +1465,7 @@
       "mu": 0.5,
       "sigma": 160,
       "vol": 1.6,
-      "closes": 11,
+      "closes": 12,
       "stories": 1,
       "buyDays": 0,
       "basket": [
@@ -1481,7 +1481,7 @@
       "mu": 0,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1501,7 +1501,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1517,7 +1517,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 7,
+      "closes": 8,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1533,7 +1533,7 @@
       "mu": 0,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1546,11 +1546,11 @@
     "warren-buffett": {
       "name": "Warren Buffett",
       "sector": "Finance",
-      "mu": 3.9841,
+      "mu": 4.4841,
       "sigma": 130,
       "vol": 1.3,
-      "closes": 11,
-      "stories": 4,
+      "closes": 12,
+      "stories": 5,
       "buyDays": 5,
       "basket": [
         {
@@ -1673,8 +1673,8 @@
           "BRK.B": 1162
         }
       },
-      "value0": 143516260102,
-      "value0Date": "2026-10-08"
+      "value0": 145548776368,
+      "value0Date": "2026-10-09"
     },
     "william-ding": {
       "name": "William Ding",
@@ -1682,7 +1682,7 @@
       "mu": 0,
       "sigma": 220,
       "vol": 2.2,
-      "closes": 11,
+      "closes": 12,
       "stories": 0,
       "buyDays": 0,
       "basket": [
@@ -1714,9 +1714,9 @@
           "label": "Elon Musk to win",
           "market": "ml",
           "person": "elon-musk",
-          "americanOdds": -115,
-          "decimalOdds": 1.8696,
-          "fairProb": 0.5156,
+          "americanOdds": -120,
+          "decimalOdds": 1.8333,
+          "fairProb": 0.5199,
           "sort": 0
         },
         {
@@ -1724,31 +1724,31 @@
           "label": "Jeff Bezos to win",
           "market": "ml",
           "person": "jeff-bezos",
-          "americanOdds": -105,
-          "decimalOdds": 1.9524,
-          "fairProb": 0.4844,
+          "americanOdds": 100,
+          "decimalOdds": 2,
+          "fairProb": 0.4801,
           "sort": 1
         },
         {
           "id": "2026-W42:h2h:elon-musk:jeff-bezos:sp:elon-musk",
-          "label": "Elon Musk −27.5",
+          "label": "Elon Musk −35.5",
           "market": "spread",
           "person": "elon-musk",
-          "line": -27.5,
+          "line": -35.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5,
+          "fairProb": 0.4997,
           "sort": 2
         },
         {
           "id": "2026-W42:h2h:elon-musk:jeff-bezos:sp:jeff-bezos",
-          "label": "Jeff Bezos +27.5",
+          "label": "Jeff Bezos +35.5",
           "market": "spread",
           "person": "jeff-bezos",
-          "line": 27.5,
+          "line": 35.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5,
+          "fairProb": 0.5003,
           "sort": 3
         }
       ],
@@ -1830,7 +1830,7 @@
           "person": "michael-dell",
           "americanOdds": -105,
           "decimalOdds": 1.9524,
-          "fairProb": 0.4909,
+          "fairProb": 0.4887,
           "sort": 0
         },
         {
@@ -1840,29 +1840,29 @@
           "person": "jensen-huang",
           "americanOdds": -115,
           "decimalOdds": 1.8696,
-          "fairProb": 0.5091,
+          "fairProb": 0.5113,
           "sort": 1
         },
         {
           "id": "2026-W42:h2h:michael-dell:jensen-huang:sp:michael-dell",
-          "label": "Michael Dell +10.5",
+          "label": "Michael Dell +12.5",
           "market": "spread",
           "person": "michael-dell",
-          "line": 10.5,
+          "line": 12.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5005,
+          "fairProb": 0.5,
           "sort": 2
         },
         {
           "id": "2026-W42:h2h:michael-dell:jensen-huang:sp:jensen-huang",
-          "label": "Jensen Huang −10.5",
+          "label": "Jensen Huang −12.5",
           "market": "spread",
           "person": "jensen-huang",
-          "line": -10.5,
+          "line": -12.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.4995,
+          "fairProb": 0.5,
           "sort": 3
         }
       ],
@@ -1942,9 +1942,9 @@
           "label": "Steve Ballmer to win",
           "market": "ml",
           "person": "steve-ballmer",
-          "americanOdds": -105,
-          "decimalOdds": 1.9524,
-          "fairProb": 0.4858,
+          "americanOdds": 100,
+          "decimalOdds": 2,
+          "fairProb": 0.4838,
           "sort": 0
         },
         {
@@ -1954,29 +1954,29 @@
           "person": "warren-buffett",
           "americanOdds": -115,
           "decimalOdds": 1.8696,
-          "fairProb": 0.5142,
+          "fairProb": 0.5162,
           "sort": 1
         },
         {
           "id": "2026-W42:h2h:steve-ballmer:warren-buffett:sp:steve-ballmer",
-          "label": "Steve Ballmer +17.5",
+          "label": "Steve Ballmer +19.5",
           "market": "spread",
           "person": "steve-ballmer",
-          "line": 17.5,
+          "line": 19.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5001,
+          "fairProb": 0.4997,
           "sort": 2
         },
         {
           "id": "2026-W42:h2h:steve-ballmer:warren-buffett:sp:warren-buffett",
-          "label": "Warren Buffett −17.5",
+          "label": "Warren Buffett −19.5",
           "market": "spread",
           "person": "warren-buffett",
-          "line": -17.5,
+          "line": -19.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.4999,
+          "fairProb": 0.5003,
           "sort": 3
         }
       ],
@@ -2164,110 +2164,110 @@
       },
       "selections": [
         {
-          "id": "2026-W42:ou:elon-musk:o:-534.5",
-          "label": "Over -534.5",
+          "id": "2026-W42:ou:elon-musk:o:-524.5",
+          "label": "Over -524.5",
           "market": "over",
           "person": "elon-musk",
-          "line": -534.5,
+          "line": -524.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
           "fairProb": 0.8,
           "sort": 0
         },
         {
-          "id": "2026-W42:ou:elon-musk:u:-534.5",
-          "label": "Under -534.5",
+          "id": "2026-W42:ou:elon-musk:u:-524.5",
+          "label": "Under -524.5",
           "market": "under",
           "person": "elon-musk",
-          "line": -534.5,
+          "line": -524.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
           "fairProb": 0.2,
           "sort": 1
         },
         {
-          "id": "2026-W42:ou:elon-musk:o:-228.5",
-          "label": "Over -228.5",
+          "id": "2026-W42:ou:elon-musk:o:-218.5",
+          "label": "Over -218.5",
           "market": "over",
           "person": "elon-musk",
-          "line": -228.5,
+          "line": -218.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
           "fairProb": 0.65,
           "sort": 2
         },
         {
-          "id": "2026-W42:ou:elon-musk:u:-228.5",
-          "label": "Under -228.5",
+          "id": "2026-W42:ou:elon-musk:u:-218.5",
+          "label": "Under -218.5",
           "market": "under",
           "person": "elon-musk",
-          "line": -228.5,
+          "line": -218.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
           "fairProb": 0.35,
           "sort": 3
         },
         {
-          "id": "2026-W42:ou:elon-musk:o:30.5",
-          "label": "Over 30.5",
+          "id": "2026-W42:ou:elon-musk:o:40.5",
+          "label": "Over 40.5",
           "market": "over",
           "person": "elon-musk",
-          "line": 30.5,
+          "line": 40.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
           "fairProb": 0.4997,
           "sort": 4
         },
         {
-          "id": "2026-W42:ou:elon-musk:u:30.5",
-          "label": "Under 30.5",
+          "id": "2026-W42:ou:elon-musk:u:40.5",
+          "label": "Under 40.5",
           "market": "under",
           "person": "elon-musk",
-          "line": 30.5,
+          "line": 40.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
           "fairProb": 0.5003,
           "sort": 5
         },
         {
-          "id": "2026-W42:ou:elon-musk:o:288.5",
-          "label": "Over 288.5",
+          "id": "2026-W42:ou:elon-musk:o:298.5",
+          "label": "Over 298.5",
           "market": "over",
           "person": "elon-musk",
-          "line": 288.5,
+          "line": 298.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
           "fairProb": 0.35,
           "sort": 6
         },
         {
-          "id": "2026-W42:ou:elon-musk:u:288.5",
-          "label": "Under 288.5",
+          "id": "2026-W42:ou:elon-musk:u:298.5",
+          "label": "Under 298.5",
           "market": "under",
           "person": "elon-musk",
-          "line": 288.5,
+          "line": 298.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
           "fairProb": 0.65,
           "sort": 7
         },
         {
-          "id": "2026-W42:ou:elon-musk:o:594.5",
-          "label": "Over 594.5",
+          "id": "2026-W42:ou:elon-musk:o:604.5",
+          "label": "Over 604.5",
           "market": "over",
           "person": "elon-musk",
-          "line": 594.5,
+          "line": 604.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
           "fairProb": 0.2,
           "sort": 8
         },
         {
-          "id": "2026-W42:ou:elon-musk:u:594.5",
-          "label": "Under 594.5",
+          "id": "2026-W42:ou:elon-musk:u:604.5",
+          "label": "Under 604.5",
           "market": "under",
           "person": "elon-musk",
-          "line": 594.5,
+          "line": 604.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
           "fairProb": 0.8,
@@ -2287,113 +2287,113 @@
       },
       "selections": [
         {
-          "id": "2026-W42:ou:jeff-bezos:o:-411.5",
-          "label": "Over -411.5",
+          "id": "2026-W42:ou:jeff-bezos:o:-409.5",
+          "label": "Over -409.5",
           "market": "over",
           "person": "jeff-bezos",
-          "line": -411.5,
+          "line": -409.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
-          "fairProb": 0.8,
+          "fairProb": 0.8003,
           "sort": 0
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:u:-411.5",
-          "label": "Under -411.5",
+          "id": "2026-W42:ou:jeff-bezos:u:-409.5",
+          "label": "Under -409.5",
           "market": "under",
           "person": "jeff-bezos",
-          "line": -411.5,
+          "line": -409.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
-          "fairProb": 0.2,
+          "fairProb": 0.1997,
           "sort": 1
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:o:-187.5",
-          "label": "Over -187.5",
+          "id": "2026-W42:ou:jeff-bezos:o:-184.5",
+          "label": "Over -184.5",
           "market": "over",
           "person": "jeff-bezos",
-          "line": -187.5,
+          "line": -184.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
-          "fairProb": 0.6503,
+          "fairProb": 0.65,
           "sort": 2
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:u:-187.5",
-          "label": "Under -187.5",
+          "id": "2026-W42:ou:jeff-bezos:u:-184.5",
+          "label": "Under -184.5",
           "market": "under",
           "person": "jeff-bezos",
-          "line": -187.5,
+          "line": -184.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
-          "fairProb": 0.3497,
+          "fairProb": 0.35,
           "sort": 3
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:o:2.5",
-          "label": "Over 2.5",
+          "id": "2026-W42:ou:jeff-bezos:o:5.5",
+          "label": "Over 5.5",
           "market": "over",
           "person": "jeff-bezos",
-          "line": 2.5,
+          "line": 5.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5,
+          "fairProb": 0.4996,
           "sort": 4
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:u:2.5",
-          "label": "Under 2.5",
+          "id": "2026-W42:ou:jeff-bezos:u:5.5",
+          "label": "Under 5.5",
           "market": "under",
           "person": "jeff-bezos",
-          "line": 2.5,
+          "line": 5.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5,
+          "fairProb": 0.5004,
           "sort": 5
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:o:192.5",
-          "label": "Over 192.5",
+          "id": "2026-W42:ou:jeff-bezos:o:194.5",
+          "label": "Over 194.5",
           "market": "over",
           "person": "jeff-bezos",
-          "line": 192.5,
+          "line": 194.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
-          "fairProb": 0.3497,
+          "fairProb": 0.35,
           "sort": 6
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:u:192.5",
-          "label": "Under 192.5",
+          "id": "2026-W42:ou:jeff-bezos:u:194.5",
+          "label": "Under 194.5",
           "market": "under",
           "person": "jeff-bezos",
-          "line": 192.5,
+          "line": 194.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
-          "fairProb": 0.6503,
+          "fairProb": 0.65,
           "sort": 7
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:o:416.5",
-          "label": "Over 416.5",
+          "id": "2026-W42:ou:jeff-bezos:o:419.5",
+          "label": "Over 419.5",
           "market": "over",
           "person": "jeff-bezos",
-          "line": 416.5,
+          "line": 419.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
-          "fairProb": 0.2,
+          "fairProb": 0.1997,
           "sort": 8
         },
         {
-          "id": "2026-W42:ou:jeff-bezos:u:416.5",
-          "label": "Under 416.5",
+          "id": "2026-W42:ou:jeff-bezos:u:419.5",
+          "label": "Under 419.5",
           "market": "under",
           "person": "jeff-bezos",
-          "line": 416.5,
+          "line": 419.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
-          "fairProb": 0.8,
+          "fairProb": 0.8003,
           "sort": 9
         }
       ],
@@ -2779,113 +2779,113 @@
       },
       "selections": [
         {
-          "id": "2026-W42:ou:jensen-huang:o:-396.5",
-          "label": "Over -396.5",
+          "id": "2026-W42:ou:jensen-huang:o:-394.5",
+          "label": "Over -394.5",
           "market": "over",
           "person": "jensen-huang",
-          "line": -396.5,
+          "line": -394.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
-          "fairProb": 0.8,
+          "fairProb": 0.8003,
           "sort": 0
         },
         {
-          "id": "2026-W42:ou:jensen-huang:u:-396.5",
-          "label": "Under -396.5",
+          "id": "2026-W42:ou:jensen-huang:u:-394.5",
+          "label": "Under -394.5",
           "market": "under",
           "person": "jensen-huang",
-          "line": -396.5,
+          "line": -394.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
-          "fairProb": 0.2,
+          "fairProb": 0.1997,
           "sort": 1
         },
         {
-          "id": "2026-W42:ou:jensen-huang:o:-172.5",
-          "label": "Over -172.5",
+          "id": "2026-W42:ou:jensen-huang:o:-169.5",
+          "label": "Over -169.5",
           "market": "over",
           "person": "jensen-huang",
-          "line": -172.5,
+          "line": -169.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
-          "fairProb": 0.6503,
+          "fairProb": 0.65,
           "sort": 2
         },
         {
-          "id": "2026-W42:ou:jensen-huang:u:-172.5",
-          "label": "Under -172.5",
+          "id": "2026-W42:ou:jensen-huang:u:-169.5",
+          "label": "Under -169.5",
           "market": "under",
           "person": "jensen-huang",
-          "line": -172.5,
+          "line": -169.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
-          "fairProb": 0.3497,
+          "fairProb": 0.35,
           "sort": 3
         },
         {
-          "id": "2026-W42:ou:jensen-huang:o:17.5",
-          "label": "Over 17.5",
+          "id": "2026-W42:ou:jensen-huang:o:20.5",
+          "label": "Over 20.5",
           "market": "over",
           "person": "jensen-huang",
-          "line": 17.5,
+          "line": 20.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5,
+          "fairProb": 0.4996,
           "sort": 4
         },
         {
-          "id": "2026-W42:ou:jensen-huang:u:17.5",
-          "label": "Under 17.5",
+          "id": "2026-W42:ou:jensen-huang:u:20.5",
+          "label": "Under 20.5",
           "market": "under",
           "person": "jensen-huang",
-          "line": 17.5,
+          "line": 20.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5,
+          "fairProb": 0.5004,
           "sort": 5
         },
         {
-          "id": "2026-W42:ou:jensen-huang:o:207.5",
-          "label": "Over 207.5",
+          "id": "2026-W42:ou:jensen-huang:o:209.5",
+          "label": "Over 209.5",
           "market": "over",
           "person": "jensen-huang",
-          "line": 207.5,
+          "line": 209.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
-          "fairProb": 0.3497,
+          "fairProb": 0.35,
           "sort": 6
         },
         {
-          "id": "2026-W42:ou:jensen-huang:u:207.5",
-          "label": "Under 207.5",
+          "id": "2026-W42:ou:jensen-huang:u:209.5",
+          "label": "Under 209.5",
           "market": "under",
           "person": "jensen-huang",
-          "line": 207.5,
+          "line": 209.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
-          "fairProb": 0.6503,
+          "fairProb": 0.65,
           "sort": 7
         },
         {
-          "id": "2026-W42:ou:jensen-huang:o:431.5",
-          "label": "Over 431.5",
+          "id": "2026-W42:ou:jensen-huang:o:434.5",
+          "label": "Over 434.5",
           "market": "over",
           "person": "jensen-huang",
-          "line": 431.5,
+          "line": 434.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
-          "fairProb": 0.2,
+          "fairProb": 0.1997,
           "sort": 8
         },
         {
-          "id": "2026-W42:ou:jensen-huang:u:431.5",
-          "label": "Under 431.5",
+          "id": "2026-W42:ou:jensen-huang:u:434.5",
+          "label": "Under 434.5",
           "market": "under",
           "person": "jensen-huang",
-          "line": 431.5,
+          "line": 434.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
-          "fairProb": 0.8,
+          "fairProb": 0.8003,
           "sort": 9
         }
       ],
@@ -3271,113 +3271,113 @@
       },
       "selections": [
         {
-          "id": "2026-W42:ou:warren-buffett:o:-224.5",
-          "label": "Over -224.5",
+          "id": "2026-W42:ou:warren-buffett:o:-222.5",
+          "label": "Over -222.5",
           "market": "over",
           "person": "warren-buffett",
-          "line": -224.5,
+          "line": -222.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
-          "fairProb": 0.7998,
+          "fairProb": 0.8003,
           "sort": 0
         },
         {
-          "id": "2026-W42:ou:warren-buffett:u:-224.5",
-          "label": "Under -224.5",
+          "id": "2026-W42:ou:warren-buffett:u:-222.5",
+          "label": "Under -222.5",
           "market": "under",
           "person": "warren-buffett",
-          "line": -224.5,
+          "line": -222.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
-          "fairProb": 0.2002,
+          "fairProb": 0.1997,
           "sort": 1
         },
         {
-          "id": "2026-W42:ou:warren-buffett:o:-92.5",
-          "label": "Over -92.5",
+          "id": "2026-W42:ou:warren-buffett:o:-89.5",
+          "label": "Over -89.5",
           "market": "over",
           "person": "warren-buffett",
-          "line": -92.5,
+          "line": -89.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
-          "fairProb": 0.6505,
+          "fairProb": 0.6499,
           "sort": 2
         },
         {
-          "id": "2026-W42:ou:warren-buffett:u:-92.5",
-          "label": "Under -92.5",
+          "id": "2026-W42:ou:warren-buffett:u:-89.5",
+          "label": "Under -89.5",
           "market": "under",
           "person": "warren-buffett",
-          "line": -92.5,
+          "line": -89.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
-          "fairProb": 0.3495,
+          "fairProb": 0.3501,
           "sort": 3
         },
         {
-          "id": "2026-W42:ou:warren-buffett:o:19.5",
-          "label": "Over 19.5",
+          "id": "2026-W42:ou:warren-buffett:o:22.5",
+          "label": "Over 22.5",
           "market": "over",
           "person": "warren-buffett",
-          "line": 19.5,
+          "line": 22.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5006,
+          "fairProb": 0.4999,
           "sort": 4
         },
         {
-          "id": "2026-W42:ou:warren-buffett:u:19.5",
-          "label": "Under 19.5",
+          "id": "2026-W42:ou:warren-buffett:u:22.5",
+          "label": "Under 22.5",
           "market": "under",
           "person": "warren-buffett",
-          "line": 19.5,
+          "line": 22.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.4994,
+          "fairProb": 0.5001,
           "sort": 5
         },
         {
-          "id": "2026-W42:ou:warren-buffett:o:131.5",
-          "label": "Over 131.5",
+          "id": "2026-W42:ou:warren-buffett:o:134.5",
+          "label": "Over 134.5",
           "market": "over",
           "person": "warren-buffett",
-          "line": 131.5,
+          "line": 134.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
-          "fairProb": 0.3505,
+          "fairProb": 0.3499,
           "sort": 6
         },
         {
-          "id": "2026-W42:ou:warren-buffett:u:131.5",
-          "label": "Under 131.5",
+          "id": "2026-W42:ou:warren-buffett:u:134.5",
+          "label": "Under 134.5",
           "market": "under",
           "person": "warren-buffett",
-          "line": 131.5,
+          "line": 134.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
-          "fairProb": 0.6495,
+          "fairProb": 0.6501,
           "sort": 7
         },
         {
-          "id": "2026-W42:ou:warren-buffett:o:264.5",
-          "label": "Over 264.5",
+          "id": "2026-W42:ou:warren-buffett:o:267.5",
+          "label": "Over 267.5",
           "market": "over",
           "person": "warren-buffett",
-          "line": 264.5,
+          "line": 267.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
-          "fairProb": 0.2001,
+          "fairProb": 0.1996,
           "sort": 8
         },
         {
-          "id": "2026-W42:ou:warren-buffett:u:264.5",
-          "label": "Under 264.5",
+          "id": "2026-W42:ou:warren-buffett:u:267.5",
+          "label": "Under 267.5",
           "market": "under",
           "person": "warren-buffett",
-          "line": 264.5,
+          "line": 267.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
-          "fairProb": 0.7999,
+          "fairProb": 0.8004,
           "sort": 9
         }
       ],
@@ -4018,14 +4018,14 @@
           "lyndal-stephens-greth-family",
           "tobias-lutke",
           "dara-khosrowshahi",
-          "michael-dell",
-          "peter-thiel",
           "jensen-huang",
+          "michael-dell",
           "jeff-bezos",
+          "peter-thiel",
           "ma-huateng",
-          "robert-pera",
           "marc-benioff",
           "brian-chesky",
+          "robert-pera",
           "len-blavatnik",
           "daniel-ek",
           "william-ding",
@@ -4084,9 +4084,9 @@
           "label": "Elon Musk",
           "market": "pick",
           "person": "elon-musk",
-          "americanOdds": 655,
-          "decimalOdds": 7.55,
-          "fairProb": 0.1105,
+          "americanOdds": 635,
+          "decimalOdds": 7.35,
+          "fairProb": 0.1134,
           "sort": 0
         },
         {
@@ -4094,9 +4094,9 @@
           "label": "Mary Barra",
           "market": "pick",
           "person": "mary-barra",
-          "americanOdds": 710,
-          "decimalOdds": 8.1,
-          "fairProb": 0.1026,
+          "americanOdds": 715,
+          "decimalOdds": 8.15,
+          "fairProb": 0.1023,
           "sort": 1
         },
         {
@@ -4124,9 +4124,9 @@
           "label": "Masayoshi Son",
           "market": "pick",
           "person": "masayoshi-son",
-          "americanOdds": 3950,
-          "decimalOdds": 40.5,
-          "fairProb": 0.0205,
+          "americanOdds": 4000,
+          "decimalOdds": 41,
+          "fairProb": 0.0204,
           "sort": 4
         },
         {
@@ -4134,9 +4134,9 @@
           "label": "Bill Gates",
           "market": "pick",
           "person": "bill-gates",
-          "americanOdds": 4025,
-          "decimalOdds": 41.25,
-          "fairProb": 0.0201,
+          "americanOdds": 4075,
+          "decimalOdds": 41.75,
+          "fairProb": 0.02,
           "sort": 5
         },
         {
@@ -4154,9 +4154,9 @@
           "label": "Larry Ellison",
           "market": "pick",
           "person": "larry-ellison",
-          "americanOdds": 4100,
-          "decimalOdds": 42,
-          "fairProb": 0.0199,
+          "americanOdds": 4125,
+          "decimalOdds": 42.25,
+          "fairProb": 0.0198,
           "sort": 7
         },
         {
@@ -4174,9 +4174,9 @@
           "label": "Lyndal Stephens Greth",
           "market": "pick",
           "person": "lyndal-stephens-greth-family",
-          "americanOdds": 4175,
-          "decimalOdds": 42.75,
-          "fairProb": 0.0195,
+          "americanOdds": 4200,
+          "decimalOdds": 43,
+          "fairProb": 0.0194,
           "sort": 9
         },
         {
@@ -4194,10 +4194,20 @@
           "label": "Dara Khosrowshahi",
           "market": "pick",
           "person": "dara-khosrowshahi",
-          "americanOdds": 4450,
-          "decimalOdds": 45.5,
-          "fairProb": 0.0183,
+          "americanOdds": 4475,
+          "decimalOdds": 45.75,
+          "fairProb": 0.0182,
           "sort": 11
+        },
+        {
+          "id": "2026-W42:top:jensen-huang",
+          "label": "Jensen Huang",
+          "market": "pick",
+          "person": "jensen-huang",
+          "americanOdds": 4500,
+          "decimalOdds": 46,
+          "fairProb": 0.0181,
+          "sort": 12
         },
         {
           "id": "2026-W42:top:michael-dell",
@@ -4207,36 +4217,26 @@
           "americanOdds": 4500,
           "decimalOdds": 46,
           "fairProb": 0.0181,
-          "sort": 12
-        },
-        {
-          "id": "2026-W42:top:peter-thiel",
-          "label": "Peter Thiel",
-          "market": "pick",
-          "person": "peter-thiel",
-          "americanOdds": 4525,
-          "decimalOdds": 46.25,
-          "fairProb": 0.018,
           "sort": 13
-        },
-        {
-          "id": "2026-W42:top:jensen-huang",
-          "label": "Jensen Huang",
-          "market": "pick",
-          "person": "jensen-huang",
-          "americanOdds": 4550,
-          "decimalOdds": 46.5,
-          "fairProb": 0.0179,
-          "sort": 14
         },
         {
           "id": "2026-W42:top:jeff-bezos",
           "label": "Jeff Bezos",
           "market": "pick",
           "person": "jeff-bezos",
-          "americanOdds": 4600,
-          "decimalOdds": 47,
-          "fairProb": 0.0177,
+          "americanOdds": 4525,
+          "decimalOdds": 46.25,
+          "fairProb": 0.018,
+          "sort": 14
+        },
+        {
+          "id": "2026-W42:top:peter-thiel",
+          "label": "Peter Thiel",
+          "market": "pick",
+          "person": "peter-thiel",
+          "americanOdds": 4550,
+          "decimalOdds": 46.5,
+          "fairProb": 0.018,
           "sort": 15
         },
         {
@@ -4244,20 +4244,10 @@
           "label": "Ma Huateng",
           "market": "pick",
           "person": "ma-huateng",
-          "americanOdds": 4625,
-          "decimalOdds": 47.25,
-          "fairProb": 0.0177,
+          "americanOdds": 4550,
+          "decimalOdds": 46.5,
+          "fairProb": 0.0179,
           "sort": 16
-        },
-        {
-          "id": "2026-W42:top:robert-pera",
-          "label": "Robert Pera",
-          "market": "pick",
-          "person": "robert-pera",
-          "americanOdds": 4625,
-          "decimalOdds": 47.25,
-          "fairProb": 0.0176,
-          "sort": 17
         },
         {
           "id": "2026-W42:top:marc-benioff",
@@ -4267,16 +4257,26 @@
           "americanOdds": 4650,
           "decimalOdds": 47.5,
           "fairProb": 0.0176,
-          "sort": 18
+          "sort": 17
         },
         {
           "id": "2026-W42:top:brian-chesky",
           "label": "Brian Chesky",
           "market": "pick",
           "person": "brian-chesky",
-          "americanOdds": 4650,
-          "decimalOdds": 47.5,
+          "americanOdds": 4675,
+          "decimalOdds": 47.75,
           "fairProb": 0.0175,
+          "sort": 18
+        },
+        {
+          "id": "2026-W42:top:robert-pera",
+          "label": "Robert Pera",
+          "market": "pick",
+          "person": "robert-pera",
+          "americanOdds": 4700,
+          "decimalOdds": 48,
+          "fairProb": 0.0174,
           "sort": 19
         },
         {
@@ -4284,9 +4284,9 @@
           "label": "Len Blavatnik",
           "market": "pick",
           "person": "len-blavatnik",
-          "americanOdds": 4650,
-          "decimalOdds": 47.5,
-          "fairProb": 0.0175,
+          "americanOdds": 4700,
+          "decimalOdds": 48,
+          "fairProb": 0.0174,
           "sort": 20
         },
         {
@@ -4294,9 +4294,9 @@
           "label": "Daniel Ek",
           "market": "pick",
           "person": "daniel-ek",
-          "americanOdds": 4650,
-          "decimalOdds": 47.5,
-          "fairProb": 0.0175,
+          "americanOdds": 4725,
+          "decimalOdds": 48.25,
+          "fairProb": 0.0173,
           "sort": 21
         },
         {
@@ -4304,9 +4304,9 @@
           "label": "William Ding",
           "market": "pick",
           "person": "william-ding",
-          "americanOdds": 4675,
-          "decimalOdds": 47.75,
-          "fairProb": 0.0174,
+          "americanOdds": 4725,
+          "decimalOdds": 48.25,
+          "fairProb": 0.0173,
           "sort": 22
         },
         {
@@ -4314,8 +4314,8 @@
           "label": "Andreas von Bechtolsheim",
           "market": "pick",
           "person": "andreas-von-bechtolsheim-family",
-          "americanOdds": 4700,
-          "decimalOdds": 48,
+          "americanOdds": 4725,
+          "decimalOdds": 48.25,
           "fairProb": 0.0173,
           "sort": 23
         },
@@ -4324,9 +4324,9 @@
           "label": "Shantanu Narayen",
           "market": "pick",
           "person": "shantanu-narayen",
-          "americanOdds": 4750,
-          "decimalOdds": 48.5,
-          "fairProb": 0.0172,
+          "americanOdds": 4775,
+          "decimalOdds": 48.75,
+          "fairProb": 0.0171,
           "sort": 24
         },
         {
@@ -4336,7 +4336,7 @@
           "person": "tim-cook",
           "americanOdds": 4800,
           "decimalOdds": 49,
-          "fairProb": 0.017,
+          "fairProb": 0.0171,
           "sort": 25
         },
         {
@@ -4346,7 +4346,7 @@
           "person": "steve-ballmer",
           "americanOdds": 4825,
           "decimalOdds": 49.25,
-          "fairProb": 0.0169,
+          "fairProb": 0.017,
           "sort": 26
         },
         {
@@ -4356,7 +4356,7 @@
           "person": "idan-ofer",
           "americanOdds": 4850,
           "decimalOdds": 49.5,
-          "fairProb": 0.0168,
+          "fairProb": 0.0169,
           "sort": 27
         },
         {
@@ -4374,9 +4374,9 @@
           "label": "Iris Fontbona",
           "market": "pick",
           "person": "iris-fontbona-family",
-          "americanOdds": 4950,
-          "decimalOdds": 50.5,
-          "fairProb": 0.0165,
+          "americanOdds": 5000,
+          "decimalOdds": 51,
+          "fairProb": 0.0164,
           "sort": 29
         },
         {
@@ -4384,9 +4384,9 @@
           "label": "Charles Koch",
           "market": "pick",
           "person": "charles-koch-family",
-          "americanOdds": 5000,
-          "decimalOdds": 51,
-          "fairProb": 0.0163,
+          "americanOdds": 5100,
+          "decimalOdds": 52,
+          "fairProb": 0.0161,
           "sort": 30
         },
         {
@@ -4394,8 +4394,8 @@
           "label": "Melinda French Gates",
           "market": "pick",
           "person": "melinda-french-gates",
-          "americanOdds": 5200,
-          "decimalOdds": 53,
+          "americanOdds": 5300,
+          "decimalOdds": 54,
           "fairProb": 0.0156,
           "sort": 31
         },
@@ -4404,9 +4404,9 @@
           "label": "Germán Larrea Mota Velasco",
           "market": "pick",
           "person": "german-larrea-mota-velasco-family",
-          "americanOdds": 5400,
-          "decimalOdds": 55,
-          "fairProb": 0.0151,
+          "americanOdds": 5500,
+          "decimalOdds": 56,
+          "fairProb": 0.015,
           "sort": 32
         },
         {
@@ -4426,7 +4426,7 @@
           "person": "gina-rinehart",
           "americanOdds": 5500,
           "decimalOdds": 56,
-          "fairProb": 0.0148,
+          "fairProb": 0.0149,
           "sort": 34
         },
         {
@@ -4434,9 +4434,9 @@
           "label": "Thomas Frist Jr",
           "market": "pick",
           "person": "thomas-frist-jr-family",
-          "americanOdds": 5800,
-          "decimalOdds": 59,
-          "fairProb": 0.0141,
+          "americanOdds": 5900,
+          "decimalOdds": 60,
+          "fairProb": 0.014,
           "sort": 35
         },
         {
@@ -4476,7 +4476,7 @@
           "person": "colin-huang",
           "americanOdds": 9000,
           "decimalOdds": 91,
-          "fairProb": 0.0092,
+          "fairProb": 0.0091,
           "sort": 39
         },
         {
@@ -4524,9 +4524,9 @@
           "label": "Bernard Arnault",
           "market": "pick",
           "person": "bernard-arnault-family",
-          "americanOdds": 9500,
-          "decimalOdds": 96,
-          "fairProb": 0.0087,
+          "americanOdds": 9600,
+          "decimalOdds": 97,
+          "fairProb": 0.0086,
           "sort": 44
         },
         {
@@ -4546,7 +4546,7 @@
           "person": "francois-pinault-family",
           "americanOdds": 10800,
           "decimalOdds": 109,
-          "fairProb": 0.0077,
+          "fairProb": 0.0076,
           "sort": 46
         },
         {
@@ -4564,9 +4564,9 @@
           "label": "Jack Ma",
           "market": "pick",
           "person": "jack-ma",
-          "americanOdds": 11200,
-          "decimalOdds": 113,
-          "fairProb": 0.0074,
+          "americanOdds": 11300,
+          "decimalOdds": 114,
+          "fairProb": 0.0073,
           "sort": 48
         },
         {
@@ -4574,8 +4574,8 @@
           "label": "Amancio Ortega",
           "market": "pick",
           "person": "amancio-ortega",
-          "americanOdds": 11200,
-          "decimalOdds": 113,
+          "americanOdds": 11300,
+          "decimalOdds": 114,
           "fairProb": 0.0073,
           "sort": 49
         },
@@ -4584,9 +4584,9 @@
           "label": "Warren Buffett",
           "market": "pick",
           "person": "warren-buffett",
-          "americanOdds": 14500,
-          "decimalOdds": 146,
-          "fairProb": 0.0057,
+          "americanOdds": 14000,
+          "decimalOdds": 141,
+          "fairProb": 0.0059,
           "sort": 50
         },
         {
@@ -4594,8 +4594,8 @@
           "label": "David Tepper",
           "market": "pick",
           "person": "david-tepper",
-          "americanOdds": 16200,
-          "decimalOdds": 163,
+          "americanOdds": 16400,
+          "decimalOdds": 165,
           "fairProb": 0.0051,
           "sort": 51
         },
@@ -4616,7 +4616,7 @@
           "person": "thomas-peterffy",
           "americanOdds": 17800,
           "decimalOdds": 179,
-          "fairProb": 0.0046,
+          "fairProb": 0.0047,
           "sort": 53
         },
         {
@@ -4624,8 +4624,8 @@
           "label": "Vicky Safra",
           "market": "pick",
           "person": "vicky-safra-family",
-          "americanOdds": 17800,
-          "decimalOdds": 179,
+          "americanOdds": 18100,
+          "decimalOdds": 182,
           "fairProb": 0.0046,
           "sort": 54
         },
@@ -4634,8 +4634,8 @@
           "label": "Stephen Schwarzman",
           "market": "pick",
           "person": "stephen-schwarzman",
-          "americanOdds": 18200,
-          "decimalOdds": 183,
+          "americanOdds": 18400,
+          "decimalOdds": 185,
           "fairProb": 0.0045,
           "sort": 55
         },
@@ -4654,8 +4654,8 @@
           "label": "Jamie Dimon",
           "market": "pick",
           "person": "jamie-dimon",
-          "americanOdds": 20500,
-          "decimalOdds": 206,
+          "americanOdds": 20700,
+          "decimalOdds": 208,
           "fairProb": 0.004,
           "sort": 57
         },
@@ -4664,8 +4664,8 @@
           "label": "Alice Walton",
           "market": "pick",
           "person": "alice-walton",
-          "americanOdds": 41100,
-          "decimalOdds": 412,
+          "americanOdds": 41300,
+          "decimalOdds": 414,
           "fairProb": 0.002,
           "sort": 58
         },
@@ -4674,8 +4674,8 @@
           "label": "Jim Walton",
           "market": "pick",
           "person": "jim-walton-family",
-          "americanOdds": 41100,
-          "decimalOdds": 412,
+          "americanOdds": 41300,
+          "decimalOdds": 414,
           "fairProb": 0.002,
           "sort": 59
         },
@@ -4684,8 +4684,8 @@
           "label": "Lukas Walton",
           "market": "pick",
           "person": "lukas-walton",
-          "americanOdds": 41100,
-          "decimalOdds": 412,
+          "americanOdds": 41300,
+          "decimalOdds": 414,
           "fairProb": 0.002,
           "sort": 60
         },
@@ -4694,8 +4694,8 @@
           "label": "Rob Walton",
           "market": "pick",
           "person": "rob-walton-family",
-          "americanOdds": 41100,
-          "decimalOdds": 412,
+          "americanOdds": 41300,
+          "decimalOdds": 414,
           "fairProb": 0.002,
           "sort": 61
         },
@@ -4704,8 +4704,8 @@
           "label": "Giancarlo Devasini",
           "market": "pick",
           "person": "giancarlo-devasini",
-          "americanOdds": 48700,
-          "decimalOdds": 488,
+          "americanOdds": 49200,
+          "decimalOdds": 493,
           "fairProb": 0.0017,
           "sort": 62
         },
@@ -4714,8 +4714,8 @@
           "label": "Jean-Louis van der Velde",
           "market": "pick",
           "person": "jean-louis-van-der-velde",
-          "americanOdds": 48700,
-          "decimalOdds": 488,
+          "americanOdds": 49200,
+          "decimalOdds": 493,
           "fairProb": 0.0017,
           "sort": 63
         },
@@ -4724,8 +4724,8 @@
           "label": "Paolo Ardoino",
           "market": "pick",
           "person": "paolo-ardoino",
-          "americanOdds": 48700,
-          "decimalOdds": 488,
+          "americanOdds": 49200,
+          "decimalOdds": 493,
           "fairProb": 0.0017,
           "sort": 64
         },
@@ -5087,7 +5087,7 @@
           "sector": "AI & tech",
           "americanOdds": 245,
           "decimalOdds": 3.45,
-          "fairProb": 0.2422,
+          "fairProb": 0.2424,
           "sort": 0
         },
         {
@@ -5097,7 +5097,7 @@
           "sector": "Media",
           "americanOdds": 270,
           "decimalOdds": 3.7,
-          "fairProb": 0.2257,
+          "fairProb": 0.2255,
           "sort": 1
         },
         {
@@ -5107,7 +5107,7 @@
           "sector": "Industrials",
           "americanOdds": 315,
           "decimalOdds": 4.15,
-          "fairProb": 0.2006,
+          "fairProb": 0.2004,
           "sort": 2
         },
         {
@@ -5127,7 +5127,7 @@
           "sector": "Finance",
           "americanOdds": 440,
           "decimalOdds": 5.4,
-          "fairProb": 0.1537,
+          "fairProb": 0.1538,
           "sort": 4
         }
       ],
@@ -6291,8 +6291,8 @@
             "method": "worth",
             "worth": 132000000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "warren-buffett": {
             "method": "shares",
@@ -6375,15 +6375,15 @@
             "method": "worth",
             "worth": 118600000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "jim-walton-family": {
             "method": "worth",
             "worth": 128800000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           }
         }
       },
@@ -6395,7 +6395,7 @@
           "person": "elon-musk",
           "americanOdds": -120,
           "decimalOdds": 1.8333,
-          "fairProb": 0.4535,
+          "fairProb": 0.4533,
           "sort": 0
         },
         {
@@ -6403,9 +6403,9 @@
           "label": "Sergey Brin",
           "market": "pick",
           "person": "sergey-brin",
-          "americanOdds": 805,
-          "decimalOdds": 9.05,
-          "fairProb": 0.0919,
+          "americanOdds": 800,
+          "decimalOdds": 9,
+          "fairProb": 0.0924,
           "sort": 1
         },
         {
@@ -6413,9 +6413,9 @@
           "label": "Jeff Bezos",
           "market": "pick",
           "person": "jeff-bezos",
-          "americanOdds": 820,
-          "decimalOdds": 9.2,
-          "fairProb": 0.0908,
+          "americanOdds": 815,
+          "decimalOdds": 9.15,
+          "fairProb": 0.0911,
           "sort": 2
         },
         {
@@ -6423,9 +6423,9 @@
           "label": "Mark Zuckerberg",
           "market": "pick",
           "person": "mark-zuckerberg",
-          "americanOdds": 855,
-          "decimalOdds": 9.55,
-          "fairProb": 0.0871,
+          "americanOdds": 860,
+          "decimalOdds": 9.6,
+          "fairProb": 0.087,
           "sort": 3
         },
         {
@@ -6435,7 +6435,7 @@
           "person": "rob-walton-family",
           "americanOdds": 1550,
           "decimalOdds": 16.5,
-          "fairProb": 0.0508,
+          "fairProb": 0.0502,
           "sort": 4
         },
         {
@@ -6453,9 +6453,9 @@
           "label": "Larry Ellison",
           "market": "pick",
           "person": "larry-ellison",
-          "americanOdds": 1900,
-          "decimalOdds": 20,
-          "fairProb": 0.0418,
+          "americanOdds": 1800,
+          "decimalOdds": 19,
+          "fairProb": 0.0436,
           "sort": 6
         },
         {
@@ -6463,9 +6463,9 @@
           "label": "Michael Dell",
           "market": "pick",
           "person": "michael-dell",
-          "americanOdds": 1975,
-          "decimalOdds": 20.75,
-          "fairProb": 0.0402,
+          "americanOdds": 2075,
+          "decimalOdds": 21.75,
+          "fairProb": 0.0385,
           "sort": 7
         },
         {
@@ -6473,9 +6473,9 @@
           "label": "Lyndal Stephens Greth",
           "market": "pick",
           "person": "lyndal-stephens-greth-family",
-          "americanOdds": 3175,
-          "decimalOdds": 32.75,
-          "fairProb": 0.0255,
+          "americanOdds": 3150,
+          "decimalOdds": 32.5,
+          "fairProb": 0.0256,
           "sort": 8
         },
         {
@@ -6485,7 +6485,7 @@
           "person": "len-blavatnik",
           "americanOdds": 3800,
           "decimalOdds": 39,
-          "fairProb": 0.0214,
+          "fairProb": 0.0213,
           "sort": 9
         },
         {
@@ -6493,9 +6493,9 @@
           "label": "Lakshmi Mittal",
           "market": "pick",
           "person": "lakshmi-mittal",
-          "americanOdds": 3950,
-          "decimalOdds": 40.5,
-          "fairProb": 0.0206,
+          "americanOdds": 3975,
+          "decimalOdds": 40.75,
+          "fairProb": 0.0204,
           "sort": 10
         },
         {
@@ -6503,9 +6503,9 @@
           "label": "Bill Gates",
           "market": "pick",
           "person": "bill-gates",
-          "americanOdds": 8000,
-          "decimalOdds": 81,
-          "fairProb": 0.0103,
+          "americanOdds": 8100,
+          "decimalOdds": 82,
+          "fairProb": 0.0102,
           "sort": 11
         },
         {
@@ -6513,8 +6513,8 @@
           "label": "Andreas von Bechtolsheim",
           "market": "pick",
           "person": "andreas-von-bechtolsheim-family",
-          "americanOdds": 10400,
-          "decimalOdds": 105,
+          "americanOdds": 10300,
+          "decimalOdds": 104,
           "fairProb": 0.008,
           "sort": 12
         },
@@ -6533,9 +6533,9 @@
           "label": "Eric Schmidt",
           "market": "pick",
           "person": "eric-schmidt",
-          "americanOdds": 27700,
-          "decimalOdds": 278,
-          "fairProb": 0.003,
+          "americanOdds": 27200,
+          "decimalOdds": 273,
+          "fairProb": 0.0031,
           "sort": 14
         },
         {
@@ -6625,8 +6625,8 @@
             "method": "worth",
             "worth": 132000000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "warren-buffett": {
             "method": "shares",
@@ -6709,15 +6709,15 @@
             "method": "worth",
             "worth": 118600000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "jim-walton-family": {
             "method": "worth",
             "worth": 128800000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           }
         }
       },
@@ -6729,7 +6729,7 @@
           "person": "elon-musk",
           "americanOdds": -120,
           "decimalOdds": 1.8333,
-          "fairProb": 0.4573,
+          "fairProb": 0.457,
           "sort": 0
         },
         {
@@ -6739,7 +6739,7 @@
           "person": "sergey-brin",
           "americanOdds": 830,
           "decimalOdds": 9.3,
-          "fairProb": 0.0897,
+          "fairProb": 0.0898,
           "sort": 1
         },
         {
@@ -6749,7 +6749,7 @@
           "person": "mark-zuckerberg",
           "americanOdds": 830,
           "decimalOdds": 9.3,
-          "fairProb": 0.0895,
+          "fairProb": 0.0896,
           "sort": 2
         },
         {
@@ -6757,9 +6757,9 @@
           "label": "Jeff Bezos",
           "market": "pick",
           "person": "jeff-bezos",
-          "americanOdds": 850,
-          "decimalOdds": 9.5,
-          "fairProb": 0.0879,
+          "americanOdds": 855,
+          "decimalOdds": 9.55,
+          "fairProb": 0.0874,
           "sort": 3
         },
         {
@@ -6767,9 +6767,9 @@
           "label": "Rob Walton",
           "market": "pick",
           "person": "rob-walton-family",
-          "americanOdds": 1550,
-          "decimalOdds": 16.5,
-          "fairProb": 0.0506,
+          "americanOdds": 1575,
+          "decimalOdds": 16.75,
+          "fairProb": 0.05,
           "sort": 4
         },
         {
@@ -6779,7 +6779,7 @@
           "person": "warren-buffett",
           "americanOdds": 1575,
           "decimalOdds": 16.75,
-          "fairProb": 0.0497,
+          "fairProb": 0.0499,
           "sort": 5
         },
         {
@@ -6787,9 +6787,9 @@
           "label": "Larry Ellison",
           "market": "pick",
           "person": "larry-ellison",
-          "americanOdds": 1925,
-          "decimalOdds": 20.25,
-          "fairProb": 0.0413,
+          "americanOdds": 1800,
+          "decimalOdds": 19,
+          "fairProb": 0.0436,
           "sort": 6
         },
         {
@@ -6797,9 +6797,9 @@
           "label": "Michael Dell",
           "market": "pick",
           "person": "michael-dell",
-          "americanOdds": 2050,
-          "decimalOdds": 21.5,
-          "fairProb": 0.0388,
+          "americanOdds": 2150,
+          "decimalOdds": 22.5,
+          "fairProb": 0.0371,
           "sort": 7
         },
         {
@@ -6809,7 +6809,7 @@
           "person": "lyndal-stephens-greth-family",
           "americanOdds": 3150,
           "decimalOdds": 32.5,
-          "fairProb": 0.0256,
+          "fairProb": 0.0255,
           "sort": 8
         },
         {
@@ -6817,9 +6817,9 @@
           "label": "Lakshmi Mittal",
           "market": "pick",
           "person": "lakshmi-mittal",
-          "americanOdds": 3800,
-          "decimalOdds": 39,
-          "fairProb": 0.0214,
+          "americanOdds": 3750,
+          "decimalOdds": 38.5,
+          "fairProb": 0.0216,
           "sort": 9
         },
         {
@@ -6837,9 +6837,9 @@
           "label": "Bill Gates",
           "market": "pick",
           "person": "bill-gates",
-          "americanOdds": 8200,
-          "decimalOdds": 83,
-          "fairProb": 0.0101,
+          "americanOdds": 8300,
+          "decimalOdds": 84,
+          "fairProb": 0.0099,
           "sort": 11
         },
         {
@@ -6847,9 +6847,9 @@
           "label": "Andreas von Bechtolsheim",
           "market": "pick",
           "person": "andreas-von-bechtolsheim-family",
-          "americanOdds": 11600,
-          "decimalOdds": 117,
-          "fairProb": 0.0071,
+          "americanOdds": 11900,
+          "decimalOdds": 120,
+          "fairProb": 0.0069,
           "sort": 12
         },
         {
@@ -6859,7 +6859,7 @@
           "person": "henry-samueli",
           "americanOdds": 13200,
           "decimalOdds": 133,
-          "fairProb": 0.0063,
+          "fairProb": 0.0062,
           "sort": 13
         },
         {
@@ -6867,8 +6867,8 @@
           "label": "Eric Schmidt",
           "market": "pick",
           "person": "eric-schmidt",
-          "americanOdds": 25900,
-          "decimalOdds": 260,
+          "americanOdds": 25500,
+          "decimalOdds": 256,
           "fairProb": 0.0032,
           "sort": 14
         },
@@ -6879,7 +6879,7 @@
           "person": "alice-walton",
           "americanOdds": 49900,
           "decimalOdds": 500,
-          "fairProb": 0.0011,
+          "fairProb": 0.001,
           "sort": 15
         },
         {
@@ -7463,8 +7463,8 @@
           "mark-zuckerberg",
           "rob-walton-family",
           "warren-buffett",
-          "michael-dell",
           "larry-ellison",
+          "michael-dell",
           "lyndal-stephens-greth-family",
           "len-blavatnik",
           "lakshmi-mittal",
@@ -7506,8 +7506,8 @@
             "method": "worth",
             "worth": 132000000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "warren-buffett": {
             "method": "shares",
@@ -7516,16 +7516,16 @@
               "BRK.B": 1162
             }
           },
-          "michael-dell": {
-            "method": "shares",
-            "shares": {
-              "DELL": 265674689
-            }
-          },
           "larry-ellison": {
             "method": "shares",
             "shares": {
               "ORCL": 1152982353
+            }
+          },
+          "michael-dell": {
+            "method": "shares",
+            "shares": {
+              "DELL": 265674689
             }
           },
           "lyndal-stephens-greth-family": {
@@ -7590,15 +7590,15 @@
             "method": "worth",
             "worth": 118600000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "jim-walton-family": {
             "method": "worth",
             "worth": 128800000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           }
         }
       },
@@ -7610,7 +7610,7 @@
           "person": "elon-musk",
           "americanOdds": -115,
           "decimalOdds": 1.8696,
-          "fairProb": 0.4454,
+          "fairProb": 0.4453,
           "sort": 0
         },
         {
@@ -7620,7 +7620,7 @@
           "person": "jeff-bezos",
           "americanOdds": 800,
           "decimalOdds": 9,
-          "fairProb": 0.0927,
+          "fairProb": 0.0924,
           "sort": 1
         },
         {
@@ -7628,9 +7628,9 @@
           "label": "Sergey Brin",
           "market": "pick",
           "person": "sergey-brin",
-          "americanOdds": 810,
-          "decimalOdds": 9.1,
-          "fairProb": 0.0915,
+          "americanOdds": 805,
+          "decimalOdds": 9.05,
+          "fairProb": 0.0921,
           "sort": 2
         },
         {
@@ -7638,9 +7638,9 @@
           "label": "Mark Zuckerberg",
           "market": "pick",
           "person": "mark-zuckerberg",
-          "americanOdds": 845,
-          "decimalOdds": 9.45,
-          "fairProb": 0.0881,
+          "americanOdds": 850,
+          "decimalOdds": 9.5,
+          "fairProb": 0.0879,
           "sort": 3
         },
         {
@@ -7650,7 +7650,7 @@
           "person": "rob-walton-family",
           "americanOdds": 1550,
           "decimalOdds": 16.5,
-          "fairProb": 0.0506,
+          "fairProb": 0.0502,
           "sort": 4
         },
         {
@@ -7660,27 +7660,27 @@
           "person": "warren-buffett",
           "americanOdds": 1575,
           "decimalOdds": 16.75,
-          "fairProb": 0.0495,
+          "fairProb": 0.0496,
           "sort": 5
-        },
-        {
-          "id": "2026-W42:blast:usd:up:2026-10-12:michael-dell",
-          "label": "Michael Dell",
-          "market": "pick",
-          "person": "michael-dell",
-          "americanOdds": 1850,
-          "decimalOdds": 19.5,
-          "fairProb": 0.0429,
-          "sort": 6
         },
         {
           "id": "2026-W42:blast:usd:up:2026-10-12:larry-ellison",
           "label": "Larry Ellison",
           "market": "pick",
           "person": "larry-ellison",
-          "americanOdds": 1975,
-          "decimalOdds": 20.75,
-          "fairProb": 0.04,
+          "americanOdds": 1900,
+          "decimalOdds": 20,
+          "fairProb": 0.0417,
+          "sort": 6
+        },
+        {
+          "id": "2026-W42:blast:usd:up:2026-10-12:michael-dell",
+          "label": "Michael Dell",
+          "market": "pick",
+          "person": "michael-dell",
+          "americanOdds": 1900,
+          "decimalOdds": 20,
+          "fairProb": 0.0417,
           "sort": 7
         },
         {
@@ -7688,9 +7688,9 @@
           "label": "Lyndal Stephens Greth",
           "market": "pick",
           "person": "lyndal-stephens-greth-family",
-          "americanOdds": 3125,
-          "decimalOdds": 32.25,
-          "fairProb": 0.0257,
+          "americanOdds": 3150,
+          "decimalOdds": 32.5,
+          "fairProb": 0.0256,
           "sort": 8
         },
         {
@@ -7698,9 +7698,9 @@
           "label": "Len Blavatnik",
           "market": "pick",
           "person": "len-blavatnik",
-          "americanOdds": 3650,
-          "decimalOdds": 37.5,
-          "fairProb": 0.0222,
+          "americanOdds": 3625,
+          "decimalOdds": 37.25,
+          "fairProb": 0.0223,
           "sort": 9
         },
         {
@@ -7708,9 +7708,9 @@
           "label": "Lakshmi Mittal",
           "market": "pick",
           "person": "lakshmi-mittal",
-          "americanOdds": 3975,
-          "decimalOdds": 40.75,
-          "fairProb": 0.0204,
+          "americanOdds": 3925,
+          "decimalOdds": 40.25,
+          "fairProb": 0.0207,
           "sort": 10
         },
         {
@@ -7718,9 +7718,9 @@
           "label": "Bill Gates",
           "market": "pick",
           "person": "bill-gates",
-          "americanOdds": 6800,
-          "decimalOdds": 69,
-          "fairProb": 0.012,
+          "americanOdds": 6900,
+          "decimalOdds": 70,
+          "fairProb": 0.0119,
           "sort": 11
         },
         {
@@ -7730,7 +7730,7 @@
           "person": "andreas-von-bechtolsheim-family",
           "americanOdds": 10800,
           "decimalOdds": 109,
-          "fairProb": 0.0076,
+          "fairProb": 0.0077,
           "sort": 12
         },
         {
@@ -7738,9 +7738,9 @@
           "label": "Henry Samueli",
           "market": "pick",
           "person": "henry-samueli",
-          "americanOdds": 12300,
-          "decimalOdds": 124,
-          "fairProb": 0.0067,
+          "americanOdds": 12700,
+          "decimalOdds": 128,
+          "fairProb": 0.0065,
           "sort": 13
         },
         {
@@ -7748,9 +7748,9 @@
           "label": "Eric Schmidt",
           "market": "pick",
           "person": "eric-schmidt",
-          "americanOdds": 22400,
-          "decimalOdds": 225,
-          "fairProb": 0.0037,
+          "americanOdds": 22100,
+          "decimalOdds": 222,
+          "fairProb": 0.0038,
           "sort": 14
         },
         {
@@ -7760,7 +7760,7 @@
           "person": "alice-walton",
           "americanOdds": 49900,
           "decimalOdds": 500,
-          "fairProb": 0.0007,
+          "fairProb": 0.0008,
           "sort": 15
         },
         {
@@ -8387,8 +8387,8 @@
             "method": "worth",
             "worth": 132000000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "warren-buffett": {
             "method": "shares",
@@ -8471,15 +8471,15 @@
             "method": "worth",
             "worth": 118600000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "jim-walton-family": {
             "method": "worth",
             "worth": 128800000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           }
         }
       },
@@ -8491,7 +8491,7 @@
           "person": "elon-musk",
           "americanOdds": -120,
           "decimalOdds": 1.8333,
-          "fairProb": 0.4566,
+          "fairProb": 0.4565,
           "sort": 0
         },
         {
@@ -8499,9 +8499,9 @@
           "label": "Jeff Bezos",
           "market": "pick",
           "person": "jeff-bezos",
-          "americanOdds": 795,
-          "decimalOdds": 8.95,
-          "fairProb": 0.0929,
+          "americanOdds": 800,
+          "decimalOdds": 9,
+          "fairProb": 0.0927,
           "sort": 1
         },
         {
@@ -8519,9 +8519,9 @@
           "label": "Mark Zuckerberg",
           "market": "pick",
           "person": "mark-zuckerberg",
-          "americanOdds": 845,
-          "decimalOdds": 9.45,
-          "fairProb": 0.088,
+          "americanOdds": 850,
+          "decimalOdds": 9.5,
+          "fairProb": 0.0876,
           "sort": 3
         },
         {
@@ -8531,7 +8531,7 @@
           "person": "rob-walton-family",
           "americanOdds": 1575,
           "decimalOdds": 16.75,
-          "fairProb": 0.0501,
+          "fairProb": 0.0498,
           "sort": 4
         },
         {
@@ -8549,9 +8549,9 @@
           "label": "Larry Ellison",
           "market": "pick",
           "person": "larry-ellison",
-          "americanOdds": 1950,
-          "decimalOdds": 20.5,
-          "fairProb": 0.0407,
+          "americanOdds": 1825,
+          "decimalOdds": 19.25,
+          "fairProb": 0.0432,
           "sort": 6
         },
         {
@@ -8559,9 +8559,9 @@
           "label": "Michael Dell",
           "market": "pick",
           "person": "michael-dell",
-          "americanOdds": 1975,
-          "decimalOdds": 20.75,
-          "fairProb": 0.0403,
+          "americanOdds": 2050,
+          "decimalOdds": 21.5,
+          "fairProb": 0.0388,
           "sort": 7
         },
         {
@@ -8569,9 +8569,9 @@
           "label": "Lyndal Stephens Greth",
           "market": "pick",
           "person": "lyndal-stephens-greth-family",
-          "americanOdds": 3250,
-          "decimalOdds": 33.5,
-          "fairProb": 0.025,
+          "americanOdds": 3200,
+          "decimalOdds": 33,
+          "fairProb": 0.0253,
           "sort": 8
         },
         {
@@ -8579,9 +8579,9 @@
           "label": "Lakshmi Mittal",
           "market": "pick",
           "person": "lakshmi-mittal",
-          "americanOdds": 4150,
-          "decimalOdds": 42.5,
-          "fairProb": 0.0197,
+          "americanOdds": 4125,
+          "decimalOdds": 42.25,
+          "fairProb": 0.0198,
           "sort": 9
         },
         {
@@ -8589,9 +8589,9 @@
           "label": "Len Blavatnik",
           "market": "pick",
           "person": "len-blavatnik",
-          "americanOdds": 4200,
-          "decimalOdds": 43,
-          "fairProb": 0.0194,
+          "americanOdds": 4275,
+          "decimalOdds": 43.75,
+          "fairProb": 0.0191,
           "sort": 10
         },
         {
@@ -8601,7 +8601,7 @@
           "person": "bill-gates",
           "americanOdds": 8300,
           "decimalOdds": 84,
-          "fairProb": 0.01,
+          "fairProb": 0.0099,
           "sort": 11
         },
         {
@@ -8619,9 +8619,9 @@
           "label": "Henry Samueli",
           "market": "pick",
           "person": "henry-samueli",
-          "americanOdds": 12400,
-          "decimalOdds": 125,
-          "fairProb": 0.0067,
+          "americanOdds": 12600,
+          "decimalOdds": 127,
+          "fairProb": 0.0066,
           "sort": 13
         },
         {
@@ -8629,9 +8629,9 @@
           "label": "Eric Schmidt",
           "market": "pick",
           "person": "eric-schmidt",
-          "americanOdds": 22400,
-          "decimalOdds": 225,
-          "fairProb": 0.0037,
+          "americanOdds": 21800,
+          "decimalOdds": 219,
+          "fairProb": 0.0038,
           "sort": 14
         },
         {
@@ -9268,8 +9268,8 @@
             "method": "worth",
             "worth": 132000000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "warren-buffett": {
             "method": "shares",
@@ -9352,15 +9352,15 @@
             "method": "worth",
             "worth": 118600000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "jim-walton-family": {
             "method": "worth",
             "worth": 128800000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           }
         }
       },
@@ -9372,7 +9372,7 @@
           "person": "elon-musk",
           "americanOdds": -120,
           "decimalOdds": 1.8333,
-          "fairProb": 0.4557,
+          "fairProb": 0.4554,
           "sort": 0
         },
         {
@@ -9380,9 +9380,9 @@
           "label": "Jeff Bezos",
           "market": "pick",
           "person": "jeff-bezos",
-          "americanOdds": 780,
-          "decimalOdds": 8.8,
-          "fairProb": 0.0945,
+          "americanOdds": 785,
+          "decimalOdds": 8.85,
+          "fairProb": 0.094,
           "sort": 1
         },
         {
@@ -9390,9 +9390,9 @@
           "label": "Sergey Brin",
           "market": "pick",
           "person": "sergey-brin",
-          "americanOdds": 840,
-          "decimalOdds": 9.4,
-          "fairProb": 0.0888,
+          "americanOdds": 835,
+          "decimalOdds": 9.35,
+          "fairProb": 0.0891,
           "sort": 2
         },
         {
@@ -9402,7 +9402,7 @@
           "person": "mark-zuckerberg",
           "americanOdds": 860,
           "decimalOdds": 9.6,
-          "fairProb": 0.0869,
+          "fairProb": 0.0867,
           "sort": 3
         },
         {
@@ -9410,9 +9410,9 @@
           "label": "Rob Walton",
           "market": "pick",
           "person": "rob-walton-family",
-          "americanOdds": 1525,
-          "decimalOdds": 16.25,
-          "fairProb": 0.0514,
+          "americanOdds": 1550,
+          "decimalOdds": 16.5,
+          "fairProb": 0.0509,
           "sort": 4
         },
         {
@@ -9422,7 +9422,7 @@
           "person": "warren-buffett",
           "americanOdds": 1650,
           "decimalOdds": 17.5,
-          "fairProb": 0.0476,
+          "fairProb": 0.0478,
           "sort": 5
         },
         {
@@ -9430,9 +9430,9 @@
           "label": "Larry Ellison",
           "market": "pick",
           "person": "larry-ellison",
-          "americanOdds": 1925,
-          "decimalOdds": 20.25,
-          "fairProb": 0.0413,
+          "americanOdds": 1800,
+          "decimalOdds": 19,
+          "fairProb": 0.0437,
           "sort": 6
         },
         {
@@ -9440,9 +9440,9 @@
           "label": "Michael Dell",
           "market": "pick",
           "person": "michael-dell",
-          "americanOdds": 1950,
-          "decimalOdds": 20.5,
-          "fairProb": 0.0405,
+          "americanOdds": 2025,
+          "decimalOdds": 21.25,
+          "fairProb": 0.0392,
           "sort": 7
         },
         {
@@ -9450,9 +9450,9 @@
           "label": "Lyndal Stephens Greth",
           "market": "pick",
           "person": "lyndal-stephens-greth-family",
-          "americanOdds": 3475,
-          "decimalOdds": 35.75,
-          "fairProb": 0.0233,
+          "americanOdds": 3450,
+          "decimalOdds": 35.5,
+          "fairProb": 0.0236,
           "sort": 8
         },
         {
@@ -9480,9 +9480,9 @@
           "label": "Bill Gates",
           "market": "pick",
           "person": "bill-gates",
-          "americanOdds": 7600,
-          "decimalOdds": 77,
-          "fairProb": 0.0108,
+          "americanOdds": 7700,
+          "decimalOdds": 78,
+          "fairProb": 0.0107,
           "sort": 11
         },
         {
@@ -9500,9 +9500,9 @@
           "label": "Henry Samueli",
           "market": "pick",
           "person": "henry-samueli",
-          "americanOdds": 11800,
-          "decimalOdds": 119,
-          "fairProb": 0.007,
+          "americanOdds": 12400,
+          "decimalOdds": 125,
+          "fairProb": 0.0067,
           "sort": 13
         },
         {
@@ -9510,8 +9510,8 @@
           "label": "Eric Schmidt",
           "market": "pick",
           "person": "eric-schmidt",
-          "americanOdds": 23000,
-          "decimalOdds": 231,
+          "americanOdds": 23400,
+          "decimalOdds": 235,
           "fairProb": 0.0036,
           "sort": 14
         },
@@ -10105,8 +10105,8 @@
           "jeff-bezos",
           "mark-zuckerberg",
           "rob-walton-family",
-          "warren-buffett",
           "larry-ellison",
+          "warren-buffett",
           "michael-dell",
           "lyndal-stephens-greth-family",
           "lakshmi-mittal",
@@ -10149,20 +10149,20 @@
             "method": "worth",
             "worth": 132000000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
+          },
+          "larry-ellison": {
+            "method": "shares",
+            "shares": {
+              "ORCL": 1152982353
+            }
           },
           "warren-buffett": {
             "method": "shares",
             "shares": {
               "BRK.A": 188290,
               "BRK.B": 1162
-            }
-          },
-          "larry-ellison": {
-            "method": "shares",
-            "shares": {
-              "ORCL": 1152982353
             }
           },
           "michael-dell": {
@@ -10233,15 +10233,15 @@
             "method": "worth",
             "worth": 118600000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "jim-walton-family": {
             "method": "worth",
             "worth": 128800000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           }
         }
       },
@@ -10261,9 +10261,9 @@
           "label": "Sergey Brin",
           "market": "pick",
           "person": "sergey-brin",
-          "americanOdds": 795,
-          "decimalOdds": 8.95,
-          "fairProb": 0.0932,
+          "americanOdds": 790,
+          "decimalOdds": 8.9,
+          "fairProb": 0.0938,
           "sort": 1
         },
         {
@@ -10271,9 +10271,9 @@
           "label": "Jeff Bezos",
           "market": "pick",
           "person": "jeff-bezos",
-          "americanOdds": 820,
-          "decimalOdds": 9.2,
-          "fairProb": 0.0906,
+          "americanOdds": 825,
+          "decimalOdds": 9.25,
+          "fairProb": 0.0903,
           "sort": 2
         },
         {
@@ -10281,9 +10281,9 @@
           "label": "Mark Zuckerberg",
           "market": "pick",
           "person": "mark-zuckerberg",
-          "americanOdds": 835,
-          "decimalOdds": 9.35,
-          "fairProb": 0.0892,
+          "americanOdds": 840,
+          "decimalOdds": 9.4,
+          "fairProb": 0.0885,
           "sort": 3
         },
         {
@@ -10293,27 +10293,27 @@
           "person": "rob-walton-family",
           "americanOdds": 1650,
           "decimalOdds": 17.5,
-          "fairProb": 0.0478,
+          "fairProb": 0.0475,
           "sort": 4
-        },
-        {
-          "id": "2026-W42:blast:usd:up:2026-10-15:warren-buffett",
-          "label": "Warren Buffett",
-          "market": "pick",
-          "person": "warren-buffett",
-          "americanOdds": 1750,
-          "decimalOdds": 18.5,
-          "fairProb": 0.0448,
-          "sort": 5
         },
         {
           "id": "2026-W42:blast:usd:up:2026-10-15:larry-ellison",
           "label": "Larry Ellison",
           "market": "pick",
           "person": "larry-ellison",
-          "americanOdds": 1850,
-          "decimalOdds": 19.5,
-          "fairProb": 0.043,
+          "americanOdds": 1750,
+          "decimalOdds": 18.5,
+          "fairProb": 0.0452,
+          "sort": 5
+        },
+        {
+          "id": "2026-W42:blast:usd:up:2026-10-15:warren-buffett",
+          "label": "Warren Buffett",
+          "market": "pick",
+          "person": "warren-buffett",
+          "americanOdds": 1775,
+          "decimalOdds": 18.75,
+          "fairProb": 0.0447,
           "sort": 6
         },
         {
@@ -10321,9 +10321,9 @@
           "label": "Michael Dell",
           "market": "pick",
           "person": "michael-dell",
-          "americanOdds": 1850,
-          "decimalOdds": 19.5,
-          "fairProb": 0.0428,
+          "americanOdds": 1925,
+          "decimalOdds": 20.25,
+          "fairProb": 0.0414,
           "sort": 7
         },
         {
@@ -10341,9 +10341,9 @@
           "label": "Lakshmi Mittal",
           "market": "pick",
           "person": "lakshmi-mittal",
-          "americanOdds": 4150,
-          "decimalOdds": 42.5,
-          "fairProb": 0.0197,
+          "americanOdds": 4125,
+          "decimalOdds": 42.25,
+          "fairProb": 0.0198,
           "sort": 9
         },
         {
@@ -10353,7 +10353,7 @@
           "person": "len-blavatnik",
           "americanOdds": 4325,
           "decimalOdds": 44.25,
-          "fairProb": 0.0189,
+          "fairProb": 0.0188,
           "sort": 10
         },
         {
@@ -10381,9 +10381,9 @@
           "label": "Henry Samueli",
           "market": "pick",
           "person": "henry-samueli",
-          "americanOdds": 11700,
-          "decimalOdds": 118,
-          "fairProb": 0.0071,
+          "americanOdds": 12000,
+          "decimalOdds": 121,
+          "fairProb": 0.0069,
           "sort": 13
         },
         {
@@ -10391,9 +10391,9 @@
           "label": "Eric Schmidt",
           "market": "pick",
           "person": "eric-schmidt",
-          "americanOdds": 20500,
-          "decimalOdds": 206,
-          "fairProb": 0.0041,
+          "americanOdds": 20000,
+          "decimalOdds": 201,
+          "fairProb": 0.0042,
           "sort": 14
         },
         {
@@ -10987,8 +10987,8 @@
           "mark-zuckerberg",
           "warren-buffett",
           "rob-walton-family",
-          "michael-dell",
           "larry-ellison",
+          "michael-dell",
           "lyndal-stephens-greth-family",
           "lakshmi-mittal",
           "len-blavatnik",
@@ -11037,19 +11037,19 @@
             "method": "worth",
             "worth": 132000000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
-          },
-          "michael-dell": {
-            "method": "shares",
-            "shares": {
-              "DELL": 265674689
-            }
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "larry-ellison": {
             "method": "shares",
             "shares": {
               "ORCL": 1152982353
+            }
+          },
+          "michael-dell": {
+            "method": "shares",
+            "shares": {
+              "DELL": 265674689
             }
           },
           "lyndal-stephens-greth-family": {
@@ -11114,15 +11114,15 @@
             "method": "worth",
             "worth": 118600000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "jim-walton-family": {
             "method": "worth",
             "worth": 128800000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           }
         }
       },
@@ -11134,7 +11134,7 @@
           "person": "elon-musk",
           "americanOdds": -120,
           "decimalOdds": 1.8333,
-          "fairProb": 0.4559,
+          "fairProb": 0.4557,
           "sort": 0
         },
         {
@@ -11144,7 +11144,7 @@
           "person": "sergey-brin",
           "americanOdds": 780,
           "decimalOdds": 8.8,
-          "fairProb": 0.0945,
+          "fairProb": 0.0948,
           "sort": 1
         },
         {
@@ -11154,7 +11154,7 @@
           "person": "jeff-bezos",
           "americanOdds": 800,
           "decimalOdds": 9,
-          "fairProb": 0.0925,
+          "fairProb": 0.0927,
           "sort": 2
         },
         {
@@ -11162,9 +11162,9 @@
           "label": "Mark Zuckerberg",
           "market": "pick",
           "person": "mark-zuckerberg",
-          "americanOdds": 840,
-          "decimalOdds": 9.4,
-          "fairProb": 0.0888,
+          "americanOdds": 845,
+          "decimalOdds": 9.45,
+          "fairProb": 0.0881,
           "sort": 3
         },
         {
@@ -11182,29 +11182,29 @@
           "label": "Rob Walton",
           "market": "pick",
           "person": "rob-walton-family",
-          "americanOdds": 1725,
-          "decimalOdds": 18.25,
-          "fairProb": 0.0455,
+          "americanOdds": 1750,
+          "decimalOdds": 18.5,
+          "fairProb": 0.0449,
           "sort": 5
-        },
-        {
-          "id": "2026-W42:blast:usd:up:2026-10-16:michael-dell",
-          "label": "Michael Dell",
-          "market": "pick",
-          "person": "michael-dell",
-          "americanOdds": 1925,
-          "decimalOdds": 20.25,
-          "fairProb": 0.0412,
-          "sort": 6
         },
         {
           "id": "2026-W42:blast:usd:up:2026-10-16:larry-ellison",
           "label": "Larry Ellison",
           "market": "pick",
           "person": "larry-ellison",
-          "americanOdds": 2025,
-          "decimalOdds": 21.25,
-          "fairProb": 0.039,
+          "americanOdds": 1950,
+          "decimalOdds": 20.5,
+          "fairProb": 0.0407,
+          "sort": 6
+        },
+        {
+          "id": "2026-W42:blast:usd:up:2026-10-16:michael-dell",
+          "label": "Michael Dell",
+          "market": "pick",
+          "person": "michael-dell",
+          "americanOdds": 1975,
+          "decimalOdds": 20.75,
+          "fairProb": 0.0403,
           "sort": 7
         },
         {
@@ -11214,7 +11214,7 @@
           "person": "lyndal-stephens-greth-family",
           "americanOdds": 3075,
           "decimalOdds": 31.75,
-          "fairProb": 0.0261,
+          "fairProb": 0.0262,
           "sort": 8
         },
         {
@@ -11222,9 +11222,9 @@
           "label": "Lakshmi Mittal",
           "market": "pick",
           "person": "lakshmi-mittal",
-          "americanOdds": 3925,
-          "decimalOdds": 40.25,
-          "fairProb": 0.0207,
+          "americanOdds": 3900,
+          "decimalOdds": 40,
+          "fairProb": 0.0208,
           "sort": 9
         },
         {
@@ -11232,9 +11232,9 @@
           "label": "Len Blavatnik",
           "market": "pick",
           "person": "len-blavatnik",
-          "americanOdds": 4100,
-          "decimalOdds": 42,
-          "fairProb": 0.0198,
+          "americanOdds": 4125,
+          "decimalOdds": 42.25,
+          "fairProb": 0.0197,
           "sort": 10
         },
         {
@@ -11242,9 +11242,9 @@
           "label": "Bill Gates",
           "market": "pick",
           "person": "bill-gates",
-          "americanOdds": 7600,
-          "decimalOdds": 77,
-          "fairProb": 0.0108,
+          "americanOdds": 7700,
+          "decimalOdds": 78,
+          "fairProb": 0.0107,
           "sort": 11
         },
         {
@@ -11272,8 +11272,8 @@
           "label": "Eric Schmidt",
           "market": "pick",
           "person": "eric-schmidt",
-          "americanOdds": 29700,
-          "decimalOdds": 298,
+          "americanOdds": 29100,
+          "decimalOdds": 292,
           "fairProb": 0.0028,
           "sort": 14
         },
@@ -14533,10 +14533,10 @@
         "from": "2026-10-12",
         "to": "2026-10-16",
         "value0": {
-          "jeff-bezos": 245734860918,
-          "sergey-brin": 249740423451
+          "jeff-bezos": 248386573399,
+          "sergey-brin": 253266252124
         },
-        "value0Date": "2026-10-08",
+        "value0Date": "2026-10-09",
         "wealth": {
           "jeff-bezos": {
             "method": "shares",
@@ -14559,18 +14559,18 @@
           "label": "Yes",
           "market": "yes",
           "person": "jeff-bezos",
-          "americanOdds": 170,
-          "decimalOdds": 2.7,
-          "fairProb": 0.3576,
+          "americanOdds": 190,
+          "decimalOdds": 2.9,
+          "fairProb": 0.3301,
           "sort": 0
         },
         {
           "id": "2026-W42:race:jeff-bezos:sergey-brin:no",
           "label": "No",
           "market": "no",
-          "americanOdds": -205,
-          "decimalOdds": 1.4878,
-          "fairProb": 0.6425,
+          "americanOdds": -235,
+          "decimalOdds": 1.4255,
+          "fairProb": 0.67,
           "sort": 1
         }
       ],
@@ -14589,10 +14589,10 @@
         "from": "2026-10-12",
         "to": "2026-10-16",
         "value0": {
-          "mark-zuckerberg": 245162993501,
-          "jeff-bezos": 245734860918
+          "mark-zuckerberg": 247535251908,
+          "jeff-bezos": 248386573399
         },
-        "value0Date": "2026-10-08",
+        "value0Date": "2026-10-09",
         "wealth": {
           "mark-zuckerberg": {
             "method": "shares",
@@ -14614,18 +14614,18 @@
           "label": "Yes",
           "market": "yes",
           "person": "mark-zuckerberg",
-          "americanOdds": 100,
-          "decimalOdds": 2,
-          "fairProb": 0.4795,
+          "americanOdds": 105,
+          "decimalOdds": 2.05,
+          "fairProb": 0.4692,
           "sort": 0
         },
         {
           "id": "2026-W42:race:mark-zuckerberg:jeff-bezos:no",
           "label": "No",
           "market": "no",
-          "americanOdds": -120,
-          "decimalOdds": 1.8333,
-          "fairProb": 0.5206,
+          "americanOdds": -125,
+          "decimalOdds": 1.8,
+          "fairProb": 0.5308,
           "sort": 1
         }
       ],
@@ -14644,10 +14644,10 @@
         "from": "2026-10-12",
         "to": "2026-10-16",
         "value0": {
-          "michael-dell": 153767196499,
-          "larry-ellison": 157255263126
+          "michael-dell": 152903753760,
+          "larry-ellison": 163804202891
         },
-        "value0Date": "2026-10-08",
+        "value0Date": "2026-10-09",
         "wealth": {
           "michael-dell": {
             "method": "shares",
@@ -14669,18 +14669,18 @@
           "label": "Yes",
           "market": "yes",
           "person": "michael-dell",
-          "americanOdds": 210,
-          "decimalOdds": 3.1,
-          "fairProb": 0.3075,
+          "americanOdds": 1550,
+          "decimalOdds": 16.5,
+          "fairProb": 0.0581,
           "sort": 0
         },
         {
           "id": "2026-W42:race:michael-dell:larry-ellison:no",
           "label": "No",
           "market": "no",
-          "americanOdds": -260,
-          "decimalOdds": 1.3846,
-          "fairProb": 0.6926,
+          "americanOdds": -4900,
+          "decimalOdds": 1.0204,
+          "fairProb": 0.942,
           "sort": 1
         }
       ],
@@ -14699,10 +14699,10 @@
         "from": "2026-10-12",
         "to": "2026-10-16",
         "value0": {
-          "warren-buffett": 143516260102,
-          "michael-dell": 153767196499
+          "warren-buffett": 145548776368,
+          "michael-dell": 152903753760
         },
-        "value0Date": "2026-10-08",
+        "value0Date": "2026-10-09",
         "wealth": {
           "warren-buffett": {
             "method": "shares",
@@ -14725,85 +14725,23 @@
           "label": "Yes",
           "market": "yes",
           "person": "warren-buffett",
-          "americanOdds": 1050,
-          "decimalOdds": 11.5,
-          "fairProb": 0.0837,
+          "americanOdds": 490,
+          "decimalOdds": 5.9,
+          "fairProb": 0.1624,
           "sort": 0
         },
         {
           "id": "2026-W42:race:warren-buffett:michael-dell:no",
           "label": "No",
           "market": "no",
-          "americanOdds": -2255,
-          "decimalOdds": 1.0443,
-          "fairProb": 0.9163,
+          "americanOdds": -700,
+          "decimalOdds": 1.1429,
+          "fairProb": 0.8377,
           "sort": 1
         }
       ],
       "settlesFrom": "Tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings) at the Fri Oct 16 close, from our daily price data. Yes if Warren Buffett is strictly above Michael Dell. A missing close voids the market.",
       "sort": 78
-    },
-    {
-      "id": "2026-W42:race:len-blavatnik:lakshmi-mittal",
-      "type": "race",
-      "title": "Will Len Blavatnik pass Lakshmi Mittal by Friday's close?",
-      "group": "races",
-      "closesAt": "2026-10-12T13:30:00.000Z",
-      "params": {
-        "chaser": "len-blavatnik",
-        "leader": "lakshmi-mittal",
-        "from": "2026-10-12",
-        "to": "2026-10-16",
-        "value0": {
-          "len-blavatnik": 19567797959,
-          "lakshmi-mittal": 20735700240
-        },
-        "value0Date": "2026-10-08",
-        "wealth": {
-          "len-blavatnik": {
-            "method": "shares",
-            "shares": {
-              "WMG": 374517252,
-              "LYB": 64435504,
-              "DOCN": 18653451,
-              "CHYM": 19601430,
-              "CEG": 6276132,
-              "COAG": 4876344,
-              "TYGO": 3220645,
-              "OPEN": 17638714
-            }
-          },
-          "lakshmi-mittal": {
-            "method": "shares",
-            "shares": {
-              "MT": 340152563
-            }
-          }
-        }
-      },
-      "selections": [
-        {
-          "id": "2026-W42:race:len-blavatnik:lakshmi-mittal:yes",
-          "label": "Yes",
-          "market": "yes",
-          "person": "len-blavatnik",
-          "americanOdds": 730,
-          "decimalOdds": 8.3,
-          "fairProb": 0.1151,
-          "sort": 0
-        },
-        {
-          "id": "2026-W42:race:len-blavatnik:lakshmi-mittal:no",
-          "label": "No",
-          "market": "no",
-          "americanOdds": -1230,
-          "decimalOdds": 1.0813,
-          "fairProb": 0.8849,
-          "sort": 1
-        }
-      ],
-      "settlesFrom": "Tracked stock wealth (share counts from SEC filings x closing price, or published net worth x one stock where a family stake is not split in filings) at the Fri Oct 16 close, from our daily price data. Yes if Len Blavatnik is strictly above Lakshmi Mittal. A missing close voids the market.",
-      "sort": 79
     },
     {
       "id": "2026-W42:duel:elon-musk:sergey-brin",
@@ -14819,8 +14757,8 @@
         "start": "open",
         "rho": 0.3,
         "value0": {
-          "elon-musk": 1301051439488,
-          "sergey-brin": 249740423451
+          "elon-musk": 1312948971336,
+          "sergey-brin": 253266252124
         },
         "wealth": {
           "elon-musk": {
@@ -14861,52 +14799,52 @@
           "sort": 1
         },
         {
-          "id": "2026-W42:duel:elon-musk:sergey-brin:by:elon-musk:42",
-          "label": "Elon Musk by $42B+",
+          "id": "2026-W42:duel:elon-musk:sergey-brin:by:elon-musk:42.5",
+          "label": "Elon Musk by $42.5B+",
           "market": "by",
           "person": "elon-musk",
-          "line": 42,
+          "line": 42.5,
           "americanOdds": 210,
           "decimalOdds": 3.1,
-          "fairProb": 0.3094,
+          "fairProb": 0.3089,
           "sort": 2
         },
         {
-          "id": "2026-W42:duel:elon-musk:sergey-brin:by:sergey-brin:42",
-          "label": "Sergey Brin by $42B+",
+          "id": "2026-W42:duel:elon-musk:sergey-brin:by:sergey-brin:42.5",
+          "label": "Sergey Brin by $42.5B+",
           "market": "by",
           "person": "sergey-brin",
-          "line": 42,
+          "line": 42.5,
           "americanOdds": 210,
           "decimalOdds": 3.1,
-          "fairProb": 0.3094,
+          "fairProb": 0.3089,
           "sort": 3
         },
         {
-          "id": "2026-W42:duel:elon-musk:sergey-brin:by:elon-musk:84.5",
-          "label": "Elon Musk by $84.5B+",
+          "id": "2026-W42:duel:elon-musk:sergey-brin:by:elon-musk:85",
+          "label": "Elon Musk by $85B+",
           "market": "by",
           "person": "elon-musk",
-          "line": 84.5,
-          "americanOdds": 505,
-          "decimalOdds": 6.05,
-          "fairProb": 0.1584,
+          "line": 85,
+          "americanOdds": 500,
+          "decimalOdds": 6,
+          "fairProb": 0.1591,
           "sort": 4
         },
         {
-          "id": "2026-W42:duel:elon-musk:sergey-brin:by:sergey-brin:84.5",
-          "label": "Sergey Brin by $84.5B+",
+          "id": "2026-W42:duel:elon-musk:sergey-brin:by:sergey-brin:85",
+          "label": "Sergey Brin by $85B+",
           "market": "by",
           "person": "sergey-brin",
-          "line": 84.5,
-          "americanOdds": 505,
-          "decimalOdds": 6.05,
-          "fairProb": 0.1584,
+          "line": 85,
+          "americanOdds": 500,
+          "decimalOdds": 6,
+          "fairProb": 0.1591,
           "sort": 5
         }
       ],
       "settlesFrom": "Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) from the opening price on Mon Oct 12 to the closing price on Fri Oct 16, from our daily price data. To win: the bigger dollar gain (or smaller loss); a tie is void. \"By $XB+\": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.",
-      "sort": 80
+      "sort": 79
     },
     {
       "id": "2026-W42:duel:jeff-bezos:mark-zuckerberg",
@@ -14922,8 +14860,8 @@
         "start": "open",
         "rho": 0.6,
         "value0": {
-          "jeff-bezos": 245734860918,
-          "mark-zuckerberg": 245162993501
+          "jeff-bezos": 248386573399,
+          "mark-zuckerberg": 247535251908
         },
         "wealth": {
           "jeff-bezos": {
@@ -14967,9 +14905,9 @@
           "market": "by",
           "person": "jeff-bezos",
           "line": 5.5,
-          "americanOdds": 215,
-          "decimalOdds": 3.15,
-          "fairProb": 0.3053,
+          "americanOdds": 210,
+          "decimalOdds": 3.1,
+          "fairProb": 0.3071,
           "sort": 2
         },
         {
@@ -14978,9 +14916,9 @@
           "market": "by",
           "person": "mark-zuckerberg",
           "line": 5.5,
-          "americanOdds": 215,
-          "decimalOdds": 3.15,
-          "fairProb": 0.3053,
+          "americanOdds": 210,
+          "decimalOdds": 3.1,
+          "fairProb": 0.3071,
           "sort": 3
         },
         {
@@ -14989,9 +14927,9 @@
           "market": "by",
           "person": "jeff-bezos",
           "line": 11,
-          "americanOdds": 520,
-          "decimalOdds": 6.2,
-          "fairProb": 0.1542,
+          "americanOdds": 510,
+          "decimalOdds": 6.1,
+          "fairProb": 0.1567,
           "sort": 4
         },
         {
@@ -15000,14 +14938,14 @@
           "market": "by",
           "person": "mark-zuckerberg",
           "line": 11,
-          "americanOdds": 520,
-          "decimalOdds": 6.2,
-          "fairProb": 0.1542,
+          "americanOdds": 510,
+          "decimalOdds": 6.1,
+          "fairProb": 0.1567,
           "sort": 5
         }
       ],
       "settlesFrom": "Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) from the opening price on Mon Oct 12 to the closing price on Fri Oct 16, from our daily price data. To win: the bigger dollar gain (or smaller loss); a tie is void. \"By $XB+\": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.",
-      "sort": 81
+      "sort": 80
     },
     {
       "id": "2026-W42:duel:larry-ellison:michael-dell",
@@ -15023,8 +14961,8 @@
         "start": "open",
         "rho": 0.6,
         "value0": {
-          "larry-ellison": 157255263126,
-          "michael-dell": 153767196499
+          "larry-ellison": 163804202891,
+          "michael-dell": 152903753760
         },
         "wealth": {
           "larry-ellison": {
@@ -15068,9 +15006,9 @@
           "market": "by",
           "person": "larry-ellison",
           "line": 3.5,
-          "americanOdds": 215,
-          "decimalOdds": 3.15,
-          "fairProb": 0.3045,
+          "americanOdds": 210,
+          "decimalOdds": 3.1,
+          "fairProb": 0.3081,
           "sort": 2
         },
         {
@@ -15079,9 +15017,9 @@
           "market": "by",
           "person": "michael-dell",
           "line": 3.5,
-          "americanOdds": 215,
-          "decimalOdds": 3.15,
-          "fairProb": 0.3045,
+          "americanOdds": 210,
+          "decimalOdds": 3.1,
+          "fairProb": 0.3081,
           "sort": 3
         },
         {
@@ -15090,9 +15028,9 @@
           "market": "by",
           "person": "larry-ellison",
           "line": 7,
-          "americanOdds": 525,
-          "decimalOdds": 6.25,
-          "fairProb": 0.1532,
+          "americanOdds": 505,
+          "decimalOdds": 6.05,
+          "fairProb": 0.1581,
           "sort": 4
         },
         {
@@ -15101,14 +15039,14 @@
           "market": "by",
           "person": "michael-dell",
           "line": 7,
-          "americanOdds": 525,
-          "decimalOdds": 6.25,
-          "fairProb": 0.1532,
+          "americanOdds": 505,
+          "decimalOdds": 6.05,
+          "fairProb": 0.1581,
           "sort": 5
         }
       ],
       "settlesFrom": "Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) from the opening price on Mon Oct 12 to the closing price on Fri Oct 16, from our daily price data. To win: the bigger dollar gain (or smaller loss); a tie is void. \"By $XB+\": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.",
-      "sort": 82
+      "sort": 81
     },
     {
       "id": "2026-W42:duel:warren-buffett:rob-walton-family",
@@ -15124,7 +15062,7 @@
         "start": "open",
         "rho": 0.3,
         "value0": {
-          "warren-buffett": 143516260102,
+          "warren-buffett": 145548776368,
           "rob-walton-family": 132000000000
         },
         "wealth": {
@@ -15139,8 +15077,8 @@
             "method": "worth",
             "worth": 132000000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           }
         }
       },
@@ -15173,7 +15111,7 @@
           "line": 2.5,
           "americanOdds": 205,
           "decimalOdds": 3.05,
-          "fairProb": 0.3117,
+          "fairProb": 0.3128,
           "sort": 2
         },
         {
@@ -15184,7 +15122,7 @@
           "line": 2.5,
           "americanOdds": 205,
           "decimalOdds": 3.05,
-          "fairProb": 0.3117,
+          "fairProb": 0.3128,
           "sort": 3
         },
         {
@@ -15193,9 +15131,9 @@
           "market": "by",
           "person": "warren-buffett",
           "line": 5,
-          "americanOdds": 485,
-          "decimalOdds": 5.85,
-          "fairProb": 0.163,
+          "americanOdds": 480,
+          "decimalOdds": 5.8,
+          "fairProb": 0.1646,
           "sort": 4
         },
         {
@@ -15204,14 +15142,14 @@
           "market": "by",
           "person": "rob-walton-family",
           "line": 5,
-          "americanOdds": 485,
-          "decimalOdds": 5.85,
-          "fairProb": 0.163,
+          "americanOdds": 480,
+          "decimalOdds": 5.8,
+          "fairProb": 0.1646,
           "sort": 5
         }
       ],
       "settlesFrom": "Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) from the opening price on Mon Oct 12 to the closing price on Fri Oct 16, from our daily price data. To win: the bigger dollar gain (or smaller loss); a tie is void. \"By $XB+\": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.",
-      "sort": 83
+      "sort": 82
     },
     {
       "id": "2026-W42:duel:jim-walton-family:bill-gates",
@@ -15228,15 +15166,15 @@
         "rho": 0.3,
         "value0": {
           "jim-walton-family": 128800000000,
-          "bill-gates": 57471222427
+          "bill-gates": 57655712209
         },
         "wealth": {
           "jim-walton-family": {
             "method": "worth",
             "worth": 128800000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "bill-gates": {
             "method": "shares",
@@ -15284,7 +15222,7 @@
           "line": 2,
           "americanOdds": 195,
           "decimalOdds": 2.95,
-          "fairProb": 0.3246,
+          "fairProb": 0.3247,
           "sort": 2
         },
         {
@@ -15295,7 +15233,7 @@
           "line": 2,
           "americanOdds": 195,
           "decimalOdds": 2.95,
-          "fairProb": 0.3246,
+          "fairProb": 0.3247,
           "sort": 3
         },
         {
@@ -15306,7 +15244,7 @@
           "line": 4.5,
           "americanOdds": 525,
           "decimalOdds": 6.25,
-          "fairProb": 0.153,
+          "fairProb": 0.1532,
           "sort": 4
         },
         {
@@ -15317,12 +15255,12 @@
           "line": 4.5,
           "americanOdds": 525,
           "decimalOdds": 6.25,
-          "fairProb": 0.153,
+          "fairProb": 0.1532,
           "sort": 5
         }
       ],
       "settlesFrom": "Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) from the opening price on Mon Oct 12 to the closing price on Fri Oct 16, from our daily price data. To win: the bigger dollar gain (or smaller loss); a tie is void. \"By $XB+\": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.",
-      "sort": 84
+      "sort": 83
     },
     {
       "id": "2026-W42:duel:alice-walton:andreas-von-bechtolsheim-family",
@@ -15339,15 +15277,15 @@
         "rho": 0.3,
         "value0": {
           "alice-walton": 118600000000,
-          "andreas-von-bechtolsheim-family": 39406697702
+          "andreas-von-bechtolsheim-family": 39664017557
         },
         "wealth": {
           "alice-walton": {
             "method": "worth",
             "worth": 118600000000,
             "ticker": "WMT",
-            "refDate": "2026-10-08",
-            "refClose": 110.54
+            "refDate": "2026-10-09",
+            "refClose": 111.24
           },
           "andreas-von-bechtolsheim-family": {
             "method": "shares",
@@ -15386,7 +15324,7 @@
           "line": 2,
           "americanOdds": 215,
           "decimalOdds": 3.15,
-          "fairProb": 0.3025,
+          "fairProb": 0.3026,
           "sort": 2
         },
         {
@@ -15397,7 +15335,7 @@
           "line": 2,
           "americanOdds": 215,
           "decimalOdds": 3.15,
-          "fairProb": 0.3025,
+          "fairProb": 0.3026,
           "sort": 3
         },
         {
@@ -15408,7 +15346,7 @@
           "line": 4,
           "americanOdds": 535,
           "decimalOdds": 6.35,
-          "fairProb": 0.1505,
+          "fairProb": 0.1506,
           "sort": 4
         },
         {
@@ -15419,12 +15357,12 @@
           "line": 4,
           "americanOdds": 535,
           "decimalOdds": 6.35,
-          "fairProb": 0.1505,
+          "fairProb": 0.1506,
           "sort": 5
         }
       ],
       "settlesFrom": "Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) from the opening price on Mon Oct 12 to the closing price on Fri Oct 16, from our daily price data. To win: the bigger dollar gain (or smaller loss); a tie is void. \"By $XB+\": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.",
-      "sort": 85
+      "sort": 84
     },
     {
       "id": "2026-W42:duel:henry-samueli:lakshmi-mittal",
@@ -15440,8 +15378,8 @@
         "start": "open",
         "rho": 0.3,
         "value0": {
-          "henry-samueli": 31802491797,
-          "lakshmi-mittal": 20735700240
+          "henry-samueli": 31052134377,
+          "lakshmi-mittal": 21837794545
         },
         "wealth": {
           "henry-samueli": {
@@ -15485,9 +15423,9 @@
           "market": "by",
           "person": "henry-samueli",
           "line": 1,
-          "americanOdds": 270,
-          "decimalOdds": 3.7,
-          "fairProb": 0.2576,
+          "americanOdds": 275,
+          "decimalOdds": 3.75,
+          "fairProb": 0.2548,
           "sort": 2
         },
         {
@@ -15496,9 +15434,9 @@
           "market": "by",
           "person": "lakshmi-mittal",
           "line": 1,
-          "americanOdds": 270,
-          "decimalOdds": 3.7,
-          "fairProb": 0.2576,
+          "americanOdds": 275,
+          "decimalOdds": 3.75,
+          "fairProb": 0.2548,
           "sort": 3
         },
         {
@@ -15507,9 +15445,9 @@
           "market": "by",
           "person": "henry-samueli",
           "line": 1.5,
-          "americanOdds": 480,
-          "decimalOdds": 5.8,
-          "fairProb": 0.1645,
+          "americanOdds": 495,
+          "decimalOdds": 5.95,
+          "fairProb": 0.1613,
           "sort": 4
         },
         {
@@ -15518,14 +15456,14 @@
           "market": "by",
           "person": "lakshmi-mittal",
           "line": 1.5,
-          "americanOdds": 480,
-          "decimalOdds": 5.8,
-          "fairProb": 0.1645,
+          "americanOdds": 495,
+          "decimalOdds": 5.95,
+          "fairProb": 0.1613,
           "sort": 5
         }
       ],
       "settlesFrom": "Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) from the opening price on Mon Oct 12 to the closing price on Fri Oct 16, from our daily price data. To win: the bigger dollar gain (or smaller loss); a tie is void. \"By $XB+\": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.",
-      "sort": 86
+      "sort": 85
     },
     {
       "id": "2026-W42:duel:len-blavatnik:eric-schmidt",
@@ -15541,8 +15479,8 @@
         "start": "open",
         "rho": 0.3,
         "value0": {
-          "len-blavatnik": 19567797959,
-          "eric-schmidt": 17053719250
+          "len-blavatnik": 19889117364,
+          "eric-schmidt": 17302643028
         },
         "wealth": {
           "len-blavatnik": {
@@ -15595,7 +15533,7 @@
           "line": 0.5,
           "americanOdds": 215,
           "decimalOdds": 3.15,
-          "fairProb": 0.3018,
+          "fairProb": 0.3046,
           "sort": 2
         },
         {
@@ -15606,7 +15544,7 @@
           "line": 0.5,
           "americanOdds": 215,
           "decimalOdds": 3.15,
-          "fairProb": 0.3018,
+          "fairProb": 0.3046,
           "sort": 3
         },
         {
@@ -15615,9 +15553,9 @@
           "market": "by",
           "person": "len-blavatnik",
           "line": 1,
-          "americanOdds": 540,
-          "decimalOdds": 6.4,
-          "fairProb": 0.1496,
+          "americanOdds": 525,
+          "decimalOdds": 6.25,
+          "fairProb": 0.1533,
           "sort": 4
         },
         {
@@ -15626,14 +15564,14 @@
           "market": "by",
           "person": "eric-schmidt",
           "line": 1,
-          "americanOdds": 540,
-          "decimalOdds": 6.4,
-          "fairProb": 0.1496,
+          "americanOdds": 525,
+          "decimalOdds": 6.25,
+          "fairProb": 0.1533,
           "sort": 5
         }
       ],
       "settlesFrom": "Change in tracked stock wealth (share counts from SEC filings x share price, or published net worth x one stock where a family stake is not split in filings) from the opening price on Mon Oct 12 to the closing price on Fri Oct 16, from our daily price data. To win: the bigger dollar gain (or smaller loss); a tie is void. \"By $XB+\": wins by more than X billion dollars; exactly X is void. A missing opening or closing price voids the market.",
-      "sort": 87
+      "sort": 86
     }
   ]
 }
