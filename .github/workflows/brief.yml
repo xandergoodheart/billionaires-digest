@@ -1,0 +1,66 @@
+name: Billionaire Brief
+
+# Emails The Billionaire Brief to confirmed waitlist signups. Manual only: no schedule until the owner says so.
+# Dry run (default) builds a preview (downloadable as the "brief-preview" artifact) and counts recipients; nothing is sent.
+# Send needs confirm_date = today's date in New York, plus these settings (Settings -> Secrets and variables -> Actions):
+#   variable SUPABASE_URL          e.g. https://<project>.supabase.co
+#   secret   SUPABASE_SERVICE_KEY  the secret (service role) key; never put it in the site
+#   secret   RESEND_API_KEY        Resend API key (send only)
+#   secret   BRIEF_FROM            e.g. "Billionaires Digest <brief@billionairesdigest.com>" (send only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: dry-run builds a preview only; send really emails everyone on the list
+        type: choice
+        options: [dry-run, send]
+        default: dry-run
+      confirm_date:
+        description: For send only - today's date in New York, YYYY-MM-DD
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: brief
+  cancel-in-progress: false
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Test the Brief builder
+        run: node --test scripts/lib/brief.test.mjs
+      - name: Dry run
+        if: inputs.mode != 'send'
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/send-brief.mjs --dry-run
+      - name: Upload preview
+        if: inputs.mode != 'send'
+        uses: actions/upload-artifact@v4
+        with:
+          name: brief-preview
+          path: out/brief-preview.*
+          retention-days: 7
+      - name: Send
+        if: inputs.mode == 'send'
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          BRIEF_FROM: ${{ secrets.BRIEF_FROM }}
+          CONFIRM_DATE: ${{ inputs.confirm_date }}
+        run: node scripts/send-brief.mjs --send "--confirm-date=$CONFIRM_DATE"
