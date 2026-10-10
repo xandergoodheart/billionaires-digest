@@ -1,48 +1,32 @@
 {
-  "generated": "2026-10-09",
+  "generated": "2026-10-10",
   "inputs": {
-    "filingsGenerated": "2026-10-09T16:26:11.412Z",
-    "pricesGenerated": "2026-10-09T16:29:53.470Z",
+    "filingsGenerated": "2026-10-10T15:30:37.897Z",
+    "pricesGenerated": "2026-10-10T15:34:18.347Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 12
+    "editions": 13
   },
   "gainers": [
     {
       "name": "Elon Musk",
       "slug": "elon-musk",
       "sector": "Aerospace",
-      "estDailyChange": 19979966102,
-      "coverage": 1.415,
+      "estDailyChange": 18223867821,
+      "coverage": 1.413,
       "holdings": [
         {
           "ticker": "TSLA",
           "shares": 699580882,
-          "change": 8.1,
-          "estChange": 5666605144,
+          "change": 7.7,
+          "estChange": 5386772791,
           "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926075203/0001104659-26-075203-index.htm"
         },
         {
           "ticker": "SPCX",
           "shares": 6418547515,
-          "change": 2.23,
-          "estChange": 14313360958,
+          "change": 2,
+          "estChange": 12837095030,
           "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm"
-        }
-      ]
-    },
-    {
-      "name": "Larry Ellison",
-      "slug": "larry-ellison",
-      "sector": "AI & tech",
-      "estDailyChange": 7356027412,
-      "coverage": 0.89,
-      "holdings": [
-        {
-          "ticker": "ORCL",
-          "shares": 1152982353,
-          "change": 6.38,
-          "estChange": 7356027412,
-          "source": "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm"
         }
       ]
     },
@@ -50,15 +34,47 @@
       "name": "Jeff Bezos",
       "slug": "jeff-bezos",
       "sector": "AI & tech",
-      "estDailyChange": 6919163750,
-      "coverage": 0.673,
+      "estDailyChange": 7955137443,
+      "coverage": 0.675,
       "holdings": [
         {
           "ticker": "AMZN",
           "shares": 950434581,
-          "change": 7.28,
-          "estChange": 6919163750,
+          "change": 8.37,
+          "estChange": 7955137443,
           "source": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm"
+        }
+      ]
+    },
+    {
+      "name": "Larry Ellison",
+      "slug": "larry-ellison",
+      "sector": "AI & tech",
+      "estDailyChange": 6583529236,
+      "coverage": 0.886,
+      "holdings": [
+        {
+          "ticker": "ORCL",
+          "shares": 1152982353,
+          "change": 5.71,
+          "estChange": 6583529236,
+          "source": "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm"
+        }
+      ]
+    },
+    {
+      "name": "Michael Dell",
+      "slug": "michael-dell",
+      "sector": "AI & tech",
+      "estDailyChange": 3057915670,
+      "coverage": 0.587,
+      "holdings": [
+        {
+          "ticker": "DELL",
+          "shares": 265674689,
+          "change": 11.51,
+          "estChange": 3057915670,
+          "source": "https://www.sec.gov/Archives/edgar/data/908724/000112329226000125/0001123292-26-000125-index.htm"
         }
       ]
     },
@@ -66,21 +82,21 @@
       "name": "Sergey Brin",
       "slug": "sergey-brin",
       "sector": "AI & tech",
-      "estDailyChange": 4391159933,
-      "coverage": 0.98,
+      "estDailyChange": 2287107462,
+      "coverage": 0.972,
       "holdings": [
         {
           "ticker": "GOOGL",
           "shares": 358939978,
-          "change": 6.21,
-          "estChange": 2229017263,
+          "change": 3.37,
+          "estChange": 1209627726,
           "source": "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html"
         },
         {
           "ticker": "GOOG",
           "shares": 359159912,
-          "change": 6.02,
-          "estChange": 2162142670,
+          "change": 3,
+          "estChange": 1077479736,
           "source": "https://www.sec.gov/Archives/edgar/data/1295032/000119312526345383/ownership.xml"
         }
       ]
@@ -89,54 +105,22 @@
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
-      "estDailyChange": 1151976397,
-      "coverage": 1.012,
+      "estDailyChange": 1395804729,
+      "coverage": 1.014,
       "holdings": [
         {
           "ticker": "BRK.A",
           "shares": 188290,
-          "change": 6118.07,
-          "estChange": 1151971400,
+          "change": 7413.03,
+          "estChange": 1395799419,
           "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
         },
         {
           "ticker": "BRK.B",
           "shares": 1162,
-          "change": 4.3,
-          "estChange": 4997,
+          "change": 4.57,
+          "estChange": 5310,
           "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
-        }
-      ]
-    },
-    {
-      "name": "Mark Zuckerberg",
-      "slug": "mark-zuckerberg",
-      "sector": "AI & tech",
-      "estDailyChange": 1117764408,
-      "coverage": 0.929,
-      "holdings": [
-        {
-          "ticker": "META",
-          "shares": 341823978,
-          "change": 3.27,
-          "estChange": 1117764408,
-          "source": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm"
-        }
-      ]
-    },
-    {
-      "name": "Lakshmi Mittal",
-      "slug": "lakshmi-mittal",
-      "sector": "Industrials",
-      "estDailyChange": 986442433,
-      "coverage": 0.658,
-      "holdings": [
-        {
-          "ticker": "MT",
-          "shares": 340152563,
-          "change": 2.9,
-          "estChange": 986442433,
-          "source": "https://www.sec.gov/Archives/edgar/data/1243429/000199937126006457/xslSCHEDULE_13D_X02/primary_doc.xml"
         }
       ]
     },
@@ -144,15 +128,31 @@
       "name": "Andreas von Bechtolsheim & family",
       "slug": "andreas-von-bechtolsheim-family",
       "sector": "AI & tech",
-      "estDailyChange": 887753498,
-      "coverage": 0.96,
+      "estDailyChange": 1060525400,
+      "coverage": 0.965,
       "holdings": [
         {
           "ticker": "ANET",
           "shares": 183799896,
-          "change": 4.83,
-          "estChange": 887753498,
+          "change": 5.77,
+          "estChange": 1060525400,
           "source": "https://www.sec.gov/Archives/edgar/data/1596532/000119312526158942/d66465ddef14a.htm"
+        }
+      ]
+    },
+    {
+      "name": "Lakshmi Mittal",
+      "slug": "lakshmi-mittal",
+      "sector": "Industrials",
+      "estDailyChange": 955828702,
+      "coverage": 0.657,
+      "holdings": [
+        {
+          "ticker": "MT",
+          "shares": 340152563,
+          "change": 2.81,
+          "estChange": 955828702,
+          "source": "https://www.sec.gov/Archives/edgar/data/1243429/000199937126006457/xslSCHEDULE_13D_X02/primary_doc.xml"
         }
       ]
     },
@@ -160,13 +160,13 @@
       "name": "Rob Walton & family",
       "slug": "rob-walton-family",
       "sector": "Luxury & retail",
-      "estDailyChange": 811932000,
+      "estDailyChange": 943140000,
       "coverage": 1,
       "holdings": [
         {
           "ticker": "WMT",
-          "change": 0.68,
-          "estChange": 811932000,
+          "change": 0.79,
+          "estChange": 943140000,
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
         }
       ]
@@ -175,19 +175,36 @@
       "name": "Jim Walton & family",
       "slug": "jim-walton-family",
       "sector": "Luxury & retail",
-      "estDailyChange": 792248800,
+      "estDailyChange": 920276000,
       "coverage": 1,
       "holdings": [
         {
           "ticker": "WMT",
-          "change": 0.68,
-          "estChange": 792248800,
+          "change": 0.79,
+          "estChange": 920276000,
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
         }
       ]
     }
   ],
-  "losers": [],
+  "losers": [
+    {
+      "name": "Mark Zuckerberg",
+      "slug": "mark-zuckerberg",
+      "sector": "AI & tech",
+      "estDailyChange": -758849231,
+      "coverage": 0.922,
+      "holdings": [
+        {
+          "ticker": "META",
+          "shares": 341823978,
+          "change": -2.22,
+          "estChange": -758849231,
+          "source": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm"
+        }
+      ]
+    }
+  ],
   "mostActive": [
     {
       "name": "Warren Buffett",
@@ -234,25 +251,6 @@
           "filed": "2026-09-25",
           "form": "4",
           "url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/xslF345X06/tm2626134-1_4seq1.xml"
-        }
-      ]
-    },
-    {
-      "name": "Bill Gates",
-      "slug": "bill-gates",
-      "sector": "AI & tech",
-      "transactions": 14,
-      "filingsCount": 2,
-      "filings": [
-        {
-          "filed": "2026-09-14",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/xslF345X06/tm2625411-1_4seq1.xml"
-        },
-        {
-          "filed": "2026-09-10",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926106713/xslF345X06/tm2625157-1_4seq1.xml"
         }
       ]
     },
@@ -339,6 +337,20 @@
           "filed": "2026-09-15",
           "form": "4",
           "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126036664/xslF345X06/form4.xml"
+        }
+      ]
+    },
+    {
+      "name": "Bill Gates",
+      "slug": "bill-gates",
+      "sector": "AI & tech",
+      "transactions": 8,
+      "filingsCount": 1,
+      "filings": [
+        {
+          "filed": "2026-09-14",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/xslF345X06/tm2625411-1_4seq1.xml"
         }
       ]
     },
@@ -732,8 +744,15 @@
       "name": "Elon Musk",
       "slug": "elon-musk",
       "sector": "Aerospace",
-      "count": 16,
+      "count": 17,
       "stories": [
+        {
+          "edition": "2026-10-10",
+          "editionUrl": "editions/2026-10-10/",
+          "headline": "Broadcom lines up $50B to finance OpenAI's custom chips",
+          "url": "https://cryptobriefing.com/broadcom-50-billion-openai-chip-financing/",
+          "source": "CryptoBriefing"
+        },
         {
           "edition": "2026-10-09",
           "editionUrl": "editions/2026-10-09/",
@@ -761,13 +780,6 @@
           "headline": "Tech billionaires added $845B in 2026, Musk a third of it",
           "url": "https://www.gurufocus.com/news/9110046/tech-billionaires-thrive-in-2026-boosting-wealth-by-845-billion",
           "source": "GuruFocus"
-        },
-        {
-          "edition": "2026-10-08",
-          "editionUrl": "editions/2026-10-08/",
-          "headline": "Goldman raises SpaceX price target to $230 before earnings",
-          "url": "https://finance.yahoo.com/markets/stocks/articles/goldman-sachs-revamps-spacex-stock-020300652.html",
-          "source": "TheStreet"
         }
       ]
     },
@@ -775,8 +787,22 @@
       "name": "Larry Ellison",
       "slug": "larry-ellison",
       "sector": "AI & tech",
-      "count": 10,
+      "count": 12,
       "stories": [
+        {
+          "edition": "2026-10-10",
+          "editionUrl": "editions/2026-10-10/",
+          "headline": "Paramount Skydance closes Warner Bros. Discovery takeover",
+          "url": "https://www.inquirer.com/entertainment/paramount-warner-brothers-deal-closes-20261006.html",
+          "source": "The Philadelphia Inquirer"
+        },
+        {
+          "edition": "2026-10-10",
+          "editionUrl": "editions/2026-10-10/",
+          "headline": "Broadcom lines up $50B to finance OpenAI's custom chips",
+          "url": "https://cryptobriefing.com/broadcom-50-billion-openai-chip-financing/",
+          "source": "CryptoBriefing"
+        },
         {
           "edition": "2026-10-08",
           "editionUrl": "editions/2026-10-08/",
@@ -797,20 +823,6 @@
           "headline": "Oracle's AI debt binge leaves Ellison exposed",
           "url": "https://www.billionaires.africa/2026/10/05/billionaire-larry-ellison-lost-almost-200-billion-in-a-year/",
           "source": "Billionaires.Africa"
-        },
-        {
-          "edition": "2026-10-04",
-          "editionUrl": "editions/2026-10-04/",
-          "headline": "Ellison pledges $9.2 billion more Oracle stock as collateral",
-          "url": "https://www.fxleaders.com/news/2026/10/01/red-flag-for-oracle-larry-ellison-pledges-billions-more-in-orcl-stock/",
-          "source": "FX Leaders"
-        },
-        {
-          "edition": "2026-10-01",
-          "editionUrl": "editions/2026-10-01/",
-          "headline": "Ellison pledges $9.2 billion more Oracle stock for son's deal",
-          "url": "https://www.investing.com/news/company-news/larry-ellison-adds-92-billion-in-oracle-shares-as-loan-collateral-4918330",
-          "source": "Investing.com"
         }
       ]
     },
@@ -818,8 +830,15 @@
       "name": "Jensen Huang",
       "slug": "jensen-huang",
       "sector": "AI & tech",
-      "count": 8,
+      "count": 9,
       "stories": [
+        {
+          "edition": "2026-10-10",
+          "editionUrl": "editions/2026-10-10/",
+          "headline": "Nvidia pledges $1B to US science and quantum push",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years",
+          "source": "NVIDIA Newsroom"
+        },
         {
           "edition": "2026-10-09",
           "editionUrl": "editions/2026-10-09/",
@@ -847,13 +866,49 @@
           "headline": "Huang's fortune tops $200 billion as Nvidia hits record",
           "url": "https://www.forbes.com/sites/conormurray/2026/10/02/jensen-huangs-fortune-breaks-200-billion-as-nvidia-stock-reaches-record-high/",
           "source": "Forbes"
+        }
+      ]
+    },
+    {
+      "name": "Masayoshi Son",
+      "slug": "masayoshi-son",
+      "sector": "AI & tech",
+      "count": 8,
+      "stories": [
+        {
+          "edition": "2026-10-10",
+          "editionUrl": "editions/2026-10-10/",
+          "headline": "SoftBank's Son warns AI 'super dangerous' in wrong hands",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/05/softbanks-masayoshi-son-has-rare-cautionary-note-on-ai-safety",
+          "source": "The Star (Malaysia)"
         },
         {
-          "edition": "2026-09-29",
-          "editionUrl": "editions/2026-09-29/",
-          "headline": "Nvidia adds a record $150 billion to its buyback",
-          "url": "https://www.fool.com/investing/2026/09/28/jensen-huang-just-gave-investors-150-billion-reaso/",
-          "source": "The Motley Fool"
+          "edition": "2026-10-07",
+          "editionUrl": "editions/2026-10-07/",
+          "headline": "SoftBank completes final $10B tranche into OpenAI",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/02/softbank-completes-final-phase-of-30-billion-investment-in-openai",
+          "source": "The Star (Malaysia)"
+        },
+        {
+          "edition": "2026-10-06",
+          "editionUrl": "editions/2026-10-06/",
+          "headline": "SoftBank's Son warns 'superintelligence' could turn dangerous",
+          "url": "https://www.businesstoday.in/technology/artificial-intelligence/story/superintelligence-could-turn-super-dangerous-says-softbanks-masayoshi-son-559613-2026-10-05",
+          "source": "Business Today"
+        },
+        {
+          "edition": "2026-10-05",
+          "editionUrl": "editions/2026-10-05/",
+          "headline": "SoftBank's Son warns superintelligence could be 'super dangerous'",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/05/softbanks-masayoshi-son-has-rare-cautionary-note-on-ai-safety",
+          "source": "The Star"
+        },
+        {
+          "edition": "2026-10-04",
+          "editionUrl": "editions/2026-10-04/",
+          "headline": "SoftBank completes $30 billion OpenAI investment tranche",
+          "url": "https://www.manilatimes.net/2026/10/03/business/foreign-business/softbank-completes-30b-openai-investment/2438078",
+          "source": "Manila Times"
         }
       ]
     },
@@ -901,49 +956,6 @@
       ]
     },
     {
-      "name": "Masayoshi Son",
-      "slug": "masayoshi-son",
-      "sector": "AI & tech",
-      "count": 7,
-      "stories": [
-        {
-          "edition": "2026-10-07",
-          "editionUrl": "editions/2026-10-07/",
-          "headline": "SoftBank completes final $10B tranche into OpenAI",
-          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/02/softbank-completes-final-phase-of-30-billion-investment-in-openai",
-          "source": "The Star (Malaysia)"
-        },
-        {
-          "edition": "2026-10-06",
-          "editionUrl": "editions/2026-10-06/",
-          "headline": "SoftBank's Son warns 'superintelligence' could turn dangerous",
-          "url": "https://www.businesstoday.in/technology/artificial-intelligence/story/superintelligence-could-turn-super-dangerous-says-softbanks-masayoshi-son-559613-2026-10-05",
-          "source": "Business Today"
-        },
-        {
-          "edition": "2026-10-05",
-          "editionUrl": "editions/2026-10-05/",
-          "headline": "SoftBank's Son warns superintelligence could be 'super dangerous'",
-          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/05/softbanks-masayoshi-son-has-rare-cautionary-note-on-ai-safety",
-          "source": "The Star"
-        },
-        {
-          "edition": "2026-10-04",
-          "editionUrl": "editions/2026-10-04/",
-          "headline": "SoftBank completes $30 billion OpenAI investment tranche",
-          "url": "https://www.manilatimes.net/2026/10/03/business/foreign-business/softbank-completes-30b-openai-investment/2438078",
-          "source": "Manila Times"
-        },
-        {
-          "edition": "2026-10-01",
-          "editionUrl": "editions/2026-10-01/",
-          "headline": "SoftBank sells record $11.1 billion junk bond to fund AI bet",
-          "url": "https://www.freemalaysiatoday.com/category/business/2026/09/24/softbank-raises-us-11-1bil-in-world-s-biggest-high-yield-corporate-bond-sale",
-          "source": "Free Malaysia Today"
-        }
-      ]
-    },
-    {
       "name": "Mukesh Ambani",
       "slug": "mukesh-ambani",
       "sector": "Other",
@@ -983,6 +995,49 @@
           "headline": "Reliance lines up second $1 billion bond sale in three weeks",
           "url": "https://www.billionaires.africa/2026/09/24/billionaire-mukesh-ambanis-reliance-lines-up-1-billion-bond-sale-its-second-in-three-weeks/",
           "source": "Billionaires.Africa"
+        }
+      ]
+    },
+    {
+      "name": "Aliko Dangote",
+      "slug": "aliko-dangote",
+      "sector": "Industrials",
+      "count": 5,
+      "stories": [
+        {
+          "edition": "2026-10-10",
+          "editionUrl": "editions/2026-10-10/",
+          "headline": "Dangote refinery's $1.6B IPO enters its final days",
+          "url": "https://nairametrics.com/2026/09/15/7-things-to-know-about-the-dangote-refinery-ipo/",
+          "source": "Nairametrics"
+        },
+        {
+          "edition": "2026-10-07",
+          "editionUrl": "editions/2026-10-07/",
+          "headline": "Dangote refinery cuts off fuel importers over blending",
+          "url": "https://www.billionaires.africa/2026/10/06/aliko-dangotes-refinery-cuts-off-petrol-to-importers-it-accuses-of-blending-its-fuel/",
+          "source": "Billionaires.Africa"
+        },
+        {
+          "edition": "2026-10-06",
+          "editionUrl": "editions/2026-10-06/",
+          "headline": "Dangote's $16B Kenya refinery hit by new legal challenge",
+          "url": "https://www.billionaires.africa/2026/10/03/africas-richest-man-aliko-dangote-blames-oil-firms-for-kenya-refinery-protests/",
+          "source": "Billionaires.Africa"
+        },
+        {
+          "edition": "2026-09-28",
+          "editionUrl": "editions/2026-09-28/",
+          "headline": "Dangote says refinery expansion to 1.4 million barrels on track",
+          "url": "https://businessday.ng/news/article/dangote-says-ambitious-timeline-for-mega-refinery-on-track/",
+          "source": "BusinessDay NG"
+        },
+        {
+          "edition": "2026-09-27",
+          "editionUrl": "editions/2026-09-27/",
+          "headline": "Dangote's refinery lifts Nigeria's petrol exports sixfold",
+          "url": "https://parrotnigeria.com/2026/09/26/aliko-dangotes-refinery-lifts-nigerias-petrol-exports-sixfold-to-750-million/",
+          "source": "Parrot Nigeria"
         }
       ]
     },
@@ -1114,48 +1169,12 @@
           "source": "CNBC"
         }
       ]
-    },
-    {
-      "name": "Aliko Dangote",
-      "slug": "aliko-dangote",
-      "sector": "Industrials",
-      "count": 4,
-      "stories": [
-        {
-          "edition": "2026-10-07",
-          "editionUrl": "editions/2026-10-07/",
-          "headline": "Dangote refinery cuts off fuel importers over blending",
-          "url": "https://www.billionaires.africa/2026/10/06/aliko-dangotes-refinery-cuts-off-petrol-to-importers-it-accuses-of-blending-its-fuel/",
-          "source": "Billionaires.Africa"
-        },
-        {
-          "edition": "2026-10-06",
-          "editionUrl": "editions/2026-10-06/",
-          "headline": "Dangote's $16B Kenya refinery hit by new legal challenge",
-          "url": "https://www.billionaires.africa/2026/10/03/africas-richest-man-aliko-dangote-blames-oil-firms-for-kenya-refinery-protests/",
-          "source": "Billionaires.Africa"
-        },
-        {
-          "edition": "2026-09-28",
-          "editionUrl": "editions/2026-09-28/",
-          "headline": "Dangote says refinery expansion to 1.4 million barrels on track",
-          "url": "https://businessday.ng/news/article/dangote-says-ambitious-timeline-for-mega-refinery-on-track/",
-          "source": "BusinessDay NG"
-        },
-        {
-          "edition": "2026-09-27",
-          "editionUrl": "editions/2026-09-27/",
-          "headline": "Dangote's refinery lifts Nigeria's petrol exports sixfold",
-          "url": "https://parrotnigeria.com/2026/09/26/aliko-dangotes-refinery-lifts-nigerias-petrol-exports-sixfold-to-750-million/",
-          "source": "Parrot Nigeria"
-        }
-      ]
     }
   ],
   "notes": {
     "movers": "Estimated; partial. Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are at least 25% of the person's Forbes net worth. For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's Walmart stake), the estimate is the published net worth × that stock's daily % change.",
     "mostDeals": "Counts profile deal entries dated within the last 12 months (month-only dates count if any part of the month falls in the window). 21 entries without a month-level date were not counted.",
-    "mostMoves": "Stories across 12 archived editions. 1 stories named nobody in the top-100 index."
+    "mostMoves": "Stories across 13 archived editions. 1 stories named nobody in the top-100 index."
   },
   "minCoverage": 0.25
 }

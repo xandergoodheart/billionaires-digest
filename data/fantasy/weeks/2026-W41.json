@@ -2200,7 +2200,19 @@
       "captain": "elon-musk",
       "points": 1610
     },
-    "perfect": null
+    "perfect": {
+      "picks": [
+        "colin-huang",
+        "daniel-ek",
+        "larry-ellison",
+        "tobias-lutke",
+        "william-ding"
+      ],
+      "captain": "larry-ellison",
+      "points": 11459,
+      "salary": 94,
+      "method": "exact search (dynamic programming over salary and picks)"
+    }
   },
-  "final": false
+  "final": true
 }
