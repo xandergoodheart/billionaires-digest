@@ -1,11 +1,11 @@
 {
-  "date": "Saturday, October 10, 2026",
-  "updated": "Oct 10, 2026 · morning edition",
+  "date": "Sunday, October 11, 2026",
+  "updated": "Oct 11, 2026 · morning edition",
   "lede": {
     "kicker": "Lede of the day",
-    "headline": "Ellison family closes $110B Warner Bros. Discovery deal",
-    "dek": "Paramount Skydance completed its takeover of Warner Bros. Discovery on Oct. 6, backed by $47 billion in new equity led by the Ellison family, creating a new company called Skydance.",
-    "ini": "LE"
+    "headline": "Trump hands out science medals to tech's billionaires, hours after a visa crackdown",
+    "dek": "Elon Musk, Sergey Brin, Jensen Huang and Michael Dell got the White House treatment on Thursday. Hours earlier, the administration suspended Microsoft and other sponsors from a green-card program.",
+    "ini": "EM"
   },
   "top10": [
     {
@@ -72,161 +72,187 @@
   "top10AsOf": "Net worths per Forbes Real-Time Billionaires as of Sep 24, 2026 9:15 PM ET",
   "stories": [
     {
-      "who": "Larry Ellison",
-      "via": "Skydance",
+      "who": "Elon Musk",
+      "sector": "AI & tech",
       "people": [
-        "Larry Ellison"
+        "Elon Musk",
+        "Sergey Brin",
+        "Jensen Huang",
+        "Michael Dell"
       ],
-      "sector": "Media",
-      "type": "Acquisition",
-      "tickers": "SKYD",
-      "read": "Consolidation",
-      "direction": "up",
-      "headline": "Paramount Skydance closes Warner Bros. Discovery takeover",
-      "move": "Paramount Skydance completed its acquisition of Warner Bros. Discovery on Oct. 6, forming a new company called Skydance that combines Paramount Pictures, Warner Bros., CBS, CNN, HBO, Paramount+ and HBO Max. The deal was financed with about $47 billion in new equity led by the Ellison family, alongside RedBird Capital and sovereign wealth funds from Saudi Arabia, Qatar and Abu Dhabi. David Ellison becomes chairman and CEO, with former Mattel chief Ynon Kreiz as co-CEO. The combined company must also pay down roughly $82 billion in debt.",
-      "why": "It closes one of the largest media mergers ever, days after Paramount settled antitrust lawsuits from a coalition of states by agreeing to an editorial-independence board for CNN and an extra $1.5 billion in movie spending over five years.",
-      "bear": "Skydance is targeting more than $6 billion in cost cuts within three years, which raises the risk of layoffs across the combined company, and press reports still disagree on the deal's total value.",
-      "watch": "How quickly Skydance moves to merge Paramount+ and HBO Max into one streaming service.",
-      "source": "The Philadelphia Inquirer",
-      "url": "https://www.inquirer.com/entertainment/paramount-warner-brothers-deal-closes-20261006.html"
+      "type": "Recognition",
+      "tickers": "TSLA · GOOGL · NVDA · DELL",
+      "read": "Star treatment",
+      "direction": "flat",
+      "headline": "Trump gives Musk, Brin, Huang science medals at White House",
+      "move": "President Trump awarded the National Medal of Science to Elon Musk, Sergey Brin, Jensen Huang and AMD's Lisa Su at a Washington ceremony on Thursday, October 8. Michael Dell and Microsoft's Satya Nadella received the National Medal of Technology and Innovation instead. Trump called Musk \"our modern-day Thomas Edison\" and said, \"Because of these people here, we will always be on top. No one else can compete with us.\" Hours before the ceremony, the administration suspended Microsoft and several other companies from the green-card sponsorship program.",
+      "why": "The honors double as a message that the administration wants to keep its biggest AI and chip players close, even as it tightens the visa pipeline many of the same companies rely on for talent.",
+      "bear": "A medal ceremony changes nothing about earnings, chip supply or visa policy; it's a photo opportunity timed to distract from the visa suspension announced the same morning.",
+      "watch": "Whether the Permanent Labor Certification suspension affecting Microsoft and Adobe expands to other sponsors.",
+      "source": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/10/8/trump-gives-top-us-science-awards-to-elon-musk-and-other-tech-executives"
     },
     {
-      "who": "Jensen Huang",
-      "via": "Nvidia",
-      "people": [
-        "Jensen Huang"
-      ],
+      "who": "Steve Ballmer",
       "sector": "AI & tech",
-      "type": "Investment",
-      "tickers": "NVDA",
-      "read": "Soft power",
+      "via": "Microsoft",
+      "people": [
+        "Steve Ballmer",
+        "Bill Gates"
+      ],
+      "type": "Policy",
+      "tickers": "MSFT · ADBE",
+      "read": "Visa crackdown",
+      "direction": "down",
+      "headline": "US suspends Microsoft, Adobe from green-card visa program",
+      "move": "The Trump administration suspended Microsoft, Adobe and several other companies from the H-1B permanent labor certification (green-card sponsorship) process, citing fraud. Vice President JD Vance announced it on Thursday, October 8, saying the program \"has become rife with fraud,\" and said he'd support eliminating the H-1B program altogether. Microsoft said it \"look[s] forward to providing the Administration with additional information\" and that it files H-1B petitions only for workers who meet the visa category's standards.",
+      "why": "Microsoft is Steve Ballmer's largest asset and a major part of Bill Gates's fortune; a prolonged freeze on skilled-worker sponsorship touches the hiring pipeline behind their stakes.",
+      "bear": "This hits sponsorship paperwork, not current staff or product roadmaps, and Microsoft says it's cooperating; the practical effect on the company may be small.",
+      "watch": "Whether the suspension is lifted after Microsoft's response, or whether more sponsors are added to the list.",
+      "source": "Semafor",
+      "url": "https://www.semafor.com/article/10/08/2026/trump-administration-blocks-tech-companies-from-visa-program"
+    },
+    {
+      "who": "Peter Thiel",
+      "sector": "AI & tech",
+      "via": "Palantir",
+      "people": [
+        "Peter Thiel"
+      ],
+      "type": "Markets",
+      "tickers": "PLTR",
+      "read": "Bulls pile in",
+      "direction": "up",
+      "headline": "Goldman Sachs upgrades Palantir to Buy on sovereign AI demand",
+      "move": "Goldman Sachs analyst Gabriela Borges upgraded Palantir to Buy from Neutral on Thursday, October 8, with a 12-month price target of $230, implying about 18% upside from Wednesday's close of $194.12. The call cites demand for sovereign AI, bespoke AI systems and Palantir's forward-deployed engineering model. Shares rose 1.8% to $197.53 Thursday, outperforming a falling market (the S&P 500 fell 0.47%, the Nasdaq fell 1.25%).",
+      "why": "Palantir is chairman and major shareholder Peter Thiel's biggest publicly traded position; a bullish turn from a major bank adds to the stock's case after a lagging year against the Nasdaq 100.",
+      "bear": "Palantir still trades at a rich multiple on revenue growth that has to keep accelerating; one upgrade doesn't resolve the valuation debate, and Zacks Research cut its own rating to Hold around the same time.",
+      "watch": "Palantir's next quarterly report for whether sovereign and government deals keep growing as fast as Borges expects.",
+      "source": "IBTimes UK",
+      "url": "https://www.ibtimes.co.uk/palantir-shares-goldman-sachs-buy-upgrade-sovereign-ai-1824696"
+    },
+    {
+      "who": "Elon Musk",
+      "sector": "Autos",
+      "via": "Tesla",
+      "people": [
+        "Elon Musk"
+      ],
+      "type": "Markets",
+      "tickers": "TSLA",
+      "read": "Export-led beat",
+      "direction": "up",
+      "headline": "Tesla's Shanghai factory posts its best month of 2026",
+      "move": "Tesla's Shanghai factory wholesaled 95,366 Model 3 and Model Y vehicles in September, per CPCA data reported around October 8-9 — up 5% from 90,812 a year earlier and 10.7% from August, its best month of 2026. Exports rose 58.3% year over year to 30,529 vehicles while domestic deliveries fell 9.4% to roughly 64,800. Shanghai wholesaled 743,060 vehicles over the first nine months of 2026, up about 22.5% from the same period in 2025.",
+      "why": "Exports, not Chinese demand, drove the gain; Tesla has extended Model 3 and Model Y discounts in China through October 31 to keep domestic buyers coming.",
+      "bear": "Wholesale figures count cars leaving the factory, not retail deliveries, and domestic China demand is still falling even as exports mask it.",
+      "watch": "Whether October discounts revive domestic Chinese demand, and Tesla's Q3 earnings report.",
+      "source": "Tesla North",
+      "url": "https://teslanorth.com/2026/10/09/tesla-shanghai-september-2026/"
+    },
+    {
+      "who": "Elon Musk",
+      "sector": "Autos",
+      "via": "Tesla",
+      "people": [
+        "Elon Musk"
+      ],
+      "type": "Policy",
+      "tickers": "TSLA",
+      "read": "Name over substance",
       "direction": "flat",
-      "headline": "Nvidia pledges $1B to US science and quantum push",
-      "move": "Nvidia said on Oct. 8 it will commit $1 billion over five years to support US research in quantum computing, healthcare and energy security, including funding for universities and for cloud providers serving government science needs. The announcement came at a Washington event tied to the White House's \"Genesis Mission\" science initiative. Nvidia said it would keep working with Department of Energy national labs, including a new supercomputer project at Argonne.",
-      "why": "It ties Nvidia's chips directly to a government-backed science push and deepens the company's relationship with Washington while AI export and chip policy are still being decided.",
-      "bear": "A five-year, $1 billion pledge is small next to Nvidia's market value, and the announcement also keeps Nvidia close to the Trump administration as it lobbies on chip export rules.",
-      "watch": "How much of the $1 billion reaches independent researchers versus Nvidia's own hardware sales.",
-      "source": "NVIDIA Newsroom",
-      "url": "https://nvidianews.nvidia.com/news/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years"
+      "headline": "Tesla renames 'Full Self-Driving' to 'Assisted Driving' in Europe",
+      "move": "Tesla began calling its \"Full Self-Driving\" feature \"Tesla Assisted Driving\" on its European websites, Reuters reported October 9. Pages in Slovakia, Germany, Spain and the Netherlands now redirect to the new name, after Germany's transport ministry said the old name was misleading since the system requires constant driver supervision. The US site still uses \"Full Self-Driving (Supervised).\" Sweden and Italy have also raised concerns about the name. An EU-wide approval vote has been pushed from October to at least December.",
+      "why": "Musk has called the software central to Tesla's future growth; clearing regulatory objections to the name is a step toward EU-wide approval, which the rebrand alone doesn't guarantee.",
+      "bear": "Changing a label doesn't change the underlying software or resolve the technical sticking points Germany and France are still testing for.",
+      "watch": "The EU-wide vote on the driver-assist software, now expected no earlier than December.",
+      "source": "The Star (Reuters)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/09/tesla-renames-039full-self-driving039-to-039assisted-driving039-in-europe-as-it-chases-clearance-for-software"
+    },
+    {
+      "who": "Mark Zuckerberg",
+      "sector": "AI & tech",
+      "via": "Meta",
+      "people": [
+        "Mark Zuckerberg"
+      ],
+      "type": "Policy",
+      "tickers": "META",
+      "read": "Competitive muscle",
+      "direction": "flat",
+      "headline": "Meta blocks TikTok parent ByteDance's ads in seven countries",
+      "move": "Meta banned advertising from ByteDance, TikTok's parent, on Facebook and Instagram, effective Thursday, October 8, in the US, Canada, Egypt, Indonesia, Japan, Thailand and Vietnam. The ban also covers third-party ads directing users to TikTok or other ByteDance properties. A Meta spokesperson said, \"We don't have to run ads from a competitor whose goal is to pull people off our apps.\" The move follows a August settlement in which Meta agreed to daily and nighttime usage limits for minors, after which Meta pressed TikTok to adopt similar limits; TikTok rejected Meta's ads calling for that.",
+      "why": "Meta is using ad-platform access, not just price or features, as a competitive weapon against its biggest short-form video rival.",
+      "bear": "The ban could invite antitrust scrutiny over a dominant platform denying a rival access to its ad network, and neither company has disclosed how much ad revenue is actually at stake.",
+      "watch": "Whether Meta extends the ban to more countries or TikTok challenges it.",
+      "source": "Innovation Village",
+      "url": "https://innovation-village.com/meta-bans-tiktok-ads-across-seven-markets-as-rivalry-escalates/"
+    },
+    {
+      "who": "Warren Buffett",
+      "sector": "Real estate",
+      "via": "Lennar",
+      "people": [
+        "Warren Buffett"
+      ],
+      "type": "Investment",
+      "tickers": "BRK.B · LEN",
+      "read": "Buying the dip",
+      "direction": "up",
+      "headline": "Berkshire raises Lennar stake past 12% despite short-seller report",
+      "move": "Berkshire Hathaway bought about 2.4 million Lennar Class A shares and 15,028 Class B shares, worth roughly $192.6 million, on October 1 and 2, lifting its stake to about 28.43 million Class A and 568,028 Class B shares, per an SEC filing reported October 6. Lennar shares fell sharply after short-seller Hunterbrook published a report on Lennar's dealings with its Millrose Properties spinoff, which it said bought more than 700 Lennar homes for an estimated $200 million-plus, 356 of them in the final week of Lennar's third quarter.",
+      "why": "Berkshire kept buying into the stock even as a short-seller report and a weak housing market pressured the shares — a vote of confidence from the company's largest outside shareholder.",
+      "bear": "Berkshire's purchases predate the Hunterbrook report; it's unclear whether Buffett's team would buy at the same pace now, and mortgage rates near 7.3% are still a drag on homebuilders.",
+      "watch": "Lennar's next earnings report and any Berkshire 13F update on whether the buying continued through the Hunterbrook selloff.",
+      "source": "IBTimes UK",
+      "url": "https://www.ibtimes.co.uk/berkshire-hathaway-buys-lennar-shares-before-report-1823995"
     },
     {
       "who": "Jeff Bezos",
-      "via": "Blue Origin",
-      "people": [
-        "Jeff Bezos"
-      ],
-      "sector": "Aerospace",
-      "type": "Investment",
-      "tickers": "Private",
-      "read": "War chest",
-      "direction": "up",
-      "headline": "Blue Origin's first outside funding round tops $10B",
-      "move": "Blue Origin is raising about $10 billion from outside investors for the first time. CEO Dave Limp said in a Sept. 30 update that the round was \"oversubscribed\" but not yet closed. Earlier reports put the valuation at $130 billion; the Wall Street Journal later reported terms near $140 billion, which Limp did not confirm. Bezos is contributing $2 billion of the round himself, on top of the roughly $30 billion he has put into the company since founding it in 2000, largely funded by selling Amazon stock.",
-      "why": "It's Blue Origin's first capital raise from outside investors after 25 years of being bankrolled almost entirely by its founder, as the company ramps up its New Glenn rocket and lunar lander programs against SpaceX.",
-      "bear": "The final size and valuation haven't been confirmed by the company, and outside money brings outside expectations to a company Bezos has run largely as a personal project.",
-      "watch": "Official confirmation of the round's size and valuation once it closes.",
-      "source": "CNBC",
-      "url": "https://www.cnbc.com/2026/09/30/blue-origin-funding-round.html"
-    },
-    {
-      "who": "Aliko Dangote",
-      "via": "Dangote Refinery",
-      "people": [
-        "Aliko Dangote"
-      ],
-      "sector": "Energy",
-      "type": "IPO / Markets",
-      "tickers": "Private",
-      "read": "Retail test",
-      "direction": "up",
-      "headline": "Dangote refinery's $1.6B IPO enters its final days",
-      "move": "The IPO for Aliko Dangote's Nigerian oil refinery closes Oct. 13. The offer covers 4.1 billion shares at 525 naira (about 40 cents) each, aiming to raise up to 2.15 trillion naira (roughly $1.6 billion), with a minimum purchase of 10 shares aimed at retail investors. Nigeria's exchange expects to confirm share allotments around Nov. 11.",
-      "why": "It's a test of local retail demand for Africa's largest private company, coming as Dangote also seeks $14.3 billion to double the refinery's capacity to 1.4 million barrels a day.",
-      "bear": "The naira has been volatile, and the refinery's profitability swung from a loss in 2025 to a large profit in early 2026, so recent results may not repeat.",
-      "watch": "Allotment results around Nov. 11 and whether shares list above the offer price in late November.",
-      "source": "Nairametrics",
-      "url": "https://nairametrics.com/2026/09/15/7-things-to-know-about-the-dangote-refinery-ipo/"
-    },
-    {
-      "who": "Ma Huateng",
-      "via": "Tencent",
-      "people": [
-        "Ma Huateng"
-      ],
       "sector": "AI & tech",
-      "type": "Investment",
-      "tickers": "700 HK",
-      "read": "Debt-funded AI",
-      "direction": "up",
-      "headline": "Tencent weighs $5B bond sale to fund AI buildout",
-      "move": "Tencent is considering an offshore bond sale of up to $5 billion, denominated in US dollars and offshore yuan, to help fund its AI and computing expansion, Bloomberg reported Oct. 8. It would follow a $4.66 billion bond sale in June, the company's largest debt deal since 2020. Tencent's AI and computing capital spending rose 176% to 52.8 billion yuan (about $7.9 billion) in the June quarter.",
-      "why": "It shows Tencent turning to debt, not just cash flow, to keep pace with AI infrastructure spending, the same week it emerged as a top backer of AI lab DeepSeek's new funding round.",
-      "bear": "Neither the size nor the timing of the bond sale is finalized, and Tencent hasn't said how the money would be used.",
-      "watch": "Whether the bond is priced this month, as people familiar with the plans told Bloomberg.",
-      "source": "Business Today Malaysia",
-      "url": "https://www.businesstoday.com.my/2026/10/08/tencent-mulls-us5-billion-bond-sale-to-fund-ai-expansion/"
-    },
-    {
-      "who": "Masayoshi Son",
-      "via": "SoftBank",
+      "via": "Amazon",
       "people": [
-        "Masayoshi Son"
+        "Jeff Bezos",
+        "Jensen Huang"
       ],
-      "sector": "AI & tech",
-      "type": "Policy",
-      "tickers": "9984.T",
-      "read": "Do as I say",
+      "type": "Financing",
+      "tickers": "AMZN · NVDA",
+      "read": "Off-balance-sheet AI",
       "direction": "flat",
-      "headline": "SoftBank's Son warns AI 'super dangerous' in wrong hands",
-      "move": "Speaking at a science forum in Kyoto on Oct. 4, Masayoshi Son said superintelligent AI could become \"super dangerous\" if it falls into the wrong hands, and called for countries to cooperate on controlling it. He announced no change to SoftBank's own AI spending.",
-      "why": "It's a notably cautious tone from one of AI's biggest financial backers — Son has committed more than $64 billion to OpenAI alone and has dismissed bubble talk over the past year.",
-      "bear": "The warning came with no funding pullback, safety program or investment condition attached, so it reads more as a policy talking point than a change in strategy.",
-      "watch": "Whether Son's comments lead to any new safety commitments from SoftBank's AI portfolio companies.",
-      "source": "The Star (Malaysia)",
-      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/05/softbanks-masayoshi-son-has-rare-cautionary-note-on-ai-safety"
-    },
-    {
-      "who": "Henry Samueli",
-      "via": "Broadcom",
-      "people": [
-        "Henry Samueli",
-        "Larry Ellison",
-        "Elon Musk"
-      ],
-      "sector": "AI & tech",
-      "type": "Investment",
-      "tickers": "AVGO",
-      "read": "Chip financing",
-      "direction": "up",
-      "headline": "Broadcom lines up $50B to finance OpenAI's custom chips",
-      "move": "The Wall Street Journal reported Oct. 7 that Broadcom is trying to arrange more than $50 billion in financing for custom AI chips it is co-developing with OpenAI, with Apollo Global Management and Blackstone among the private lenders approached. The financing would support chips tied to OpenAI's plan to deploy 10 gigawatts of AI accelerators by the end of 2029. The same report said Oracle and SpaceX are separately in talks with lenders including Apollo, Blackstone and Goldman Sachs on their own AI chip and compute deals.",
-      "why": "It shows AI's buildout increasingly running on borrowed money arranged by chipmakers and banks, not just the cash reserves of the AI labs themselves.",
-      "bear": "Talks are early, no deal is expected before year-end, and none of the companies involved has confirmed the size or structure of the financing.",
-      "watch": "Whether Broadcom's financing, and the parallel Oracle and SpaceX deals, are finalized before year-end.",
-      "source": "CryptoBriefing",
-      "url": "https://cryptobriefing.com/broadcom-50-billion-openai-chip-financing/"
+      "headline": "Amazon explores $8 billion investor financing for Nvidia chips",
+      "move": "Amazon is in talks with outside investors over roughly $8 billion of financing built around its Nvidia chips, the Financial Times reported October 2. Under the plan, the chips would move into a special-purpose vehicle that raises money from investors, with Amazon leasing them back for its data centers. As of the report, no deal had been finalized and Amazon had not commented.",
+      "why": "The structure would let Amazon keep using the chips in AWS while shifting some of the capital cost off its own balance sheet, as its 2026 capex is expected to run around $220 billion.",
+      "bear": "Advanced AI chips depreciate fast — Bloomberg has flagged roughly a five-year replacement cycle — so outside investors in the vehicle would bear the risk that newer Nvidia generations erode the hardware's value before the financing is paid off.",
+      "watch": "Whether Amazon and its investors finalize the structure, and whether other hyperscalers adopt similar off-balance-sheet chip financing.",
+      "source": "Let's Data Science",
+      "url": "https://letsdatascience.com/news/amazon-explores-investor-financing-for-nvidia-ai-chips-c8ce1822",
+      "correction": null
     }
   ],
-  "consensus": {
-    "headline": "AI's financiers turn to debt, not just equity",
-    "body": "In the same week, Nvidia pledged $1 billion toward US science infrastructure, Tencent moved to raise up to $5 billion in bonds for its AI buildout, and Broadcom began lining up more than $50 billion in financing for OpenAI's custom AI chips. Three of tech's biggest balance sheets are now tapping outside capital, not just cash on hand, to keep pace with AI's compute costs.",
-    "tags": [
-      "AI & tech",
-      "Financing"
-    ]
-  },
-  "filings": [],
-  "watch": [
-    "Oct 13: Dangote refinery's $1.6B IPO closes in Nigeria; allotment results expected around Nov 11.",
-    "Oct 21: Tesla's third-quarter earnings call, where Musk is expected to update AI and robotics plans.",
-    "Oct 25-28: Oracle AI World in Las Vegas, the company's first major event since the Paramount-Warner Bros. Discovery deal closed.",
-    "Whether Broadcom's $50 billion OpenAI chip financing and Blue Origin's funding round close on the terms reported this week."
+  "consensus": null,
+  "filings": [
+    {
+      "filer": "Berkshire Hathaway",
+      "form": "Form 4",
+      "change": "Bought ~2.4M Lennar Class A and 15,028 Class B shares (~$192.6M) Oct 1-2, lifting its stake to roughly 29M shares and past the 10% SEC reporting threshold.",
+      "direction": "up"
+    }
   ],
-  "quickHits": [],
+  "watch": [
+    "Oct 13: JPMorgan is expected to open bank earnings season.",
+    "Oct 13: Dangote Refinery's Lagos IPO subscription window is set to close.",
+    "Oct 25-28: Oracle AI World runs at The Venetian in Las Vegas.",
+    "December (at the earliest): the EU-wide vote on Tesla's driver-assist software, pushed back from October."
+  ],
+  "quickHits": [
+    "Barclays started coverage of Palantir at Overweight with a $265 price target this week, even as Zacks Research cut its own rating to Hold.",
+    "Dangote Refinery's IPO prospectus shows a $1.82 billion first-half-2026 profit after a $476 million loss for all of 2025, Reuters reported.",
+    "Nigeria's NNPC is set to supply Dangote Refinery eight cargoes of Nigerian crude plus one WTI Midland cargo in October, Reuters reported."
+  ],
   "memo": [
-    "AI infrastructure is increasingly funded with debt and outside capital, not just founder cash — Blue Origin, Tencent and OpenAI's chip partners are all borrowing or raising external money for AI-era buildouts.",
-    "Family-controlled companies are willing to dilute ownership to fund growth: the $110 billion Paramount-Warner Bros. deal and Dangote's refinery IPO both bring in outside capital at scale.",
-    "Public caution from AI's biggest backers, like SoftBank's Son, rarely comes with funding pullbacks — don't mistake cautious rhetoric for a change in capital allocation."
+    "A fast, cheap fix on labeling can defuse a regulatory fight without touching the product — Tesla's rename shows compliance theater can buy time.",
+    "A big, patient shareholder can keep buying through bad headlines that would sink a smaller holder's conviction — Berkshire's Lennar buying is a reminder that staying power is itself an edge.",
+    "Platforms are now treating ad-network access as a competitive weapon, not just a revenue line — expect more bans like Meta's on rivals, not fewer."
   ],
   "ledger": null
 }
