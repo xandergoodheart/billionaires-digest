@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-10",
+  "generated": "2026-10-11",
   "inputs": {
-    "filingsGenerated": "2026-10-10T15:30:37.897Z",
-    "pricesGenerated": "2026-10-10T15:34:18.347Z",
+    "filingsGenerated": "2026-10-11T15:52:18.640Z",
+    "pricesGenerated": "2026-10-11T15:56:02.311Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 13
+    "editions": 14
   },
   "gainers": [
     {
@@ -307,11 +307,25 @@
       ]
     },
     {
+      "name": "Bill Gates",
+      "slug": "bill-gates",
+      "sector": "AI & tech",
+      "transactions": 8,
+      "filingsCount": 1,
+      "filings": [
+        {
+          "filed": "2026-09-14",
+          "form": "4",
+          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/xslF345X06/tm2625411-1_4seq1.xml"
+        }
+      ]
+    },
+    {
       "name": "Carlos Slim Helu & family",
       "slug": "carlos-slim-helu-family",
       "sector": "Media",
-      "transactions": 9,
-      "filingsCount": 6,
+      "transactions": 6,
+      "filingsCount": 5,
       "filings": [
         {
           "filed": "2026-10-08",
@@ -337,20 +351,6 @@
           "filed": "2026-09-15",
           "form": "4",
           "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126036664/xslF345X06/form4.xml"
-        }
-      ]
-    },
-    {
-      "name": "Bill Gates",
-      "slug": "bill-gates",
-      "sector": "AI & tech",
-      "transactions": 8,
-      "filingsCount": 1,
-      "filings": [
-        {
-          "filed": "2026-09-14",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/xslF345X06/tm2625411-1_4seq1.xml"
         }
       ]
     },
@@ -744,8 +744,29 @@
       "name": "Elon Musk",
       "slug": "elon-musk",
       "sector": "Aerospace",
-      "count": 17,
+      "count": 20,
       "stories": [
+        {
+          "edition": "2026-10-11",
+          "editionUrl": "editions/2026-10-11/",
+          "headline": "Trump gives Musk, Brin, Huang science medals at White House",
+          "url": "https://www.aljazeera.com/news/2026/10/8/trump-gives-top-us-science-awards-to-elon-musk-and-other-tech-executives",
+          "source": "Al Jazeera"
+        },
+        {
+          "edition": "2026-10-11",
+          "editionUrl": "editions/2026-10-11/",
+          "headline": "Tesla's Shanghai factory posts its best month of 2026",
+          "url": "https://teslanorth.com/2026/10/09/tesla-shanghai-september-2026/",
+          "source": "Tesla North"
+        },
+        {
+          "edition": "2026-10-11",
+          "editionUrl": "editions/2026-10-11/",
+          "headline": "Tesla renames 'Full Self-Driving' to 'Assisted Driving' in Europe",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/09/tesla-renames-039full-self-driving039-to-039assisted-driving039-in-europe-as-it-chases-clearance-for-software",
+          "source": "The Star (Reuters)"
+        },
         {
           "edition": "2026-10-10",
           "editionUrl": "editions/2026-10-10/",
@@ -759,27 +780,6 @@
           "headline": "Musk blames \"oligarchs\" as Starlink stays stuck in India",
           "url": "https://www.cnbc.com/2026/10/09/musk-starlink-ambani-india-us.html",
           "source": "CNBC"
-        },
-        {
-          "edition": "2026-10-09",
-          "editionUrl": "editions/2026-10-09/",
-          "headline": "Musk back above $1 trillion as SpaceX stock jumps",
-          "url": "https://www.cnbc.com/2026/10/05/spacex-stock-climbs-highest-since-june-returning-musk-to-trillionaire.html",
-          "source": "CNBC"
-        },
-        {
-          "edition": "2026-10-09",
-          "editionUrl": "editions/2026-10-09/",
-          "headline": "Tesla deliveries beat estimates despite tax-credit hangover",
-          "url": "https://teslanorth.com/2026/10/02/tesla-q3-2026-deliveries/",
-          "source": "TeslaNorth"
-        },
-        {
-          "edition": "2026-10-09",
-          "editionUrl": "editions/2026-10-09/",
-          "headline": "Tech billionaires added $845B in 2026, Musk a third of it",
-          "url": "https://www.gurufocus.com/news/9110046/tech-billionaires-thrive-in-2026-boosting-wealth-by-845-billion",
-          "source": "GuruFocus"
         }
       ]
     },
@@ -830,8 +830,22 @@
       "name": "Jensen Huang",
       "slug": "jensen-huang",
       "sector": "AI & tech",
-      "count": 9,
+      "count": 11,
       "stories": [
+        {
+          "edition": "2026-10-11",
+          "editionUrl": "editions/2026-10-11/",
+          "headline": "Trump gives Musk, Brin, Huang science medals at White House",
+          "url": "https://www.aljazeera.com/news/2026/10/8/trump-gives-top-us-science-awards-to-elon-musk-and-other-tech-executives",
+          "source": "Al Jazeera"
+        },
+        {
+          "edition": "2026-10-11",
+          "editionUrl": "editions/2026-10-11/",
+          "headline": "Amazon explores $8 billion investor financing for Nvidia chips",
+          "url": "https://letsdatascience.com/news/amazon-explores-investor-financing-for-nvidia-ai-chips-c8ce1822",
+          "source": "Let's Data Science"
+        },
         {
           "edition": "2026-10-10",
           "editionUrl": "editions/2026-10-10/",
@@ -852,6 +866,21 @@
           "headline": "Nvidia adds $150B buyback, the biggest ever",
           "url": "https://cryptobriefing.com/nvidia-shares-record-high-buyback-rebound/",
           "source": "CryptoBriefing"
+        }
+      ]
+    },
+    {
+      "name": "Mark Zuckerberg",
+      "slug": "mark-zuckerberg",
+      "sector": "AI & tech",
+      "count": 8,
+      "stories": [
+        {
+          "edition": "2026-10-11",
+          "editionUrl": "editions/2026-10-11/",
+          "headline": "Meta blocks TikTok parent ByteDance's ads in seven countries",
+          "url": "https://innovation-village.com/meta-bans-tiktok-ads-across-seven-markets-as-rivalry-escalates/",
+          "source": "Innovation Village"
         },
         {
           "edition": "2026-10-06",
@@ -861,10 +890,24 @@
           "source": "Tech Insider"
         },
         {
-          "edition": "2026-10-04",
-          "editionUrl": "editions/2026-10-04/",
-          "headline": "Huang's fortune tops $200 billion as Nvidia hits record",
-          "url": "https://www.forbes.com/sites/conormurray/2026/10/02/jensen-huangs-fortune-breaks-200-billion-as-nvidia-stock-reaches-record-high/",
+          "edition": "2026-10-01",
+          "editionUrl": "editions/2026-10-01/",
+          "headline": "Zuckerberg-linked entities sell $21 million in Meta stock",
+          "url": "https://finbold.com/mark-zuckerberg-makes-monster-meta-stock-sale",
+          "source": "Finbold"
+        },
+        {
+          "edition": "2026-09-29",
+          "editionUrl": "editions/2026-09-29/",
+          "headline": "Meta launches a new AI platform for businesses",
+          "url": "https://about.fb.com/news/2026/09/launching-meta-enterprise-platform/",
+          "source": "Meta Newsroom"
+        },
+        {
+          "edition": "2026-09-28",
+          "editionUrl": "editions/2026-09-28/",
+          "headline": "Zuckerberg loses $9 billion in a day on AI doubts",
+          "url": "https://www.forbes.com/sites/maryroeloffs/2026/09/25/mark-zuckerberg-loses-9-billion-in-a-day-as-goldman-sachs-pours-cold-water-on-meta-stock-rally/",
           "source": "Forbes"
         }
       ]
@@ -913,49 +956,6 @@
       ]
     },
     {
-      "name": "Mark Zuckerberg",
-      "slug": "mark-zuckerberg",
-      "sector": "AI & tech",
-      "count": 7,
-      "stories": [
-        {
-          "edition": "2026-10-06",
-          "editionUrl": "editions/2026-10-06/",
-          "headline": "Zuckerberg, Musk, Huang sign voluntary AI safety accord",
-          "url": "https://tech-insider.org/trump-white-house-ai-accord-super-intelligence-2026/",
-          "source": "Tech Insider"
-        },
-        {
-          "edition": "2026-10-01",
-          "editionUrl": "editions/2026-10-01/",
-          "headline": "Zuckerberg-linked entities sell $21 million in Meta stock",
-          "url": "https://finbold.com/mark-zuckerberg-makes-monster-meta-stock-sale",
-          "source": "Finbold"
-        },
-        {
-          "edition": "2026-09-29",
-          "editionUrl": "editions/2026-09-29/",
-          "headline": "Meta launches a new AI platform for businesses",
-          "url": "https://about.fb.com/news/2026/09/launching-meta-enterprise-platform/",
-          "source": "Meta Newsroom"
-        },
-        {
-          "edition": "2026-09-28",
-          "editionUrl": "editions/2026-09-28/",
-          "headline": "Zuckerberg loses $9 billion in a day on AI doubts",
-          "url": "https://www.forbes.com/sites/maryroeloffs/2026/09/25/mark-zuckerberg-loses-9-billion-in-a-day-as-goldman-sachs-pours-cold-water-on-meta-stock-rally/",
-          "source": "Forbes"
-        },
-        {
-          "edition": "2026-09-27",
-          "editionUrl": "editions/2026-09-27/",
-          "headline": "Meta stock jumps 25% since Zuckerberg unveiled Muse AI",
-          "url": "https://www.tikr.com/blog/meta-stock-zuckerberg-vr-glasses-muse-charm-meta-connect",
-          "source": "TIKR"
-        }
-      ]
-    },
-    {
       "name": "Mukesh Ambani",
       "slug": "mukesh-ambani",
       "sector": "Other",
@@ -995,6 +995,49 @@
           "headline": "Reliance lines up second $1 billion bond sale in three weeks",
           "url": "https://www.billionaires.africa/2026/09/24/billionaire-mukesh-ambanis-reliance-lines-up-1-billion-bond-sale-its-second-in-three-weeks/",
           "source": "Billionaires.Africa"
+        }
+      ]
+    },
+    {
+      "name": "Warren Buffett",
+      "slug": "warren-buffett",
+      "sector": "Finance",
+      "count": 6,
+      "stories": [
+        {
+          "edition": "2026-10-11",
+          "editionUrl": "editions/2026-10-11/",
+          "headline": "Berkshire raises Lennar stake past 12% despite short-seller report",
+          "url": "https://www.ibtimes.co.uk/berkshire-hathaway-buys-lennar-shares-before-report-1823995",
+          "source": "IBTimes UK"
+        },
+        {
+          "edition": "2026-10-09",
+          "editionUrl": "editions/2026-10-09/",
+          "headline": "Berkshire keeps buying Lennar as homebuilder slides",
+          "url": "https://www.cnbc.com/2026/10/03/berkshire-buys-more-lennar-shares-but-pace-of-purchases-slows.html",
+          "source": "CNBC"
+        },
+        {
+          "edition": "2026-10-06",
+          "editionUrl": "editions/2026-10-06/",
+          "headline": "Berkshire adds to Lennar stake as homebuilder slumps",
+          "url": "https://www.investing.com/news/insider-trading-news/berkshire-hathaway-increases-lennar-stake-with-1926m-stock-purchase-93CH-4933273",
+          "source": "Investing.com"
+        },
+        {
+          "edition": "2026-09-28",
+          "editionUrl": "editions/2026-09-28/",
+          "headline": "Berkshire nearly doubles its stake in homebuilder Lennar",
+          "url": "https://www.gurufocus.com/news/9099065/berkshire-hathaway-boosts-stake-in-lennar-len-amid-housing-market-challenges",
+          "source": "GuruFocus"
+        },
+        {
+          "edition": "2026-09-27",
+          "editionUrl": "editions/2026-09-27/",
+          "headline": "Berkshire nearly doubles its stake in homebuilder Lennar",
+          "url": "https://www.gurufocus.com/news/9099065/berkshire-hathaway-boosts-stake-in-lennar-len-amid-housing-market-challenges",
+          "source": "GuruFocus"
         }
       ]
     },
@@ -1126,55 +1169,12 @@
           "source": "American Bazaar"
         }
       ]
-    },
-    {
-      "name": "Warren Buffett",
-      "slug": "warren-buffett",
-      "sector": "Finance",
-      "count": 5,
-      "stories": [
-        {
-          "edition": "2026-10-09",
-          "editionUrl": "editions/2026-10-09/",
-          "headline": "Berkshire keeps buying Lennar as homebuilder slides",
-          "url": "https://www.cnbc.com/2026/10/03/berkshire-buys-more-lennar-shares-but-pace-of-purchases-slows.html",
-          "source": "CNBC"
-        },
-        {
-          "edition": "2026-10-06",
-          "editionUrl": "editions/2026-10-06/",
-          "headline": "Berkshire adds to Lennar stake as homebuilder slumps",
-          "url": "https://www.investing.com/news/insider-trading-news/berkshire-hathaway-increases-lennar-stake-with-1926m-stock-purchase-93CH-4933273",
-          "source": "Investing.com"
-        },
-        {
-          "edition": "2026-09-28",
-          "editionUrl": "editions/2026-09-28/",
-          "headline": "Berkshire nearly doubles its stake in homebuilder Lennar",
-          "url": "https://www.gurufocus.com/news/9099065/berkshire-hathaway-boosts-stake-in-lennar-len-amid-housing-market-challenges",
-          "source": "GuruFocus"
-        },
-        {
-          "edition": "2026-09-27",
-          "editionUrl": "editions/2026-09-27/",
-          "headline": "Berkshire nearly doubles its stake in homebuilder Lennar",
-          "url": "https://www.gurufocus.com/news/9099065/berkshire-hathaway-boosts-stake-in-lennar-len-amid-housing-market-challenges",
-          "source": "GuruFocus"
-        },
-        {
-          "edition": "2026-09-24",
-          "editionUrl": "editions/2026-09-24/",
-          "headline": "Berkshire builds a nearly 10% stake in homebuilder Lennar",
-          "url": "https://www.cnbc.com/2026/09/22/lennar-shares-pop-as-berkshire-builds-almost-a-10percent-stake-in-beleaguered-homebuilder.html",
-          "source": "CNBC"
-        }
-      ]
     }
   ],
   "notes": {
     "movers": "Estimated; partial. Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are at least 25% of the person's Forbes net worth. For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's Walmart stake), the estimate is the published net worth × that stock's daily % change.",
     "mostDeals": "Counts profile deal entries dated within the last 12 months (month-only dates count if any part of the month falls in the window). 21 entries without a month-level date were not counted.",
-    "mostMoves": "Stories across 13 archived editions. 1 stories named nobody in the top-100 index."
+    "mostMoves": "Stories across 14 archived editions. 1 stories named nobody in the top-100 index."
   },
   "minCoverage": 0.25
 }
