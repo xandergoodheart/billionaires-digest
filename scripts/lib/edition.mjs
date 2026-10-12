@@ -47,10 +47,10 @@ export function schemaText(longDate, shortDate) {
 }
 
 export function rulesText(longDate) {
-  return `- Today is ${longDate}. Use web search to find real news from the last 48 hours (extend to 7 days only if needed) about investments, acquisitions, sales, insider trades, IPOs, leadership changes and major company moves by people on the Forbes or Bloomberg billionaire lists, focusing on the top 100.
+  return `- Today is ${longDate}. Use web search to find real news from the last 48 hours (extend to 7 days only if needed) about investments, acquisitions, sales, insider trades, IPOs, leadership changes and major company moves by the people in data/people/index.json.
 - Every story must come from a search result. Copy its URL exactly. Never invent a story, number, quote, date or URL. If you can't verify a detail, leave it out.
 - Only use URLs of news articles or filings, not stock-quote or company profile pages.
-- Look up the current top 10 by net worth (Forbes real-time or Bloomberg Billionaires Index) and say which source and date in top10AsOf.
+- Skip the net-worth top 10: top10 and top10AsOf are filled automatically from our own data. Never quote Forbes or Bloomberg net worth figures or ranks.
 - When a story is about someone in the top 10, set "who" to their name exactly as written in top10.
 - Only include a consensus alert when two or more billionaires moved money the same direction in the same sector. Otherwise set it to null.
 - Write plainly: short sentences, no jargon, no hype. Keep facts in "move"; put opinion only in "read", "why", "bear" and "memo".
@@ -110,19 +110,19 @@ export function top10FromIndex(index) {
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-// "2026-09-24T21:15-04:00" -> "Net worths per Forbes Real-Time Billionaires as of Sep 24, 2026 9:15 PM ET"
-// Uses the wall-clock date and time written in asOf (the index is stamped in New York time).
+// "2026-09-24T21:15-04:00" -> "List as of Sep 24, 2026 9:15 PM ET"
+// Uses the wall-clock date and time written in asOf (the index is stamped in New York time). The site never shows the
+// top10 worth values or names the list's outside source; this label stays neutral.
 export function top10AsOfFromIndex(index) {
-  const src = index?.source || 'Forbes Real-Time Billionaires';
   const m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(String(index?.asOf || ''));
-  if (!m) return `Net worths per ${src}`;
+  if (!m) return 'List date not on file';
   let when = `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}`;
   if (m[4] != null) {
     const h = Number(m[4]);
     const h12 = h % 12 === 0 ? 12 : h % 12;
     when += ` ${h12}:${m[5]} ${h < 12 ? 'AM' : 'PM'} ET`;
   }
-  return `Net worths per ${src} as of ${when}`;
+  return `List as of ${when}`;
 }
 
 // Writes digest.json, archive/<isoDate>.json and rebuilds archive/index.json.

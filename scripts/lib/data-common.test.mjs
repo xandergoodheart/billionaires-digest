@@ -109,3 +109,30 @@ test('methodText mentions overrides only when present', () => {
   assert.equal(methodText(null), METHOD);
   assert.equal(methodText(OV), `${METHOD} ${OVERRIDES_METHOD}`);
 });
+
+test('quoteDate: New York date, but midnight-UTC end-of-day quotes keep their UTC date', async () => {
+  const { quoteDate } = await import('./data-common.mjs');
+  assert.equal(quoteDate('2026-09-26T00:00:00.000Z'), '2026-09-26');
+  assert.equal(quoteDate('2026-09-26T01:30:00.000Z'), '2026-09-25');
+  assert.equal(quoteDate('2026-09-25T20:00:00.000Z'), '2026-09-25');
+  assert.equal(quoteDate(null), null);
+  assert.equal(quoteDate('nope'), null);
+});
+
+test('stakeTable: our own Public Stake Value; worth-basis and empty entries excluded; ranks by value', async () => {
+  const { stakeTable, fmtStake } = await import('./data-common.mjs');
+  const est = { generated: '2026-10-12T02:00:00Z', people: {
+    a: { coveredValue: 5e9 }, b: { coveredValue: 9e9 }, c: { coveredValue: 5e9 },
+    w: { method: 'worth', coveredValue: 1e12 }, z: { coveredValue: null }, y: { coveredValue: 0 },
+  } };
+  const t = stakeTable(est);
+  assert.equal(t.asOf, '2026-10-11');
+  assert.deepEqual(t.value, { a: 5e9, b: 9e9, c: 5e9 });
+  assert.deepEqual(t.rank, { b: 1, a: 2, c: 3 });
+  assert.deepEqual(stakeTable(null), { asOf: null, value: {}, rank: {} });
+  assert.equal(fmtStake(1.318e12), '$1.3T');
+  assert.equal(fmtStake(246.79e9), '$246.8B');
+  assert.equal(fmtStake(845e6), '$845M');
+  assert.equal(fmtStake(150e9), '$150B');
+  assert.equal(fmtStake(null), '');
+});

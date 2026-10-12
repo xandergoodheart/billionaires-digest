@@ -231,6 +231,39 @@
   BD.loadPrices = function(){ return optionalJson('data/prices/latest.json'); };          // { quotes: { SYM: { price, changePct, ... } } }
   BD.loadNetworthEst = function(){ return optionalJson('data/prices/networth-est.json'); }; // { method, people: { slug: { estDailyChange } } }
 
+  // Public Stake Value: our own number, disclosed US-listed share counts × latest close (coveredValue in
+  // networth-est.json). Never a net worth. Worth-basis entries (a published net worth moved by one stock) get none.
+  // Same rules as stakeTable/fmtStake in scripts/lib/data-common.mjs.
+  BD.STAKE_LABEL = 'Public Stake Value';
+  BD.STAKE_NONE = 'No US-listed stake on file';
+  BD.STAKE_NOTE = 'Disclosed US-listed shares × latest close. Not a net worth.';
+  BD.stakeTable = function(est){
+    var value = {}, rank = {}, ppl = (est && est.people) || {};
+    Object.keys(ppl).forEach(function(s){
+      var p = ppl[s];
+      if (!p || p.method === 'worth') return;
+      var v = p.coveredValue;
+      if (typeof v === 'number' && isFinite(v) && v > 0) value[s] = v;
+    });
+    Object.keys(value).sort(function(a, b){ return value[b] - value[a] || (a < b ? -1 : a > b ? 1 : 0); })
+      .forEach(function(s, i){ rank[s] = i + 1; });
+    var asOf = null, ms = est && est.generated ? Date.parse(est.generated) : NaN;
+    if (isFinite(ms)) { try { asOf = new Date(ms).toLocaleDateString('en-CA', { timeZone: 'America/New_York' }); } catch (e) { asOf = new Date(ms).toISOString().slice(0, 10); } }
+    return { asOf: asOf, value: value, rank: rank };
+  };
+  BD.fmtStake = function(n){
+    if (typeof n !== 'number' || !isFinite(n) || n <= 0) return '';
+    var u = [[1e12, 'T'], [1e9, 'B'], [1e6, 'M'], [1e3, 'K']];
+    for (var i = 0; i < u.length; i++) if (n >= u[i][0]) return '$' + (Math.round(n / u[i][0] * 10) / 10) + u[i][1];
+    return '$' + Math.round(n);
+  };
+  // A week file's salaryMethod for display. Week files written before Public Stake Value say "Forbes-rank tiers"; the
+  // site never names that list, so that wording is shown neutrally. '' for missing.
+  BD.salaryMethodText = function(m){
+    return typeof m === 'string' ? m.replace(/Forbes-rank tiers/gi, 'tiers by the earlier list rank').replace(/Forbes/gi, 'list') : '';
+  };
+  BD.loadStakes = function(){ return BD.loadNetworthEst().then(function(est){ return BD.stakeTable(est); }); };
+
   // one person's SEC filings: null when the person has no file (404); rejects on other errors
   var personFilingsCache = {};
   BD.loadPersonFilings = function(s){

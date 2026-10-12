@@ -6,7 +6,7 @@
 --   waitlist                  one row per signup (email, referral code, captain pick, confirmed / unsubscribed)
 --   waitlist_leagues          one reserved league per confirmed signup, joined by invite code
 --   waitlist_league_members   who is in which reserved league (max 50 per league)
---   events                    our own simple tracking (no third-party trackers)
+--   events                    our own simple tracking (no third-party trackers), kept 13 months (purge_old_events)
 --
 -- Nobody reads or writes these tables directly from the browser: RLS is on, anon/authenticated have no table
 -- privileges, and everything goes through the functions below (SECURITY DEFINER, fixed search_path).
@@ -15,9 +15,16 @@
 -- referrals first, then earlier signup (so one confirmed friend moves you up exactly REF_BOOST spots).
 -- REF_BOOST lives in ONE function, waitlist_ref_boost(), so the owner can change it in one place.
 --
--- Safe to run more than once, like 0001-0004. It never deletes signup data.
+-- Emails: one signup per mailbox. Uniqueness uses a normalised copy (lowercase, +tag removed, and for gmail.com /
+-- googlemail.com the dots removed too), so "a.b+x@gmail.com" and "ab@gmail.com" are the same person. The address as
+-- typed (trimmed, lowercased) is kept in `email` and is what we send to.
+-- The Billionaire Brief goes only to signups who ticked the box (brief_opt_in), confirmed, and did not unsubscribe.
 --
--- Apply:  psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/0005_waitlist.sql
+-- Safe to run more than once, like 0001-0004. It never deletes signup data.
+-- Sensitive functions have their EXECUTE revoked right after they are created, and the Game sync workflow applies
+-- all migrations in ONE transaction, so a failure part-way can never leave an admin function callable.
+--
+-- Apply:  psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 --single-transaction -f supabase/migrations/0005_waitlist.sql
 
 create schema if not exists extensions;
 create extension if not exists citext with schema extensions;
@@ -53,17 +60,39 @@ language sql immutable set search_path = public, extensions, pg_temp as $$
   )
 $$;
 
+-- Normalised email for uniqueness: lowercase, drop any +tag; gmail.com / googlemail.com also drop dots and become gmail.com.
+create or replace function public.waitlist_email_norm(p text) returns text
+language plpgsql immutable set search_path = public, extensions, pg_temp as $$
+declare
+  e text := lower(btrim(coalesce(p, '')));
+  at_pos int := length(e) - position('@' in reverse(e)) + 1;   -- the last @
+  loc text;
+  dom text;
+begin
+  if position('@' in e) = 0 then return e; end if;
+  loc := split_part(left(e, at_pos - 1), '+', 1);
+  dom := substr(e, at_pos + 1);
+  if dom in ('gmail.com', 'googlemail.com') then
+    loc := replace(loc, '.', '');
+    dom := 'gmail.com';
+  end if;
+  return loc || '@' || dom;
+end $$;
+revoke execute on function public.waitlist_email_norm(text) from public, anon, authenticated;
+
 -- ---------------------------------------------------------------------------
 -- Tables
 -- ---------------------------------------------------------------------------
 create table if not exists public.waitlist (
   id uuid primary key default gen_random_uuid(),
   user_id uuid unique references auth.users(id) on delete cascade,
-  email extensions.citext not null unique check (length(email) between 3 and 254),
+  email extensions.citext not null check (length(email) between 3 and 254),     -- as typed (trimmed, lowercased); we send here
+  email_norm text not null unique check (email_norm = public.waitlist_email_norm(email)),
   referral_code text not null unique check (referral_code ~ '^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{8}$'),
   referred_by uuid references public.waitlist(id) on delete set null,
   captain_pick text check (captain_pick is null or captain_pick ~ '^[a-z0-9-]{2,80}$'),
   source jsonb check (public.waitlist_source_ok(source)),
+  brief_opt_in boolean not null default false,   -- ticked "send me The Billionaire Brief" (default unticked)
   pending_league_code text check (pending_league_code is null or pending_league_code ~ '^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{8}$'),
   confirmed_at timestamptz,
   unsubscribed_at timestamptz,
@@ -134,6 +163,7 @@ language sql security definer set search_path = public, extensions, pg_temp as $
   values (p_user, p_name, case when p_props is null or jsonb_typeof(p_props) <> 'object' or octet_length(p_props::text) > 2048
                                then '{}'::jsonb else p_props end)
 $$;
+revoke execute on function public.waitlist_log(uuid, text, jsonb) from public, anon, authenticated;
 
 -- Place in line for every confirmed signup.
 create or replace function public.waitlist_positions()
@@ -151,6 +181,7 @@ language sql stable security definer set search_path = public, extensions, pg_te
          c.refs
   from c
 $$;
+revoke execute on function public.waitlist_positions() from public, anon, authenticated;
 
 create or replace function public.waitlist_norm_code(p text) returns text
 language sql immutable as $$ select upper(regexp_replace(coalesce(p, ''), '[\s-]', '', 'g')) $$;
@@ -173,11 +204,12 @@ begin
   perform public.waitlist_log(p_user, 'league_joined', jsonb_build_object('league', l.name::text));
   return 'joined';
 end $$;
+revoke execute on function public.waitlist_do_join(uuid, uuid, text) from public, anon, authenticated;
 
 -- ---------------------------------------------------------------------------
 -- Player functions
 -- ---------------------------------------------------------------------------
--- {email, referral_code, confirmed, position, total, referrals_confirmed, captain_pick,
+-- {email, referral_code, confirmed, position, total, referrals_confirmed, captain_pick, brief_opt_in,
 --  league:{name, invite_code, members}|null, joined_leagues:[names]}; null when the caller has not joined.
 create or replace function public.waitlist_me() returns jsonb
 language plpgsql stable security definer set search_path = public, extensions, pg_temp as $$
@@ -204,6 +236,7 @@ begin
     'total', (select count(*) from public.waitlist x where x.confirmed_at is not null),
     'referrals_confirmed', refs,
     'captain_pick', w.captain_pick,
+    'brief_opt_in', w.brief_opt_in,
     'league', lg,
     'joined_leagues', coalesce((
       select jsonb_agg(l.name::text order by m.joined_at)
@@ -213,13 +246,25 @@ begin
 end $$;
 
 -- Sign up (or update a pending signup). Needs a session; an anonymous one is fine.
--- Errors: 'email_taken' when another user has CONFIRMED this email (the page then offers a sign-in link).
-create or replace function public.waitlist_join(p_email text, p_ref text, p_league text, p_source jsonb) returns jsonb
+-- p_brief_opt_in: the "send me The Billionaire Brief" box (default unticked). Re-joining can tick it, never untick it
+-- (unsubscribing is done with the link in every Brief).
+-- Errors (exact messages, for the page):
+--   'email_taken'    another user has CONFIRMED this email (the page then offers a sign-in link)
+--   'email_pending'  another user signed up with this email less than 24 hours ago and has not confirmed yet
+-- Another user's unconfirmed signup older than 24 hours is released (deleted, nothing logged), so nobody can squat an
+-- address they cannot confirm. "Same email" means the same normalised email (waitlist_email_norm).
+-- The old 4-argument version is replaced (one function, so PostgREST calls with 4 or 5 named arguments both work).
+drop function if exists public.waitlist_join(text, text, text, jsonb);
+create or replace function public.waitlist_join(p_email text, p_ref text, p_league text, p_source jsonb,
+                                                p_brief_opt_in boolean default false) returns jsonb
 language plpgsql security definer set search_path = public, extensions, pg_temp as $$
 declare
   uid uuid := auth.uid();
   e text := lower(btrim(coalesce(p_email, '')));
+  en text;
+  opt boolean := coalesce(p_brief_opt_in, false);
   w public.waitlist%rowtype;
+  other public.waitlist%rowtype;
   ref_id uuid;
   lcode text;
   code text;
@@ -229,44 +274,49 @@ begin
   if length(e) < 3 or length(e) > 254 or e !~ '^[^@\s]+@[^@\s]+\.[^@\s.]+$' then
     raise exception 'Please enter a valid email address.';
   end if;
-  -- The email is taken only by ANOTHER user's CONFIRMED signup. Another user's unconfirmed signup with this email is
-  -- released (deleted, nothing logged), so nobody can squat an address they cannot confirm.
-  if exists (select 1 from public.waitlist x where x.email = e::extensions.citext and x.user_id is distinct from uid
-             and x.confirmed_at is not null) then
-    raise exception 'email_taken';
+  en := public.waitlist_email_norm(e);
+  select * into other from public.waitlist x where x.email_norm = en and x.user_id is distinct from uid for update;
+  if found then
+    if other.confirmed_at is not null then raise exception 'email_taken'; end if;
+    if other.created_at > now() - interval '24 hours' then raise exception 'email_pending'; end if;
+    delete from public.waitlist x where x.id = other.id;
   end if;
-  delete from public.waitlist x where x.email = e::extensions.citext and x.user_id is distinct from uid and x.confirmed_at is null;
   -- invite code of a reserved league, remembered until the email is confirmed (unknown codes are ignored)
   select l.invite_code into lcode from public.waitlist_leagues l where l.invite_code = public.waitlist_norm_code(p_league);
 
   select * into w from public.waitlist where user_id = uid for update;
   if found then
     if w.confirmed_at is null then
-      update public.waitlist set email = e, pending_league_code = coalesce(lcode, pending_league_code)
+      update public.waitlist set email = e, email_norm = en, pending_league_code = coalesce(lcode, pending_league_code),
+        brief_opt_in = brief_opt_in or opt
       where id = w.id;
-    elsif lcode is not null then
-      perform public.waitlist_do_join(w.id, uid, lcode);
+    else
+      if opt and not w.brief_opt_in then update public.waitlist set brief_opt_in = true where id = w.id; end if;
+      if lcode is not null then perform public.waitlist_do_join(w.id, uid, lcode); end if;
     end if;
     return jsonb_build_object('referral_code', w.referral_code, 'confirmed', w.confirmed_at is not null);
   end if;
 
-  -- referrer: a known code that is not the caller's own (the caller has no row yet, so it cannot be)
-  select x.id into ref_id from public.waitlist x where x.referral_code = public.waitlist_norm_code(p_ref);
+  -- referrer: a known code that is not the caller's own mailbox (the caller has no row yet, and the uniqueness above
+  -- already removed or refused any other row with the same normalised email)
+  select x.id into ref_id from public.waitlist x
+  where x.referral_code = public.waitlist_norm_code(p_ref) and x.email_norm <> en;
 
   loop
     tries := tries + 1;
     code := public.new_invite_code();
     begin
-      insert into public.waitlist (user_id, email, referral_code, referred_by, source, pending_league_code)
-      values (uid, e, code, ref_id, public.waitlist_clean_source(p_source), lcode)
+      insert into public.waitlist (user_id, email, email_norm, referral_code, referred_by, source, pending_league_code, brief_opt_in)
+      values (uid, e, en, code, ref_id, public.waitlist_clean_source(p_source), lcode, opt)
       returning * into w;
       exit;
     exception when unique_violation then
-      -- same rule as above if another signup took this email meanwhile
-      if exists (select 1 from public.waitlist x where x.email = e::extensions.citext and x.confirmed_at is not null) then
-        raise exception 'email_taken';
+      -- another signup took this email meanwhile: same rules as above (it is brand new, so it is pending)
+      select * into other from public.waitlist x where x.email_norm = en and x.user_id is distinct from uid;
+      if found then
+        if other.confirmed_at is not null then raise exception 'email_taken'; end if;
+        raise exception 'email_pending';
       end if;
-      delete from public.waitlist x where x.email = e::extensions.citext and x.user_id is distinct from uid and x.confirmed_at is null;
       if tries >= 10 then raise exception 'Could not make a referral code. Please try again.'; end if;
     end;
   end loop;
@@ -314,6 +364,7 @@ begin
   if not found or w.confirmed_at is null then raise exception 'Confirm your email first.'; end if;
   return w;
 end $$;
+revoke execute on function public.waitlist_require_confirmed(uuid) from public, anon, authenticated;
 
 create or replace function public.waitlist_pick_captain(p_slug text) returns jsonb
 language plpgsql security definer set search_path = public, extensions, pg_temp as $$
@@ -436,21 +487,30 @@ begin
   return found;
 end $$;
 
--- Browser events: only invite_copied and share_clicked. Repeats of the same event by the same user within
--- 10 seconds are ignored (visitors without a session share one 10-second limit per event). Returns true when logged.
+-- Browser events: only invite_copied and share_clicked, signed-in sessions only (an anonymous sign-in is fine).
+-- props: a JSON object of at most 256 bytes. Returns true when logged, false when skipped: a repeat of the same event
+-- by the same user within 10 seconds, or the user already logged 200 browser events in the last 24 hours.
 create or replace function public.log_event(p_name text, p_props jsonb) returns boolean
 language plpgsql security definer set search_path = public, extensions, pg_temp as $$
 declare
   uid uuid := auth.uid();
 begin
+  if uid is null then raise exception 'Please sign in first.'; end if;
   if p_name is null or p_name not in ('invite_copied', 'share_clicked') then raise exception 'Unknown event.'; end if;
+  if p_props is not null and (jsonb_typeof(p_props) <> 'object' or octet_length(p_props::text) > 256) then
+    raise exception 'Event details are too large.';
+  end if;
   if exists (
     select 1 from public.events ev
-    where ev.name = p_name and ev.user_id is not distinct from uid and ev.created_at > now() - interval '10 seconds'
+    where ev.user_id = uid and ev.name = p_name and ev.created_at > now() - interval '10 seconds'
   ) then
     return false;
   end if;
-  perform public.waitlist_log(uid, p_name, p_props);
+  if (select count(*) from public.events ev
+      where ev.user_id = uid and ev.name in ('invite_copied', 'share_clicked') and ev.created_at > now() - interval '24 hours') >= 200 then
+    return false;
+  end if;
+  perform public.waitlist_log(uid, p_name, coalesce(p_props, '{}'::jsonb));
   return true;
 end $$;
 
@@ -484,18 +544,24 @@ begin
     'referral_share_pct', case when n_confirmed = 0 then null else round(100.0 * (
       select count(*) from public.waitlist w where w.confirmed_at is not null
         and exists (select 1 from public.waitlist r where r.referred_by = w.id and r.confirmed_at is not null)) / n_confirmed, 1) end,
+    'brief_opt_ins', (select count(*) from public.waitlist
+                      where confirmed_at is not null and brief_opt_in and unsubscribed_at is null),
     'unsubscribes', (select count(*) from public.waitlist where unsubscribed_at is not null)
   );
 end $$;
+revoke execute on function public.waitlist_admin_metrics(int) from public, anon, authenticated;
+grant execute on function public.waitlist_admin_metrics(int) to service_role;
 
--- Brief recipients: confirmed and not unsubscribed, with their place in line.
+-- Brief recipients: confirmed, opted in to the Brief, and not unsubscribed, with their place in line.
 create or replace function public.waitlist_brief_recipients() returns jsonb
 language sql stable security definer set search_path = public, extensions, pg_temp as $$
   select coalesce(jsonb_agg(jsonb_build_object('email', w.email::text, 'unsub_token', w.unsub_token,
            'position', p.line_position, 'referral_code', w.referral_code) order by p.line_position), '[]'::jsonb)
   from public.waitlist w join public.waitlist_positions() p on p.waitlist_id = w.id
-  where w.confirmed_at is not null and w.unsubscribed_at is null
+  where w.confirmed_at is not null and w.brief_opt_in and w.unsubscribed_at is null
 $$;
+revoke execute on function public.waitlist_brief_recipients() from public, anon, authenticated;
+grant execute on function public.waitlist_brief_recipients() to service_role;
 
 -- Server-side events (the Brief sender): only brief_sent / brief_clicked.
 create or replace function public.waitlist_admin_log(p_name text, p_props jsonb) returns void
@@ -504,25 +570,42 @@ begin
   if p_name is null or p_name not in ('brief_sent', 'brief_clicked') then raise exception 'Unknown event.'; end if;
   perform public.waitlist_log(null, p_name, p_props);
 end $$;
+revoke execute on function public.waitlist_admin_log(text, jsonb) from public, anon, authenticated;
+grant execute on function public.waitlist_admin_log(text, jsonb) to service_role;
+
+-- Privacy promise: events are kept 13 months. Deletes older ones; returns how many. Run daily by the Game sync workflow.
+create or replace function public.purge_old_events() returns int
+language plpgsql security definer set search_path = public, extensions, pg_temp as $$
+declare n int;
+begin
+  delete from public.events where created_at < now() - interval '13 months';
+  get diagnostics n = row_count;
+  return n;
+end $$;
+revoke execute on function public.purge_old_events() from public, anon, authenticated;
+grant execute on function public.purge_old_events() to service_role;
 
 -- ---------------------------------------------------------------------------
 -- Who may call what. Supabase grants EXECUTE on new functions to everyone by default, so reset it.
 -- ---------------------------------------------------------------------------
-revoke execute on function public.waitlist_ref_boost(), public.waitlist_clean_source(jsonb), public.waitlist_source_ok(jsonb),
+revoke execute on function public.waitlist_ref_boost(), public.waitlist_email_norm(text), public.waitlist_clean_source(jsonb), public.waitlist_source_ok(jsonb),
   public.waitlist_log(uuid, text, jsonb), public.waitlist_positions(), public.waitlist_norm_code(text),
-  public.waitlist_do_join(uuid, uuid, text), public.waitlist_me(), public.waitlist_join(text, text, text, jsonb),
+  public.waitlist_do_join(uuid, uuid, text), public.waitlist_me(), public.waitlist_join(text, text, text, jsonb, boolean),
   public.waitlist_confirm(), public.waitlist_require_confirmed(uuid), public.waitlist_pick_captain(text),
   public.waitlist_reserve_league(text), public.waitlist_join_league(text), public.waitlist_league_info(text),
   public.waitlist_stats(), public.waitlist_unsubscribe(uuid), public.log_event(text, jsonb),
-  public.waitlist_admin_metrics(int), public.waitlist_brief_recipients(), public.waitlist_admin_log(text, jsonb)
+  public.waitlist_admin_metrics(int), public.waitlist_brief_recipients(), public.waitlist_admin_log(text, jsonb),
+  public.purge_old_events()
   from public, anon, authenticated;
 
 -- browser (visitors with or without a session)
-grant execute on function public.waitlist_me(), public.waitlist_join(text, text, text, jsonb), public.waitlist_confirm(),
+grant execute on function public.waitlist_me(), public.waitlist_join(text, text, text, jsonb, boolean), public.waitlist_confirm(),
   public.waitlist_pick_captain(text), public.waitlist_reserve_league(text), public.waitlist_join_league(text),
-  public.waitlist_league_info(text), public.waitlist_stats(), public.waitlist_unsubscribe(uuid), public.log_event(text, jsonb)
+  public.waitlist_league_info(text), public.waitlist_stats(), public.waitlist_unsubscribe(uuid)
   to anon, authenticated;
+-- browser events need a session (anonymous sign-in counts as authenticated)
+grant execute on function public.log_event(text, jsonb) to authenticated;
 -- service role (Brief sender, metrics script)
 grant execute on function public.waitlist_admin_metrics(int), public.waitlist_brief_recipients(),
-  public.waitlist_admin_log(text, jsonb)
+  public.waitlist_admin_log(text, jsonb), public.purge_old_events()
   to service_role;

@@ -1,7 +1,8 @@
 /* Billionaires Digest v2: Player profile (player.html?p=<slug>). ES5, UI only.
-   Facts come from data/people/index.json (Forbes rank, net worth), data/people/<slug>.json (sourced profile), the
-   fantasy week and day files (via BDFantasyStore) and the latest digest.json. CEOs (not on the billionaire list)
-   come from data/ceos/index.json instead: role, company, bio and sources, no Forbes rank or net worth. Nothing is
+   Facts come from data/people/index.json (name, sector), data/people/<slug>.json (sourced profile),
+   data/prices/networth-est.json (Public Stake Value via BD.stakeTable; never a net worth), the fantasy week and day
+   files (via BDFantasyStore) and the latest digest.json. CEOs (not on the billionaire list) come from
+   data/ceos/index.json instead: role, company, bio and sources, no Public Stake Value. Nothing is
    made up: when a field is missing it is left out. "+ Add to team" uses the same store action as the Draft room.
    Game only: play money, no prizes. Not financial advice. */
 (function(){
@@ -78,7 +79,6 @@
     var s0 = ceoSources()[0];
     return s0 ? { url: s0.url, label: s0.title || 'Source' } : null;
   }
-  function rank(){ var r = (D.idx && D.idx.rank) || (D.pool && D.pool.rank) || (D.nd && D.nd.rank); return typeof r === 'number' ? r : null; }
   function sal(){ var s = F.salaries()[slug]; return typeof s === 'number' ? s : null; }
   // portraits: only plain site-relative paths from window.BDPortraits (assets/v2/portraits.js)
   function safePath(u){ return typeof u === 'string' && /^[A-Za-z0-9_\-./]+$/.test(u) && u.indexOf('..') < 0 ? u : null; }
@@ -172,16 +172,13 @@
     bits.push(sector());
     sub.textContent = bits.join(' / ');
     main.appendChild(sub);
-    var r = rank();
-    if (r != null || (D.idx && D.idx.worth)){
+    // Public Stake Value (our own number: disclosed US-listed shares × latest close; never a net worth)
+    if (!isCeo() && D.stakes){
       var fb = el('p', 'pp-hero__forbes');
-      fb.appendChild(txt((r != null ? 'No. ' + r + ' on Forbes' : 'Forbes') + (D.idx && D.idx.worth ? ' · ' + D.idx.worth : '')));
-      var ix = D.peopleIx;
-      if (ix && ix.sourceUrl){
-        fb.appendChild(txt(' · '));
-        var a = extLink(ix.sourceUrl, (ix.source || 'Source') + (ix.asOf ? ', ' + BD.fmtDate(BD.isoOf(ix.asOf)) : ''), 'pp-hero__src');
-        if (a) fb.appendChild(a);
-      }
+      var sv = D.stakes.value[slug], sr = D.stakes.rank[slug];
+      fb.appendChild(txt(sv
+        ? BD.STAKE_LABEL + ' ' + BD.fmtStake(sv) + (sr ? ' · No. ' + sr + ' on our list' : '') + (D.stakes.asOf ? ' · as of ' + BD.fmtDate(D.stakes.asOf) : '') + '. Disclosed US-listed shares × latest close; not a net worth.'
+        : BD.STAKE_LABEL + ': — · ' + BD.STAKE_NONE + '.'));
       main.appendChild(fb);
     }
     if (isCeo() && D.ceo && typeof D.ceo.roleSince === 'number'){
@@ -376,12 +373,12 @@
         if (a1) d.appendChild(a1);
       });
     }
-    if (sal() != null) scoutItem(ul, 'Cap cost', function(d){ d.appendChild(txt(sal() + ' of ' + C.CAP + ' this week' + (F.state.draftWk && F.state.draftWk.salaryMethod ? ' (' + F.state.draftWk.salaryMethod + ')' : '') + '.')); });
+    if (sal() != null) scoutItem(ul, 'Cap cost', function(d){ d.appendChild(txt(sal() + ' of ' + C.CAP + ' this week' + (F.state.draftWk && F.state.draftWk.salaryMethod ? ' (' + BD.salaryMethodText(F.state.draftWk.salaryMethod) + ')' : '') + '.')); });
     // form, only from the data
     var form = [];
     if (st.hot && st.hotWhy) form.push(st.hotWhy + '.');
     if (st.buy) form.push('Insider buy filed ' + fmt.dayLabel(st.buy) + ' (+25 that day).');
-    if (st.news) form.push(st.news + (st.news === 1 ? ' story' : ' stories') + ' in the latest edition (+10 each).');
+    if (st.news) form.push(st.news + (st.news === 1 ? ' story' : ' stories') + ' in the latest edition (not scored).');
     if (form.length) scoutItem(ul, 'Recent form', function(d){ d.appendChild(txt(form.join(' '))); });
     if (prof){
       var ctl = arr(prof.controls).filter(function(e){ return e && e.name; });
@@ -406,12 +403,6 @@
           inner.appendChild(li);
         });
         d.appendChild(inner);
-      });
-      if (str(prof.gaps)) scoutItem(ul, 'Not verified', function(d){
-        var det = el('details', 'pp-gaps');
-        det.appendChild(el('summary', null, 'What our research could not confirm'));
-        det.appendChild(el('p', null, str(prof.gaps)));
-        d.appendChild(det);
       });
     }
     box.appendChild(ul);
@@ -495,7 +486,7 @@
     }
     var counts = (F.state.index && F.state.index.news) || {}, eds = arr(F.state.index && F.state.index.newsEditions);
     if (counts[slug] > 0){
-      c.appendChild(el('p', 'v2-news__foot', 'In the game: ' + counts[slug] + (counts[slug] === 1 ? ' story' : ' stories') + ' in the ' + (eds.length ? eds.map(function(d){ return BD.monDay(d); }).join(', ') + ' edition' + (eds.length > 1 ? 's' : '') : 'latest edition') + '. Each story is worth +10 points on its day.'));
+      c.appendChild(el('p', 'v2-news__foot', counts[slug] + (counts[slug] === 1 ? ' story' : ' stories') + ' in the ' + (eds.length ? eds.map(function(d){ return BD.monDay(d); }).join(', ') + ' edition' + (eds.length > 1 ? 's' : '') : 'latest edition') + '. Stories are not scored in the game.'));
     }
     if (iso){
       var f = el('p', 'v2-news__foot');
@@ -612,7 +603,6 @@
     var rows = logRows(), last = rows[0] || null;
     var rules = (last && F.state.days[last.date] && F.state.days[last.date].rules) || {};
     var buyPts = typeof rules.insiderBuy === 'number' ? rules.insiderBuy : 25;
-    var storyPts = typeof rules.perStory === 'number' ? rules.perStory : 10;
     if (sal() == null){
       c.appendChild(el('p', 'v2-lede', name() + ' can\'t be drafted this week: ' + ndReason() + '.'));
       c.appendChild(el('p', null, 'Private companies, funds and family holdings have no daily price, so people whose wealth is mostly private cannot be drafted.'));
@@ -631,14 +621,13 @@
     var lastTxt = last && last.returnPct != null && last.pricePoints != null ? ' On ' + fmt.dayLabel(last.date) + ' the portfolio moved ' + P.pct(last.returnPct) + ', so price points were ' + signedTxt(last.pricePoints) + '.' : '';
     rule('Price points', 'The portfolio\'s return that day × 100, rounded. +1.23% is +123; a down day is negative. A quote that did not trade that day counts as 0%.', (port + lastTxt).trim());
     rule('Insider buy: +' + buyPts, 'For each Form 4 open-market purchase (code P) filed that day.' + (isCeo() ? ' Our Form 4 feed tracks the billionaires only, so CEOs score 0 here for now.' : ''), last ? 'On ' + fmt.dayLabel(last.date) + ': ' + (last.insiderBuy ? signedTxt(last.insiderBuy) : '0') + '.' + (F.stat(slug).buy ? ' Most recent: ' + fmt.dayLabel(F.stat(slug).buy) + '.' : '') : '');
-    rule('Stories: +' + storyPts + ' each', 'For each story about them in that day\'s Digest.', last ? 'On ' + fmt.dayLabel(last.date) + ': ' + (last.stories ? signedTxt(last.stories) : '0') + '.' : '');
     var capTxt = '';
     if (last && last.points != null) capTxt = 'On ' + fmt.dayLabel(last.date) + ': ' + signedTxt(last.points) + ' points, or ' + signedTxt(C.captainPoints(last.points)) + ' as captain.';
     rule('Captain: × ' + C.CAPTAIN_MULT, 'If you make them captain, their total for the day is multiplied by ' + C.CAPTAIN_MULT + ' and rounded.', capTxt);
     c.appendChild(ol);
     var s = sal();
     var capP = el('p', 'pp-note');
-    capP.appendChild(txt((s != null ? 'Cap cost this week: ' + s + ' of ' + C.CAP + '. ' : '') + 'Salaries follow Forbes rank among draftable people: ranks 1–5 cost 30, 6–10 cost 26, 11–20 cost 22, 21–35 cost 18, 36–50 cost 14, 51–75 cost 10, 76–100 cost 7. ' + (isCeo() ? 'CEOs have no Forbes rank, so they start at the median cost of the billionaires in that week\'s pool. ' : '') + 'They are frozen when the week opens. After four weeks of results, salaries move up to ±4 by recent form. '));
+    capP.appendChild(txt((s != null ? 'Cap cost this week: ' + s + ' of ' + C.CAP + '. ' : '') + 'Salaries follow each billionaire\'s Public Stake Value rank among draftable people (disclosed US-listed shares × latest close): the top 5 cost 30, 6–10 cost 26, 11–20 cost 22, 21–35 cost 18, 36–50 cost 14, 51–75 cost 10, the rest 7. People with no US-listed stake on file cost 14. ' + (isCeo() ? 'CEOs have no Public Stake Value, so they start at the median cost of the billionaires in that week\'s pool. ' : '') + 'They are frozen when the week opens. After four weeks of results, salaries move up to ±4 by recent form. '));
     capP.appendChild(link(null, 'Full rules', 'play-terms.html#how'));
     c.appendChild(capP);
     panel.appendChild(c);
@@ -702,8 +691,9 @@
   });
   // CEOs (not in data/people): data/ceos/index.json
   var ceosP = BD.getJson('data/ceos/index.json').then(null, function(){ return null; });
-  Promise.all([F.init(), peopleP, profP, ceosP]).then(function(r){
-    D.peopleIx = r[1]; D.prof = r[2];
+  var stakesP = BD.loadStakes().then(null, function(){ return null; });
+  Promise.all([F.init(), peopleP, profP, ceosP, stakesP]).then(function(r){
+    D.peopleIx = r[1]; D.prof = r[2]; D.stakes = r[4];
     D.idx = BD.indexBySlug(slug);
     if (!D.idx && r[3]){
       arr(r[3].people).forEach(function(c){ if (c && c.slug === slug) D.ceo = c; });

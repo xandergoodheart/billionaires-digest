@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// The Billionaire Brief: email to confirmed waitlist signups (not unsubscribed). Built, but OFF by default.
+// The Billionaire Brief: email to confirmed waitlist signups who ticked the Brief box and have not unsubscribed
+// (the recipient list comes from waitlist_brief_recipients(), which applies all three rules). Built, but OFF by default.
 //
 //   node scripts/send-brief.mjs                 dry run (default): writes out/brief-preview.html + .txt, prints the
 //                                               recipient count. Without SUPABASE_URL / SUPABASE_SERVICE_KEY it uses one
@@ -10,7 +11,8 @@
 // Options: --digest=path (default digest.json)
 //
 // Sending: Resend batch API, up to 50 emails per request, at most 2 requests a second, retries on 429/5xx.
-// Logs one brief_sent event (date + counts) through waitlist_admin_log. Never prints email addresses or keys.
+// Logs one brief_sent event (date + counts) through waitlist_admin_log. Never prints email addresses, keys or the
+// email provider's response bodies (HTTP status codes only).
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -42,15 +44,16 @@ async function seasonLabel() {
 async function postWithRetry(url, init, tries = 5) {
   for (let i = 1; ; i++) {
     const r = await fetch(url, init);
-    if (r.ok) return r.json().catch(() => null);
-    const body = (await r.text()).slice(0, 300);
+    // only the status code is ever printed: provider responses can echo recipient addresses
+    await r.body?.cancel().catch(() => {});
+    if (r.ok) return true;
     if ((r.status === 429 || r.status >= 500) && i < tries) {
       const wait = Math.max(Number(r.headers.get('retry-after')) * 1000 || 0, 1000 * 2 ** (i - 1));
       console.log(`  HTTP ${r.status}, retrying in ${wait} ms`);
       await sleep(wait);
       continue;
     }
-    throw new Error(`Resend HTTP ${r.status}: ${body}`);
+    throw new Error(`Resend HTTP ${r.status}`);
   }
 }
 
@@ -77,7 +80,7 @@ async function main() {
     await writeFile(join(out, 'brief-preview.html'), b.html);
     await writeFile(join(out, 'brief-preview.txt'), `Subject: ${b.subject}\n\n${b.text}`);
     console.log(`Dry run. Preview: out/brief-preview.html (subject: ${b.subject})`);
-    console.log(haveDb ? `Recipients (confirmed, subscribed): ${recipients.length}`
+    console.log(haveDb ? `Recipients (confirmed, opted in, subscribed): ${recipients.length}`
       : 'Recipients: unknown (SUPABASE_URL / SUPABASE_SERVICE_KEY not set; preview uses a sample recipient). Nothing sent.');
     return;
   }

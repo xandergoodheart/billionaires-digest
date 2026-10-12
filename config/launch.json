@@ -1,6 +1,7 @@
 {
-  "_note": "The ONE launch switch. gate: true hides the game and Tools pages behind an 'Opens Nov 9' card and sends Play to the waitlist landing. To open the game: set gate to false, then run `node scripts/sync-nav.mjs` (and `node scripts/build-pages.mjs` for generated pages) and commit.",
-  "gate": true,
+  "_note": "The ONE launch switch. gate: false = the game is open (preseason until Season 1 starts on seasonStart; everyone resets then). gate: true would hide the game and Tools pages behind an 'Opens Nov 9' card again. After changing gate: run `node scripts/sync-nav.mjs` (and `node scripts/build-pages.mjs` for generated pages) and commit.",
+  "_regate": "assets/launch.js is no longer loaded by any page (removed for the preseason so pages don't pause). To re-gate, add <script src=\"assets/launch.js\"></script> back to the <head> of each gated page, then set gate: true.",
+  "gate": false,
   "seasonStart": "2026-11-09",
   "seasonStartLabel": "Monday, Nov 9"
 }

@@ -163,6 +163,10 @@
     say(teamName() + '. ' + (total == null ? 'No team points yet.' : 'Team total ' + plainTxt(total) + ' fantasy points.') + ' ' + result(v) + '.');
   }
 
+  // The Book is hidden from the menus (scripts/lib/nav.mjs MENU_HIDDEN / BOOK_HIDDEN): no Book matchup or
+  // "All matchups" link here either. Set to false together with nav.mjs to bring it back.
+  var BOOK_HIDDEN = true;
+
   // ---- featured scoreboard without a team: the week's top matchup on The Book ----
   function renderBookBoard(book){
     var box = clear($('hmteam'));
@@ -180,7 +184,7 @@
     row.appendChild(link('v2-btn v2-btn--ghost v2-btn--sm', 'Lucky five', 'draft.html#lucky'));
     empty.appendChild(row);
     box.appendChild(empty);
-    if (ev){
+    if (ev && !BOOK_HIDDEN){
       var model = book.model || {};
       var mk = function(slug){
         var ml = arr(ev.selections).filter(function(s){ return s.market === 'ml' && s.person === slug; })[0];
@@ -364,7 +368,9 @@
     var practice = src.wk.practice ? ' (practice week)' : '';
     $('watchk').textContent = src.kind === 'week'
       ? F.fmt.weekTitle(src.wk.week) + ' · points so far, through ' + F.fmt.dayLabel(src.date)
-      : 'Last scored day · ' + F.fmt.dayLabel(src.date) + practice + '. This week has no scores yet.';
+      : 'Last scored day · ' + F.fmt.dayLabel(src.date) + practice + (S.sbWk && S.sbWk.week !== src.wk.week
+        ? '. ' + F.fmt.weekTitle(S.sbWk.week) + ' has no scores yet.'
+        : '.');
     var ol = clear($('watchlist')), sal = F.salaries(), wsal = src.wk.salaries || {};
     top.forEach(function(x, i){
       var p = x.p, li = el('li', 'hm-watch__i');
@@ -401,9 +407,11 @@
     if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x) renderWatch(); }, function(){});
     var v = view();
     if (v.mode !== 'none'){ renderTeamBoard(v); return; }
+    if (BOOK_HIDDEN){ renderBookBoard(null); return; }
     return loadBook().then(renderBookBoard, function(){ renderBookBoard(null); });
   }, function(err){
     if (window.console) console.warn(err);
+    if (BOOK_HIDDEN){ boardFail(); return; }
     loadBook().then(function(b){ if (b) renderBookBoard(b); else boardFail(); }, boardFail);
   });
 })();

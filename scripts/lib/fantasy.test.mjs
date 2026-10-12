@@ -3,9 +3,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   core, resolveHoldingTicker, holdingCandidates, personPortfolio, scorePersonDay, computeSalaries, tierSalary,
-  ensureFeasible, top5Team, tradingDateOf, fantasySymbols, hasInsiderBuy, medianSalary, ceoPlayer, isCeo, CEO_SALARY_NOTE,
+  ensureFeasible, top5Team, tickerMove, fantasySymbols, hasInsiderBuy, medianSalary, ceoPlayer, isCeo, CEO_SALARY_NOTE, NO_STAKE_SALARY,
 } from './fantasy.mjs';
-import { scoreWeek, newWeekFile, buildPool, addCeosToWeek } from '../build-fantasy.mjs';
+import { scoreWeek, newWeekFile, buildPool, addCeosToWeek, buildDay, dayReady, recentTradingDays, dayPlayers } from '../build-fantasy.mjs';
+import { POINTS } from './fantasy.mjs';
 
 const q = (changePct, price = 100, time = '2026-09-24T20:00:00.000Z') => ({ price, changePct, time });
 
@@ -107,28 +108,94 @@ test('weights: duplicates of one company merge', () => {
 });
 
 // ---------- points ----------
-test('points: return × 100, insider buy +25, +10 per story; stale quotes count 0%', () => {
+// closes as history maps: { SYM: Map(date -> close) }
+const H = (obj) => Object.fromEntries(Object.entries(obj).map(([k, rows]) => [k, new Map(rows)]));
+
+test('points: close-to-close return × 100, insider buy +25, no story bonus; a missing close counts 0%', () => {
+  assert.deepEqual(POINTS, { insiderBuy: 25 });
   const holdings = [{ ticker: 'AAA', weight: 0.5 }, { ticker: 'BBB', weight: 0.5 }, { ticker: 'OLD', weight: 0 }];
-  const quotes = { AAA: q(2.0), BBB: q(0.46), OLD: q(9, 1, '2026-09-20T20:00:00.000Z') };
+  const history = H({ AAA: [['2026-09-23', 100], ['2026-09-24', 102]], BBB: [['2026-09-23', 50], ['2026-09-24', 50.23]], OLD: [['2026-09-22', 1], ['2026-09-24', 2]] });
   const filings = [{ personSlug: 'p', filed: '2026-09-24', form4: { summary: [{ code: 'P' }] } }, { personSlug: 'p', filed: '2026-09-24', form4: { summary: [{ code: 'P' }] } }];
-  const stories = [{ who: 'Pat Person' }, { who: 'Someone', people: ['Pat Person & family'] }, { who: 'Other' }];
-  const r = scorePersonDay({ slug: 'p', name: 'Pat Person', holdings, quotes, tradingDate: '2026-09-24', filings, stories });
+  const r = scorePersonDay({ slug: 'p', holdings, history, conflicts: {}, date: '2026-09-24', filings });
   assert.equal(r.returnPct, 1.23);
   assert.equal(r.pricePoints, 123);
-  assert.deepEqual(r.bonuses, { insiderBuy: 25, stories: 20 });
-  assert.equal(r.points, 168);
-  assert.equal(r.holdings[2].stale, true);
-  const neg = scorePersonDay({ slug: 'n', name: 'Nobody', holdings: [{ ticker: 'AAA', weight: 1 }], quotes: { AAA: q(-1.234) }, tradingDate: '2026-09-24' });
+  assert.deepEqual(r.bonuses, { insiderBuy: 25 });
+  assert.equal(r.points, 148);
+  assert.equal(r.holdings[2].stale, true);  // no 2026-09-23 close: the previous trading day is required
+  const neg = scorePersonDay({ slug: 'n', holdings: [{ ticker: 'AAA', weight: 1 }], history: H({ AAA: [['2026-09-23', 100], ['2026-09-24', 98.766]] }), date: '2026-09-24' });
   assert.equal(neg.points, -123);
   assert.equal(hasInsiderBuy([{ personSlug: 'p', filed: '2026-09-24', form4: { summary: [{ code: 'S' }] } }], 'p', '2026-09-24'), false);
 });
 
-test('points: captain 1.5× and team day total', () => {
+test('Monday scores from the Friday close; after a holiday, from the last trading day', () => {
+  const m = tickerMove(H({ X: [['2026-10-02', 100], ['2026-10-04', 1], ['2026-10-05', 103]] }), {}, 'X', '2026-10-05');
+  assert.equal(m.changePct, 3);
+  // Friday 2026-11-27 (half day) follows Wednesday 11-25 (Thanksgiving 11-26 closed)
+  assert.equal(tickerMove(H({ X: [['2026-11-25', 200], ['2026-11-27', 202]] }), {}, 'X', '2026-11-27').changePct, 1);
+});
+
+test('sanity guard: a move over 40% or a previous-close conflict is quarantined (0 points), never scored', () => {
+  // PSKY 2026-10-05: Finnhub said pc 4.75 while our 2026-10-02 close was 9.5 -> +103.79% would have scored 5242
+  const history = H({ PSKY: [['2026-10-02', 9.5], ['2026-10-05', 9.68]], ORCL: [['2026-10-02', 142.3], ['2026-10-05', 142.48]], SPY: [['2026-10-02', 769.64], ['2026-10-05', 774.83]] });
+  const conflicts = { PSKY: { '2026-10-05': { prevDate: '2026-10-02', vendorPrev: 4.75, ourPrev: 9.5, diffPct: -50 } } };
+  const day = buildDay({ date: '2026-10-05', players: [{ slug: 'larry-ellison', holdings: [{ ticker: 'ORCL', weight: 0.5 }, { ticker: 'PSKY', weight: 0.5 }] }], history, conflicts, filings: [], generated: 'x' });
+  const le = day.people['larry-ellison'];
+  assert.deepEqual(le.holdings[1], { ticker: 'PSKY', weight: 0.5, changePct: 0, quarantined: true });
+  assert.equal(le.points, 6);   // ORCL +0.1265% × 0.5 only
+  assert.equal(day.flags.length, 1);
+  assert.equal(day.flags[0].ticker, 'PSKY');
+  assert.deepEqual(day.flags[0].people, ['larry-ellison']);
+  assert.match(day.flags[0].reason, /4\.75.*9\.5/);
+  assert.equal(day.spy.points, core.spyPoints(0.6743));
+  assert.equal(day.rules.perStory, undefined);
+  // a raw 103% move with no conflict on file is caught by the 40% rule
+  const big = tickerMove(H({ PSKY: [['2026-10-02', 4.75], ['2026-10-05', 9.68]] }), {}, 'PSKY', '2026-10-05');
+  assert.equal(big.quarantined, true);
+  assert.equal(big.changePct, 0);
+  assert.match(big.reason, /over 40%/);
+  assert.equal(tickerMove(H({ A: [['2026-10-02', 10], ['2026-10-05', 13.9]] }), {}, 'A', '2026-10-05').changePct, 39);
+});
+
+test('day files: ready once SPY has both closes; the rebuild window is the last 10 trading days', () => {
+  const h = H({ SPY: [['2026-10-09', 1], ['2026-10-12', 2]] });
+  assert.equal(dayReady(h, '2026-10-12'), true);
+  assert.equal(dayReady(h, '2026-10-13'), false);
+  assert.equal(dayReady(H({ SPY: [['2026-11-25', 1], ['2026-11-26', 2]] }), '2026-11-26'), false); // Thanksgiving
+  const w = recentTradingDays('2026-11-29');
+  assert.equal(w.length, 10);
+  assert.equal(w[w.length - 1], '2026-11-27');
+  assert.ok(!w.includes('2026-11-26'));
+  assert.equal(recentTradingDays('2026-10-12', 3).join(), '2026-10-08,2026-10-09,2026-10-12');
+  // the week file's frozen holdings win; pool players it lacks are added
+  const players = dayPlayers({ draftable: [{ slug: 'a', holdings: [{ ticker: 'A', weight: 1 }] }] },
+    { draftable: [{ slug: 'a', holdings: [{ ticker: 'Z', weight: 1 }] }, { slug: 'b', holdings: [] }] });
+  assert.deepEqual(players.map((p) => [p.slug, p.holdings[0]?.ticker]), [['a', 'A'], ['b', undefined]]);
+});
+
+test('NYSE calendar 2026-2027: holidays and half days', () => {
+  assert.equal(core.isTradingDay('2026-11-26'), false);   // Thanksgiving
+  assert.equal(core.isTradingDay('2026-11-27'), true);
+  assert.equal(core.isHalfDay('2026-11-27'), true);
+  assert.equal(core.closeMinutes('2026-11-27'), 13 * 60);
+  assert.equal(new Date(core.closeAt('2026-11-27')).toISOString(), '2026-11-27T18:00:00.000Z'); // 13:00 EST
+  assert.equal(new Date(core.closeAt('2026-10-09')).toISOString(), '2026-10-09T20:00:00.000Z'); // 16:00 EDT
+  assert.equal(core.prevTradingDay('2026-11-27'), '2026-11-25');
+  assert.equal(core.nextTradingDay('2026-11-25'), '2026-11-27');
+  assert.equal(core.prevTradingDay('2026-10-05'), '2026-10-02');
+  for (const d of ['2026-12-25', '2027-01-01', '2027-03-26', '2027-06-18', '2027-07-05', '2027-12-24', '2026-10-04']) assert.equal(core.isTradingDay(d), false, d);
+  assert.equal(core.isHalfDay('2026-12-24'), true);
+  assert.equal(core.isHalfDay('2027-11-26'), true);
+  assert.deepEqual(core.tradingDaysOf('2026-W48'), ['2026-11-23', '2026-11-24', '2026-11-25', '2026-11-27']);
+});
+
+test('points: captain 1.5× per day, halves rounded away from zero (as Postgres round does)', () => {
   const day = { people: { a: { points: 100 }, b: { points: -41 }, c: { points: 10 }, d: { points: 0 }, e: { points: 5 } } };
   const r = core.teamDay(['a', 'b', 'c', 'd', 'e'], 'b', day);
-  assert.equal(r.bySlug.b, -61); // Math.round(-61.5): halves round up
+  assert.equal(r.bySlug.b, -62); // -61.5 -> -62, same as SQL round(-61.5)
   assert.equal(core.captainPoints(123), 185);
-  assert.equal(r.total, 100 - 61 + 10 + 0 + 5);
+  assert.equal(core.captainPoints(-1), -2);
+  assert.equal(core.captainPoints(1), 2);
+  assert.equal(r.total, 100 - 62 + 10 + 0 + 5);
 });
 
 test('SPY benchmark points are × 5 picks', () => {
@@ -281,8 +348,7 @@ test('export / import code round trip', () => {
   assert.throws(() => core.importCode('hello'));
 });
 
-test('tradingDateOf uses the New York date of the quotes', () => {
-  assert.equal(tradingDateOf({ A: q(1), B: q(1), C: q(1, 1, '2026-09-23T20:00:00.000Z') }), '2026-09-24');
+test('top5Team: richest five by rank, captain the richest', () => {
   assert.deepEqual(top5Team([{ slug: 'z', rank: 2 }, { slug: 'y', rank: 1 }]), { picks: ['y', 'z'], captain: 'y' });
 });
 
@@ -338,16 +404,31 @@ test('buildPool adds every CEO as a company-stock player and skips a slug clash'
   // no quote for AAA yet: still draftable
   assert.equal(pool.notDraftable.length, 0);
   assert.deepEqual(buildPool(indexPeople, profiles, quotes).draftable.map((p) => p.slug), ['p1']);
+  // a billionaire's rank is the Public Stake Value rank, never the index (list) rank
+  assert.equal(pool.draftable[0].rank, null);
+  assert.equal(buildPool(indexPeople, profiles, quotes, [], { p1: 3 }).draftable[0].rank, 3);
 });
 
-test('CEO day scoring: company stock return, stories by name, no insider buy without filings', () => {
+test('salaries: stake-rank tiers, no stake on file = 14, CEOs at the median', () => {
+  const ranked = Array.from({ length: 12 }, (_, i) => ({ slug: 'r' + String(i).padStart(2, '0'), rank: 100 + i * 7 })); // gaps in rank are fine
+  const none = [{ slug: 'n1', rank: null }, { slug: 'n2' }];
+  const { salaries, ceoBase } = computeSalaries([...none, ...ranked, ceoPlayer(CEO_A)]);
+  assert.deepEqual(ranked.map((p) => salaries[p.slug]), [30, 30, 30, 30, 30, 26, 26, 26, 26, 26, 22, 22]);
+  assert.equal(salaries.n1, NO_STAKE_SALARY);
+  assert.equal(salaries.n2, 14);
+  // billionaire salaries: 30×5, 26×5, 22×2, 14×2 -> sorted middle pair 26, 26
+  assert.equal(ceoBase, 26);
+  assert.equal(salaries['ceo-a'], 26);
+  assert.deepEqual(top5Team([...none, ...ranked]).picks, ['r00', 'r01', 'r02', 'r03', 'r04']);
+});
+
+test('CEO day scoring: company stock return, no story bonus, no insider buy without filings', () => {
   const p = ceoPlayer(CEO_A);
-  const stories = [{ who: 'Ann Chief', headline: 'x' }, { who: 'Someone', people: ['Ann Chief'], headline: 'y' }, { who: 'Other', headline: 'z' }];
-  const r = scorePersonDay({ slug: p.slug, name: p.name, holdings: p.holdings, quotes: { AAA: q(1.5) }, tradingDate: '2026-09-24', filings: [], stories });
+  const r = scorePersonDay({ slug: p.slug, holdings: p.holdings, history: H({ AAA: [['2026-09-23', 100], ['2026-09-24', 101.5]] }), date: '2026-09-24', filings: [] });
   assert.equal(r.pricePoints, 150);
-  assert.deepEqual(r.bonuses, { insiderBuy: 0, stories: 20 });
-  assert.equal(r.points, 170);
-  const none = scorePersonDay({ slug: p.slug, name: p.name, holdings: p.holdings, quotes: {}, tradingDate: '2026-09-24', filings: [], stories: [] });
+  assert.deepEqual(r.bonuses, { insiderBuy: 0 });
+  assert.equal(r.points, 150);
+  const none = scorePersonDay({ slug: p.slug, holdings: p.holdings, history: {}, date: '2026-09-24', filings: [] });
   assert.equal(none.points, 0);
   assert.equal(none.holdings[0].stale, true);
 });
@@ -355,11 +436,11 @@ test('CEO day scoring: company stock return, stories by name, no insider buy wit
 test('new week file: CEOs in the pool with the salary note', () => {
   const pool = { draftable: [...['a', 'b', 'c', 'd', 'e', 'f'].map((s, i) => ({ slug: s, name: s, rank: i + 1, holdings: [] })), ceoPlayer(CEO_A)] };
   const wk = newWeekFile('2026-W41', pool, [], '2026-09-29T00:00:00Z');
-  assert.equal(wk.salaryMethod, 'Forbes-rank tiers among draftable; ' + CEO_SALARY_NOTE);
+  assert.equal(wk.salaryMethod, 'Public Stake Value rank tiers among draftable (no stake on file: 14); ' + CEO_SALARY_NOTE);
   assert.ok(wk.draftable.some((p) => p.slug === 'ceo-a'));
   assert.equal(typeof wk.salaries['ceo-a'], 'number');
   const noCeo = newWeekFile('2026-W41', { draftable: pool.draftable.slice(0, 6) }, [], '2026-09-29T00:00:00Z');
-  assert.equal(noCeo.salaryMethod, 'Forbes-rank tiers among draftable');
+  assert.equal(noCeo.salaryMethod, 'Public Stake Value rank tiers among draftable (no stake on file: 14)');
 });
 
 test('addCeosToWeek: appends CEOs before the lock only, nobody else changes', () => {
@@ -373,7 +454,7 @@ test('addCeosToWeek: appends CEOs before the lock only, nobody else changes', ()
   assert.equal(r.wk.salaries['ceo-a'], 20);
   for (const p of bill) assert.equal(r.wk.salaries[p.slug], before.salaries[p.slug]);
   assert.equal(r.wk.draftable.length, 42);
-  assert.equal(r.wk.salaryMethod, 'Forbes-rank tiers among draftable; ' + CEO_SALARY_NOTE);
+  assert.equal(r.wk.salaryMethod, 'Public Stake Value rank tiers among draftable (no stake on file: 14); ' + CEO_SALARY_NOTE);
   assert.deepEqual(wk, before, 'input week file not mutated');
   // second run: nothing new
   assert.deepEqual(addCeosToWeek(r.wk, pool, [], open).added, []);

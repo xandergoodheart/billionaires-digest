@@ -23,13 +23,14 @@ import {
 } from './lib/pages/render.mjs';
 import { buildCompanyIndex, renderCompany, renderCompanyIndex, relatedFor, COMPANY_CSS } from './lib/pages/companies.mjs';
 import { GUIDES, renderFilings101, renderGuidesIndex, GUIDE_CSS } from './lib/pages/guides.mjs';
+import { stakeTable, fmtStake, STAKE_LABEL, STAKE_NONE, STAKE_NOTE } from './lib/data-common.mjs';
 
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const FILINGS_LIMIT = 15;
 const HOLDING_GROUPS = ['controls', 'stakes', 'vehicles', 'realEstate', 'trophies'];
 // top-level pages built by other scripts; listed in the sitemap without a lastmod
-const EXTRA_TOP = ['/calendar.html', '/fantasy.html', '/flows.html', '/quarterly.html', '/copycat.html', '/network.html', '/compare.html', '/property.html', '/privacy.html'];
+const EXTRA_TOP = ['/calendar.html', '/fantasy.html', '/flows.html', '/quarterly.html', '/copycat.html', '/network.html', '/compare.html', '/property.html', '/privacy.html', '/terms.html'];
 
 async function readJson(p) { return JSON.parse(await readFile(p, 'utf8')); }
 async function readJsonOr(p, fallback) {
@@ -46,16 +47,23 @@ export async function buildPages(root = '.') {
   const P = (...xs) => join(R, ...xs);
 
   // ---- load data ----
+  // Order and the value shown come from our own Public Stake Value (data/prices/networth-est.json, see stakeTable):
+  // people with one by value, then everyone else A–Z. The index's list rank and net worth are never shown.
+  // p.rank below is only the position in that order (used to sort holders on company pages); it is not displayed.
   const index = await readJson(P('data/people/index.json'));
+  const stakes = stakeTable(await readJsonOr(P('data/prices/networth-est.json'), null));
+  const stakeAsOf = stakes.asOf ? fmtDate(stakes.asOf) : '';
   const people = arr(index.people)
     .filter(p => p && p.name && typeof p.slug === 'string' && SLUG_RE.test(p.slug))
-    .map((p, i) => ({ p, i }))
-    .sort((a, b) => (Number(a.p.rank) || 1e9) - (Number(b.p.rank) || 1e9) || a.i - b.i)
-    .map(x => x.p);
-  // rank shown on pages: the index rank when it is a number, else the position in the sorted list
-  people.forEach((p, i) => { p = people[i] = { ...p }; if (!Number.isFinite(Number(p.rank)) || Number(p.rank) <= 0) p.rank = i + 1; });
+    .map(p => {
+      const { rank: _r, worth: _w, ...rest } = p;
+      return { ...rest, stakeRank: stakes.rank[p.slug] || null, stakeValue: stakes.value[p.slug] || null };
+    })
+    .sort((a, b) => (a.stakeRank || 1e9) - (b.stakeRank || 1e9) || a.name.localeCompare(b.name, 'en') || (a.slug < b.slug ? -1 : 1));
+  people.forEach((p, i) => { p.rank = i + 1; });
+  const stakeText = p => (p.stakeValue ? fmtStake(p.stakeValue) : '');
   const indexIso = isoOf(index.asOf);
-  const srcShort = String(index.source || 'Forbes Real-Time Billionaires').replace(/\s+Billionaires$/i, '');
+  const stakeIso = stakes.asOf || null;
   const byCore = new Map();
   for (const p of people) if (!byCore.has(coreName(p.name))) byCore.set(coreName(p.name), p);
   const personOf = name => byCore.get(coreName(name)) || null;
@@ -108,13 +116,13 @@ export async function buildPages(root = '.') {
     const fp = footprint(name, prof, quotes, companies.entryLink);
     const fil = filings(filData, FILINGS_LIMIT);
     const holdings = prof ? HOLDING_GROUPS.reduce((n, k) => n + arr(prof[k]).filter(e => e && typeof e === 'object').length, 0) : 0;
-    const asOfText = indexIso ? fmtDate(indexIso) : '';
-    const worth = str(ip.worth);
+    const stake = stakeText(ip);
 
     const descBits = [];
-    descBits.push(`${name} ranks #${ip.rank} on ${index.source || 'Forbes Real-Time Billionaires'}` +
-      (worth ? ` at ${worth}` : '') + (asOfText ? ` (as of ${asOfText})` : ''));
-    if (str(ip.source)) descBits.push(`with wealth from ${str(ip.source)}`);
+    descBits.push(stake
+      ? `${name}: ${STAKE_LABEL} ${stake} in disclosed US-listed shares` + (stakeAsOf ? ` (as of ${stakeAsOf})` : '')
+      : `${name}: no US-listed stake on file`);
+    if (str(ip.source)) descBits.push(`wealth from ${str(ip.source)}`);
     const description = descBits.join(', ') + (holdings ? `; ${plural(holdings, 'tracked holding', 'tracked holdings')}, SEC filings and latest moves.` : '; SEC filings and latest moves.');
 
     const bc = breadcrumb([['Home', '/'], ['People', '/people/'], [name, `/people/${ip.slug}/`]]);
@@ -132,16 +140,16 @@ export async function buildPages(root = '.') {
 <section class="pcard pcard--player" aria-label="${esc('Profile: ' + name)}">
   <div class="pchead">
     <div class="pcwho">
-      <div class="pcrank">#${esc(ip.rank)} of ${people.length} · <a href="${esc(sectorHref(sector))}">${esc(sector)}</a></div>
+      <div class="pcrank">${ip.stakeRank ? esc('No. ' + ip.stakeRank + ' by ' + STAKE_LABEL) + ' · ' : ''}<a href="${esc(sectorHref(sector))}">${esc(sector)}</a></div>
       <h1 class="pcname serif">${esc(name)}</h1>
       ${str(ip.source) ? `<div class="pcsrc">${esc(ip.source)}</div>` : ''}
     </div>
     <div class="pcside">${avatar(name, sector, 72)}</div>
   </div>
   <div class="pcworth">
-    <div class="label">Net worth</div>
-    <div class="pcval">${esc(worth || '—')}</div>
-    <div class="pcsub">${esc(srcShort + (asOfText ? ' · as of ' + asOfText : ''))}</div>
+    <div class="label">${esc(STAKE_LABEL)}</div>
+    <div class="pcval">${esc(stake || '—')}</div>
+    <div class="pcsub">${esc(stake ? STAKE_NOTE + (stakeAsOf ? ' As of ' + stakeAsOf + '.' : '') : STAKE_NONE)}</div>
   </div>
   <a class="livelink" href="/news.html#person=${esc(encodeURIComponent(ip.slug))}">Open the live card →</a>
 </section>
@@ -168,13 +176,13 @@ ${watchList(name, prof)}
       path: `/people/${ip.slug}/`,
       ogImage: ogLatest,
       ogType: 'profile',
-      dateline: `People · #${ip.rank} of ${people.length}`,
-      updated: asOfText ? `Net worths as of ${asOfText}` : '',
+      dateline: 'People',
+      updated: stake && stakeAsOf ? `${STAKE_LABEL} as of ${stakeAsOf}` : '',
       jsonLd: [bc.ld, { '@context': 'https://schema.org', '@type': 'Person', name, url: `${SITE}/people/${ip.slug}/` }],
       body
     }));
     sitemap.push([`/people/${ip.slug}/`, maxIso([
-      indexIso, isoOf(prof && prof.asOf), isoOf(fil.latestFiled), moves.length ? moves[0].iso : null,
+      indexIso, stake ? stakeIso : null, isoOf(prof && prof.asOf), isoOf(fil.latestFiled), moves.length ? moves[0].iso : null,
       quoteTimes.length ? nyIso(quoteTimes[quoteTimes.length - 1]) : null
     ])]);
   }
@@ -182,27 +190,26 @@ ${watchList(name, prof)}
   // ---- people/ ----
   {
     const bc = breadcrumb([['Home', '/'], ['People', '/people/']]);
-    const asOfText = indexIso ? fmtDate(indexIso) : '';
     const items = people.map(p => `<li><a href="/people/${p.slug}/">${avatar(p.name, p.sector || 'Other', 44)}<span class="plinfo">` +
       `<span class="pln serif">${esc(p.name)}</span>` +
-      `<span class="plw">${esc('#' + p.rank + ' · ' + (p.worth || ''))}</span>` +
+      `<span class="plw">${esc(p.stakeValue ? STAKE_LABEL + ' ' + stakeText(p) : STAKE_NONE)}</span>` +
       `<span class="plx">${esc([p.sector, p.source].filter(Boolean).join(' · '))}</span></span></a></li>`).join('\n');
     const body = `${bc.html}
-<div class="wrap pagehead"><h1 class="serif">The ${people.length} richest people</h1><p>${esc('Ranked by net worth per ' + (index.source || 'Forbes Real-Time Billionaires') + (asOfText ? ' as of ' + asOfText : '') + '. Open a name for their companies, holdings, SEC filings and latest moves.')}</p></div>
+<div class="wrap pagehead"><h1 class="serif">The ${people.length} richest people</h1><p>${esc('Ordered by ' + STAKE_LABEL + ': disclosed US-listed shares × latest close' + (stakeAsOf ? ', as of ' + stakeAsOf : '') + '. Not a net worth. People with no US-listed stake on file follow, A–Z. Open a name for their companies, holdings, SEC filings and latest moves.')}</p></div>
 <div class="wrap pagebody"><ol class="plist" style="padding-top:12px">
 ${items}
 </ol></div>`;
     out.set('people/index.html', page({
       title: `The ${people.length} richest people: holdings and latest moves · Billionaires Digest`,
-      description: `The world's ${people.length} richest people ranked by net worth${asOfText ? ' as of ' + asOfText : ''}, each with their companies, tracked holdings, SEC filings and latest moves.`,
+      description: `The world's ${people.length} richest people, each with their companies, tracked holdings, SEC filings and latest moves.`,
       path: '/people/',
       ogImage: ogLatest,
       dateline: 'People',
-      updated: asOfText ? `Net worths as of ${asOfText}` : '',
+      updated: stakeAsOf ? `${STAKE_LABEL} as of ${stakeAsOf}` : '',
       jsonLd: [bc.ld],
       body
     }));
-    sitemap.push(['/people/', indexIso]);
+    sitemap.push(['/people/', maxIso([indexIso, stakeIso])]);
   }
 
   // ---- editions/<date>/ ----
@@ -312,7 +319,7 @@ ${side}
       path: c.href,
       ogImage: ogLatest,
       dateline: `Companies · ${plural(c.holderCount, 'holder', 'holders')}`,
-      updated: indexIso ? `Net worths as of ${fmtDate(indexIso)}` : '',
+      updated: '',
       jsonLd: [bc.ld],
       css: COMPANY_CSS,
       body: `${bc.html}\n${r.body}`
@@ -332,7 +339,7 @@ ${side}
       path: '/companies/',
       ogImage: ogLatest,
       dateline: 'Companies',
-      updated: indexIso ? `Net worths as of ${fmtDate(indexIso)}` : '',
+      updated: '',
       jsonLd: [bc.ld],
       css: COMPANY_CSS,
       body: `${bc.html}\n${renderCompanyIndex(companies.list, people.length)}`

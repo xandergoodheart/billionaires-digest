@@ -34,10 +34,11 @@
   }
 
   // Sort a copy of the pool. key: pts | avg | capdesc | capasc | rank | name.
-  // get: { pts(slug), avg(slug), cap(slug) } each returning a number or null. Missing values sort last;
-  // ties fall back to Forbes rank.
+  // get: { pts(slug), avg(slug), cap(slug), rank(slug)? } each returning a number or null. Missing values sort last;
+  // ties fall back to rank: get.rank (the Public Stake Value rank) when given, else the entry's own rank.
   function sortPlayers(list, key, get){
-    function byRank(a, b){ return (num(a.rank) ? a.rank : 999) - (num(b.rank) ? b.rank : 999); }
+    var rk = get && get.rank ? function(p){ var r = get.rank(p.slug); return num(r) ? r : 999; } : function(p){ return num(p.rank) ? p.rank : 999; };
+    function byRank(a, b){ return rk(a) - rk(b); }
     function byName(a, b){ var x = String(a.name || ''), y = String(b.name || ''); return x < y ? -1 : (x > y ? 1 : byRank(a, b)); }
     function desc(fn){
       return function(a, b){

@@ -406,6 +406,7 @@
     var seq = ++seasonSeq;
     if (!weeks.length){
       var first = S.index && S.index.firstRealWeek ? C.weekMonday(S.index.firstRealWeek) : null;
+      if (first && first <= C.nyDate(F.now())) first = null;   // only while the first real week is still ahead
       emptyState(body, 'No finished weeks yet', (first ? 'The first real week starts ' + fmt.dayLabel(first) + '. ' : '') + 'Save a lineup before the lock, and your record against the S&P 500, the Top 5 richest and the perfect team builds here week by week.');
       return;
     }

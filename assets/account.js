@@ -58,7 +58,7 @@
     var m = msgEl();
     b.addEventListener('click', function(){
       busy(b, true, 'Starting…'); m.textContent = ''; wantFocus = true;
-      BDGame.signIn().then(function(){ return refresh(); }).catch(function(e){
+      BDGame.signIn({ captchaParent: box }).then(function(){ return refresh(); }).catch(function(e){
         busy(b, false, 'Play online'); bad(m, e.message);
       });
     });
@@ -75,7 +75,8 @@
     inp.maxLength = 20; inp.autocomplete = 'off'; inp.spellcheck = false; inp.setAttribute('autocapitalize', 'off');
     inp.setAttribute('aria-describedby', id + '-hint');
     if (state.me) inp.value = state.me.nickname;
-    var hint = el('p', 'g-hint', '3 to 20 letters, numbers, _ or -. It shows on leaderboards. '); hint.id = id + '-hint';
+    var hint = el('p', 'g-hint', '3 to 20 letters, numbers, _ or -. It shows on leaderboards. ' +
+      (state.me ? 'You can change it once every 7 days. ' : '')); hint.id = id + '-hint';
     var rules = el('a', null, 'Nickname rules'); rules.href = 'play-terms.html#nicknames'; hint.appendChild(rules);
     var go = el('button', 'g-btn g-btn--primary', 'Save nickname'); go.type = 'submit';
     var m = msgEl();

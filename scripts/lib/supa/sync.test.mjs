@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
-import { sync, loadData } from './sync.mjs';
+import { sync, loadData, pointsChanged, lastTradingDay } from './sync.mjs';
 import { generateMarkets, resolveMarket, marketTimes } from './markets.mjs';
 import { nyToUtc, nyDate, nyWeekday } from './time.mjs';
 
@@ -96,7 +96,12 @@ function fakeSupabase() {
         }
         return send(404, { message: 'no such function' });
       }
-      if (req.method === 'GET' && u.pathname === '/rest/v1/fantasy_weeks') return send(200, [{ week: '2026-W39', final: true }, { week: '2026-W40', final: false }]);
+      if (req.method === 'GET' && u.pathname === '/rest/v1/fantasy_weeks') return send(200, fakeSupabase.weeks || [{ week: '2026-W39', final: true }, { week: '2026-W40', final: false }]);
+      if (req.method === 'GET' && u.pathname === '/rest/v1/person_points') {
+        const from = u.searchParams.get('date').replace(/^gte\./, '');
+        const to = u.searchParams.getAll('date')[1].replace(/^lte\./, '');
+        return send(200, (fakeSupabase.points || []).filter(r => r.date >= from && r.date <= to));
+      }
       if (req.method === 'GET' && u.pathname === '/rest/v1/markets') {
         const st = /in\.\(([^)]*)\)/.exec(u.searchParams.get('status'))[1].split(',');
         const before = new Date(u.searchParams.get('closes_at').replace(/^lte\./, ''));
@@ -265,4 +270,35 @@ test('generateMarkets: CEOs with a sector join the sector markets', () => {
   const specs = generateMarkets({ week, people, filings: FILINGS.filings, prevWeek: W39, now: new Date('2026-09-28T13:00:00Z') });
   const members = specs.find(m => m.kind === 'sector_top').params.members;
   assert.deepEqual(members.Autos, ['c01', 'c02', 'c03']);
+});
+
+test('pointsChanged / lastTradingDay', () => {
+  const days = [{ date: '2026-10-05', people: [{ slug: 'a', points: 10 }, { slug: 'b', points: -3 }] }, { date: '2026-10-12', people: [{ slug: 'a', points: 1 }] }];
+  const w = { week: '2026-W41', start: '2026-10-05', end: '2026-10-09' };
+  assert.equal(pointsChanged(days, w, [{ date: '2026-10-05', slug: 'a', points: 10 }, { date: '2026-10-05', slug: 'b', points: -3 }]), false);
+  assert.equal(pointsChanged(days, w, [{ date: '2026-10-05', slug: 'a', points: 5242 }, { date: '2026-10-05', slug: 'b', points: -3 }]), true);
+  assert.equal(pointsChanged(days, w, [{ date: '2026-10-05', slug: 'a', points: 10 }]), true); // a row missing
+  assert.equal(lastTradingDay(w), '2026-10-09');
+  assert.equal(lastTradingDay({ week: '2027-W12', start: '2027-03-22', end: '2027-03-26' }), '2027-03-25'); // Good Friday
+});
+
+test('a final week is settled again when its points changed, and only then', async () => {
+  await withServer(async (f, env) => {
+    const sat = new Date('2026-10-03T14:45:00Z');
+    fakeSupabase.now = sat;
+    fakeSupabase.weeks = [{ week: '2026-W39', final: true }, { week: '2026-W40', final: true }];
+    const same = DAYS.flatMap(d => (Array.isArray(d.people) ? d.people : Object.values(d.people)).map(p => ({ date: d.date, slug: p.slug, points: p.points })));
+    try {
+      fakeSupabase.points = same;
+      const a = await sync({ env, root: dataRoot, now: sat, log: quiet });
+      assert.deepEqual(a.settled, []);
+      fakeSupabase.points = same.map(r => (r.slug === 'p01' && r.date === '2026-09-28' ? { ...r, points: 5242 } : r));
+      f.calls.length = 0;
+      const b = await sync({ env, root: dataRoot, now: sat, log: quiet });
+      assert.deepEqual(b.settled, ['2026-W40 (final, points changed)']);
+      assert.deepEqual(f.calls.find(c => c.path.endsWith('/settle_week')).args, { p_week: '2026-W40', p_final: true });
+      // compared before the upload: the upload still happens
+      assert.ok(f.calls.some(c => c.path.endsWith('/upsert_points')));
+    } finally { fakeSupabase.weeks = null; fakeSupabase.points = null; }
+  });
 });

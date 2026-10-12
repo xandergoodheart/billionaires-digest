@@ -1,5 +1,5 @@
-/* Billionaires Digest: waitlist landing (index.html), unsubscribe.html and privacy.html.
-   Uses the v2 tokens (assets/v2/tokens.css), so light and dark themes come for free. */
+/* Billionaires Digest: the "Save your team" box on the Play home (index.html), unsubscribe.html, privacy.html and
+   terms.html. Uses the v2 tokens (assets/v2/tokens.css), so light and dark themes come for free. */
 
 /* no odds or matchup lines on the waitlist / privacy / unsubscribe pages (the scores ticker shows play-money lines) */
 .v2-ticker { display: none !important; }
@@ -32,7 +32,7 @@
 }
 .wl-card__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: var(--fs-xl); line-height: 1.05; margin-bottom: var(--s1); }
 .wl-note { color: var(--text); line-height: 1.45; }
-.wl-note a, .wl-hint a, .wl-foot a, .wl-legal a { color: var(--link); }
+.wl-note a, .wl-hint a, .wl-foot a, .wl-legal a:not(.v2-btn), .wl-agree a, .wl-check a { color: var(--link); }
 .wl-hint { font-size: var(--fs-sm); color: var(--text-muted); margin: var(--s0) 0 0; }
 .wl-label { display: block; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); margin-bottom: 6px; }
 
@@ -71,6 +71,20 @@
 .wl-face__ini { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 20px; color: var(--text-muted); }
 
 .wl-stats { margin: var(--s1) 0 0; font-size: var(--fs-sm); color: var(--text-muted); font-weight: 600; }
+
+/* "Also send me The Billionaire Brief" (unticked by default) and the terms line under the email form */
+.wl-check { display: flex; align-items: flex-start; gap: 10px; margin: var(--s1) 0 0; font-size: var(--fs-sm); line-height: 1.4; color: var(--text); cursor: pointer; }
+.wl-check input { flex: 0 0 auto; width: 20px; height: 20px; margin: 0; accent-color: var(--brand); cursor: pointer; }
+.wl-check input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.wl-agree { margin-top: var(--s0); }
+
+/* the "Save your team" section on the Play home, right under the hero */
+.wl-save { margin: var(--s2) 0; }
+.wl-save__head { margin-bottom: var(--s1); }
+.wl-save__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: var(--fs-xl); line-height: 1.05; margin: 0 0 6px; color: var(--text); }
+.wl-save__p { margin: 0; color: var(--text-muted); line-height: 1.45; max-width: 60ch; }
+.wl-save .wl-card { max-width: 760px; }
+.hm-hero__kick [data-wl-season] { white-space: nowrap; }
 
 /* how it works */
 .wl-how { margin-top: var(--s3); }

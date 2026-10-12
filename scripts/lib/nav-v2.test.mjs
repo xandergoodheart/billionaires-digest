@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { NAV_V2, SUBNAV_V2, BOTTOM_V2, renderTopbarV2, renderBottomTabsV2, renderFooterV2, renderNav, navV2, subnavV2, GATED, readGated } from './nav.mjs';
+import { NAV_V2, SUBNAV_V2, BOTTOM_V2, renderTopbarV2, renderBottomTabsV2, renderFooterV2, renderNav, navV2, subnavV2, GATED, readGated, MENU_HIDDEN, BOOK_HIDDEN } from './nav.mjs';
 
 // These tests check the full (open-game) chrome; the launch-gated chrome is tested separately below.
 const U = { gated: false };
@@ -13,7 +13,7 @@ const currentLinks = (html, attr) => [...html.matchAll(new RegExp(`<a [^>]*${att
 test('NAV_V2: five sections, play sub-tabs', () => {
   assert.deepEqual(NAV_V2.map((n) => n.key), ['play', 'learn', 'players', 'news', 'tools']);
   assert.deepEqual(NAV_V2.map((n) => n.label), ['Play', 'Learn', 'Players', 'News', 'Tools']);
-  assert.deepEqual(NAV_V2.map((n) => n.href), ['play.html', 'academy.html', 'players.html', 'news.html', 'flows.html']);
+  assert.deepEqual(NAV_V2.map((n) => n.href), ['index.html', 'academy.html', 'players.html', 'news.html', 'flows.html']);
   assert.deepEqual(SUBNAV_V2.play.items.map((i) => i.label), ['My team', 'Draft room', 'Scores', 'Leagues', 'The Book', 'Next Moves', 'Rules']);
   assert.equal(SUBNAV_V2.play.label, 'Billionaire Fantasy League');
   assert.deepEqual(BOTTOM_V2, ['play', 'learn', 'players', 'news']);
@@ -75,7 +75,7 @@ test('renderBottomTabsV2: four tabs, active marked', () => {
   assert.deepEqual([...html.matchAll(/<a [^>]*>([^<]*)<\/a>/g)].map((m) => m[1]), ['Play', 'Learn', 'Players', 'News']);
   assert.deepEqual(currentLinks(html, 'aria-current="true"'), ['Play']);
   assert.deepEqual(currentLinks(renderBottomTabsV2('news', U), 'aria-current'), ['News']);
-  assert.ok(renderBottomTabsV2('play', UA).includes('href="/play.html"'));
+  assert.ok(renderBottomTabsV2('play', UA).includes('<a href="/" aria-current="true">Play</a>'));
 });
 
 test('renderFooterV2: disclaimers and links', () => {
@@ -84,6 +84,8 @@ test('renderFooterV2: disclaimers and links', () => {
   assert.ok(html.includes('Play money only: no purchases, cash-out or prizes.'));
   assert.ok(html.includes('href="about.html"') && html.includes('href="about.html#corrections"') && html.includes('href="play-terms.html"'));
   assert.ok(renderFooterV2(UA).includes('href="/play-terms.html"'));
+  assert.ok(html.includes('<a href="terms.html">Terms</a>') && html.includes('<a href="privacy.html">Privacy</a>'));
+  assert.ok(renderFooterV2(UA).includes('<a href="/terms.html">Terms</a>'));
 });
 
 test('v1 renderNav is unchanged by the v2 additions', () => {
@@ -174,10 +176,10 @@ test('News and Tools sections: sub-tabs, absolute links for generated pages', ()
   assert.ok(!renderBottomTabsV2('tools', U).includes('aria-current'));
 });
 
-test('Open game: Play goes to play.html ("/play.html" absolute); the BD mark is the home page; News lives at news.html', () => {
+test('Open game: Play goes to the home page ("/" absolute); the BD mark is the home page; News lives at news.html', () => {
   const rel = renderTopbarV2('play', null, U);
   const top = rel.slice(rel.indexOf('<nav class="v2-topnav"'), rel.indexOf('</nav>'));
-  assert.ok(top.includes('<a href="play.html" aria-current="true">Play</a>'));
+  assert.ok(top.includes('<a href="index.html" aria-current="true">Play</a>'));
   assert.ok(top.includes('<a href="news.html">News</a>'));
   assert.ok(rel.includes('<a class="v2-mark" href="index.html">'));
   assert.ok(/<a class="v2-top__act v2-top__act--team" href="team.html">[\s\S]*?<span>My team<\/span><\/a>/.test(rel));
@@ -190,10 +192,10 @@ test('Open game: Play goes to play.html ("/play.html" absolute); the BD mark is 
   assert.ok(news.includes('<a class="v2-menu__top" href="news.html" aria-current="true">News</a>'));
   const abs = renderTopbarV2('news', 'people', UA);
   assert.ok(abs.includes('<a class="v2-mark" href="/">'));
-  assert.ok(abs.includes('<a href="/play.html">Play</a>') && abs.includes('href="/news.html"'));
-  assert.ok(!abs.includes('href="/index.html"'));
+  assert.ok(abs.includes('<a href="/">Play</a>') && abs.includes('href="/news.html"'));
+  assert.ok(!abs.includes('href="/index.html"') && !abs.includes('play.html'));
   const tabs = renderBottomTabsV2('play', U);
-  assert.ok(tabs.includes('<a href="play.html" aria-current="true">Play</a>') && tabs.includes('<a href="news.html">News</a>'));
+  assert.ok(tabs.includes('<a href="index.html" aria-current="true">Play</a>') && tabs.includes('<a href="news.html">News</a>'));
   assert.ok(renderFooterV2(U).includes('<a class="v2-mark v2-mark--sm" href="index.html">'));
   assert.ok(renderFooterV2(UA).includes('<a class="v2-mark v2-mark--sm" href="/">'));
   assert.ok(renderFooterV2(U).includes('<a href="privacy.html">Privacy</a>'));
@@ -252,8 +254,6 @@ test('Launch gate: no odds ticker anywhere (no container, no ticker.js); open ga
   assert.ok(!renderFooterV2(G).includes('ticker.js'));
   assert.ok(!renderFooterV2({ absolute: true, gated: true }).includes('ticker.js'));
   assert.ok(renderFooterV2(G).trimEnd().endsWith('</footer>'));
-  assert.ok(renderTopbarV2('news', 'today', U).includes('<div class="v2-ticker" data-ticker hidden></div>'));
-  assert.ok(renderFooterV2(U).includes('<script src="assets/v2/ticker.js" defer></script>'));
 });
 
 test('readGated: reads config/launch.json, fails open', () => {
@@ -262,12 +262,41 @@ test('readGated: reads config/launch.json, fails open', () => {
   assert.equal(readGated(new URL('./does-not-exist.json', import.meta.url)), false);
 });
 
-test('scores ticker: empty hidden container first in the chrome, script loaded by the footer', () => {
+test('Menus: The Book, Next Moves, Copycat, Who invests with whom and Where they buy are hidden (pages stay up)', () => {
+  assert.deepEqual(MENU_HIDDEN, ['book', 'moves', 'copycat', 'network', 'property']);
+  assert.deepEqual(subnavV2('play', U).items.map((i) => i.key), ['team', 'draft', 'scores', 'leagues', 'rules']);
+  assert.deepEqual(subnavV2('tools', U).items.map((i) => i.key), ['flows', 'quarterly', 'compare', 'filings101']);
+  // the full definitions are untouched
+  assert.equal(SUBNAV_V2.play.items.length, 7);
+  assert.equal(SUBNAV_V2.tools.items.length, 7);
+  for (const [t, s] of [['play', 'team'], ['play', 'book'], ['tools', 'flows'], ['news', 'today']]) {
+    const html = renderTopbarV2(t, s, U);
+    for (const h of ['book.html', 'moves.html', 'copycat.html', 'network.html', 'property.html']) {
+      assert.ok(!html.includes('href="' + h + '"'), t + '/' + s + ' hides ' + h);
+    }
+    for (const h of ['team.html', 'draft.html', 'scores.html', 'leagues.html', 'play-terms.html', 'players.html', 'news.html', 'flows.html', 'quarterly.html', 'compare.html']) {
+      assert.ok(html.includes('href="' + h + '"'), t + '/' + s + ' keeps ' + h);
+    }
+  }
+  // a hidden page itself: section still active, no sub-tab marked
+  const book = renderTopbarV2('play', 'book', U);
+  assert.equal((book.match(/aria-current="page"/g) || []).length, 0);
+});
+
+test('Odds ticker: hidden while The Book is hidden from the menus (no container, no ticker.js)', () => {
+  assert.equal(BOOK_HIDDEN, true);
+  for (const [t, s] of [['play', 'team'], ['news', 'today'], ['players', null]]) {
+    assert.ok(!renderTopbarV2(t, s, U).includes('data-ticker'), t);
+    assert.ok(!renderTopbarV2(t, s, UA).includes('v2-ticker'), t);
+  }
+  assert.ok(!renderFooterV2(U).includes('ticker.js'));
+  assert.ok(!renderFooterV2(UA).includes('ticker.js'));
+  assert.ok(renderFooterV2(U).trimEnd().endsWith('</footer>'));
+});
+
+test('chrome order: skip link before the top bar; sub-tab label before the tabs', () => {
   const html = renderTopbarV2('play', 'team', U);
-  assert.ok(html.includes('<div class="v2-ticker" data-ticker hidden></div>'));
-  assert.ok(html.indexOf('v2-skip') < html.indexOf('v2-ticker') && html.indexOf('v2-ticker') < html.indexOf('<header class="v2-top"'));
-  assert.ok(renderFooterV2(U).includes('<script src="assets/v2/ticker.js" defer></script>'));
-  assert.ok(renderFooterV2(UA).includes('<script src="/assets/v2/ticker.js" defer></script>'));
+  assert.ok(html.indexOf('v2-skip') < html.indexOf('<header class="v2-top"'));
   // sub-tab bar: section label comes before the tabs
   const sub = html.slice(html.indexOf('<nav class="v2-subtabs"'));
   assert.ok(sub.indexOf('v2-subtabs__label') < sub.indexOf('v2-subtabs__list'));

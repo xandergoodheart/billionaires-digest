@@ -10,6 +10,9 @@
   var $ = function(id){ return document.getElementById(id); };
 
   var UI = { q: '', sector: '', sort: 'pts', kind: '' };
+  // Public Stake Value (BD.stakeTable): the Stake column, the rank sort and its tie-break. Never a net worth.
+  var ST = { asOf: null, value: {}, rank: {} };
+  function stakeRank(s){ return ST.rank[s] || null; }
   try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; UI.kind = cleanKind(saved.kind); } } catch (e) {}
   // a link from a player page (players.html?sector=...) or a shared search (?q=...) wins over the kept filters
   (function(){
@@ -119,7 +122,7 @@
   }
   function visible(){
     var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && typeOk(p) && P.matches(p, UI.q); });
-    return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: function(s){ return F.stat(s).avg; }, cap: sal });
+    return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: function(s){ return F.stat(s).avg; }, cap: sal, rank: stakeRank });
   }
 
   // ---- pool table ----
@@ -162,7 +165,10 @@
       var tdA = el('td', 'n pl-c-avg' + (a == null ? '' : ' ' + numCls(a)), a == null ? '—' : signedTxt(a)); tdA.setAttribute('data-label', 'Avg/day'); tr.appendChild(tdA);
       var s = sal(p.slug);
       var tdC = el('td', 'n dr-c-cap', s == null ? '—' : String(s)); tdC.setAttribute('data-label', 'Cap'); tr.appendChild(tdC);
-      var tdR = el('td', 'n pl-c-rank', typeof p.rank === 'number' ? 'No. ' + p.rank : '—'); tdR.setAttribute('data-label', 'Forbes'); tr.appendChild(tdR);
+      var sv = ST.value[p.slug];
+      var tdR = el('td', 'n pl-c-rank', sv ? BD.fmtStake(sv) : '—'); tdR.setAttribute('data-label', 'Stake');
+      if (!sv) tdR.title = BD.STAKE_NONE;
+      tr.appendChild(tdR);
       var tdS = el('td', 'dr-c-status');
       var b;
       if (picked){
@@ -183,8 +189,9 @@
       tr.appendChild(tdS);
       body.appendChild(tr);
     });
-    var method = S.draftWk && S.draftWk.salaryMethod;
-    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Forbes rank') + ' · Forbes rank: Forbes Real-Time Billionaires (CEOs have none)';
+    var method = BD.salaryMethodText(S.draftWk && S.draftWk.salaryMethod);
+    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Public Stake Value rank') +
+      ' · Stake = ' + BD.STAKE_LABEL + ': disclosed US-listed shares × latest close, not a net worth' + (ST.asOf ? ', as of ' + BD.fmtDate(ST.asOf) : '') + '. — = no US-listed stake on file (CEOs have none).';
     $('poolcap').textContent = 'Players you can draft for ' + fmt.weekName(S.draftWeek) + (UI.kind ? ', ' + KIND_WORDS[UI.kind] : '') + ', ' + list.length + ' shown';
   }
   function renderNotDraftable(){
@@ -249,6 +256,7 @@
   }
   if (F.testClock() != null){ var tcb = $('testclock'); tcb.hidden = false; tcb.textContent = 'Test clock (for testing only): ' + new Date(F.now()).toISOString(); }
   var people = BD.loadPeople().then(null, function(){ return null; });
+  BD.loadStakes().then(function(st){ ST = st; if (F.state.loaded && F.state.draftWk) renderPool(); }, function(){});
   F.init().then(function(){
     if (!F.state.draftWk){ fail(); return; }
     renderHead(); renderNotices(); renderSectors(); renderAll();

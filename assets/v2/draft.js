@@ -18,6 +18,9 @@
   var mqPhone = window.matchMedia ? window.matchMedia('(max-width: 767px)') : { matches: false };
 
   var UI = { q: '', sector: '', sort: 'pts', kind: '', saveMsg: null, syncMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
+  // Public Stake Value rank (BD.stakeTable) for the rank sort and tie-breaks. Never a net worth.
+  var ST = { rank: {} };
+  function stakeRank(s){ return ST.rank[s] || null; }
   try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; UI.kind = cleanKind(saved.kind); } } catch (e) {}
   function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort, kind: UI.kind })); } catch (e) {} }
   var KIND_WORDS = { '': 'all players', billionaire: 'billionaires', ceo: 'CEOs' };
@@ -231,8 +234,8 @@
   // ---- filters + sort ----
   function visible(){
     var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && typeOk(p) && P.matches(p, UI.q); });
-    if (UI.sort === 'value') return P.sortPlayers(list, 'avg', { avg: valNum });
-    return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: avgOf, cap: sal });
+    if (UI.sort === 'value') return P.sortPlayers(list, 'avg', { avg: valNum, rank: stakeRank });
+    return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: avgOf, cap: sal, rank: stakeRank });
   }
 
   // ---- recent form sparkline (same numbers as the player card chart) ----
@@ -362,12 +365,12 @@
       tr.appendChild(tdS);
       body.appendChild(tr);
     });
-    var method = S.draftWk && S.draftWk.salaryMethod;
-    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Forbes rank') +
+    var method = BD.salaryMethodText(S.draftWk && S.draftWk.salaryMethod);
+    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Public Stake Value rank') +
       ' · Avg = recent average points per scored day · Form = the last ' + (S.sparkDates.length || 0) + ' scored days';
     $('valuefoot').textContent = anyValue
       ? VALUE_RULE + ' The top 5 in the current view get a Value badge. Based on recent days only; not a forecast.'
-      : 'No scored days yet, so there are no Value badges and "Best value" sorts by Forbes rank. ' + VALUE_RULE;
+      : 'No scored days yet, so there are no Value badges and "Best value" sorts by Public Stake Value. ' + VALUE_RULE;
     $('poolcap').textContent = 'Players you can draft for ' + fmt.weekName(S.draftWeek) + (UI.kind ? ', ' + KIND_WORDS[UI.kind] : '') + (UI.sector ? ', ' + UI.sector : '') + ', ' + list.length + ' shown';
   }
   function renderNotDraftable(){
@@ -886,6 +889,7 @@
   if (F.testClock() != null){ var tcb = $('testclock'); tcb.hidden = false; tcb.textContent = 'Test clock (for testing only): ' + new Date(F.now()).toISOString(); }
   // nicknames under the names in the pool (a playful label we write; the list works without it)
   if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x && F.state.loaded && F.state.draftWk) renderPool(); });
+  BD.loadStakes().then(function(st){ ST = st; if (F.state.loaded && F.state.draftWk) renderPool(); }, function(){});
   F.init().then(function(){
     if (!F.state.draftWk){ fail(); return; }
     loadQueue();

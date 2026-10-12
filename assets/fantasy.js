@@ -539,7 +539,7 @@
 
   // ---- player pool ----
   var SORTS = {
-    rank:   { label: 'Rank',     def: 'asc',  key: function(p){ return p.rank; } },
+    rank:   { label: 'Stake rank', def: 'asc',  key: function(p){ return p.rank == null ? 999 : p.rank; } },
     salary: { label: 'Salary',   def: 'desc', key: function(p){ return salaries()[p.slug]; } },
     avg:    { label: 'Avg pts',  def: 'desc', key: function(p){ var a = stat(p.slug).avg; return a == null ? -1e9 : a; } },
     last:   { label: 'Last day', def: 'desc', key: function(p){ var a = stat(p.slug).last; return a == null ? -1e9 : a; } },
@@ -616,7 +616,7 @@
       return true;
     });
     var so = SORTS[UI.sort] || SORTS.rank, sign = UI.dir === 'asc' ? 1 : -1;
-    rows.sort(function(a, b){ return sign * (so.key(a) - so.key(b)) || a.rank - b.rank; });
+    rows.sort(function(a, b){ return sign * (so.key(a) - so.key(b)) || SORTS.rank.key(a) - SORTS.rank.key(b) || (a.slug < b.slug ? -1 : 1); });
     var lastDate = S.sparkDates[S.sparkDates.length - 1];
     $('draftcount').textContent = rows.length + ' of ' + arr(wk.draftable).length + ' players · sorted by ' + so.label.toLowerCase() +
       (lastDate ? ' · last scored ' + dayLabel(lastDate) + (C.isPractice(C.isoWeek(lastDate)) ? ' (practice)' : '') : '');
@@ -633,7 +633,7 @@
       var nb = nameBtn(p.slug);
       tx.appendChild(nb);
       var top2 = arr(p.holdings).slice(0, 2).map(function(h){ var pct = h.weight * 100; return h.ticker + ' ' + (pct > 0 && pct < 1 ? pct.toFixed(1) : Math.round(pct)) + '%'; });
-      tx.appendChild(el('span', 'g-rp__sub', '#' + p.rank + ' · ' + p.sector + (top2.length ? ' · ' + top2.join(', ') : '') + (arr(p.holdings).length > 2 ? ' +' + (p.holdings.length - 2) : '')));
+      tx.appendChild(el('span', 'g-rp__sub', p.sector + (top2.length ? ' · ' + top2.join(', ') : '') + (arr(p.holdings).length > 2 ? ' +' + (p.holdings.length - 2) : '')));
       var bd = badges(p.slug, false); if (bd) tx.appendChild(bd);
       who.appendChild(tx);
       if (S.captain === p.slug) who.appendChild(el('span', 'g-badge g-badge--captain', 'C')).setAttribute('title', 'Your captain');
@@ -689,10 +689,10 @@
     head.innerHTML = ''; body.innerHTML = ''; foot.innerHTML = '';
     head.appendChild(avatar(slug, 64));
     var ht = el('div', 'fl-dhead');
-    ht.appendChild(el('div', 'g-card__kicker', (p.rank ? '#' + p.rank + ' richest · ' : '') + (p.sector || 'Other')));
+    ht.appendChild(el('div', 'g-card__kicker', p.sector || 'Other'));
     var h = el('h2', 'g-drawer__title', p.name); h.id = 'drawertitle'; ht.appendChild(h);
     var worth = S.worth[slug];
-    ht.appendChild(el('div', 'fl-dhead__sub', (worth ? 'Net worth ' + worth + ' · ' : '') + 'Salary ' + (sal != null ? sal : '—') + (S.captain === slug ? ' · Your captain' : (S.picks.indexOf(slug) >= 0 ? ' · In your lineup' : ''))));
+    ht.appendChild(el('div', 'fl-dhead__sub', (worth ? BD.STAKE_LABEL + ' ' + worth + ' · ' : '') + 'Salary ' + (sal != null ? sal : '—') + (S.captain === slug ? ' · Your captain' : (S.picks.indexOf(slug) >= 0 ? ' · In your lineup' : ''))));
     head.appendChild(ht);
     head.appendChild(btn('g-btn g-btn--icon g-drawer__close', '×', { 'data-close': '1', 'aria-label': 'Close player card' }));
 
@@ -724,7 +724,6 @@
     if (ld){
       var bits = ['Price ' + signed(ld.pricePoints) + ' (' + (ld.returnPct > 0 ? '+' : '') + (Math.round(ld.returnPct * 100) / 100) + '%)'];
       if (ld.bonuses && ld.bonuses.insiderBuy) bits.push('insider buy +' + ld.bonuses.insiderBuy);
-      if (ld.bonuses && ld.bonuses.stories) bits.push('news +' + ld.bonuses.stories);
       sec.appendChild(el('p', 'fl-dnote', dayLabel(S.lastDay.date) + ': ' + bits.join(' · ') + ' = ' + signed(ld.points) + ' points.'));
     }
     body.appendChild(sec);
@@ -758,7 +757,7 @@
     // news
     var ns = el('section', 'fl-dsec');
     ns.appendChild(el('h3', 'fl-dsec__h', 'News'));
-    ns.appendChild(el('p', 'fl-dnote', s.news ? s.news + (s.news === 1 ? ' story' : ' stories') + ' in recent editions of the Digest (+10 points each on the day).' : 'No stories in recent editions.'));
+    ns.appendChild(el('p', 'fl-dnote', s.news ? s.news + (s.news === 1 ? ' story' : ' stories') + ' in recent editions of the Digest.' : 'No stories in recent editions.'));
     var a = el('a', 'g-btn', 'Profile and stories'); a.href = 'people/' + encodeURIComponent(slug) + '/'; ns.appendChild(a);
     body.appendChild(ns);
 
@@ -973,6 +972,7 @@
     if (!weeks.length){
       box.innerHTML = '';
       var first = S.index && S.index.firstRealWeek ? C.weekMonday(S.index.firstRealWeek) : null;
+      if (first && first <= C.nyDate(now())) first = null;   // only while the first real week is still ahead
       box.appendChild(emptyState('No finished weeks yet', (first ? 'The first real week starts ' + dayLabel(first) + '. ' : '') + 'Save a lineup before the lock, and your record against the S&P 500, the Top 5 richest and the perfect team builds here week by week.', 'Build your lineup'));
       renderChips();
       return;
@@ -1094,14 +1094,14 @@
   function renderNoDraft(){
     var ul = $('nodraft');
     ul.innerHTML = '';
-    var list = arr(S.index && S.index.notDraftable).slice().sort(function(a, b){ return a.rank - b.rank; });
+    var list = arr(S.index && S.index.notDraftable).slice().sort(function(a, b){ return String(a.name || a.slug).localeCompare(String(b.name || b.slug)); });
     $('nodraftsummary').textContent = 'Show ' + list.length + ' people who cannot be drafted (no daily market price)';
     list.forEach(function(p){
       S.people[p.slug] = S.people[p.slug] || p;
       var li = el('li');
       var a = el('a', 'fl-ndlink', p.name); a.href = 'people/' + encodeURIComponent(p.slug) + '/';
       li.appendChild(a);
-      li.appendChild(el('span', 'g-rp__sub', '#' + p.rank + ' · ' + (p.sector || 'Other') + ' · private wealth'));
+      li.appendChild(el('span', 'g-rp__sub', (p.sector || 'Other') + ' · ' + BD.STAKE_NONE.toLowerCase()));
       ul.appendChild(li);
     });
   }
@@ -1294,9 +1294,9 @@
         if (!ticking){ ticking = true; setInterval(renderHead, 20000); }
       });
     }).then(null, function(err){ if (window.console) console.warn(err); fail(); });
-    // net worth for the player card (optional)
-    if (BD.loadPeople) BD.loadPeople().then(function(px){
-      arr(px && px.people).forEach(function(p){ if (p.worth) S.worth[p.slug] = p.worth; });
+    // Public Stake Value for the player card (optional; never a net worth)
+    if (BD.loadStakes) BD.loadStakes().then(function(st){
+      Object.keys(st.value).forEach(function(s){ S.worth[s] = BD.fmtStake(st.value[s]); });
       if (drawer) refreshDrawer();
     }, function(){});
   }

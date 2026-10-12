@@ -34,15 +34,15 @@ const V2_ACTIVE = {
   'moves.html': ['play', 'moves'],
   'play-terms.html': ['play', 'rules'],
   'markets.html': ['play', 'moves'],
-  'design.html': ['play', null],
   'academy.html': ['learn', 'academy'],
   'life.html': ['learn', 'hub'],
   'life-play.html': ['learn', 'hub'],
   'players.html': ['players', null],
   'player.html': ['players', null],
-  'index.html': ['play', null],     // waitlist landing (Play points here while config/launch.json gate is on)
-  'play.html': ['play', null],      // the game's front page
+  'index.html': ['play', null],     // the Play home (preseason hero + "Save your team" email box)
   'privacy.html': ['news', null],
+  'terms.html': ['news', null],
+  '404.html': [null, null],
   'unsubscribe.html': ['news', null],
   'news.html': ['news', 'today'],
   'sectors.html': ['news', 'sectors'],
@@ -56,6 +56,11 @@ const V2_ACTIVE = {
   'compare.html': ['tools', 'compare'],
   'property.html': ['tools', 'property']
 };
+
+// Pages without any site chrome: never touched. play.html is a tiny redirect to the home page.
+const SKIP = new Set(['play.html']);
+// Pages served at any URL depth (GitHub Pages serves 404.html for every missing path): root-absolute links.
+const ABSOLUTE = new Set(['404.html']);
 
 // v2 blocks are only replaced between existing markers (never inserted)
 function replaceMarked(html, name, block, file) {
@@ -86,13 +91,15 @@ console.log(`launch gate: ${GATED ? 'ON (game + Tools hidden in the nav)' : 'off
 let changed = 0;
 const files = (await readdir(ROOT)).filter(f => f.endsWith('.html')).sort();
 for (const f of files) {
+  if (SKIP.has(f)) { console.log(`skipped    ${f}  (no chrome)`); continue; }
   const p = join(ROOT, f);
   const before = await readFile(p, 'utf8');
   if (before.includes('<!-- v2topbar:start -->')) {
     const [top, sub] = V2_ACTIVE[f] || [null, null];
-    let v2 = replaceMarked(before, 'v2topbar', renderTopbarV2(top, sub), f);
-    v2 = replaceMarked(v2, 'v2tabs', renderBottomTabsV2(top), f);
-    v2 = replaceMarked(v2, 'v2footer', renderFooterV2(), f);
+    const o = { absolute: ABSOLUTE.has(f) };
+    let v2 = replaceMarked(before, 'v2topbar', renderTopbarV2(top, sub, o), f);
+    v2 = replaceMarked(v2, 'v2tabs', renderBottomTabsV2(top, o), f);
+    v2 = replaceMarked(v2, 'v2footer', renderFooterV2(o), f);
     if (v2 !== before) { await writeFile(p, v2); changed++; }
     console.log(`${v2 !== before ? 'updated' : 'unchanged'}  ${f}  (v2)${V2_ACTIVE[f] ? '' : '  (no active v2 key)'}`);
     continue;

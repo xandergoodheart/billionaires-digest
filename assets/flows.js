@@ -150,7 +150,7 @@
     if (!rows.length){ box.appendChild(el('p', 'tempty', 'No sector data yet.')); return; }
     var tw = el('div', 'ttable-wrap');
     var tb = el('table', 'ttable');
-    tb.appendChild(el('caption', null, 'Sector is the person\'s main sector in the Forbes list, not the company\'s. Estimated; partial.'));
+    tb.appendChild(el('caption', null, 'Sector is the person\'s main sector on our list, not the company\'s. Estimated; partial.'));
     var th = el('thead'), hr = el('tr');
     ['Sector', 'Buys', 'Sales', 'Net', 'Other lines'].forEach(function(h){ var c = el('th', null, h); c.scope = 'col'; hr.appendChild(c); });
     th.appendChild(hr); tb.appendChild(th);
@@ -216,15 +216,13 @@
     var box = clear('boardlists');
     if (!lb){ box.appendChild(el('p', 'tempty', 'Leaderboards are not available right now.')); return; }
     var n = lb.notes || {};
-    var minCov = typeof lb.minCoverage === 'number' ? Math.round(lb.minCoverage * 100) + '%' : 'a set share';
-    var moverNote = 'Change in value of disclosed US-listed holdings on the last trading day. Only people whose covered holdings are at least ' + minCov + ' of their net worth.';
+    var moverNote = 'Change in value of disclosed US-listed holdings on the last trading day. Only people whose disclosed holdings are a large part of their wealth.';
     function moverRows(list){
       return arr(list).map(function(r){
         return {
           person: r,
           value: signedUsd(r.estDailyChange),
           cls: r.estDailyChange > 0 ? 'up' : 'down',
-          detail: 'Covers about ' + Math.round((r.coverage || 0) * 100) + '% of net worth',
           links: arr(r.holdings).slice(0, 3).map(function(h){ return { href: h.source, text: h.ticker + ' stake' }; })
         };
       });

@@ -16,6 +16,9 @@
   function shortName(n){ return String(n || '').replace(/\s*&\s*family\s*$/i, ''); }
 
   var G = null, nodeBy = {}, adj = {}, nodeEls = {}, edgeEls = [];
+  // Public Stake Value (BD.stakeTable), our own number; never a net worth. Text comes from here, not the graph file.
+  var ST = { asOf: null, value: {}, rank: {} };
+  function stakeLine(slug){ var v = ST.value[slug]; return v ? BD.STAKE_LABEL + ' ' + BD.fmtStake(v) : BD.STAKE_NONE; }
   var selected = null, hot = null;
   var panel, live, svgEl;
 
@@ -78,11 +81,11 @@
     var a = el('a', null, n.name); a.href = personHref(n.slug); a.style.color = 'inherit';
     h2.appendChild(a);
     who.appendChild(h2);
-    who.appendChild(el('div', 'nsub', '#' + n.rank + ' · ' + (n.worthText || '') + ' · ' + n.sector));
+    who.appendChild(el('div', 'nsub', stakeLine(n.slug) + ' · ' + n.sector));
     head.appendChild(who);
     panel.appendChild(head);
     var list = (adj[slug] || []).slice().sort(function(x, y){
-      return y.weight - x.weight || nodeBy[x.other].rank - nodeBy[y.other].rank;
+      return y.weight - x.weight || (nodeBy[x.other].rank || 999) - (nodeBy[y.other].rank || 999);
     });
     panel.appendChild(el('p', 'nsub', 'Holds the same companies as ' + plural(list.length, 'person', 'people') + '.'));
     list.forEach(function(x){
@@ -183,7 +186,7 @@
     var grid = el('div', 'netgrid');
     var left = el('div');
     var box = el('div', 'netbox');
-    svgEl = sv('svg', { viewBox: vb.join(' '), role: 'group', 'aria-label': 'Network of ' + G.nodes.length + ' people linked by shared holdings. Tab through people in rank order.' });
+    svgEl = sv('svg', { viewBox: vb.join(' '), role: 'group', 'aria-label': 'Network of ' + G.nodes.length + ' people linked by shared holdings. Tab through people from the largest circle down.' });
     var defs = sv('defs', {});
     var seen = {};
     G.nodes.forEach(function(n){
@@ -213,7 +216,7 @@
     order.forEach(function(n){
       var r = +n.r || 8;
       var g = sv('g', { 'class': 'nnode', transform: 'translate(' + n.x + ' ' + n.y + ')', tabindex: '0', role: 'button', 'aria-pressed': 'false' });
-      g.setAttribute('aria-label', n.name + ', number ' + n.rank + ', ' + (n.worthText || '') + '. Shares companies with ' + plural(adj[n.slug].length, 'person', 'people') + '.');
+      g.setAttribute('aria-label', n.name + ', ' + stakeLine(n.slug) + '. Shares companies with ' + plural(adj[n.slug].length, 'person', 'people') + '.');
       var t = sv('title', {}); t.textContent = n.name + ' · ' + plural(adj[n.slug].length, 'link', 'links');
       g.appendChild(t);
       g.appendChild(sv('circle', { 'class': 'nring', r: r + 3.5 }));
@@ -240,7 +243,7 @@
     box.appendChild(svgEl);
     left.appendChild(box);
     var leg = el('div', 'netlegend');
-    leg.appendChild(el('span', null, 'Circle size: net worth'));
+    leg.appendChild(el('span', null, 'Circle size: ' + BD.STAKE_LABEL + ' (disclosed US-listed shares × latest close; not a net worth)'));
     leg.appendChild(el('span', null, 'Line thickness: companies in common'));
     leg.appendChild(el('span', null, 'Circle art: sector'));
     leg.appendChild(el('span', null, plural(G.nodes.length, 'person', 'people') + ' · ' + plural(G.edges.length, 'link', 'links')));
@@ -282,8 +285,9 @@
     if (start && nodeBy[start]) select(start); else paint();
   }
 
-  Promise.all([BD.getJson('data/network/graph.json'), BD.loadPeople().catch(function(){ return null; })]).then(function(res){
+  Promise.all([BD.getJson('data/network/graph.json'), BD.loadPeople().catch(function(){ return null; }), BD.loadStakes().then(null, function(){ return null; })]).then(function(res){
     G = res[0] || {};
+    if (res[2]) ST = res[2];
     G.nodes = arr(G.nodes).filter(function(n){ return n && n.slug && isFinite(n.x) && isFinite(n.y); });
     if (!G.nodes.length){ body.innerHTML = ''; body.appendChild(el('p', 't4msg', 'No shared holdings to show yet.')); return; }
     var up = document.getElementById('updated');

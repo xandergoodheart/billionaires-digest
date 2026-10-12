@@ -17,13 +17,15 @@ for (const mode of MODES) describe(`waitlist (${mode})`, () => {
 
   // Supabase Auth confirming an email address (what the confirmation link does)
   const authConfirm = (uid, email) => t.root('update auth.users set email = $2, email_confirmed_at = now() where id = $1', [uid, email]);
-  const join = (uid, email, ref = null, league = null, source = null) =>
-    t.call(uid, 'waitlist_join', [email, ref, league, source == null ? null : JSON.stringify(source)]);
+  const join = (uid, email, ref = null, league = null, source = null, optIn) =>
+    t.call(uid, 'waitlist_join', [email, ref, league, source == null ? null : JSON.stringify(source)]
+      .concat(optIn === undefined ? [] : [optIn]));
+  // make another user's pending signup older than the 24-hour hold
+  const age = (uid, hours = 25) => t.root(`update public.waitlist set created_at = created_at - make_interval(hours => $2) where user_id = $1`, [uid, hours]);
   // a confirmed signup; returns { uid, email, code }
-  async function signup({ ref = null, league = null, confirm = true } = {}) {
+  async function signup({ ref = null, league = null, confirm = true, optIn, email = nextEmail() } = {}) {
     const uid = await t.newUser();
-    const email = nextEmail();
-    const r = await join(uid, email, ref, league);
+    const r = await join(uid, email, ref, league, null, optIn);
     if (confirm) { await authConfirm(uid, email); await t.call(uid, 'waitlist_confirm'); }
     return { uid, email, code: r.referral_code };
   }
@@ -46,12 +48,19 @@ for (const mode of MODES) describe(`waitlist (${mode})`, () => {
     assert.deepEqual(row.source, { utm_source: 'x', utm_campaign: 'z'.repeat(100) });
     assert.equal(Number((await t.root(`select count(*) c from public.events where user_id = $1 and name = 'waitlist_signup'`, [uid])).rows[0].c), 1);
 
-    // while alice is unconfirmed, another session may take the email over (squatting is released)
+    // while alice is unconfirmed and her signup is under 24 hours old, another session gets 'email_pending'
     const other = await t.newUser();
+    await rejectsWith(assert, join(other, 'ALICE@example.com'), /^email_pending$/);
+    await age(uid, 23);
+    await rejectsWith(assert, join(other, 'ALICE@example.com'), /^email_pending$/);
+    // after 24 hours the unconfirmed signup is released (squatting is released)
+    await age(uid, 2);
     const taken = await join(other, 'ALICE@example.com');
     assert.equal(taken.confirmed, false);
     assert.equal((await t.root('select count(*)::int c from public.waitlist where user_id = $1', [uid])).rows[0].c, 0);
-    // ...and back again
+    // ...and back again, once that one is 24 hours old too
+    await rejectsWith(assert, join(uid, 'alice@example.com'), /^email_pending$/);
+    await age(other);
     assert.equal((await join(uid, 'alice@example.com')).confirmed, false);
     assert.equal((await t.root('select count(*)::int c from public.waitlist where user_id = $1', [other])).rows[0].c, 0);
     const r2 = await t.root('select referral_code from public.waitlist where user_id = $1', [uid]);
@@ -88,6 +97,8 @@ for (const mode of MODES) describe(`waitlist (${mode})`, () => {
     const a = await t.newUser();
     const b = await t.newUser();
     await join(a, 'x@ex.com');
+    await rejectsWith(assert, join(b, 'X@ex.com'), /^email_pending$/);
+    await age(a);
     const rb = await join(b, 'X@ex.com');
     assert.equal(rb.confirmed, false);
     assert.equal((await t.root('select count(*)::int c from public.waitlist where user_id = $1', [a])).rows[0].c, 0);
@@ -234,8 +245,8 @@ for (const mode of MODES) describe(`waitlist (${mode})`, () => {
   });
 
   test('unsubscribe by token; recipients exclude unsubscribed and unconfirmed', async () => {
-    const u = await signup();
-    const pending = await signup({ confirm: false });
+    const u = await signup({ optIn: true });
+    const pending = await signup({ confirm: false, optIn: true });
     const token = (await t.root('select unsub_token from public.waitlist where user_id = $1', [u.uid])).rows[0].unsub_token;
     let rec = await t.admin('select public.waitlist_brief_recipients() r');
     const emails = rec.rows[0].r.map(x => x.email);
@@ -251,18 +262,107 @@ for (const mode of MODES) describe(`waitlist (${mode})`, () => {
     assert.ok((await me(u.uid)).position >= 1);
   });
 
-  test('log_event: browser events only, 10-second limit per user', async () => {
+  test('log_event: browser events only, signed-in only, small props, 10-second and 200-a-day limits', async () => {
     const u = await signup();
     await rejectsWith(assert, t.call(u.uid, 'log_event', ['brief_sent', '{}']), /Unknown event/);
     await rejectsWith(assert, t.call(u.uid, 'log_event', ['waitlist_signup', '{}']), /Unknown event/);
+    // visitors without a session cannot log anything
+    await rejectsWith(assert, t.call(null, 'log_event', ['invite_copied', '{}']), /permission denied|sign in/);
     assert.equal(await t.call(u.uid, 'log_event', ['invite_copied', JSON.stringify({ where: 'landing' })]), true);
     assert.equal(await t.call(u.uid, 'log_event', ['invite_copied', '{}']), false);
-    assert.equal(await t.call(u.uid, 'log_event', ['share_clicked', JSON.stringify({ big: 'x'.repeat(5000) })]), true);
-    const ev = (await t.root(`select props from public.events where user_id = $1 and name = 'share_clicked'`, [u.uid])).rows[0];
-    assert.deepEqual(ev.props, {});   // oversized props dropped
+    // props: an object of at most 256 bytes
+    await rejectsWith(assert, t.call(u.uid, 'log_event', ['share_clicked', JSON.stringify({ big: 'x'.repeat(300) })]), /too large/);
+    await rejectsWith(assert, t.call(u.uid, 'log_event', ['share_clicked', '[1,2]']), /too large/);
+    const fits = { k: 'x'.repeat(256 - '{"k": ""}'.length) };
+    assert.equal(await t.call(u.uid, 'log_event', ['share_clicked', JSON.stringify(fits)]), true);
+    assert.equal(await t.call(u.uid, 'log_event', ['share_clicked', null]) === false, true);   // within 10 s
     // after 10 seconds it logs again
     await t.root(`update public.events set created_at = created_at - interval '11 seconds' where user_id = $1`, [u.uid]);
     assert.equal(await t.call(u.uid, 'log_event', ['invite_copied', '{}']), true);
+    // at most 200 browser events per user in 24 hours (3 so far + 196 = 199)
+    await t.root(`insert into public.events (user_id, name, created_at)
+                  select $1, 'share_clicked', now() - interval '1 hour' from generate_series(1, 196)`, [u.uid]);
+    await t.root(`update public.events set created_at = created_at - interval '11 seconds' where user_id = $1`, [u.uid]);
+    assert.equal(await t.call(u.uid, 'log_event', ['invite_copied', '{}']), true);    // 200th
+    await t.root(`update public.events set created_at = created_at - interval '11 seconds' where user_id = $1`, [u.uid]);
+    assert.equal(await t.call(u.uid, 'log_event', ['share_clicked', '{}']), false);   // 201st: skipped
+    const count = uid => t.root(`select count(*)::int c from public.events where user_id = $1 and name in ('invite_copied', 'share_clicked')`, [uid]);
+    assert.equal((await count(u.uid)).rows[0].c, 200);
+    // a day later the limit has rolled over
+    await t.root(`update public.events set created_at = created_at - interval '24 hours' where user_id = $1`, [u.uid]);
+    assert.equal(await t.call(u.uid, 'log_event', ['share_clicked', '{}']), true);
+  });
+
+  test('emails: one signup per mailbox (case, +tags, gmail dots), sent to the address as typed', async () => {
+    const norm = async e => (await t.root('select public.waitlist_email_norm($1) n', [e])).rows[0].n;
+    assert.equal(await norm(' A.B+news@GMail.com '), 'ab@gmail.com');
+    assert.equal(await norm('a.b@googlemail.com'), 'ab@gmail.com');
+    assert.equal(await norm('first.last+x+y@Example.com'), 'first.last@example.com');
+    assert.equal(await norm('odd"@"local@example.com'), 'odd"@"local@example.com');
+    await rejectsWith(assert, t.call(null, 'waitlist_email_norm', ['a@b.co']), /permission denied/);
+
+    const base = `wl.norm${++n}@gmail.com`;
+    const owner = await signup({ email: base });
+    const plain = base.replace(/\./g, (m, i) => i < base.indexOf('@') ? '' : m);
+    const row = (await t.root('select email::text e, email_norm from public.waitlist where user_id = $1', [owner.uid])).rows[0];
+    assert.equal(row.e, base);                // kept as typed: this is where we send
+    assert.equal(row.email_norm, plain);
+    // aliases of a confirmed mailbox are taken
+    for (const alias of [plain, base.replace('@', '+2@'), plain.replace('@gmail.com', '@googlemail.com'), base.toUpperCase()]) {
+      await rejectsWith(assert, join(await t.newUser(), alias), /^email_taken$/);
+    }
+    // other domains keep their dots (different mailboxes) but still drop +tags
+    const a = await signup({ email: `dot.ted${n}@example.org` });
+    const b = await signup({ email: `dotted${n}@example.org` });
+    assert.notEqual(a.code, b.code);
+    await rejectsWith(assert, join(await t.newUser(), `dot.ted${n}+promo@example.org`), /^email_taken$/);
+
+    // no referral credit for your own aliases: the alias is refused, so it never counts
+    const before = (await me(owner.uid)).referrals_confirmed;
+    await rejectsWith(assert, join(await t.newUser(), base.replace('@', '+friend@'), owner.code), /^email_taken$/);
+    // an unconfirmed alias of yourself older than 24 hours is released, not credited
+    const self = await t.newUser();
+    const pend = `self.ref${n}@gmail.com`;
+    const p1 = await join(self, pend);
+    await age(self);
+    const alt = await t.newUser();
+    await join(alt, pend.replace('@', '+2@'), p1.referral_code);
+    assert.equal((await t.root('select referred_by from public.waitlist where user_id = $1', [alt])).rows[0].referred_by, null);
+    assert.equal((await me(owner.uid)).referrals_confirmed, before);
+  });
+
+  test('brief opt-in: unticked by default, ticking on re-join, recipients need it; old 4-argument calls still work', async () => {
+    const no = await signup();
+    const yes = await signup({ optIn: true });
+    assert.equal((await me(no.uid)).brief_opt_in, false);
+    assert.equal((await me(yes.uid)).brief_opt_in, true);
+    const recips = async () => (await t.admin('select public.waitlist_brief_recipients() r')).rows[0].r.map(x => x.email);
+    let r = await recips();
+    assert.ok(r.includes(yes.email));
+    assert.ok(!r.includes(no.email));
+    // re-joining can tick it (confirmed or not) but never unticks it
+    await join(no.uid, no.email, null, null, null, true);
+    assert.equal((await me(no.uid)).brief_opt_in, true);
+    await join(no.uid, no.email, null, null, null, false);
+    await join(no.uid, no.email);
+    assert.equal((await me(no.uid)).brief_opt_in, true);
+    r = await recips();
+    assert.ok(r.includes(no.email));
+    const pending = await signup({ confirm: false });
+    await join(pending.uid, pending.email, null, null, null, true);
+    assert.equal((await t.root('select brief_opt_in from public.waitlist where user_id = $1', [pending.uid])).rows[0].brief_opt_in, true);
+    assert.ok(!(await recips()).includes(pending.email));   // still unconfirmed
+    // named 4-argument call (what an older page sends through PostgREST) still works, with the box unticked
+    const old = await t.newUser();
+    const e = nextEmail();
+    const res = (await t.as(old, `select public.waitlist_join(p_email => $1, p_ref => null, p_league => null, p_source => null) r`, [e])).rows[0].r;
+    assert.equal(res.confirmed, false);
+    assert.equal((await t.root('select brief_opt_in from public.waitlist where user_id = $1', [old])).rows[0].brief_opt_in, false);
+    // only one waitlist_join exists (no ambiguous overloads)
+    assert.equal((await t.root(`select count(*)::int c from pg_proc where proname = 'waitlist_join'`)).rows[0].c, 1);
+    const m = (await t.admin('select public.waitlist_admin_metrics(30) r')).rows[0].r;
+    assert.equal(typeof m.brief_opt_ins, 'number');
+    assert.ok(m.brief_opt_ins >= 2);
   });
 
   test('admin metrics and admin functions: service role only', async () => {
@@ -276,13 +376,30 @@ for (const mode of MODES) describe(`waitlist (${mode})`, () => {
     await rejectsWith(assert, t.admin(`select public.waitlist_admin_log('share_clicked', '{}')`), /Unknown event/);
     const m = (await t.admin('select public.waitlist_admin_metrics(30) r')).rows[0].r;
     for (const k of ['days', 'since', 'events_per_day', 'signups', 'confirmed', 'captain_pct', 'leagues_reserved',
-      'league_members', 'referral_share_pct', 'unsubscribes']) assert.ok(k in m, k);
+      'league_members', 'referral_share_pct', 'brief_opt_ins', 'unsubscribes']) assert.ok(k in m, k);
     assert.equal(m.days, 30);
     assert.ok(m.signups >= m.confirmed && m.confirmed > 0);
     assert.ok(m.events_per_day.some(e => e.name === 'brief_sent' && e.count >= 1));
     assert.ok(m.league_members.every(l => typeof l.name === 'string' && typeof l.members === 'number'));
     const def = (await t.admin('select public.waitlist_admin_metrics() r')).rows[0].r;
     assert.equal(def.days, 30);
+  });
+
+  test('purge_old_events: keeps 13 months, service role only', async () => {
+    const u = await signup();
+    await t.root(`insert into public.events (user_id, name, created_at) values
+      ($1, 'share_clicked', now() - interval '13 months' - interval '1 day'),
+      ($1, 'share_clicked', now() - interval '13 months' + interval '1 day'),
+      ($1, 'invite_copied', now() - interval '400 days')`, [u.uid]);
+    const old = async () => Number((await t.root(`select count(*) c from public.events where created_at < now() - interval '13 months'`)).rows[0].c);
+    assert.ok(await old() >= 2);
+    const keptBefore = Number((await t.root(`select count(*) c from public.events where created_at >= now() - interval '13 months'`)).rows[0].c);
+    for (const who of [null, u.uid]) await rejectsWith(assert, t.as(who, 'select public.purge_old_events()'), /permission denied/);
+    const n = (await t.admin('select public.purge_old_events() n')).rows[0].n;
+    assert.ok(n >= 2);
+    assert.equal(await old(), 0);
+    assert.equal(Number((await t.root(`select count(*) c from public.events where created_at >= now() - interval '13 months'`)).rows[0].c), keptBefore);
+    assert.equal((await t.admin('select public.purge_old_events() n')).rows[0].n, 0);
   });
 
   test('migration re-applies cleanly and keeps data', async () => {
@@ -296,4 +413,22 @@ for (const mode of MODES) describe(`waitlist (${mode})`, () => {
     assert.equal((await me(u.uid)).confirmed, true);
     await rejectsWith(assert, t.as(null, 'select * from public.waitlist'), /permission denied/);
   });
+});
+
+// C1: a failure part-way through 0005 must not leave an internal or admin function callable. The Game sync workflow
+// applies all migrations in one transaction, and each sensitive function is revoked right after it is created.
+test('0005: sensitive functions are revoked right after they are created; migrations apply in one transaction', async () => {
+  const sql = await readFile(pathJoin(MIGRATIONS_DIR, '0005_waitlist.sql'), 'utf8');
+  const sensitive = ['waitlist_email_norm', 'waitlist_log', 'waitlist_positions', 'waitlist_do_join', 'waitlist_require_confirmed',
+    'waitlist_admin_metrics', 'waitlist_brief_recipients', 'waitlist_admin_log', 'purge_old_events'];
+  for (const fn of sensitive) {
+    const at = sql.indexOf(`create or replace function public.${fn}(`);
+    assert.ok(at >= 0, fn);
+    const next = sql.indexOf('create or replace function', at + 10);
+    const block = sql.slice(at, next < 0 ? undefined : next);
+    assert.match(block, new RegExp(`revoke execute on function public\\.${fn}\\([^)]*\\) from public, anon, authenticated;`), fn);
+  }
+  const wf = await readFile(pathJoin(MIGRATIONS_DIR, '..', '..', '.github', 'workflows', 'game.yml'), 'utf8');
+  assert.match(wf, /psql "\$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -q --single-transaction "\$\{args\[@\]\}"/);
+  assert.match(wf, /select public\.purge_old_events\(\)/);
 });

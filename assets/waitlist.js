@@ -1,13 +1,18 @@
-/* Billionaires Digest: the waitlist landing (index.html). ES5, needs assets/common.js (BD) and assets/v2/portraits.js.
- * Exposes no globals.
+/* Billionaires Digest: the "Save your team" email box on the Play home (index.html). ES5, needs assets/common.js (BD)
+ * and assets/v2/portraits.js. Exposes no globals.
  *
  * Backend contract: supabase/migrations/0005_waitlist.sql (docs/WAITLIST-PLAN.md section 1). Browser only calls RPCs.
- * Flow: enter email -> anonymous session -> waitlist_join -> auth.updateUser({ email }) sends the confirmation email
+ * Flow: enter email -> the visitor's existing guest (anonymous) session, or a new one -> waitlist_join -> auth.updateUser({ email })
+ *   attaches the email to that same guest user and sends the confirmation email (so the team they play with carries over)
  *   -> the link returns to /?confirmed=1 with the session in the URL (detectSessionInUrl: true on THIS client only)
- *   -> waitlist_confirm -> place in line, referral link, captain pick, league reservation.
+ *   -> waitlist_confirm -> invite link, captain pick, league reservation.
+ * The optional "Also send me The Billionaire Brief" checkbox (unticked by default) is sent as p_brief_opt_in.
+ * email_pending (that email already has a confirmation waiting): ask them to check that inbox or try tomorrow.
  * email_taken: offer a sign-in link (signInWithOtp, shouldCreateUser: false).
+ * Anti-spam: with a public "turnstileSiteKey" in config/supabase.json, signInAnonymously / signInWithOtp / resend first run
+ * Cloudflare Turnstile and pass options.captchaToken (updateUser takes none). Without the key: unchanged.
  * ?ref=CODE, ?join=CODE and utm_* are kept in sessionStorage until the visitor joins.
- * If config/supabase.json is disabled or the backend (waitlist RPCs) is unreachable: "Signups open shortly", no crash.
+ * If config/supabase.json is disabled or the backend (waitlist RPCs) is unreachable: "Saving by email opens shortly", no crash.
  */
 (function(w, d){
   var SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js';
@@ -24,6 +29,7 @@
   if (!app) return;
   var live = d.getElementById('wl-live');
   var client = null;
+  var captchaSite = '';     // public Turnstile site key from config/supabase.json, or '' (then no anti-spam check)
   var me = null;            // waitlist_me() result
   var inviteInfo = null;    // waitlist_league_info() result for ?join=
   var timer = null;
@@ -43,6 +49,7 @@
   }
   function errText(e){
     var m = (e && (e.message || e.error_description || e.msg)) || '';
+    if (/email_pending/.test(m)) return 'That email has a pending confirmation. Check its inbox, or try again tomorrow.';
     if (/Failed to fetch|NetworkError|Load failed|timeout/i.test(m)) return 'Could not reach the server. Check your connection and try again.';
     if (/rate limit|too many/i.test(m)) return 'Too many tries. Please wait a minute and try again.';
     if (/invalid.*email|email.*invalid/i.test(m)) return 'That email address does not look right.';
@@ -98,6 +105,74 @@
     try { w.history.replaceState(null, '', w.location.pathname + w.location.hash); } catch (e) {}
   }
 
+  // ---------- Cloudflare Turnstile (anti-spam check) ----------
+  // Used only when config/supabase.json has a public "turnstileSiteKey"; without it nothing here runs.
+  // The same block is in assets/game-client.js and assets/waitlist.js; whichever loads first defines BDTurnstile.
+  // BDTurnstile.run(siteKey, parentEl, fn): renders a fresh widget in parentEl (invisible unless Cloudflare needs the
+  // visitor to click), waits for a token, calls fn(token), then removes the widget: tokens are single-use.
+  var BDT = w.BDTurnstile = w.BDTurnstile || (function(){
+    var API = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    var WAIT_MS = 120000;
+    var LOAD_MSG = 'Could not load the anti-spam check. Check your connection (and any blocker for challenges.cloudflare.com), then try again.';
+    var FAIL_MSG = 'The anti-spam check did not finish. Please try again.';
+    var loading = null;
+    function load(){
+      if (w.turnstile && w.turnstile.render) return Promise.resolve();
+      if (loading) return loading;
+      loading = new Promise(function(res, rej){
+        var s = d.createElement('script');
+        s.src = API; s.async = true; s.defer = true;
+        s.onload = function(){ if (w.turnstile && w.turnstile.render) res(); else { loading = null; rej(new Error(LOAD_MSG)); } };
+        s.onerror = function(){ loading = null; if (s.parentNode) s.parentNode.removeChild(s); rej(new Error(LOAD_MSG)); };
+        d.head.appendChild(s);
+      });
+      return loading;
+    }
+    function key(c){
+      var k = c && c.turnstileSiteKey;
+      return (typeof k === 'string' && /^[0-9A-Za-z_-]{10,}$/.test(k) && !/your|placeholder|xxxx/i.test(k)) ? k : '';
+    }
+    function run(siteKey, parent, fn){
+      var box = d.createElement('div');
+      box.className = 'bd-turnstile';
+      box.style.maxWidth = '100%'; box.style.overflow = 'hidden'; box.style.marginTop = '8px';
+      if (!parent || !parent.appendChild) {
+        // no place given: a small box at the bottom of the screen (only visible if Cloudflare asks for a click)
+        parent = d.body;
+        box.style.position = 'fixed'; box.style.left = '50%'; box.style.bottom = '16px'; box.style.zIndex = '1000';
+        box.style.transform = 'translateX(-50%)'; box.style.marginTop = '0';
+      }
+      var id = null;
+      function cleanup(){
+        try { if (id !== null && w.turnstile) w.turnstile.remove(id); } catch (e) {}
+        if (box.parentNode) box.parentNode.removeChild(box);
+      }
+      return load().then(function(){
+        return new Promise(function(res, rej){
+          parent.appendChild(box);
+          var t = setTimeout(function(){ rej(new Error(FAIL_MSG)); }, WAIT_MS);
+          function bad(){ clearTimeout(t); rej(new Error(FAIL_MSG)); return true; }
+          try {
+            id = w.turnstile.render(box, {
+              sitekey: siteKey, appearance: 'interaction-only', action: 'signin',
+              callback: function(tok){ clearTimeout(t); res(tok); },
+              'error-callback': bad, 'expired-callback': bad, 'timeout-callback': bad
+            });
+          } catch (e) { bad(); }
+        });
+      }).then(function(tok){
+        return Promise.resolve().then(function(){ return fn(tok); })
+          .then(function(v){ cleanup(); return v; }, function(e){
+            cleanup();
+            var m = String((e && (e.message || e.msg)) || '');
+            if (/captcha/i.test(m)) { var x = new Error(FAIL_MSG); x.code = e && e.code; throw x; }
+            throw e;
+          });
+      }, function(e){ cleanup(); throw e; });
+    }
+    return { run: run, key: key };
+  })();
+
   // ---------- Supabase client (own instance: detectSessionInUrl true, same storageKey as the game) ----------
   var here = (d.currentScript && d.currentScript.src) || '';
   var CONFIG_URL = here ? here.replace(/assets\/waitlist\.js(\?.*)?$/, 'config/supabase.json') : 'config/supabase.json';
@@ -122,6 +197,7 @@
     return fetch(CONFIG_URL, { cache: 'no-store' })
       .then(function(r){ if (!r.ok) throw new Error('no config'); return r.json(); })
       .then(function(c){
+        captchaSite = BDT.key(c);
         if (!usable(c)) return false;
         return withTimeout(loadScript(SUPABASE_JS), TIMEOUT_MS).then(function(){
           client = w.supabase.createClient(String(c.url).replace(/\/+$/, ''), keyOf(c), {
@@ -147,7 +223,10 @@
   function ensureSession(){
     return getSession().then(function(s){
       if (s) return s;
-      return client.auth.signInAnonymously().then(function(r){ if (r.error) throw r.error; return r.data && r.data.session; });
+      if (!captchaSite) return client.auth.signInAnonymously().then(function(r){ if (r.error) throw r.error; return r.data && r.data.session; });
+      return BDT.run(captchaSite, app, function(tok){
+        return client.auth.signInAnonymously({ options: { captchaToken: tok } }).then(function(r){ if (r.error) throw r.error; return r.data && r.data.session; });
+      });
     });
   }
   function logEvent(name, props){
@@ -226,9 +305,9 @@
   }
 
   function renderClosed(){
-    var h = el('h2', 'wl-card__h', 'Signups open shortly');
-    var p = el('p', 'wl-note', 'The waitlist is almost ready. Check back soon. Meanwhile, ');
-    var a = el('a', null, "read today's Digest"); a.href = 'news.html';
+    var h = el('h2', 'wl-card__h', 'Saving by email opens shortly');
+    var p = el('p', 'wl-note', 'You can still play: your team is kept in this browser. Check back soon to add your email. Meanwhile, ');
+    var a = el('a', null, 'draft your team'); a.href = 'draft.html';
     p.appendChild(a); p.appendChild(d.createTextNode('.'));
     setApp([h, p]);
   }
@@ -243,14 +322,24 @@
     inp.maxLength = 254; inp.spellcheck = false; inp.setAttribute('autocapitalize', 'off'); inp.setAttribute('inputmode', 'email');
     inp.setAttribute('aria-describedby', 'wl-email-hint');
     if (prefill) inp.value = prefill;
-    var go = el('button', 'v2-btn v2-btn--primary v2-btn--big wl-go', 'Join the waitlist'); go.type = 'submit';
+    var go = el('button', 'v2-btn v2-btn--primary v2-btn--big wl-go', 'Save my team'); go.type = 'submit';
     row.appendChild(inp); row.appendChild(go);
-    var hint = el('p', 'wl-hint', "Free. We'll email you a link to confirm. Unsubscribe any time. ");
+    var hint = el('p', 'wl-hint', "Free. We'll email you a link to confirm, then only emails about your account and your team.");
     hint.id = 'wl-email-hint';
-    var pa = el('a', null, 'Privacy'); pa.href = 'privacy.html'; hint.appendChild(pa);
+    // optional newsletter opt-in: unticked by default, stored on the signup row (p_brief_opt_in)
+    var opt = el('label', 'wl-check');
+    var cb = el('input'); cb.type = 'checkbox'; cb.id = 'wl-brief'; cb.name = 'brief'; cb.checked = false;
+    opt.appendChild(cb);
+    opt.appendChild(el('span', null, 'Also send me The Billionaire Brief, our free email newsletter. Unsubscribe any time.'));
+    var legal = el('p', 'wl-hint wl-agree');
+    legal.appendChild(d.createTextNode('By joining you agree to the '));
+    var ta = el('a', null, 'Terms'); ta.href = 'terms.html'; legal.appendChild(ta);
+    legal.appendChild(d.createTextNode(' and '));
+    var pa = el('a', null, 'Privacy Policy'); pa.href = 'privacy.html'; legal.appendChild(pa);
+    legal.appendChild(d.createTextNode('.'));
     var m = msg();
     if (note) ok(m, note);
-    f.appendChild(lab); f.appendChild(row); f.appendChild(hint); f.appendChild(m);
+    f.appendChild(lab); f.appendChild(row); f.appendChild(hint); f.appendChild(opt); f.appendChild(legal); f.appendChild(m);
     f.addEventListener('submit', function(e){
       e.preventDefault();
       var email = String(inp.value || '').trim().toLowerCase();
@@ -261,13 +350,13 @@
         return;
       }
       inp.removeAttribute('aria-invalid');
-      busy(go, true, 'Joining…'); m.textContent = ''; m.className = 'wl-msg';
-      join(email).then(function(){
+      busy(go, true, 'Saving…'); m.textContent = ''; m.className = 'wl-msg';
+      join(email, cb.checked === true).then(function(){
         ssSet(SS_EMAIL, email); ssSet(SS_MODE, 'confirm'); ssSet(SS_SENT, String(Date.now()));
         renderInbox(email, 'confirm');
         announce('Check your inbox to confirm ' + email + '.');
       }, function(err){
-        busy(go, false, 'Join the waitlist');
+        busy(go, false, 'Save my team');
         if (/email_taken|already (been )?registered|already exists|email_exists/i.test((err && (err.message || err.code)) || '')) {
           renderTaken(email);
           return;
@@ -275,17 +364,30 @@
         bad(m, errText(err));
       });
     });
-    setApp([el('h2', 'wl-card__h', 'Get your spot in line'), f]);
+    setApp([el('h2', 'wl-card__h', 'Save your team'), f]);
   }
 
-  function join(email){
+  // Signature mismatch while the newsletter column is not live yet (PostgREST: function not found for these params).
+  function noBriefParam(e){
+    var t = String((e && (e.message || '')) || '') + ' ' + String((e && (e.code || e.hint || '')) || '');
+    return /PGRST202|p_brief_opt_in|Could not find the function/i.test(t);
+  }
+  function join(email, briefOptIn){
     var src = START.src;
+    var args = {
+      p_email: email,
+      p_ref: src.ref || null,
+      p_league: src.join || null,
+      p_source: sourceJson(),
+      p_brief_opt_in: briefOptIn === true
+    };
     return ensureSession().then(function(){
-      return rpc('waitlist_join', {
-        p_email: email,
-        p_ref: src.ref || null,
-        p_league: src.join || null,
-        p_source: sourceJson()
+      return rpc('waitlist_join', args).then(null, function(err){
+        if (!noBriefParam(err)) throw err;
+        // older backend without the opt-in: never retry an opt-in silently, only a plain signup
+        if (args.p_brief_opt_in) throw new Error('The newsletter option is not ready yet. Untick it to save your team now.');
+        var plain = { p_email: args.p_email, p_ref: args.p_ref, p_league: args.p_league, p_source: args.p_source };
+        return rpc('waitlist_join', plain);
       });
     }).then(function(){
       return client.auth.updateUser({ email: email }, { emailRedirectTo: redirectUrl() }).then(function(r){
@@ -295,8 +397,8 @@
   }
 
   function renderTaken(email){
-    var h = el('h2', 'wl-card__h', "That email is already on the list");
-    var p = el('p', 'wl-note', "If it's yours, we'll email you a sign-in link so you can see your place in line.");
+    var h = el('h2', 'wl-card__h', 'That email already has an account');
+    var p = el('p', 'wl-note', "If it's yours, we'll email you a sign-in link to get back to it.");
     var b = btn('Email me a sign-in link');
     var back = btn('Use a different email', 'v2-btn--ghost');
     var m = msg();
@@ -314,11 +416,24 @@
     b.focus();
   }
   function sendSignInLink(email){
+    if (captchaSite) {
+      return BDT.run(captchaSite, app, function(tok){
+        return client.auth.signInWithOtp({ email: email, options: { emailRedirectTo: redirectUrl(), shouldCreateUser: false, captchaToken: tok } })
+          .then(function(r){ if (r.error) throw r.error; });
+      });
+    }
     return client.auth.signInWithOtp({ email: email, options: { emailRedirectTo: redirectUrl(), shouldCreateUser: false } })
       .then(function(r){ if (r.error) throw r.error; });
   }
+  // updateUser takes no captcha token (Supabase does not check one there); resend does.
   function resend(email, mode){
     if (mode === 'signin') return sendSignInLink(email);
+    if (captchaSite && client.auth.resend) {
+      return BDT.run(captchaSite, app, function(tok){
+        return client.auth.resend({ type: 'email_change', email: email, options: { emailRedirectTo: redirectUrl(), captchaToken: tok } })
+          .then(function(r){ if (r && r.error) throw r.error; });
+      });
+    }
     var p = client.auth.resend
       ? client.auth.resend({ type: 'email_change', email: email, options: { emailRedirectTo: redirectUrl() } })
       : client.auth.updateUser({ email: email }, { emailRedirectTo: redirectUrl() });
@@ -331,8 +446,8 @@
     p.appendChild(d.createTextNode('We sent a link to '));
     p.appendChild(el('strong', null, email));
     p.appendChild(d.createTextNode(mode === 'signin'
-      ? '. Open it on this device to see your place in line.'
-      : '. Click it to confirm and get your place in line. Check spam if it is not there in a minute.'));
+      ? '. Open it on this device to sign in.'
+      : '. Click it to confirm and save your team. Check spam if it is not there in a minute.'));
     var b = btn('Resend the email', 'v2-btn--ghost');
     var other = btn('Use a different email', 'v2-btn--ghost');
     var m = msg();
@@ -402,19 +517,17 @@
 
   function renderConfirmed(){
     var nodes = [];
-    var h = el('h2', 'wl-card__h', "You're on the list");
+    var h = el('h2', 'wl-card__h', "You're in");
     nodes.push(h);
-    var pos = el('p', 'wl-pos');
-    if (me && isFinite(Number(me.position)) && isFinite(Number(me.total))) {
-      pos.appendChild(d.createTextNode('Your place in line: '));
-      pos.appendChild(el('strong', 'wl-pos__n', '#' + fmt(me.position)));
-      pos.appendChild(d.createTextNode(' of ' + fmt(me.total)));
-    } else pos.textContent = 'Your place in line is being worked out.';
+    var pos = el('p', 'wl-note');
+    pos.appendChild(d.createTextNode('Your email '));
+    if (me && me.email) pos.appendChild(el('strong', null, String(me.email)));
+    pos.appendChild(d.createTextNode((me && me.email ? ' ' : '') + 'is confirmed. Sign in with it any time to get back to your team.'));
     nodes.push(pos);
-    nodes.push(linkRow('wl-ref', 'Your referral link', SITE + '/?ref=' + encodeURIComponent(me.referral_code || ''), 'referral'));
-    var boost = el('p', 'wl-note', 'Each friend who confirms moves you up 10 spots.');
+    nodes.push(linkRow('wl-ref', 'Your invite link', SITE + '/?ref=' + encodeURIComponent(me.referral_code || ''), 'referral'));
+    var boost = el('p', 'wl-note', 'Send it to friends so they can draft a team too.');
     var rc = Number(me.referrals_confirmed) || 0;
-    if (rc > 0) boost.appendChild(d.createTextNode(' ' + (rc === 1 ? '1 friend has' : fmt(rc) + ' friends have') + ' confirmed so far.'));
+    if (rc > 0) boost.appendChild(d.createTextNode(' ' + (rc === 1 ? '1 friend has' : fmt(rc) + ' friends have') + ' joined from it so far.'));
     nodes.push(boost);
 
     // invite from ?join= for a confirmed visitor who is not in that league yet
@@ -444,7 +557,7 @@
   function captainSection(){
     var sec = el('section', 'wl-sub wl-cap');
     sec.setAttribute('aria-labelledby', 'wl-caph');
-    var h = el('h3', 'wl-sub__h', 'Pick your captain'); h.id = 'wl-caph';
+    var h = el('h3', 'wl-sub__h', 'Pick your Season 1 captain'); h.id = 'wl-caph';
     sec.appendChild(h);
     var cur = el('p', 'wl-note');
     sec.appendChild(cur);
@@ -489,7 +602,7 @@
   function leagueSection(){
     var sec = el('section', 'wl-sub wl-league');
     sec.setAttribute('aria-labelledby', 'wl-lgh');
-    var h = el('h3', 'wl-sub__h', 'Reserve your league'); h.id = 'wl-lgh';
+    var h = el('h3', 'wl-sub__h', 'Reserve your Season 1 league'); h.id = 'wl-lgh';
     sec.appendChild(h);
     if (me.league && me.league.invite_code) {
       var p = el('p', 'wl-note');
@@ -498,7 +611,7 @@
       if (isFinite(n)) p.appendChild(d.createTextNode(' · ' + (BD.plural ? BD.plural(n, 'member', 'members') : n + ' members')));
       sec.appendChild(p);
       sec.appendChild(linkRow('wl-inv', 'League invite link', SITE + '/?join=' + encodeURIComponent(me.league.invite_code), 'league'));
-      sec.appendChild(el('p', 'wl-hint', 'Friends who join the waitlist from this link start Season 1 in your league. Up to 50 members.'));
+      sec.appendChild(el('p', 'wl-hint', 'Friends who save their team from this link start Season 1 in your league. Up to 50 members.'));
       return sec;
     }
     var f = el('form', 'wl-form');
@@ -570,38 +683,11 @@
   function showFresh(){
     var email = ssGet(SS_EMAIL), mode = ssGet(SS_MODE);
     if (email && mode) { renderInbox(email, mode === 'signin' ? 'signin' : 'confirm'); return; }
-    renderForm('', inviteInfo ? 'Join the waitlist to join ' + inviteInfo.name + ' when you confirm.' : '');
+    renderForm('', inviteInfo ? 'Save your team to join ' + inviteInfo.name + ' when you confirm.' : '');
     if (LINK_ERROR) {
       var m = app.querySelector('.wl-msg');
       if (m) bad(m, 'That email link did not work (' + LINK_ERROR + '). Enter your email to get a new one.');
     }
-  }
-
-  // ---------- today's top stories (digest.json) ----------
-  function renderNews(){
-    var list = d.getElementById('wl-news'), date = d.getElementById('wl-newsdate');
-    if (!list) return;
-    var get = BD.getJson || function(u){ return fetch(u, { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }); };
-    get('digest.json').then(function(dg){
-      clear(list);
-      var st = (dg && Array.isArray(dg.stories) ? dg.stories : []).filter(function(s){ return s && s.headline; }).slice(0, 5);
-      if (date && dg && dg.date) date.textContent = String(dg.date);
-      if (!st.length) { list.appendChild(el('li', 'wl-msg', 'No stories yet today.')); return; }
-      st.forEach(function(s){
-        var li = el('li', 'wl-story');
-        var a = el('a', 'wl-story__h', String(s.headline)); a.href = 'news.html';
-        li.appendChild(a);
-        var meta = [s.who, s.source].filter(Boolean).map(String).join(' · ');
-        if (meta) li.appendChild(el('span', 'wl-story__meta', meta));
-        list.appendChild(li);
-      });
-    }, function(){
-      clear(list);
-      var li = el('li', 'wl-msg', "Today's stories could not load here. ");
-      var a = el('a', null, 'Open the news page'); a.href = 'news.html';
-      li.appendChild(a);
-      list.appendChild(li);
-    });
   }
 
   // season label from config/launch.json (the page already says "Monday, Nov 9" without it)
@@ -614,7 +700,6 @@
     }, function(){});
   }
 
-  renderNews();
   seasonLabel();
   start();
 })(window, document);

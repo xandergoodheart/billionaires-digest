@@ -140,7 +140,38 @@ export function parseShareCount(text) {
 export const METHOD =
   "Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. " +
   'Covers only disclosed share counts in US-listed holdings; may undercount. ' +
-  "Shown only when these holdings are at least 25% of the person's Forbes net worth.";
+  "Shown only when these holdings are a large part of the person's wealth.";
+
+// ---------- Public Stake Value ----------
+// Our own ranking number: disclosed US-listed share counts × latest close (coveredValue in networth-est.json).
+// Never call it net worth. Worth-basis entries (config/wealth-overrides.json: a published net worth moved by one stock)
+// are not our own number, so they get no Public Stake Value.
+export const STAKE_LABEL = 'Public Stake Value';
+export const STAKE_NONE = 'No US-listed stake on file';
+export const STAKE_NOTE = 'Disclosed US-listed shares × latest close. Not a net worth.';
+
+// est: data/prices/networth-est.json. Returns { asOf: 'YYYY-MM-DD'|null, value: { slug: usd }, rank: { slug: n } };
+// rank 1 = the largest value (ties by slug).
+export function stakeTable(est) {
+  const value = {};
+  for (const [slug, p] of Object.entries((est && est.people) || {})) {
+    if (!p || p.method === 'worth') continue;
+    const v = p.coveredValue;
+    if (typeof v === 'number' && Number.isFinite(v) && v > 0) value[slug] = v;
+  }
+  const rank = {};
+  Object.keys(value).sort((a, b) => value[b] - value[a] || (a < b ? -1 : a > b ? 1 : 0)).forEach((s, i) => { rank[s] = i + 1; });
+  const ms = est && est.generated ? Date.parse(est.generated) : NaN;
+  return { asOf: Number.isFinite(ms) ? nyDate(new Date(ms)) : null, value, rank };
+}
+
+// $1.3T / $246.8B / $845M / $12K (one decimal, trailing .0 dropped). '' for missing.
+export function fmtStake(n) {
+  if (typeof n !== 'number' || !Number.isFinite(n) || n <= 0) return '';
+  const units = [[1e12, 'T'], [1e9, 'B'], [1e6, 'M'], [1e3, 'K']];
+  for (const [d, u] of units) if (n >= d) return '$' + Math.round((n / d) * 10) / 10 + u;
+  return '$' + Math.round(n);
+}
 
 // Added to the method text when config/wealth-overrides.json lists anyone.
 export const OVERRIDES_METHOD =
@@ -304,6 +335,14 @@ export function estimateAll(profiles, quotes, adrs = adrSet(profiles), worths = 
   return { people, excluded, skipped };
 }
 
+// Session date of a quote's ISO time: the New York date, except end-of-day OTC/ADR quotes stamped exactly midnight UTC,
+// which are dated by their UTC date (same rule as quoteSession in scripts/fetch-prices.mjs). Null when unparseable.
+export function quoteDate(time) {
+  const ms = time ? Date.parse(time) : NaN;
+  if (!Number.isFinite(ms)) return null;
+  return ms % 86400000 === 0 ? new Date(ms).toISOString().slice(0, 10) : nyDate(new Date(ms));
+}
+
 // One worth-basis estimate (see estimateAll `overrides`), or null when the worth or the quote's % change is missing.
 export function worthEntry(slug, ov, quotes, worths) {
   const worth = worths?.[slug];
@@ -325,7 +364,7 @@ export function worthEntry(slug, ov, quotes, worths) {
       source: ov.source,
       // Reference close the net worth is pinned to (used by scripts/lib/wealth.mjs trackedValue).
       refClose: typeof q.price === 'number' && Number.isFinite(q.price) ? q.price : null,
-      refDate: q.time ? nyDate(new Date(q.time)) : null,
+      refDate: quoteDate(q.time),
     }],
   };
 }
