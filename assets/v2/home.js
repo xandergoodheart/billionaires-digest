@@ -336,29 +336,6 @@
     box.appendChild(el('p', 'hm-mv__fine', open.length + (open.length === 1 ? ' open market' : ' open markets') + '. Settled only from public SEC filings. Play-money coins, no cash value.'));
   }
 
-  // ---- how to play: rules from the draft week file (BDFantasyCore when the file is missing) ----
-  var WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-  function renderHow(wk){
-    var ol = clear($('howlist'));
-    var picks = wk && typeof wk.picks === 'number' ? wk.picks : C.PICKS;
-    var cap = wk && typeof wk.cap === 'number' ? wk.cap : C.CAP;
-    var mult = wk && typeof wk.captainMultiplier === 'number' ? wk.captainMultiplier : C.CAPTAIN_MULT;
-    var pw = WORDS[picks] || String(picks);
-    [
-      ['Make your picks', pw.charAt(0).toUpperCase() + pw.slice(1) + ' players, billionaires or big-company CEOs, ' + cap + ' cap. Each player has a cap cost; stay at or under ' + cap + '.'],
-      ['Name your captain', 'Your captain scores ' + mult + '× points, good or bad.'],
-      ['Watch the week play out', 'Points come from their real stock moves each trading day, head to head with the S&P 500.']
-    ].forEach(function(x, i){
-      var li = el('li', 'hm-how__i');
-      li.appendChild(el('span', 'hm-how__n', '0' + (i + 1)));
-      var t = el('div', 'hm-how__t');
-      t.appendChild(el('h3', 'hm-how__h', x[0]));
-      t.appendChild(el('p', 'hm-how__p', x[1]));
-      li.appendChild(t);
-      ol.appendChild(li);
-    });
-  }
-
   // ---- players to watch: top 5 by real points this scoring week (or the last scored day) ----
   function renderWatch(){
     var S = F.state, sec = $('watchsec');
@@ -400,9 +377,7 @@
     function(){ renderLede(null); renderStories(null); renderHeadlines(null); });
   BD.getJson('data/moves/markets.json').then(renderMoves, function(){ renderMoves(null); });
 
-  renderHow(null);
   F.init().then(function(){
-    renderHow(F.state.draftWk);
     renderWatch();
     if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x) renderWatch(); }, function(){});
     var v = view();

@@ -185,14 +185,8 @@
 .hm-fr__book { border-top: 1px solid var(--line); padding-top: 4px; }
 .hm-sb--last { border-bottom: 0; padding-bottom: 0; }
 
-/* ---------- how to play ---------- */
+/* ---------- card section heads ---------- */
 .hm-sec__head--card { border-bottom-width: 1px; border-bottom-color: var(--line); align-items: flex-start; }
-.hm-how__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
-@media (min-width: 768px) and (max-width: 1023px) { .hm-how__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s1); } }
-.hm-how__i { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
-.hm-how__n { flex: none; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 32px; line-height: 1; color: var(--brand-ink); }
-.hm-how__h { font-size: var(--fs-md); font-weight: 700; line-height: 1.25; margin: 2px 0 2px; }
-.hm-how__p { margin: 0; font-size: var(--fs-sm); color: var(--text-muted); }
 
 /* ---------- From the Digest ---------- */
 .hm-story__n { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 16px; color: var(--text); margin-right: 8px; letter-spacing: 0; }
@@ -211,3 +205,30 @@
 .hm-watch__i .v2-player__name:hover { text-decoration: underline; text-underline-offset: 2px; }
 .hm-watch__sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hm-watch__pts { flex: none; margin-left: auto; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 24px; }
+
+/* ---------- "How it works" popup (assets/howto.js) ---------- */
+.hw { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: var(--s1); background: rgba(8, 9, 10, .72); }
+.hw[hidden] { display: none; }
+.hw__panel {
+  position: relative; width: 100%; max-width: 440px; max-height: calc(100vh - 2 * var(--s1)); max-height: calc(100dvh - 2 * var(--s1));
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  background: var(--card); color: var(--text); border-radius: var(--radius-card); box-shadow: 0 12px 40px rgba(0, 0, 0, .35), var(--shadow); padding: var(--s2);
+}
+.hw__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: var(--fs-xl); line-height: 1.05; margin: 0 0 var(--s1); }
+.hw__h:focus { outline: none; }
+.hw__h:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.hw__media { position: relative; margin: 0 0 var(--s1); border-radius: 8px; overflow: hidden; background: #0B0B0C; }
+.hw__video { display: block; width: 100%; aspect-ratio: 1 / 1; max-height: 340px; object-fit: contain; background: #0B0B0C; }
+.hw__vbtn {
+  position: absolute; left: 8px; bottom: 8px; min-height: 36px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .6);
+  background: rgba(8, 9, 10, .7); color: #fff; font: inherit; font-size: var(--fs-sm); font-weight: 700; cursor: pointer;
+}
+.hw__vbtn--play { left: 50%; top: 50%; bottom: auto; transform: translate(-50%, -50%); min-height: 48px; padding: 10px 22px; font-size: var(--fs-md); background: var(--brand); border-color: var(--brand); }
+.hw__vbtn:focus-visible { outline: 3px solid #8AB4FF; outline-offset: 2px; }
+.hw__steps.hm-steps__list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.hw__steps .hm-steps__n { width: 28px; height: 28px; font-size: 18px; }
+.hw__steps .hm-steps__t { margin: 3px 0 2px; }
+.hw__acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: var(--s2); }
+.hw__btn { flex: 1 1 160px; }
+@media (max-width: 767px) { .hw { padding: 12px; align-items: flex-start; } .hw__panel { padding: var(--s1); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); } }
+.hw__media[hidden] { display: none; }
