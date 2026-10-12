@@ -220,10 +220,10 @@
 .hw__media { position: relative; margin: 0 0 var(--s1); border-radius: 8px; overflow: hidden; background: #0B0B0C; }
 .hw__video { display: block; width: 100%; aspect-ratio: 1 / 1; max-height: 340px; object-fit: contain; background: #0B0B0C; }
 .hw__vbtn {
-  position: absolute; left: 8px; bottom: 8px; min-height: 36px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .6);
+  position: absolute; right: 8px; top: 8px; min-height: 32px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .6);
   background: rgba(8, 9, 10, .7); color: #fff; font: inherit; font-size: var(--fs-sm); font-weight: 700; cursor: pointer;
 }
-.hw__vbtn--play { left: 50%; top: 50%; bottom: auto; transform: translate(-50%, -50%); min-height: 48px; padding: 10px 22px; font-size: var(--fs-md); background: var(--brand); border-color: var(--brand); }
+.hw__vbtn--play { right: auto; left: 50%; top: 50%; transform: translate(-50%, -50%); min-height: 48px; padding: 10px 22px; font-size: var(--fs-md); background: var(--brand); border-color: var(--brand); }
 .hw__vbtn:focus-visible { outline: 3px solid #8AB4FF; outline-offset: 2px; }
 .hw__steps.hm-steps__list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
 .hw__steps .hm-steps__n { width: 28px; height: 28px; font-size: 18px; }
