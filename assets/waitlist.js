@@ -13,6 +13,7 @@
  * Cloudflare Turnstile and pass options.captchaToken (updateUser takes none). Without the key: unchanged.
  * ?ref=CODE, ?join=CODE and utm_* are kept in sessionStorage until the visitor joins.
  * If config/supabase.json is disabled or the backend (waitlist RPCs) is unreachable: "Saving by email opens shortly", no crash.
+ * Email switch: config/launch.json "emailSignup" must be true, otherwise the same "opens shortly" card shows and Supabase is never contacted.
  */
 (function(w, d){
   var SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js';
@@ -690,16 +691,23 @@
     }
   }
 
-  // season label from config/launch.json (the page already says "Monday, Nov 9" without it)
-  function seasonLabel(){
+  // config/launch.json: the season label (the page already says "Monday, Nov 9" without it) and the email switch.
+  // emailSignup must be exactly true to open email saving; anything else (false, missing, unreadable file) shows
+  // "Saving by email opens shortly" without contacting Supabase.
+  function launchConfig(){
     var u = here ? here.replace(/assets\/waitlist\.js(\?.*)?$/, 'config/launch.json') : 'config/launch.json';
-    fetch(u, { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(c){
-      if (!c || typeof c.seasonStartLabel !== 'string' || !c.seasonStartLabel) return;
-      var ns = d.querySelectorAll('[data-wl-season]');
-      for (var i = 0; i < ns.length; i++) ns[i].textContent = c.seasonStartLabel;
-    }, function(){});
+    return fetch(u, { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }, function(){ return null; })
+      .then(null, function(){ return null; });
+  }
+  function seasonLabel(c){
+    if (!c || typeof c.seasonStartLabel !== 'string' || !c.seasonStartLabel) return;
+    var ns = d.querySelectorAll('[data-wl-season]');
+    for (var i = 0; i < ns.length; i++) ns[i].textContent = c.seasonStartLabel;
   }
 
-  seasonLabel();
-  start();
+  launchConfig().then(function(c){
+    seasonLabel(c);
+    if (c && c.emailSignup === true) start();
+    else { renderClosed(); cleanUrl(); }
+  });
 })(window, document);

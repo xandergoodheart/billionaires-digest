@@ -3,5 +3,7 @@
   "_regate": "assets/launch.js is no longer loaded by any page (removed for the preseason so pages don't pause). To re-gate, add <script src=\"assets/launch.js\"></script> back to the <head> of each gated page, then set gate: true.",
   "gate": false,
   "seasonStart": "2026-11-09",
-  "seasonStartLabel": "Monday, Nov 9"
+  "seasonStartLabel": "Monday, Nov 9",
+  "_emailSignup": "Email saving on the front page. false = show 'Saving by email opens shortly' and don't contact Supabase. Turn true once Resend SMTP is set up in Supabase (Auth > SMTP) so confirmation emails actually send.",
+  "emailSignup": false
 }

@@ -22,19 +22,6 @@
 .hm-rail__ico { width: 16px; height: 12px; flex: none; background: linear-gradient(currentColor 0 0) 0 0 / 100% 2px no-repeat, linear-gradient(currentColor 0 0) 0 5px / 100% 2px no-repeat, linear-gradient(currentColor 0 0) 0 10px / 70% 2px no-repeat; }
 
 /* ---------- left rail ---------- */
-.hm-promo {
-  position: relative; overflow: hidden; border-radius: var(--radius-card); padding: var(--s2) var(--s1);
-  background: #16181B; color: #fff; text-align: center; box-shadow: var(--shadow);
-}
-.hm-promo::before, .hm-promo::after { content: ''; position: absolute; width: 90px; height: 2px; background: var(--brand); transform: rotate(-24deg); opacity: .85; }
-.hm-promo::before { left: -18px; top: 22px; }
-.hm-promo::after { right: -20px; bottom: 30px; }
-.hm-promo__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 26px; line-height: .98; }
-.hm-promo__h span { display: block; }
-.hm-promo__r { color: #FF6B64; }
-.hm-promo__p { font-size: var(--fs-sm); color: #C9CED4; margin: 10px 0 14px; }
-.hm-promo__btn { width: 100%; }
-.hm-promo :focus-visible { outline-color: #8AB4FF; }
 .hm-links { padding-bottom: var(--s0); }
 .hm-links__list { list-style: none; margin: 0; padding: 0; }
 .hm-links__list li + li { border-top: 1px solid var(--line); }
@@ -146,30 +133,49 @@
 .hm-mv__fine { font-size: var(--fs-xs); color: var(--text-muted); margin: 10px 0 12px; }
 .hm-odds__btn { margin-top: 4px; }
 
-/* ---------- v3 fantasy home: hero banner ---------- */
+/* ---------- front-page hero: what the site is, in one look (stays dark in both themes) ---------- */
 .hm-hero {
   position: relative; overflow: hidden; isolation: isolate; border-radius: var(--radius-card); background: #0B0B0C; color: #fff;
-  min-height: 300px; display: flex; align-items: flex-end; margin-bottom: var(--gutter); box-shadow: var(--shadow);
+  min-height: 360px; display: flex; align-items: flex-end; margin-bottom: var(--gutter); box-shadow: var(--shadow);
 }
 .hm-hero__img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
 .hm-hero::before {
   content: ''; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to top, rgba(8, 9, 10, .94) 0%, rgba(8, 9, 10, .72) 38%, rgba(8, 9, 10, .18) 75%, rgba(8, 9, 10, .05) 100%),
-              linear-gradient(to right, rgba(8, 9, 10, .7) 0%, rgba(8, 9, 10, 0) 60%);
+  background: linear-gradient(to top, rgba(8, 9, 10, .94) 0%, rgba(8, 9, 10, .76) 45%, rgba(8, 9, 10, .25) 80%, rgba(8, 9, 10, .08) 100%),
+              linear-gradient(to right, rgba(8, 9, 10, .75) 0%, rgba(8, 9, 10, 0) 65%);
 }
-.hm-hero__in { padding: var(--s3); max-width: 680px; }
-.hm-hero__kick { display: inline-block; background: var(--brand); color: #fff; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 3px 8px; border-radius: 3px; margin-bottom: 10px; }
-.hm-hero__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 60px; line-height: .95; margin: 0 0 10px; color: #fff; text-shadow: 0 2px 12px rgba(0, 0, 0, .5); }
-.hm-hero__sub { font-size: var(--fs-lg); color: #E1E4E8; margin: 0 0 var(--s1); max-width: 52ch; }
+.hm-hero__in { padding: var(--s3); max-width: 760px; min-width: 0; }
+.hm-hero__kick { display: inline-block; background: var(--brand); color: #fff; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; line-height: 1.35; padding: 3px 8px; border-radius: 3px; margin: 0 0 12px; }
+.hm-hero__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 64px; line-height: .95; margin: 0 0 12px; color: #fff; text-shadow: 0 2px 12px rgba(0, 0, 0, .5); overflow-wrap: break-word; }
+.hm-hero__sub { font-size: var(--fs-lg); line-height: 1.45; color: #E1E4E8; margin: 0 0 var(--s2); max-width: 54ch; }
+.hm-hero__acts { display: flex; flex-wrap: wrap; gap: 12px; }
+.hm-hero__btn--ghost { background: transparent; color: #fff; border-color: #9AA1AA; }
+.hm-hero__btn--ghost:hover { background: rgba(255, 255, 255, .08); border-color: #fff; }
 .hm-hero :focus-visible { outline-color: #8AB4FF; }
 @media (max-width: 767px) {
-  .hm-hero { min-height: 340px; }
+  .hm-hero { min-height: 0; }
   .hm-hero__img { object-position: 50% 30%; }
-  .hm-hero__in { padding: var(--s2) var(--s1); }
-  .hm-hero__h { font-size: 38px; }
+  .hm-hero__in { padding: 120px var(--s1) var(--s2); }
+  .hm-hero__h { font-size: 40px; }
   .hm-hero__sub { font-size: var(--fs-md); }
-  .hm-hero__btn { width: 100%; }
+  .hm-hero__btn { flex: 1 1 100%; }
 }
+
+/* how it works: three numbered steps, side by side from 768px, stacked on phones */
+.hm-steps { background: var(--card); color: var(--text); border-radius: var(--radius-card); box-shadow: var(--shadow); padding: var(--s2); margin-bottom: var(--gutter); scroll-margin-top: var(--s1); }
+.hm-steps:focus { outline: none; }
+.hm-steps__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: var(--fs-xl); line-height: 1.05; margin: 0 0 var(--s1); }
+.hm-steps__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s1); }
+@media (min-width: 768px) { .hm-steps__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); } }
+.hm-steps__i { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
+.hm-steps__n { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: #fff; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 22px; line-height: 1; }
+.hm-steps__t { font-size: var(--fs-md); font-weight: 700; line-height: 1.25; margin: 6px 0 4px; }
+.hm-steps__p { margin: 0; font-size: var(--fs-sm); line-height: 1.45; color: var(--text-muted); }
+.hm-steps__brief { margin: var(--s2) 0 0; padding-top: var(--s1); border-top: 1px solid var(--line); font-size: var(--fs-md); }
+.hm-steps__brief a { font-weight: 700; color: var(--link); white-space: nowrap; }
+.hm-steps__note { margin: 8px 0 0; font-size: var(--fs-xs); color: var(--text-muted); }
+@media (max-width: 767px) { .hm-steps { padding: var(--s1); } }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 /* ---------- your franchise (scoreboard card additions) ---------- */
 .hm-sb__pts { display: block; font-size: var(--fs-sm); font-weight: 400; color: var(--text-muted); }
