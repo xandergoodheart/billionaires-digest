@@ -1,4 +1,4 @@
-// Renders the static share cards (prototype pages) in the casino style.
+// Renders the static share cards (prototype pages) in the ESPN-style share-card look.
 // Usage: node scripts/render-static-og.mjs
 // Writes og/casino-looks.png and og/v2-preview.png. Does not touch index.html.
 
