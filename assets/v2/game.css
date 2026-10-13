@@ -546,7 +546,7 @@ html.g-lock, html.g-lock body { overflow: hidden; }
 .bk-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gutter); align-items: start; }
 @media (min-width: 1000px) {
   .bk-layout { grid-template-columns: minmax(0, 1fr) 360px; }
-  .bk-rail { position: sticky; top: var(--s2); max-height: calc(100vh - 48px); overflow-y: auto; border-radius: var(--radius); }
+  .bk-rail { position: sticky; top: calc(var(--v2-chrome-h, 104px) + var(--s2)); max-height: calc(100vh - var(--v2-chrome-h, 104px) - 48px); overflow-y: auto; border-radius: var(--radius); }
   .bk-bar { display: none !important; }
 }
 @media (max-width: 999px) {

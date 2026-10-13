@@ -183,8 +183,12 @@ test('Open game: Play goes to the home page ("/" absolute); the BD mark is the h
   assert.ok(top.includes('<a href="news.html">News</a>'));
   assert.ok(rel.includes('<a class="v2-mark" href="index.html">'));
   assert.ok(/<a class="v2-top__act v2-top__act--team" href="team.html">[\s\S]*?<span>My team<\/span><\/a>/.test(rel));
-  assert.ok(/<a class="v2-top__act v2-top__act--draft" href="draft.html">[\s\S]*?<span>Draft<\/span><\/a>/.test(rel));
-  assert.ok(/<a class="v2-top__act v2-top__search" href="people\/">[\s\S]*?<span>Search<\/span><\/a>/.test(rel));
+  // Draft lives in the Play sub-tabs only: no separate top-bar Draft link
+  const right = rel.slice(rel.indexOf('<div class="v2-top__right">'), rel.indexOf('<button type="button" class="v2-menubtn"'));
+  assert.ok(!right.includes('draft.html') && !right.includes('v2-top__act--draft'));
+  // search is a round icon button with an accessible name
+  assert.ok(/<a class="v2-top__icon v2-top__search" href="people\/" aria-label="Search"><svg [^>]*aria-hidden="true"[\s\S]*?<\/svg><\/a>/.test(rel));
+  assert.equal((right.match(/<a /g) || []).length, 2);
   assert.equal((rel.match(/aria-current="page"/g) || []).length, 0);
   const news = renderTopbarV2('news', 'today', U);
   const sub = news.slice(news.indexOf('<nav class="v2-subtabs"'));
@@ -232,7 +236,7 @@ test('Launch gate: Play points to the waitlist landing, only Rules under Play, T
   assert.ok(renderBottomTabsV2('play', G).includes('<a href="index.html" aria-current="true">Play</a>'));
 });
 
-test('Launch gate: one "Join the waitlist" action instead of Draft + My team; open game keeps both', () => {
+test('Launch gate: one "Join the waitlist" action instead of My team; open game keeps My team', () => {
   const g = renderTopbarV2('news', 'today', { gated: true });
   const right = g.slice(g.indexOf('<div class="v2-top__right">'), g.indexOf('<button type="button" class="v2-menubtn"'));
   assert.ok(right.includes('<a class="v2-top__act v2-top__act--team v2-top__act--join" href="index.html"><span>Join the waitlist</span></a>'));
@@ -241,7 +245,8 @@ test('Launch gate: one "Join the waitlist" action instead of Draft + My team; op
   assert.equal((right.match(/Join the waitlist/g) || []).length, 1);
   assert.ok(renderTopbarV2('news', 'today', { absolute: true, gated: true }).includes('v2-top__act--join" href="/"'));
   const o = renderTopbarV2('news', 'today', U);
-  assert.ok(o.includes('v2-top__act--draft" href="draft.html"') && o.includes('v2-top__act--team" href="team.html"'));
+  assert.ok(o.includes('v2-top__act--team" href="team.html"') && !o.includes('v2-top__act--draft'));
+  assert.ok(o.includes('aria-label="Search"') && g.includes('aria-label="Search"'));
   assert.ok(!o.includes('Join the waitlist'));
 });
 
@@ -300,4 +305,17 @@ test('chrome order: skip link before the top bar; sub-tab label before the tabs'
   // sub-tab bar: section label comes before the tabs
   const sub = html.slice(html.indexOf('<nav class="v2-subtabs"'));
   assert.ok(sub.indexOf('v2-subtabs__label') < sub.indexOf('v2-subtabs__list'));
+});
+
+test('one header surface: sub-tabs render inside the sticky header, the MENU sheet stays outside it', () => {
+  const html = renderTopbarV2('play', 'team', U);
+  const head = html.slice(html.indexOf('<header class="v2-top">'), html.indexOf('</header>'));
+  assert.ok(head.includes('<nav class="v2-subtabs" aria-label="Play">'));
+  assert.ok(html.indexOf('id="v2-menu"') > html.indexOf('</header>'));
+  // a section without sub-tabs: plain header, nothing nested
+  const players = renderTopbarV2('players', null, U);
+  assert.ok(players.includes('<header class="v2-top">') && !players.includes('v2-subtabs'));
+  // labels: no "■" glyph, and sub-tab pills keep aria-current="page"
+  assert.ok(!html.includes('■'));
+  assert.ok(/<li><a href="team.html" aria-current="page">My team<\/a><\/li>/.test(head));
 });

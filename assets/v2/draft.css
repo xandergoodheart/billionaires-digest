@@ -60,7 +60,7 @@
 .dr-pool .v2-empty { padding: var(--s2) 0; }
 
 /* starting-five panel: dark, sticky on desktop */
-.dr-side { position: sticky; top: var(--s1); max-height: calc(100vh - 2 * var(--s1)); overflow-y: auto; overscroll-behavior: contain; padding: 3px; margin: -3px; display: flex; flex-direction: column; gap: var(--s1); }
+.dr-side { position: sticky; top: calc(var(--v2-chrome-h, 104px) + var(--s1)); max-height: calc(100vh - var(--v2-chrome-h, 104px) - 2 * var(--s1)); overflow-y: auto; overscroll-behavior: contain; padding: 3px; margin: -3px; display: flex; flex-direction: column; gap: var(--s1); }
 .dr-panel {
   --text: #FFFFFF; --text-muted: #B9BFC7; --line: #33373C; --positive: #3CC985; --negative: #FF6B64; --brand-ink: #FF8A84;
   --disabled-bg: #2A2D31; --link: #8AB4FF; --card: #16181B; --focus: #8AB4FF; --line-2: #7C848E; --positive-tint: #10301F;

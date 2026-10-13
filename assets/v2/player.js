@@ -652,7 +652,7 @@
     if (!b) return;
     var t;
     if ((t = b.getAttribute('data-tab'))){ showTab(t, false); return; }
-    if ((t = b.getAttribute('data-goto'))){ showTab(t, true); window.scrollTo(0, $('tab-' + t).getBoundingClientRect().top + window.pageYOffset - 16); return; }
+    if ((t = b.getAttribute('data-goto'))){ showTab(t, true); var hd = document.querySelector('.v2-top'); window.scrollTo(0, $('tab-' + t).getBoundingClientRect().top + window.pageYOffset - (hd ? hd.offsetHeight : 0) - 16); return; }
     if (b.id === 'addbtn'){
       var r;
       if (b.getAttribute('aria-disabled') === 'true'){ say('Cannot add ' + name() + ': ' + b.getAttribute('data-why') + '.'); return; }
