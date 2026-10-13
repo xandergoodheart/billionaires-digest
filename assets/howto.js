@@ -1,8 +1,9 @@
 /* Billionaires Digest: the "How it works" popup on the Play home (index.html only). ES5, no globals, no dependencies.
  *
- * Opens by itself once, ~1.2 s after load, for first-time visitors: skipped when localStorage has "bd-howto-seen"
- * or "bd-fantasy-v1" holds a team (saved weekly team or a working draft with picks). The hero's "How it works"
- * button (.hm-hero__btn--ghost, href="#how" as the no-JS fallback) opens it every time.
+ * The hero's "How it works" button (.hm-hero__btn--ghost, href="#how" as the no-JS fallback) opens it every time.
+ * Automatic first-visit opening is switched off (AUTO_OPEN below): the same video now plays in the hero itself.
+ * With AUTO_OPEN = true it opens once, ~1.2 s after load, for first-time visitors: skipped when localStorage has
+ * "bd-howto-seen" or "bd-fantasy-v1" holds a team (saved weekly team or a working draft with picks).
  * Content: a square looping video (assets/video/how-it-works.webm, then .mp4; captions are burned in), the three
  * steps copied from the #how section (one source of wording), "Draft your team, free" and "Close".
  * Missing or broken video files: the video stays hidden (it shows only once its metadata loads) and is removed;
@@ -13,6 +14,9 @@
  */
 (function(w, d){
   var SEEN = 'bd-howto-seen', TEAM = 'bd-fantasy-v1', DELAY_MS = 1200;
+  // Off: the hero already plays this video on load (assets/v2/hero-video.js), so an automatic popup would repeat it.
+  // Set to true to bring back the one-time popup for first-time visitors.
+  var AUTO_OPEN = false;
   var POSTER = 'assets/video/how-it-works-poster.webp';
   var SOURCES = [['assets/video/how-it-works.webm', 'video/webm'], ['assets/video/how-it-works.mp4', 'video/mp4']];
   var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])';
@@ -191,7 +195,7 @@
     });
   }
 
-  if (!lsGet(SEEN) && !hasTeam()) {
+  if (AUTO_OPEN && !lsGet(SEEN) && !hasTeam()) {
     autoTimer = setTimeout(function(){
       autoTimer = null;
       var menu = d.getElementById('v2-menu');
