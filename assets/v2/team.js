@@ -25,6 +25,15 @@
   function plainTxt(n){ return n < 0 ? MINUS + Math.abs(n) : String(n); }
   function numCls(n){ return n > 0 ? 'v2-pos' : (n < 0 ? 'v2-neg' : 'v2-zero'); }
   function link(cls, text, href){ var a = el('a', cls, text); a.href = href; return a; }
+  // Academy "Play smarter" Scout badge (academy.html writes bd-academy-play-v1). Display only: no points effect.
+  function scoutBadge(){
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem('bd-academy-play-v1') || 'null'); } catch (e) { s = null; }
+    if (!s || s.v !== 1 || typeof s.scout !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(s.scout)) return null;
+    var a = link('v2-pill tm-scout', 'Scout badge', 'academy.html');
+    a.setAttribute('aria-label', 'Scout badge: passed every Play smarter lesson in the Academy');
+    return a;
+  }
   var liveT = null;
   function say(t){ var n = $('live'); n.textContent = ''; clearTimeout(liveT); liveT = setTimeout(function(){ n.textContent = t; }, 40); }
   function surname(name){
@@ -139,6 +148,8 @@
     var left = el('div', 'tm-score__main');
     var h = el('h1', 'tm-score__name', teamName()); h.id = 'teamname';
     left.appendChild(h);
+    var scout = scoutBadge();
+    if (scout) left.appendChild(scout);
     var total = v.any ? v.res.total : null;
     var row = el('div', 'tm-score__row');
     var big = el('span', 'tm-score__big num', total == null ? '—' : plainTxt(total));

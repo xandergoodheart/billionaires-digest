@@ -55,6 +55,8 @@
 .tm-score__k { display: block; font-size: var(--fs-sm); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #D5D9DE; }
 .tm-score__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--s3); align-items: end; }
 .tm-score__name { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 48px; line-height: 1; text-transform: uppercase; overflow-wrap: anywhere; }
+.tm-scout { display: inline-flex; margin-top: 8px; text-decoration: none; }
+.tm-scout:hover { text-decoration: underline; }
 .tm-score__row { display: flex; align-items: baseline; gap: var(--s2); flex-wrap: wrap; margin-top: 8px; }
 .tm-score__big { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 104px; line-height: .85; letter-spacing: -.01em; }
 .tm-score__unit { font-size: var(--fs-sm); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #D5D9DE; }
