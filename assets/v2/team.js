@@ -6,7 +6,8 @@
    points, captain applied), "Play the week" replay of the real scored days, the benchmark card, season (streak, XP,
    badges, coins), next round, team news, leagues.
      chart, replay, benchmark <- BDWeekCore (assets/v2/week-core.js) over BDFantasyStore.teamWeek; a replay, never a forecast
-     streak, badges  <- BDFantasyStore.pure.seasonRecord over finished real weeks you saved a team for
+     streak, badges  <- BDFantasyStore.pure.seasonRecord over finished weeks you saved a team for that count now
+                        (C.countsNow: preseason weeks before Season 1, then only Season 1 weeks, so everything resets)
      XP / level      <- weeks played x100 + weeks beat the S&P 500 x50; a level every 500 XP (formula shown on the page)
      coins           <- the online game (BDFantasyStore.me()) only when signed in; otherwise "Sign in" text
    The profile preview shows initials (or an approved illustrated portrait from BDPortraits), never a photo.
@@ -104,6 +105,7 @@
     if (v.any){
       if (v.team.lateFrom) return 'Late entry: scoring from ' + fmt.dayLabel(v.team.lateFrom) + '.';
       if (v.wk.practice) return 'Practice week: your working draft scores here. It does not count for your streak or XP.';
+      if (C.isPreseason(v.wk.week) && C.seasonStarted(F.now())) return 'Preseason week: it does not count in ' + C.SEASON_NAME + '.';
       return '';
     }
     var start = v.mode === 'upcoming' ? C.weekInfo(v.weekId).start : ((v.team && v.team.lateFrom) || v.wk.start);
@@ -365,6 +367,7 @@
     body.appendChild(line);
     if (v.team.lateFrom) body.appendChild(el('p', 'tm-small', 'Late entry: your team scores from ' + fmt.dayLabel(v.team.lateFrom) + '; the S&P 500 counts every scored day of the week.'));
     if (v.wk.practice) body.appendChild(el('p', 'tm-small', 'Practice week: it does not count for your season record.'));
+    else if (C.isPreseason(v.wk.week)) body.appendChild(el('p', 'tm-small', 'Preseason week: it does not count in ' + C.SEASON_NAME + (C.seasonStarted(F.now()) ? '.' : ', which starts ' + fmt.dayLabel(C.seasonStartDate()) + '.')));
     body.appendChild(link('v2-btn v2-btn--ghost v2-btn--sm tm-bench__btn', 'See the leaderboard', 'scores.html#leaderboard'));
     sec.hidden = false;
   }
@@ -481,19 +484,25 @@
     cd.textContent = locked ? 'now. Reload the page for the next round.' : span(info.locksAt - t);
   }
 
-  // ---- season record (finished real weeks with a saved team) -> streak, XP, badges ----
+  // ---- record (finished weeks with a saved team that count now) -> streak, XP, badges ----
+  // Before Season 1 these come from the preseason weeks (card titled "Preseason"); from Season 1 (Mon Nov 9) only
+  // Season 1 weeks count, so streak, XP, level and badges all start again from zero. Preseason data is kept.
   var season = null;
   function loadSeason(){
-    var S = F.state, store = F.store();
-    var finished = arr(S.index && S.index.weeks).filter(function(w){ return w.final && !w.practice && store.teams[w.week]; }).map(function(w){ return w.week; });
+    var S = F.state, store = F.store(), t = F.now();
+    var finished = F.pure.recordWeeks(S.index && S.index.weeks, store.teams, t).map(function(w){ return w.week; });
     return Promise.all(finished.map(function(id){ return F.loadWeek(id); })).then(function(files){
-      season = F.pure.seasonRecord(files.map(function(wk, j){ return { wk: wk, team: store.teams[finished[j]] }; }));
+      season = F.pure.seasonRecord(files.map(function(wk, j){ return { wk: wk, team: store.teams[finished[j]] }; }), t);
     }, function(){ season = null; });
   }
   function xpOf(rec){ return rec.played * XP_WEEK + rec.winsSpy * XP_WIN; }
   function renderLevel(){
     var body = clear($('levelbody')), rec = season || { played: 0, winsSpy: 0, streak: 0 };
-    var S = F.state;
+    var S = F.state, started = C.seasonStarted(F.now());
+    $('seasonh').textContent = C.periodName(F.now());
+    body.appendChild(el('p', 'tm-small', started
+      ? C.SEASON_NAME + ' since ' + fmt.dayLabel(C.seasonStartDate()) + '. Preseason weeks do not count here.'
+      : 'Preseason: none of this counts. Streak, XP, level and badges reset to zero for everyone when ' + C.SEASON_NAME + ' starts ' + fmt.dayLabel(C.seasonStartDate()) + '.'));
     // streak meter: five lamps; lit = consecutive weeks beating the S&P 500 (newest first)
     var sm = el('div', 'tm-streak');
     sm.appendChild(el('span', 'tm-meter__k', 'Streak · weeks beating the S&P 500'));
@@ -501,10 +510,9 @@
     lamps.setAttribute('aria-hidden', 'true');
     for (var i = 0; i < 5; i++) lamps.appendChild(el('span', 'tm-streak__l' + (i < rec.streak ? ' is-lit' : '')));
     sm.appendChild(lamps);
-    // next Monday you can start on: the first real week if it is still ahead, else the week now open in the Draft room
-    var first = S.index && S.index.firstRealWeek ? C.weekMonday(S.index.firstRealWeek) : null;
+    // next Monday you can start on: the week now open in the Draft room
     var dw = S.draftWeek || (S.index && S.index.draftWeek);
-    var next = first && first > C.nyDate(F.now()) ? first : (dw ? C.weekMonday(dw) : null);
+    var next = dw ? C.weekMonday(dw) : null;
     var stxt;
     if (!rec.played) stxt = 'Start your streak Monday' + (next ? ' (' + fmt.shortDate(next) + ')' : '') + '.';
     else if (!rec.streak) stxt = 'No streak right now. Beat the S&P 500 this week to start one.';

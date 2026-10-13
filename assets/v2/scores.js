@@ -123,7 +123,7 @@
     var t = el('div', 'sc-board__title');
     t.appendChild(el('span', 'v2-kicker', fmt.weekTitle(wk.week)));
     var over = F.weekOver(wk);
-    t.appendChild(el('p', 'sc-board__sub', range(wk) + (over ? ' · final' : '') + (wk.practice ? ' · practice, not counted in your season' : '')));
+    t.appendChild(el('p', 'sc-board__sub', range(wk) + (over ? ' · final' : '') + (wk.practice ? ' · practice, not counted in your season' : (C.isPreseason(wk.week) && C.seasonStarted(F.now()) ? ' · preseason, not counted in ' + C.SEASON_NAME : ''))));
     top.appendChild(t);
     box.appendChild(top);
     return top;
@@ -366,7 +366,7 @@
     var body = clear($('prevbody'));
     $('prevmeta').textContent = F.weekOver(wk) ? 'Final' : '';
     body.appendChild(el('span', 'v2-kicker', fmt.weekTitle(wk.week)));
-    body.appendChild(el('p', 'sc-prev__range', range(wk) + (wk.practice ? ' · practice, not counted in your season' : '')));
+    body.appendChild(el('p', 'sc-prev__range', range(wk) + (wk.practice ? ' · practice, not counted in your season' : (C.isPreseason(wk.week) && C.seasonStarted(F.now()) ? ' · preseason, not counted in ' + C.SEASON_NAME : ''))));
     var team = wk.practice ? null : F.store().teams[wk.week];
     if (!team || !team.picks){
       body.appendChild(el('p', 'v2-msg', wk.practice ? 'Practice weeks are not counted in your season.' : 'You did not have a team in ' + fmt.weekName(wk.week) + '.'));
@@ -399,68 +399,89 @@
   }
 
   // ---- season record (v1 renderSeason) ----
+  // Before Season 1 this is the "Preseason record" (preseason weeks); from Season 1 (C.SEASON_START_WEEK, Mon Nov 9)
+  // it is the "Season 1 record" and counts only Season 1 weeks, so everyone starts again at zero. Preseason weeks are
+  // kept and listed underneath, labelled as not counted.
   var seasonSeq = 0;
+  function startLabel(){ return fmt.dayLabel(C.seasonStartDate()); }
   function renderSeason(){
-    var S = F.state, store = F.store(), body = clear($('seasonbody'));
-    var weeks = arr(S.index && S.index.weeks).filter(function(w){ return w.final && !w.practice && store.teams[w.week]; });
+    var S = F.state, store = F.store(), body = clear($('seasonbody')), t = F.now();
+    var started = C.seasonStarted(t), period = C.periodName(t);
+    $('seasonh').textContent = period + ' record';
+    var weeks = F.pure.recordWeeks(S.index && S.index.weeks, store.teams, t);
+    var pre = started ? F.pure.recordWeeks(S.index && S.index.weeks, store.teams, t, 'preseason') : [];
     var seq = ++seasonSeq;
-    if (!weeks.length){
-      var first = S.index && S.index.firstRealWeek ? C.weekMonday(S.index.firstRealWeek) : null;
-      if (first && first <= C.nyDate(F.now())) first = null;   // only while the first real week is still ahead
-      emptyState(body, 'No finished weeks yet', (first ? 'The first real week starts ' + fmt.dayLabel(first) + '. ' : '') + 'Save a lineup before the lock, and your record against the S&P 500, the Top 5 richest and the perfect team builds here week by week.');
+    var resetNote = started
+      ? C.SEASON_NAME + ' started ' + startLabel() + ' and everyone started again from zero. Preseason weeks are kept below but do not count.'
+      : 'Preseason weeks are for learning the game and do not count: everyone\'s scores, records and streaks reset when ' + C.SEASON_NAME + ' starts ' + startLabel() + '.';
+    if (!weeks.length && !pre.length){
+      emptyState(body, started ? 'No finished ' + C.SEASON_NAME + ' weeks yet' : 'No finished weeks yet', resetNote + ' Save a lineup before the lock, and your record against the S&P 500, the Top 5 richest and the perfect team builds here week by week.');
       return;
     }
-    body.appendChild(el('p', 'v2-loading', 'Loading your season…'));
-    Promise.all(weeks.map(function(w){ return F.loadWeek(w.week); })).then(function(files){
+    body.appendChild(el('p', 'v2-loading', 'Loading your record…'));
+    var all = weeks.concat(pre);
+    Promise.all(all.map(function(w){ return F.loadWeek(w.week); })).then(function(files){
       if (seq !== seasonSeq) return;
-      var rec = F.pure.seasonRecord(files.map(function(wk, i){ return { wk: wk, team: store.teams[weeks[i].week] }; }));
-      store.record = { played: rec.played, winsSpy: rec.winsSpy, winsTop5: rec.winsTop5, winsPerfect: rec.winsPerfect, best: rec.best, streak: rec.streak };
+      var entries = files.map(function(wk, i){ return { wk: wk, team: store.teams[all[i].week] }; });
+      var rec = F.pure.seasonRecord(entries, t);
+      var preRec = started ? F.pure.seasonRecord(entries.filter(function(x){ return x.wk && C.isPreseason(x.wk.week); })) : null;
+      store.record = { period: period, played: rec.played, winsSpy: rec.winsSpy, winsTop5: rec.winsTop5, winsPerfect: rec.winsPerfect, best: rec.best, streak: rec.streak };
       F.persist();
       clear(body);
-      var g = el('div', 'sc-rec');
-      [['Weeks played', String(rec.played), false],
-       ['vs S&P 500', rec.winsSpy + '–' + (rec.played - rec.winsSpy), rec.winsSpy * 2 > rec.played],
-       ['vs Top 5 richest', rec.winsTop5 + '–' + (rec.played - rec.winsTop5), rec.winsTop5 * 2 > rec.played],
-       ['Matched perfect', rec.winsPerfect + ' of ' + rec.played, false],
-       ['Best week', rec.best ? signedTxt(rec.best.points) : '—', false, rec.best ? fmt.shortDate(C.weekMonday(rec.best.week)) : ''],
-       ['Streak', rec.streak ? 'W' + rec.streak : '—', rec.streak > 0, 'weeks beating the S&P 500']].forEach(function(x){
-        var d = el('div', 'v2-stat sc-rec__stat' + (x[2] ? ' is-win' : ''));
-        d.appendChild(el('span', 'v2-stat__label', x[0]));
-        d.appendChild(el('span', 'v2-stat__value', x[1]));
-        if (x[3]) d.appendChild(el('span', 'sc-rec__sub', x[3]));
-        g.appendChild(d);
-      });
-      body.appendChild(g);
-      var hh = el('h3', 'v2-h3 sc-hist__h', 'Weekly history'); hh.id = 'histh';
-      body.appendChild(hh);
-      var wrap = el('div', 'sc-scroll');
-      wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-labelledby', 'histh'); wrap.tabIndex = 0;
-      var t = el('table', 'v2-table sc-hist');
-      t.appendChild(el('caption', 'sc-hist__cap', 'Finished weeks, newest first. W = you beat that benchmark.'));
-      var hr = el('tr');
-      [['Week', ''], ['My points', 'n'], ['S&P 500', 'n'], ['Top 5', 'n'], ['Perfect', 'n']].forEach(function(x){ var th = el('th', x[1] || null, x[0]); th.scope = 'col'; hr.appendChild(th); });
-      var th0 = el('thead'); th0.appendChild(hr); t.appendChild(th0);
-      var tb = el('tbody');
-      function res(mine, v, winIfGe){
-        var td = el('td', 'n');
-        if (typeof v !== 'number'){ td.appendChild(el('span', 'v2-zero', 'n/a')); return td; }
-        var w = winIfGe ? mine >= v : mine > v;
-        td.appendChild(el('span', 'sc-res' + (w ? ' is-win' : ''), w ? 'W' : 'L'));
-        td.appendChild(el('span', numCls(v), ' ' + signedTxt(v)));
-        return td;
+      body.appendChild(el('p', 'v2-msg', resetNote));
+      if (!rec.played){
+        emptyState(body, 'No finished ' + C.SEASON_NAME + ' weeks yet', 'Save a lineup before the lock, and your ' + C.SEASON_NAME + ' record builds here week by week.');
+      } else {
+        var g = el('div', 'sc-rec');
+        [['Weeks played', String(rec.played), false],
+         ['vs S&P 500', rec.winsSpy + '–' + (rec.played - rec.winsSpy), rec.winsSpy * 2 > rec.played],
+         ['vs Top 5 richest', rec.winsTop5 + '–' + (rec.played - rec.winsTop5), rec.winsTop5 * 2 > rec.played],
+         ['Matched perfect', rec.winsPerfect + ' of ' + rec.played, false],
+         ['Best week', rec.best ? signedTxt(rec.best.points) : '—', false, rec.best ? fmt.shortDate(C.weekMonday(rec.best.week)) : ''],
+         ['Streak', rec.streak ? 'W' + rec.streak : '—', rec.streak > 0, 'weeks beating the S&P 500']].forEach(function(x){
+          var d = el('div', 'v2-stat sc-rec__stat' + (x[2] ? ' is-win' : ''));
+          d.appendChild(el('span', 'v2-stat__label', x[0]));
+          d.appendChild(el('span', 'v2-stat__value', x[1]));
+          if (x[3]) d.appendChild(el('span', 'sc-rec__sub', x[3]));
+          g.appendChild(d);
+        });
+        body.appendChild(g);
+        historyTable(body, rec, 'histh', 'Weekly history', 'Finished weeks, newest first. W = you beat that benchmark.');
       }
-      rec.rows.forEach(function(r){
-        var tr = el('tr'), th = el('th', 'sc-days__who', 'Week of ' + fmt.shortDate(C.weekMonday(r.week)) + (rec.best && rec.best.week === r.week ? ' · best' : '')); th.scope = 'row';
-        tr.appendChild(th);
-        tr.appendChild(el('td', 'n v2-strong ' + numCls(r.mine), signedTxt(r.mine)));
-        tr.appendChild(res(r.mine, r.spy)); tr.appendChild(res(r.mine, r.top5)); tr.appendChild(res(r.mine, r.perfect, true));
-        tb.appendChild(tr);
-      });
-      t.appendChild(tb); wrap.appendChild(t); body.appendChild(wrap);
+      if (preRec && preRec.played) historyTable(body, preRec, 'prehisth', 'Preseason (not counted)', 'Your preseason weeks, newest first. Kept for reference; they do not count in ' + C.SEASON_NAME + '.');
     }, function(){
       if (seq !== seasonSeq) return;
-      clear(body).appendChild(el('p', 'v2-msg', 'Your season record is not available right now.'));
+      clear(body).appendChild(el('p', 'v2-msg', 'Your record is not available right now.'));
     });
+  }
+  // a weekly history table for one record (rows newest first)
+  function historyTable(body, rec, id, title, caption){
+    var hh = el('h3', 'v2-h3 sc-hist__h', title); hh.id = id;
+    body.appendChild(hh);
+    var wrap = el('div', 'sc-scroll');
+    wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-labelledby', id); wrap.tabIndex = 0;
+    var t = el('table', 'v2-table sc-hist');
+    t.appendChild(el('caption', 'sc-hist__cap', caption));
+    var hr = el('tr');
+    [['Week', ''], ['My points', 'n'], ['S&P 500', 'n'], ['Top 5', 'n'], ['Perfect', 'n']].forEach(function(x){ var th = el('th', x[1] || null, x[0]); th.scope = 'col'; hr.appendChild(th); });
+    var th0 = el('thead'); th0.appendChild(hr); t.appendChild(th0);
+    var tb = el('tbody');
+    function res(mine, v, winIfGe){
+      var td = el('td', 'n');
+      if (typeof v !== 'number'){ td.appendChild(el('span', 'v2-zero', 'n/a')); return td; }
+      var w = winIfGe ? mine >= v : mine > v;
+      td.appendChild(el('span', 'sc-res' + (w ? ' is-win' : ''), w ? 'W' : 'L'));
+      td.appendChild(el('span', numCls(v), ' ' + signedTxt(v)));
+      return td;
+    }
+    rec.rows.forEach(function(r){
+      var tr = el('tr'), th = el('th', 'sc-days__who', fmt.weekTitle(r.week) + (rec.best && rec.best.week === r.week ? ' · best' : '')); th.scope = 'row';
+      tr.appendChild(th);
+      tr.appendChild(el('td', 'n v2-strong ' + numCls(r.mine), signedTxt(r.mine)));
+      tr.appendChild(res(r.mine, r.spy)); tr.appendChild(res(r.mine, r.top5)); tr.appendChild(res(r.mine, r.perfect, true));
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb); wrap.appendChild(t); body.appendChild(wrap);
   }
 
   // ---- page ----
@@ -478,7 +499,7 @@
     box.appendChild(r);
     $('days').hidden = true;
     $('scside').hidden = true; $('scmain').className = 'span-12 v2-stack';
-    clear($('seasonbody')).appendChild(el('p', 'v2-msg', 'Your season record will show here when the game data loads.'));
+    clear($('seasonbody')).appendChild(el('p', 'v2-msg', 'Your record will show here when the game data loads.'));
     say('The game data is not available right now.');
   }
   // After the page is drawn, bring #season / #leaderboard back into view (the layout above them changed).

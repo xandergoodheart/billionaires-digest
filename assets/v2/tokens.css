@@ -50,6 +50,12 @@
   --ticker: #1B1C1E;           /* scores ticker strip */
   --ticker-2: #34363A;         /* ticker separators */
   --subbar: #FFFFFF;           /* sub-tab bar */
+  /* top navigation surface (sticky, blurred) and its pills */
+  --nav-glass: rgba(237, 238, 240, .8);      /* page bg at 80% (solid var(--bg) where blur is unsupported) */
+  --nav-hover: rgba(0, 0, 0, .04);
+  --nav-active: rgba(0, 0, 0, .06);          /* active section pill */
+  --nav-sub-active: rgba(0, 0, 0, .08);      /* active sub-tab pill */
+  --nav-shadow: 0 6px 20px rgba(16, 18, 20, .08);
 
   /* legacy casino aliases (restyled; do not use in new code) */
   --felt: var(--canvas);
@@ -100,7 +106,7 @@
   --margin: 24px;
   --margin-mobile: 16px;
   --tap: 44px;
-  --topbar-h: 56px;
+  --topbar-h: 60px;            /* slim sticky top bar */
   --tabs-h: 60px;
 
   /* motion */
@@ -141,6 +147,11 @@
   --ticker: #0E0F10;
   --ticker-2: #2E3034;
   --subbar: #1D1F22;
+  --nav-glass: rgba(18, 19, 20, .8);
+  --nav-hover: rgba(255, 255, 255, .05);
+  --nav-active: rgba(255, 255, 255, .08);
+  --nav-sub-active: rgba(255, 255, 255, .12);
+  --nav-shadow: 0 6px 24px rgba(0, 0, 0, .45);
   color-scheme: dark;
 }
 /* … or by the system setting (unless data-theme="light") */
@@ -174,6 +185,11 @@
     --ticker: #0E0F10;
     --ticker-2: #2E3034;
     --subbar: #1D1F22;
+    --nav-glass: rgba(18, 19, 20, .8);
+    --nav-hover: rgba(255, 255, 255, .05);
+    --nav-active: rgba(255, 255, 255, .08);
+    --nav-sub-active: rgba(255, 255, 255, .12);
+    --nav-shadow: 0 6px 24px rgba(0, 0, 0, .45);
     color-scheme: dark;
   }
 }
@@ -181,7 +197,7 @@
 @media (max-width: 767px) {
   :root {
     --margin: 16px;
-    --topbar-h: 52px;
+    --topbar-h: 56px;
     --fs-hero: 64px;
     --fs-3xl: 36px;
     --fs-2xl: 28px;

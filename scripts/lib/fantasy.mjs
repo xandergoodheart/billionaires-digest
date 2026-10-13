@@ -246,6 +246,8 @@ export function medianSalary(values) {
 
 // draftable: [{ slug, rank, type? }] sorted or not; rank = Public Stake Value rank (scripts/lib/data-common.mjs
 // stakeTable; null when the person has none). history: [{ totals: { slug: points } }] of recent finished real weeks.
+// Preseason weeks stay in this history after Season 1 starts: recent form is price information about the players,
+// not a player's score, so the Season 1 reset (fantasy-core SEASON_START_WEEK) does not apply here.
 // Billionaires with a rank: tiers by their position among the ranked billionaires in the pool (TIERS sizes).
 // Billionaires without one: NO_STAKE_SALARY. CEOs (type "ceo", no rank): the median of the billionaire salaries.
 // Then everyone (billionaires and CEOs together) gets the same ±ADJUST_MAX by recent points percentile once there are

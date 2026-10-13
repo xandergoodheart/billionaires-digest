@@ -91,7 +91,7 @@ export function renderFooter({ absolute = false } = {}) {
 export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navmore'),nav=document.querySelector('.sitenav');var mq=window.matchMedia?window.matchMedia('(max-width: 699.98px)'):null,panel=null,cur=null,y0=0;function closeAll(ex){for(var i=0;i<d.length;i++)if(d[i]!==ex)d[i].removeAttribute('open');}function hidePanel(){if(panel){panel.hidden=true;while(panel.firstChild)panel.removeChild(panel.firstChild);}var s=cur&&cur.querySelector('summary');if(s){s.removeAttribute('aria-expanded');s.removeAttribute('aria-controls');}cur=null;}function closeCur(){var el=cur;hidePanel();if(el)el.removeAttribute('open');}function showPanel(el){var ul=el.querySelector('ul'),s=el.querySelector('summary');hidePanel();if(!ul)return;if(!panel){panel=document.createElement('div');panel.className='navpanel';panel.id='navpanel';panel.setAttribute('role','region');panel.hidden=true;document.body.appendChild(panel);}panel.setAttribute('aria-label',(s?s.textContent.replace(/\\s+/g,' ').replace(/^ | $/g,''):'Site')+' menu');panel.appendChild(ul.cloneNode(true));panel.style.top=Math.round(nav?nav.getBoundingClientRect().bottom:0)+'px';panel.hidden=false;cur=el;y0=window.pageYOffset||0;if(s){s.setAttribute('aria-expanded','true');s.setAttribute('aria-controls','navpanel');}}function onScroll(){if(cur&&Math.abs((window.pageYOffset||0)-y0)>2)closeCur();}function onResize(){if(cur)closeCur();}if(d.length){document.documentElement.className+=' js-navpanel';document.addEventListener('click',function(e){var t=e.target;if(panel&&panel.contains(t))return;if(cur&&!cur.contains(t))closeCur();for(var i=0;i<d.length;i++)if(d[i].hasAttribute('open')&&!d[i].contains(t))d[i].removeAttribute('open');});document.addEventListener('keydown',function(e){if(e.key!=='Escape'&&e.key!=='Esc')return;for(var i=0;i<d.length;i++)if(d[i].hasAttribute('open')){d[i].removeAttribute('open');var s=d[i].querySelector('summary');if(s)s.focus();}hidePanel();});for(var j=0;j<d.length;j++)d[j].addEventListener('toggle',function(){if(this.open){closeAll(this);if(mq&&mq.matches)showPanel(this);}else if(this===cur)hidePanel();});window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onResize);}var row=nav&&nav.querySelector('.wrap');if(!row)return;function fades(){var max=row.scrollWidth-row.clientWidth;nav.classList.toggle('is-scrolled',row.scrollLeft>2);nav.classList.toggle('is-end',row.scrollLeft>=max-2);}var c=row.querySelector('.wrap>a[aria-current="page"],summary[aria-current="page"]');if(c&&row.scrollWidth>row.clientWidth){var x=c.getBoundingClientRect().left-row.getBoundingClientRect().left+row.scrollLeft;if(x+c.offsetWidth>row.clientWidth-32)row.scrollLeft=Math.max(0,x-(row.clientWidth-c.offsetWidth)/2);}fades();row.addEventListener('scroll',fades,{passive:true});window.addEventListener('resize',fades);})();`;
 
 // ---------------------------------------------------------------------------------------------------------------
-// v2 chrome (branch v2): dark top bar with BD wordmark, sub-tabs per section, phone MENU sheet, phone bottom tabs
+// v2 chrome (branch v2): slim sticky blurred top bar with BD wordmark, pill sub-tabs per section, phone MENU sheet, phone bottom tabs
 // and the v2 footer. Pages opt in with <!-- v2topbar:start --> / <!-- v2tabs:start --> / <!-- v2footer:start -->
 // markers (scripts/sync-nav.mjs). Behavior of the MENU sheet lives in assets/v2/chrome.js. v1 NAV above is unchanged.
 
@@ -176,15 +176,19 @@ const topItem = (key, gated) => navV2({ gated }).find(n => n.key === key) || nul
 // Icons for the top-bar actions (original line drawings; no brand icons).
 const ICON = {
   team: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>',
-  draft: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
   search: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>'
 };
 
 // Top bar + sub-tabs + phone MENU sheet. topKey: NAV_V2 key (or null); subKey: sub-tab key of that section (or null).
+// One sticky, blurred header (<header class="v2-top">) holds the top row and, directly under it, the section's pill
+// sub-tabs (<nav class="v2-subtabs">), so both share one surface and one hairline at the bottom. The phone MENU sheet
+// stays outside the header (a blurred, sticky parent would trap the fixed sheet inside it).
 // Active section: aria-current="true"; active sub-tab (the page itself): aria-current="page".
+// Right side: a round search icon button (aria-label "Search") and one round "My team" button. Draft lives in the
+// Play sub-tabs, so the top bar has no separate Draft link.
 // The scores ticker is an empty, hidden container here; assets/v2/ticker.js (loaded by renderFooterV2) fills it
 // from real data and shows it, or leaves it hidden when the data is missing.
-// While GATED: no ticker container (no odds anywhere), and the Draft + My team actions become one "Join the waitlist" button.
+// While GATED: no ticker container (no odds anywhere), and My team becomes one "Join the waitlist" button.
 // No ticker either while The Book is hidden from the menus (BOOK_HIDDEN).
 export function renderTopbarV2(topKey, subKey, { absolute = false, gated = GATED } = {}) {
   const u = h => escHtml(url(h, absolute));
@@ -195,12 +199,25 @@ export function renderTopbarV2(topKey, subKey, { absolute = false, gated = GATED
   const top = sections.map(n => `      <a href="${u(n.href)}"${sec(n.key === topKey)}>${escHtml(n.label)}</a>`).join('\n');
   const mark = `<a class="v2-mark" href="${u('index.html')}"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>`;
   const ticker = showTicker(gated) ? '\n<div class="v2-ticker" data-ticker hidden></div>' : '';
+  const search = `      <a class="v2-top__icon v2-top__search" href="${u('people/')}" aria-label="Search">${ICON.search}</a>`;
   const acts = gated
-    ? `      <a class="v2-top__act v2-top__search" href="${u('people/')}">${ICON.search}<span>Search</span></a>
+    ? `${search}
       <a class="v2-top__act v2-top__act--team v2-top__act--join" href="${u('index.html')}"><span>Join the waitlist</span></a>`
-    : `      <a class="v2-top__act v2-top__act--draft" href="${u('draft.html')}">${ICON.draft}<span>Draft</span></a>
-      <a class="v2-top__act v2-top__search" href="${u('people/')}">${ICON.search}<span>Search</span></a>
+    : `${search}
       <a class="v2-top__act v2-top__act--team" href="${u('team.html')}">${ICON.team}<span>My team</span></a>`;
+  let subHtml = '';
+  if (sub) {
+    const items = sub.items.map(i => `        <li><a href="${u(i.href)}"${cur(i.key === subKey)}>${escHtml(i.label)}</a></li>`).join('\n');
+    subHtml = `
+  <nav class="v2-subtabs" aria-label="${escHtml(topItem(topKey, gated).label)}">
+    <div class="v2-wrap v2-subtabs__in">
+      <span class="v2-subtabs__label">${escHtml(sub.label)}</span>
+      <ul class="v2-subtabs__list">
+${items}
+      </ul>
+    </div>
+  </nav>`;
+  }
   let out = `<a class="v2-skip" href="#main">Skip to content</a>${ticker}
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
@@ -212,20 +229,8 @@ ${top}
 ${acts}
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
-  </div>
+  </div>${subHtml}
 </header>`;
-  if (sub) {
-    const items = sub.items.map(i => `      <li><a href="${u(i.href)}"${cur(i.key === subKey)}>${escHtml(i.label)}</a></li>`).join('\n');
-    out += `
-<nav class="v2-subtabs" aria-label="${escHtml(topItem(topKey, gated).label)}">
-  <div class="v2-wrap v2-subtabs__in">
-    <span class="v2-subtabs__label">${escHtml(sub.label)}</span>
-    <ul class="v2-subtabs__list">
-${items}
-    </ul>
-  </div>
-</nav>`;
-  }
   // phone MENU sheet: every section, with its sub-tabs
   const menu = sections.map(n => {
     const s = subnavV2(n.key, { gated });

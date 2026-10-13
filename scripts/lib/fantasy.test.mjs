@@ -215,6 +215,40 @@ test('week ids and boundaries', () => {
   assert.equal(core.isPractice('2026-W40'), false);
 });
 
+test('Season 1: SEASON_START_WEEK is the ISO week of config/launch.json seasonStart; preseason vs season weeks', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const launch = JSON.parse(await readFile(new URL('../../config/launch.json', import.meta.url), 'utf8'));
+  assert.equal(launch.seasonStart, '2026-11-09');
+  assert.equal(core.weekday(launch.seasonStart), 1); // a Monday
+  assert.equal(core.isoWeek(launch.seasonStart), core.SEASON_START_WEEK);
+  assert.equal(core.SEASON_START_WEEK, '2026-W46');
+  assert.equal(core.weekMonday('2026-W46'), '2026-11-09');
+  assert.equal(core.isoWeek('2026-11-08'), '2026-W45'); // the Sunday before
+  assert.equal(core.seasonStartDate(), '2026-11-09');
+  // the SQL copy says the same week
+  const sql = await readFile(new URL('../../supabase/migrations/0007_season1.sql', import.meta.url), 'utf8');
+  assert.match(sql, new RegExp(`season_start_week\\(\\) returns text\\s+language sql immutable as \\$\\$ select '${core.SEASON_START_WEEK}'`));
+  // practice < preseason < Season 1
+  assert.equal(core.isPreseason('2026-W39'), false); // practice
+  assert.equal(core.isPreseason('2026-W40'), true);
+  assert.equal(core.isPreseason('2026-W45'), true);
+  assert.equal(core.isPreseason('2026-W46'), false);
+  assert.equal(core.isSeasonWeek('2026-W46'), true);
+  assert.equal(core.isSeasonWeek('2027-W01'), true);
+  // the switch is midnight New York on Mon Nov 9 (EST, UTC-5)
+  const t = (s) => Date.parse(s);
+  assert.equal(core.seasonStarted(t('2026-11-09T04:59:59Z')), false);
+  assert.equal(core.seasonStarted(t('2026-11-09T05:00:00Z')), true);
+  assert.equal(core.periodName(t('2026-10-12T12:00:00Z')), 'Preseason');
+  assert.equal(core.periodName(t('2026-11-09T12:00:00Z')), 'Season 1');
+  // what counts in the running totals
+  const pre = t('2026-11-08T12:00:00Z'), on = t('2026-11-20T12:00:00Z');
+  assert.equal(core.countsNow('2026-W45', pre), true);
+  assert.equal(core.countsNow('2026-W39', pre), false); // practice never counts
+  assert.equal(core.countsNow('2026-W45', on), false);  // a week before W46 is out of the Season 1 total
+  assert.equal(core.countsNow('2026-W46', on), true);
+});
+
 test('lock is Monday 09:30 New York across DST', () => {
   const iso = (w) => new Date(core.weekInfo(w).locksAt).toISOString();
   assert.equal(iso('2026-W40'), '2026-09-28T13:30:00.000Z'); // EDT
