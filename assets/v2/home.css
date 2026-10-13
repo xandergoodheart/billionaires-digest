@@ -161,6 +161,27 @@
   .hm-hero__btn { flex: 1 1 100%; }
 }
 
+/* hero with the "How it works" video (assets/v2/hero-video.js). Phones/tablets: video under the buttons, centred,
+   at most 360px. 1024px and up: two columns, text left, square video right. If the video can't load, the script
+   removes .hm-hero--video and hides the box, so the hero is the one-column layout above. */
+.hm-hero--video { flex-direction: column; align-items: stretch; justify-content: flex-end; }
+.hm-hero__media { position: relative; width: auto; max-width: 360px; margin: 0 var(--s3) var(--s3); align-self: center; border-radius: var(--radius-card); overflow: hidden; background: #0B0B0C; border: 1px solid rgba(255, 255, 255, .18); box-shadow: 0 8px 28px rgba(0, 0, 0, .45); }
+.hm-hero__media[hidden] { display: none; }
+.hm-hero__video { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; max-height: 360px; object-fit: contain; background: #0B0B0C; }
+.hm-hero--video .hm-hero__in { padding-bottom: var(--s2); }
+@media (max-width: 767px) {
+  .hm-hero__media { width: calc(100% - 2 * var(--s1)); margin: 0 var(--s1) var(--s2); }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hm-hero__media { width: 100%; }
+}
+@media (min-width: 1024px) {
+  .hm-hero--video { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); align-items: center; gap: var(--s2); }
+  .hm-hero--video .hm-hero__in { align-self: end; max-width: none; padding: var(--s3) 0 var(--s3) var(--s3); }
+  .hm-hero--video .hm-hero__media { width: 100%; max-width: 460px; margin: var(--s3) var(--s3) var(--s3) 0; }
+  .hm-hero--video .hm-hero__video { max-height: none; }
+}
+
 /* how it works: three numbered steps, side by side from 768px, stacked on phones */
 .hm-steps { background: var(--card); color: var(--text); border-radius: var(--radius-card); box-shadow: var(--shadow); padding: var(--s2); margin-bottom: var(--gutter); scroll-margin-top: var(--s1); }
 .hm-steps:focus { outline: none; }

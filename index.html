@@ -108,7 +108,7 @@
 <main id="main" class="v2-main hm-main" tabindex="-1">
   <div class="v2-wrap">
     <p class="v2-banner" id="testclock" hidden></p>
-    <section class="hm-hero" aria-labelledby="heroh">
+    <section class="hm-hero hm-hero--video" aria-labelledby="heroh">
       <img class="hm-hero__img" src="assets/art/realistic/hero-fantasy.webp" alt="" width="1600" height="896" fetchpriority="high">
       <div class="hm-hero__in">
         <p class="hm-hero__kick">Free fantasy game · Preseason now · Season 1 starts Mon, Nov 9</p>
@@ -119,7 +119,15 @@
           <a class="v2-btn v2-btn--ghost v2-btn--big hm-hero__btn hm-hero__btn--ghost" href="#how">How it works</a>
         </div>
       </div>
+      <div class="hm-hero__media">
+        <video class="hm-hero__video" muted playsinline loop autoplay preload="metadata" poster="assets/video/how-it-works-poster.webp" aria-label="How it works: a 20-second video">
+          <source src="assets/video/how-it-works.webm" type="video/webm">
+          <source src="assets/video/how-it-works.mp4" type="video/mp4">
+        </video>
+        <button class="hw__vbtn" type="button" hidden>Pause video</button>
+      </div>
     </section>
+    <script src="assets/v2/hero-video.js"></script>
 
     <section class="hm-steps" id="how" aria-labelledby="howstepsh" tabindex="-1">
       <h2 class="hm-steps__h" id="howstepsh">How it works</h2>
