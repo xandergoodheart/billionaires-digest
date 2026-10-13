@@ -360,7 +360,7 @@
   var CHART_DAYS = 10;
   var DIGEST = null, CAL = null;
   var calP = BD.getJson('data/insights/calendar.json').then(function(c){ CAL = c; return c; }, function(){ return null; });
-  var winP = null, dayP = {}, filP = {};
+  var winP = null, dayP = {}, filP = {}, movP = null;
   function today(){ return C.nyDate(F.now()); }
   function capOf(slug, wk){
     var sal = F.salaries(), ws = (wk && wk.salaries) || {};
@@ -463,6 +463,25 @@
     if (!filP[slug]) filP[slug] = BD.getJson('data/filings/by-person/' + slug + '.json').then(null, function(){ return null; });
     return filP[slug];
   }
+  // data/fantasy/movers.json ("why it moved" reasons, keyed TICKER@DATE), fetched once on the first flip
+  function loadMovers(){
+    if (!movP) movP = BD.getJson('data/fantasy/movers.json').then(function(d){ return d && d.movers && typeof d.movers === 'object' ? d.movers : {}; }, function(){ return {}; });
+    return movP;
+  }
+  // "Why it moved" block for the best day's leading holding: label + source link, then the sentence (2 lines max)
+  function whyMoved(m){
+    if (!m || typeof m.why !== 'string' || !m.why || !BD.safeUrl(m.sourceUrl)) return null;
+    var box = el('div', 'hm-ptw__mv');
+    var hd = el('p', 'hm-ptw__mvh');
+    hd.appendChild(el('span', 'hm-ptw__wh', 'Why it moved'));
+    var a = link('hm-ptw__mvsrc', '(' + (m.sourceName || 'source') + ')', m.sourceUrl);
+    a.target = '_blank'; a.rel = 'noopener'; a.appendChild(el('span', 'v2-sr', ' (opens in a new tab)'));
+    hd.appendChild(document.createTextNode(' ')); hd.appendChild(a);
+    box.appendChild(hd);
+    var t = el('p', 'hm-ptw__mvt', m.why); t.title = m.why;
+    box.appendChild(t);
+    return box;
+  }
   // newest Form 4 with a code P (open-market purchase) filed in the last 14 days; its EDGAR URL comes from the data
   function buyFiling(data){
     var cut = C.addDays(today(), -14), hit = null;
@@ -532,7 +551,7 @@
     // best day in the window, and the holding that moved most in its direction that day (from the day file)
     var best = null;
     rows.forEach(function(r){ if (r.v != null && r.v > 0 && (!best || r.v > best.v)) best = r; });
-    var jobs = [best ? loadDayFile(best.d) : null, c.why === 'buy' || buyDay(slug) ? loadFilings(slug) : null];
+    var jobs = [best ? loadDayFile(best.d) : null, c.why === 'buy' || buyDay(slug) ? loadFilings(slug) : null, best ? loadMovers() : null];
     return Promise.all(jobs).then(function(r){
       var e = earnings(slug), hc = hotCount(slug), f = r[1] ? buyFiling(r[1]) : null;
       if (f){
@@ -546,7 +565,11 @@
         if (dp){
           var hs = arr(dp.holdings).filter(function(h){ return h && h.ticker && typeof h.changePct === 'number' && typeof h.weight === 'number'; });
           hs.sort(function(a, b){ return b.weight * b.changePct - a.weight * a.changePct; });
-          if (hs.length && hs[0].changePct > 0) led = ', led by ' + hs[0].ticker + ' +' + hs[0].changePct.toFixed(1) + '%';
+          if (hs.length && hs[0].changePct > 0){
+            led = ', led by ' + hs[0].ticker + ' +' + hs[0].changePct.toFixed(1) + '%';
+            var mv = whyMoved(r[2] && r[2][hs[0].ticker + '@' + best.d]);
+            if (mv) box.insertBefore(mv, box.firstChild);
+          }
         }
         reasons.push(reasonLi('📈', ['Best day:', signedTxt(best.v) + ' on ' + dayParts(best.d).full + led], null));
       }
