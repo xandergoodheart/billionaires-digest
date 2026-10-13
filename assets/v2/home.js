@@ -546,13 +546,15 @@
     if (!m || typeof m.why !== 'string' || !m.why || !BD.safeUrl(m.sourceUrl)) return null;
     var box = el('div', 'hm-ptw__mv');
     var hd = el('p', 'hm-ptw__mvh');
-    hd.appendChild(el('span', 'hm-ptw__wh', 'Why it moved'));
-    var a = link('hm-ptw__mvsrc', '(' + (m.sourceName || 'source') + ')', m.sourceUrl);
-    a.target = '_blank'; a.rel = 'noopener'; a.appendChild(el('span', 'v2-sr', ' (opens in a new tab)'));
-    hd.appendChild(document.createTextNode(' ')); hd.appendChild(a);
+    hd.appendChild(el('span', 'hm-ptw__wh', 'Why the stock moved'));
     box.appendChild(hd);
     var t = el('p', 'hm-ptw__mvt', m.why); t.title = m.why;
     box.appendChild(t);
+    var sp = el('p', 'hm-ptw__mvs', 'Source: ');
+    var a = link('hm-ptw__mvsrc', (m.sourceName || 'source') + ' \u2197', m.sourceUrl);
+    a.target = '_blank'; a.rel = 'noopener'; a.appendChild(el('span', 'v2-sr', ' (opens in a new tab)'));
+    sp.appendChild(a);
+    box.appendChild(sp);
     return box;
   }
   // newest Form 4 with a code P (open-market purchase) filed in the last 14 days; its EDGAR URL comes from the data
