@@ -7,8 +7,10 @@
      how to play          <- cap, picks and captain multiplier from the draft week file (BDFantasyCore as fallback)
      today's lede         <- digest.json (the latest edition; the full edition lives at news.html)
      From the Digest      <- up to 3 more stories from digest.json (hidden when there are none)
-     Players to watch     <- top 5 by real points this scoring week, or the last scored day (BDWeekCore); nicknames
-                             from data/fantasy/nicknames.json via BDDossier; names open the player dossier
+     Players to watch     <- featured strip under the hero: top 5 by real points this scoring week, or the last scored
+                             day (BDWeekCore); nicknames from data/fantasy/nicknames.json via BDDossier; names open the
+                             player dossier; avg/day from BDFantasyStore stats, cap cost from the salaries; + Draft
+                             opens draft.html (no preselect there)
      Top Headlines        <- digest.json stories
      Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1)
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
@@ -350,20 +352,46 @@
         : '.');
     var ol = clear($('watchlist')), sal = F.salaries(), wsal = src.wk.salaries || {};
     top.forEach(function(x, i){
-      var p = x.p, li = el('li', 'hm-watch__i');
-      li.appendChild(el('span', 'hm-watch__rank num', String(i + 1)));
-      li.appendChild(avatar(p));
-      var tx = el('div', 'v2-player__txt');
-      tx.appendChild(nameLink(p, src.wk.week));
+      var p = x.p, li = el('li', 'hm-ptw__card' + (i === 0 ? ' is-top' : ''));
+      var pic = el('div', 'hm-ptw__pic');
+      var av = avatar(p); av.className += ' hm-ptw__av';
+      pic.appendChild(av);
+      pic.appendChild(el('span', 'hm-ptw__rank num', '#' + (i + 1)));
+      li.appendChild(pic);
+      var who = el('div', 'hm-ptw__who');
+      who.appendChild(nameLink(p, src.wk.week));
       var nk = window.BDDossier ? window.BDDossier.nickname(p.slug) : null;
-      if (nk) tx.appendChild(el('span', 'v2-nick', nk));
-      var h = arr(p.holdings)[0] || {};
-      var c = typeof sal[p.slug] === 'number' ? sal[p.slug] : (typeof wsal[p.slug] === 'number' ? wsal[p.slug] : null);
-      tx.appendChild(el('span', 'v2-player__sub hm-watch__sub', [h.name, h.ticker, c == null ? null : 'cap ' + c].filter(Boolean).join(' · ')));
-      li.appendChild(tx);
-      var pts = el('span', 'hm-watch__pts num ' + numCls(x.points), signedTxt(x.points));
-      pts.appendChild(el('span', 'v2-sr', ' points'));
+      if (nk) who.appendChild(el('span', 'v2-nick hm-ptw__nick', nk));
+      li.appendChild(who);
+      var pts = el('p', 'hm-ptw__pts num ' + numCls(x.points), signedTxt(x.points));
+      pts.appendChild(el('span', 'hm-ptw__unit', ' pts'));
       li.appendChild(pts);
+      // avg/day: the store's per-player average (same number as the Players board); cap cost: draft-week
+      // salaries, else the source week's
+      var avg = F.stat(p.slug).avg;
+      avg = typeof avg === 'number' && isFinite(avg) ? Math.round(avg) : null;
+      var c = typeof sal[p.slug] === 'number' ? sal[p.slug] : (typeof wsal[p.slug] === 'number' ? wsal[p.slug] : null);
+      if (avg != null || c != null){
+        var meta = el('p', 'hm-ptw__meta');
+        if (avg != null){
+          var m1 = el('span', 'hm-ptw__m');
+          m1.appendChild(el('span', 'hm-ptw__ml', 'Avg/day '));
+          m1.appendChild(el('strong', 'num ' + numCls(avg), signedTxt(avg)));
+          meta.appendChild(m1);
+        }
+        if (c != null){
+          var m2 = el('span', 'hm-ptw__m');
+          m2.appendChild(el('span', 'hm-ptw__ml', 'Cap '));
+          m2.appendChild(el('strong', 'num', String(c)));
+          meta.appendChild(m2);
+        }
+        li.appendChild(meta);
+      }
+      // draft.html has no way to preselect a player (no query or hash for it), so this opens the Draft room
+      var dr = link('v2-btn v2-btn--primary v2-btn--sm hm-ptw__draft', '', 'draft.html');
+      dr.appendChild(el('span', null, '+ Draft'));
+      dr.appendChild(el('span', 'v2-sr', ': open the Draft room to pick ' + p.name));
+      li.appendChild(dr);
       ol.appendChild(li);
     });
     sec.hidden = false;

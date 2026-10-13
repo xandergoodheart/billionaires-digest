@@ -239,18 +239,75 @@
 .hm-stories__foot { margin: 12px 0 0; font-size: var(--fs-sm); }
 .hm-stories__foot a { color: var(--link); font-weight: 600; }
 
-/* ---------- players to watch ---------- */
-.hm-watch__k { margin: 2px 0 0; font-size: var(--fs-sm); color: var(--text-muted); }
-.hm-watch__list { list-style: none; margin: 0; padding: 0; }
-.hm-watch__i { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); min-width: 0; }
-.hm-watch__i:last-child { border-bottom: 0; }
-.hm-watch__rank { flex: none; width: 1.4em; text-align: center; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 22px; color: var(--text-muted); }
-.hm-watch__i .v2-av { flex: none; }
-.hm-watch__i .v2-player__txt { min-width: 0; }
-.hm-watch__i .v2-player__name { display: inline; }
-.hm-watch__i .v2-player__name:hover { text-decoration: underline; text-underline-offset: 2px; }
-.hm-watch__sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hm-watch__pts { flex: none; margin-left: auto; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 24px; }
+/* ---------- players to watch: featured strip under the hero ----------
+   Five dark cards (both themes) in one row from 1024px; below that a horizontal swipe row (scroll-snap, the next card
+   peeks, no visible scrollbar) that bleeds to the screen edges so only the row scrolls, never the page. */
+.hm-ptw { margin-bottom: var(--gutter); }
+.hm-ptw__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px var(--s1); margin-bottom: 12px; }
+.hm-ptw__titles { display: flex; flex-direction: column-reverse; min-width: 0; }
+.hm-ptw__h { margin: 0; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 40px; line-height: 1; text-transform: uppercase; letter-spacing: .005em; color: var(--text); }
+.hm-ptw__k { margin: 0 0 4px; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+.hm-ptw__more { display: inline-flex; align-items: center; gap: 4px; flex: none; min-height: var(--tap); color: var(--link); font-size: var(--fs-sm); font-weight: 700; text-decoration: none; white-space: nowrap; }
+.hm-ptw__more:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+.hm-ptw__row {
+  list-style: none; margin: 0; padding: 4px 0 6px;
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gutter);
+}
+.hm-ptw__card {
+  --text: #FFFFFF; --text-muted: #B9BFC7; --line: #33373C; --positive: #3CC985; --negative: #FF6B64; --brand-ink: #FF6B64; --link: #8AB4FF;
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0;
+  padding: 20px var(--s1) var(--s1); text-align: center;
+  background: var(--ink-2); color: #fff; border: 1px solid rgba(255, 255, 255, .1); border-radius: 14px; box-shadow: var(--shadow);
+  transition: transform var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+}
+.hm-ptw__card.is-top { border-top-color: var(--brand); box-shadow: inset 0 3px 0 var(--brand), var(--shadow); }
+.hm-ptw__card:hover, .hm-ptw__card:focus-within { transform: translateY(-3px); border-color: rgba(255, 255, 255, .22); }
+.hm-ptw__card.is-top:hover, .hm-ptw__card.is-top:focus-within { border-top-color: var(--brand); }
+.hm-ptw__card :focus-visible { outline-color: #8AB4FF; }
+.hm-ptw__pic { position: relative; flex: none; }
+.hm-ptw__av { --av: 96px; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14); }
+.hm-ptw__rank {
+  position: absolute; left: -6px; top: -4px; min-width: 32px; height: 26px; padding: 0 6px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #fff; color: #16181B; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 17px; line-height: 1;
+  box-shadow: 0 0 0 2px var(--ink-2);
+}
+.hm-ptw__card.is-top .hm-ptw__rank { background: var(--brand); color: #fff; }
+.hm-ptw__who { display: flex; flex-direction: column; align-items: center; min-width: 0; max-width: 100%; }
+.hm-ptw__who .v2-player__name { display: inline; font-size: var(--fs-lg); color: #fff; overflow-wrap: anywhere; }
+.hm-ptw__who .v2-player__name:hover { text-decoration: underline; text-underline-offset: 2px; }
+.hm-ptw__card .v2-ceo { background: #fff; color: #16181B; border-color: #fff; }
+.hm-ptw__nick { margin-top: 3px; }
+.hm-ptw__pts { margin: 2px 0 0; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 52px; line-height: .95; }
+.hm-ptw__unit { font-size: 18px; letter-spacing: .02em; color: var(--text-muted); }
+.hm-ptw__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 14px; margin: 0; font-size: var(--fs-sm); color: var(--text-muted); }
+.hm-ptw__m strong { font-weight: 700; color: var(--text); }
+.hm-ptw__m strong.v2-pos { color: var(--positive); }
+.hm-ptw__m strong.v2-neg { color: var(--negative); }
+.hm-ptw__draft { margin-top: auto; align-self: stretch; }
+@media (prefers-reduced-motion: reduce) {
+  .hm-ptw__card { transition: none; }
+  .hm-ptw__card:hover, .hm-ptw__card:focus-within { transform: none; }
+}
+
+/* tablet and phone: swipe row */
+@media (max-width: 1023px) {
+  .hm-ptw__row {
+    display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden;
+    margin: 0 calc(-1 * var(--margin)); padding: 6px var(--margin) 8px; scroll-padding-inline: var(--margin);
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+    scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .hm-ptw__row::-webkit-scrollbar { display: none; }
+  .hm-ptw__card { flex: 0 0 38%; scroll-snap-align: start; }
+}
+@media (max-width: 767px) {
+  .hm-ptw__h { font-size: 32px; }
+  .hm-ptw__head { align-items: flex-end; }
+  .hm-ptw__card { flex-basis: 78%; }
+  .hm-ptw__pts { font-size: 46px; }
+}
 
 /* ---------- "How it works" popup (assets/howto.js) ---------- */
 .hw { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: var(--s1); background: rgba(8, 9, 10, .72); }
