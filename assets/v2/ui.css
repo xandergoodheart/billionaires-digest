@@ -599,3 +599,6 @@ html.v2-lock, html.v2-lock body { overflow: hidden; }
 /* Prototype label: shown only on the Cloudflare preview (*.pages.dev), set by chrome.js */
 .v2-proto { background: #FFC862; color: #1A1200; font-size: var(--fs-sm); font-weight: 600; text-align: center; padding: 6px var(--s2); }
 .v2-proto a { color: #1A1200; }
+
+/* Preseason / Season 1 copy swapped by assets/v2/chrome.js: hidden wins over any display rule */
+[data-preseason][hidden], [data-inseason][hidden] { display: none !important; }

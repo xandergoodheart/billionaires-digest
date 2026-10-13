@@ -47,8 +47,9 @@
   function signed(n){ return typeof n === 'number' ? (n > 0 ? '+' + n : String(n)) : '—'; }
   function dayLabel(d){ return DAYN[C.weekday(d)] + ' ' + MONTHS[+d.slice(5, 7) - 1] + ' ' + (+d.slice(8, 10)); }
   function shortDate(d){ return MONTHS[+d.slice(5, 7) - 1] + ' ' + (+d.slice(8, 10)); }
-  function weekName(id){ return C.isPractice(id) ? 'the practice week' : 'the week of ' + shortDate(C.weekMonday(id)); }
-  function weekTitle(id){ return C.isPractice(id) ? 'Practice week' : 'Week of ' + shortDate(C.weekMonday(id)); }
+  // Preseason weeks (before Season 1, C.SEASON_START_WEEK) are always labelled as such; they never count in Season 1.
+  function weekName(id){ return C.isPractice(id) ? 'the practice week' : (C.isPreseason(id) ? 'the preseason week of ' : 'the week of ') + shortDate(C.weekMonday(id)); }
+  function weekTitle(id){ return C.isPractice(id) ? 'Practice week' : (C.isPreseason(id) ? 'Preseason week of ' : 'Week of ') + shortDate(C.weekMonday(id)); }
 
   // ---- pure scoring helpers ----
   function dayPeople(wk, d){ var o = {}, m = (wk.daily && wk.daily[d]) || {}; for (var k in m) o[k] = { points: m[k] }; return { people: o }; }
@@ -309,13 +310,25 @@
     return { ok: true, n: d.n, text: d.text };
   }
 
+  // Index weeks that count in the running record at ms (C.countsNow: the preseason before Season 1, then only Season 1
+  // weeks), finished, not practice, with a saved team in `teams`. Pass `period` 'preseason' to list the preseason weeks
+  // instead (kept and shown after Season 1 starts, never counted in it).
+  function recordWeeks(indexWeeks, teams, ms, period){
+    return arr(indexWeeks).filter(function(w){
+      if (!w || !w.final || w.practice || !teams || !teams[w.week]) return false;
+      return period === 'preseason' ? C.isPreseason(w.week) : C.countsNow(w.week, ms);
+    });
+  }
   // Season record over finished real weeks (v1 renderSeason). entries: [{ wk, team }] (wk = week file).
+  // ms (optional): only weeks that count at that time (C.countsNow) are used, so from Season 1 the preseason weeks drop
+  // out and the streak, best week and wins start again from zero; a streak never carries across the boundary.
   // Returns { played, winsSpy, winsTop5, winsPerfect, best: { week, points } | null, streak, rows (newest first) }.
-  function seasonRecord(entries){
+  function seasonRecord(entries, ms){
     var rec = { played: 0, winsSpy: 0, winsTop5: 0, winsPerfect: 0, best: null, streak: 0, rows: [] };
     arr(entries).forEach(function(x){
       var wk = x && x.wk, team = x && x.team;
       if (!wk || !team) return;
+      if (ms != null && !C.countsNow(wk.week, ms)) return;
       var bm = wk.benchmarks || {};
       var mine = teamWeek(wk, team).total;
       var t5 = bm.top5 ? teamWeek(wk, bm.top5).total : null;
@@ -412,7 +425,7 @@
     onlinePlaying: onlinePlaying, me: me, isSynced: isSynced, syncTeam: syncTeam, busy: function(){ return ON.busy; },
     // pure helpers (tested)
     pure: { teamWeek: teamWeek, weekPoints: weekPoints, projectionFrom: projectionFrom, dayPeople: dayPeople, computeStatsFrom: computeStatsFrom, matchTeamFrom: matchTeamFrom, weekOverAt: weekOverAt, teamSig: teamSig,
-            encodeTeams: function(teams){ return C.exportCode(teams); }, decodeTeams: decodeTeams, mergeTeams: mergeTeams, seasonRecord: seasonRecord },
+            encodeTeams: function(teams){ return C.exportCode(teams); }, decodeTeams: decodeTeams, mergeTeams: mergeTeams, seasonRecord: seasonRecord, recordWeeks: recordWeeks },
     fmt: { signed: signed, dayLabel: dayLabel, shortDate: shortDate, weekName: weekName, weekTitle: weekTitle, DAYN: DAYN, MONTHS: MONTHS }
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -120,7 +120,7 @@ test('store: reads the v1 key and shape, round-trips a saved team', () => {
   const res = F.saveTeam();
   assert.equal(res.ok, true, res.text);
   assert.equal(res.late, null);
-  assert.match(res.text, /Lineup saved for the week of Sep 28\./);
+  assert.match(res.text, /Lineup saved for the preseason week of Sep 28\./);
   const saved = JSON.parse(storage.data['bd-fantasy-v1']);
   assert.deepEqual(saved.teams['2026-W40'].picks, ['a', 'c', 'd', 'e', 'f']);
   assert.equal(saved.teams['2026-W40'].captain, 'c');
@@ -271,4 +271,41 @@ test('seasonRecord: v1 season numbers (wins vs S&P and Top 5, matched perfect, b
   const t5 = F.pure.teamWeek(w1, w1.benchmarks.top5).total;
   assert.equal(r.winsTop5, mine > t5 ? 1 : 0);
   assert.equal(r.rows[0].top5, null);
+});
+
+test('Season 1: a preseason week is out of the Season 1 record, and a streak does not carry across the boundary', () => {
+  const { F } = load();
+  const team = { picks: ['a', 'b', 'c', 'd', 'e'], captain: 'a' };
+  const mine = F.pure.teamWeek(WK, team).total;
+  const won = (week) => ({ ...WK, week, final: true, benchmarks: { spy: mine - 1, top5: null, perfect: null } });
+  const entries = [{ wk: won('2026-W44'), team }, { wk: won('2026-W45'), team }, { wk: won('2026-W46'), team }];
+  // before Mon Nov 9 (New York): the preseason weeks make the record; W46 is not in it
+  const pre = plain(F.pure.seasonRecord(entries, Date.parse('2026-11-08T18:00:00Z')));
+  assert.equal(pre.played, 2);
+  assert.equal(pre.streak, 2);
+  assert.deepEqual(pre.rows.map((x) => x.week), ['2026-W45', '2026-W44']);
+  // from Season 1: only W46 counts; the two preseason wins do not add to the streak, wins or total
+  const on = plain(F.pure.seasonRecord(entries, Date.parse('2026-11-16T15:00:00Z')));
+  assert.equal(on.played, 1);
+  assert.equal(on.streak, 1);
+  assert.equal(on.winsSpy, 1);
+  assert.equal(on.best.week, '2026-W46');
+  assert.deepEqual(on.rows.map((x) => x.week), ['2026-W46']);
+  // no time given: every entry counts (old behaviour, used for the separate preseason list)
+  assert.equal(plain(F.pure.seasonRecord(entries)).played, 3);
+  // which index weeks feed the record
+  const ix = [
+    { week: '2026-W39', practice: true, final: true }, { week: '2026-W44', final: true }, { week: '2026-W45', final: true },
+    { week: '2026-W46', final: true }, { week: '2026-W47', final: false },
+  ];
+  const teams = { '2026-W39': team, '2026-W44': team, '2026-W45': team, '2026-W46': team, '2026-W47': team };
+  const ids = (xs) => plain(xs).map((w) => w.week);
+  assert.deepEqual(ids(F.pure.recordWeeks(ix, teams, Date.parse('2026-11-08T18:00:00Z'))), ['2026-W44', '2026-W45']);
+  assert.deepEqual(ids(F.pure.recordWeeks(ix, teams, Date.parse('2026-11-23T18:00:00Z'))), ['2026-W46']);
+  assert.deepEqual(ids(F.pure.recordWeeks(ix, teams, Date.parse('2026-11-23T18:00:00Z'), 'preseason')), ['2026-W44', '2026-W45']);
+  // labels
+  assert.equal(F.fmt.weekTitle('2026-W45'), 'Preseason week of Nov 2');
+  assert.equal(F.fmt.weekName('2026-W44'), 'the preseason week of Oct 26');
+  assert.equal(F.fmt.weekTitle('2026-W46'), 'Week of Nov 9');
+  assert.equal(F.fmt.weekTitle('2026-W39'), 'Practice week');
 });
