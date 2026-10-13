@@ -3,7 +3,7 @@
    the week, the five picks as INITIALS circles + names (no portraits: real people's likenesses never go into shared
    images), a "C" captain badge, this week's team points (or "Drafted, scoring starts <day>"), and the footer.
    Two sizes: 1080x1350 (portrait, Instagram) and 1200x630 (wide, X and link previews).
-   BDTeamShare.build(info) -> { toggle: <button>, panel: <div> }
+   BDTeamShare.build(info) -> { card: <section> } (a compact side card for the home page's right column)
      info = { week: 'Week of Oct 12', total: number|null, startDay: 'Mon Oct 19'|null,
               picks: [{ name, captain: bool, pts: number|null }] }
    Play money only. */
@@ -197,41 +197,48 @@
     });
   }
 
+  // compact inline icons (simple glyphs drawn here, 24x24, currentColor)
+  var ICONS = {
+    x: '<path d="M5 4l14 16M19 4L5 20" stroke-width="2.4" stroke-linecap="round"/>',
+    threads: '<circle cx="12" cy="12" r="3.6"/><path d="M15.6 12v1.6a2.6 2.6 0 005.2 0V12a8.8 8.8 0 10-3.4 6.9" stroke-linecap="round"/>',
+    facebook: '<path d="M14.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4A21 21 0 0015.4 4c-2.3 0-3.9 1.4-3.9 4v2.5H9v3h2.5V21z" fill="currentColor" stroke="none"/>',
+    whatsapp: '<path d="M4 20l1.3-4A8.2 8.2 0 1112 20.2a8.3 8.3 0 01-4-1z" stroke-linejoin="round"/><path d="M9.2 8.6c.2 2.9 2.4 5.6 5.8 6.4l1.2-1.4-1.8-.9-.8.8c-1-.5-2-1.5-2.5-2.5l.8-.8-.9-1.8z" fill="currentColor" stroke="none"/>',
+    linkedin: '<rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5V16M8 7.6v.1M11.5 16v-5.5M11.5 13c0-1.7 1-2.6 2.3-2.6s2.2.8 2.2 2.6V16" stroke-linecap="round"/>',
+    download: '<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" stroke-linecap="round" stroke-linejoin="round"/>',
+    copy: '<path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1" stroke-linecap="round"/>'
+  };
+  function icon(name){
+    var w = el('span', 'hm-sh__ico');
+    w.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">' + ICONS[name] + '</svg>';
+    return w;
+  }
+  function roundBtn(tag, name, label){
+    var b = el(tag, 'hm-sh__round hm-sh__round--' + name);
+    if (tag === 'button') b.type = 'button';
+    b.setAttribute('aria-label', label); b.title = label;
+    b.appendChild(icon(name));
+    return b;
+  }
+
+  // the side card: title, thumbnail + one-line summary, Share…, round icon buttons, More options (size), Instagram hint
   function build(info){
     var id = 'hm-share-' + (++uid), imgs = null, busy = null, kind = 'portrait';
-    var toggle = el('button', 'v2-btn v2-btn--ghost v2-btn--sm hm-share__toggle', 'Share your team');
-    toggle.type = 'button'; toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-controls', id);
-    var panel = el('div', 'hm-share'); panel.id = id; panel.hidden = true;
-    panel.setAttribute('role', 'region'); panel.setAttribute('aria-label', 'Share your team');
-    panel.appendChild(el('h3', 'hm-share__h', 'Share your team'));
+    var card = el('section', 'v2-card hm-sh'); card.setAttribute('aria-labelledby', id + '-h');
+    var h = el('h2', 'hm-rail__h', 'Share your team'); h.id = id + '-h';
+    card.appendChild(h);
 
-    var body = el('div', 'hm-share__body');
-    var fig = el('figure', 'hm-share__fig is-portrait');
-    var img = el('img', 'hm-share__img'); img.alt = ''; img.width = 1080; img.height = 1350;
-    fig.appendChild(img);
-    var cap = el('figcaption', 'hm-share__cap', 'Making your image…');
-    fig.appendChild(cap);
-    body.appendChild(fig);
-
-    var side = el('div', 'hm-share__side');
-    var fs = el('fieldset', 'hm-share__size');
-    fs.appendChild(el('legend', 'hm-share__legend', 'Image size'));
-    [['portrait', 'Portrait · Instagram'], ['wide', 'Wide · X, links']].forEach(function(o, i){
-      var lab = el('label', 'hm-share__opt'), r = el('input');
-      r.type = 'radio'; r.name = id + '-size'; r.value = o[0]; r.checked = i === 0;
-      r.addEventListener('change', function(){ if (r.checked){ kind = o[0]; show(); } });
-      lab.appendChild(r); lab.appendChild(el('span', null, o[1]));
-      fs.appendChild(lab);
-    });
-    side.appendChild(fs);
-
-    var btns = el('div', 'hm-share__btns');
-    var msg = el('p', 'hm-share__msg', ''); msg.setAttribute('role', 'status'); msg.setAttribute('aria-live', 'polite');
+    var top = el('div', 'hm-sh__top');
+    var img = el('img', 'hm-sh__thumb'); img.alt = ''; img.width = 120; img.height = 150;
+    top.appendChild(img);
+    var sum = el('div', 'hm-sh__sum');
+    sum.appendChild(el('p', 'hm-sh__line', hasPts(info) ? 'This week: ' + signed(info.total) : 'Drafted, scoring starts ' + (info.startDay || 'soon')));
+    if (info.week) sum.appendChild(el('p', 'hm-sh__week', info.week));
+    var msg = el('p', 'hm-sh__msg', ''); msg.setAttribute('role', 'status'); msg.setAttribute('aria-live', 'polite');
     function say(t){ msg.textContent = ''; setTimeout(function(){ msg.textContent = t; }, 30); }
 
     // Share… (native share sheet): the image when the browser can share files, otherwise the link; hidden if neither
     if (navigator.share){
-      var nat = el('button', 'v2-btn v2-btn--primary v2-btn--sm hm-share__native', 'Share…'); nat.type = 'button';
+      var nat = el('button', 'v2-btn v2-btn--primary v2-btn--sm hm-sh__native', 'Share…'); nat.type = 'button';
       nat.addEventListener('click', function(){
         log('native');
         var text = shareText(info), cur = imgs && imgs[kind], data = null;
@@ -247,16 +254,20 @@
           say('Sharing did not work here. Use a button below or copy the link.');
         });
       });
-      btns.appendChild(nat);
+      sum.appendChild(nat);
     }
+    top.appendChild(sum);
+    card.appendChild(top);
+
+    var row = el('div', 'hm-sh__row');
     intents(info).forEach(function(x){
-      var a = el('a', 'v2-btn v2-btn--ghost v2-btn--sm hm-share__net hm-share__net--' + x.id, x.label);
+      var a = roundBtn('a', x.id, (x.id === 'x' ? 'Post on X' : 'Share on ' + x.label) + ' (opens in a new tab)');
+      a.title = x.id === 'x' ? 'Post on X' : x.label;
       a.href = x.href; a.target = '_blank'; a.rel = 'noopener';
-      a.appendChild(el('span', 'v2-sr', ' (opens in a new tab)'));
       a.addEventListener('click', function(){ log(x.id); });
-      btns.appendChild(a);
+      row.appendChild(a);
     });
-    var dl = el('button', 'v2-btn v2-btn--ghost v2-btn--sm hm-share__dl', 'Download image'); dl.type = 'button';
+    var dl = roundBtn('button', 'download', 'Download image');
     dl.addEventListener('click', function(){
       log('download');
       ready().then(function(){
@@ -264,43 +275,46 @@
         if (!cur){ say('The image could not be made in this browser.'); return; }
         var a = el('a'); a.href = cur.url; a.download = SIZES[kind].file;
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        say('Image downloaded.');
+        say(kind === 'wide' ? 'Wide image downloaded.' : 'Image downloaded.');
       });
     });
-    btns.appendChild(dl);
-    var cp = el('button', 'v2-btn v2-btn--ghost v2-btn--sm hm-share__copy', 'Copy link'); cp.type = 'button';
+    row.appendChild(dl);
+    var cp = roundBtn('button', 'copy', 'Copy link');
     cp.addEventListener('click', function(){
       log('copy');
       copyText(URL_SHARE).then(function(){ say('Link copied.'); }, function(){ say('Could not copy. The link is ' + URL_SHARE); });
     });
-    btns.appendChild(cp);
-    side.appendChild(btns);
-    side.appendChild(el('p', 'hm-share__note', 'Instagram: tap Share… on your phone, or download the image and post it.'));
-    side.appendChild(msg);
-    body.appendChild(side);
-    panel.appendChild(body);
+    row.appendChild(cp);
+    card.appendChild(row);
 
-    function show(){
-      fig.className = 'hm-share__fig is-' + kind;
-      var cur = imgs && imgs[kind];
-      if (!cur) return;
-      img.src = cur.url; img.width = SIZES[kind].w; img.height = SIZES[kind].h;
-      img.alt = 'Preview of your share image: My Billionaire Fantasy team, ' + (info.week || '') + ', ' +
-        info.picks.map(function(p){ return p.name + (p.captain ? ' (captain)' : ''); }).join(', ') + '. ' +
-        (hasPts(info) ? signed(info.total) + ' points this week.' : 'Drafted, scoring starts ' + (info.startDay || 'soon') + '.');
-      cap.textContent = (kind === 'wide' ? 'Wide, 1200 × 630' : 'Portrait, 1080 × 1350') + ' · made in your browser';
-    }
+    var det = el('details', 'hm-sh__more');
+    det.appendChild(el('summary', null, 'More options'));
+    var seg = el('div', 'hm-sh__seg'); seg.setAttribute('role', 'radiogroup'); seg.setAttribute('aria-label', 'Image size');
+    [['portrait', 'Portrait'], ['wide', 'Wide']].forEach(function(o, i){
+      var lab = el('label', 'hm-sh__segopt'), r = el('input');
+      r.type = 'radio'; r.name = id + '-size'; r.value = o[0]; r.checked = i === 0;
+      r.addEventListener('change', function(){ if (r.checked) kind = o[0]; });
+      lab.appendChild(r); lab.appendChild(el('span', null, o[1]));
+      seg.appendChild(lab);
+    });
+    det.appendChild(seg);
+    det.appendChild(el('p', 'hm-sh__fine', 'Portrait 1080 × 1350 for Instagram; wide 1200 × 630 for X and links. Used by Share… and Download.'));
+    card.appendChild(det);
+
+    card.appendChild(el('p', 'hm-sh__note', 'Instagram: tap Share… on your phone, or download the image and post it.'));
+    card.appendChild(msg);
+
     function ready(){
-      if (!busy) busy = render(info).then(function(o){ imgs = o; show(); }, function(){ cap.textContent = 'The image could not be made in this browser. You can still share the link.'; });
+      if (!busy) busy = render(info).then(function(o){
+        imgs = o;
+        img.src = o.portrait.url;
+        img.alt = 'Preview of your share image: My Billionaire Fantasy team, ' + (info.week || '') + ', ' +
+          info.picks.map(function(p){ return p.name + (p.captain ? ' (captain)' : ''); }).join(', ') + '.';
+      }, function(){ img.hidden = true; });
       return busy;
     }
-    toggle.addEventListener('click', function(){
-      var open = panel.hidden;
-      panel.hidden = !open;
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) ready();
-    });
-    return { toggle: toggle, panel: panel, render: function(){ return ready().then(function(){ return imgs; }); } };
+    ready();
+    return { card: card, render: function(){ return ready().then(function(){ return imgs; }); } };
   }
 
   window.BDTeamShare = { build: build, shareText: shareText, intents: intents, URL: URL_SHARE, draw: draw };

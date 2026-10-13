@@ -12,7 +12,8 @@
                              BDFantasyStore stats, data/insights/calendar.json; the back loads a 10-day chart and
                              reasons lazily (see "players to watch" below); + Draft opens draft.html?add=<slug>
      Top Headlines        <- digest.json stories (5) + All news
-     Share your team      <- assets/v2/team-share.js (canvas image, made in the browser), only with a saved or drafted team of 5
+     Share your team      <- assets/v2/team-share.js: a side card above Top Headlines (canvas image made in the browser),
+                             only with a saved or drafted team of 5
      Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1)
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
    Play money only, no prizes, not financial advice. */
@@ -152,8 +153,9 @@
     }
     foot.appendChild(row);
     box.appendChild(foot);
-    var sh = shareFor(v);
-    if (sh){ row.appendChild(sh.toggle); box.appendChild(sh.panel); }
+    var sh = shareFor(v), rail = document.querySelector('.hm-right'), was = $('hmsharecard');
+    if (was) was.parentNode.removeChild(was);
+    if (sh && rail){ sh.card.id = 'hmsharecard'; rail.insertBefore(sh.card, rail.firstChild); }
     say(teamName() + '. ' + (total == null ? 'No team points yet.' : 'Team total ' + plainTxt(total) + ' fantasy points.') + ' ' + result(v) + '.');
   }
 

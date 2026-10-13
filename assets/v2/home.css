@@ -355,21 +355,29 @@
 @media (max-width: 767px) { .hw { padding: 12px; align-items: flex-start; } .hw__panel { padding: var(--s1); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); } }
 .hw__media[hidden] { display: none; }
 
-/* ---------- Share your team (assets/v2/team-share.js) ---------- */
-.hm-share { border-top: 1px solid var(--line); margin-top: var(--s1); padding-top: var(--s1); }
-.hm-share__h { font-size: var(--fs-lg); font-weight: 700; margin: 0 0 12px; }
-.hm-share__body { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s1); }
-@media (min-width: 640px) { .hm-share__body { grid-template-columns: minmax(0, 200px) minmax(0, 1fr); align-items: start; } }
-.hm-share__fig { margin: 0; }
-.hm-share__img { display: block; width: 100%; max-width: 200px; height: auto; border-radius: 8px; background: #0B0B0C; box-shadow: var(--shadow); }
-.hm-share__fig.is-wide .hm-share__img { max-width: 100%; }
-@media (min-width: 640px) { .hm-share__body:has(.is-wide) { grid-template-columns: minmax(0, 280px) minmax(0, 1fr); } }
-.hm-share__img:not([src]) { aspect-ratio: 1080 / 1350; }
-.hm-share__cap { margin-top: 6px; font-size: var(--fs-xs); color: var(--text-muted); }
-.hm-share__size { border: 0; margin: 0 0 12px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: center; }
-.hm-share__legend { float: left; margin-right: 4px; font-size: var(--fs-sm); font-weight: 700; padding: 0; }
-.hm-share__opt { display: inline-flex; align-items: center; gap: 6px; min-height: var(--tap); font-size: var(--fs-sm); cursor: pointer; }
-.hm-share__opt input { width: 18px; height: 18px; margin: 0; accent-color: var(--brand); }
-.hm-share__btns { display: flex; flex-wrap: wrap; gap: 8px; }
-.hm-share__note { margin: 12px 0 0; font-size: var(--fs-sm); color: var(--text-muted); }
-.hm-share__msg { margin: 6px 0 0; font-size: var(--fs-sm); font-weight: 600; min-height: 1.2em; }
+/* ---------- Share your team: compact side card above Top Headlines (assets/v2/team-share.js) ---------- */
+.hm-sh__top { display: flex; gap: 12px; align-items: flex-start; padding-top: 8px; }
+.hm-sh__thumb { flex: none; width: 120px; height: auto; aspect-ratio: 1080 / 1350; border-radius: 6px; background: #0B0B0C; box-shadow: var(--shadow); }
+.hm-sh__sum { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.hm-sh__line { margin: 0; font-size: var(--fs-md); font-weight: 700; line-height: 1.3; }
+.hm-sh__week { margin: 0 0 6px; font-size: var(--fs-xs); color: var(--text-muted); }
+.hm-sh__native { align-self: flex-start; }
+.hm-sh__row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.hm-sh__round {
+  display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0;
+  border-radius: 50%; border: 1px solid var(--line-2); background: var(--card); color: var(--text); cursor: pointer; text-decoration: none;
+}
+.hm-sh__round:hover { border-color: var(--text); }
+.hm-sh__ico, .hm-sh__ico svg { display: block; }
+.hm-sh__more { margin-top: 12px; font-size: var(--fs-sm); }
+.hm-sh__more summary { cursor: pointer; color: var(--link); font-weight: 700; min-height: 32px; display: flex; align-items: center; }
+.hm-sh__seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: 999px; padding: 2px; margin-top: 6px; }
+.hm-sh__segopt { position: relative; cursor: pointer; }
+.hm-sh__segopt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.hm-sh__segopt span { display: inline-flex; align-items: center; min-height: 30px; padding: 0 14px; border-radius: 999px; font-size: var(--fs-sm); font-weight: 600; }
+.hm-sh__segopt input:checked + span { background: var(--text); color: var(--card); }
+.hm-sh__segopt input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.hm-sh__fine { margin: 6px 0 0; font-size: var(--fs-xs); color: var(--text-muted); }
+.hm-sh__note { margin: 10px 0 0; font-size: var(--fs-xs); color: var(--text-muted); }
+.hm-sh__msg { margin: 4px 0 0; font-size: var(--fs-sm); font-weight: 600; }
+.hm-sh__msg:empty { display: none; }
