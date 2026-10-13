@@ -18,7 +18,7 @@
   function el(tag, cls, text){ var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   function initials(name){ return window.BD && BD.initials ? BD.initials(name) : String(name || '?').charAt(0).toUpperCase(); }
   function signed(n){ return n > 0 ? '+' + n : (n < 0 ? MINUS + Math.abs(n) : '0'); }
-  function signedAscii(n){ return n > 0 ? '+' + n : String(n); }
+  function signedAscii(n){ return n > 0 ? '+' + n : (n < 0 ? '\u2212' + Math.abs(n) : String(n)); }
   function hasPts(info){ return typeof info.total === 'number' && isFinite(info.total); }
 
   function shareText(info){
