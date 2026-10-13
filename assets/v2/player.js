@@ -535,7 +535,7 @@
       t.appendChild(tb); wrap.appendChild(t); c.appendChild(wrap);
       var note = el('p', 'pp-note');
       note.appendChild(txt('The daily move of these holdings, by weight, sets the price points. '));
-      note.appendChild(link(null, 'How weights work', 'play-terms.html#how'));
+      note.appendChild(link(null, 'How weights work', 'play-terms.html#method'));
       c.appendChild(note);
       grid.appendChild(c);
     }

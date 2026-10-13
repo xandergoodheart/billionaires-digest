@@ -94,3 +94,20 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
 })();
+// Anchor links into folded content: when the URL's #target sits inside a closed <details>, open it so the jump lands
+// on visible text (on load and on later hash changes).
+(function(){
+  function openTarget(){
+    var id = (location.hash || '').slice(1), el = null;
+    if (!id) return;
+    try { el = document.getElementById(decodeURIComponent(id)); } catch (e) { el = document.getElementById(id); }
+    if (!el) return;
+    var n = el, opened = false;
+    while (n && n !== document.body) { if (n.tagName === 'DETAILS' && !n.open) { n.open = true; opened = true; } n = n.parentNode; }
+    if (opened && el.scrollIntoView) el.scrollIntoView();
+  }
+  // Run now too (this script loads at the end of <body>), before page scripts such as book.js rewrite the hash.
+  openTarget();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', openTarget);
+  window.addEventListener('hashchange', openTarget);
+})();

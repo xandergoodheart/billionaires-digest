@@ -56,3 +56,17 @@
   .bk-odd--rung .bk-odd__price { font-size: 17px; }
   .bk-grid--duel { gap: 6px 4px; }
 }
+
+/* Rules for The Book (moved from play-terms.html): folded under a <details>; the h2 sits inside the summary */
+.bk-rules { margin-top: var(--s2); }
+.bk-rules > summary { display: flex; align-items: center; gap: 12px; min-height: var(--tap); cursor: pointer; list-style: none; border-radius: 4px; }
+.bk-rules > summary::-webkit-details-marker { display: none; }
+.bk-rules > summary::before {
+  content: ''; flex: none; width: 8px; height: 8px; margin: 0 4px 0 2px;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg);
+  transition: transform var(--t-base) var(--ease);
+}
+.bk-rules[open] > summary::before { transform: rotate(45deg); }
+.bk-rules > summary h2 { margin: 0; }
+.bk-rules[open] > summary { margin-bottom: var(--s1); }
+.bk-rules h3 { margin: var(--s2) 0 var(--s0); font-size: var(--fs-lg); }

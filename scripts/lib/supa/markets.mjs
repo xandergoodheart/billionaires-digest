@@ -113,7 +113,7 @@ export function resolveMarket(m, ctx) {
   const p = m.params || {};
   const week = ctx.weeks[p.week];
   const giveUp = m.resolves_by && now.getTime() > new Date(m.resolves_by).getTime() + GIVE_UP_DAYS * 86400e3;
-  const stale = note => (giveUp ? { outcome: 'void', note, source_url: `${SITE}/play-terms.html` } : null);
+  const stale = note => (giveUp ? { outcome: 'void', note, source_url: `${SITE}/book.html#markets` } : null);
   if (!week) return stale(`Void: the data for week ${p.week} never arrived.`);
   const today = nyDate(now);
   const fantasyUrl = `${SITE}/fantasy.html`;
