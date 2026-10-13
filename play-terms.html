@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="assets/v2/tokens.css">
 <link rel="stylesheet" href="assets/v2/ui.css">
 <link rel="stylesheet" href="assets/v2/game.css">
+<link rel="stylesheet" href="assets/v2/rules.css">
 </head>
 <body class="v2 v2-gamepage">
 <!-- v2topbar:start -->
@@ -101,126 +102,137 @@
 <!-- v2topbar:end -->
 
 <main id="main" class="v2-main" tabindex="-1">
-  <div class="v2-wrap gp" id="app">
+  <div class="v2-wrap gp rl" id="app">
     <p class="v2-play">Play money · no prizes · not financial advice</p>
-    <header class="gm-head">
+    <header class="gm-head rl-head">
       <div class="gm-head__title">
         <span class="v2-kicker">Play-money game · Fantasy</span>
         <h1 class="v2-display gm-head__h" id="pageh">Rules</h1>
       </div>
-      <p class="gm-head__dek">The short version: it's a free game with play money. Nothing you win is worth anything, and nothing here is advice.</p>
+      <p class="gm-head__dek">Five picks, one captain, points every trading day. Free, play money, not advice.</p>
     </header>
 
-    <p class="v2-banner" id="preseason" data-preseason><strong>Preseason now, Season 1 starts Monday, Nov 9.</strong> Until then every week is a preseason week: play it to learn the game, but it doesn't count. On that Monday everyone's scores, records and streaks reset to zero.</p>
-    <p class="v2-banner" data-inseason hidden><strong>Season 1 started Monday, Nov 9.</strong> Everyone's scores, records and streaks reset to zero that day. The preseason weeks before it are kept but don't count.</p>
+    <nav class="rl-toc" aria-label="On this page">
+      <ul class="rl-toc__list">
+        <li><a href="#how">How to play</a></li>
+        <li><a href="#scoring">Scoring</a></li>
+        <li><a href="#leagues">Leagues &amp; your account</a></li>
+        <li><a href="#fine-print">Fine print</a></li>
+      </ul>
+    </nav>
 
-    <section class="gm-panel gm-panel--solo g-terminal" aria-label="Game status">
-      <div class="gm-panel__status">
-        <span id="statuspill"><span class="g-pill g-pill--upcoming"><span class="g-pill__dot"></span>Play money</span></span>
-        <div class="g-stat g-stat--sm"><span class="g-stat__label" id="keystatlabel">Real money involved</span><span class="g-stat__num g-num" id="keystat">None</span></div>
-      </div>
+    <section class="rl-quick" aria-labelledby="quick-h">
+      <h2 class="rl-quick__h" id="quick-h">The game in 30 seconds</h2>
+      <ul class="rl-tiles">
+        <li class="rl-tile"><span class="rl-tile__num">5 picks</span><span class="rl-tile__txt">Billionaires or big-company CEOs</span></li>
+        <li class="rl-tile"><span class="rl-tile__num">100 cap</span><span class="rl-tile__txt">Salaries total 100 or less</span></li>
+        <li class="rl-tile"><span class="rl-tile__num">1% = 100 pts</span><span class="rl-tile__txt">Daily move, every trading day</span></li>
+        <li class="rl-tile"><span class="rl-tile__num">Captain 1.5×</span><span class="rl-tile__txt">One pick scores 1.5 times</span></li>
+        <li class="rl-tile"><span class="rl-tile__num">Insider buy +25</span><span class="rl-tile__txt">The only bonus</span></li>
+      </ul>
+      <p class="rl-quick__lock"><strong>Lineups lock Monday 9:30 AM New York time</strong> · <span data-preseason>Preseason now, Season 1 starts Mon, Nov 9</span><span data-inseason hidden>Season 1 started Mon, Nov 9</span></p>
+      <p class="rl-quick__note" id="preseason" data-preseason>Preseason weeks are practice and don't count. On Nov 9 everyone's scores, records and streaks reset to zero.</p>
+      <p class="rl-quick__note" data-inseason hidden>Everyone's scores, records and streaks reset to zero that day. The preseason weeks before it are kept but don't count.</p>
     </section>
 
-    <section class="gm-section" id="how" aria-labelledby="how-h">
-      <h2 class="v2-h2 gm-section__h" id="how-h">How it works</h2>
-      <div class="gm-how">
-        <div class="g-card">
-          <h3 class="g-card__title">The game</h3>
-          <ul>
-            <li><strong>Pick five.</strong> Choose five players (billionaires or big-company CEOs). Each has a salary, and your five must add up to <strong>100 or less</strong>.</li>
-            <li><strong>Pick a captain.</strong> One of your five is captain and scores <strong>1.5 times</strong> their points.</li>
-            <li><strong>Salaries</strong> are set from each player's Public Stake Value rank and recent form. They are fixed for the week once it opens.</li>
-            <li><strong>Weeks</strong> run Monday to Friday, on US market days. Your lineup <strong>locks Monday at 9:30 AM New York time</strong>. Saving after the lock sets your team for the next week.</li>
-            <li><strong>Starting mid-week?</strong> Your first save also enters you in the current week, scoring from the <strong>next trading day</strong> (late entry).</li>
-          </ul>
-        </div>
-        <div class="g-card">
-          <h3 class="g-card__title">Scoring, per person, per trading day</h3>
-          <div class="g-table-wrap">
-            <table class="g-table gm-scoretable">
-              <caption>Points for each pick. The captain's total is multiplied by 1.5 and rounded. The insider buy (+25) is the only bonus.</caption>
-              <thead><tr><th scope="col">Event</th><th scope="col">Points</th></tr></thead>
-              <tbody>
-                <tr><th scope="row">Portfolio return that day</th><td>return % × 100, rounded (+1.23% = <span class="g-up">+123</span>; a down day is negative)</td></tr>
-                <tr><th scope="row">Form 4 open-market purchase (code P) filed that day</th><td class="g-up">+25</td></tr>
-                <tr><th scope="row">Captain</th><td class="g-gold">× 1.5</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <h3 class="g-card__title gm-subh">Benchmarks</h3>
-          <ul>
-            <li><strong>S&amp;P 500 (SPY)</strong>: SPY's daily return × 100, times 5 so it compares with a five-pick team (no captain).</li>
-            <li><strong>Top 5 richest</strong>: the five highest-ranked draftable people, with the richest as captain. It ignores the cap.</li>
-            <li><strong>Perfect team</strong>: the best possible five under the cap with the best captain, worked out after the week ends.</li>
-          </ul>
-        </div>
-        <div class="g-card">
-          <h3 class="g-card__title">Method notes</h3>
-          <ul>
-            <li>A portfolio is the person's current controlling stakes and holdings on their profile that trade on a US exchange, including US lines of foreign companies (ADRs) used for daily moves only.</li>
-            <li>When every holding has an exact disclosed share count, holdings are weighted by value (<em>value-weighted</em>). Otherwise the companies a person controls together count for 75% and their other stakes for 25%, with each group split by value when every holding in it has a share count and equally when not (<em>controls-weighted, 75/25</em>). Someone with only one group puts 100% in it. Each player card shows the method and the weights.</li>
-            <li>A quote that did not trade that day counts as 0%. Days with no market (weekends and holidays) do not score.</li>
-            <li>Private companies, funds and family holdings have no daily price, so people whose wealth is mostly private cannot be drafted.</li>
-            <li>Lineup projections and the matchup win chance are simple estimates from recent points. They are not forecasts.</li>
-          </ul>
-        </div>
-      </div>
-      <p class="gm-disclaim"><strong>Game only.</strong> No real money, no prizes, not financial advice. Scores use public prices and disclosed holdings and are approximate. Nothing here is a recommendation to buy or sell any security.</p>
+    <section class="rl-sec" id="how" aria-labelledby="how-h">
+      <h2 class="v2-h2 rl-sec__h" id="how-h">How to play</h2>
+      <ol class="rl-steps">
+        <li><strong>Draft five.</strong> Pick five different players whose salaries add up to 100 or less.</li>
+        <li><strong>Pick a captain.</strong> One of your five scores 1.5 times their points.</li>
+        <li><strong>Save before the Monday lock.</strong> Picks lock at 9:30 AM New York time, when US markets open. Then nobody can change them and everyone's picks become visible. Saving after the lock sets next week's team.</li>
+        <li><strong>Score every trading day.</strong> Weeks run Monday to Friday on US market days. Scores update once a day.</li>
+      </ol>
+      <p class="rl-aside"><strong>Joined late?</strong> Your first save also enters you in the current week, until Friday. It scores from the next trading day.</p>
     </section>
 
-    <section class="gm-section" id="terms">
-      <div class="g-card g-card--flat gp-prose">
-      <h2>Play money only</h2>
-      <ul>
-        <li>Coins have no cash value. They can't be bought, sold, cashed out, traded or sent to another player.</li>
-        <li>There are no prizes. Leaderboards are for bragging rights.</li>
-        <li>We may reset balances, scores, leagues or markets at any time, for example to fix a bug or start a new season. <span data-preseason>Everyone's scores reset when Season 1 starts on Monday, Nov 9.</span><span data-inseason hidden>Everyone's scores reset when Season 1 started on Monday, Nov 9.</span></li>
+    <section class="rl-sec" id="scoring" aria-labelledby="scoring-h">
+      <h2 class="v2-h2 rl-sec__h" id="scoring-h">Scoring</h2>
+      <ul class="rl-list">
+        <li><strong>Daily move:</strong> each pick's portfolio return that day in percent × 100, rounded. +1.23% is +123; a down day is negative.</li>
+        <li><strong>Insider buy:</strong> +25 when the player files a Form 4 open-market purchase (code P) that day. The only bonus.</li>
+        <li><strong>Captain:</strong> their whole day, insider buy included, × 1.5 and rounded.</li>
+        <li><strong>Salaries</strong> come from each player's Public Stake Value rank and recent form. They're fixed for the week once it opens.</li>
       </ul>
-      <h2>Not investment advice</h2>
-      <p>The fantasy league and markets are games built on public information about the world's richest people. Scores, prices and results are not predictions or recommendations to buy or sell anything.</p>
-      <h2>Your account</h2>
-      <p>Pressing Play online creates a guest account stored in this browser. We don't ask for your name or a password. If you want, you can add your email on the home page ("Save your team"): we attach it to your guest account so you can sign back in to it. Without an email, clearing your browser's site data or switching devices loses that account. We keep only what the game needs: your nickname, coins, picks, league memberships and trades, plus your email if you add one. See the <a href="privacy.html">Privacy Policy</a> and the site <a href="terms.html">Terms</a>.</p>
-      <h2 id="nicknames">Nicknames and league names</h2>
-      <ul>
-        <li>3 to 20 characters: letters, numbers, _ and - only.</li>
-        <li>Nicknames are unique, ignoring upper and lower case.</li>
-        <li>No slurs, insults, sexual words, or names that pretend to be us or our staff. Some words are blocked automatically, and we may rename or remove anything else that breaks this rule.</li>
-        <li>There is no chat. Nicknames and league names are the only text players can write.</li>
-      </ul>
-      <h2>Fantasy league</h2>
-      <ul>
-        <li>Each week, pick five different players — billionaires or big-company CEOs — whose salaries add up to 100 or less, and choose one as captain. The captain scores 1.5 times.</li>
-        <li>Picks lock Monday at 9:30 AM New York time, when US markets open. After that nobody can change them, and everyone's picks become visible.</li>
-        <li>Joined late? You can still enter a team until Friday. It scores from the next trading day after you save it.</li>
-        <li>Points come from each person's daily market moves in our data. Scores update once a day.</li>
-        <li>Leagues hold up to 50 players. You can be in up to 10 leagues.</li>
-      </ul>
-      <h2>How markets are settled</h2>
-      <ul>
-        <li>Markets have moved to The Book: no new markets open. Markets that were already open close and settle as described here.</li>
-        <li>New markets open on Monday mornings and close Friday at 4:00 PM New York time. We settle them on Saturday once the week's data is in.</li>
-        <li>Head-to-head questions compare two people's fantasy points for the week. A tie makes the market void.</li>
-        <li>Sector questions compare the average fantasy points of the draftable people in each sector. A tie for first makes the market void.</li>
-        <li>Insider-buy questions resolve YES if the person files a Form 4 on SEC EDGAR showing an open-market purchase (transaction code P) between Monday and Friday of that week. If we can't read a filing well enough to tell, the market is void.</li>
-        <li>Only our own data files are used, and each result links to its source. If the data never arrives, the market is void.</li>
-        <li>Void markets give back what each player put in. Winning shares pay 1 coin each, rounded down to a whole coin.</li>
-      </ul>
-      <h2 id="book">The Book</h2>
-      <ul>
-        <li>The Book takes play-money bets on the fantasy week at fixed odds: head-to-head matchups (moneyline and spread), a person's weekly points over or under a line, the week's top scorer, whether someone files an insider buy by Friday, and the top sector.</li>
-        <li>Odds come from a simple model of our own data (recent news, insider buys and how much each person's holdings usually move) plus a house margin. They are not forecasts or advice.</li>
-        <li>A bet is a single pick or a parlay of 2 to 4 picks from different events. Stakes are 1 to 500 coins, you can place up to 50 bets a day, and no bet pays back more than 10,000 coins.</li>
-        <li>You get the odds shown when you place the bet. If they changed in the meantime, the bet is refused and your slip shows the new odds to review. Once someone bets on a price it no longer changes.</li>
-        <li>Betting locks Monday at 9:30 AM New York time, when the week's fantasy picks lock. Bets settle after Friday's scores are in, usually on Saturday, from the fantasy league's week totals and SEC EDGAR filings.</li>
-        <li>Lines end in .5, so over/unders and spreads can't tie. A tie in a head-to-head moneyline, a tie for top scorer or top sector, missing data, or a Form 4 we can't read makes that pick void: a single is refunded, and a parlay is paid on its other picks. A parlay with a losing pick loses.</li>
-        <li>Coins won are play money like any other coins: no cash value, no prizes.</li>
-      </ul>
-      <h2>Fair play</h2>
-      <p>One account per person, please. We may remove accounts, nicknames or leagues that abuse the game, try to break it, or use more than one account to move markets or leaderboards.</p>
-      <h2>Free to play</h2>
-      <p>The game is free. There is nothing to buy, no entry fee and no prize, and coins and points have no cash value.</p>
 
+      <div class="rl-example">
+        <div class="g-table-wrap">
+          <table class="g-table rl-table">
+            <caption>Worked example: one day, made-up players</caption>
+            <thead><tr><th scope="col">Pick</th><th scope="col">Move that day</th><th scope="col">Points</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Player A <span class="rl-cap">Captain</span></th><td>+1.20%</td><td class="g-up">120 × 1.5 = +180</td></tr>
+              <tr><th scope="row">Player B</th><td>−0.50%</td><td class="g-down">−50</td></tr>
+              <tr><th scope="row">Player C</th><td>+0.30%, plus an insider buy</td><td class="g-up">30 + 25 = +55</td></tr>
+              <tr><th scope="row">Player D</th><td>0.00%</td><td>0</td></tr>
+              <tr><th scope="row">Player E</th><td>+2.05%</td><td class="g-up">+205</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row" colspan="2">Team total for the day</th><td class="g-up">+390</td></tr></tfoot>
+          </table>
+        </div>
+        <p class="rl-more"><a href="academy.html?lesson=how-you-score">Learn more in the Academy <span aria-hidden="true">→</span></a></p>
       </div>
+
+      <details class="rl-details" id="benchmarks">
+        <summary>Show more: benchmarks</summary>
+        <ul class="rl-list">
+          <li><strong>S&amp;P 500 (SPY):</strong> SPY's daily return × 100, times 5 so it compares with a five-pick team (no captain).</li>
+          <li><strong>Top 5 richest:</strong> the five highest-ranked draftable people, with the richest as captain. It ignores the cap.</li>
+          <li><strong>Perfect team:</strong> the best possible five under the cap with the best captain, worked out after the week ends.</li>
+        </ul>
+      </details>
+      <details class="rl-details" id="method">
+        <summary>Show more: how a portfolio is measured</summary>
+        <ul class="rl-list">
+          <li>A portfolio is the person's current controlling stakes and holdings on their profile that trade on a US exchange, including US lines of foreign companies (ADRs) used for daily moves only.</li>
+          <li>When every holding has an exact disclosed share count, holdings are weighted by value (<em>value-weighted</em>). Otherwise the companies a person controls together count for 75% and their other stakes for 25%, with each group split by value when every holding in it has a share count and equally when not (<em>controls-weighted, 75/25</em>). Someone with only one group puts 100% in it. Each player card shows the method and the weights.</li>
+          <li>A quote that did not trade that day counts as 0%. Days with no market (weekends and holidays) do not score.</li>
+          <li>Private companies, funds and family holdings have no daily price, so people whose wealth is mostly private cannot be drafted.</li>
+          <li>Scores use public prices and disclosed holdings and are approximate.</li>
+          <li>Lineup projections and the matchup win chance are simple estimates from recent points. They are not forecasts.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="rl-sec" id="leagues" aria-labelledby="leagues-h">
+      <h2 class="v2-h2 rl-sec__h" id="leagues-h">Leagues &amp; your account</h2>
+      <dl class="rl-facts">
+        <div><dt>Leagues</dt><dd>Up to 50 players each. You can be in up to 10.</dd></div>
+        <div><dt>Account</dt><dd>Pressing Play online creates a guest account in this browser: no name, no password. Add your email on the home page ("Save your team") to sign back in.</dd></div>
+        <div id="nicknames"><dt>Nicknames</dt><dd>3 to 20 characters: letters, numbers, _ and - only. Unique, ignoring case. Same rules for league names.</dd></div>
+        <div id="fair-play"><dt>Fair play</dt><dd>One account per person, please.</dd></div>
+      </dl>
+      <details class="rl-details">
+        <summary>Show more: your account and data</summary>
+        <ul class="rl-list">
+          <li>Without an email, clearing your browser's site data or switching devices loses that account.</li>
+          <li>We keep only what the game needs: your nickname, coins, picks, league memberships and trades, plus your email if you add one. See the <a href="privacy.html">Privacy Policy</a> and the site <a href="terms.html">Terms</a>.</li>
+        </ul>
+      </details>
+      <details class="rl-details">
+        <summary>Show more: name rules and fair play</summary>
+        <ul class="rl-list">
+          <li>No slurs, insults, sexual words, or names that pretend to be us or our staff. Some words are blocked automatically, and we may rename or remove anything else that breaks this rule.</li>
+          <li>There is no chat. Nicknames and league names are the only text players can write.</li>
+          <li>We may remove accounts, nicknames or leagues that abuse the game, try to break it, or use more than one account to move markets or leaderboards.</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="rl-sec" id="fine-print" aria-labelledby="fine-h">
+      <h2 class="v2-h2 rl-sec__h" id="fine-h">Fine print</h2>
+      <div class="rl-fine" id="terms">
+        <h3 class="rl-fine__h">Free, for fun, not advice</h3>
+        <p>The game is free: nothing to buy, no entry fee, no prizes. Coins and points have no cash value and can't be bought, sold, cashed out, traded or sent to another player; leaderboards are for bragging rights. Built on public information about the world's richest people, its scores, prices and results are not predictions or recommendations to buy or sell anything.</p>
+        <p class="rl-fine__small"><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy Policy</a></p>
+      </div>
+      <details class="rl-details" id="resets">
+        <summary>Show more: resets</summary>
+        <ul class="rl-list">
+          <li>We may reset balances, scores, leagues or markets at any time, for example to fix a bug or start a new season. <span data-preseason>Everyone's scores reset when Season 1 starts on Monday, Nov 9.</span><span data-inseason hidden>Everyone's scores reset when Season 1 started on Monday, Nov 9.</span></li>
+        </ul>
+      </details>
+      <p class="rl-moved" id="book">The Book's rules, including how old markets settle, are now on <a href="book.html#book-rules">The Book page <span aria-hidden="true">→</span></a></p>
     </section>
   </div>
 </main>
@@ -256,5 +268,6 @@
 
 <script src="assets/fantasy-core.js"></script>
 <script src="assets/v2/chrome.js"></script>
+<script src="assets/v2/rules.js"></script>
 </body>
 </html>
