@@ -6,7 +6,8 @@
 
 import { readFile, appendFile } from 'node:fs/promises';
 import Anthropic from '@anthropic-ai/sdk';
-import { schemaText, rulesText, validate, DIRECTIONS, normalizeUrl, dates, writeEdition } from './lib/edition.mjs';
+import { schemaText, rulesText, validate, DIRECTIONS, normalizeUrl, dates, writeEdition, checkMovers } from './lib/edition.mjs';
+import { loadDayFiles, pickMoverDate, listMovers } from './lib/movers.mjs';
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const MODEL = process.env.DIGEST_MODEL || 'claude-sonnet-5';
@@ -32,7 +33,21 @@ ${rulesText(longDate)}
 - Your final message must be ONLY the JSON object, with no markdown fences and no commentary, matching this shape:
 ${SCHEMA}`;
 
-const messages = [{ role: 'user', content: `Build today's edition for ${longDate}. Return only the JSON.` }];
+// "Why they moved": this path can't run scripts/list-movers.mjs, so the list goes in the request.
+const dayData = await loadDayFiles('.');
+const moverDate = pickMoverDate(dayData.dates, isoDate);
+let moverList = [];
+if (moverDate) {
+  const day = dayData.days.get(moverDate);
+  let week = null;
+  try { week = JSON.parse(await readFile(`data/fantasy/weeks/${day.week}.json`, 'utf8')); } catch { /* names fall back to tickers */ }
+  moverList = listMovers(day, week);
+}
+const moversNote = moverList.length
+  ? `\n\nOutput of node scripts/list-movers.mjs (for "movers"):\n${JSON.stringify(moverList)}`
+  : '\n\nlist-movers found no movers today: leave "movers" out.';
+
+const messages = [{ role: 'user', content: `Build today's edition for ${longDate}. Return only the JSON.${moversNote}` }];
 
 // ---- usage and cost tracking ----
 
@@ -182,6 +197,18 @@ try {
   }
 
   filterToSources(digest, sources);
+
+  if (Object.prototype.hasOwnProperty.call(digest, 'movers')) {
+    const r = checkMovers(digest.movers, dayData.movesByDate, isoDate);
+    for (const { entry, reason } of r.dropped) console.warn(`Dropped mover (${reason}): ${entry?.ticker ?? '?'} ${entry?.date ?? ''}`);
+    digest.movers = sources.size
+      ? r.kept.filter(m => {
+        const ok = sources.has(normalizeUrl(m.sourceUrl));
+        if (!ok) console.warn(`Dropped mover not backed by a search result: ${m.ticker} ${m.date} (${m.sourceUrl})`);
+        return ok;
+      })
+      : r.kept;
+  }
 
   const problems = validate(digest);
   if (problems.length) throw new Error('Edition failed checks: ' + problems.join('; '));
