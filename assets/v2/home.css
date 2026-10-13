@@ -1,102 +1,144 @@
 /* Billionaires Digest v3: front door (index.html), sports-network homepage. Needs tokens.css + ui.css. Prefix: hm-.
-   Below the hero: two columns from 1024px (main about 2/3 · side about 1/3). Main = your franchise, top story, then
-   From the Digest (.hm-more); side = Top Headlines (+ the hidden Next Moves card). The DOM is in phone reading order
-   (franchise -> top story -> headlines -> digest); the desktop grid puts the side column next to both main blocks. */
+   Below the hero, the strip and How it works: two columns from 1024px (main about 2/3 · side about 1/3).
+   Side (.hm-right) = Your team (roster), Share your team (team of 5), Play with friends; it is sticky under the top bar
+   (--v2-chrome-h from chrome.js) and scrolls on its own when taller than the screen, so the roster follows the scroll.
+   Main (.hm-center) = Today's Digest, From the Digest. Under 1024px the side column dissolves (display: contents) and
+   the cards take the phone order: Your team -> Today's Digest -> Play with friends -> Share. All cards: 14px radius
+   (same as the Players to watch cards), 24px gaps. */
 
 .hm-main { padding-top: var(--s2); }
-.hm-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s2); }
+.hm-layout { --hm-r: 14px; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s2); }
 .hm-layout > * { min-width: 0; }
-.hm-center, .hm-right, .hm-more { display: flex; flex-direction: column; gap: var(--s2); }
-@media (min-width: 1024px) {
-  .hm-layout { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto 1fr; grid-template-areas: "center right" "more right"; align-items: start; }
-  .hm-center { grid-area: center; }
-  .hm-right { grid-area: right; }
-  .hm-more { grid-area: more; }
+.hm-center { display: flex; flex-direction: column; gap: var(--s2); }
+.hm-side-card { position: relative; background: var(--card); color: var(--text); border-radius: var(--hm-r); box-shadow: var(--shadow); padding: var(--s2); }
+@media (max-width: 1023px) {
+  .hm-right { display: contents; }
+  .hm-roster { order: 1; }
+  .hm-center { order: 2; }
+  .hm-friends { order: 3; }
+  #hmsharecard { order: 4; }
+  .hm-odds { order: 5; }
 }
+@media (min-width: 1024px) {
+  .hm-layout { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: start; }
+  .hm-center { grid-column: 1; grid-row: 1; }
+  .hm-right {
+    grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: var(--s2);
+    position: sticky; top: calc(var(--v2-chrome-h, 104px) + var(--s1));
+    max-height: calc(100vh - var(--v2-chrome-h, 104px) - 2 * var(--s1));
+    overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent;
+    /* room for the cards' shadows and focus rings inside the scroll box; the negative margin keeps the edges aligned */
+    padding: 4px; margin: -4px;
+  }
+}
+@media (max-width: 767px) { .hm-side-card { padding: var(--s1); } }
 
 /* side headings */
 .hm-rail__h { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; line-height: 1.2; padding: 4px 0 10px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
 .hm-rail__ico { width: 16px; height: 12px; flex: none; background: linear-gradient(currentColor 0 0) 0 0 / 100% 2px no-repeat, linear-gradient(currentColor 0 0) 0 5px / 100% 2px no-repeat, linear-gradient(currentColor 0 0) 0 10px / 70% 2px no-repeat; }
 
-/* ---------- featured scoreboard ---------- */
-.hm-board { background: var(--card); color: var(--text); border-radius: var(--radius-card); box-shadow: var(--shadow); padding: var(--s1) var(--s2) var(--s2); }
-.hm-board__loading { margin: var(--s1) 0; }
-.hm-sb__head { display: flex; justify-content: space-between; align-items: center; gap: var(--s1); }
-.hm-sb__kick { font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
-.hm-sb__more, .hm-sec__more { display: inline-flex; align-items: center; white-space: nowrap; flex: none; min-height: var(--tap); color: var(--link); font-size: var(--fs-sm); font-weight: 700; text-decoration: none; }
-.hm-sb__more:hover, .hm-sec__more:hover { text-decoration: underline; }
-.hm-sb { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s2); padding: 4px 0 12px; border-bottom: 1px solid var(--line); }
-.hm-sb__side { display: flex; align-items: center; gap: var(--s1); min-width: 0; }
-.hm-sb__side--a { justify-content: flex-end; text-align: right; }
-.hm-sb__side--b { flex-direction: row-reverse; justify-content: flex-end; text-align: left; }
-.hm-sb__team { display: flex; flex-direction: column; min-width: 0; }
-.hm-sb__name { font-size: 20px; font-weight: 700; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hm-sb__sub { font-size: var(--fs-xs); color: var(--text-muted); }
-.hm-sb__score { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 48px; line-height: 1; color: var(--text-muted); }
-.hm-sb__side.is-win .hm-sb__score { color: var(--text); }
-.hm-sb__side--a.is-win .hm-sb__score::after, .hm-sb__side--b.is-win .hm-sb__score::before { content: ''; display: inline-block; vertical-align: middle; border: 7px solid transparent; }
-.hm-sb__side--a.is-win .hm-sb__score::after { border-right-color: var(--text); margin-left: 6px; border-left-width: 0; }
-.hm-sb__side--b.is-win .hm-sb__score::before { border-left-color: var(--text); margin-right: 6px; border-right-width: 0; }
-.hm-sb--odds .hm-sb__score { font-size: 34px; color: var(--text); }
-.hm-sb__mid { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
-.hm-sb__status { font-size: var(--fs-sm); font-weight: 700; white-space: nowrap; }
-.hm-sb__status.is-live { color: var(--brand-ink); }
-.hm-sb__vs { font-size: var(--fs-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
-.hm-sb__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s0) var(--s1); padding-top: 12px; }
-.hm-sb__result { margin: 0; font-weight: 600; flex: 1 1 260px; }
-.hm-sb__btns { display: flex; flex-wrap: wrap; gap: 8px; }
+/* ---------- Your team: the roster card ----------
+   From 1024px a vertical list (40px faces, name, points); under 1024px one row of five (56px, 44px on phones). */
+.hm-roster__head { display: flex; justify-content: space-between; align-items: center; gap: var(--s1); }
+.hm-roster__h { margin: 0; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 28px; line-height: 1; text-transform: uppercase; letter-spacing: .005em; }
+.hm-roster__more, .hm-sec__more { display: inline-flex; align-items: center; white-space: nowrap; flex: none; min-height: var(--tap); color: var(--link); font-size: var(--fs-sm); font-weight: 700; text-decoration: none; }
+.hm-roster__more:hover, .hm-sec__more:hover { text-decoration: underline; text-underline-offset: 2px; }
+.hm-roster__meta { margin: 0 0 var(--s0); font-size: var(--fs-sm); color: var(--text-muted); }
+.hm-roster__meta.is-live { color: var(--brand-ink); font-weight: 700; }
+.hm-roster__loading { margin: var(--s0) 0; }
+.hm-slots { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.hm-slot { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 6px 0; border-top: 1px solid var(--line); min-width: 0; }
+.hm-slot:first-child { border-top: 0; }
+.hm-slot__pic { position: relative; flex: none; width: var(--slot, 40px); height: var(--slot, 40px); }
+.hm-slot__av { --av: var(--slot, 40px); }
+.hm-slot__add { display: flex; align-items: center; justify-content: center; box-sizing: border-box; border: 2px dashed var(--line-2); border-radius: 50%; color: var(--text-muted); }
+.hm-slot__c {
+  position: absolute; right: -4px; bottom: -3px; display: flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%; background: var(--brand); color: #fff; box-shadow: 0 0 0 2px var(--card);
+  font-size: 11px; font-weight: 800; line-height: 1;
+}
+.hm-slot__who { flex: 1 1 auto; min-width: 0; }
+.hm-slot__name { display: block; font-weight: 600; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hm-slot__short { display: none; }
+.hm-slot.is-empty .hm-slot__name, .hm-slot.is-empty .hm-slot__short { color: var(--text-muted); font-weight: 400; }
+.hm-slot__pts { flex: none; font-weight: 700; font-size: var(--fs-md); }
+.hm-roster__sum { margin-top: var(--s0); padding-top: var(--s1); border-top: 1px solid var(--line); }
+.hm-roster__prog { margin: 0; font-weight: 600; }
+.hm-score { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+.hm-score__side { display: inline-flex; align-items: baseline; gap: 6px; }
+.hm-score__lab { font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); }
+.hm-score__n { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 30px; line-height: 1; }
+.hm-score__dot { color: var(--text-muted); }
+.hm-roster__res { margin: 6px 0 0; font-weight: 700; }
+.hm-roster__res.is-win { color: var(--positive); }
+.hm-roster__res.is-loss { color: var(--negative); }
+.hm-roster__btns { display: flex; flex-direction: column; gap: 8px; margin-top: var(--s1); }
+.hm-roster__btns .v2-btn, .hm-friends__btns .v2-btn { width: 100%; justify-content: center; }
+@media (max-width: 1023px) {
+  .hm-layout { --slot: 56px; }
+  .hm-slots { flex-direction: row; justify-content: space-between; gap: 8px; margin-top: 4px; }
+  .hm-slot { flex: 1 1 0; flex-direction: column; gap: 6px; min-height: 0; padding: 0; border-top: 0; text-align: center; }
+  .hm-slot__who { width: 100%; }
+  .hm-slot__name { display: none; }
+  .hm-slot__short { display: block; font-size: var(--fs-sm); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hm-slot__pts { font-size: var(--fs-sm); }
+  .hm-roster__btns { flex-direction: row; flex-wrap: wrap; }
+  .hm-roster__btns .v2-btn { width: auto; flex: 1 1 160px; }
+}
 @media (max-width: 767px) {
-  .hm-board { padding: 8px var(--s1) 12px; }
-  .hm-sb { gap: 10px; }
-  .hm-sb__side { flex-direction: column-reverse; align-items: center; gap: 2px; text-align: center; }
-  .hm-sb__side--a, .hm-sb__side--b { flex-direction: column-reverse; justify-content: center; text-align: center; }
-  .hm-sb__team { align-items: center; max-width: 100%; }
-  .hm-sb__name { font-size: 16px; max-width: 100%; }
-  .hm-sb__score { font-size: 38px; }
-  .hm-sb--odds .hm-sb__score { font-size: 28px; }
-  .hm-sb__side--a.is-win .hm-sb__score::after, .hm-sb__side--b.is-win .hm-sb__score::before { display: none; }
+  .hm-layout { --slot: 44px; }
+  .hm-roster__h { font-size: 24px; }
+  .hm-slot__short { font-size: var(--fs-xs); }
 }
 
-/* ---------- top story: a plain card with a normal headline (sentence case, at most 3 lines) ---------- */
-.hm-lede { position: relative; border-radius: var(--radius-card); background: var(--card); color: var(--text); box-shadow: var(--shadow); padding: var(--s2); }
-.hm-lede__top { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; margin-bottom: 10px; }
-.hm-lede__kick { display: inline-block; background: var(--brand); color: #fff; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 3px 8px; border-radius: 3px; }
-.hm-lede__date { font-size: var(--fs-sm); color: var(--text-muted); }
+/* ---------- Play with friends ---------- */
+.hm-friends__p { margin: 10px 0 var(--s1); color: var(--text-muted); }
+.hm-friends__btns { display: flex; flex-direction: column; gap: 8px; }
+@media (max-width: 1023px) {
+  .hm-friends__btns { flex-direction: row; flex-wrap: wrap; }
+  .hm-friends__btns .v2-btn { width: auto; flex: 1 1 160px; }
+}
+
+/* ---------- Today's Digest: top story + the next 4 headlines in one card ---------- */
+.hm-lede { position: relative; border-radius: var(--hm-r); background: var(--card); color: var(--text); box-shadow: var(--shadow); padding: var(--s2); }
+.hm-dg__kick { margin: 0 0 12px; font-size: var(--fs-sm); color: var(--text-muted); }
+.hm-dg__brand { display: inline-block; background: var(--brand); color: #fff; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 3px 8px; border-radius: 3px; margin-right: 2px; }
 .hm-lede__h {
   font-family: var(--font-display); font-weight: var(--fw-display); font-size: 34px; line-height: 1.08; text-transform: none; letter-spacing: 0;
-  margin: 0 0 12px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; max-height: 3.3em; overflow-wrap: break-word;
+  margin: 0 0 12px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; max-height: 3.3em; overflow-wrap: break-word; text-wrap: balance;
 }
 .hm-lede__h a { color: var(--text); text-decoration: none; }
 .hm-lede__h a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.hm-lede__dek { font-size: var(--fs-lg); line-height: 1.5; color: var(--text); max-width: 70ch; margin: 0 0 var(--s1); }
-.hm-lede__src { font-size: var(--fs-sm); color: var(--text-muted); margin: 0 0 var(--s1); }
+.hm-lede__dek { font-size: var(--fs-lg); line-height: 1.5; color: var(--text); max-width: 70ch; margin: 0 0 var(--s0); }
+.hm-lede__src { font-size: var(--fs-sm); color: var(--text-muted); margin: 0; }
 .hm-lede__src a { color: var(--link); }
-.hm-lede__btn { margin-top: 0; }
+.hm-dg__list { list-style: none; margin: var(--s2) 0 0; padding: 0; border-top: 1px solid var(--line); }
+.hm-dg__i { display: flex; flex-direction: column; gap: 3px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.hm-dg__meta { font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--brand-ink); }
+.hm-dg__h { color: var(--text); font-size: var(--fs-lg); font-weight: 700; line-height: 1.3; text-decoration: none; max-width: 70ch; }
+.hm-dg__h:hover { text-decoration: underline; text-underline-offset: 3px; }
+.hm-dg__all { display: inline-flex; align-items: center; gap: 2px; min-height: var(--tap); margin-top: 8px; color: var(--link); font-size: var(--fs-md); font-weight: 700; text-decoration: none; }
+.hm-dg__all:hover { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 767px) {
   .hm-lede { padding: var(--s1); }
   .hm-lede__h { font-size: 26px; }
   .hm-lede__dek { font-size: var(--fs-md); }
+  .hm-dg__h { font-size: var(--fs-md); }
+  .hm-dg__list { margin-top: var(--s1); }
 }
 
 /* ---------- story grid ---------- */
 .hm-sec__head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--s1); border-bottom: 2px solid var(--text); padding-bottom: 4px; margin-bottom: 12px; }
-.hm-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--gutter); }
-.hm-story { background: var(--card); border-radius: var(--radius-card); box-shadow: var(--shadow); padding: var(--s1); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.hm-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--s2); }
+.hm-story { background: var(--card); border-radius: var(--hm-r, 14px); box-shadow: var(--shadow); padding: var(--s1); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .hm-story__kick { font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--brand-ink); }
-.hm-story__h { font-size: 18px; font-weight: 700; line-height: 1.25; }
+.hm-story__h { font-size: 18px; font-weight: 700; line-height: 1.25; text-wrap: balance; }
 .hm-story__h a { color: var(--text); text-decoration: none; }
 .hm-story__h a:hover { text-decoration: underline; text-underline-offset: 2px; }
 .hm-story__p { font-size: var(--fs-sm); color: var(--text-muted); margin: 0; }
 .hm-story__src { margin-top: auto; font-size: var(--fs-xs); color: var(--text-muted); }
 
-/* ---------- side: Top Headlines (5) + All news ---------- */
-.hm-heads__list { list-style: none; margin: 0; padding: 0; }
-.hm-heads__list li { border-bottom: 1px solid var(--line); }
-.hm-heads__list li:last-child { border-bottom: 0; }
-.hm-heads__list a { display: block; padding: 10px 0; color: var(--text); text-decoration: none; font-size: var(--fs-md); font-weight: 600; line-height: 1.3; }
-.hm-heads__list a:hover { text-decoration: underline; text-underline-offset: 2px; }
-.hm-heads__all { display: inline-flex; align-items: center; gap: 4px; min-height: var(--tap); margin-top: 4px; color: var(--link); font-size: var(--fs-sm); font-weight: 700; text-decoration: none; }
-.hm-heads__all:hover { text-decoration: underline; }
+/* ---------- side: Next Moves (hidden card) ---------- */
 .hm-odds__top { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
 .hm-odds__top .hm-rail__h { border-bottom: 0; margin-bottom: 0; }
 .hm-mv { list-style: none; margin: 0; padding: 0; }
@@ -113,7 +155,7 @@
 /* ---------- front-page hero: what the site is, in one look (stays dark in both themes) ---------- */
 .hm-hero {
   position: relative; overflow: hidden; isolation: isolate; border-radius: var(--radius-card); background: #0B0B0C; color: #fff;
-  min-height: 360px; display: flex; align-items: flex-end; margin-bottom: var(--gutter); box-shadow: var(--shadow);
+  min-height: 360px; display: flex; align-items: flex-end; margin-bottom: var(--s2); box-shadow: var(--shadow);
 }
 .hm-hero__img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
 .hm-hero::before {
@@ -185,7 +227,7 @@
 }
 
 /* how it works: three numbered steps, side by side from 768px, stacked on phones */
-.hm-steps { background: var(--card); color: var(--text); border-radius: var(--radius-card); box-shadow: var(--shadow); padding: var(--s2); margin-bottom: var(--gutter); scroll-margin-top: var(--s1); }
+.hm-steps { background: var(--card); color: var(--text); border-radius: 14px; box-shadow: var(--shadow); padding: var(--s2); margin-bottom: var(--s2); scroll-margin-top: var(--s1); }
 .hm-steps:focus { outline: none; }
 .hm-steps__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: var(--fs-xl); line-height: 1.05; margin: 0 0 var(--s1); }
 .hm-steps__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s1); }
@@ -201,18 +243,11 @@
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 /* ---------- your franchise (scoreboard card additions) ---------- */
-.hm-sb__pts { display: block; font-size: var(--fs-sm); font-weight: 400; color: var(--text-muted); }
-.hm-fr__empty { padding: 4px 0 var(--s1); }
-.hm-fr__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: 30px; line-height: 1; margin: 4px 0 6px; }
-.hm-fr__p { margin: 0 0 12px; color: var(--text-muted); }
-.hm-fr__book { border-top: 1px solid var(--line); padding-top: 4px; }
-.hm-sb--last { border-bottom: 0; padding-bottom: 0; }
 
 /* ---------- card section heads ---------- */
 .hm-sec__head--card { border-bottom-width: 1px; border-bottom-color: var(--line); align-items: flex-start; }
 
 /* ---------- From the Digest ---------- */
-.hm-story__n { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 16px; color: var(--text); margin-right: 8px; letter-spacing: 0; }
 .hm-stories__foot { margin: 12px 0 0; font-size: var(--fs-sm); }
 .hm-stories__foot a { color: var(--link); font-weight: 600; }
 
@@ -220,7 +255,7 @@
    Dark cards (both themes). One row of five from 1024px; below that a horizontal swipe row (scroll-snap, the next card
    peeks, no visible scrollbar) that bleeds to the screen edges so only the row scrolls, never the page.
    Each card flips in place (rotateY, 450ms); with reduced motion the faces swap instantly (ui.css drops transitions). */
-.hm-ptw { margin-bottom: var(--gutter); }
+.hm-ptw { margin-bottom: var(--s2); }
 .hm-ptw__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px var(--s1); margin-bottom: 10px; }
 .hm-ptw__titles { display: flex; flex-direction: column-reverse; min-width: 0; }
 .hm-ptw__h { margin: 0; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 40px; line-height: 1; text-transform: uppercase; letter-spacing: .005em; color: var(--text); }
@@ -299,6 +334,10 @@
 .hm-ptw__base { stroke: #7C848E; stroke-width: 1; vector-effect: non-scaling-stroke; }
 .hm-ptw__cap { margin-top: 1px; font-size: 10px; color: var(--text-muted); letter-spacing: .02em; }
 .hm-ptw__wh { margin: 0; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+.hm-ptw__mv { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.hm-ptw__mvh { margin: 0; display: flex; align-items: baseline; justify-content: space-between; gap: 6px; min-width: 0; }
+.hm-ptw__mvsrc { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #8AB4FF; font-size: 11px; font-weight: 700; }
+.hm-ptw__mvt { margin: 0; font-size: 11.5px; line-height: 1.25; color: #E1E4E8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .hm-ptw__why { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
 .hm-ptw__r { display: flex; gap: 5px; align-items: flex-start; font-size: 11.5px; line-height: 1.25; }
 .hm-ptw__r .hm-ptw__ico { flex: none; margin-top: 1px; }
@@ -355,7 +394,7 @@
 @media (max-width: 767px) { .hw { padding: 12px; align-items: flex-start; } .hw__panel { padding: var(--s1); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); } }
 .hw__media[hidden] { display: none; }
 
-/* ---------- Share your team: compact side card above Top Headlines (assets/v2/team-share.js) ---------- */
+/* ---------- Share your team: compact side card under Your team (assets/v2/team-share.js) ---------- */
 .hm-sh__top { display: flex; gap: 12px; align-items: flex-start; padding-top: 8px; }
 .hm-sh__thumb { flex: none; width: 120px; height: auto; aspect-ratio: 1080 / 1350; border-radius: 6px; background: #0B0B0C; box-shadow: var(--shadow); }
 .hm-sh__sum { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
@@ -381,3 +420,33 @@
 .hm-sh__note { margin: 10px 0 0; font-size: var(--fs-xs); color: var(--text-muted); }
 .hm-sh__msg { margin: 4px 0 0; font-size: var(--fs-sm); font-weight: 600; }
 .hm-sh__msg:empty { display: none; }
+
+/* ---------- phones (< 1024px): mini roster bar ----------
+   Fixed just above the bottom tabs (bottom: 0 + safe area where there are no tabs, 768-1023px). Shown by home.js
+   (.is-on) only after the roster card has scrolled out above the screen; the page gets extra bottom padding while it
+   shows (body.hm-mini-on), so it never covers the last content. Slides up; with reduced motion it just appears. */
+.hm-mini {
+  position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom)); z-index: 45;
+  display: flex; align-items: center; gap: 4px; padding: 4px 4px 4px 14px;
+  background: #16181B; color: #fff; border: 1px solid rgba(255, 255, 255, .12); border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .28), 0 2px 6px rgba(0, 0, 0, .18);
+  transform: translateY(calc(100% + 24px)); opacity: 0; visibility: hidden;
+  transition: transform 260ms cubic-bezier(.16, 1, .3, 1), opacity 200ms ease-out, visibility 0s linear 260ms;
+}
+.hm-mini.is-on { transform: none; opacity: 1; visibility: visible; transition-delay: 0s; }
+@media (max-width: 767px) { .hm-mini { bottom: calc(var(--tabs-h) + 8px + env(safe-area-inset-bottom)); } }
+@media (min-width: 1024px) { .hm-mini { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hm-mini, .hm-mini.is-on { transition: none; transform: none; } }
+.hm-mini__go { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 12px; min-height: 44px; color: #fff; text-decoration: none; border-radius: 10px; }
+.hm-mini__faces { display: flex; flex: none; padding-left: 6px; }
+.hm-mini__av { --av: 24px; width: 24px; height: 24px; margin-left: -6px; border-radius: 50%; box-shadow: 0 0 0 2px #16181B; flex: none; }
+.hm-mini__av.is-empty { box-sizing: border-box; border: 1.5px dashed #7C848E; background: #16181B; }
+.hm-mini__av.is-cap { box-shadow: 0 0 0 2px #D62D27; z-index: 1; }
+.hm-mini__lab { font-weight: 700; font-size: var(--fs-md); white-space: nowrap; }
+.hm-mini__go-txt { margin-left: auto; color: #B9BFC7; font-size: var(--fs-sm); font-weight: 600; white-space: nowrap; }
+.hm-mini__chev { display: flex; color: #B9BFC7; }
+.hm-mini__go:hover .hm-mini__go-txt, .hm-mini__go:hover .hm-mini__chev { color: #fff; }
+.hm-mini__x { flex: none; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-left: 1px solid rgba(255, 255, 255, .12); border-radius: 0 10px 10px 0; background: transparent; color: #B9BFC7; cursor: pointer; }
+.hm-mini__x:hover { color: #fff; }
+.hm-mini :focus-visible { outline: 3px solid #8AB4FF; outline-offset: -3px; }
+body.hm-mini-on .hm-main { padding-bottom: calc(var(--s5) + 64px); }

@@ -169,30 +169,26 @@
     </section>
 
     <div class="hm-layout">
-      <!-- main column: your franchise, top story, From the Digest -->
-      <div class="hm-center">
-        <section class="hm-board" id="hero" aria-labelledby="boardh">
-          <h2 class="v2-sr" id="boardh">Your franchise</h2>
+      <!-- side column from 1024px (sticky, follows the scroll): Your team, Share your team (team of 5), Play with friends.
+           Under 1024px it dissolves (display: contents) and the cards take the phone order:
+           Your team -> Today's Digest -> Play with friends -> Share. -->
+      <div class="hm-right">
+        <section class="hm-roster hm-side-card" id="hero" aria-labelledby="rosterh">
+          <div class="hm-roster__head">
+            <h2 class="hm-roster__h" id="rosterh">Your team</h2>
+            <a class="hm-roster__more" href="scores.html">Scores</a>
+          </div>
           <div id="hmteam" aria-busy="true">
-            <p class="v2-loading hm-board__loading">Checking for your team…</p>
+            <p class="v2-loading hm-roster__loading">Checking for your team…</p>
           </div>
         </section>
-
-        <article class="hm-lede" id="lede" aria-labelledby="ledeh">
-          <div id="ledebody">
-            <span class="hm-lede__kick">Top story</span>
-            <h2 class="hm-lede__h" id="ledeh">Today's edition</h2>
-            <p class="v2-loading">Loading today's edition…</p>
+        <section class="hm-side-card hm-friends" id="hmfriends" aria-labelledby="friendsh">
+          <h2 class="hm-rail__h" id="friendsh">Play with friends</h2>
+          <p class="hm-friends__p">Start a league and send the invite link.</p>
+          <div class="hm-friends__btns">
+            <a class="v2-btn v2-btn--ghost" href="leagues.html#leagueforms">Create a league</a>
+            <a class="v2-btn v2-btn--ghost" href="leagues.html#leagueforms">Join with a code</a>
           </div>
-        </article>
-      </div>
-
-      <!-- side column: headlines, Next Moves odds (hidden) -->
-      <aside class="hm-right" aria-label="Headlines">
-        <section class="v2-card hm-heads" aria-labelledby="headsh">
-          <h2 class="hm-rail__h" id="headsh"><span class="hm-rail__ico" aria-hidden="true"></span>Top Headlines</h2>
-          <ul class="hm-heads__list" id="headlines"><li><span class="v2-skel"></span></li><li><span class="v2-skel"></span></li></ul>
-          <a class="hm-heads__all" href="news.html">All news <span aria-hidden="true">→</span></a>
         </section>
         <section class="v2-card hm-odds" aria-labelledby="oddsh" hidden>
           <div class="hm-odds__top">
@@ -202,16 +198,24 @@
           <div id="d-moves"><span class="v2-skel"></span><span class="v2-skel"></span></div>
           <a class="v2-btn v2-btn--ghost v2-btn--block hm-odds__btn" href="moves.html">See all markets</a>
         </section>
-      </aside>
+      </div>
 
-      <!-- main column, continued (after the headlines on phones) -->
-      <div class="hm-more">
-        <section class="hm-stories" id="digestsec" aria-labelledby="storiesh">
+      <!-- main column: Today's Digest (top story + next 4 headlines), From the Digest (the stories after those) -->
+      <div class="hm-center">
+        <article class="hm-lede" id="lede" aria-labelledby="ledeh">
+          <div id="ledebody">
+            <p class="hm-dg__kick"><span class="hm-dg__brand">Today's Digest</span></p>
+            <h2 class="hm-lede__h" id="ledeh">Today's edition</h2>
+            <p class="v2-loading">Loading today's edition…</p>
+          </div>
+        </article>
+
+        <section class="hm-stories" id="digestsec" aria-labelledby="storiesh" hidden>
           <div class="hm-sec__head">
             <h2 class="v2-h2" id="storiesh">From the Digest</h2>
             <a class="hm-sec__more" href="news.html">All stories</a>
           </div>
-          <ol class="hm-grid" id="storygrid"><li class="hm-story"><span class="v2-skel"></span><span class="v2-skel"></span></li></ol>
+          <ol class="hm-grid" id="storygrid"></ol>
           <p class="hm-stories__foot" id="storyfoot" hidden></p>
         </section>
 

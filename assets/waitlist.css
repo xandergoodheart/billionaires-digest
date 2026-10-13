@@ -80,6 +80,9 @@
 
 /* the "Save your team" section on the Play home, right under the hero */
 .wl-save { margin: var(--s2) 0; }
+/* hidden until config/launch.json "emailSignup" is true: assets/waitlist.js then adds .wl-email-on to <html>.
+   Hidden by default (not after a check), so the page never flashes an empty box or leaves a gap. */
+html:not(.wl-email-on) .wl-save { display: none; }
 .wl-save__head { margin: 0 auto var(--s1); max-width: 760px; text-align: center; }
 .wl-save__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: var(--fs-xl); line-height: 1.05; margin: 0 0 6px; color: var(--text); }
 .wl-save__p { margin: 0; color: var(--text-muted); line-height: 1.45; max-width: 60ch; margin-left: auto; margin-right: auto; }
