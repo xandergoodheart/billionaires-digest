@@ -10,7 +10,7 @@
      Players to watch     <- featured strip under the hero: top 5 by real points this scoring week, or the last scored
                              day (BDWeekCore); nicknames from data/fantasy/nicknames.json via BDDossier; names open the
                              player dossier; avg/day from BDFantasyStore stats, cap cost from the salaries; + Draft
-                             opens draft.html (no preselect there)
+                             opens draft.html?add=<slug>, which adds the player
      Top Headlines        <- digest.json stories
      Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1)
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
@@ -387,10 +387,10 @@
         }
         li.appendChild(meta);
       }
-      // draft.html has no way to preselect a player (no query or hash for it), so this opens the Draft room
-      var dr = link('v2-btn v2-btn--primary v2-btn--sm hm-ptw__draft', '', 'draft.html');
+      // draft.html?add=<slug> adds the player in the Draft room (assets/v2/draft.js addFromUrl; same rules as + Add)
+      var dr = link('v2-btn v2-btn--primary v2-btn--sm hm-ptw__draft', '', 'draft.html?add=' + encodeURIComponent(p.slug));
       dr.appendChild(el('span', null, '+ Draft'));
-      dr.appendChild(el('span', 'v2-sr', ': open the Draft room to pick ' + p.name));
+      dr.appendChild(el('span', 'v2-sr', ' ' + p.name + ' in the Draft room'));
       li.appendChild(dr);
       ol.appendChild(li);
     });

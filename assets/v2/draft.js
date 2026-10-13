@@ -17,7 +17,7 @@
   var $ = function(id){ return document.getElementById(id); };
   var mqPhone = window.matchMedia ? window.matchMedia('(max-width: 767px)') : { matches: false };
 
-  var UI = { q: '', sector: '', sort: 'pts', kind: '', saveMsg: null, syncMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
+  var UI = { q: '', sector: '', sort: 'pts', kind: '', saveMsg: null, syncMsg: null, addMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
   // Public Stake Value rank (BD.stakeTable) for the rank sort and tie-breaks. Never a net worth.
   var ST = { rank: {} };
   function stakeRank(s){ return ST.rank[s] || null; }
@@ -127,6 +127,7 @@
   }
   function renderNotices(){
     var S = F.state, box = clear($('notices')), t = F.now();
+    if (UI.addMsg) box.appendChild(el('p', UI.addMsg.ok ? 'dr-notice dr-notice--soft' : 'v2-banner dr-notice', UI.addMsg.text));
     if (S.salaryFallback) box.appendChild(el('p', 'v2-banner dr-notice', 'Cap costs for ' + fmt.weekName(S.draftWeek) + ' are not out yet, so these are this week\'s; they may change when the week opens.'));
     if (C.isPractice(S.draftWeek)) box.appendChild(el('p', 'dr-notice dr-notice--soft', 'Practice week: your picks are scored on the sample days so you can see how the game works. Practice does not count in your season.'));
     // lock / late-entry note (v1 wording)
@@ -757,7 +758,7 @@
   }
   function doSave(from){
     var r = F.saveTeam();
-    UI.syncMsg = null;
+    UI.syncMsg = null; UI.addMsg = null;
     UI.saveMsg = { ok: r.ok, bad: !r.ok || !r.persisted, text: r.text };
     renderStats(); renderSide(); renderNotices();
     say(r.text);
@@ -876,6 +877,33 @@
     if (kind === 'online' || kind === 'sync') renderSide();
   });
 
+  // ---- deep link: draft.html?add=<slug> (the front page's "+ Draft" buttons) ----
+  // Adds the player once through F.addPick (the same rules as "+ Add": 5 picks, cap, no duplicates), then drops
+  // add= from the URL so a refresh does not try again. Slugs not in this week's draftable pool are ignored.
+  function addFromUrl(){
+    var q = String(location.search || '').replace(/^\?/, ''), parts = q ? q.split('&') : [], keep = [], slug = null;
+    for (var i = 0; i < parts.length; i++){
+      if (/^add=/.test(parts[i])){ if (slug == null){ try { slug = decodeURIComponent(parts[i].slice(4).replace(/\+/g, ' ')); } catch (e) { slug = ''; } } }
+      else if (parts[i]) keep.push(parts[i]);
+    }
+    if (slug == null) return;
+    try { history.replaceState(null, '', location.pathname + (keep.length ? '?' + keep.join('&') : '') + location.hash); } catch (e) {}
+    if (!/^[a-z0-9-]+$/.test(slug)) return;
+    var inPool = pool().some(function(p){ return p && p.slug === slug; });
+    if (!inPool || sal(slug) == null) return;
+    var name = F.person(slug).name, text, ok;
+    if (F.state.picks.indexOf(slug) >= 0){ ok = true; text = name + ' is already on your team.'; }
+    else {
+      var r = F.addPick(slug);
+      ok = r.ok;
+      text = r.ok ? changeLine('Added ' + name + '.') + (F.state.captain === slug ? ' Captain.' : '')
+        : 'Could not add ' + name + ': ' + (r.text || 'not allowed right now') + '.';
+    }
+    UI.addMsg = { ok: ok, text: text };
+    renderNotices();
+    say(text);
+  }
+
   // ---- load ----
   function fail(){
     $('weekpill').textContent = 'Data unavailable';
@@ -896,5 +924,6 @@
     renderHead(); renderNotices(); renderSectors(); renderNotDraftable(); renderAll();
     $('tools').hidden = false;
     document.body.classList.add('dr-ready');
+    addFromUrl();
   }, function(err){ if (window.console) console.warn(err); fail(); });
 })();
