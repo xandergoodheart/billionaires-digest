@@ -13,7 +13,7 @@
      Play with friends    <- static card in index.html (leagues.html#leagueforms)
      Today's Digest       <- digest.json: the lede (headline, dek, source link) + the next 4 headlines + Read today's edition
      From the Digest      <- up to 3 digest.json stories after those 4 (hidden when there are none, so nothing repeats)
-     story player chips   <- each story's own `people` (never guessed from the text): up to 2 draftable players, with
+     story player chips   <- each story's own `people`, else its `who` (never guessed from the text): up to 2 draftable players, with
                              their move on the latest scored day (BDFantasyStore's S.lastDay, no extra fetch)
      Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1); card is hidden
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
@@ -391,8 +391,9 @@
   }
 
   // ---- story player chips: who in the game a story names, and their move on the latest scored day ----
-  // Players come only from the story's own `people` list (names as in data/people/index.json), in that order, kept when
-  // they are in the draftable pool (billionaires and CEOs); at most 2. Never guessed from the text. The move is the
+  // Players come only from the story's own `people` list (names as in data/people/index.json), in that order, or, when
+  // it is empty, from its `who` (the subject the edition tagged); kept when they are in the draftable pool (billionaires
+  // and CEOs); at most 2. Never guessed from the text. The move is the
   // latest scored trading day (data/fantasy/days/<latestDay>.json, already loaded by the store), which can be before
   // the story's date, so the row says "Last close <day>". Context only: the wording never says the story caused it.
   var CHIP_MAX = 2, chipSlots = [], chipsReady = false;
@@ -406,7 +407,9 @@
     var pool = F.state.people || {}, byName = {}, out = [], seen = {}, k;
     for (k in pool) if (has(pool, k) && pool[k] && pool[k].name) byName[normName(pool[k].name)] = k;
     var N = window.BDPortraitNames || {};
-    arr(st && st.people).forEach(function(nm){
+    // the story's own `people`; when that is empty, its tagged subject `who` (the edition writes both)
+    var names = arr(st && st.people).length ? arr(st.people) : (st && typeof st.who === 'string' ? [st.who] : []);
+    names.forEach(function(nm){
       if (out.length >= CHIP_MAX || typeof nm !== 'string') return;
       var n = normName(nm), slug = has(byName, n) ? byName[n] : (has(N, n) ? N[n] : null);
       if (slug && has(pool, slug) && !seen[slug]){ seen[slug] = 1; out.push(pool[slug]); }
