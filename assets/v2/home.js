@@ -7,7 +7,7 @@
      how to play          <- cap, picks and captain multiplier from the draft week file (BDFantasyCore as fallback)
      today's lede         <- digest.json (the latest edition; the full edition lives at news.html)
      From the Digest      <- up to 3 more stories from digest.json (hidden when there are none)
-     Players to watch     <- five flip cards under the hero (or, preview only, ?ptw=rail at the top of the right rail):
+     Players to watch     <- five flip cards under the hero:
                              a mixed watch list (top scorers, earnings, insider buy, value) from BDWeekCore scores,
                              BDFantasyStore stats, data/insights/calendar.json; the back loads a 10-day chart and
                              reasons lazily (see "players to watch" below); + Draft opens draft.html?add=<slug>
@@ -336,9 +336,6 @@
   //   chart + best day (on the first flip)  <- week files' daily points (+1 older week file), the best day's day file
   //   insider-buy filing link (on flip)     <- data/filings/by-person/<slug>.json (only for a card with a buy)
   //   in the news (on flip)                 <- digest.json (already loaded for the lede)
-  // PREVIEW ONLY: ?ptw=rail shows the same cards stacked at the top of the right rail (option B) instead of the strip
-  // under the hero (option A). Remove this switch (and the .hm-ptw--rail CSS) once the owner picks a layout.
-  var PTW_RAIL = /(?:^|[?&])ptw=rail(?:&|$)/.test(String(location.search).replace(/^\?/, ''));
   var CHART_DAYS = 10;
   var DIGEST = null, CAL = null;
   var calP = BD.getJson('data/insights/calendar.json').then(function(c){ CAL = c; return c; }, function(){ return null; });
@@ -577,7 +574,6 @@
     var src = W ? W.watchSource(S.sbWk, S.prevWk) : null;
     var picked = src ? pickWatch(src) : { list: [], vals: {} }, top = picked.list;
     if (!top.length){ sec.hidden = true; return; }
-    sec.classList.toggle('hm-ptw--rail', PTW_RAIL);
     var practice = src.wk.practice ? ' (practice week)' : '';
     $('watchk').textContent = src.kind === 'week'
       ? F.fmt.weekTitle(src.wk.week) + ' · points so far, through ' + F.fmt.dayLabel(src.date)
@@ -651,7 +647,6 @@
       back.addEventListener('keydown', function(e){ if (e.key === 'Escape' || e.keyCode === 27){ e.preventDefault(); flip(li, false, src); } });
       ol.appendChild(li);
     });
-    placeWatch();
     sec.hidden = false;
   }
   function draftBtn(p){
@@ -661,17 +656,6 @@
     dr.appendChild(el('span', 'v2-sr', ' ' + p.name + ' in the Draft room'));
     return dr;
   }
-  // option B (preview only): at 1024px and up the section moves to the top of the right rail; below that it stays
-  // right after the hero, where option A puts it.
-  var railMq = window.matchMedia ? window.matchMedia('(min-width: 1024px)') : null, ptwHome = null;
-  function placeWatch(){
-    var sec = $('watchsec'), rightRail = document.querySelector('.hm-right');
-    if (!PTW_RAIL || !sec || !rightRail) return;
-    if (!ptwHome) ptwHome = sec.nextElementSibling;
-    if (railMq && railMq.matches){ if (sec.parentNode !== rightRail) rightRail.insertBefore(sec, rightRail.firstChild); }
-    else if (ptwHome && sec.nextElementSibling !== ptwHome) ptwHome.parentNode.insertBefore(sec, ptwHome);
-  }
-  if (PTW_RAIL && railMq){ if (railMq.addEventListener) railMq.addEventListener('change', placeWatch); else if (railMq.addListener) railMq.addListener(placeWatch); }
 
   // ---- page ----
   var tc = F.testClock();

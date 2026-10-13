@@ -351,29 +351,6 @@
   .hm-ptw__card { flex-basis: 62%; }
 }
 
-/* PREVIEW ONLY (?ptw=rail, option B): compact cards stacked at the top of the right rail at 1024px and up.
-   Remove with the switch in home.js once the owner picks a layout. */
-@media (min-width: 1024px) {
-  .hm-ptw--rail { margin-bottom: 0; }
-  .hm-ptw--rail .hm-ptw__head { margin-bottom: 6px; }
-  .hm-ptw--rail .hm-ptw__h { font-size: 26px; }
-  .hm-ptw--rail .hm-ptw__more { min-height: 32px; font-size: 12px; }
-  .hm-ptw--rail .hm-ptw__row { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 0; }
-  /* faces are not stacked here: the one showing is in flow, so the card is short on the front and tall on the back */
-  .hm-ptw--rail .hm-ptw__inner { display: block; height: auto; }
-  .hm-ptw--rail .hm-ptw__back { position: absolute; inset: 0; }
-  .hm-ptw--rail .hm-ptw__card.is-flipped .hm-ptw__back { position: relative; inset: auto; }
-  .hm-ptw--rail .hm-ptw__card.is-flipped .hm-ptw__front { position: absolute; inset: 0; }
-  .hm-ptw--rail .hm-ptw__flip { flex-direction: row; align-items: center; gap: 10px; padding: 8px 12px 8px 14px; border-radius: 13px; text-align: left; }
-  .hm-ptw--rail .hm-ptw__av { --av: 48px; }
-  .hm-ptw--rail .hm-ptw__nick, .hm-ptw--rail .hm-ptw__meta, .hm-ptw--rail .hm-ptw__front .hm-ptw__draft { display: none; }
-  .hm-ptw--rail .hm-ptw__rank { left: -10px; top: -6px; min-width: 24px; height: 19px; font-size: 13px; }
-  .hm-ptw--rail .hm-ptw__who { flex: 1 1 auto; align-items: flex-start; }
-  .hm-ptw--rail .hm-ptw__name { font-size: 14px; }
-  .hm-ptw--rail .hm-ptw__pts { flex: none; font-size: 28px; }
-  .hm-ptw--rail .hm-ptw__unit { font-size: 12px; }
-}
-
 /* ---------- "How it works" popup (assets/howto.js) ---------- */
 .hw { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: var(--s1); background: rgba(8, 9, 10, .72); }
 .hw[hidden] { display: none; }
