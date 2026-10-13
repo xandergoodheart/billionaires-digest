@@ -1,20 +1,19 @@
 /* Billionaires Digest v3: the front door (index.html), sports-network homepage layout. ES5, IIFE, UI only.
    Real data only, each block on its own (one failing never blanks the others):
      hero banner          <- static art (assets/art/realistic/hero-fantasy.webp, no people) + link to the Draft room
-     your franchise       <- BDFantasyStore (same browser team as team.html): your team's real points vs the S&P 500;
-                             no team -> "You haven't drafted yet" + the week's top matchup from The Book
-                             (data/book/index.json + week file)
-     how to play          <- cap, picks and captain multiplier from the draft week file (BDFantasyCore as fallback)
-     top story            <- digest.json lede (headline, dek, source link, Read today's edition; full edition at news.html)
-     From the Digest      <- up to 3 more stories from digest.json (hidden when there are none)
      Players to watch     <- five flip cards under the hero:
                              a mixed watch list (top scorers, earnings, insider buy, value) from BDWeekCore scores,
                              BDFantasyStore stats, data/insights/calendar.json; the back loads a 10-day chart and
                              reasons lazily (see "players to watch" below); + Draft opens draft.html?add=<slug>
-     Top Headlines        <- digest.json stories (5) + All news
-     Share your team      <- assets/v2/team-share.js: a side card above Top Headlines (canvas image made in the browser),
-                             only with a saved or drafted team of 5
-     Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1)
+     Your team (roster)   <- BDFantasyStore (same browser team as team.html): five slots (portrait + captain "C", or an
+                             empty "+"), then "N of 5 picked · cap left" (no team / draft) or the scoreline vs the S&P 500
+                             with won/lost wording; top of the sticky side column from 1024px. Phones also get a slim
+                             fixed "mini roster" bar once the card is scrolled past (dismissible for the visit).
+     Share your team      <- assets/v2/team-share.js: a side card under Your team, only with a saved or drafted team of 5
+     Play with friends    <- static card in index.html (leagues.html#leagueforms)
+     Today's Digest       <- digest.json: the lede (headline, dek, source link) + the next 4 headlines + Read today's edition
+     From the Digest      <- up to 3 digest.json stories after those 4 (hidden when there are none, so nothing repeats)
+     Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1); card is hidden
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
    Play money only, no prizes, not financial advice. */
 (function(){
@@ -52,7 +51,6 @@
     var ws = String(name || '').replace(/\s*&\s*family\s*$/i, '').trim().split(/\s+/);
     return ws[ws.length - 1] || '';
   }
-  function odds(n){ n = Number(n); if (!isFinite(n)) return ''; return n > 0 ? '+' + n : (n < 0 ? MINUS + Math.abs(n) : 'EVEN'); }
   function firstSentences(t, max){
     t = String(t || '').replace(/\s+/g, ' ').trim();
     if (t.length <= max) return t;
@@ -104,61 +102,105 @@
     return v.any ? 'Live · thru ' + F.fmt.dayLabel(v.res.scored[v.res.scored.length - 1]) : 'Live';
   }
   function teamName(){ var me = F.me(); return me && me.nickname ? me.nickname : 'Your team'; }
-  function captainName(v){
-    var c = v.team && v.team.captain, p = c ? F.person(c) : null;
-    return p && p.name ? p.name : null;
-  }
 
-  // one side of the scoreboard: name, sub line, big score (null -> dash)
-  function side(cls, name, sub, score, win){
-    var s = el('div', 'hm-sb__side ' + cls + (win ? ' is-win' : ''));
-    var t = el('div', 'hm-sb__team');
-    t.appendChild(el('span', 'hm-sb__name', name));
-    if (sub) t.appendChild(el('span', 'hm-sb__sub', sub));
-    s.appendChild(t);
-    s.appendChild(el('span', 'hm-sb__score num', score == null ? '—' : score));
-    return s;
+  // ---- Your team: the roster card (top of the sticky side column from 1024px; first card on phones) ----
+  // Five slots (filled: portrait + captain "C"; empty: dashed "+"), then the draft progress ("1 of 5 picked · 63 cap
+  // left") or the scoreline vs the S&P 500, then the buttons. Never a dash placeholder: a number that does not exist
+  // yet becomes words ("Scoring starts Mon Oct 19").
+  var PLUS_SVG = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>';
+  function capLeft(picks){
+    var sal = F.salaries(), t = 0, known = true;
+    picks.forEach(function(s){ if (typeof sal[s] === 'number') t += sal[s]; else known = false; });
+    return known ? C.CAP - t : null;
   }
-
-  // ---- featured scoreboard: your team vs S&P 500 ----
-  function renderTeamBoard(v){
+  // the first scoring day of this team (late entry: lateFrom), as an ISO date, or null
+  function startIso(v){
+    var id = v.mode === 'scoring' ? v.wk.week : (v.mode === 'upcoming' ? v.weekId : null);
+    return v.team && v.team.lateFrom ? v.team.lateFrom : (id ? C.weekInfo(id).start : null);
+  }
+  function slotsEl(v){
+    var picks = v.team ? arr(v.team.picks) : [], pts = v.mode === 'scoring' && v.any ? v.res.bySlug || {} : null;
+    var ol = el('ol', 'hm-slots');
+    for (var i = 0; i < C.PICKS; i++){
+      var slug = picks[i], li;
+      if (slug){
+        var p = F.person(slug) || { slug: slug, name: slug }, cap = v.team.captain === slug;
+        li = el('li', 'hm-slot' + (cap ? ' is-cap' : ''));
+        var pic = el('span', 'hm-slot__pic');
+        var av = avatar(p); av.className += ' hm-slot__av';
+        pic.appendChild(av);
+        if (cap) pic.appendChild(el('span', 'hm-slot__c', 'C')).setAttribute('aria-hidden', 'true');
+        li.appendChild(pic);
+        var who = el('span', 'hm-slot__who');
+        who.appendChild(el('span', 'hm-slot__name', p.name || slug));
+        who.appendChild(el('span', 'hm-slot__short', surname(p.name || slug)));
+        if (cap) who.appendChild(el('span', 'v2-sr', ', captain'));
+        li.appendChild(who);
+        if (pts && typeof pts[slug] === 'number') li.appendChild(el('span', 'hm-slot__pts num ' + numCls(pts[slug]), signedTxt(pts[slug])));
+      } else {
+        li = el('li', 'hm-slot is-empty');
+        var add = el('span', 'hm-slot__pic hm-slot__add'); add.innerHTML = PLUS_SVG;
+        li.appendChild(add);
+        var w2 = el('span', 'hm-slot__who');
+        w2.appendChild(el('span', 'hm-slot__name', 'Open slot'));
+        w2.appendChild(el('span', 'hm-slot__short', 'Open'));
+        li.appendChild(w2);
+      }
+      ol.appendChild(li);
+    }
+    return ol;
+  }
+  function metaText(v){
+    if (v.mode === 'none') return 'Pick five under the ' + C.CAP + '-point cap';
+    if (v.mode === 'draft') return 'Draft in progress · not saved yet';
+    if (v.mode === 'upcoming') return F.fmt.weekTitle(v.weekId) + ' · ' + status(v);
+    return F.fmt.weekTitle(v.wk.week) + ' · ' + status(v);
+  }
+  function renderRoster(v){
     var box = clear($('hmteam'));
     box.removeAttribute('aria-busy');
+    var picks = v.team ? arr(v.team.picks) : [];
+    var meta = el('p', 'hm-roster__meta' + (v.mode === 'scoring' && !F.weekOver(v.wk) && !v.wk.practice ? ' is-live' : ''), metaText(v));
+    box.appendChild(meta);
+    box.appendChild(slotsEl(v));
+    var sum = el('div', 'hm-roster__sum');
     var total = v.any ? v.res.total : null, bm = bench(v);
-    var leftWin = total != null && bm != null && total > bm, rightWin = total != null && bm != null && bm > total;
-    var head = el('div', 'hm-sb__head');
-    head.appendChild(el('span', 'hm-sb__kick', 'Your franchise' + (v.mode === 'scoring' ? ' · ' + F.fmt.weekTitle(v.wk.week) : v.mode === 'upcoming' ? ' · ' + F.fmt.weekTitle(v.weekId) : '')));
-    head.appendChild(link('hm-sb__more', 'Scores', 'scores.html'));
-    box.appendChild(head);
-    var sb = el('div', 'hm-sb');
-    var cap = captainName(v);
-    sb.appendChild(side('hm-sb__side--a', teamName(), v.team.picks.length + ' of ' + C.PICKS + ' picked' + (cap ? ' · C ' + surname(cap) : ''), total == null ? null : plainTxt(total), leftWin));
-    var mid = el('div', 'hm-sb__mid');
-    mid.appendChild(el('span', 'hm-sb__status' + (v.mode === 'scoring' && !F.weekOver(v.wk) && !v.wk.practice ? ' is-live' : ''), status(v)));
-    mid.appendChild(el('span', 'hm-sb__vs', 'vs'));
-    sb.appendChild(mid);
-    sb.appendChild(side('hm-sb__side--b', 'S&P 500', 'Benchmark', bm == null ? null : plainTxt(bm), rightWin));
-    box.appendChild(sb);
-    var foot = el('div', 'hm-sb__foot');
-    var res = el('p', 'hm-sb__result', result(v));
-    if (total != null) res.appendChild(el('span', 'hm-sb__pts', 'Real points so far this week: ' + plainTxt(total)));
-    foot.appendChild(res);
-    var row = el('div', 'hm-sb__btns');
-    if (v.mode === 'draft'){
-      row.appendChild(link('v2-btn v2-btn--primary v2-btn--sm', 'Finish your draft', 'draft.html'));
-      row.appendChild(link('v2-btn v2-btn--ghost v2-btn--sm', 'Go to my team', 'team.html'));
+    if (v.mode === 'none' || v.mode === 'draft'){
+      var left = capLeft(picks);
+      sum.appendChild(el('p', 'hm-roster__prog', picks.length + ' of ' + C.PICKS + ' picked' + (left != null ? ' · ' + left + ' cap left' : '')));
+    } else if (total != null){
+      var line = el('p', 'hm-score');
+      var a = el('span', 'hm-score__side'); a.appendChild(el('span', 'hm-score__lab', teamName())); a.appendChild(el('strong', 'hm-score__n num ' + numCls(total), signedTxt(total)));
+      line.appendChild(a);
+      if (bm != null){
+        line.appendChild(el('span', 'hm-score__dot', '·')).setAttribute('aria-hidden', 'true');
+        var b = el('span', 'hm-score__side'); b.appendChild(el('span', 'hm-score__lab', 'S&P 500')); b.appendChild(el('strong', 'hm-score__n num ' + numCls(bm), signedTxt(bm)));
+        line.appendChild(b);
+      }
+      sum.appendChild(line);
+      var diff = bm == null ? null : total - bm;
+      sum.appendChild(el('p', 'hm-roster__res' + (diff > 0 ? ' is-win' : diff < 0 ? ' is-loss' : ''), result(v)));
     } else {
-      row.appendChild(link('v2-btn v2-btn--primary v2-btn--sm', 'Go to my team', 'team.html'));
-      row.appendChild(link('v2-btn v2-btn--ghost v2-btn--sm', 'Edit your starting five', 'draft.html'));
+      var from = startIso(v);
+      sum.appendChild(el('p', 'hm-roster__prog', from && from > today() ? 'Scoring starts ' + F.fmt.dayLabel(from) : result(v)));
     }
-    foot.appendChild(row);
-    box.appendChild(foot);
-    var sh = shareFor(v), rail = document.querySelector('.hm-right'), was = $('hmsharecard');
+    box.appendChild(sum);
+    var row = el('div', 'hm-roster__btns');
+    if (v.mode === 'none' || v.mode === 'draft'){
+      row.appendChild(link('v2-btn v2-btn--primary', picks.length ? 'Finish your draft' : 'Draft your team', 'draft.html'));
+      row.appendChild(link('v2-btn v2-btn--ghost', 'Lucky five', 'draft.html#lucky'));
+    } else {
+      row.appendChild(link('v2-btn v2-btn--primary', 'Go to my team', 'team.html'));
+      row.appendChild(link('v2-btn v2-btn--ghost', 'Edit your starting five', 'draft.html'));
+    }
+    box.appendChild(row);
+    var sh = shareFor(v), was = $('hmsharecard'), friends = $('hmfriends');
     if (was) was.parentNode.removeChild(was);
-    if (sh && rail){ sh.card.id = 'hmsharecard'; rail.insertBefore(sh.card, rail.firstChild); }
-    say(teamName() + '. ' + (total == null ? 'No team points yet.' : 'Team total ' + plainTxt(total) + ' fantasy points.') + ' ' + result(v) + '.');
+    if (sh && friends){ sh.card.id = 'hmsharecard'; sh.card.className += ' hm-side-card'; friends.parentNode.insertBefore(sh.card, friends); }
+    mini(v);
+    if (v.mode === 'none') say("Your team. You haven't drafted yet.");
+    else say(teamName() + '. ' + picks.length + ' of ' + C.PICKS + ' picked. ' + (total == null ? '' : 'Team total ' + plainTxt(total) + ' fantasy points. ') + result(v) + '.');
   }
-
   // ---- Share your team: only with a saved or drafted team of 5 (assets/v2/team-share.js) ----
   function shareFor(v){
     var picks = v.team ? arr(v.team.picks) : [];
@@ -181,86 +223,120 @@
     });
   }
 
-  // The Book is hidden from the menus (scripts/lib/nav.mjs MENU_HIDDEN / BOOK_HIDDEN): no Book matchup or
-  // "All matchups" link here either. Set to false together with nav.mjs to bring it back.
-  var BOOK_HIDDEN = true;
-
-  // ---- featured scoreboard without a team: the week's top matchup on The Book ----
-  function renderBookBoard(book){
-    var box = clear($('hmteam'));
-    box.removeAttribute('aria-busy');
-    var ev = book && arr(book.events).filter(function(e){ return e && e.type === 'h2h' && e.params && e.params.a && e.params.b; })[0];
-    var head = el('div', 'hm-sb__head');
-    head.appendChild(el('span', 'hm-sb__kick', 'Your franchise'));
-    head.appendChild(link('hm-sb__more', 'Rules', 'play-terms.html'));
-    box.appendChild(head);
-    var empty = el('div', 'hm-fr__empty');
-    empty.appendChild(el('h3', 'hm-fr__h', "You haven't drafted yet"));
-    empty.appendChild(el('p', 'hm-fr__p', 'Draft five of the world\'s richest and score on their real stock moves. Nothing is saved in this browser yet.'));
-    var row = el('div', 'hm-sb__btns');
-    row.appendChild(link('v2-btn v2-btn--primary v2-btn--sm', 'Draft your five', 'draft.html'));
-    row.appendChild(link('v2-btn v2-btn--ghost v2-btn--sm', 'Lucky five', 'draft.html#lucky'));
-    empty.appendChild(row);
-    box.appendChild(empty);
-    if (ev && !BOOK_HIDDEN){
-      var model = book.model || {};
-      var mk = function(slug){
-        var ml = arr(ev.selections).filter(function(s){ return s.market === 'ml' && s.person === slug; })[0];
-        var nm = model[slug] && model[slug].name ? model[slug].name : slug;
-        return { name: nm, sector: model[slug] && model[slug].sector, odds: ml ? odds(ml.americanOdds) : null };
-      };
-      var a = mk(ev.params.a), b = mk(ev.params.b);
-      var at = Date.parse(book.locksAt), pre = isFinite(at) && Date.now() < at;
-      var bh = el('div', 'hm-sb__head hm-fr__book');
-      bh.appendChild(el('span', 'hm-sb__kick', 'Top matchup this week · The Book'));
-      bh.appendChild(link('hm-sb__more', 'All matchups', 'book.html'));
-      box.appendChild(bh);
-      var sb = el('div', 'hm-sb hm-sb--odds hm-sb--last');
-      sb.appendChild(side('hm-sb__side--a', surname(a.name), a.sector || '', a.odds, false));
-      var mid = el('div', 'hm-sb__mid');
-      mid.appendChild(el('span', 'hm-sb__status', pre ? lockText(at) : 'This week'));
-      mid.appendChild(el('span', 'hm-sb__vs', 'Moneyline'));
-      sb.appendChild(mid);
-      sb.appendChild(side('hm-sb__side--b', surname(b.name), b.sector || '', b.odds, false));
-      box.appendChild(sb);
-    }
-    say("Play the billionaires. You haven't drafted yet.");
-  }
-  function loadBook(){
-    return BD.getJson('data/book/index.json').then(function(idx){
-      var w = idx && idx.latest;
-      if (!w || !/^\d{4}-W\d{2}$/.test(w)) return null;
-      return BD.getJson('data/book/' + w + '.json');
-    });
-  }
   function boardFail(){
     var box = clear($('hmteam'));
     box.removeAttribute('aria-busy');
-    box.appendChild(el('p', 'hm-sb__result', 'The game data is not available right now, so your team cannot show here.'));
-    var row = el('div', 'hm-sb__btns');
-    row.appendChild(link('v2-btn v2-btn--primary v2-btn--sm', 'Draft your five', 'draft.html'));
-    row.appendChild(link('v2-btn v2-btn--ghost v2-btn--sm', 'Go to my team', 'team.html'));
+    box.appendChild(el('p', 'hm-roster__prog', 'The game data is not available right now, so your team cannot show here.'));
+    var row = el('div', 'hm-roster__btns');
+    row.appendChild(link('v2-btn v2-btn--primary', 'Draft your team', 'draft.html'));
+    row.appendChild(link('v2-btn v2-btn--ghost', 'Go to my team', 'team.html'));
     box.appendChild(row);
   }
 
-  // ---- top story, story grid, headlines (digest.json) ----
-  function ledeStory(d){
-    var st = arr(d.stories).filter(function(s){ return s && s.headline; });
-    var h = d.lede && d.lede.headline;
-    for (var i = 0; i < st.length; i++) if (st[i].headline === h) return st[i];
-    return null;
+  // ---- phones (< 1024px): a slim "mini roster" bar above the bottom tabs once the roster card is scrolled past ----
+  // Five 24px faces + "1/5" (or the week's points) + a chevron to team.html (draft.html until the team is complete).
+  // Dismissible for this visit (sessionStorage); the page gets bottom padding while it shows, so nothing is covered.
+  var MINI_OFF = 'bd-hm-mini-off', miniBar = null, miniPast = false;
+  function miniDismissed(){ try { return window.sessionStorage.getItem(MINI_OFF) === '1'; } catch (e) { return false; } }
+  function miniSync(){
+    if (!miniBar) return;
+    var narrow = !window.matchMedia || window.matchMedia('(max-width: 1023px)').matches;
+    var on = narrow && miniPast && !miniDismissed();
+    miniBar.classList.toggle('is-on', on);
+    miniBar.setAttribute('aria-hidden', on ? 'false' : 'true');
+    var f = miniBar.querySelectorAll('a, button');
+    for (var i = 0; i < f.length; i++){ if (on) f[i].removeAttribute('tabindex'); else f[i].setAttribute('tabindex', '-1'); }
+    document.body.classList.toggle('hm-mini-on', on);
   }
-  function renderLede(d){
+  function mini(v){
+    if (miniDismissed()) return;
+    var picks = v.team ? arr(v.team.picks) : [], full = v.mode === 'scoring' || v.mode === 'upcoming';
+    if (!miniBar){
+      miniBar = el('div', 'hm-mini');
+      miniBar.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(miniBar);
+      var card = $('hero');
+      if (card && 'IntersectionObserver' in window){
+        new IntersectionObserver(function(es){
+          var e = es[es.length - 1];
+          miniPast = !e.isIntersecting && e.boundingClientRect.top < 0;
+          miniSync();
+        }).observe(card);
+      }
+      if (window.matchMedia){ var mq = window.matchMedia('(max-width: 1023px)'); if (mq.addListener) mq.addListener(miniSync); }
+    }
+    clear(miniBar);
+    var a = link('hm-mini__go', '', full ? 'team.html' : 'draft.html');
+    var faces = el('span', 'hm-mini__faces');
+    for (var i = 0; i < C.PICKS; i++){
+      if (picks[i]){
+        var p = F.person(picks[i]) || { slug: picks[i], name: picks[i] }, av = avatar(p);
+        av.className += ' hm-mini__av' + (v.team.captain === picks[i] ? ' is-cap' : '');
+        faces.appendChild(av);
+      } else faces.appendChild(el('span', 'hm-mini__av is-empty')).setAttribute('aria-hidden', 'true');
+    }
+    a.appendChild(faces);
+    var label = v.mode === 'scoring' && v.any ? signedTxt(v.res.total) + ' pts' : picks.length + '/' + C.PICKS;
+    a.appendChild(el('span', 'hm-mini__lab num', label));
+    a.appendChild(el('span', 'hm-mini__go-txt', full ? 'My team' : (picks.length ? 'Finish draft' : 'Draft')));
+    var chev = el('span', 'hm-mini__chev'); chev.setAttribute('aria-hidden', 'true');
+    chev.innerHTML = '<svg viewBox="0 0 16 16" width="16" height="16" focusable="false"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    a.appendChild(chev);
+    a.appendChild(el('span', 'v2-sr', full ? ': your team, ' + label + '. Open My team' : ': your team, ' + picks.length + ' of ' + C.PICKS + ' picked. Open the Draft room'));
+    miniBar.appendChild(a);
+    var x = el('button', 'hm-mini__x'); x.type = 'button'; x.setAttribute('aria-label', 'Hide the team bar');
+    x.innerHTML = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+    x.addEventListener('click', function(){
+      try { window.sessionStorage.setItem(MINI_OFF, '1'); } catch (e) {}
+      miniSync();
+      var m = $('main'); if (m) m.focus({ preventScroll: true });
+      say('Team bar hidden.');
+    });
+    miniBar.appendChild(x);
+    miniSync();
+  }
+
+  // ---- Today's Digest: one card (top story + the next 4 headlines), then From the Digest (the stories after those) ----
+  // The top story is digest.json's lede. Its story in d.stories is the one with the same headline, or, because the
+  // lede is sometimes re-worded, the story whose headline shares at least half its words (so it is never listed twice).
+  function words(t){ var o = {}; String(t || '').toLowerCase().replace(/[^a-z0-9$%. ]+/g, ' ').split(/\s+/).forEach(function(w){ if (w) o[w] = 1; }); return o; }
+  function overlap(a, b){
+    var A = words(a), B = words(b), n = 0, u = 0, k;
+    for (k in A){ u++; if (B[k]) n++; }
+    for (k in B) if (!A[k]) u++;
+    return u ? n / u : 0;
+  }
+  function ledeStory(d){
+    var st = arr(d && d.stories).filter(function(s){ return s && s.headline; });
+    var h = d && d.lede && d.lede.headline, best = null, bs = 0;
+    if (!h) return null;
+    for (var i = 0; i < st.length; i++){
+      if (st[i].headline === h) return st[i];
+      var o = overlap(st[i].headline, h);
+      if (o > bs){ bs = o; best = st[i]; }
+    }
+    return bs >= 0.5 ? best : null;
+  }
+  var LIST_N = 4;
+  function restStories(d){
+    var lede = ledeStory(d);
+    return arr(d && d.stories).filter(function(s){ return s && s.headline && s !== lede; });
+  }
+  function renderDigest(d){
     var box = clear($('ledebody'));
     var lede = d && d.lede && d.lede.headline ? d.lede : null;
-    var top = el('div', 'hm-lede__top');
-    top.appendChild(el('span', 'hm-lede__kick', 'Top story'));
-    if (d && d.date) top.appendChild(el('span', 'hm-lede__date', String(d.date)));
-    box.appendChild(top);
+    var kick = el('p', 'hm-dg__kick');
+    kick.appendChild(el('span', 'hm-dg__brand', "Today's Digest"));
+    if (d && d.date) kick.appendChild(document.createTextNode(' · ' + String(d.date)));
+    box.appendChild(kick);
     var h = el('h2', 'hm-lede__h'); h.id = 'ledeh';
     if (lede) h.appendChild(link(null, lede.headline, 'news.html')); else h.textContent = "Today's edition";
     box.appendChild(h);
-    if (!d){ box.appendChild(el('p', 'hm-lede__dek', "Today's edition could not load here. Open the news page to read it.")); box.appendChild(link('v2-btn v2-btn--primary', 'Go to News', 'news.html')); return; }
+    if (!d){
+      box.appendChild(el('p', 'hm-lede__dek', "Today's edition could not load here. Open the news page to read it."));
+      box.appendChild(link('hm-dg__all', 'Go to News →', 'news.html'));
+      return;
+    }
     if (lede && lede.dek) box.appendChild(el('p', 'hm-lede__dek', lede.dek));
     if (!lede) box.appendChild(el('p', 'hm-lede__dek', 'The morning edition is on the press.'));
     // the source of the story behind the top story (every fact links its source)
@@ -273,41 +349,38 @@
       src.appendChild(a);
       box.appendChild(src);
     }
-    box.appendChild(link('v2-btn v2-btn--primary hm-lede__btn', "Read today's edition", 'news.html'));
+    var next = restStories(d).slice(0, LIST_N);
+    if (next.length){
+      var ul = el('ul', 'hm-dg__list'); ul.setAttribute('aria-label', 'More headlines');
+      next.forEach(function(st){
+        var li = el('li', 'hm-dg__i');
+        var meta = [st.sector, st.who].filter(Boolean).join(' · ');
+        if (meta) li.appendChild(el('span', 'hm-dg__meta', meta));
+        li.appendChild(link('hm-dg__h', st.headline, 'news.html'));
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+    }
+    var all = link('hm-dg__all', "Read today's edition", 'news.html');
+    all.appendChild(el('span', null, ' →')).setAttribute('aria-hidden', 'true');
+    box.appendChild(all);
   }
-  // From the Digest: up to 3 of today's stories besides the top story (headline + one line); hidden when there are none
+  // From the Digest: up to 3 stories after the ones in the Today's Digest list (never the same stories); hidden when none
   function renderStories(d){
-    var ul = clear($('storygrid')), lede = d ? ledeStory(d) : null, foot = clear($('storyfoot'));
-    var st = d ? arr(d.stories).filter(function(s){ return s && s.headline && s !== lede; }) : [];
-    $('digestsec').hidden = !!d && !st.length;
+    var ul = clear($('storygrid')), foot = clear($('storyfoot'));
+    var st = d ? restStories(d).slice(LIST_N) : [];
+    $('digestsec').hidden = !st.length;
     foot.hidden = true;
-    if (!st.length){ if (!d){ var li0 = el('li', 'hm-story'); li0.appendChild(el('p', 'v2-msg', 'Stories could not load right now.')); ul.appendChild(li0); } return; }
-    st.slice(0, 3).forEach(function(s, i){
+    if (!st.length) return;
+    st.slice(0, 3).forEach(function(s){
       var li = el('li', 'hm-story');
-      var k = el('span', 'hm-story__kick');
-      k.appendChild(el('span', 'hm-story__n', (i < 9 ? '0' : '') + (i + 1)));
-      k.appendChild(document.createTextNode([s.sector, s.who].filter(Boolean).join(' · ')));
+      var k = el('span', 'hm-story__kick', [s.sector, s.who].filter(Boolean).join(' · '));
       li.appendChild(k);
       var h = el('h3', 'hm-story__h');
       h.appendChild(link(null, s.headline, 'news.html'));
       li.appendChild(h);
       if (s.move) li.appendChild(el('p', 'hm-story__p', firstSentences(s.move, 150)));
       if (s.source) li.appendChild(el('span', 'hm-story__src', s.source));
-      ul.appendChild(li);
-    });
-    var iso = BD.isoFromLong ? BD.isoFromLong(d.date) : null;
-    if (iso && /^\d{4}-\d{2}-\d{2}$/.test(iso)){
-      foot.appendChild(link(null, 'Read the ' + BD.monDay(iso) + ' edition', 'editions/' + iso + '/'));
-      foot.hidden = false;
-    }
-  }
-  function renderHeadlines(d){
-    var ul = clear($('headlines'));
-    var st = d ? arr(d.stories).filter(function(s){ return s && s.headline; }) : [];
-    if (!st.length){ ul.appendChild(el('li', 'v2-msg', d ? 'No headlines yet.' : 'Headlines could not load right now.')); return; }
-    st.slice(0, 5).forEach(function(s){
-      var li = el('li');
-      li.appendChild(link(null, s.headline, 'news.html'));
       ul.appendChild(li);
     });
   }
@@ -705,8 +778,8 @@
   var tc = F.testClock();
   if (tc != null){ var tb = $('testclock'); tb.hidden = false; tb.textContent = 'Test clock (for testing only): ' + new Date(F.now()).toISOString(); }
 
-  BD.getJson('digest.json').then(function(d){ DIGEST = d; renderLede(d); renderStories(d); renderHeadlines(d); },
-    function(){ renderLede(null); renderStories(null); renderHeadlines(null); });
+  BD.getJson('digest.json').then(function(d){ DIGEST = d; renderDigest(d); renderStories(d); },
+    function(){ renderDigest(null); renderStories(null); });
   BD.getJson('data/moves/markets.json').then(renderMoves, function(){ renderMoves(null); });
 
   F.init().then(function(){
@@ -716,12 +789,9 @@
       if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x) renderWatch(); }, function(){});
     });
     var v = view();
-    if (v.mode !== 'none'){ renderTeamBoard(v); return; }
-    if (BOOK_HIDDEN){ renderBookBoard(null); return; }
-    return loadBook().then(renderBookBoard, function(){ renderBookBoard(null); });
+    renderRoster(v);
   }, function(err){
     if (window.console) console.warn(err);
-    if (BOOK_HIDDEN){ boardFail(); return; }
-    loadBook().then(function(b){ if (b) renderBookBoard(b); else boardFail(); }, boardFail);
+    boardFail();
   });
 })();
