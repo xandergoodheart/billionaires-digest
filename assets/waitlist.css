@@ -80,10 +80,10 @@
 
 /* the "Save your team" section on the Play home, right under the hero */
 .wl-save { margin: var(--s2) 0; }
-.wl-save__head { margin-bottom: var(--s1); }
+.wl-save__head { margin: 0 auto var(--s1); max-width: 760px; text-align: center; }
 .wl-save__h { font-family: var(--font-display); font-weight: var(--fw-display); text-transform: uppercase; font-size: var(--fs-xl); line-height: 1.05; margin: 0 0 6px; color: var(--text); }
-.wl-save__p { margin: 0; color: var(--text-muted); line-height: 1.45; max-width: 60ch; }
-.wl-save .wl-card { max-width: 760px; }
+.wl-save__p { margin: 0; color: var(--text-muted); line-height: 1.45; max-width: 60ch; margin-left: auto; margin-right: auto; }
+.wl-save .wl-card, .wl-save .wl-invite { max-width: 760px; margin-left: auto; margin-right: auto; }
 .hm-hero__kick [data-wl-season] { white-space: nowrap; }
 
 /* how it works */
