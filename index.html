@@ -120,11 +120,14 @@
         </div>
       </div>
       <div class="hm-hero__media">
-        <video class="hm-hero__video" muted playsinline loop autoplay preload="metadata" poster="assets/video/how-it-works-poster.webp" aria-label="How it works: a 20-second video">
-          <source src="assets/video/how-it-works.webm" type="video/webm">
-          <source src="assets/video/how-it-works.mp4" type="video/mp4">
-        </video>
-        <button class="hw__vbtn" type="button" hidden>Pause video</button>
+        <p class="hm-hero__vlabel"><svg class="hm-hero__vlabel-ico" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><path d="M2.5 1.5v9l8-4.5z" fill="currentColor"/></svg>How it works · 20 sec</p>
+        <div class="hm-hero__vbox">
+          <video class="hm-hero__video" muted playsinline loop autoplay preload="metadata" poster="assets/video/how-it-works-poster.webp" aria-label="How it works: a 20-second video">
+            <source src="assets/video/how-it-works.webm" type="video/webm">
+            <source src="assets/video/how-it-works.mp4" type="video/mp4">
+          </video>
+          <button class="hm-vbtn" type="button" aria-label="Pause video" hidden><svg class="hm-vbtn__ico hm-vbtn__ico--pause" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 2.5h2.6v11H4zM9.4 2.5H12v11H9.4z" fill="currentColor"/></svg><svg class="hm-vbtn__ico hm-vbtn__ico--play" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4.5 2.5v11l9-5.5z" fill="currentColor"/></svg><span class="hm-vbtn__txt">Play video</span></button>
+        </div>
       </div>
     </section>
     <script src="assets/v2/hero-video.js"></script>
@@ -276,6 +279,5 @@
 <script src="assets/v2/dossier.js"></script>
 <script src="assets/v2/home.js"></script>
 <script src="assets/waitlist.js"></script>
-<script src="assets/howto.js"></script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+/* Not loaded anywhere as of 2026-10-13 (the front page links "How it works" to the #how steps instead). */
 /* Billionaires Digest: the "How it works" popup on the Play home (index.html only). ES5, no globals, no dependencies.
  *
  * The hero's "How it works" button (.hm-hero__btn--ghost, href="#how" as the no-JS fallback) opens it every time.

@@ -161,25 +161,50 @@
   .hm-hero__btn { flex: 1 1 100%; }
 }
 
-/* hero with the "How it works" video (assets/v2/hero-video.js). Phones/tablets: video under the buttons, centred,
-   at most 360px. 1024px and up: two columns, text left, square video right. If the video can't load, the script
-   removes .hm-hero--video and hides the box, so the hero is the one-column layout above. */
+/* hero with the "How it works" video (assets/v2/hero-video.js), framed as a card. Under 1024px: stacked, the card
+   centred under the buttons, at most 360px wide, with the same side padding as the text. 1024px and up: two columns
+   (text, then the card), vertically centred, 48px padding all round and a 48px gap. If the video can't load, the
+   script removes .hm-hero--video and hides the card, so the hero is the one-column layout above. */
 .hm-hero--video { flex-direction: column; align-items: stretch; justify-content: flex-end; }
-.hm-hero__media { position: relative; width: auto; max-width: 360px; margin: 0 var(--s3) var(--s3); align-self: center; border-radius: var(--radius-card); overflow: hidden; background: #0B0B0C; border: 1px solid rgba(255, 255, 255, .18); box-shadow: 0 8px 28px rgba(0, 0, 0, .45); }
-.hm-hero__media[hidden] { display: none; }
-.hm-hero__video { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; max-height: 360px; object-fit: contain; background: #0B0B0C; }
 .hm-hero--video .hm-hero__in { padding-bottom: var(--s2); }
-@media (max-width: 767px) {
-  .hm-hero__media { width: calc(100% - 2 * var(--s1)); margin: 0 var(--s1) var(--s2); }
+.hm-hero__media {
+  position: relative; box-sizing: border-box; width: calc(100% - 2 * var(--s3)); max-width: 360px; margin: 0 auto var(--s3); padding: 12px;
+  background: rgba(11, 11, 12, .88); border: 1px solid rgba(255, 255, 255, .12); border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .3);
 }
-@media (min-width: 768px) and (max-width: 1023px) {
-  .hm-hero__media { width: 100%; }
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .hm-hero__media { background: rgba(11, 11, 12, .78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+}
+.hm-hero__media[hidden] { display: none; }
+.hm-hero__vlabel { display: flex; align-items: center; gap: 6px; margin: 0 2px 10px; font-size: var(--fs-xs); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; line-height: 1.2; color: #B9BFC7; }
+.hm-hero__vlabel-ico { flex: none; color: var(--brand); }
+.hm-hero__vbox { position: relative; }
+.hm-hero__video { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: contain; background: #0B0B0C; border-radius: 10px; }
+/* round icon-only Pause/Play, bottom-right inside the video (the progress dashes are at the top) */
+.hm-vbtn {
+  position: absolute; right: 10px; bottom: 10px; display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: rgba(0, 0, 0, .55); color: #fff; cursor: pointer;
+}
+.hm-vbtn:hover { background: rgba(0, 0, 0, .75); }
+.hm-vbtn:focus-visible { outline: 3px solid #8AB4FF; outline-offset: 2px; }
+.hm-vbtn[hidden] { display: none; }
+.hm-vbtn__ico { display: block; }
+.hm-vbtn__ico--play, .hm-vbtn.is-paused .hm-vbtn__ico--pause, .hm-vbtn__txt { display: none; }
+.hm-vbtn.is-paused .hm-vbtn__ico--play { display: block; }
+/* before the first play (reduced motion / autoplay blocked) the same button is the large centred "Play video" */
+.hm-hero__vbox .hw__vbtn--play .hm-vbtn__ico { display: none; }
+.hm-hero__vbox .hw__vbtn--play .hm-vbtn__txt { display: inline; }
+@media (max-width: 767px) {
+  .hm-hero__media { width: calc(100% - 2 * var(--s1)); margin-bottom: var(--s2); padding: 10px; }
 }
 @media (min-width: 1024px) {
-  .hm-hero--video { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); align-items: center; gap: var(--s2); }
-  .hm-hero--video .hm-hero__in { align-self: end; max-width: none; padding: var(--s3) 0 var(--s3) var(--s3); }
-  .hm-hero--video .hm-hero__media { width: 100%; max-width: 460px; margin: var(--s3) var(--s3) var(--s3) 0; }
-  .hm-hero--video .hm-hero__video { max-height: none; }
+  .hm-hero--video { display: grid; grid-template-columns: minmax(0, 1fr) 340px; align-items: center; gap: 48px; padding: 48px; }
+  .hm-hero--video .hm-hero__in { align-self: center; max-width: none; padding: 0; }
+  .hm-hero--video .hm-hero__h { font-size: clamp(44px, 2.4vw + 22px, 60px); line-height: .98; }
+  .hm-hero--video .hm-hero__media { width: 100%; max-width: none; margin: 0; }
+}
+@media (min-width: 1280px) {
+  .hm-hero--video { grid-template-columns: minmax(0, 1fr) 400px; }
 }
 
 /* how it works: three numbered steps, side by side from 768px, stacked on phones */
