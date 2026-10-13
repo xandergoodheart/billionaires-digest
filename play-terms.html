@@ -102,7 +102,10 @@
 <!-- v2topbar:end -->
 
 <main id="main" class="v2-main" tabindex="-1">
-  <div class="v2-wrap gp rl" id="app">
+  <div class="v2-wrap gp rl rl--a" id="app">
+    <!-- PREVIEW ONLY: ?layout=a|b|c switches between three layouts of the same content so the owner can compare.
+         Remove this script, the rl--b / rl--c rules in assets/v2/rules.css and the .rl-vcap line once a layout is picked. -->
+    <script>(function(){var m=/[?&]layout=([abc])\b/.exec(location.search||''),el=document.getElementById('app');if(m&&el)el.className=el.className.replace(/\brl--a\b/,'rl--'+m[1]);})();</script>
     <p class="v2-play">Play money · no prizes · not financial advice</p>
 
     <section class="rl-top" id="how" aria-labelledby="pageh" tabindex="-1">
@@ -118,6 +121,7 @@
             <button class="hm-vbtn" type="button" aria-label="Pause video" hidden><svg class="hm-vbtn__ico hm-vbtn__ico--pause" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 2.5h2.6v11H4zM9.4 2.5H12v11H9.4z" fill="currentColor"/></svg><svg class="hm-vbtn__ico hm-vbtn__ico--play" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4.5 2.5v11l9-5.5z" fill="currentColor"/></svg><span class="hm-vbtn__txt">Play video</span></button>
           </div>
         </div>
+        <p class="rl-vcap">Watch it in 20 seconds</p>
         <script src="assets/v2/hero-video.js"></script>
         <div class="rl-cards">
           <ul class="rl-cards__list">
