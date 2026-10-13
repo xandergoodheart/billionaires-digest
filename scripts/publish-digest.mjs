@@ -3,9 +3,13 @@
 // Checks every story link, drops dead links and quote/profile pages, validates
 // the edition, and only then writes digest.json and archive/. On any problem it
 // exits 1 without writing anything. The draft file is never modified.
+// Optional "movers" ("Why they moved") entries are checked against data/fantasy/days and link-checked too;
+// bad entries are dropped with a warning (never fatal). Kept ones also go to data/fantasy/movers.json.
 
 import { readFile } from 'node:fs/promises';
-import { validate, DIRECTIONS, dates, writeEdition, top10FromIndex, top10AsOfFromIndex } from './lib/edition.mjs';
+import { writeFile, mkdir } from 'node:fs/promises';
+import { validate, DIRECTIONS, dates, writeEdition, top10FromIndex, top10AsOfFromIndex, checkMovers, mergeMoversFile } from './lib/edition.mjs';
+import { loadDayFiles, holdersOf } from './lib/movers.mjs';
 
 const USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
@@ -105,6 +109,21 @@ async function checkLink(url) {
 
 const dropped = [];
 
+// ---- "Why they moved": data checks (ticker, date, changePct against our day files; wording; https) ----
+
+const hadMovers = Object.prototype.hasOwnProperty.call(digest, 'movers');
+const dayData = await loadDayFiles('.');
+let movers = [];
+if (hadMovers) {
+  const r = checkMovers(digest.movers, dayData.movesByDate, isoDate);
+  for (const { entry, reason } of r.dropped) console.warn(`Dropped mover (${reason}): ${entry?.ticker ?? '?'} ${entry?.date ?? ''}`);
+  movers = r.kept.filter((m) => {
+    if (isQuotePage(m.sourceUrl)) { console.warn(`Dropped mover (quote/profile page): ${m.ticker} ${m.date} (${m.sourceUrl})`); return false; }
+    return true;
+  });
+}
+const moverLinks = movers.map((m) => ({ m, url: m.sourceUrl }));
+
 if (Array.isArray(digest.stories)) {
   const afterQuote = [];
   for (const s of digest.stories) {
@@ -120,10 +139,11 @@ if (Array.isArray(digest.stories)) {
     if (!s || typeof s.url !== 'string' || !/^https?:\/\//.test(s.url)) return { s, keep: true, note: null, checked: false }; // validate() reports it
     return { s, checked: true, ...(await checkLink(s.url)) };
   }));
+  const moverResults = await Promise.all(moverLinks.map(async ({ m, url }) => ({ m, checked: true, ...(await checkLink(url)) })));
 
   // If no checked link got any HTTP status back, assume this machine has no
   // network access to article sites and keep every story.
-  const checked = results.filter(r => r.checked);
+  const checked = [...results, ...moverResults].filter(r => r.checked);
   const noNetwork = checked.length > 0 && checked.every(r => !r.gotStatus);
   if (noNetwork) console.warn('Link check skipped: no network access to article sites');
 
@@ -140,7 +160,15 @@ if (Array.isArray(digest.stories)) {
     }
   }
   digest.stories = kept;
+
+  movers = moverResults.filter(({ m, keep, note }) => {
+    if (noNetwork) return true;
+    if (keep) { if (note) console.warn(`Kept mover with ${note}: ${m.ticker} ${m.date} (${m.sourceUrl})`); return true; }
+    console.warn(`Dropped mover (${note}): ${m.ticker} ${m.date} (${m.sourceUrl})`);
+    return false;
+  }).map(r => r.m);
 }
+if (hadMovers) digest.movers = movers;
 
 // ---- top 10 from the people index ----
 // data/people/index.json is the source of truth for the top 10 when it exists.
@@ -165,6 +193,27 @@ if (problems.length) {
 await writeEdition(digest, isoDate);
 console.log(`Published ${digest.stories.length} stories for ${longDate} (${dropped.length} dropped).`);
 
+// ---- data/fantasy/movers.json (never fails the publish) ----
+try {
+  const path = 'data/fantasy/movers.json';
+  let existing = null;
+  try { existing = JSON.parse(await readFile(path, 'utf8')); } catch { /* first run */ }
+  if (movers.length || existing) {
+    const entries = movers.map((m) => ({ ...m, players: holdersOf(dayData.days.get(m.date), m.ticker) }));
+    const next = mergeMoversFile(existing, entries, { tradingDays: dayData.dates, edition: isoDate });
+    const same = existing && JSON.stringify({ ...existing, updated: null }) === JSON.stringify({ ...next, updated: null });
+    if (!same) {
+      await mkdir('data/fantasy', { recursive: true });
+      await writeFile(path, JSON.stringify(next, null, 2) + '\n');
+      console.log(`Movers: ${movers.length} kept; ${path} now has ${Object.keys(next.movers).length} reasons over ${next.days.length} trading days.`);
+    } else {
+      console.log(`Movers: ${movers.length} kept; ${path} unchanged.`);
+    }
+  }
+} catch (err) {
+  console.warn(`warning: movers file skipped: ${err?.message || err}`);
+}
+
 // ---- Open Graph image (never fails the publish) ----
 // Writes og/<isoDate>.png and og/latest.png and points index.html's og:image and twitter:image at the dated file.
 try {
@@ -185,5 +234,5 @@ try {
 } catch (err) {
   console.warn(`warning: static pages skipped: ${err?.message || err}`);
 }
-console.log('Reminder: commit the static pages too: git add people editions companies guides sitemap.xml robots.txt');
+console.log('Reminder: commit the static pages too: git add people editions companies guides sitemap.xml robots.txt data/fantasy/movers.json');
 process.exit(0);

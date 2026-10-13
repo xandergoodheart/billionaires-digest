@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-09",
+  "week": "2026-W41",
+  "people": {
+    "jensen-huang": { "slug": "jensen-huang", "holdings": [{ "ticker": "NVDA", "weight": 1, "changePct": -4.1234 }] },
+    "jeff-bezos": { "slug": "jeff-bezos", "holdings": [{ "ticker": "AMZN", "weight": 1, "changePct": 3.2945 }] },
+    "andy-jassy": { "slug": "andy-jassy", "holdings": [{ "ticker": "AMZN", "weight": 1, "changePct": 3.2945 }] },
+    "warren-buffett": { "slug": "warren-buffett", "holdings": [
+      { "ticker": "BRK.B", "weight": 0.6, "changePct": 0.5 },
+      { "ticker": "TINY", "weight": 0.05, "changePct": 30.0 },
+      { "ticker": "MIDX", "weight": 0.35, "changePct": -2.5 }
+    ] },
+    "michael-dell": { "slug": "michael-dell", "holdings": [
+      { "ticker": "DELL", "weight": 0.75, "changePct": 2.0033 },
+      { "ticker": "SAFE", "weight": 0.125, "changePct": -9.9 }
+    ] },
+    "stale-person": { "slug": "stale-person", "holdings": [{ "ticker": "STAL", "weight": 1, "changePct": 0, "stale": true }] },
+    "quar-person": { "slug": "quar-person", "holdings": [{ "ticker": "QUAR", "weight": 1, "changePct": 0, "quarantined": true }] },
+    "undrafted": { "slug": "undrafted", "holdings": [{ "ticker": "UNDR", "weight": 1, "changePct": 12.0 }] },
+    "p1": { "slug": "p1", "holdings": [{ "ticker": "AAA", "weight": 1, "changePct": 1.1 }] },
+    "p2": { "slug": "p2", "holdings": [{ "ticker": "BBB", "weight": 1, "changePct": -1.2 }] },
+    "p3": { "slug": "p3", "holdings": [{ "ticker": "CCC", "weight": 1, "changePct": 1.3 }] },
+    "p4": { "slug": "p4", "holdings": [{ "ticker": "DDD", "weight": 1, "changePct": 0.4 }] },
+    "p5": { "slug": "p5", "holdings": [{ "ticker": "EEE", "weight": 1, "changePct": 0.2 }] }
+  }
+}
