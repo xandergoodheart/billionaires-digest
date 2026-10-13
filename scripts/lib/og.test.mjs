@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { ogSectors, fitHeadline, updateOgMeta, renderCardOg, renderOg, ogTree, cardTree, OG_WIDTH, OG_HEIGHT } from './og.mjs';
+import { ogSectors, fitHeadline, updateOgMeta, renderCardOg, renderOg, ogTree, cardTree, homeTree, renderHomeOg, publishOg, HOME_COPY, OG_WIDTH, OG_HEIGHT } from './og.mjs';
 
 const PNG = Buffer.from([0x89, 0x50, 0x4e, 0x47]);
 
@@ -73,12 +73,17 @@ test('edition card headline uses the fitted size', () => {
   assert.match(json, new RegExp(`"fontSize":${fit.size},`));
 });
 
-test('updateOgMeta edits the front page (index.html) tags in place; news.html uses the static latest.png', async () => {
+test('index.html has the fixed home.png share image; updateOgMeta edits news.html tags in place', async () => {
   const { readFile } = await import('node:fs/promises');
   const { fileURLToPath } = await import('node:url');
   const root = fileURLToPath(new URL('../../', import.meta.url));
-  const html = await readFile(root + 'index.html', 'utf8');
   const count = (h, re) => (h.match(re) || []).length;
+  const index = await readFile(root + 'index.html', 'utf8');
+  assert.match(index, /<meta property="og:image" content="https:\/\/billionairesdigest\.com\/og\/home\.png">/);
+  assert.match(index, /<meta name="twitter:image" content="https:\/\/billionairesdigest\.com\/og\/home\.png">/);
+  assert.match(index, /<meta property="og:image:alt" content="Billionaires Digest: fantasy sports where the players are billionaires">/);
+  assert.equal(count(index, /og\/\d{4}-\d{2}-\d{2}\.png/g), 0);
+  const html = await readFile(root + 'news.html', 'utf8');
   for (const re of [/<meta property="og:image" content="[^"]*">/g, /<meta name="twitter:card" content="summary_large_image">/g, /<meta name="twitter:image" content="[^"]*">/g]) {
     assert.equal(count(html, re), 1, String(re));
   }
@@ -87,7 +92,40 @@ test('updateOgMeta edits the front page (index.html) tags in place; news.html us
   // only the two image URLs changed: no tag was inserted
   assert.equal(out.split('\n').length, html.split('\n').length);
   assert.equal(out.replace(/og\/[^"]+\.png/g, 'X'), html.replace(/og\/[^"]+\.png/g, 'X'));
-  const news = await readFile(root + 'news.html', 'utf8');
-  assert.match(news, /<meta property="og:image" content="https:\/\/billionairesdigest\.com\/og\/latest\.png">/);
-  assert.match(news, /<meta name="twitter:image" content="https:\/\/billionairesdigest\.com\/og\/latest\.png">/);
+});
+
+test('publishOg writes the dated image, updates news.html and leaves index.html alone', async () => {
+  const { readFile, writeFile, mkdtemp, rm, stat } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const path = await import('node:path');
+  const { fileURLToPath } = await import('node:url');
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const dir = await mkdtemp(path.join(tmpdir(), 'og-pub-'));
+  try {
+    const index = await readFile(root + 'index.html', 'utf8');
+    const news = await readFile(root + 'news.html', 'utf8');
+    await writeFile(path.join(dir, 'index.html'), index);
+    await writeFile(path.join(dir, 'news.html'), news);
+    const r = await publishOg({ date: 'Monday, January 2, 2030', lede: { headline: 'Test headline' }, stories: [] }, '2030-01-02', dir);
+    assert.equal(r.page, 'news.html');
+    assert.equal(r.metaChanged, true);
+    assert.equal(await readFile(path.join(dir, 'index.html'), 'utf8'), index);
+    const newsOut = await readFile(path.join(dir, 'news.html'), 'utf8');
+    assert.match(newsOut, /<meta property="og:image" content="https:\/\/billionairesdigest\.com\/og\/2030-01-02\.png">/);
+    assert.match(newsOut, /<meta name="twitter:image" content="https:\/\/billionairesdigest\.com\/og\/2030-01-02\.png">/);
+    assert.ok((await stat(path.join(dir, 'og', '2030-01-02.png'))).size > 1000);
+    assert.ok((await stat(path.join(dir, 'og', 'latest.png'))).size > 1000);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+
+test('homeTree carries the fixed front-page copy and renders a 1200x630 PNG', async () => {
+  const json = JSON.stringify(homeTree());
+  for (const s of [HOME_COPY.headline, HOME_COPY.sub, ...HOME_COPY.pills, 'BILLIONAIRES DIGEST', 'billionairesdigest.com']) {
+    assert.ok(json.includes(JSON.stringify(s).slice(1, -1)), s);
+  }
+  const png = await renderHomeOg();
+  assert.equal(png.readUInt32BE(16), OG_WIDTH);
+  assert.equal(png.readUInt32BE(20), OG_HEIGHT);
 });

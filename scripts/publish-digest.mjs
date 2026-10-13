@@ -223,11 +223,12 @@ try {
 }
 
 // ---- Open Graph image (never fails the publish) ----
-// Writes og/<isoDate>.png and og/latest.png and points index.html's og:image and twitter:image at the dated file.
+// Writes og/<isoDate>.png and og/latest.png and points news.html's og:image and twitter:image at the dated file.
+// index.html is never touched: the front page keeps its fixed og/home.png (scripts/render-home-og.mjs).
 try {
   const { publishOg } = await import('./lib/og.mjs');
   const r = await publishOg(digest, isoDate, '.');
-  console.log(`OG image written: og/${isoDate}.png and og/latest.png${r.metaChanged ? '; index.html meta tags updated' : ''}.`);
+  console.log(`OG image written: og/${isoDate}.png and og/latest.png${r.metaChanged ? '; news.html meta tags updated' : ''}.`);
 } catch (err) {
   console.warn(`warning: OG image skipped: ${err?.message || err}`);
 }
@@ -242,5 +243,5 @@ try {
 } catch (err) {
   console.warn(`warning: static pages skipped: ${err?.message || err}`);
 }
-console.log('Reminder: commit the static pages too: git add people editions companies guides sitemap.xml robots.txt data/fantasy/movers.json');
+console.log('Reminder: commit the static pages too: git add og news.html people editions companies guides sitemap.xml robots.txt data/fantasy/movers.json');
 process.exit(0);

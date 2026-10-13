@@ -23,7 +23,7 @@ Stack decision: stay on the current static site (GitHub Pages) + existing Supaba
 - Migrations idempotent (CI re-applies all of them daily). New migration file: `supabase/migrations/0005_waitlist.sql` (0004 is reserved in `pending/`).
 - Browser code ES5 IIFE + `BD` helpers (assets/common.js). Mobile 390px, light+dark themes, visible focus, reduced motion.
 - Never invent facts. Captain stats shown only from real counts. No real-person photos.
-- Don't edit `scripts/` files the morning routine relies on in ways that change their behaviour; `index.html` must keep its og:image / twitter:image meta tags (scripts/lib/og.mjs rewrites them) and the v2 nav/footer markers.
+- Don't edit `scripts/` files the morning routine relies on in ways that change their behaviour; `index.html` keeps its fixed og:image / twitter:image (og/home.png); scripts/lib/og.mjs now rewrites news.html's tags instead and the v2 nav/footer markers.
 
 ## 1. Database — `supabase/migrations/0005_waitlist.sql`
 Tables (all RLS on, no grants to anon/authenticated):

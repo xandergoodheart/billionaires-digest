@@ -1,7 +1,7 @@
 // Renders the Open Graph image for the current digest.json by hand.
 // Usage: node scripts/render-og.mjs
-// Writes og/<YYYY-MM-DD>.png and og/latest.png and points index.html's og:image and
-// twitter:image meta tags at the dated file. The date comes from digest.json's "date".
+// Writes og/<YYYY-MM-DD>.png and og/latest.png and points news.html's og:image and
+// twitter:image meta tags at the dated file (index.html keeps its fixed og/home.png). The date comes from digest.json's "date".
 
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -33,7 +33,7 @@ const isoDate = isoFromLong(digest.date) || dates(new Date()).isoDate;
 try {
   const r = await publishOg(digest, isoDate, ROOT);
   console.log(`Wrote ${path.relative(ROOT, r.dated)} and ${path.relative(ROOT, r.latest)} (${r.bytes} bytes).`);
-  console.log(r.metaChanged ? 'Updated og:image / twitter:image in index.html.' : 'index.html meta tags already up to date.');
+  console.log(r.metaChanged ? 'Updated og:image / twitter:image in news.html.' : 'news.html meta tags already up to date.');
 } catch (err) {
   console.error(`OG image failed: ${err.stack || err.message}`);
   process.exit(1);
