@@ -13,6 +13,8 @@
      Play with friends    <- static card in index.html (leagues.html#leagueforms)
      Today's Digest       <- digest.json: the lede (headline, dek, source link) + the next 4 headlines + Read today's edition
      From the Digest      <- up to 3 digest.json stories after those 4 (hidden when there are none, so nothing repeats)
+     story player chips   <- each story's own `people`, else its `who` (never guessed from the text): up to 2 draftable players, with
+                             their move on the latest scored day (BDFantasyStore's S.lastDay, no extra fetch)
      Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1); card is hidden
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
    Play money only, no prizes, not financial advice. */
@@ -341,6 +343,7 @@
     if (!lede) box.appendChild(el('p', 'hm-lede__dek', 'The morning edition is on the press.'));
     // the source of the story behind the top story (every fact links its source)
     var s = ledeStory(d), u = s ? BD.safeUrl(s.url) : null;
+    if (lede && s) chipSlot(box, s);
     if (u && s.source){
       var src = el('p', 'hm-lede__src');
       src.appendChild(document.createTextNode('Source: '));
@@ -357,6 +360,7 @@
         var meta = [st.sector, st.who].filter(Boolean).join(' · ');
         if (meta) li.appendChild(el('span', 'hm-dg__meta', meta));
         li.appendChild(link('hm-dg__h', st.headline, 'news.html'));
+        chipSlot(li, st);
         ul.appendChild(li);
       });
       box.appendChild(ul);
@@ -379,10 +383,97 @@
       var h = el('h3', 'hm-story__h');
       h.appendChild(link(null, s.headline, 'news.html'));
       li.appendChild(h);
+      chipSlot(li, s);
       if (s.move) li.appendChild(el('p', 'hm-story__p', firstSentences(s.move, 150)));
       if (s.source) li.appendChild(el('span', 'hm-story__src', s.source));
       ul.appendChild(li);
     });
+  }
+
+  // ---- story player chips: who in the game a story names, and their move on the latest scored day ----
+  // Players come only from the story's own `people` list (names as in data/people/index.json), in that order, or, when
+  // it is empty, from its `who` (the subject the edition tagged); kept when they are in the draftable pool (billionaires
+  // and CEOs); at most 2. Never guessed from the text. The move is the
+  // latest scored trading day (data/fantasy/days/<latestDay>.json, already loaded by the store), which can be before
+  // the story's date, so the row says "Last close <day>". Context only: the wording never says the story caused it.
+  var CHIP_MAX = 2, chipSlots = [], chipsReady = false;
+  function normName(n){
+    var t = String(n == null ? '' : n);
+    if (t.normalize) t = t.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    return t.toLowerCase().replace(/\s*&\s*family\s*$/, '').replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
+  }
+  function has(o, k){ return !!o && Object.prototype.hasOwnProperty.call(o, k); }
+  function storyPlayers(st){
+    var pool = F.state.people || {}, byName = {}, out = [], seen = {}, k;
+    for (k in pool) if (has(pool, k) && pool[k] && pool[k].name) byName[normName(pool[k].name)] = k;
+    var N = window.BDPortraitNames || {};
+    // the story's own `people`; when that is empty, its tagged subject `who` (the edition writes both)
+    var names = arr(st && st.people).length ? arr(st.people) : (st && typeof st.who === 'string' ? [st.who] : []);
+    names.forEach(function(nm){
+      if (out.length >= CHIP_MAX || typeof nm !== 'string') return;
+      var n = normName(nm), slug = has(byName, n) ? byName[n] : (has(N, n) ? N[n] : null);
+      if (slug && has(pool, slug) && !seen[slug]){ seen[slug] = 1; out.push(pool[slug]); }
+    });
+    return out;
+  }
+  // a player's score on the day, or null (no row, missing numbers, or a quarantined holding flagged for that player)
+  function dayScore(day, slug){
+    var r = day && day.people && has(day.people, slug) ? day.people[slug] : null;
+    if (!r || typeof r.returnPct !== 'number' || !isFinite(r.returnPct) || typeof r.points !== 'number' || !isFinite(r.points)) return null;
+    if (arr(day.flags).some(function(f){ return f && arr(f.people).indexOf(slug) >= 0; })) return null;
+    return { pct: r.returnPct, pts: Math.round(r.points) };
+  }
+  function pctTxt(p){
+    var r = Math.round(p * 10) / 10;
+    if (r === 0) return '0.0%';
+    return (r > 0 ? '+' : MINUS) + Math.abs(r).toFixed(1) + '%';
+  }
+  function ptsTxt(n){ return signedTxt(n) + ' pts'; }
+  function chipRow(st){
+    var ps = storyPlayers(st);
+    if (!ps.length) return null;
+    var day = F.state.lastDay, d = day && typeof day.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(day.date) ? day.date : null;
+    var row = el('div', 'hm-chips');
+    row.setAttribute('role', 'group');
+    row.setAttribute('aria-label', 'Players in this story');
+    if (d) row.appendChild(el('span', 'hm-chips__pre', 'Last close ' + dayParts(d).wd));
+    ps.forEach(function(p){
+      var sc = d ? dayScore(day, p.slug) : null, full = d ? dayParts(d).full : '';
+      var a = link('hm-chip', '', 'player.html?p=' + encodeURIComponent(p.slug));
+      var av = avatar(p); av.className += ' hm-chip__av';
+      a.appendChild(av);
+      a.appendChild(el('span', 'hm-chip__name', surname(p.name) || p.name));
+      var tip;
+      if (sc){
+        var r = Math.round(sc.pct * 10) / 10, cls = r !== 0 ? numCls(r) : numCls(sc.pts);
+        var mv = pctTxt(sc.pct) + (r === 0 && sc.pts === 0 ? '' : ' · ' + ptsTxt(sc.pts));
+        a.appendChild(el('span', 'hm-chip__mv num ' + cls, mv));
+        tip = p.name + ' on ' + full + ': ' + pctTxt(sc.pct) + ', ' + signedTxt(sc.pts) + ' points. Shown for context; moves have many causes.';
+      } else {
+        a.appendChild(el('span', 'hm-chip__mv hm-chip__mv--none', 'no score'));
+        tip = p.name + (full ? ' on ' + full : '') + ': no score. Shown for context; moves have many causes.';
+      }
+      a.title = tip;
+      a.setAttribute('aria-label', tip + ' Open the player page.');
+      row.appendChild(a);
+    });
+    return row;
+  }
+  // render-time placeholder (the digest can arrive before the store); filled once both are in
+  function chipSlot(parent, st){
+    var box = el('div', 'hm-chips-slot'); box.hidden = true;
+    parent.appendChild(box);
+    chipSlots.push({ box: box, st: st });
+    if (chipsReady) fillChips();
+  }
+  function fillChips(){
+    chipSlots.forEach(function(c){
+      var row = null;
+      try { row = chipRow(c.st); } catch (e) { if (window.console) console.warn(e); }
+      clear(c.box);
+      if (row){ c.box.appendChild(row); c.box.hidden = false; } else c.box.hidden = true;
+    });
+    chipSlots = [];
   }
 
   // ---- Next Moves: open markets from data/moves/markets.json ----
@@ -785,6 +876,7 @@
   BD.getJson('data/moves/markets.json').then(renderMoves, function(){ renderMoves(null); });
 
   F.init().then(function(){
+    chipsReady = true; fillChips();
     // the watch list waits for the calendar (earnings picks); nicknames re-render it once they arrive
     calP.then(function(){
       renderWatch();

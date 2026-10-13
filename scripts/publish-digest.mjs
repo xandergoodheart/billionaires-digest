@@ -8,7 +8,7 @@
 
 import { readFile } from 'node:fs/promises';
 import { writeFile, mkdir } from 'node:fs/promises';
-import { validate, DIRECTIONS, dates, writeEdition, top10FromIndex, top10AsOfFromIndex, checkMovers, mergeMoversFile } from './lib/edition.mjs';
+import { validate, DIRECTIONS, dates, writeEdition, fillPeopleFromWho, top10FromIndex, top10AsOfFromIndex, checkMovers, mergeMoversFile } from './lib/edition.mjs';
 import { loadDayFiles, holdersOf } from './lib/movers.mjs';
 
 const USER_AGENT =
@@ -179,6 +179,14 @@ if (peopleIndex) {
   digest.top10 = top10FromIndex(peopleIndex);
   digest.top10AsOf = top10AsOfFromIndex(peopleIndex);
   console.log(`Top 10 set from data/people/index.json (${digest.top10AsOf}).`);
+}
+
+// ---- people from who (player chips on the front page) ----
+{
+  let ceoIndex = null;
+  try { ceoIndex = JSON.parse(await readFile('data/ceos/index.json', 'utf8')); } catch { /* no CEO list */ }
+  const filled = fillPeopleFromWho(digest, [peopleIndex, ceoIndex]);
+  for (const f of filled) console.log(`people filled from who: "${f.headline}" -> [${f.who}]`);
 }
 
 // ---- validate and write ----

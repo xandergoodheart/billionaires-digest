@@ -47,6 +47,7 @@ Source of truth: `scripts/lib/edition.mjs` `rulesText()`. If you change one, cha
 - Only use URLs of news articles or filings, not stock-quote or company profile pages. Link the article itself.
 - Skip the net-worth top 10: top10 and top10AsOf are filled automatically from our own data. Never quote Forbes or Bloomberg net worth figures or ranks.
 - When a story is about someone in the top 10, set "who" to their name exactly as written in top10.
+- "people" is required when the story is about one or more top-100 people or tracked CEOs; always include "who". Write names exactly as in data/people/index.json or data/ceos/index.json. (If it is missing, the publish script fills it with [who] when who is an exact player name.)
 - Only include a consensus alert when two or more billionaires moved money the same direction in the same sector. Otherwise set it to null.
 - Write plainly: short sentences, no jargon, no hype. Keep facts in "move"; put opinion only in "read", "why", "bear" and "memo".
 - Do not reproduce article text. Summarize in your own words.
@@ -84,8 +85,10 @@ Goal: explain WHY a player's stock moved on the site's player cards, with a link
 ## Optional story fields
 These are new and optional. Older editions without them still work.
 - `via`: the company or vehicle the story is about when it isn't the person directly (e.g. `"Tesla"`).
-- `people`: an array of every top-100 name the story affects, written exactly as in
-  `data/people/index.json`. For example, an Alphabet story is `["Larry Page", "Sergey Brin"]`.
+- `people`: required when the story is about one or more top-100 people or tracked CEOs; always include `who`.
+  Write names exactly as in `data/people/index.json` or `data/ceos/index.json`. For example, an Alphabet story is
+  `["Larry Page", "Sergey Brin"]`. The front page shows these players' latest moves under the story. If it is
+  missing, the publish script fills it with `[who]` when `who` is an exact player name.
 - `who` stays the primary person.
 - `correction`: a string, only when a published story had a significant error that was fixed. Write it as
   `"Corrected <Mon D, YYYY>: <what was wrong and what it says now>."` The site shows it as a small note
@@ -104,7 +107,7 @@ The publish script sets `date` and `updated` for you, but include them anyway.
   "stories": [ {
       "who": person's name, "sector": one of "AI & tech" | "Finance" | "Aerospace" | "Luxury & retail" | "Real estate" | "Energy" | "Media" | "Autos" | "Industrials" (mining, metals, steel, cement, chemicals, shipping, manufacturing) | "Health" (pharma, vaccines, hospitals, biotech) | "Other",
       "via": optional, the company or vehicle the story is about when it isn't the person directly (e.g. "Tesla"),
-      "people": optional, array of every top-100 name the story affects (e.g. ["Larry Page", "Sergey Brin"]),
+      "people": required when the story is about one or more top-100 people or tracked CEOs; always include "who". Array of names exactly as in data/people/index.json or data/ceos/index.json (e.g. ["Larry Page", "Sergey Brin"]),
       "type": e.g. "Acquisition" | "Investment" | "Insider trade" | "IPO / Markets" | "Leadership" | "Product launch" | "Policy" | "Property" | "Divestiture",
       "tickers": e.g. "NVDA · MSFT" (or "Private"),
       "read": short opinion label, "direction": "up" | "down" | "flat",

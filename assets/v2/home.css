@@ -138,6 +138,26 @@
 .hm-story__p { font-size: var(--fs-sm); color: var(--text-muted); margin: 0; }
 .hm-story__src { margin-top: auto; font-size: var(--fs-xs); color: var(--text-muted); }
 
+/* ---------- story player chips (Today's Digest + From the Digest): player, then their last scored move ---------- */
+.hm-chips-slot { margin: 2px 0 6px; min-width: 0; }
+.hm-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-width: 0; }
+.hm-chips__pre { font-size: var(--fs-xs); color: var(--text-muted); white-space: nowrap; }
+.hm-chip {
+  display: inline-flex; align-items: center; gap: 6px; max-width: 100%; min-height: 30px; padding: 3px 10px 3px 4px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface-2); color: var(--text);
+  font-size: var(--fs-xs); line-height: 1.2; text-decoration: none;
+}
+.hm-chip:hover { border-color: var(--line-2); }
+.hm-chip:hover .hm-chip__name { text-decoration: underline; text-underline-offset: 2px; }
+.hm-chip:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.hm-chip__av.v2-av { --av: 20px; }
+.hm-chip__name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.hm-chip__mv { font-weight: 700; white-space: nowrap; color: var(--text-muted); }
+.hm-chip__mv.v2-pos { color: var(--positive); }
+.hm-chip__mv.v2-neg { color: var(--negative); }
+.hm-chip__mv.v2-zero, .hm-chip__mv--none { color: var(--text-muted); font-weight: 400; }
+.hm-story .hm-chips-slot { margin: 0; }
+
 /* ---------- side: Next Moves (hidden card) ---------- */
 .hm-odds__top { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
 .hm-odds__top .hm-rail__h { border-bottom: 0; margin-bottom: 0; }

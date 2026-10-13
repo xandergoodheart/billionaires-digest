@@ -25,7 +25,7 @@ export function schemaText(longDate, shortDate) {
   "stories": [ {
       "who": person's name, "sector": one of "AI & tech" | "Finance" | "Aerospace" | "Luxury & retail" | "Real estate" | "Energy" | "Media" | "Autos" | "Industrials" (mining, metals, steel, cement, chemicals, shipping, manufacturing) | "Health" (pharma, vaccines, hospitals, biotech) | "Other",
       "via": optional, the company or vehicle the story is about when it isn't the person directly (e.g. "Tesla"),
-      "people": optional, array of every top-100 name the story affects (e.g. ["Larry Page", "Sergey Brin"]),
+      "people": required when the story is about one or more top-100 people or tracked CEOs; always include "who". Array of names exactly as in data/people/index.json or data/ceos/index.json (e.g. ["Larry Page", "Sergey Brin"]),
       "type": e.g. "Acquisition" | "Investment" | "Insider trade" | "IPO / Markets" | "Leadership" | "Product launch" | "Policy" | "Property" | "Divestiture",
       "tickers": e.g. "NVDA · MSFT" (or "Private"),
       "read": short opinion label, "direction": "up" | "down" | "flat",
@@ -53,6 +53,7 @@ export function rulesText(longDate) {
 - Only use URLs of news articles or filings, not stock-quote or company profile pages.
 - Skip the net-worth top 10: top10 and top10AsOf are filled automatically from our own data. Never quote Forbes or Bloomberg net worth figures or ranks.
 - When a story is about someone in the top 10, set "who" to their name exactly as written in top10.
+- "people" is required when the story is about one or more top-100 people or tracked CEOs; always include "who". Write names exactly as in data/people/index.json or data/ceos/index.json. (If it is missing, the publish script fills it with [who] when who is an exact player name.)
 - Only include a consensus alert when two or more billionaires moved money the same direction in the same sector. Otherwise set it to null.
 - Write plainly: short sentences, no jargon, no hype. Keep facts in "move"; put opinion only in "read", "why", "bear" and "memo".
 - Do not reproduce article text. Summarize in your own words.
@@ -131,6 +132,25 @@ export function top10AsOfFromIndex(index) {
 }
 
 // Writes digest.json, archive/<isoDate>.json and rebuilds archive/index.json.
+// ---- people from who ----
+// A story's `people` drives the player chips on the front page. When it is missing or empty and `who` is exactly a
+// name in data/people/index.json or data/ceos/index.json, set it to [who]. Returns what was filled.
+export function fillPeopleFromWho(digest, indexes = []) {
+  const names = new Set();
+  for (const ix of indexes) for (const p of (Array.isArray(ix?.people) ? ix.people : [])) {
+    if (p && typeof p.name === 'string' && p.name) names.add(p.name);
+  }
+  const filled = [];
+  for (const s of (Array.isArray(digest?.stories) ? digest.stories : [])) {
+    if (!s || (Array.isArray(s.people) && s.people.length)) continue;
+    if (typeof s.who === 'string' && names.has(s.who)) {
+      s.people = [s.who];
+      filled.push({ headline: s.headline, who: s.who });
+    }
+  }
+  return filled;
+}
+
 export async function writeEdition(digest, isoDate) {
   const json = JSON.stringify(digest, null, 2) + '\n';
   await writeFile('digest.json', json);
