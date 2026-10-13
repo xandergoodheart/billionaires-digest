@@ -239,57 +239,101 @@
 .hm-stories__foot { margin: 12px 0 0; font-size: var(--fs-sm); }
 .hm-stories__foot a { color: var(--link); font-weight: 600; }
 
-/* ---------- players to watch: featured strip under the hero ----------
-   Five dark cards (both themes) in one row from 1024px; below that a horizontal swipe row (scroll-snap, the next card
-   peeks, no visible scrollbar) that bleeds to the screen edges so only the row scrolls, never the page. */
+/* ---------- players to watch: five flip cards under the hero ----------
+   Dark cards (both themes). One row of five from 1024px; below that a horizontal swipe row (scroll-snap, the next card
+   peeks, no visible scrollbar) that bleeds to the screen edges so only the row scrolls, never the page.
+   Each card flips in place (rotateY, 450ms); with reduced motion the faces swap instantly (ui.css drops transitions). */
 .hm-ptw { margin-bottom: var(--gutter); }
-.hm-ptw__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px var(--s1); margin-bottom: 12px; }
+.hm-ptw__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px var(--s1); margin-bottom: 10px; }
 .hm-ptw__titles { display: flex; flex-direction: column-reverse; min-width: 0; }
 .hm-ptw__h { margin: 0; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 40px; line-height: 1; text-transform: uppercase; letter-spacing: .005em; color: var(--text); }
 .hm-ptw__k { margin: 0 0 4px; font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
 .hm-ptw__more { display: inline-flex; align-items: center; gap: 4px; flex: none; min-height: var(--tap); color: var(--link); font-size: var(--fs-sm); font-weight: 700; text-decoration: none; white-space: nowrap; }
 .hm-ptw__more:hover { text-decoration: underline; text-underline-offset: 2px; }
 
-.hm-ptw__row {
-  list-style: none; margin: 0; padding: 4px 0 6px;
-  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--gutter);
-}
+.hm-ptw__row { list-style: none; margin: 0; padding: 4px 0 6px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
 .hm-ptw__card {
   --text: #FFFFFF; --text-muted: #B9BFC7; --line: #33373C; --positive: #3CC985; --negative: #FF6B64; --brand-ink: #FF6B64; --link: #8AB4FF;
-  position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0;
-  padding: 20px var(--s1) var(--s1); text-align: center;
-  background: var(--ink-2); color: #fff; border: 1px solid rgba(255, 255, 255, .1); border-radius: 14px; box-shadow: var(--shadow);
-  transition: transform var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+  position: relative; min-width: 0; perspective: 1100px; color: #fff;
+  transition: transform var(--t-base) var(--ease);
 }
-.hm-ptw__card.is-top { border-top-color: var(--brand); box-shadow: inset 0 3px 0 var(--brand), var(--shadow); }
-.hm-ptw__card:hover, .hm-ptw__card:focus-within { transform: translateY(-3px); border-color: rgba(255, 255, 255, .22); }
-.hm-ptw__card.is-top:hover, .hm-ptw__card.is-top:focus-within { border-top-color: var(--brand); }
+.hm-ptw__card:hover, .hm-ptw__card:focus-within { transform: translateY(-3px); }
+.hm-ptw__inner { position: relative; display: grid; height: 100%; transform-style: preserve-3d; transition: transform 450ms var(--ease); }
+.hm-ptw__card.is-flipped .hm-ptw__inner { transform: rotateY(180deg); }
+.hm-ptw__face {
+  grid-area: 1 / 1; min-width: 0; display: flex; flex-direction: column;
+  background: var(--ink-2); border: 1px solid rgba(255, 255, 255, .1); border-radius: 14px; box-shadow: var(--shadow);
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+}
+.hm-ptw__card:hover .hm-ptw__face, .hm-ptw__card:focus-within .hm-ptw__face { border-color: rgba(255, 255, 255, .22); }
+.hm-ptw__card.is-top .hm-ptw__face { box-shadow: inset 0 3px 0 var(--brand), var(--shadow); }
+.hm-ptw__back { transform: rotateY(180deg); padding: 10px; gap: 5px; }
 .hm-ptw__card :focus-visible { outline-color: #8AB4FF; }
-.hm-ptw__pic { position: relative; flex: none; }
-.hm-ptw__av { --av: 96px; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14); }
+/* reduced motion: no 3D turn, the faces swap */
+@media (prefers-reduced-motion: reduce) {
+  .hm-ptw__card:hover, .hm-ptw__card:focus-within { transform: none; }
+  .hm-ptw__card.is-flipped .hm-ptw__inner, .hm-ptw__back { transform: none; }
+  .hm-ptw__back { visibility: hidden; }
+  .hm-ptw__card.is-flipped .hm-ptw__back { visibility: visible; }
+  .hm-ptw__card.is-flipped .hm-ptw__front { visibility: hidden; }
+}
+
+/* front */
+.hm-ptw__front { align-items: stretch; }
+.hm-ptw__flip {
+  flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; gap: 5px; width: 100%;
+  padding: 12px 10px 6px; background: none; border: 0; border-radius: 13px 13px 0 0; color: inherit; font: inherit; text-align: center; cursor: pointer;
+}
+.hm-ptw__flip:focus-visible { outline: 3px solid #8AB4FF; outline-offset: -3px; }
+.hm-ptw__pic { position: relative; flex: none; display: inline-block; }
+.hm-ptw__av { --av: 64px; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14); }
 .hm-ptw__rank {
-  position: absolute; left: -6px; top: -4px; min-width: 32px; height: 26px; padding: 0 6px; border-radius: 999px;
+  position: absolute; left: -8px; top: -4px; min-width: 28px; height: 22px; padding: 0 5px; border-radius: 999px;
   display: inline-flex; align-items: center; justify-content: center;
-  background: #fff; color: #16181B; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 17px; line-height: 1;
+  background: #fff; color: #16181B; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 15px; line-height: 1;
   box-shadow: 0 0 0 2px var(--ink-2);
 }
 .hm-ptw__card.is-top .hm-ptw__rank { background: var(--brand); color: #fff; }
-.hm-ptw__who { display: flex; flex-direction: column; align-items: center; min-width: 0; max-width: 100%; }
-.hm-ptw__who .v2-player__name { display: inline; font-size: var(--fs-lg); color: #fff; overflow-wrap: anywhere; }
-.hm-ptw__who .v2-player__name:hover { text-decoration: underline; text-underline-offset: 2px; }
-.hm-ptw__card .v2-ceo { background: #fff; color: #16181B; border-color: #fff; }
-.hm-ptw__nick { margin-top: 3px; }
-.hm-ptw__pts { margin: 2px 0 0; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 52px; line-height: .95; }
-.hm-ptw__unit { font-size: 18px; letter-spacing: .02em; color: var(--text-muted); }
-.hm-ptw__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 14px; margin: 0; font-size: var(--fs-sm); color: var(--text-muted); }
+.hm-ptw__who { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; max-width: 100%; }
+.hm-ptw__name { font-size: var(--fs-md); font-weight: 700; line-height: 1.15; overflow-wrap: anywhere; }
+.hm-ptw__flip:hover .hm-ptw__name { text-decoration: underline; text-underline-offset: 2px; }
+.hm-ptw__card .v2-ceo { background: #fff; color: #16181B; border-color: #fff; margin-left: 4px; vertical-align: 1px; }
+.hm-ptw__nick { margin: 0; }
+.hm-ptw__tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: #2A2D31; color: #E1E4E8; font-size: 11px; font-weight: 700; letter-spacing: .02em; white-space: nowrap; }
+.hm-ptw__ico { font-size: 12px; line-height: 1; }
+.hm-ptw__nums { display: flex; align-items: center; justify-content: center; gap: 4px 10px; flex-wrap: wrap; }
+.hm-ptw__pts { font-family: var(--font-display); font-weight: var(--fw-display); font-size: 36px; line-height: .95; }
+.hm-ptw__unit { font-size: 15px; letter-spacing: .02em; color: var(--text-muted); }
+.hm-ptw__meta { display: flex; flex-direction: column; align-items: flex-start; gap: 0; font-size: var(--fs-xs); line-height: 1.3; color: var(--text-muted); text-align: left; }
 .hm-ptw__m strong { font-weight: 700; color: var(--text); }
 .hm-ptw__m strong.v2-pos { color: var(--positive); }
 .hm-ptw__m strong.v2-neg { color: var(--negative); }
-.hm-ptw__draft { margin-top: auto; align-self: stretch; }
-@media (prefers-reduced-motion: reduce) {
-  .hm-ptw__card { transition: none; }
-  .hm-ptw__card:hover, .hm-ptw__card:focus-within { transform: none; }
-}
+.hm-ptw__front .hm-ptw__draft { margin: 0 10px 10px; min-height: 34px; padding: 4px 12px; font-size: 13px; }
+
+/* back */
+.hm-ptw__bhd { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; }
+.hm-ptw__bh { min-width: 0; margin: 0; font-size: var(--fs-sm); font-weight: 700; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hm-ptw__bbody { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 6px; }
+.hm-ptw__load { margin: 0; font-size: var(--fs-xs); }
+.hm-ptw__chart { margin: 0; }
+.hm-ptw__svg { display: block; width: 100%; height: 36px; overflow: visible; }
+.hm-ptw__bar.is-pos { fill: var(--positive); }
+.hm-ptw__bar.is-neg { fill: var(--negative); }
+.hm-ptw__base { stroke: #7C848E; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.hm-ptw__cap { margin-top: 1px; font-size: 10px; color: var(--text-muted); letter-spacing: .02em; }
+.hm-ptw__wh { margin: 0; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+.hm-ptw__why { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.hm-ptw__r { display: flex; gap: 5px; align-items: flex-start; font-size: 11.5px; line-height: 1.25; }
+.hm-ptw__r .hm-ptw__ico { flex: none; margin-top: 1px; }
+.hm-ptw__rt { min-width: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: #E1E4E8; }
+.hm-ptw__rt strong { color: #fff; }
+.hm-ptw__rt a { color: #8AB4FF; }
+.hm-ptw__acts { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; margin-top: auto; padding-top: 2px; }
+.hm-ptw__acts .hm-ptw__draft { min-height: 30px; padding: 4px 12px; font-size: 13px; }
+.hm-ptw__prof { display: inline-flex; align-items: center; min-height: 32px; color: #8AB4FF; font-size: 12px; font-weight: 700; text-decoration: none; }
+.hm-ptw__prof:hover { text-decoration: underline; }
+.hm-ptw__back-btn { flex: none; min-height: 28px; padding: 2px 10px; border-radius: 999px; border: 1px solid #7C848E; background: transparent; color: #fff; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.hm-ptw__back-btn:hover { border-color: #fff; }
 
 /* tablet and phone: swipe row */
 @media (max-width: 1023px) {
@@ -300,13 +344,34 @@
     scrollbar-width: none; -ms-overflow-style: none;
   }
   .hm-ptw__row::-webkit-scrollbar { display: none; }
-  .hm-ptw__card { flex: 0 0 38%; scroll-snap-align: start; }
+  .hm-ptw__card { flex: 0 0 32%; scroll-snap-align: start; }
 }
 @media (max-width: 767px) {
   .hm-ptw__h { font-size: 32px; }
-  .hm-ptw__head { align-items: flex-end; }
-  .hm-ptw__card { flex-basis: 78%; }
-  .hm-ptw__pts { font-size: 46px; }
+  .hm-ptw__card { flex-basis: 62%; }
+}
+
+/* PREVIEW ONLY (?ptw=rail, option B): compact cards stacked at the top of the right rail at 1024px and up.
+   Remove with the switch in home.js once the owner picks a layout. */
+@media (min-width: 1024px) {
+  .hm-ptw--rail { margin-bottom: 0; }
+  .hm-ptw--rail .hm-ptw__head { margin-bottom: 6px; }
+  .hm-ptw--rail .hm-ptw__h { font-size: 26px; }
+  .hm-ptw--rail .hm-ptw__more { min-height: 32px; font-size: 12px; }
+  .hm-ptw--rail .hm-ptw__row { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 0; }
+  /* faces are not stacked here: the one showing is in flow, so the card is short on the front and tall on the back */
+  .hm-ptw--rail .hm-ptw__inner { display: block; height: auto; }
+  .hm-ptw--rail .hm-ptw__back { position: absolute; inset: 0; }
+  .hm-ptw--rail .hm-ptw__card.is-flipped .hm-ptw__back { position: relative; inset: auto; }
+  .hm-ptw--rail .hm-ptw__card.is-flipped .hm-ptw__front { position: absolute; inset: 0; }
+  .hm-ptw--rail .hm-ptw__flip { flex-direction: row; align-items: center; gap: 10px; padding: 8px 12px 8px 14px; border-radius: 13px; text-align: left; }
+  .hm-ptw--rail .hm-ptw__av { --av: 48px; }
+  .hm-ptw--rail .hm-ptw__nick, .hm-ptw--rail .hm-ptw__meta, .hm-ptw--rail .hm-ptw__front .hm-ptw__draft { display: none; }
+  .hm-ptw--rail .hm-ptw__rank { left: -10px; top: -6px; min-width: 24px; height: 19px; font-size: 13px; }
+  .hm-ptw--rail .hm-ptw__who { flex: 1 1 auto; align-items: flex-start; }
+  .hm-ptw--rail .hm-ptw__name { font-size: 14px; }
+  .hm-ptw--rail .hm-ptw__pts { flex: none; font-size: 28px; }
+  .hm-ptw--rail .hm-ptw__unit { font-size: 12px; }
 }
 
 /* ---------- "How it works" popup (assets/howto.js) ---------- */

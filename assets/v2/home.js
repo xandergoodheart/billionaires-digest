@@ -7,10 +7,10 @@
      how to play          <- cap, picks and captain multiplier from the draft week file (BDFantasyCore as fallback)
      today's lede         <- digest.json (the latest edition; the full edition lives at news.html)
      From the Digest      <- up to 3 more stories from digest.json (hidden when there are none)
-     Players to watch     <- featured strip under the hero: top 5 by real points this scoring week, or the last scored
-                             day (BDWeekCore); nicknames from data/fantasy/nicknames.json via BDDossier; names open the
-                             player dossier; avg/day from BDFantasyStore stats, cap cost from the salaries; + Draft
-                             opens draft.html?add=<slug>, which adds the player
+     Players to watch     <- five flip cards under the hero (or, preview only, ?ptw=rail at the top of the right rail):
+                             a mixed watch list (top scorers, earnings, insider buy, value) from BDWeekCore scores,
+                             BDFantasyStore stats, data/insights/calendar.json; the back loads a 10-day chart and
+                             reasons lazily (see "players to watch" below); + Draft opens draft.html?add=<slug>
      Top Headlines        <- digest.json stories
      Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1)
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
@@ -39,17 +39,6 @@
     a.setAttribute('data-sector', BD.sectorSlug(p.sector || 'Other'));
     a.setAttribute('aria-hidden', 'true');
     if (pic){ var im = el('img'); im.src = pic; im.alt = ''; im.loading = 'lazy'; a.appendChild(im); }
-    return a;
-  }
-  // name: a link to the player page; a plain click opens the player dossier (assets/v2/dossier.js) instead
-  function nameLink(p, weekId){
-    var a = link('v2-player__name', p.name, 'player.html?p=' + encodeURIComponent(p.slug));
-    var ceoB = window.BDCeoBadge ? window.BDCeoBadge(p) : null;
-    if (ceoB) a.appendChild(ceoB);
-    if (window.BDDossier){
-      a.setAttribute('data-dossier', p.slug); a.setAttribute('aria-haspopup', 'dialog');
-      if (weekId) a.setAttribute('data-dossier-week', weekId);
-    }
     return a;
   }
   function nyFmt(ms, opts){
@@ -338,76 +327,366 @@
     box.appendChild(el('p', 'hm-mv__fine', open.length + (open.length === 1 ? ' open market' : ' open markets') + '. Settled only from public SEC filings. Play-money coins, no cash value.'));
   }
 
-  // ---- players to watch: top 5 by real points this scoring week (or the last scored day) ----
+  // ---- players to watch: five flip cards ----
+  // The pick: the top 2 scorers (this scoring week, or the last scored day), then the best scorer with earnings in the
+  // current or next scoring week, with an insider buy in the last 14 days, and the best value pick; the rest are the
+  // next top scorers, so there are always 5 different players. Every reason comes from existing data only:
+  //   scores, avg/day, insider-buy bonus    <- BDFantasyStore (week + day files it already loaded)
+  //   earnings                              <- data/insights/calendar.json (fetched with the page, ~47 KB)
+  //   chart + best day (on the first flip)  <- week files' daily points (+1 older week file), the best day's day file
+  //   insider-buy filing link (on flip)     <- data/filings/by-person/<slug>.json (only for a card with a buy)
+  //   in the news (on flip)                 <- digest.json (already loaded for the lede)
+  // PREVIEW ONLY: ?ptw=rail shows the same cards stacked at the top of the right rail (option B) instead of the strip
+  // under the hero (option A). Remove this switch (and the .hm-ptw--rail CSS) once the owner picks a layout.
+  var PTW_RAIL = /(?:^|[?&])ptw=rail(?:&|$)/.test(String(location.search).replace(/^\?/, ''));
+  var CHART_DAYS = 10;
+  var DIGEST = null, CAL = null;
+  var calP = BD.getJson('data/insights/calendar.json').then(function(c){ CAL = c; return c; }, function(){ return null; });
+  var winP = null, dayP = {}, filP = {};
+  function today(){ return C.nyDate(F.now()); }
+  function capOf(slug, wk){
+    var sal = F.salaries(), ws = (wk && wk.salaries) || {};
+    return typeof sal[slug] === 'number' ? sal[slug] : (typeof ws[slug] === 'number' ? ws[slug] : null);
+  }
+  function avgOf(slug){ var a = F.stat(slug).avg; return typeof a === 'number' && isFinite(a) ? Math.round(a) : null; }
+  function indexWeek(id){ var w = arr(F.state.index && F.state.index.weeks); for (var i = 0; i < w.length; i++) if (w[i].week === id) return { w: w[i], i: i, all: w }; return null; }
+  function dayParts(d){ var s = F.fmt.dayLabel(d), k = s.indexOf(' '); return { wd: s.slice(0, k), md: s.slice(k + 1), full: s }; }
+  // hot streak: positive on at least 4 of the last 5 trading days (the store's 5-day series)
+  function hotCount(slug){ var n = 0; arr(F.stat(slug).series).forEach(function(v){ if (typeof v === 'number' && v > 0) n++; }); return n; }
+  // insider buy: a scored insider-buy bonus (Form 4 code P, see scripts/lib/fantasy.mjs) on a day in the last 14 days
+  function buyDay(slug){
+    var cut = C.addDays(today(), -14), best = null, days = F.state.days || {};
+    Object.keys(days).forEach(function(d){
+      var e = days[d] && days[d].people && days[d].people[slug];
+      if (d >= cut && e && e.bonuses && e.bonuses.insiderBuy > 0 && (!best || d > best)) best = d;
+    });
+    return best;
+  }
+  // earnings: an exact-day "Earnings & events" calendar item for this person in the current or next scoring week
+  function earnings(slug){
+    var ix = F.state.index, cur = indexWeek((F.state.sbWk && F.state.sbWk.week) || (ix && ix.currentWeek));
+    if (!CAL || !cur) return null;
+    var nxt = cur.all[cur.i + 1], from = cur.w.start, to = nxt ? nxt.end : cur.w.end, hit = null;
+    arr(CAL.events).forEach(function(e){
+      if (!e || e.type !== 'events' || e.approx || e.precision !== 'day' || !/\b(results|earnings)\b/i.test(e.title || '')) return;
+      if (e.date < from || e.date > to) return;
+      if (!arr(e.people).some(function(p){ return p && p.slug === slug; })) return;
+      if (!hit || e.date < hit.date) hit = e;
+    });
+    return hit ? { e: hit, thisWeek: hit.date <= cur.w.end } : null;
+  }
+  function valueSet(pool, wk){
+    var avgs = pool.map(function(p){ return avgOf(p.slug); }).filter(function(a){ return a != null; }).sort(function(a, b){ return b - a; });
+    if (!avgs.length) return {};
+    var cut = avgs[Math.max(0, Math.ceil(avgs.length / 4) - 1)], out = {};
+    pool.forEach(function(p){ var a = avgOf(p.slug), c = capOf(p.slug, wk); if (a != null && c != null && c <= 14 && a >= cut) out[p.slug] = true; });
+    return out;
+  }
+  var TAGS = { top: ['🏆', 'Top scorer'], hot: ['🔥', 'Hot streak'], earn: ['📅', 'Earnings'], buy: ['🧾', 'Insider buy'], value: ['💰', 'Value'] };
+  function pickWatch(src){
+    var ranked = W.topPlayers(src, 1000), rank = {}, used = {}, out = [];
+    ranked.forEach(function(x, i){ rank[x.p.slug] = i + 1; });
+    var pool = arr(F.state.draftWk && F.state.draftWk.draftable).length ? F.state.draftWk.draftable : src.wk.draftable;
+    var vals = valueSet(arr(pool), src.wk);
+    function add(x, why, extra){ used[x.p.slug] = 1; out.push({ x: x, rank: rank[x.p.slug], why: why, extra: extra || null }); }
+    function first(test){ for (var i = 0; i < ranked.length; i++){ if (!used[ranked[i].p.slug]){ var r = test(ranked[i]); if (r) return { x: ranked[i], r: r }; } } return null; }
+    ranked.slice(0, 2).forEach(function(x){ add(x, 'top'); });
+    var e = first(function(x){ return earnings(x.p.slug); });
+    if (e && out.length < 5) add(e.x, 'earn', e.r);
+    var b = first(function(x){ return buyDay(x.p.slug); });
+    if (b && out.length < 5) add(b.x, 'buy', b.r);
+    var bestV = null;
+    ranked.forEach(function(x){ if (!used[x.p.slug] && vals[x.p.slug] && (!bestV || avgOf(x.p.slug) > avgOf(bestV.p.slug))) bestV = x; });
+    if (bestV && out.length < 5) add(bestV, 'value');
+    for (var i = 0; i < ranked.length && out.length < 5; i++) if (!used[ranked[i].p.slug]) add(ranked[i], hotCount(ranked[i].p.slug) >= 4 ? 'hot' : 'top');
+    return { list: out, vals: vals };
+  }
+  function tagText(c){
+    var t = TAGS[c.why];
+    if (c.why === 'earn' && c.extra){ var dp = dayParts(c.extra.e.date); return [t[0], 'Earnings ' + (c.extra.thisWeek ? dp.wd : dp.md)]; }
+    return t;
+  }
+  function tagEl(c){
+    var t = tagText(c), s = el('span', 'hm-ptw__tag hm-ptw__tag--' + c.why);
+    s.appendChild(el('span', 'hm-ptw__ico', t[0])).setAttribute('aria-hidden', 'true');
+    s.appendChild(document.createTextNode(' ' + t[1]));
+    return s;
+  }
+
+  // ---- lazy data for the back (first flip only, shared by all cards, cached) ----
+  function weekPts(wks, d, slug){
+    for (var i = 0; i < wks.length; i++){ var w = wks[i]; if (w && w.daily && w.daily[d] && typeof w.daily[d][slug] === 'number') return w.daily[d][slug]; }
+    return null;
+  }
+  // the last CHART_DAYS trading days with scores (not practice weeks), newest week first until there are enough
+  function loadWindow(){
+    if (winP) return winP;
+    var S = F.state, base = indexWeek((S.sbWk && S.sbWk.week) || (S.index && S.index.currentWeek));
+    var wks = [S.sbWk, S.prevWk].filter(Boolean);
+    function count(){ var n = 0; wks.forEach(function(w){ if (!w.practice) n += arr(w.days).length; }); return n; }
+    function more(k){
+      if (count() >= CHART_DAYS || !base || base.i - k < 0 || k > 4) return Promise.resolve();
+      var id = base.all[base.i - k].week;
+      return F.loadWeek(id).then(function(w){ if (w && !w.practice) wks.push(w); return more(k + 1); });
+    }
+    winP = more(2).then(function(){
+      var ds = {};
+      wks.forEach(function(w){ if (!w.practice) arr(w.days).forEach(function(d){ ds[d] = 1; }); });
+      return { dates: Object.keys(ds).sort().slice(-CHART_DAYS), wks: wks };
+    }, function(){ winP = null; return null; });
+    return winP;
+  }
+  function loadDayFile(d){
+    if (F.state.days && F.state.days[d]) return Promise.resolve(F.state.days[d]);
+    if (!dayP[d]) dayP[d] = BD.getJson('data/fantasy/days/' + d + '.json').then(null, function(){ return null; });
+    return dayP[d];
+  }
+  function loadFilings(slug){
+    if (!filP[slug]) filP[slug] = BD.getJson('data/filings/by-person/' + slug + '.json').then(null, function(){ return null; });
+    return filP[slug];
+  }
+  // newest Form 4 with a code P (open-market purchase) filed in the last 14 days; its EDGAR URL comes from the data
+  function buyFiling(data){
+    var cut = C.addDays(today(), -14), hit = null;
+    arr(data && data.filings).forEach(function(f){
+      if (!f || !f.form4 || !f.filed || f.filed < cut || !BD.safeUrl(f.url)) return;
+      if (!arr(f.form4.transactions).some(function(t){ return t && t.code === 'P'; })) return;
+      if (!hit || f.filed > hit.filed) hit = f;
+    });
+    return hit;
+  }
+
+  // ---- the back: chart + reasons ----
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function svgEl(n, attrs){ var e = document.createElementNS(SVGNS, n); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  // one bar: rounded 2px at the data end, square at the zero baseline
+  function barPath(x, w, y0, y1){
+    var r = Math.min(2, w / 2, Math.abs(y1 - y0));
+    if (y1 < y0) return 'M' + x + ',' + y0 + 'V' + (y1 + r) + 'Q' + x + ',' + y1 + ' ' + (x + r) + ',' + y1 + 'H' + (x + w - r) + 'Q' + (x + w) + ',' + y1 + ' ' + (x + w) + ',' + (y1 + r) + 'V' + y0 + 'Z';
+    return 'M' + x + ',' + y0 + 'V' + (y1 - r) + 'Q' + x + ',' + y1 + ' ' + (x + r) + ',' + y1 + 'H' + (x + w - r) + 'Q' + (x + w) + ',' + y1 + ' ' + (x + w) + ',' + (y1 - r) + 'V' + y0 + 'Z';
+  }
+  function chart(name, rows){
+    var box = el('figure', 'hm-ptw__chart');
+    var W0 = 200, H = 52, pad = 2, n = rows.length, slot = W0 / Math.max(n, 1), bw = Math.max(4, slot - 4);
+    var vals = rows.map(function(r){ return r.v; }).filter(function(v){ return v != null; });
+    var hi = Math.max(0, Math.max.apply(null, vals.concat([0]))), lo = Math.min(0, Math.min.apply(null, vals.concat([0])));
+    if (hi === lo) hi = lo + 1;
+    function y(v){ return pad + (hi - v) / (hi - lo) * (H - 2 * pad); }
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W0 + ' ' + H, preserveAspectRatio: 'none', 'class': 'hm-ptw__svg', focusable: 'false', 'aria-hidden': 'true' });
+    rows.forEach(function(r, i){
+      var x = i * slot + (slot - bw) / 2, g = svgEl('g', {});
+      var t = svgEl('title', {}); t.textContent = F.fmt.dayLabel(r.d) + ': ' + (r.v == null ? 'no score' : signedTxt(r.v) + ' points'); g.appendChild(t);
+      g.appendChild(svgEl('rect', { x: i * slot, y: 0, width: slot, height: H, fill: 'transparent' }));
+      if (r.v != null && r.v !== 0) g.appendChild(svgEl('path', { d: barPath(x, bw, y(0), y(r.v)), 'class': r.v > 0 ? 'hm-ptw__bar is-pos' : 'hm-ptw__bar is-neg' }));
+      svg.appendChild(g);
+    });
+    svg.appendChild(svgEl('line', { x1: 0, x2: W0, y1: y(0), y2: y(0), 'class': 'hm-ptw__base' }));
+    box.appendChild(svg);
+    var cap = el('figcaption', 'hm-ptw__cap', 'Daily points, last ' + n + ' trading days');
+    box.appendChild(cap);
+    // table view for screen readers
+    var tw = el('div', 'v2-sr'), tb = el('table'), cp = el('caption', null, name + ': daily points, last ' + n + ' trading days');
+    tb.appendChild(cp);
+    var tbody = el('tbody');
+    rows.forEach(function(r){ var tr = el('tr'); tr.appendChild(el('th', null, F.fmt.dayLabel(r.d))); tr.appendChild(el('td', null, r.v == null ? 'no score' : signedTxt(r.v))); tbody.appendChild(tr); });
+    tb.appendChild(tbody); tw.appendChild(tb); box.appendChild(tw);
+    return box;
+  }
+  function reasonLi(ico, parts, href, ext){
+    var li = el('li', 'hm-ptw__r');
+    li.appendChild(el('span', 'hm-ptw__ico', ico)).setAttribute('aria-hidden', 'true');
+    var body = el('span', 'hm-ptw__rt');
+    body.appendChild(el('strong', null, parts[0] + ' '));
+    if (href){
+      var a = link(null, parts[1], href);
+      if (ext){ a.target = '_blank'; a.rel = 'noopener noreferrer'; a.appendChild(el('span', 'v2-sr', ' (opens in a new tab)')); }
+      body.appendChild(a);
+    } else body.appendChild(document.createTextNode(parts[1]));
+    li.appendChild(body);
+    return li;
+  }
+  function fillBack(li, c, src, win){
+    var p = c.x.p, slug = p.slug, box = clear(li.querySelector('.hm-ptw__bbody'));
+    var rows = win ? win.dates.map(function(d){ return { d: d, v: weekPts(win.wks, d, slug) }; }) : [];
+    if (rows.length) box.appendChild(chart(p.name, rows));
+    box.appendChild(el('p', 'hm-ptw__wh', "Why they're on the watch list"));
+    var ul = el('ul', 'hm-ptw__why'), reasons = [];
+    // best day in the window, and the holding that moved most in its direction that day (from the day file)
+    var best = null;
+    rows.forEach(function(r){ if (r.v != null && r.v > 0 && (!best || r.v > best.v)) best = r; });
+    var jobs = [best ? loadDayFile(best.d) : null, c.why === 'buy' || buyDay(slug) ? loadFilings(slug) : null];
+    return Promise.all(jobs).then(function(r){
+      var e = earnings(slug), hc = hotCount(slug), f = r[1] ? buyFiling(r[1]) : null;
+      if (f){
+        var tk = f.form4 && f.form4.ticker ? ' (' + f.form4.ticker + ')' : '';
+        reasons.push(reasonLi('🧾', ['Insider buy:', 'Form 4 purchase filed ' + dayParts(f.filed).full + tk], f.url, true));
+      }
+      if (e) reasons.push(reasonLi('📅', ['Earnings ' + dayParts(e.e.date).full + ':', e.e.title], 'calendar.html'));
+      if (hc >= 4) reasons.push(reasonLi('🔥', ['Hot streak:', 'up on ' + hc + ' of the last 5 trading days'], null));
+      if (best){
+        var led = '', dp = r[0] && r[0].people && r[0].people[slug];
+        if (dp){
+          var hs = arr(dp.holdings).filter(function(h){ return h && h.ticker && typeof h.changePct === 'number' && typeof h.weight === 'number'; });
+          hs.sort(function(a, b){ return b.weight * b.changePct - a.weight * a.changePct; });
+          if (hs.length && hs[0].changePct > 0) led = ', led by ' + hs[0].ticker + ' +' + hs[0].changePct.toFixed(1) + '%';
+        }
+        reasons.push(reasonLi('📈', ['Best day:', signedTxt(best.v) + ' on ' + dayParts(best.d).full + led], null));
+      }
+      var story = DIGEST ? arr(DIGEST.stories).filter(function(s){ return s && s.headline && arr(s.people).indexOf(p.name) >= 0; })[0] : null;
+      if (story) reasons.push(reasonLi('📰', ['In the news:', story.headline], 'news.html'));
+      if (c.why === 'value' || li._vals[slug]){
+        reasons.push(reasonLi('💰', ['Value:', 'cap ' + capOf(slug, src.wk) + ', avg/day ' + signedTxt(avgOf(slug)) + ' (top quarter of the pool)'], null));
+      }
+      // the card's own reason first, then the rest, at most 3
+      var key = { buy: '🧾', earn: '📅', hot: '🔥', value: '💰' }[c.why];
+      reasons.sort(function(a, b){ return (b.firstChild.textContent === key) - (a.firstChild.textContent === key); });
+      if (!reasons.length) reasons.push(reasonLi('🏆', ['Top scorer:', 'No. ' + c.rank + ' by ' + (src.kind === 'week' ? 'points this week' : 'points on ' + dayParts(src.date).full)], null));
+      reasons.slice(0, 3).forEach(function(x){ ul.appendChild(x); });
+      box.appendChild(ul);
+      li._filled = true;
+      setFocusable(li.querySelector('.hm-ptw__back'), li.classList.contains('is-flipped'));
+    });
+  }
+
+  // ---- flip ----
+  var FOCUSABLE = 'a[href], button, [tabindex]';
+  function setFocusable(face, on){
+    if (!face) return;
+    face.setAttribute('aria-hidden', on ? 'false' : 'true');
+    var f = face.querySelectorAll(FOCUSABLE);
+    for (var i = 0; i < f.length; i++){ if (on) f[i].removeAttribute('tabindex'); else f[i].setAttribute('tabindex', '-1'); }
+  }
+  function flip(li, on, src){
+    var front = li.querySelector('.hm-ptw__front'), back = li.querySelector('.hm-ptw__back'), btn = li.querySelector('.hm-ptw__flip');
+    li.classList.toggle('is-flipped', on);
+    btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    setFocusable(back, on);
+    setFocusable(front, !on);
+    if (on){
+      var fb = li.querySelector('.hm-ptw__back-btn');
+      if (fb) fb.focus({ preventScroll: true });
+      if (!li._filled && !li._loading){
+        li._loading = true;
+        loadWindow().then(function(win){ return fillBack(li, li._c, src, win); }).then(null, function(e){ if (window.console) console.warn(e); });
+      }
+    } else btn.focus({ preventScroll: true });
+  }
+
   function renderWatch(){
     var S = F.state, sec = $('watchsec');
     var src = W ? W.watchSource(S.sbWk, S.prevWk) : null;
-    var top = src ? W.topPlayers(src, 5) : [];
+    var picked = src ? pickWatch(src) : { list: [], vals: {} }, top = picked.list;
     if (!top.length){ sec.hidden = true; return; }
+    sec.classList.toggle('hm-ptw--rail', PTW_RAIL);
     var practice = src.wk.practice ? ' (practice week)' : '';
     $('watchk').textContent = src.kind === 'week'
       ? F.fmt.weekTitle(src.wk.week) + ' · points so far, through ' + F.fmt.dayLabel(src.date)
       : 'Last scored day · ' + F.fmt.dayLabel(src.date) + practice + (S.sbWk && S.sbWk.week !== src.wk.week
         ? '. ' + F.fmt.weekTitle(S.sbWk.week) + ' has no scores yet.'
         : '.');
-    var ol = clear($('watchlist')), sal = F.salaries(), wsal = src.wk.salaries || {};
-    top.forEach(function(x, i){
-      var p = x.p, li = el('li', 'hm-ptw__card' + (i === 0 ? ' is-top' : ''));
-      var pic = el('div', 'hm-ptw__pic');
+    var ol = clear($('watchlist'));
+    top.forEach(function(c, i){
+      var x = c.x, p = x.p, id = 'ptwb-' + p.slug;
+      var li = el('li', 'hm-ptw__card' + (i === 0 ? ' is-top' : ''));
+      li._c = c; li._vals = picked.vals;
+      var inner = el('div', 'hm-ptw__inner');
+      // front: one button (no links inside it); + Draft sits beside it, outside the button
+      var front = el('div', 'hm-ptw__face hm-ptw__front');
+      var b = el('button', 'hm-ptw__flip'); b.type = 'button';
+      b.setAttribute('aria-expanded', 'false'); b.setAttribute('aria-controls', id);
+      var pic = el('span', 'hm-ptw__pic');
       var av = avatar(p); av.className += ' hm-ptw__av';
       pic.appendChild(av);
-      pic.appendChild(el('span', 'hm-ptw__rank num', '#' + (i + 1)));
-      li.appendChild(pic);
-      var who = el('div', 'hm-ptw__who');
-      who.appendChild(nameLink(p, src.wk.week));
+      pic.appendChild(el('span', 'hm-ptw__rank num', '#' + c.rank));
+      b.appendChild(pic);
+      var who = el('span', 'hm-ptw__who');
+      var nm = el('span', 'hm-ptw__name', p.name), ceoB = window.BDCeoBadge ? window.BDCeoBadge(p) : null;
+      if (ceoB) nm.appendChild(ceoB);
+      who.appendChild(nm);
       var nk = window.BDDossier ? window.BDDossier.nickname(p.slug) : null;
       if (nk) who.appendChild(el('span', 'v2-nick hm-ptw__nick', nk));
-      li.appendChild(who);
-      var pts = el('p', 'hm-ptw__pts num ' + numCls(x.points), signedTxt(x.points));
+      who.appendChild(tagEl(c));
+      b.appendChild(who);
+      var nums = el('span', 'hm-ptw__nums');
+      var pts = el('span', 'hm-ptw__pts num ' + numCls(x.points), signedTxt(x.points));
       pts.appendChild(el('span', 'hm-ptw__unit', ' pts'));
-      li.appendChild(pts);
-      // avg/day: the store's per-player average (same number as the Players board); cap cost: draft-week
-      // salaries, else the source week's
-      var avg = F.stat(p.slug).avg;
-      avg = typeof avg === 'number' && isFinite(avg) ? Math.round(avg) : null;
-      var c = typeof sal[p.slug] === 'number' ? sal[p.slug] : (typeof wsal[p.slug] === 'number' ? wsal[p.slug] : null);
-      if (avg != null || c != null){
-        var meta = el('p', 'hm-ptw__meta');
-        if (avg != null){
-          var m1 = el('span', 'hm-ptw__m');
-          m1.appendChild(el('span', 'hm-ptw__ml', 'Avg/day '));
-          m1.appendChild(el('strong', 'num ' + numCls(avg), signedTxt(avg)));
-          meta.appendChild(m1);
+      nums.appendChild(pts);
+      b.appendChild(nums);
+      {
+        var avg = avgOf(p.slug), cap = capOf(p.slug, src.wk);
+        if (avg != null || cap != null){
+          var meta = el('span', 'hm-ptw__meta');
+          if (avg != null){ var m1 = el('span', 'hm-ptw__m'); m1.appendChild(el('span', null, 'Avg/day ')); m1.appendChild(el('strong', 'num ' + numCls(avg), signedTxt(avg))); meta.appendChild(m1); }
+          if (cap != null){ var m2 = el('span', 'hm-ptw__m'); m2.appendChild(el('span', null, 'Cap ')); m2.appendChild(el('strong', 'num', String(cap))); meta.appendChild(m2); }
+          nums.appendChild(meta);
         }
-        if (c != null){
-          var m2 = el('span', 'hm-ptw__m');
-          m2.appendChild(el('span', 'hm-ptw__ml', 'Cap '));
-          m2.appendChild(el('strong', 'num', String(c)));
-          meta.appendChild(m2);
-        }
-        li.appendChild(meta);
       }
-      // draft.html?add=<slug> adds the player in the Draft room (assets/v2/draft.js addFromUrl; same rules as + Add)
-      var dr = link('v2-btn v2-btn--primary v2-btn--sm hm-ptw__draft', '', 'draft.html?add=' + encodeURIComponent(p.slug));
-      dr.appendChild(el('span', null, '+ Draft'));
-      dr.appendChild(el('span', 'v2-sr', ' ' + p.name + ' in the Draft room'));
-      li.appendChild(dr);
+      b.appendChild(el('span', 'v2-sr', '. Flip for details'));
+      front.appendChild(b);
+      front.appendChild(draftBtn(p));
+      inner.appendChild(front);
+      // back: chart, reasons, + Draft, Full profile, Flip back (filled on the first flip)
+      var back = el('div', 'hm-ptw__face hm-ptw__back'); back.id = id;
+      back.setAttribute('role', 'group'); back.setAttribute('aria-label', p.name + ': details');
+      var bhd = el('div', 'hm-ptw__bhd');
+      bhd.appendChild(el('p', 'hm-ptw__bh', p.name));
+      var fb = el('button', 'hm-ptw__back-btn', 'Flip back'); fb.type = 'button';
+      bhd.appendChild(fb);
+      back.appendChild(bhd);
+      var bb = el('div', 'hm-ptw__bbody');
+      bb.appendChild(el('p', 'v2-loading hm-ptw__load', 'Loading…'));
+      back.appendChild(bb);
+      var acts = el('div', 'hm-ptw__acts');
+      acts.appendChild(draftBtn(p));
+      var prof = link('hm-ptw__prof', 'Full profile', 'player.html?p=' + encodeURIComponent(p.slug));
+      prof.appendChild(el('span', null, ' →')).setAttribute('aria-hidden', 'true');
+      if (window.BDDossier){ prof.setAttribute('data-dossier', p.slug); prof.setAttribute('aria-haspopup', 'dialog'); prof.setAttribute('data-dossier-week', src.wk.week); }
+      acts.appendChild(prof);
+      back.appendChild(acts);
+      inner.appendChild(back);
+      li.appendChild(inner);
+      setFocusable(back, false);
+      b.addEventListener('click', function(){ flip(li, true, src); });
+      fb.addEventListener('click', function(){ flip(li, false, src); });
+      back.addEventListener('keydown', function(e){ if (e.key === 'Escape' || e.keyCode === 27){ e.preventDefault(); flip(li, false, src); } });
       ol.appendChild(li);
     });
+    placeWatch();
     sec.hidden = false;
   }
+  function draftBtn(p){
+    // draft.html?add=<slug> adds the player in the Draft room (assets/v2/draft.js addFromUrl; same rules as + Add)
+    var dr = link('v2-btn v2-btn--primary v2-btn--sm hm-ptw__draft', '', 'draft.html?add=' + encodeURIComponent(p.slug));
+    dr.appendChild(el('span', null, '+ Draft'));
+    dr.appendChild(el('span', 'v2-sr', ' ' + p.name + ' in the Draft room'));
+    return dr;
+  }
+  // option B (preview only): at 1024px and up the section moves to the top of the right rail; below that it stays
+  // right after the hero, where option A puts it.
+  var railMq = window.matchMedia ? window.matchMedia('(min-width: 1024px)') : null, ptwHome = null;
+  function placeWatch(){
+    var sec = $('watchsec'), rightRail = document.querySelector('.hm-right');
+    if (!PTW_RAIL || !sec || !rightRail) return;
+    if (!ptwHome) ptwHome = sec.nextElementSibling;
+    if (railMq && railMq.matches){ if (sec.parentNode !== rightRail) rightRail.insertBefore(sec, rightRail.firstChild); }
+    else if (ptwHome && sec.nextElementSibling !== ptwHome) ptwHome.parentNode.insertBefore(sec, ptwHome);
+  }
+  if (PTW_RAIL && railMq){ if (railMq.addEventListener) railMq.addEventListener('change', placeWatch); else if (railMq.addListener) railMq.addListener(placeWatch); }
 
   // ---- page ----
   var tc = F.testClock();
   if (tc != null){ var tb = $('testclock'); tb.hidden = false; tb.textContent = 'Test clock (for testing only): ' + new Date(F.now()).toISOString(); }
 
-  BD.getJson('digest.json').then(function(d){ renderLede(d); renderStories(d); renderHeadlines(d); },
+  BD.getJson('digest.json').then(function(d){ DIGEST = d; renderLede(d); renderStories(d); renderHeadlines(d); },
     function(){ renderLede(null); renderStories(null); renderHeadlines(null); });
   BD.getJson('data/moves/markets.json').then(renderMoves, function(){ renderMoves(null); });
 
   F.init().then(function(){
-    renderWatch();
-    if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x) renderWatch(); }, function(){});
+    // the watch list waits for the calendar (earnings picks); nicknames re-render it once they arrive
+    calP.then(function(){
+      renderWatch();
+      if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x) renderWatch(); }, function(){});
+    });
     var v = view();
     if (v.mode !== 'none'){ renderTeamBoard(v); return; }
     if (BOOK_HIDDEN){ renderBookBoard(null); return; }
