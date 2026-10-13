@@ -22,7 +22,7 @@ Owner works in plain language; keep explanations short and non-technical.
 
 ## Daily pipeline (America/New_York)
 - 5:30 AM `.github/workflows/data.yml` "Morning data": fetch-filings (SEC EDGAR) → fetch-13f (Mondays) → fetch-prices (Finnhub) → build-insights → build-copycat → build-network → build-fantasy → build-book → build-pages → commit.
-- 6:00 AM Claude Code cloud routine "Billionaires Digest morning edition" (claude.ai/code/routines/trig_01GNVXrAbF4BZnqEsPGVNmyq, environment "Full network"): follows `EDITION.md`, writes a draft, runs `scripts/publish-digest.mjs` (link check, validate, top10 from data/people/index.json, OG image, build-pages), commits.
+- 6:00 AM Claude Code cloud routine "Billionaires Digest morning edition" (claude.ai/code/routines/trig_01GNVXrAbF4BZnqEsPGVNmyq, environment "Full network"): follows `EDITION.md`, writes a draft, runs `scripts/publish-digest.mjs` (link check, validate, top10 from data/people/index.json, OG image → og/<date>.png + news.html's og:image, build-pages), commits. `index.html` keeps a fixed share image `og/home.png` (re-render by hand: `node scripts/render-home-og.mjs`); the daily run never touches it.
 - 6:45 AM `game.yml` "Game sync": tests → apply `supabase/migrations/*.sql` (idempotent) → `scripts/supabase-sync.mjs` (fantasy weeks/points, settle, The Book upload/close/settle).
 - 7:15 AM `health.yml`: opens/closes a `site-health` GitHub issue.
 - `daily.yml` = API backup edition, manual only (needs ANTHROPIC_API_KEY, not set).

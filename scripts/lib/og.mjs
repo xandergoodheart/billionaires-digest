@@ -210,7 +210,61 @@ export async function renderCardOg(opts = {}) {
   return toPng(cardTree(opts));
 }
 
-// ---- meta tags in index.html ----
+
+// ---- fixed front-page brand card (og/home.png; never changes day to day) ----
+export const HOME_COPY = {
+  headline: 'FANTASY SPORTS, BUT THE PLAYERS ARE BILLIONAIRES.',
+  sub: 'Draft 5 billionaires & CEOs. Score on their real stock moves. Beat your friends.',
+  pills: ['Free to play', 'Play money only', 'Season 1 · Nov 9']
+};
+
+function pill(label) {
+  return h('div', { display: 'flex', padding: '9px 20px 8px', marginRight: 14, borderRadius: 999, border: `2px solid ${C.rule}`,
+    backgroundColor: 'rgba(255,255,255,0.04)', fontFamily: BODY, fontWeight: 600, fontSize: 21, letterSpacing: 0.5, color: C.text,
+    whiteSpace: 'nowrap', alignItems: 'center' },
+    h('div', { width: 9, height: 9, borderRadius: 5, backgroundColor: C.red, marginRight: 10 }),
+    h('span', {}, label));
+}
+
+// Layout tree for the front-page card (exported for tests). Dark ESPN look with a soft stadium-light glow (gradients only).
+export function homeTree(copy = HOME_COPY) {
+  const fit = fitHeadline(copy.headline, { maxWidth: 1000, maxHeight: 250, maxLines: 2, lineHeight: 0.95,
+    sizes: [116, 110, 104, 98, 92, 86, 80], spacing: 1 });
+  return h('div', { width: OG_WIDTH, height: OG_HEIGHT, display: 'flex', flexDirection: 'column', position: 'relative',
+      backgroundColor: C.bar,
+      backgroundImage: 'radial-gradient(ellipse 900px 520px at 85% -12%, rgba(255,240,215,0.20), rgba(255,240,215,0) 70%), ' +
+        'radial-gradient(ellipse 700px 420px at 8% -18%, rgba(255,240,215,0.10), rgba(255,240,215,0) 70%), ' +
+        'linear-gradient(180deg, #121417 0%, #0B0B0C 62%, #1A0D0C 100%)',
+      padding: `44px ${PAD_X + 12}px 40px` },
+    // red base line
+    h('div', { position: 'absolute', left: 0, right: 0, bottom: 0, height: 8, backgroundColor: C.red, display: 'flex' }),
+    // brand row
+    h('div', { display: 'flex', alignItems: 'center' },
+      logo(56),
+      h('div', { display: 'flex', marginLeft: 18, fontFamily: DISPLAY, fontWeight: 800, fontSize: 40, lineHeight: 1, letterSpacing: 1.5, color: C.text },
+        'BILLIONAIRES DIGEST')
+    ),
+    // headline + subline
+    h('div', { display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center' },
+      h('div', { display: 'block', width: 1000, fontFamily: DISPLAY, fontWeight: 800, fontSize: fit.size, lineHeight: 0.95,
+        letterSpacing: 1, color: C.text }, fit.text),
+      h('div', { display: 'flex', marginTop: 24, maxWidth: 1080, fontFamily: BODY, fontWeight: 600, fontSize: 29, lineHeight: 1.3, color: C.soft },
+        copy.sub)
+    ),
+    // pills + domain
+    h('div', { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
+      h('div', { display: 'flex' }, copy.pills.map(pill)),
+      h('div', { display: 'flex', fontFamily: DISPLAY, fontWeight: 800, fontSize: 30, letterSpacing: 1, color: C.text }, 'billionairesdigest.com')
+    )
+  );
+}
+
+// Returns the fixed front-page share image as a PNG Buffer (1200x630).
+export async function renderHomeOg(copy) {
+  return toPng(homeTree(copy));
+}
+
+// ---- share-image meta tags (news.html, the daily edition page) ----
 function escAttr(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
 
 // Points og:image and twitter:image at imageUrl and makes twitter:card summary_large_image.
@@ -235,7 +289,9 @@ export function updateOgMeta(html, imageUrl) {
   return out;
 }
 
-// Renders og/<isoDate>.png and og/latest.png under root and points index.html's meta tags at the dated file.
+// Renders og/<isoDate>.png and og/latest.png under root and points news.html's (the daily edition page)
+// meta tags at the dated file. index.html is never touched: the front page keeps its fixed og/home.png.
+export const EDITION_PAGE = 'news.html';
 export async function publishOg(digest, isoDate, root = '.') {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(isoDate))) throw new Error(`bad date ${isoDate}`);
   const png = await renderOg(digest);
@@ -244,9 +300,9 @@ export async function publishOg(digest, isoDate, root = '.') {
   const dated = path.join(dir, `${isoDate}.png`);
   await writeFile(dated, png);
   await writeFile(path.join(dir, 'latest.png'), png);
-  const indexPath = path.join(root, 'index.html');
-  const html = await readFile(indexPath, 'utf8');
+  const pagePath = path.join(root, EDITION_PAGE);
+  const html = await readFile(pagePath, 'utf8');
   const next = updateOgMeta(html, `${SITE_URL}/og/${isoDate}.png`);
-  if (next !== html) await writeFile(indexPath, next);
-  return { dated, latest: path.join(dir, 'latest.png'), bytes: png.length, metaChanged: next !== html };
+  if (next !== html) await writeFile(pagePath, next);
+  return { dated, latest: path.join(dir, 'latest.png'), bytes: png.length, metaChanged: next !== html, page: EDITION_PAGE };
 }

@@ -28,16 +28,17 @@ Build today's Billionaires Digest edition and publish it.
 7. If it fails, fix only the problems it lists, using real sources, and run it again. Retry at most
    2 times. If it still fails, stop. Do not commit. The site keeps yesterday's edition.
 8. On success, run:
-   `git add digest.json archive og index.html people editions companies guides sitemap.xml robots.txt data/fantasy/movers.json && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
+   `git add digest.json archive og news.html people editions companies guides sitemap.xml robots.txt data/fantasy/movers.json && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
    (use today's date in New York time). `og/` holds the share image the publish script renders for the
-   edition. `index.html` is only changed by the publish script, which points its og:image and
-   twitter:image meta tags at that image. If the image step printed a warning, commit anyway.
+   edition. `news.html` is only changed by the publish script, which points its og:image and
+   twitter:image meta tags at that image. `index.html` (the front page) has a fixed share image
+   (`og/home.png`) and must not change during a daily run. If the image step printed a warning, commit anyway.
 9. Final message: how many stories were published, which stories were dropped (and why), how many
    movers were kept or dropped by the publish script (and why), and anything that looked wrong.
    Include the 'unverified by fetch' list from step 4 (or say it's empty).
 
-Never edit `index.html` (the publish script updates its share-image meta tags; that is the only change), anything in `scripts/`, or workflow files during a daily run.
-(On the live site since v3 (2026-09-29) `index.html` is the Play front page and the daily edition page is `news.html`; never edit either during a daily run — `news.html` reads `digest.json`, so publishing the edition is enough.)
+Never edit `index.html` (it is never part of a daily run's changes; its share image `og/home.png` is fixed), anything in `scripts/`, or workflow files during a daily run. The publish script updates `news.html`'s share-image meta tags; that is the only change to `news.html`.
+(On the live site since v3 (2026-09-29) `index.html` is the Play front page and the daily edition page is `news.html`; never edit either by hand during a daily run — `news.html` reads `digest.json`, so publishing the edition is enough; only the publish script touches `news.html`, for its share-image tags.)
 
 ## Editorial rules
 Source of truth: `scripts/lib/edition.mjs` `rulesText()`. If you change one, change both.
