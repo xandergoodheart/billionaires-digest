@@ -13,7 +13,8 @@
  * Cloudflare Turnstile and pass options.captchaToken (updateUser takes none). Without the key: unchanged.
  * ?ref=CODE, ?join=CODE and utm_* are kept in sessionStorage until the visitor joins.
  * If config/supabase.json is disabled or the backend (waitlist RPCs) is unreachable: "Saving by email opens shortly", no crash.
- * Email switch: config/launch.json "emailSignup" must be true, otherwise the same "opens shortly" card shows and Supabase is never contacted.
+ * Email switch: config/launch.json "emailSignup" must be true, otherwise Supabase is never contacted and the whole section stays
+ * hidden (waitlist.css hides .wl-save until this script adds .wl-email-on to <html>; the "opens shortly" card is still rendered).
  */
 (function(w, d){
   var SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1/dist/umd/supabase.min.js';
@@ -707,7 +708,7 @@
 
   launchConfig().then(function(c){
     seasonLabel(c);
-    if (c && c.emailSignup === true) start();
+    if (c && c.emailSignup === true){ d.documentElement.classList.add('wl-email-on'); start(); }
     else { renderClosed(); cleanUrl(); }
   });
 })(window, document);

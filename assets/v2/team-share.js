@@ -1,9 +1,9 @@
-/* Billionaires Digest: "Share your team" (home page "Your franchise" card). ES5, IIFE, no external libraries.
+/* Billionaires Digest: "Share your team" (home page side column, under the "Your team" roster card). ES5, IIFE, no external libraries.
    The share image is drawn in the browser with <canvas> (nothing is uploaded): the BD mark, "My Billionaire Fantasy team",
    the week, the five picks as INITIALS circles + names (no portraits: real people's likenesses never go into shared
    images), a "C" captain badge, this week's team points (or "Drafted, scoring starts <day>"), and the footer.
    Two sizes: 1080x1350 (portrait, Instagram) and 1200x630 (wide, X and link previews).
-   BDTeamShare.build(info) -> { card: <section> } (a compact side card for the home page's right column)
+   BDTeamShare.build(info) -> { card: <section> } (a compact side card for the home page's side column)
      info = { week: 'Week of Oct 12', total: number|null, startDay: 'Mon Oct 19'|null,
               picks: [{ name, captain: bool, pts: number|null }] }
    Play money only. */
