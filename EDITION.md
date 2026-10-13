@@ -21,17 +21,19 @@ Build today's Billionaires Digest edition and publish it.
    name in "move" matches the article. If something doesn't match, fix it to match the article or drop
    the story. If WebFetch is blocked for a source, keep the story only if the facts appear in at least
    two independent search results, and list it under 'unverified by fetch' in your final report.
+4b. Why they moved: follow the "Why they moved" section below (run `node scripts/list-movers.mjs`,
+   research each big mover, add the optional `movers` field).
 5. Write the draft to `/tmp/digest.draft.json`. It must match the schema below.
 6. Run `node scripts/publish-digest.mjs /tmp/digest.draft.json`.
 7. If it fails, fix only the problems it lists, using real sources, and run it again. Retry at most
    2 times. If it still fails, stop. Do not commit. The site keeps yesterday's edition.
 8. On success, run:
-   `git add digest.json archive og index.html people editions companies guides sitemap.xml robots.txt && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
+   `git add digest.json archive og index.html people editions companies guides sitemap.xml robots.txt data/fantasy/movers.json && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
    (use today's date in New York time). `og/` holds the share image the publish script renders for the
    edition. `index.html` is only changed by the publish script, which points its og:image and
    twitter:image meta tags at that image. If the image step printed a warning, commit anyway.
-9. Final message: how many stories were published, which stories were dropped (and why), and
-   anything that looked wrong.
+9. Final message: how many stories were published, which stories were dropped (and why), how many
+   movers were kept or dropped by the publish script (and why), and anything that looked wrong.
    Include the 'unverified by fetch' list from step 4 (or say it's empty).
 
 Never edit `index.html` (the publish script updates its share-image meta tags; that is the only change), anything in `scripts/`, or workflow files during a daily run.
@@ -52,6 +54,32 @@ Source of truth: `scripts/lib/edition.mjs` `rulesText()`. If you change one, cha
 Also:
 - Write 8 to 12 stories.
 - Leave `ledger` as `null`. Don't touch it. The publish script carries the existing ledger over.
+
+<!-- BEGIN: Why they moved (mirrored in scripts/lib/edition.mjs MOVERS_RULES; if you change one, change both) -->
+## Why they moved
+Goal: explain WHY a player's stock moved on the site's player cards, with a linked source. Facts only.
+
+1. Run `node scripts/list-movers.mjs`. It reads our own scored day files (no network) and prints up to 8 of the
+   biggest daily stock moves among players' main holdings: `ticker`, company, `date` (the trading day),
+   `changePct` (close to close) and the player slugs. Lines marked "under 2%" are skipped.
+2. For each mover with a move of 2% or more (up or down), search the web for a reputable news report (wire
+   services, major business papers, the company's own release or filing) from that trading day or the evening
+   before it that explains the move. Open it with WebFetch and confirm it is about that stock on that day.
+3. If you find one, add an entry to `movers`:
+   `{ "ticker", "date", "changePct", "why", "sourceName", "sourceUrl" }`
+   - `ticker`, `date` and `changePct`: copy exactly from the list-movers output.
+   - `why`: one plain sentence, 160 characters or fewer, that names the move (changePct rounded to one
+     decimal; the first percentage in the sentence must be the move) and attributes the reason, e.g.
+     "Nvidia rose 4.2% after reports of new chip orders." Use attribution wording such as "after reports
+     that…" or "after the company said…". No certainty beyond what the report says, no predictions, no advice.
+     The publish script rejects the words "will", "should", "must" and "sell" (write "sale" or "sell-off").
+   - `sourceName`: the publication. `sourceUrl`: the https article URL exactly as found, never a stock-quote page.
+4. If nothing reputable explains a move, skip that mover. Never guess, and never use a general market story
+   unless it names that company. At most 8 entries. Leave `movers` out (or `[]`) if there are none.
+5. The publish script checks each entry against our day files (ticker, date, changePct within 0.05), checks the
+   wording and the link, and drops bad entries with a warning instead of failing the edition. Kept entries also
+   go to `data/fantasy/movers.json` (last 10 trading days), which the front page reads.
+<!-- END: Why they moved -->
 
 ## Optional story fields
 These are new and optional. Older editions without them still work.
@@ -93,6 +121,7 @@ The publish script sets `date` and `updated` for you, but include them anyway.
   "watch": [string] (upcoming dates and events),
   "quickHits": [string] (one-sentence moves that didn't get a full story),
   "memo": [string] (3 short takeaways for someone running a business, not a fund),
+  "movers": optional, [ { "ticker": string, "date": trading date "YYYY-MM-DD", "changePct": number copied exactly from list-movers, "why": one sentence (160 characters max), "sourceName": publication name, "sourceUrl": "https://..." } ] (0 to 8 entries; leave out or [] when none),
   "ledger": null
 }
 ```
