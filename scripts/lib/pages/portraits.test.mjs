@@ -12,6 +12,11 @@ test('name with " & family" and accents -> painted portrait path', () => {
   assert.equal(portraitFor('  Rob   Walton & family '), '/assets/portraits/real/rob-walton-family.webp');
 });
 
+test('no painted portrait -> emblem card (by slug or name)', () => {
+  assert.equal(portraitFor('dieter-schwarz'), '/assets/portraits/emblem/dieter-schwarz.svg');
+  assert.equal(portraitFor('Germán Larrea Mota Velasco & family'), '/assets/portraits/emblem/german-larrea-mota-velasco-family.svg');
+});
+
 test('unknown name -> grey silhouette', () => {
   assert.equal(SILHOUETTE, '/assets/portraits/silhouette.webp');
   assert.equal(portraitFor('Nobody Anyone'), SILHOUETTE);

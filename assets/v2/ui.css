@@ -254,6 +254,8 @@ a.v2-player__name:hover { text-decoration: underline; text-underline-offset: 2px
 /* painted portrait (white background melts into the sector plate, face centered) */
 .v2-av--pic { color: transparent; }
 .v2-av--pic img { object-position: 50% 0; transform: scale(1.7); transform-origin: 50% 22%; mix-blend-mode: multiply; }
+/* emblem card (no painted portrait yet): show the whole medallion, no zoom or blend */
+.v2-av--pic img[src*="/portraits/emblem/"] { object-position: 50% 50%; transform: none; mix-blend-mode: normal; }
 .v2-av--sm { --av: 32px; }
 .v2-av--lg { --av: 72px; }
 .v2-av[data-sector="ai-tech"] { --plate: #DCE6F2; }
