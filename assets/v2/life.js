@@ -37,7 +37,7 @@
   function validSlug(s){ return typeof s === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s) && s.length <= 60; }
   function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function num(x){ return typeof x === 'number' && isFinite(x) && x >= 0 ? Math.floor(x) : 0; }
-  function focusTop(n, anchor){ try { n.focus({ preventScroll: true }); } catch (e) { n.focus(); } var r = (anchor || n).getBoundingClientRect(); if (r.top < 0 || r.top > window.innerHeight * 0.4) window.scrollTo(0, Math.max(0, window.pageYOffset + r.top - 12)); }
+  function focusTop(n, anchor){ try { n.focus({ preventScroll: true }); } catch (e) { n.focus(); } var r = (anchor || n).getBoundingClientRect(), hd = document.querySelector('.v2-top'), off = hd ? hd.offsetHeight : 0; if (r.top < off || r.top > window.innerHeight * 0.4) window.scrollTo(0, Math.max(0, window.pageYOffset + r.top - off - 12)); }
   function queryParam(name){
     var m = new RegExp('[?&]' + name + '=([^&#]*)').exec(location.search || '');
     if (!m) return null;
