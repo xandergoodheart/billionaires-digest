@@ -163,6 +163,10 @@
     say(teamName() + '. ' + (total == null ? 'No team points yet.' : 'Team total ' + plainTxt(total) + ' fantasy points.') + ' ' + result(v) + '.');
   }
 
+  // The Book is hidden from the menus (scripts/lib/nav.mjs MENU_HIDDEN / BOOK_HIDDEN): no Book matchup or
+  // "All matchups" link here either. Set to false together with nav.mjs to bring it back.
+  var BOOK_HIDDEN = true;
+
   // ---- featured scoreboard without a team: the week's top matchup on The Book ----
   function renderBookBoard(book){
     var box = clear($('hmteam'));
@@ -180,7 +184,7 @@
     row.appendChild(link('v2-btn v2-btn--ghost v2-btn--sm', 'Lucky five', 'draft.html#lucky'));
     empty.appendChild(row);
     box.appendChild(empty);
-    if (ev){
+    if (ev && !BOOK_HIDDEN){
       var model = book.model || {};
       var mk = function(slug){
         var ml = arr(ev.selections).filter(function(s){ return s.market === 'ml' && s.person === slug; })[0];
@@ -332,29 +336,6 @@
     box.appendChild(el('p', 'hm-mv__fine', open.length + (open.length === 1 ? ' open market' : ' open markets') + '. Settled only from public SEC filings. Play-money coins, no cash value.'));
   }
 
-  // ---- how to play: rules from the draft week file (BDFantasyCore when the file is missing) ----
-  var WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-  function renderHow(wk){
-    var ol = clear($('howlist'));
-    var picks = wk && typeof wk.picks === 'number' ? wk.picks : C.PICKS;
-    var cap = wk && typeof wk.cap === 'number' ? wk.cap : C.CAP;
-    var mult = wk && typeof wk.captainMultiplier === 'number' ? wk.captainMultiplier : C.CAPTAIN_MULT;
-    var pw = WORDS[picks] || String(picks);
-    [
-      ['Make your picks', pw.charAt(0).toUpperCase() + pw.slice(1) + ' players, billionaires or big-company CEOs, ' + cap + ' cap. Each player has a cap cost; stay at or under ' + cap + '.'],
-      ['Name your captain', 'Your captain scores ' + mult + '× points, good or bad.'],
-      ['Watch the week play out', 'Points come from their real stock moves each trading day, head to head with the S&P 500.']
-    ].forEach(function(x, i){
-      var li = el('li', 'hm-how__i');
-      li.appendChild(el('span', 'hm-how__n', '0' + (i + 1)));
-      var t = el('div', 'hm-how__t');
-      t.appendChild(el('h3', 'hm-how__h', x[0]));
-      t.appendChild(el('p', 'hm-how__p', x[1]));
-      li.appendChild(t);
-      ol.appendChild(li);
-    });
-  }
-
   // ---- players to watch: top 5 by real points this scoring week (or the last scored day) ----
   function renderWatch(){
     var S = F.state, sec = $('watchsec');
@@ -364,7 +345,9 @@
     var practice = src.wk.practice ? ' (practice week)' : '';
     $('watchk').textContent = src.kind === 'week'
       ? F.fmt.weekTitle(src.wk.week) + ' · points so far, through ' + F.fmt.dayLabel(src.date)
-      : 'Last scored day · ' + F.fmt.dayLabel(src.date) + practice + '. This week has no scores yet.';
+      : 'Last scored day · ' + F.fmt.dayLabel(src.date) + practice + (S.sbWk && S.sbWk.week !== src.wk.week
+        ? '. ' + F.fmt.weekTitle(S.sbWk.week) + ' has no scores yet.'
+        : '.');
     var ol = clear($('watchlist')), sal = F.salaries(), wsal = src.wk.salaries || {};
     top.forEach(function(x, i){
       var p = x.p, li = el('li', 'hm-watch__i');
@@ -394,16 +377,16 @@
     function(){ renderLede(null); renderStories(null); renderHeadlines(null); });
   BD.getJson('data/moves/markets.json').then(renderMoves, function(){ renderMoves(null); });
 
-  renderHow(null);
   F.init().then(function(){
-    renderHow(F.state.draftWk);
     renderWatch();
     if (window.BDDossier) window.BDDossier.loadNicknames().then(function(x){ if (x) renderWatch(); }, function(){});
     var v = view();
     if (v.mode !== 'none'){ renderTeamBoard(v); return; }
+    if (BOOK_HIDDEN){ renderBookBoard(null); return; }
     return loadBook().then(renderBookBoard, function(){ renderBookBoard(null); });
   }, function(err){
     if (window.console) console.warn(err);
+    if (BOOK_HIDDEN){ boardFail(); return; }
     loadBook().then(function(b){ if (b) renderBookBoard(b); else boardFail(); }, boardFail);
   });
 })();

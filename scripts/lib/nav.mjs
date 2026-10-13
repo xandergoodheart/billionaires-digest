@@ -2,6 +2,25 @@
 // Top-level .html pages get this markup via scripts/sync-nav.mjs (relative links);
 // generated pages (scripts/lib/pages/layout.mjs) render it with absolute links.
 
+import { readFileSync } from 'node:fs';
+
+// Launch switch: config/launch.json { "gate": true|false }. While gated (waitlist before Season 1), the v2 chrome
+// sends Play to the waitlist landing (index.html), hides every Play sub-tab except Rules, and hides the Tools section.
+// Un-gate: set "gate": false in config/launch.json, run `node scripts/sync-nav.mjs` (and build-pages for generated pages).
+// A missing or broken file counts as not gated (fail open), the same as assets/launch.js in the browser.
+export function readGated(file = new URL('../../config/launch.json', import.meta.url)) {
+  try { return JSON.parse(readFileSync(file, 'utf8')).gate === true; } catch { return false; }
+}
+export const GATED = readGated();
+const GATED_HIDDEN_SECTIONS = ['tools'];
+const GATED_PLAY_ITEMS = ['rules'];
+
+// Owner decision 2026-10-04: these pages stay online and reachable by URL, but are left out of every v2 menu
+// (sub-tabs, phone MENU sheet). While The Book is hidden, the odds ticker (assets/v2/ticker.js, built from The Book)
+// is hidden too. To bring one back, remove its key here and run `node scripts/sync-nav.mjs` (+ build-pages).
+export const MENU_HIDDEN = ['book', 'moves', 'copycat', 'network', 'property'];
+export const BOOK_HIDDEN = MENU_HIDDEN.includes('book');
+
 // key: used for aria-current. href: relative to the site root, no leading slash.
 export const NAV = [
   { key: 'today', label: 'Today', href: 'news.html' },
@@ -77,7 +96,8 @@ export const NAV_JS = `(function(){var d=document.querySelectorAll('details.navm
 // markers (scripts/sync-nav.mjs). Behavior of the MENU sheet lives in assets/v2/chrome.js. v1 NAV above is unchanged.
 
 // Top-level sections (Phase 3). The leaderboard lives in Scores, so there is no separate Rankings section.
-// Play is the site's front door (index.html, "/" on generated pages); the daily edition lives at news.html.
+// Play's front page is the home page (index.html, "/" on generated pages): the preseason Play home with the
+// "Save your team" email box. play.html only redirects there. The daily edition lives at news.html.
 export const NAV_V2 = [
   { key: 'play', label: 'Play', href: 'index.html' },
   { key: 'learn', label: 'Learn', href: 'academy.html' },
@@ -135,7 +155,23 @@ export const SUBNAV_V2 = {
 // Phone bottom tab bar (four sections). Tools is reachable from the phone MENU sheet (it lists every NAV_V2 section).
 export const BOTTOM_V2 = ['play', 'learn', 'players', 'news'];
 
-const topItem = key => NAV_V2.find(n => n.key === key) || null;
+// The sections and sub-tabs actually shown, after the launch switch and MENU_HIDDEN.
+export function navV2({ gated = GATED } = {}) {
+  if (!gated) return NAV_V2;
+  return NAV_V2.filter(n => !GATED_HIDDEN_SECTIONS.includes(n.key));
+}
+export function subnavV2(key, { gated = GATED } = {}) {
+  let s = key && SUBNAV_V2[key] ? SUBNAV_V2[key] : null;
+  if (!s) return s;
+  s = { ...s, items: s.items.filter(i => !MENU_HIDDEN.includes(i.key)) };
+  if (!gated) return s;
+  if (GATED_HIDDEN_SECTIONS.includes(key)) return null;
+  if (key === 'play') return { ...s, items: s.items.filter(i => GATED_PLAY_ITEMS.includes(i.key)) };
+  return s;
+}
+// The odds ticker is built from The Book: none while gated or while The Book is hidden from the menus.
+const showTicker = gated => !gated && !BOOK_HIDDEN;
+const topItem = (key, gated) => navV2({ gated }).find(n => n.key === key) || null;
 
 // Icons for the top-bar actions (original line drawings; no brand icons).
 const ICON = {
@@ -148,14 +184,24 @@ const ICON = {
 // Active section: aria-current="true"; active sub-tab (the page itself): aria-current="page".
 // The scores ticker is an empty, hidden container here; assets/v2/ticker.js (loaded by renderFooterV2) fills it
 // from real data and shows it, or leaves it hidden when the data is missing.
-export function renderTopbarV2(topKey, subKey, { absolute = false } = {}) {
+// While GATED: no ticker container (no odds anywhere), and the Draft + My team actions become one "Join the waitlist" button.
+// No ticker either while The Book is hidden from the menus (BOOK_HIDDEN).
+export function renderTopbarV2(topKey, subKey, { absolute = false, gated = GATED } = {}) {
   const u = h => escHtml(url(h, absolute));
   const sec = cur2 => cur2 ? ' aria-current="true"' : '';
-  const sub = topKey && SUBNAV_V2[topKey] ? SUBNAV_V2[topKey] : null;
-  const top = NAV_V2.map(n => `      <a href="${u(n.href)}"${sec(n.key === topKey)}>${escHtml(n.label)}</a>`).join('\n');
+  const sections = navV2({ gated });
+  if (topKey && !topItem(topKey, gated)) topKey = null;   // section hidden by the launch switch
+  const sub = subnavV2(topKey, { gated });
+  const top = sections.map(n => `      <a href="${u(n.href)}"${sec(n.key === topKey)}>${escHtml(n.label)}</a>`).join('\n');
   const mark = `<a class="v2-mark" href="${u('index.html')}"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>`;
-  let out = `<a class="v2-skip" href="#main">Skip to content</a>
-<div class="v2-ticker" data-ticker hidden></div>
+  const ticker = showTicker(gated) ? '\n<div class="v2-ticker" data-ticker hidden></div>' : '';
+  const acts = gated
+    ? `      <a class="v2-top__act v2-top__search" href="${u('people/')}">${ICON.search}<span>Search</span></a>
+      <a class="v2-top__act v2-top__act--team v2-top__act--join" href="${u('index.html')}"><span>Join the waitlist</span></a>`
+    : `      <a class="v2-top__act v2-top__act--draft" href="${u('draft.html')}">${ICON.draft}<span>Draft</span></a>
+      <a class="v2-top__act v2-top__search" href="${u('people/')}">${ICON.search}<span>Search</span></a>
+      <a class="v2-top__act v2-top__act--team" href="${u('team.html')}">${ICON.team}<span>My team</span></a>`;
+  let out = `<a class="v2-skip" href="#main">Skip to content</a>${ticker}
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
     ${mark}
@@ -163,9 +209,7 @@ export function renderTopbarV2(topKey, subKey, { absolute = false } = {}) {
 ${top}
     </nav>
     <div class="v2-top__right">
-      <a class="v2-top__act v2-top__act--draft" href="${u('draft.html')}">${ICON.draft}<span>Draft</span></a>
-      <a class="v2-top__act v2-top__search" href="${u('people/')}">${ICON.search}<span>Search</span></a>
-      <a class="v2-top__act v2-top__act--team" href="${u('team.html')}">${ICON.team}<span>My team</span></a>
+${acts}
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
   </div>
@@ -173,7 +217,7 @@ ${top}
   if (sub) {
     const items = sub.items.map(i => `      <li><a href="${u(i.href)}"${cur(i.key === subKey)}>${escHtml(i.label)}</a></li>`).join('\n');
     out += `
-<nav class="v2-subtabs" aria-label="${escHtml(topItem(topKey).label)}">
+<nav class="v2-subtabs" aria-label="${escHtml(topItem(topKey, gated).label)}">
   <div class="v2-wrap v2-subtabs__in">
     <span class="v2-subtabs__label">${escHtml(sub.label)}</span>
     <ul class="v2-subtabs__list">
@@ -183,8 +227,8 @@ ${items}
 </nav>`;
   }
   // phone MENU sheet: every section, with its sub-tabs
-  const menu = NAV_V2.map(n => {
-    const s = SUBNAV_V2[n.key];
+  const menu = sections.map(n => {
+    const s = subnavV2(n.key, { gated });
     const kids = s ? `\n        <ul>\n` + s.items.map(i => `          <li><a href="${u(i.href)}"${cur(n.key === topKey && i.key === subKey)}>${escHtml(i.label)}</a></li>`).join('\n') + `\n        </ul>` : '';
     return `      <li><a class="v2-menu__top" href="${u(n.href)}"${sec(n.key === topKey)}>${escHtml(n.label)}</a>${kids}</li>`;
   }).join('\n');
@@ -205,15 +249,16 @@ ${menu}
 }
 
 // Phone bottom tab bar (hidden on desktop by CSS; icons are CSS masks in ui.css, in this order).
-export function renderBottomTabsV2(topKey, { absolute = false } = {}) {
-  const items = BOTTOM_V2.map(k => topItem(k)).map(n =>
+export function renderBottomTabsV2(topKey, { absolute = false, gated = GATED } = {}) {
+  const items = BOTTOM_V2.map(k => topItem(k, gated)).filter(Boolean).map(n =>
     `  <a href="${escHtml(url(n.href, absolute))}"${n.key === topKey ? ' aria-current="true"' : ''}>${escHtml(n.label)}</a>`).join('\n');
   return `<nav class="v2-tabs" aria-label="Sections">\n${items}\n</nav>`;
 }
 
 // Footer. Also loads assets/v2/ticker.js (deferred), so every page with the v2 footer gets the scores ticker,
-// including generated pages (scripts/lib/pages/layout.mjs renders this with absolute links).
-export function renderFooterV2({ absolute = false } = {}) {
+// including generated pages (scripts/lib/pages/layout.mjs renders this with absolute links). Not while GATED or while
+// The Book is hidden (BOOK_HIDDEN): no odds.
+export function renderFooterV2({ absolute = false, gated = GATED } = {}) {
   const u = h => escHtml(url(h, absolute));
   return `<footer class="v2-foot">
   <div class="v2-wrap v2-foot__in">
@@ -224,12 +269,13 @@ export function renderFooterV2({ absolute = false } = {}) {
       <a href="${u('play-terms.html')}">Game rules</a>
       <a href="${u('about.html')}#sponsor">Sponsor the brief</a>
       <a href="${u('calendar.ics')}">Calendar feed</a>
+      <a href="${u('terms.html')}">Terms</a>
+      <a href="${u('privacy.html')}">Privacy</a>
     </nav>
     <div class="v2-foot__notes">
       <p>For information only · not financial advice</p>
       <p>Play money only: no purchases, cash-out or prizes.</p>
     </div>
   </div>
-</footer>
-<script src="${u('assets/v2/ticker.js')}" defer></script>`;
+</footer>${showTicker(gated) ? `\n<script src="${u('assets/v2/ticker.js')}" defer></script>` : ''}`;
 }

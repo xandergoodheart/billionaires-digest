@@ -3,7 +3,7 @@
 
 import {
   esc, safeUrl, arr, str, dirClass, arrow, joinBits, initials, fmtDate, monYear, clip,
-  fmtShares, fmtUsd, fmtPrice, sectorArt, sectorHref
+  fmtShares, fmtUsd, sectorArt, sectorHref
 } from './util.mjs';
 import { portraitFor } from './portraits.mjs';
 
@@ -181,10 +181,12 @@ export function quoteFor(e, quotes) {
   }
   return null;
 }
+// Percent move only (never the raw share price); '' when the quote has no % change.
 export function quoteHtml(qb) {
-  const pct = qb.q.changePct, has = typeof pct === 'number' && isFinite(pct);
-  const dir = !has ? 'flat' : (pct > 0 ? 'up' : (pct < 0 ? 'down' : 'flat'));
-  const t = (qb.sym ? qb.sym + ' ' : '') + fmtPrice(qb.q.price) + (has ? ' ' + arrow(dir) + Math.abs(pct).toFixed(2) + '%' : '');
+  const pct = qb.q.changePct;
+  if (typeof pct !== 'number' || !isFinite(pct)) return '';
+  const dir = pct > 0 ? 'up' : (pct < 0 ? 'down' : 'flat');
+  const t = (qb.sym ? qb.sym + ' ' : '') + arrow(dir) + Math.abs(pct).toFixed(2) + '%';
   return `<span class="fpq ${dirClass(dir)}">${esc(t)}</span>`;
 }
 
@@ -203,7 +205,8 @@ export function footprint(name, prof, quotes, companyLink) {
       if (!x.main) continue;
       if (key === 'controls' || key === 'stakes') {
         const qb = quoteFor(e, quotes);
-        if (qb) { x.quote = quoteHtml(qb); if (qb.q.time) quoteTimes.push(String(qb.q.time)); }
+        const qh = qb ? quoteHtml(qb) : '';
+        if (qh) { x.quote = qh; if (qb.q.time) quoteTimes.push(String(qb.q.time)); }
         const cl = companyLink ? companyLink(e) : null;
         if (cl && cl.href) { x.href = cl.href; x.head = cl.head; }
       }
@@ -214,7 +217,6 @@ export function footprint(name, prof, quotes, companyLink) {
     out.push(`<div class="fpg"><h3 class="fph">${esc(label)}</h3>${rows.join('')}</div>`);
   }
   if (!any) out.push(`<p class="pcnote">${esc('No sourced footprint entries on file for ' + name + ' yet.')}</p>`);
-  if (prof.gaps) out.push(`<p class="pcnote">${esc('Research gaps: ' + prof.gaps)}</p>`);
   return { html: out.join(''), quoteTimes, any };
 }
 

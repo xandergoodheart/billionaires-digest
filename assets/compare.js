@@ -21,7 +21,7 @@
     return a;
   }
 
-  var people = [], graph = null, est = null;
+  var people = [], graph = null, est = null, ST = { asOf: null, value: {}, rank: {} }; // ST: Public Stake Value (BD.stakeTable)
   var selA, selB, cols, sharedBox, token = 0;
 
   function readHash(){
@@ -83,7 +83,7 @@
     var head = el('div', 'cmphead');
     head.appendChild(BD.avatar({ name: name, sector: ip.sector || P.sector }, 64));
     var who = el('div');
-    who.appendChild(el('div', 'cmprank', '#' + (ip.rank || P.rank || '?') + ' · ' + (ip.sector || P.sector || 'Other')));
+    who.appendChild(el('div', 'cmprank', (ST.rank[slug] ? 'No. ' + ST.rank[slug] + ' by ' + BD.STAKE_LABEL + ' · ' : '') + (ip.sector || P.sector || 'Other')));
     var h2 = el('h2', 'serif'), a = el('a', null, name); a.href = personHref(slug);
     h2.appendChild(a); who.appendChild(h2);
     if (ip.source) who.appendChild(el('div', 'cmprank', 'Wealth from ' + ip.source));
@@ -91,11 +91,10 @@
     col.appendChild(head);
 
     var wbox = el('div', 'cmpworth');
-    wbox.appendChild(el('div', 'label', 'Net worth'));
-    wbox.appendChild(el('div', 'v serif', ip.worth || P.worth || '—'));
-    var pix = BD.getPeople();
-    var iso = BD.isoOf(pix && pix.asOf);
-    wbox.appendChild(el('div', 's', String((pix && pix.source) || 'Forbes').replace(/\s+Billionaires$/i, '') + (iso ? ' · as of ' + BD.fmtDate(iso) : '')));
+    wbox.appendChild(el('div', 'label', BD.STAKE_LABEL));
+    var sv = ST.value[slug];
+    wbox.appendChild(el('div', 'v serif', sv ? BD.fmtStake(sv) : '—'));
+    wbox.appendChild(el('div', 's', sv ? BD.STAKE_NOTE + (ST.asOf ? ' As of ' + BD.fmtDate(ST.asOf) + '.' : '') : BD.STAKE_NONE));
     var pe = est && est.people && Object.prototype.hasOwnProperty.call(est.people, slug) ? est.people[slug] : null;
     var minCov = est && typeof est.minCoverage === 'number' && isFinite(est.minCoverage) ? est.minCoverage : 0.25;
     var e = el('div', 'e');
@@ -103,7 +102,7 @@
       var v = pe.estDailyChange, dir = v > 0 ? 'up' : (v < 0 ? 'down' : 'flat');
       e.appendChild(document.createTextNode('Est. today: '));
       e.appendChild(el('span', BD.dirClass(dir), BD.arrow(dir) + (BD.fmtUsd(Math.abs(v)) || '$0')));
-      e.appendChild(document.createTextNode(' from public stakes (covers ' + (pe.coverage >= 0.9 ? 'most' : '~' + Math.round(pe.coverage * 100) + '%') + ' of net worth)'));
+      e.appendChild(document.createTextNode(' from public stakes'));
     } else {
       e.appendChild(document.createTextNode('Est. today: not shown. Too little of their wealth is in US-listed stakes with known share counts.'));
       e.className = 'e';
@@ -229,7 +228,7 @@
     var f = el('div', 't4field');
     var l = el('label', null, label); l.htmlFor = id;
     var s = el('select', 't4select'); s.id = id;
-    people.forEach(function(p){ var o = el('option', null, '#' + p.rank + ' ' + p.name); o.value = p.slug; s.appendChild(o); });
+    people.forEach(function(p){ var o = el('option', null, p.name); o.value = p.slug; s.appendChild(o); });
     f.appendChild(l); f.appendChild(s);
     return { f: f, s: s };
   }
@@ -250,7 +249,7 @@
     body.appendChild(grid);
     sharedBox = el('section'); sharedBox.setAttribute('aria-live', 'polite');
     body.appendChild(sharedBox);
-    body.appendChild(el('p', 't4note', 'Net worth is from the Forbes real-time list. Holdings, deals and counts come from each person\'s sourced profile; every row links to its source. "Est. today" appears only when enough of a person\'s wealth is in US-listed stakes with disclosed share counts.'));
+    body.appendChild(el('p', 't4note', BD.STAKE_LABEL + ' is our own figure: disclosed US-listed share counts × latest close. It is not a net worth and leaves out private companies and other assets. Holdings, deals and counts come from each person\'s sourced profile; every row links to its source. "Est. today" appears only when enough of a person\'s wealth is in US-listed stakes with disclosed share counts.'));
 
     var h = readHash();
     selA.value = h.a; selB.value = h.b;
@@ -270,10 +269,13 @@
     BD.getJson('data/network/graph.json').catch(function(){ return null; }),
     BD.loadNetworthEst()
   ]).then(function(res){
-    people = arr(res[0] && res[0].people).slice().sort(function(x, y){ return (x.rank || 999) - (y.rank || 999); });
-    graph = res[1]; est = res[2];
-    var up = document.getElementById('updated'), iso = BD.isoOf(res[0] && res[0].asOf);
-    if (up && iso) up.textContent = 'Net worth as of ' + BD.fmtDate(iso);
+    graph = res[1]; est = res[2]; ST = BD.stakeTable(est);
+    // order: Public Stake Value rank, then everyone else A–Z
+    people = arr(res[0] && res[0].people).slice().sort(function(x, y){
+      return (ST.rank[x.slug] || 1e9) - (ST.rank[y.slug] || 1e9) || String(x.name).localeCompare(String(y.name));
+    });
+    var up = document.getElementById('updated');
+    if (up && ST.asOf) up.textContent = BD.STAKE_LABEL + ' as of ' + BD.fmtDate(ST.asOf);
     if (people.length < 1){ body.innerHTML = ''; body.appendChild(el('p', 't4msg', 'No people to compare yet.')); return; }
     build();
   }).catch(function(){

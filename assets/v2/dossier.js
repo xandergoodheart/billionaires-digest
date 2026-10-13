@@ -11,7 +11,7 @@
    BDPortraits (assets/v2/portraits.js) is optional.
    Real data only: every figure comes from the site's data files with its date and source; when a file or field
    is missing the item is left out or shows "—". CEOs (data/ceos/index.json) get a CEO version: role and company,
-   bio and sources from that file, no net worth. Game only: play money, no prizes. Not financial advice. */
+   bio and sources from that file, no Public Stake Value. Game only: play money, no prizes. Not financial advice. */
 (function(){
   var F = window.BDFantasyStore, C = window.BDFantasyCore, K = window.BDDossierCore;
   if (!window.BD || !F || !C || !K) return;
@@ -299,11 +299,12 @@
     var since = c0 ? K.roleSince(c0.role) : null;
     if (since) fact(dl, 'Role since', String(since), c0.name ? 'at ' + c0.name : '');
     fact(dl, 'Sector', sectorOf());
-    var ix = BD.indexBySlug(D.slug), pix = BD.getPeople();
-    var worth = (prof && str(prof.worth)) || (ix && str(ix.worth)) || '';
-    var wAsOf = (prof && prof.asOf) || (pix && pix.asOf) || '';
-    if (worth) fact(dl, 'Net worth', worth, 'Forbes Real-Time' + (dateTxt(wAsOf) ? ', ' + dateTxt(wAsOf) : ''));
-    else if (x.prof === undefined) fact(dl, 'Net worth', '…', 'loading');
+    var ix = BD.indexBySlug(D.slug);
+    // Public Stake Value (BD.stakeTable): our own number, never a net worth
+    var st = x.stakes, sv = st && st.value[D.slug];
+    if (sv) fact(dl, BD.STAKE_LABEL, BD.fmtStake(sv), 'Disclosed US-listed shares × latest close' + (st.asOf ? ', ' + BD.fmtDate(st.asOf) : '') + '. Not a net worth.');
+    else if (st) fact(dl, BD.STAKE_LABEL, '—', BD.STAKE_NONE);
+    else if (x.stakes === undefined) fact(dl, BD.STAKE_LABEL, '…', 'loading');
     var ph = primary(), tk = ph && ph.ticker;
     var fin = tk && x.fin ? K.financials(x.fin, tk) : null;
     var q = tk && x.prices && x.prices.quotes && has(x.prices.quotes, tk) ? x.prices.quotes[tk] : null;
@@ -315,10 +316,6 @@
     box.appendChild(dl);
     var src = el('p', 'dz-src');
     var bits = 0;
-    if (pix && BD.safeUrl(pix.sourceUrl)){
-      var a = ext(null, (pix.source || 'Forbes Real-Time') + (dateTxt(pix.asOf) ? ', ' + dateTxt(pix.asOf) : ''), pix.sourceUrl, 'src-forbes');
-      src.appendChild(txt('Net worth: ')); src.appendChild(a); bits++;
-    }
     if (c0 && BD.safeUrl(c0.source)){
       if (bits) src.appendChild(txt(' · '));
       src.appendChild(txt('Role: ')); src.appendChild(ext(null, 'source', c0.source, 'src-role')); bits++;
@@ -630,6 +627,7 @@
     peopleIx().then(function(){ return profile(slug); }).then(done('prof'));
     optJson('data/financials/index.json').then(done('fin'));
     BD.loadPrices().then(done('prices'));
+    BD.loadStakes().then(done('stakes'), function(){ return null; });
     optJson('data/ceos/index.json').then(done('ceos'));
     if (isCeo()) x.filings = null;
     else once('filings:' + slug, function(){ return BD.loadPersonFilings(slug); }).then(done('filings'));

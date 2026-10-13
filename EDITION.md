@@ -13,8 +13,7 @@ Build today's Billionaires Digest edition and publish it.
    trades, IPOs, launches, layoffs, lawsuits, regulatory actions and leadership changes.
    When you set `people` on a story, use names exactly as written in `data/people/index.json`.
 3. Research with web search. Look at the last 48 hours first. Go back up to 7 days only if needed.
-   Look up the current top 10 by net worth (Forbes real-time or Bloomberg Billionaires Index) and
-   write the source and date in `top10AsOf`.
+   Skip the net-worth top 10 and never quote Forbes or Bloomberg net worth figures or ranks.
    Note: `top10` and `top10AsOf` now come from `data/people/index.json` automatically. The publish
    script replaces whatever the draft has with ranks 1-10 from the index. You may still write them
    (the schema below lists them), but they will be overwritten.
@@ -41,10 +40,10 @@ Never edit `index.html` (the publish script updates its share-image meta tags; t
 ## Editorial rules
 Source of truth: `scripts/lib/edition.mjs` `rulesText()`. If you change one, change both.
 
-- Today is the date of the run (New York time). Use web search to find real news from the last 48 hours (extend to 7 days only if needed) about investments, acquisitions, sales, insider trades, IPOs, leadership changes and major company moves by people on the Forbes or Bloomberg billionaire lists, focusing on the top 100.
+- Today is the date of the run (New York time). Use web search to find real news from the last 48 hours (extend to 7 days only if needed) about investments, acquisitions, sales, insider trades, IPOs, leadership changes and major company moves by the people in data/people/index.json.
 - Every story must come from a search result. Copy its URL exactly. Never invent a story, number, quote, date or URL. If you can't verify a detail, leave it out.
 - Only use URLs of news articles or filings, not stock-quote or company profile pages. Link the article itself.
-- Look up the current top 10 by net worth (Forbes real-time or Bloomberg Billionaires Index) and say which source and date in top10AsOf.
+- Skip the net-worth top 10: top10 and top10AsOf are filled automatically from our own data. Never quote Forbes or Bloomberg net worth figures or ranks.
 - When a story is about someone in the top 10, set "who" to their name exactly as written in top10.
 - Only include a consensus alert when two or more billionaires moved money the same direction in the same sector. Otherwise set it to null.
 - Write plainly: short sentences, no jargon, no hype. Keep facts in "move"; put opinion only in "read", "why", "bear" and "memo".

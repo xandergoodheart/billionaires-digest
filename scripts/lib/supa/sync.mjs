@@ -1,6 +1,9 @@
 // The daily game sync (see scripts/supabase-sync.mjs):
 //   1. upload recent fantasy weeks and daily points      -> upsert_week, upsert_points
+//      (weeks that ended in the last RECENT_DAYS days, i.e. the last 3 weeks plus the current one; build-fantasy
+//      rebuilds recent days from closes, so their points can change after a week is final)
 //   2. score weeks: live standings, then final            -> settle_week
+//      a week already final is settled again when its uploaded points changed (compared before the upload)
 //   3. close markets past Friday 4 PM New York            -> close_due_markets
 //   4. on Mondays, open the week's markets if missing     -> create_market (same slugs every run)
 //      OFF by default: The Book replaced the LMSR markets (set GAME_LMSR_MARKETS=1 to open new ones again).
@@ -24,6 +27,26 @@ import { nyDate, nyWeekday, addDays } from './time.mjs';
 import { generateMarkets, resolveMarket, weekTotals, isPBuy, GIVE_UP_DAYS } from './markets.mjs';
 import { settleBook, isPriceEvent, priceEventState } from '../book/settle.mjs';
 import { syncMoves, movesEnabled, isMovesMarket } from './moves-sync.mjs';
+import { core } from '../fantasy.mjs';
+
+// Last NYSE trading day of a week (Friday unless it is a holiday); falls back to the week's end.
+export function lastTradingDay(w) {
+  const days = /^\d{4}-W\d{2}$/.test(w.week || '') ? core.tradingDaysOf(w.week) : [];
+  return days.length ? days[days.length - 1] : w.end;
+}
+
+// Weeks whose points in the database differ from our day files. dbRows: [{ date, slug, points }] of the week's dates.
+export function pointsChanged(days, w, dbRows) {
+  const db = new Map((dbRows || []).map(r => [`${String(r.date).slice(0, 10)}|${r.slug}`, Number(r.points)]));
+  for (const d of days) {
+    if (d.date < w.start || d.date > w.end) continue;
+    for (const p of d.people || []) {
+      const v = db.get(`${d.date}|${p.slug}`);
+      if (v === undefined || v !== Math.round(Number(p.points))) return true;
+    }
+  }
+  return false;
+}
 
 // The Book replaced the LMSR markets in the UI: no new markets unless this is turned back on.
 export const LMSR_NEW_MARKETS = false;
@@ -97,6 +120,19 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
   const live = data.weeks.filter(w => w.practice !== true);
   const recent = live.filter(w => w.end >= addDays(today, -RECENT_DAYS));
   if (!data.weeks.length) log('No fantasy weeks in data/fantasy/weeks yet: skipping the fantasy upload.');
+  let isFinal = {};
+  const changedFinal = new Set();
+  if (recent.length) {
+    const rows = await api.select('fantasy_weeks', 'select=week,final&week=in.(' + recent.map(w => `"${w.week.replace(/"/g, '')}"`).join(',') + ')');
+    isFinal = Object.fromEntries((rows || []).map(r => [r.week, !!r.final]));
+    // before uploading: did a final week's points change (closes repaired, days rebuilt)?
+    for (const w of recent.filter(x => isFinal[x.week])) {
+      try {
+        const db = await api.select('person_points', `select=date,slug,points&date=gte.${w.start}&date=lte.${w.end}&limit=10000`);
+        if (pointsChanged(data.days, w, db)) changedFinal.add(w.week);
+      } catch (e) { log(`could not compare points for ${w.week}: ${e.message}`); }
+    }
+  }
   for (const w of recent) {
     await api.rpc('upsert_week', { p: { week: w.week, start: w.start, end: w.end, locksAt: w.locksAt, salaries: w.salaries || {}, draftable: w.draftable || [] } });
     summary.weeks++;
@@ -109,15 +145,14 @@ export async function sync({ env = process.env, root, now = new Date(), fetchImp
 
   // 2. settle
   if (recent.length) {
-    const rows = await api.select('fantasy_weeks', 'select=week,final&week=in.(' + recent.map(w => `"${w.week.replace(/"/g, '')}"`).join(',') + ')');
-    const isFinal = Object.fromEntries((rows || []).map(r => [r.week, !!r.final]));
     for (const w of recent) {
-      const haveEnd = data.days.some(d => d.date === w.end);
+      const last = lastTradingDay(w);
+      const haveEnd = data.days.some(d => d.date === last);
       const done = today > w.end && (haveEnd || today >= addDays(w.end, 2));
       const locked = w.locksAt && now.getTime() >= new Date(w.locksAt).getTime();
-      if (done && !isFinal[w.week]) {
+      if (done && (!isFinal[w.week] || changedFinal.has(w.week))) {
         await api.rpc('settle_week', { p_week: w.week, p_final: true });
-        summary.settled.push(`${w.week} (final)`);
+        summary.settled.push(`${w.week} (final${isFinal[w.week] ? ', points changed' : ''})`);
       } else if (locked && !done) {
         await api.rpc('settle_week', { p_week: w.week, p_final: false });
         summary.settled.push(`${w.week} (live)`);
@@ -247,7 +282,7 @@ async function syncBook({ api, data, now, today, live, summary, log }) {
   // after Friday's data: settle
   for (const b of books) {
     const w = weeksById[b.week];
-    const haveEnd = data.days.some(d => d.date === w.end);
+    const haveEnd = data.days.some(d => d.date === lastTradingDay(w));
     if (!(today > w.end && (haveEnd || today >= addDays(w.end, 2)))) continue;
     const pending = await api.select('book_events', `select=id&week=eq.${encodeURIComponent(b.week)}&status=in.(open,closed)&limit=1`);
     if (!pending || !pending.length) continue;

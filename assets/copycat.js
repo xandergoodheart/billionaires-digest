@@ -41,9 +41,9 @@
     var rows = arr(d.buys);
     if (!rows.length){ sec.appendChild(el('p', 'fnote', 'No open-market buys in our filings data yet.')); return sec; }
     var t = el('table', 'qtable');
-    t.appendChild(el('caption', 'sr-only', 'Each open-market purchase, the price paid, today\'s price and the return'));
+    t.appendChild(el('caption', 'sr-only', 'Each open-market purchase, the price paid (from the Form 4) and the return since'));
     var thead = el('thead'), hr = el('tr');
-    [['Date', 'hide-sm'], ['Who', ''], ['Stock', ''], ['Paid', 'n'], ['Now', 'n hide-sm'], ['Return', 'n']].forEach(function(x){ var th = el('th', x[1] || null, x[0]); th.scope = 'col'; hr.appendChild(th); });
+    [['Date', 'hide-sm'], ['Who', ''], ['Stock', ''], ['Paid', 'n'], ['Return', 'n']].forEach(function(x){ var th = el('th', x[1] || null, x[0]); th.scope = 'col'; hr.appendChild(th); });
     thead.appendChild(hr); t.appendChild(thead);
     var tb = el('tbody');
     rows.forEach(function(r){
@@ -62,16 +62,12 @@
       if (u){ var a = el('a', 'src', 'Form 4 ↗'); a.href = u; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.setAttribute('aria-label', 'Form 4 filing for ' + (r.ticker || r.issuer) + ' on SEC.gov'); st.appendChild(a); }
       tr.appendChild(st);
       tr.appendChild(el('td', 'n', money(r.pricePaid)));
-      var now = el('td', 'n hide-sm', r.priceNow != null ? money(r.priceNow) : '—');
-      tr.appendChild(now);
       var ret = el('td', 'n ' + (r.returnPct == null ? 'flat' : dir(r.returnPct)));
       if (r.returnPct == null){
         ret.textContent = 'n/a';
         ret.appendChild(el('span', 'sub', r.ticker ? 'no quote' : 'not listed'));
       } else {
         ret.textContent = (r.returnPct > 0 ? '▲ ' : (r.returnPct < 0 ? '▼ ' : '')) + pctText(r.returnPct);
-        var ns = el('span', 'sub hide-sm-inv', 'now ' + money(r.priceNow));
-        ret.appendChild(ns);
       }
       tr.appendChild(ret);
       tb.appendChild(tr);

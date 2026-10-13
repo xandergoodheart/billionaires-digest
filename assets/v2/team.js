@@ -490,9 +490,12 @@
     lamps.setAttribute('aria-hidden', 'true');
     for (var i = 0; i < 5; i++) lamps.appendChild(el('span', 'tm-streak__l' + (i < rec.streak ? ' is-lit' : '')));
     sm.appendChild(lamps);
+    // next Monday you can start on: the first real week if it is still ahead, else the week now open in the Draft room
     var first = S.index && S.index.firstRealWeek ? C.weekMonday(S.index.firstRealWeek) : null;
+    var dw = S.draftWeek || (S.index && S.index.draftWeek);
+    var next = first && first > C.nyDate(F.now()) ? first : (dw ? C.weekMonday(dw) : null);
     var stxt;
-    if (!rec.played) stxt = 'Start your streak Monday' + (first ? ' (' + fmt.shortDate(first) + ')' : '') + '.';
+    if (!rec.played) stxt = 'Start your streak Monday' + (next ? ' (' + fmt.shortDate(next) + ')' : '') + '.';
     else if (!rec.streak) stxt = 'No streak right now. Beat the S&P 500 this week to start one.';
     else stxt = rec.streak + (rec.streak === 1 ? ' week' : ' weeks') + ' in a row beating the S&P 500.';
     sm.appendChild(el('p', 'tm-streak__txt', stxt));
@@ -610,7 +613,7 @@
       });
       body.appendChild(ul);
     }
-    // recent-edition counts from the game index (same counts that score +10 per story)
+    // recent-edition counts from the game index (news only: stories no longer score points)
     var counts = (F.state.index && F.state.index.news) || {};
     var recent = picks.filter(function(s){ return counts[s] > 0; });
     if (!items.length && recent.length){

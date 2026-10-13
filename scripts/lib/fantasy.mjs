@@ -153,11 +153,15 @@ export function personPortfolio(profile, quotes, adrs = KNOWN_ADRS) {
 }
 
 // ---- daily scoring ----
-export const POINTS = { insiderBuy: 25, story: 10 };
+// A day's points come from our own closes (data/prices/history): previous trading day's close -> that day's close.
+// No story bonus (removed 2026-10-12); an insider buy (Form 4, code P, filed that day) adds +25.
+export const POINTS = { insiderBuy: 25 };
 export const pricePoints = (returnPct) => Math.round(returnPct * 100);
+// Sanity guard: a one-day move bigger than this (in %) is quarantined (scored 0 and flagged), never scored.
+export const MAX_DAY_MOVE_PCT = 40;
 
-// Story matching, same rule as BD.storyMatches in assets/common.js.
-const normName = (x) => String(x ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+// Story matching, same rule as BD.storyMatches in assets/common.js (news counts in the draft room; not scored).
+const normName = (x) => String(x ?? '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const coreName = (x) => normName(String(x ?? '').replace(/\s*&\s*family\s*$/i, ''));
 export function storyMatches(story, name) {
   const n = coreName(name);
@@ -172,49 +176,57 @@ export function hasInsiderBuy(filings, slug, date) {
     [...(f.form4.summary ?? []), ...(f.form4.transactions ?? [])].some((t) => t && t.code === 'P'));
 }
 
-// One person's day. holdings: from personPortfolio; quotes; tradingDate (a quote whose New York date differs counts 0%).
-export function scorePersonDay({ slug, name, holdings, quotes, tradingDate, filings, stories }) {
+// history: { SYM: Map(date -> close) | [[date, close]] } (or a Map of those). Returns the close or null.
+export function closeOn(history, sym, date) {
+  const s = history instanceof Map ? history.get(sym) : history?.[sym];
+  if (!s) return null;
+  const v = s instanceof Map ? s.get(date) : (Array.isArray(s) ? (s.find((r) => r && r[0] === date) || [])[1] : undefined);
+  return typeof v === 'number' && Number.isFinite(v) && v > 0 ? v : null;
+}
+
+// One ticker's move on trading day `date`, close to close. conflicts: quality.json conflicts ({ SYM: { date: {...} } }).
+// Returns { changePct, prevClose, close } or { changePct: 0, stale: true } (a close is missing) or
+// { changePct: 0, quarantined: true, reason } (sanity guard).
+export function tickerMove(history, conflicts, sym, date) {
+  const prevDate = core.prevTradingDay(date);
+  const prev = closeOn(history, sym, prevDate), cur = closeOn(history, sym, date);
+  if (prev == null || cur == null) return { changePct: 0, stale: true };
+  const raw = (cur / prev - 1) * 100;
+  const changePct = Math.round(raw * 10000) / 10000;
+  const c = conflicts?.[sym]?.[date];
+  if (c) return { changePct: 0, quarantined: true, reason: `vendor previous close ${c.vendorPrev} for ${c.prevDate} disagrees with ours (${c.ourPrev}) by more than 2%`, prevClose: prev, close: cur };
+  if (Math.abs(raw) > MAX_DAY_MOVE_PCT) return { changePct: 0, quarantined: true, reason: `move of ${changePct}% is over ${MAX_DAY_MOVE_PCT}%`, prevClose: prev, close: cur };
+  return { changePct, prevClose: prev, close: cur };
+}
+
+// One person's day. holdings: from personPortfolio (or a week file's frozen draftable); date: a trading day.
+export function scorePersonDay({ slug, holdings, history, conflicts, date, filings }) {
   let ret = 0;
   const rows = [];
   for (const h of holdings) {
-    const q = quotes[h.ticker];
-    const fresh = q && typeof q.changePct === 'number' && Number.isFinite(q.changePct) && (!q.time || core.nyDate(Date.parse(q.time)) === tradingDate);
-    const cp = fresh ? q.changePct : 0;
-    ret += h.weight * cp;
-    const row = { ticker: h.ticker, weight: Math.round(h.weight * 10000) / 10000, changePct: fresh ? Math.round(cp * 10000) / 10000 : 0 };
-    if (!fresh) row.stale = true;
+    const m = tickerMove(history, conflicts, h.ticker, date);
+    ret += h.weight * m.changePct;
+    const row = { ticker: h.ticker, weight: Math.round(h.weight * 10000) / 10000, changePct: m.changePct };
+    if (m.stale) row.stale = true;
+    if (m.quarantined) row.quarantined = true;
     rows.push(row);
   }
   const returnPct = Math.round(ret * 10000) / 10000;
-  const insiderBuy = hasInsiderBuy(filings, slug, tradingDate) ? POINTS.insiderBuy : 0;
-  const nStories = (stories ?? []).filter((s) => storyMatches(s, name)).length;
-  const bonuses = { insiderBuy, stories: nStories * POINTS.story };
+  const insiderBuy = hasInsiderBuy(filings, slug, date) ? POINTS.insiderBuy : 0;
   const pp = pricePoints(returnPct);
-  return { slug, returnPct, pricePoints: pp, points: pp + bonuses.insiderBuy + bonuses.stories, bonuses, holdings: rows };
-}
-
-// New York date of the quote snapshot: the most common quote date among the given symbols.
-export function tradingDateOf(quotes) {
-  const counts = new Map();
-  for (const q of Object.values(quotes ?? {})) {
-    const t = Date.parse(q?.time);
-    if (!Number.isFinite(t)) continue;
-    const d = core.nyDate(t);
-    counts.set(d, (counts.get(d) || 0) + 1);
-  }
-  let best = null, n = 0;
-  for (const [d, c] of counts) if (c > n || (c === n && d > best)) { best = d; n = c; }
-  return best;
+  return { slug, returnPct, pricePoints: pp, points: pp + insiderBuy, bonuses: { insiderBuy }, holdings: rows };
 }
 
 // ---- salaries ----
 export const TIERS = [[5, 30], [10, 26], [20, 22], [35, 18], [50, 14], [75, 10], [Infinity, 7]];
 export const tierSalary = (pos) => TIERS.find(([upTo]) => pos <= upTo)[1];
+// Billionaires with no Public Stake Value (no disclosed US-listed share count on file) start here.
+export const NO_STAKE_SALARY = 14;
 export const ADJUST_MIN_WEEKS = 4;
 export const ADJUST_MAX = 4;
 
 // ---- CEOs (data/ceos/index.json): business leaders who are not on the top-100 billionaire list ----
-// A CEO plays on one holding, their company's stock, at full weight. No Forbes rank.
+// A CEO plays on one holding, their company's stock, at full weight. No stake rank.
 export const CEO_METHOD = 'company stock';
 export const CEO_SALARY_NOTE = 'CEOs start at the pool\'s median cost';
 export const isCeo = (p) => !!p && p.type === 'ceo';
@@ -232,17 +244,24 @@ export function medianSalary(values) {
   return Math.round(v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2);
 }
 
-// draftable: [{ slug, rank, type? }] sorted or not. history: [{ totals: { slug: points } }] of recent finished real weeks.
-// Billionaires: Forbes-rank tiers among the billionaires in the pool. CEOs (type "ceo", no rank): the median of those
-// billionaire tier salaries. Then everyone (billionaires and CEOs together) gets the same ±ADJUST_MAX by recent points
-// percentile once there are ADJUST_MIN_WEEKS finished real weeks, and ensureFeasible runs.
+// draftable: [{ slug, rank, type? }] sorted or not; rank = Public Stake Value rank (scripts/lib/data-common.mjs
+// stakeTable; null when the person has none). history: [{ totals: { slug: points } }] of recent finished real weeks.
+// Billionaires with a rank: tiers by their position among the ranked billionaires in the pool (TIERS sizes).
+// Billionaires without one: NO_STAKE_SALARY. CEOs (type "ceo", no rank): the median of the billionaire salaries.
+// Then everyone (billionaires and CEOs together) gets the same ±ADJUST_MAX by recent points percentile once there are
+// ADJUST_MIN_WEEKS finished real weeks, and ensureFeasible runs.
 // Returns { salaries: { slug: salary }, adjusted: boolean, ceoBase: number|null }.
+const hasRank = (p) => typeof p.rank === 'number' && Number.isFinite(p.rank) && p.rank > 0;
 export function computeSalaries(draftable, history = []) {
-  const byRank = (a, b) => (a.rank ?? 999) - (b.rank ?? 999) || a.slug.localeCompare(b.slug);
-  const sorted = draftable.filter((p) => !isCeo(p)).sort(byRank);
-  const ceos = draftable.filter(isCeo).sort((a, b) => a.slug.localeCompare(b.slug));
+  const bySlug = (a, b) => a.slug.localeCompare(b.slug);
+  const bill = draftable.filter((p) => !isCeo(p));
+  const ranked = bill.filter(hasRank).sort((a, b) => a.rank - b.rank || bySlug(a, b));
+  const unranked = bill.filter((p) => !hasRank(p)).sort(bySlug);
+  const sorted = [...ranked, ...unranked];
+  const ceos = draftable.filter(isCeo).sort(bySlug);
   const salaries = {};
-  sorted.forEach((p, i) => { salaries[p.slug] = tierSalary(i + 1); });
+  ranked.forEach((p, i) => { salaries[p.slug] = tierSalary(i + 1); });
+  for (const p of unranked) salaries[p.slug] = NO_STAKE_SALARY;
   const ceoBase = ceos.length ? (medianSalary(sorted.map((p) => salaries[p.slug])) ?? tierSalary(Infinity)) : null;
   for (const c of ceos) salaries[c.slug] = ceoBase;
   const everyone = [...sorted, ...ceos];
@@ -277,8 +296,8 @@ export function ensureFeasible(salaries, cap = core.CAP, size = core.PICKS) {
   return cheapest() <= cap;
 }
 
-// Top 5 richest benchmark: draftable ranks 1–5, captain = the richest.
-// CEOs are not in it (no Forbes rank).
+// Top 5 benchmark: the five best-ranked draftable billionaires (rank = Public Stake Value rank in new week files),
+// captain = rank 1. CEOs are not in it (no rank).
 export function top5Team(draftable) {
   const sorted = draftable.filter((p) => !isCeo(p)).sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999) || a.slug.localeCompare(b.slug)).slice(0, core.PICKS);
   return { picks: sorted.map((p) => p.slug), captain: sorted[0]?.slug ?? null };

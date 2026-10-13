@@ -30,9 +30,22 @@ for (const mode of MODES) describe(mode, () => {
     ]) await rejectsWith(assert, t.call(u1, 'set_nickname', [bad]), re);
     // whole-word terms do not block longer words
     assert.deepEqual(await t.call(u1, 'set_nickname', ['classic_bass']), { nickname: 'classic_bass' });
+    // saving the same nickname again is fine; a change within 7 days of the first pick is refused (0006)
+    assert.deepEqual(await t.call(u1, 'set_nickname', ['classic_bass']), { nickname: 'classic_bass' });
+    await rejectsWith(assert, t.call(u1, 'set_nickname', ['Nick_1']), /once every 7 days\. Next change: October 4\./);
+    await t.setNow('2026-10-04T19:59:59Z');
+    await rejectsWith(assert, t.call(u1, 'set_nickname', ['Nick_1']), /once every 7 days/);
+    await t.setNow('2026-10-04T20:00:00Z');   // exactly 7 days after the first pick
     assert.deepEqual(await t.call(u1, 'set_nickname', ['Nick_1']), { nickname: 'Nick_1' });
+    // the clock restarts at each change
+    await t.setNow('2026-10-10T20:00:00Z');
+    await rejectsWith(assert, t.call(u1, 'set_nickname', ['Nick_2']), /Next change: October 11\./);
+    await t.setNow(BEFORE_LOCK);
+    assert.equal((await t.root('select nickname::text n from public.profiles where id = $1', [u1])).rows[0].n, 'Nick_1');
     const u2 = await t.newUser();
     await rejectsWith(assert, t.call(u2, 'set_nickname', ['nick_1']), /taken/);
+    // a first pick is never limited, even right after a failed one
+    assert.deepEqual(await t.call(u2, 'set_nickname', ['second_try']), { nickname: 'second_try' });
     assert.equal(await t.coins(u1), 1000);
     // signed-out visitors cannot pick one
     await rejectsWith(assert, t.call(null, 'set_nickname', ['whoever']), /permission denied/);
@@ -132,6 +145,27 @@ for (const mode of MODES) describe(mode, () => {
     // after Friday the week is closed to newcomers
     await t.setNow('2026-10-10T15:00:00Z');
     await rejectsWith(assert, t.call(tooLate, 'save_roster', [W2.week, picks, 'g']), /week is over/);
+    await t.setNow(BEFORE_LOCK);
+  });
+
+  test('settle_week: captain points round per day, halves away from zero (0006)', async () => {
+    const W3 = { ...WEEK, week: '2026-W43', start: '2026-10-19', end: '2026-10-23', locksAt: '2026-10-19T13:30:00Z' };
+    await t.admin('select public.upsert_week($1::jsonb)', [JSON.stringify(W3)]);
+    const neg = await t.newUser('round_neg'), pos = await t.newUser('round_pos');
+    const picks = ['b', 'c', 'e', 'f', 'g'];
+    await t.setNow('2026-10-18T20:00:00Z');
+    await t.call(neg, 'save_roster', [W3.week, picks, 'g']);
+    await t.call(pos, 'save_roster', [W3.week, picks, 'e']);
+    await t.admin('select public.upsert_points($1::jsonb)', [JSON.stringify([
+      { date: '2026-10-19', people: [{ slug: 'g', points: -41 }, { slug: 'e', points: 41 }] },
+      { date: '2026-10-20', people: [{ slug: 'e', points: 41 }] }
+    ])]);
+    await t.admin('select public.settle_week($1)', [W3.week]);
+    const pts = async u => Number((await t.root(`select points from public.team_scores where user_id = $1 and week = '2026-W43'`, [u])).rows[0].points);
+    // captain g: one day of -41 -> round(-61.5) = -62 (not -61.5); e is a normal pick: 41 + 41
+    assert.equal(await pts(neg), -62 + 82);
+    // captain e: two days of 41 -> 62 + 62 = 124 (not 123); g is a normal pick: -41
+    assert.equal(await pts(pos), 124 - 41);
     await t.setNow(BEFORE_LOCK);
   });
 
@@ -331,6 +365,16 @@ for (const mode of MODES) describe(mode, () => {
     assert.ok(Array.isArray((await t.as(null, 'select * from public.coin_leaderboard(5)')).rows));
     assert.ok(Array.isArray((await t.as(null, 'select slug from public.markets')).rows));
     await rejectsWith(assert, t.as(null, 'select * from public.positions'), /permission denied/);
+    // profiles (0006): visitors read nothing; a player reads only their own row; boards show nicknames, never ids
+    await rejectsWith(assert, t.as(null, 'select * from public.profiles'), /permission denied/);
+    const own = (await t.as(u, 'select id, nickname::text as nickname, coins from public.profiles')).rows;
+    assert.deepEqual(own.map(r => r.id), [u]);
+    assert.ok(Number((await t.root('select count(*) c from public.profiles')).rows[0].c) > 1);
+    assert.equal((await t.as(u, 'select count(*)::int c from public.profiles where id <> auth.uid()')).rows[0].c, 0);
+    const board = (await t.as(null, 'select * from public.coin_leaderboard(500)')).rows;
+    assert.ok(board.some(r => r.nickname === 'priv_check'));
+    assert.ok(board.every(r => !('id' in r) && !('user_id' in r)));
+    assert.ok((await t.as(u, 'select public.me() r')).rows[0].r.nickname === 'priv_check');
     // the service role can read tables for the sync job
     assert.ok(Array.isArray((await t.admin('select week, final from public.fantasy_weeks')).rows));
   });

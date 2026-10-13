@@ -9,6 +9,7 @@ import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isNoteEntry, isFormerEntry } from './lib/pages/companies.mjs';
+import { stakeTable, fmtStake } from './lib/data-common.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PEOPLE = join(ROOT, 'data', 'people');
@@ -25,15 +26,6 @@ const str = (x) => (x == null ? '' : String(x)).trim();
 const safeUrl = (u) => (typeof u === 'string' && /^https?:\/\//i.test(u.trim()) ? u.trim() : null);
 const norm = (x) => str(x).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 
-// "$927.9B" -> 927.9 (billions)
-function parseWorth(v) {
-  const m = /\$?\s*([\d,.]+)\s*([TBM])?/i.exec(str(v));
-  if (!m) return null;
-  const n = parseFloat(m[1].replace(/,/g, ''));
-  if (!isFinite(n)) return null;
-  const u = (m[2] || 'B').toUpperCase();
-  return u === 'T' ? n * 1000 : u === 'M' ? n / 1000 : n;
-}
 
 // ------------------------------------------------------------------
 // Company normalization
@@ -98,6 +90,7 @@ const DEAL_STOP = new Set(['capital', 'global', 'international', 'investments', 
 // Load people
 // ------------------------------------------------------------------
 const index = await readJson(join(PEOPLE, 'index.json'));
+const STAKES = stakeTable(await readJson(join(ROOT, 'data', 'prices', 'networth-est.json')).catch(() => null));
 const people = [];
 for (const ip of arr(index.people)) {
   if (!ip || !ip.slug) continue;
@@ -275,8 +268,11 @@ const linked = new Set();
 for (const e of edges) { linked.add(e.a); linked.add(e.b); }
 const nodes = people
   .filter(({ ip }) => linked.has(ip.slug))
-  .map(({ ip }) => ({ slug: ip.slug, name: ip.name, rank: Number(ip.rank) || null, sector: ip.sector || 'Other', worth: parseWorth(ip.worth), worthText: ip.worth || '' }))
-  .sort((x, y) => (x.rank || 999) - (y.rank || 999));
+  // rank / worth / worthText: our own Public Stake Value (data/prices/networth-est.json via stakeTable; USD billions in
+  // `worth`), never the index's list rank or net worth. People with none: rank null, worth 0, worthText ''.
+  .map(({ ip }) => ({ slug: ip.slug, name: ip.name, rank: STAKES.rank[ip.slug] || null, sector: ip.sector || 'Other',
+    worth: STAKES.value[ip.slug] ? Math.round(STAKES.value[ip.slug] / 1e7) / 100 : 0, worthText: fmtStake(STAKES.value[ip.slug]) }))
+  .sort((x, y) => (x.rank || 999) - (y.rank || 999) || x.name.localeCompare(y.name));
 
 // ---- deterministic force layout (fixed seed, fixed iterations) ----
 function mulberry32(seed) {
@@ -361,6 +357,7 @@ for (const n of nodes) n.r = Math.round((9 + 17 * Math.sqrt((n.worth || 0) / max
 const graph = {
   // companies[].kinds / refs: which profile list (controls, stakes, privateDeals) and the index in it, for a then b
   asOf: index.asOf || null,
+  stakeAsOf: STAKES.asOf,
   source: 'Built from each person\'s profile (data/people): companies they control or hold stakes in, plus private deals that name a company another person holds.',
   rule: 'Two people are linked when they currently hold the same company (holdings described as sold, exited or historical, and note rows, are left out). Companies match by ticker (exchange prefix removed; GOOG counted as GOOGL, BRK.A as BRK.B), otherwise by company name without corporate suffixes and notes. A private deal links two people only when its text names, word for word, a company the other person holds.',
   viewBox: [0, 0, W, H],

@@ -52,7 +52,7 @@ test('matches: name, sector, ticker and company words; accents folded', () => {
   assert.ok(!P.matches(POOL[0], 'ann beta'));
 });
 
-test('sortPlayers: each key, missing values last, ties by Forbes rank', () => {
+test('sortPlayers: each key, missing values last, ties by rank', () => {
   const get = { pts, avg: (s) => ({ a: 2, b: 1 }[s] ?? null), cap: (s) => ({ a: 20, b: 30, c: 20, d: 7 }[s] ?? null) };
   const order = (k) => P.sortPlayers(POOL, k, get).map((p) => p.slug).join('');
   assert.equal(order('pts'), 'badce');
@@ -62,6 +62,9 @@ test('sortPlayers: each key, missing values last, ties by Forbes rank', () => {
   assert.equal(order('rank'), 'bcade');
   assert.equal(order('name'), 'abcde');
   assert.equal(order('nope'), 'bcade');
+  // get.rank (Public Stake Value rank) overrides the entries' own rank; missing ranks last
+  const byStake = P.sortPlayers(POOL, 'rank', { rank: (s) => ({ e: 1, d: 2, a: 3 }[s] ?? null) }).map((p) => p.slug).join('');
+  assert.equal(byStake.slice(0, 3), 'eda');
   // copy, not in place
   assert.equal(POOL[0].slug, 'a');
 });

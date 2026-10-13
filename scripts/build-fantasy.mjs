@@ -1,48 +1,105 @@
 // Billionaire Fantasy League data (game only; no real money, no prizes, not financial advice).
 //
-//   node scripts/build-fantasy.mjs [--now=2026-09-28T14:00:00Z] [--force-day]
+//   node scripts/build-fantasy.mjs [--now=2026-09-28T14:00:00Z] [--root=<site dir>] [--rebuild-days=10]
 //
-// Reads data/people, data/ceos/index.json, data/prices/latest.json, data/filings/latest.json and archive/<date>.json.
+// Reads data/people, data/ceos/index.json, data/prices/latest.json (which tickers are quoted, for the pool),
+// data/prices/networth-est.json (Public Stake Value rank: player order and salary tiers),
+// data/prices/history (closes), data/prices/quality.json (quarantined sessions), data/filings/latest.json and
+// archive/<date>.json (news counts only; stories are not scored).
 // CEOs (data/ceos) join every week's pool as type "ceo" players on their company stock (see scripts/lib/fantasy.mjs).
 // Writes:
-//   data/fantasy/days/<YYYY-MM-DD>.json  one file per trading day (New York date of the quotes); never duplicated
+//   data/fantasy/days/<YYYY-MM-DD>.json  one file per NYSE trading day, written once both that day's close and the
+//                                        previous trading day's close are in history (SPY decides); the last
+//                                        REBUILD_TRADING_DAYS trading days are rebuilt every run, so late or repaired
+//                                        closes correct them. A day file on a non-trading day, or one in that window
+//                                        whose closes are not in yet (an old intraday file), is removed.
 //   data/fantasy/weeks/<YYYY-Www>.json   salaries frozen when the week file is first written, days, totals, benchmarks
 //                                        (a week that has not locked yet and has no CEOs gets them appended, with
 //                                        nobody else's salary changed)
 //   data/fantasy/index.json              current and draft week, weeks list, latest day, not-draftable list, news counts
-// Needs no network and no keys. Skips the day file when the quotes are not from a new trading day.
+// Needs no network and no keys. Files are rewritten only when their content changes (ignoring `generated`).
 
-import { readdir } from 'node:fs/promises';
+import { readdir, unlink } from 'node:fs/promises';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT, loadProfiles, loadCeos, readJson, writeJson, adrSet } from './lib/data-common.mjs';
+import { ROOT as REPO_ROOT, loadProfiles, loadCeos, readJson, writeJson, adrSet, stakeTable } from './lib/data-common.mjs';
 import {
-  core, BENCHMARK_SYMBOL, personPortfolio, scorePersonDay, tradingDateOf, computeSalaries, top5Team, POINTS, storyMatches,
-  isCeo, ceoPlayer, CEO_SALARY_NOTE,
+  core, BENCHMARK_SYMBOL, personPortfolio, scorePersonDay, tickerMove, closeOn, computeSalaries, top5Team, POINTS, MAX_DAY_MOVE_PCT,
+  storyMatches, isCeo, ceoPlayer, CEO_SALARY_NOTE, NO_STAKE_SALARY, ADJUST_MAX,
 } from './lib/fantasy.mjs';
+import { loadSeriesDir } from './fetch-prices.mjs';
 
-const OUT = join(ROOT, 'data', 'fantasy');
-const DAYS = join(OUT, 'days');
-const WEEKS = join(OUT, 'weeks');
+export const REBUILD_TRADING_DAYS = 10;
 const PRACTICE_LABEL = 'Practice week';
 
 const arg = (name) => { const a = process.argv.find((x) => x.startsWith(`--${name}=`)); return a ? a.slice(name.length + 3) : null; };
-const flag = (name) => process.argv.includes(`--${name}`);
 
 async function listJson(dir) {
   try { return (await readdir(dir)).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)).sort(); } catch { return []; }
 }
 const round4 = (x) => Math.round(x * 10000) / 10000;
+const sameDoc = (a, b) => JSON.stringify({ ...(a || {}), generated: null }) === JSON.stringify({ ...(b || {}), generated: null });
 
+// The last n NYSE trading days on or before `todayNy`, oldest first.
+export function recentTradingDays(todayNy, n = REBUILD_TRADING_DAYS) {
+  const out = [];
+  let d = core.isTradingDay(todayNy) ? todayNy : core.prevTradingDay(todayNy);
+  while (out.length < n) { out.unshift(d); d = core.prevTradingDay(d); }
+  return out;
+}
+
+// A day is buildable once SPY has both its close and the previous trading day's close.
+export const dayReady = (history, date) => core.isTradingDay(date) &&
+  closeOn(history, BENCHMARK_SYMBOL, date) != null && closeOn(history, BENCHMARK_SYMBOL, core.prevTradingDay(date)) != null;
+
+// The day file for a trading day, from closes. players: [{ slug, holdings: [{ ticker, weight }] }].
+export function buildDay({ date, players, history, conflicts, filings, generated }) {
+  const people = {};
+  const flagged = new Map();
+  for (const p of players) {
+    const r = scorePersonDay({ slug: p.slug, holdings: p.holdings || [], history, conflicts, date, filings });
+    people[p.slug] = r;
+    for (const h of r.holdings) if (h.quarantined) {
+      if (!flagged.has(h.ticker)) flagged.set(h.ticker, { ticker: h.ticker, reason: tickerMove(history, conflicts, h.ticker, date).reason, people: [] });
+      flagged.get(h.ticker).people.push(p.slug);
+    }
+  }
+  const m = tickerMove(history, conflicts, BENCHMARK_SYMBOL, date);
+  const spy = m.stale || m.quarantined
+    ? { ticker: BENCHMARK_SYMBOL, changePct: null, points: null, note: m.quarantined ? `SPY quarantined: ${m.reason}` : 'No SPY close for this day' }
+    : { ticker: BENCHMARK_SYMBOL, changePct: m.changePct, points: core.spyPoints(m.changePct) };
+  if (m.quarantined && !flagged.has(BENCHMARK_SYMBOL)) flagged.set(BENCHMARK_SYMBOL, { ticker: BENCHMARK_SYMBOL, reason: m.reason, people: [] });
+  const week = core.isoWeek(date);
+  return {
+    date, week, generated, practice: core.isPractice(week),
+    closes: `${core.prevTradingDay(date)} close -> ${date} close (data/prices/history)`,
+    rules: { pricePoints: 'round(portfolio close-to-close return % × 100)', insiderBuy: POINTS.insiderBuy, maxDayMovePct: MAX_DAY_MOVE_PCT },
+    spy, people,
+    flags: [...flagged.values()].sort((a, b) => a.ticker.localeCompare(b.ticker)),
+  };
+}
+
+// Who a day scores: the week file's frozen draftable (holdings and weights as of the week's start) when there is one,
+// plus anyone in the current pool it lacks (with current holdings).
+export function dayPlayers(weekFile, pool) {
+  const out = [], seen = new Set();
+  for (const p of (weekFile && Array.isArray(weekFile.draftable) ? weekFile.draftable : [])) {
+    if (p && p.slug && Array.isArray(p.holdings) && !seen.has(p.slug)) { seen.add(p.slug); out.push(p); }
+  }
+  for (const p of pool.draftable) if (!seen.has(p.slug)) { seen.add(p.slug); out.push(p); }
+  return out;
+}
 // ceos: data/ceos/index.json people. Every CEO is draftable (their company stock is a US listing; a day without a
 // fresh quote counts 0%, like any stale quote). A CEO slug that is also a billionaire slug is skipped.
-export function buildPool(indexPeople, profiles, quotes, ceos = []) {
+// stakeRank: { slug: n } Public Stake Value rank (data-common stakeTable). A player's `rank` is that rank (null without
+// one); the index's list rank is not used.
+export function buildPool(indexPeople, profiles, quotes, ceos = [], stakeRank = {}) {
   const bySlug = new Map(profiles.map((p) => [p.slug, p]));
   const adrs = adrSet(profiles);
   const draftable = [], notDraftable = [];
   for (const ip of indexPeople) {
     const prof = bySlug.get(ip.slug);
-    const base = { slug: ip.slug, name: ip.name, rank: ip.rank, sector: ip.sector || 'Other' };
+    const base = { slug: ip.slug, name: ip.name, rank: stakeRank?.[ip.slug] ?? null, sector: ip.sector || 'Other' };
     const pf = prof ? personPortfolio(prof, quotes, adrs) : { holdings: [], method: null };
     if (!pf.holdings.length) { notDraftable.push({ ...base, reason: 'No daily market price (private wealth)' }); continue; }
     draftable.push({ ...base, method: pf.method, holdings: pf.holdings.map((h) => ({ ticker: h.ticker, name: h.name, weight: round4(h.weight), tier: h.tier, ...(h.adr ? { adr: true } : {}) })) });
@@ -62,7 +119,8 @@ function weekLabel(id) {
 }
 
 export function salaryMethodText(adjusted, withCeos) {
-  const base = adjusted ? `Forbes-rank tiers ±${4} by recent points percentile` : 'Forbes-rank tiers among draftable';
+  const tiers = `Public Stake Value rank tiers among draftable (no stake on file: ${NO_STAKE_SALARY})`;
+  const base = adjusted ? `${tiers} ±${ADJUST_MAX} by recent points percentile` : tiers;
   return withCeos ? `${base}; ${CEO_SALARY_NOTE}` : base;
 }
 
@@ -133,6 +191,10 @@ export function scoreWeek(wk, dayFiles, todayNy) {
 }
 
 async function main() {
+  const ROOT = arg('root') ?? REPO_ROOT;
+  const OUT = join(ROOT, 'data', 'fantasy');
+  const DAYS = join(OUT, 'days');
+  const WEEKS = join(OUT, 'weeks');
   const nowArg = arg('now');
   const now = nowArg ? Date.parse(nowArg) : Date.now();
   if (!Number.isFinite(now)) throw new Error(`bad --now: ${nowArg}`);
@@ -144,40 +206,39 @@ async function main() {
   const profiles = await loadProfiles();
   const prices = await readJson(join(ROOT, 'data', 'prices', 'latest.json'), null);
   const quotes = prices?.quotes ?? {};
+  const history = await loadSeriesDir(join(ROOT, 'data', 'prices', 'history'));
+  const conflicts = (await readJson(join(ROOT, 'data', 'prices', 'quality.json'), {}))?.conflicts ?? {};
   const filings = (await readJson(join(ROOT, 'data', 'filings', 'latest.json'), { filings: [] })).filings ?? [];
   const editions = ((await readJson(join(ROOT, 'archive', 'index.json'), { editions: [] })).editions ?? []).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d)).sort();
 
   const ceos = await loadCeos();
-  const pool = buildPool(indexPeople, profiles, quotes, ceos);
+  const stakes = stakeTable(await readJson(join(ROOT, 'data', 'prices', 'networth-est.json'), null));
+  const pool = buildPool(indexPeople, profiles, quotes, ceos, stakes.rank);
   console.log(`Draftable: ${pool.draftable.length} (${pool.draftable.filter(isCeo).length} CEOs); not draftable: ${pool.notDraftable.length}`);
 
-  // ---- day file ----
-  const tradingDate = Object.keys(quotes).length ? tradingDateOf(quotes) : null;
-  const existingDays = await listJson(DAYS);
-  const latestExisting = existingDays[existingDays.length - 1] ?? null;
-  if (!tradingDate) console.log('No quotes: no day file.');
-  else if (!core.isWeekday(tradingDate)) console.log(`Quotes are from ${tradingDate}, a weekend: no day file.`);
-  else if (existingDays.includes(tradingDate) && !flag('force-day')) console.log(`Day ${tradingDate} already written: not duplicated.`);
-  else if (latestExisting && tradingDate < latestExisting) console.log(`Quotes (${tradingDate}) are older than the latest day file (${latestExisting}): skipped.`);
-  else {
-    const edition = editions.includes(tradingDate) ? await readJson(join(ROOT, 'archive', `${tradingDate}.json`), null) : null;
-    const stories = Array.isArray(edition?.stories) ? edition.stories : [];
-    const people = {};
-    for (const p of pool.draftable) {
-      people[p.slug] = scorePersonDay({ slug: p.slug, name: p.name, holdings: p.holdings, quotes, tradingDate, filings, stories });
-    }
-    const sq = quotes[BENCHMARK_SYMBOL];
-    const spyFresh = sq && typeof sq.changePct === 'number' && (!sq.time || core.nyDate(Date.parse(sq.time)) === tradingDate);
-    const spy = spyFresh ? { ticker: BENCHMARK_SYMBOL, changePct: round4(sq.changePct), points: core.spyPoints(sq.changePct) } : { ticker: BENCHMARK_SYMBOL, changePct: null, points: null, note: 'No SPY quote for this day' };
-    const practice = core.isPractice(core.isoWeek(tradingDate));
-    await writeJson(join(DAYS, `${tradingDate}.json`), {
-      date: tradingDate, week: core.isoWeek(tradingDate), generated, practice,
-      quotesGenerated: prices?.generated ?? null, edition: edition ? tradingDate : null,
-      rules: { pricePoints: 'round(portfolio return % × 100)', insiderBuy: POINTS.insiderBuy, perStory: POINTS.story },
-      spy, people,
-    }, { pretty: false });
-    console.log(`Wrote day ${tradingDate}${practice ? ' (practice)' : ''}: ${Object.keys(people).length} people; SPY ${spy.points ?? 'n/a'}; stories in edition ${stories.length}.`);
+  // ---- day files (closes only) ----
+  const nDays = Number(arg('rebuild-days') ?? REBUILD_TRADING_DAYS);
+  if (!(Number.isInteger(nDays) && nDays >= 1 && nDays <= 300)) throw new Error(`bad --rebuild-days: ${arg('rebuild-days')}`);
+  const window = recentTradingDays(todayNy, nDays);
+  const removeDay = async (d, why) => { await unlink(join(DAYS, `${d}.json`)); console.log(`Removed day ${d}: ${why}.`); };
+  for (const d of await listJson(DAYS)) {
+    if (!core.isTradingDay(d)) await removeDay(d, 'not an NYSE trading day');
+    else if (d >= window[0] && !dayReady(history, d)) await removeDay(d, 'its closes are not in yet (built from intraday quotes)');
   }
+  const weekCache = {};
+  const weekFileOf = async (id) => (id in weekCache ? weekCache[id] : (weekCache[id] = await readJson(join(WEEKS, `${id}.json`), null)));
+  let written = 0;
+  for (const d of window) {
+    if (!dayReady(history, d)) { console.log(`Day ${d}: waiting for closes.`); continue; }
+    const doc = buildDay({ date: d, players: dayPlayers(await weekFileOf(core.isoWeek(d)), pool), history, conflicts, filings, generated });
+    const path = join(DAYS, `${d}.json`);
+    if (sameDoc(await readJson(path, null), doc)) continue;
+    await writeJson(path, doc, { pretty: false });
+    written++;
+    console.log(`Wrote day ${d}${doc.practice ? ' (practice)' : ''}: ${Object.keys(doc.people).length} people; SPY ${doc.spy.points ?? 'n/a'}` +
+      (doc.flags.length ? `; quarantined ${doc.flags.map((f) => f.ticker).join(', ')}` : '') + '.');
+  }
+  console.log(`Day files: ${written} written; window ${window[0]}..${window[window.length - 1]}.`);
 
   // ---- weeks ----
   const dayIds = await listJson(DAYS);
@@ -206,8 +267,9 @@ async function main() {
         console.log(`Week ${id} has not locked: added ${r.added.length} CEOs (${r.added.map((s) => `${s} ${wk.salaries[s]}`).join(', ')}); other salaries unchanged.`);
       }
     }
-    if (!wk.final || wk.benchmarks?.perfect == null) wk = scoreWeek(wk, dayFiles, todayNy);
-    await writeJson(path, wk);
+    const before = JSON.stringify(wk);
+    if (!wk.final || wk.benchmarks?.perfect == null || wk.end >= window[0]) wk = scoreWeek(wk, dayFiles, todayNy);
+    if (JSON.stringify(wk) !== before) await writeJson(path, wk);
     if (wk.final && !wk.practice) finishedReal.push(wk);
     weekSummaries.push({ week: wk.week, label: wk.label, practice: wk.practice, start: wk.start, end: wk.end, locksAt: wk.locksAt, days: wk.days.length, final: wk.final });
   }

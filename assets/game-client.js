@@ -7,6 +7,8 @@
  *
  * Fantasy hook: BDGame.syncRoster(week, picks, captain) saves a roster online when the player is signed in
  * with a nickname, and otherwise resolves { ok: false, skipped: true } without doing anything.
+ * Anti-spam: when config/supabase.json has a public "turnstileSiteKey", sign-in runs Cloudflare Turnstile first and
+ * passes the token as options.captchaToken (Supabase Auth -> Bot protection checks it). Without the key: unchanged.
  * BD.game.ready (when assets/common.js is loaded first) is a Promise<boolean>: true only when the config is enabled
  * and the backend answered the public current_week() probe.
  */
@@ -53,6 +55,74 @@
   }
   function unwrap(r){ if (r.error) throw fail(r.error); return r.data; }
 
+  // ---------- Cloudflare Turnstile (anti-spam check) ----------
+  // Used only when config/supabase.json has a public "turnstileSiteKey"; without it nothing here runs.
+  // The same block is in assets/game-client.js and assets/waitlist.js; whichever loads first defines BDTurnstile.
+  // BDTurnstile.run(siteKey, parentEl, fn): renders a fresh widget in parentEl (invisible unless Cloudflare needs the
+  // visitor to click), waits for a token, calls fn(token), then removes the widget: tokens are single-use.
+  var BDT = w.BDTurnstile = w.BDTurnstile || (function(){
+    var API = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    var WAIT_MS = 120000;
+    var LOAD_MSG = 'Could not load the anti-spam check. Check your connection (and any blocker for challenges.cloudflare.com), then try again.';
+    var FAIL_MSG = 'The anti-spam check did not finish. Please try again.';
+    var loading = null;
+    function load(){
+      if (w.turnstile && w.turnstile.render) return Promise.resolve();
+      if (loading) return loading;
+      loading = new Promise(function(res, rej){
+        var s = document.createElement('script');
+        s.src = API; s.async = true; s.defer = true;
+        s.onload = function(){ if (w.turnstile && w.turnstile.render) res(); else { loading = null; rej(new Error(LOAD_MSG)); } };
+        s.onerror = function(){ loading = null; if (s.parentNode) s.parentNode.removeChild(s); rej(new Error(LOAD_MSG)); };
+        document.head.appendChild(s);
+      });
+      return loading;
+    }
+    function key(c){
+      var k = c && c.turnstileSiteKey;
+      return (typeof k === 'string' && /^[0-9A-Za-z_-]{10,}$/.test(k) && !/your|placeholder|xxxx/i.test(k)) ? k : '';
+    }
+    function run(siteKey, parent, fn){
+      var box = document.createElement('div');
+      box.className = 'bd-turnstile';
+      box.style.maxWidth = '100%'; box.style.overflow = 'hidden'; box.style.marginTop = '8px';
+      if (!parent || !parent.appendChild) {
+        // no place given: a small box at the bottom of the screen (only visible if Cloudflare asks for a click)
+        parent = document.body;
+        box.style.position = 'fixed'; box.style.left = '50%'; box.style.bottom = '16px'; box.style.zIndex = '1000';
+        box.style.transform = 'translateX(-50%)'; box.style.marginTop = '0';
+      }
+      var id = null;
+      function cleanup(){
+        try { if (id !== null && w.turnstile) w.turnstile.remove(id); } catch (e) {}
+        if (box.parentNode) box.parentNode.removeChild(box);
+      }
+      return load().then(function(){
+        return new Promise(function(res, rej){
+          parent.appendChild(box);
+          var t = setTimeout(function(){ rej(new Error(FAIL_MSG)); }, WAIT_MS);
+          function bad(){ clearTimeout(t); rej(new Error(FAIL_MSG)); return true; }
+          try {
+            id = w.turnstile.render(box, {
+              sitekey: siteKey, appearance: 'interaction-only', action: 'signin',
+              callback: function(tok){ clearTimeout(t); res(tok); },
+              'error-callback': bad, 'expired-callback': bad, 'timeout-callback': bad
+            });
+          } catch (e) { bad(); }
+        });
+      }).then(function(tok){
+        return Promise.resolve().then(function(){ return fn(tok); })
+          .then(function(v){ cleanup(); return v; }, function(e){
+            cleanup();
+            var m = String((e && (e.message || e.msg)) || '');
+            if (/captcha/i.test(m)) { var x = new Error(FAIL_MSG); x.code = e && e.code; throw x; }
+            throw e;
+          });
+      }, function(e){ cleanup(); throw e; });
+    }
+    return { run: run, key: key };
+  })();
+
   // Resolves { enabled, reason }. Cached.
   G.ready = function(){
     if (readyPromise) return readyPromise;
@@ -86,12 +156,18 @@
       return client.auth.getSession().then(function(r){ return (r.data && r.data.session) || null; }, function(){ return null; });
     });
   };
-  G.signIn = function(){
+  // opts.captchaParent: where to show the anti-spam check if Cloudflare needs a click (only with a turnstileSiteKey)
+  G.signIn = function(opts){
     return G.ready().then(function(){
       var n = need(); if (n) return n;
-      return client.auth.signInAnonymously().then(function(r){ if (r.error) throw fail(r.error); return r.data && r.data.session; });
+      var site = BDT.key(cfg);
+      if (!site) return client.auth.signInAnonymously().then(function(r){ if (r.error) throw fail(r.error); return r.data && r.data.session; });
+      return BDT.run(site, opts && opts.captchaParent, function(tok){
+        return client.auth.signInAnonymously({ options: { captchaToken: tok } }).then(function(r){ if (r.error) throw fail(r.error); return r.data && r.data.session; });
+      });
     });
   };
+  G.captchaEnabled = function(){ return !!BDT.key(cfg); };
   G.signOut = function(){ return client ? client.auth.signOut() : Promise.resolve(); };
   G.onAuth = function(fn){
     if (!client) return;

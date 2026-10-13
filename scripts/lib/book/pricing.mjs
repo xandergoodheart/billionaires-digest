@@ -2,7 +2,7 @@
 // Used by scripts/build-book.mjs. Coins only: no purchases, no cash-out, no prizes.
 //
 // Model (per person, per trading day): points ~ Normal(mu, sigma)
-//   mu    = 10 x (stories in the last 20 editions / 20) + 25 x (P-buy days in the last 90 calendar days / 63)
+//   mu    = 25 x (P-buy days in the last 90 calendar days / 63)  (stories are not scored)
 //   sigma = 100 x daily portfolio volatility (%): realized from data/prices/history when >= 15 closes,
 //           blended linearly with the sector default from 15 to 60 closes.
 // Correlation: 1.0 when two people share a holding weighted >= 50% for both (never paired head-to-head),
@@ -219,7 +219,7 @@ export function personModel(person, { history = {}, storyCount = 0, buyDays = 0,
   const rv = realizedVol(person.holdings, history, asOf);
   const bv = blendedVol(person.sector, rv);
   const lambda = buyDays / P_TRADING_DAYS;
-  const mu = POINTS.story * storyCount / STORY_EDITIONS + POINTS.insiderBuy * lambda;
+  const mu = POINTS.insiderBuy * lambda; // stories are not scored
   return {
     slug: person.slug, name: person.name, sector: person.sector || 'Other', holdings: person.holdings || [],
     mu, sigma: Math.round(100 * bv.vol * 1e6) / 1e6, vol: bv.vol, volDefault: bv.def, volRealized: rv.vol, closes: rv.closes, volWeight: bv.weight,

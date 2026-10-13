@@ -50,8 +50,10 @@
     --down: var(--negative, #FF6B63);
   }
 }
-.nw a { color: var(--nw-text); text-underline-offset: 2px; }
-.nw a:hover { color: var(--nw-red-ink); }
+/* page links only: the v2 chrome (dark top bar, sub-tabs, menu, bottom tabs, footer) keeps its own colors from ui.css.
+   A plain ".nw a" beat ui.css (same specificity, later file) and painted dark text on the dark top bar in light mode. */
+.nw :where(main) a { color: var(--nw-text); text-underline-offset: 2px; }
+.nw :where(main) a:hover { color: var(--nw-red-ink); }
 .nw-main:focus { outline: none; }
 .nw :focus-visible { outline: 3px solid var(--focus, #1A73E8); outline-offset: 2px; }
 

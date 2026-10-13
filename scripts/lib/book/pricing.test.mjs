@@ -117,10 +117,10 @@ test('volatility: sector default, realized blend 15 -> 60 closes', () => {
   // unknown sector -> 1.8; missing history for a big holding -> default
   assert.equal(blendedVol('Space pirates', null).vol, 1.8);
   assert.equal(realizedVol([{ ticker: 'X', weight: 0.5 }, { ticker: 'Y', weight: 0.5 }], { X: mk(80) }, '2026-12-31').vol, null);
-  // model: sigma = 100 x vol; mu = stories + P-buy days
+  // model: sigma = 100 x vol; mu = P-buy days (stories are not scored)
   const m = personModel(person('p', 'AI & tech', h), { history: {}, storyCount: 4, buyDays: 9, asOf: '2026-09-27' });
   assert.equal(m.sigma, 220);
-  assert.ok(Math.abs(m.mu - (10 * 4 / 20 + 25 * 9 / 63)) < 1e-12);
+  assert.ok(Math.abs(m.mu - 25 * 9 / 63) < 1e-12); // stories are not scored
 });
 
 test('correlation: shared main holding 1.0 (excluded from head-to-heads), sector 0.6, else 0.3', () => {

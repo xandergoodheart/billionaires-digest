@@ -54,6 +54,29 @@
   C.isWeekday = function(s){ var w = C.weekday(s); return w >= 1 && w <= 5; };
   C.nextWeekday = function(s){ var t = C.addDays(s, 1); while (!C.isWeekday(t)) t = C.addDays(t, 1); return t; };
 
+  // ---- NYSE trading calendar ----
+  // Full closures and 1:00 p.m. early closes for 2026-2027, from https://www.nyse.com/markets/hours-calendars
+  // (checked 2026-10-12). Extend this list before 2028.
+  C.HOLIDAYS = {
+    '2026-01-01': 1, '2026-01-19': 1, '2026-02-16': 1, '2026-04-03': 1, '2026-05-25': 1, '2026-06-19': 1,
+    '2026-07-03': 1, '2026-09-07': 1, '2026-11-26': 1, '2026-12-25': 1,
+    '2027-01-01': 1, '2027-01-18': 1, '2027-02-15': 1, '2027-03-26': 1, '2027-05-31': 1, '2027-06-18': 1,
+    '2027-07-05': 1, '2027-09-06': 1, '2027-11-25': 1, '2027-12-24': 1
+  };
+  C.HALF_DAYS = { '2026-11-27': 1, '2026-12-24': 1, '2027-11-26': 1 };
+  C.isHoliday = function(s){ return C.HOLIDAYS[s] === 1; };
+  C.isHalfDay = function(s){ return C.HALF_DAYS[s] === 1; };
+  // A day the NYSE is open (weekday, not a full closure)
+  C.isTradingDay = function(s){ return !!parseYmd(s) && C.isWeekday(s) && !C.isHoliday(s); };
+  C.prevTradingDay = function(s){ var t = C.addDays(s, -1); while (!C.isTradingDay(t)) t = C.addDays(t, -1); return t; };
+  C.nextTradingDay = function(s){ var t = C.addDays(s, 1); while (!C.isTradingDay(t)) t = C.addDays(t, 1); return t; };
+  // Closing time of a trading day in New York minutes after midnight (16:00, or 13:00 on a half day)
+  C.closeMinutes = function(s){ return C.isHalfDay(s) ? 13 * 60 : 16 * 60; };
+  // UTC ms of the closing bell of trading day s
+  C.closeAt = function(s){ var m = C.closeMinutes(s); return C.nyToUtc(s, Math.floor(m / 60), m % 60); };
+  // Trading days of an ISO week (Mon-Fri minus closures)
+  C.tradingDaysOf = function(id){ var out = [], d = C.weekDays(id); for (var i = 0; i < d.length; i++) if (C.isTradingDay(d[i])) out.push(d[i]); return out; };
+
   // ISO-8601 week id of a date: "2026-W40"
   C.isoWeek = function(s){
     var d = parseYmd(s);
@@ -117,7 +140,10 @@
     if (!captain || !seen[captain]) errs.push('Choose a captain from your picks');
     return { ok: !errs.length, used: used, errors: errs };
   };
-  C.captainPoints = function(p){ return Math.round(p * C.CAPTAIN_MULT); };
+  // Halves round away from zero (-61.5 -> -62, 61.5 -> 62), the same as Postgres round(numeric), so the page and the
+  // server's settle_week agree on captain points. The captain multiplier is applied and rounded per day.
+  C.roundPts = function(x){ return x < 0 ? -Math.round(-x) : Math.round(x); };
+  C.captainPoints = function(p){ return C.roundPts(p * C.CAPTAIN_MULT); };
   // day: a days file ({ people: { slug: { points } } }); returns { total, bySlug }
   C.teamDay = function(picks, captain, day){
     var total = 0, by = {};

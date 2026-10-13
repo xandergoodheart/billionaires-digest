@@ -26,7 +26,6 @@
 <body class="v2 nw">
 <!-- v2topbar:start -->
 <a class="v2-skip" href="#main">Skip to content</a>
-<div class="v2-ticker" data-ticker hidden></div>
 <header class="v2-top">
   <div class="v2-wrap v2-top__in">
     <a class="v2-mark" href="index.html"><span class="v2-mark__bd" aria-hidden="true">BD</span><span class="v2-mark__name">Billionaires Digest</span></a>
@@ -71,8 +70,6 @@
           <li><a href="draft.html">Draft room</a></li>
           <li><a href="scores.html">Scores</a></li>
           <li><a href="leagues.html">Leagues</a></li>
-          <li><a href="book.html">The Book</a></li>
-          <li><a href="moves.html">Next Moves</a></li>
           <li><a href="play-terms.html">Rules</a></li>
         </ul></li>
       <li><a class="v2-menu__top" href="academy.html">Learn</a>
@@ -94,10 +91,7 @@
         <ul>
           <li><a href="flows.html">Insider flows</a></li>
           <li><a href="quarterly.html">What their funds bought</a></li>
-          <li><a href="copycat.html">Copycat portfolio</a></li>
-          <li><a href="network.html">Who invests with whom</a></li>
           <li><a href="compare.html">Compare two</a></li>
-          <li><a href="property.html">Where they buy</a></li>
           <li><a href="guides/filings-101/">Filings 101</a></li>
         </ul></li>
       <li><a class="v2-menu__top" href="people/">Search</a></li>
@@ -132,6 +126,8 @@
       <a href="play-terms.html">Game rules</a>
       <a href="about.html#sponsor">Sponsor the brief</a>
       <a href="calendar.ics">Calendar feed</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
     </nav>
     <div class="v2-foot__notes">
       <p>For information only · not financial advice</p>
@@ -139,7 +135,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/v2/ticker.js" defer></script>
 <!-- v2footer:end -->
 
 <script src="assets/v2/portraits.js"></script>
@@ -162,7 +157,9 @@
   }
   function focusHeading(h){ if (!h) return; h.tabIndex = -1; try { h.focus({ preventScroll: true }); } catch(e){ h.focus(); } }
   function people(){ var ix = BD.getPeople(); return ix ? ix.people : []; }
-  function byRank(a, b){ return (Number(a.rank) || 999) - (Number(b.rank) || 999); }
+  // order and the value shown: our own Public Stake Value (BD.stakeTable), never net worth; no stake on file: A–Z after
+  var ST = { asOf: null, value: {}, rank: {} };
+  function byRank(a, b){ return (ST.rank[a.slug] || 1e9) - (ST.rank[b.slug] || 1e9) || String(a.name).localeCompare(String(b.name)); }
   // stories in the newest n editions: [{ iso, date, s }], newest first
   function storiesIn(n){
     return BD.loadArchiveDated(n).then(function(list){
@@ -180,7 +177,7 @@
     a.appendChild(BD.avatar({ name: p.name, sector: p.sector || 'Other' }, 40));
     var info = el('span', 'plinfo');
     info.appendChild(el('span', 'pln serif', p.name));
-    info.appendChild(el('span', 'plw', (p.rank ? '#' + p.rank + ' · ' : '') + (p.worth || '')));
+    info.appendChild(el('span', 'plw', ST.value[p.slug] ? BD.STAKE_LABEL + ' ' + BD.fmtStake(ST.value[p.slug]) : BD.STAKE_NONE));
     if (extra) info.appendChild(el('span', 'plx', extra));
     a.appendChild(info);
     li.appendChild(a);
@@ -344,7 +341,7 @@
     if (sec) renderSector(sec); else renderGrid();
   }
   window.addEventListener('hashchange', route);
-  BD.loadPeople().then(route, route);
+  Promise.all([BD.loadPeople().then(null, function(){ return null; }), BD.loadStakes().then(function(st){ ST = st; }, function(){})]).then(route, route);
 })();
 </script>
 </body>

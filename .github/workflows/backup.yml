@@ -1,0 +1,86 @@
+name: Nightly backup
+
+# Encrypted nightly copy of the game database: the public schema (tables + data: profiles, rosters, scores, leagues,
+# The Book, waitlist, events). Not auth.users. Restore steps: docs/BACKUPS.md.
+#
+# This repository is PUBLIC and so are its workflow artifacts, so the dump is encrypted with gpg (AES256, passphrase
+# from the BACKUP_PASSPHRASE secret) before anything is uploaded. The plain dump only ever exists on the runner and is
+# shredded before the upload step; the upload step takes only the encrypted .gpg file. Kept 30 days.
+#
+# Settings (Settings -> Secrets and variables -> Actions):
+#   secret SUPABASE_DB_URL     Postgres connection string (Session pooler), same as the Game sync workflow
+#   secret BACKUP_PASSPHRASE   a long random passphrase; keep a copy in the password manager, without it the backups
+#                              cannot be opened
+# Missing either: the job prints a notice and passes without doing anything.
+
+on:
+  schedule:
+    - cron: '30 7 * * *' # 07:30 UTC = 3:30 AM New York (EDT), 2:30 AM (EST)
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: db-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check settings
+        id: cfg
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ] || [ -z "$BACKUP_PASSPHRASE" ]; then
+            echo "::notice title=Backup skipped::Set the SUPABASE_DB_URL and BACKUP_PASSPHRASE secrets to turn on nightly backups."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Dump the public schema and encrypt it
+        id: dump
+        if: steps.cfg.outputs.run == 'true'
+        env:
+          PGURL: ${{ secrets.SUPABASE_DB_URL }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          umask 077
+          WORK="$RUNNER_TEMP/backup-plain"
+          OUT="$RUNNER_TEMP/backup-encrypted"
+          mkdir -p "$WORK" "$OUT"
+          trap 'shred -u "$WORK"/* 2>/dev/null || rm -f "$WORK"/*' EXIT
+
+          # pg_dump must be at least the server's major version, so run the matching official postgres image.
+          VER="$(psql "$PGURL" -XAtq -c 'show server_version_num')"
+          MAJOR="${VER:0:2}"
+          case "$MAJOR" in 1[3-9]) ;; *) echo "Unexpected server version '$VER'"; exit 1 ;; esac
+          echo "Server is Postgres $MAJOR"
+          docker run --rm --network host --user "$(id -u):$(id -g)" -e PGURL -e HOME=/tmp -v "$WORK:/work" "postgres:$MAJOR" \
+            sh -c 'pg_dump "$PGURL" --schema=public --format=custom --file=/work/public.dump'
+          test -s "$WORK/public.dump"
+
+          STAMP="$(date -u +%Y-%m-%dT%H%MZ)"
+          FILE="$OUT/bd-public-$STAMP.dump.gpg"
+          printf '%s' "$BACKUP_PASSPHRASE" | gpg --batch --yes --quiet --pinentry-mode loopback --passphrase-fd 0 \
+            --symmetric --cipher-algo AES256 --output "$FILE" "$WORK/public.dump"
+          # never upload something that is not encrypted
+          if head -c 5 "$FILE" | grep -q PGDMP; then echo "Encryption check failed"; rm -f "$FILE"; exit 1; fi
+          PKT="$(gpg --batch --list-packets --pinentry-mode loopback --passphrase-fd 0 "$FILE" <<< "$BACKUP_PASSPHRASE" 2>/dev/null || true)"
+          case "$PKT" in *':symkey enc packet:'*) ;; *) echo "Encryption check failed"; rm -f "$FILE"; exit 1 ;; esac
+          echo "Encrypted backup: $(basename "$FILE") ($(stat -c %s "$FILE") bytes)"
+
+      - name: Upload the encrypted backup (30 days)
+        if: steps.cfg.outputs.run == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: db-backup-${{ github.run_id }}
+          path: ${{ runner.temp }}/backup-encrypted/*.gpg
+          retention-days: 30
+          if-no-files-found: error

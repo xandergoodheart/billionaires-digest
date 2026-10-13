@@ -80,7 +80,7 @@ export function parseTickers(raw) {
 export function tickerKey(sym) { const t = str(sym).toUpperCase(); return TICKER_ALIASES[t] || t; }
 
 // ---- build the index ----
-// people: sorted index people (with rank); profiles: Map slug -> profile
+// people: sorted index people (rank = position in the site's order, for sorting only; never shown); profiles: Map slug -> profile
 // returns { list (sorted by name), bySlug, entryLink(entry) -> {href, head} | null }
 export function buildCompanyIndex(people, profiles) {
   const rows = []; // { person, group, e, head, tickers }
@@ -218,7 +218,7 @@ function holderEntryRow(c, r) {
 function holderBlock(c, h) {
   const p = h.person;
   return `<li class="cohold"><a class="cohwho" href="/people/${esc(p.slug)}/">${avatar(p.name, p.sector || 'Other', 44)}<span class="plinfo">` +
-    `<span class="pln serif">${esc(p.name)}</span><span class="plw">${esc('#' + p.rank + (p.worth ? ' · ' + p.worth : ''))}</span></span></a>` +
+    `<span class="pln serif">${esc(p.name)}</span>${p.sector ? `<span class="plw">${esc(p.sector)}</span>` : ''}</span></a>` +
     `<div class="fpg">${h.rows.map(r => holderEntryRow(c, r)).join('')}</div></li>`;
 }
 
@@ -230,9 +230,10 @@ export function renderCompany(c, ctx) {
   let priceHtml = '';
   for (const r of c.rows) {
     const qb = quoteFor(r.e, ctx.quotes);
-    if (!qb) continue;
+    const qh = qb ? quoteHtml({ sym: qb.sym || (r.tickers[0] && r.tickers[0].sym) || '', q: qb.q }) : '';
+    if (!qh) continue;
     const t = qb.q.time ? nyStamp(String(qb.q.time)) : '';
-    priceHtml = `<div class="coquote">${quoteHtml({ sym: qb.sym || (r.tickers[0] && r.tickers[0].sym) || '', q: qb.q })}` +
+    priceHtml = `<div class="coquote">${qh}` +
       `<span class="coqnote">${esc(joinBits([t ? 'as of ' + t : '', ctx.pricesProvider ? 'via ' + ctx.pricesProvider : '']))}</span></div>`;
     if (qb.q.time) lastmods.push(isoOf(String(qb.q.time)));
     break;
