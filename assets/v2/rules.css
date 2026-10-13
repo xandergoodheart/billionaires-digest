@@ -1,6 +1,6 @@
 /* Rules page (play-terms.html): "watch, glance, ask".
    1. How to play: the 20-second video (same markup and assets/v2/hero-video.js as the front-page hero; the video
-      classes are restyled here because home.css isn't loaded) beside three big icon cards.
+      classes are restyled here because home.css isn't loaded) and three icon cards.
    2. Quick answers: an accordion of <details>, closed by default.
    3. Full rules: one <details> holding every rule; chrome.js opens it when a link targets an id inside.
    Uses tokens.css + ui.css + game.css. Both themes run through the tokens; motion is a chevron turn only. */
@@ -11,7 +11,6 @@
 .rl-top { outline: none; }
 .rl-title { font-size: clamp(44px, 4vw + 20px, 72px); line-height: .95; margin: var(--s0) 0 var(--s4); }
 .rl-hero { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: var(--s5); align-items: center; }
-.rl-vcap { display: none; }
 .rl-hero:not(.hm-hero--video) { grid-template-columns: minmax(0, 1fr); }
 
 /* video card (same pieces as the home hero) */
@@ -113,7 +112,7 @@
 }
 .rl-moved { margin: var(--s2) 0 0; color: var(--text-muted); }
 
-@media (max-width: 899px) {
+@media (max-width: 1023px) {
   .rl-hero { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
   .rl-video { margin: 0 auto; }
 }
@@ -134,69 +133,23 @@
   .rl-cap { display: table; margin: 4px 0 0; }
 }
 
-/* =====================================================================================================
-   PREVIEW ONLY: layouts B and C, switched by ?layout=b|c (inline script in play-terms.html sets rl--b / rl--c
-   on #app; rl--a is the default above). Remove the losing layouts once the owner picks one.
-   ===================================================================================================== */
-
-/* ---------- B "Steps": three numbered steps in a row, video centred below, Quick answers as a card grid ---------- */
-.rl--b > * { max-width: none; }
-.rl--b .rl-title { text-align: center; }
-.rl--b .rl-hero, .rl--b .rl-hero:not(.hm-hero--video) { grid-template-columns: minmax(0, 1fr); gap: var(--s2); justify-items: center; }
-.rl--b .rl-cards { order: 1; width: 100%; text-align: center; }
-.rl--b .rl-video { order: 2; margin-top: var(--s3); }
-.rl--b .rl-vcap { order: 3; display: block; margin: 0; font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); }
-.rl--b .rl-cards__list { counter-reset: rl-step; position: relative; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s3); }
-.rl--b .rl-cards__list::before {
-  content: ''; position: absolute; left: 16.67%; right: 16.67%; top: 22px; height: 2px; background: var(--line-2); z-index: 0;
-}
-.rl--b .rl-card {
-  counter-increment: rl-step; position: relative; z-index: 1; flex-direction: column; align-items: center; text-align: center;
-  gap: var(--s1); padding: 0; background: transparent; box-shadow: none; border-radius: 0;
-}
-.rl--b .rl-card::before {
-  content: counter(rl-step); display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%;
-  background: var(--brand); color: #fff; font-family: var(--font-display); font-weight: var(--fw-display); font-size: 24px; line-height: 1;
-  box-shadow: 0 0 0 6px var(--bg);
-}
-.rl--b .rl-card__ico { width: 64px; height: 64px; padding: 15px; border-radius: 16px; }
-.rl--b .rl-card__p { margin: 0 auto; max-width: 28ch; }
-.rl--b .rl-season { justify-content: center; margin-top: var(--s3); }
-.rl--b .rl-faq { max-width: none; margin-top: var(--s6); }
-.rl--b .rl-faq__h { text-align: center; margin-bottom: var(--s2); }
-.rl--b .rl-faq { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px var(--s1); align-items: start; }
-.rl--b .rl-faq__h { grid-column: 1 / -1; }
-.rl--b .rl-q, .rl--b .rl-q:first-of-type { border: 0; background: var(--card); border-radius: 12px; box-shadow: var(--shadow); padding: 0 var(--s2); }
-.rl--b .rl-q > summary { min-height: 64px; font-size: 18px; }
-.rl--b .rl-full { margin-left: auto; margin-right: auto; }
-@media (max-width: 899px) {
-  .rl--b .rl-cards__list { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
-  .rl--b .rl-cards__list::before { left: 50%; right: auto; top: 23px; bottom: 60px; width: 2px; height: auto; }
-  .rl--b .rl-card { background: var(--bg); padding-bottom: 4px; }
-  .rl--b .rl-faq { grid-template-columns: minmax(0, 1fr); }
-}
-@media (max-width: 767px) {
-  .rl--b .rl-title, .rl--b .rl-faq__h { text-align: left; }
-  .rl--b .rl-q { padding: 0 var(--s1); }
-  .rl--b .rl-card__h { font-size: 26px; }
-}
-
-/* ---------- C "Help centre": sticky left column (video + compact cards), answers and full rules on the right ---------- */
+/* ---------- desktop (1024px+): help-centre layout. A sticky left column (title, video, compact cards) and the
+   answers and full rules on the right. Below 1024px everything stacks with the video on top. ---------- */
 @media (min-width: 1024px) {
-  .rl--c { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); grid-template-rows: auto auto auto 1fr; column-gap: var(--s5); align-items: start; }
-  .rl--c > * { max-width: none; }
-  .rl--c > .v2-play { grid-column: 1 / -1; }
-  .rl--c .rl-top { grid-column: 1; grid-row: 2 / 5; position: sticky; top: calc(var(--v2-chrome-h, 104px) + var(--s2)); }
-  .rl--c .rl-faq, .rl--c .rl-full { grid-column: 2; max-width: 760px; }
-  .rl--c .rl-faq { grid-row: 2; margin-top: 0; padding-top: 14px; }
-  .rl--c .rl-full { grid-row: 3; }
-  .rl--c .rl-title { font-size: 52px; margin: 0 0 var(--s1); }
-  .rl--c .rl-hero, .rl--c .rl-hero:not(.hm-hero--video) { grid-template-columns: minmax(0, 1fr); gap: var(--s2); }
-  .rl--c .rl-video { max-width: 260px; padding: 8px; }
-  .rl--c .rl-cards__list { gap: 8px; }
-  .rl--c .rl-card { padding: 12px var(--s1); gap: var(--s1); border-radius: 12px; }
-  .rl--c .rl-card__ico { width: 40px; height: 40px; padding: 9px; border-radius: 10px; }
-  .rl--c .rl-card__h { font-size: 22px; margin: 0 0 4px; }
-  .rl--c .rl-card__p { font-size: 16px; }
-  .rl--c .rl-season { margin-top: var(--s1); font-size: var(--fs-sm); }
+  .rl { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); grid-template-rows: auto auto auto 1fr; column-gap: var(--s5); align-items: start; }
+  .rl > * { max-width: none; }
+  .rl > .v2-play { grid-column: 1 / -1; }
+  .rl .rl-top { grid-column: 1; grid-row: 2 / 5; position: sticky; top: calc(var(--v2-chrome-h, 104px) + var(--s2)); }
+  .rl .rl-faq, .rl .rl-full { grid-column: 2; max-width: 760px; }
+  .rl .rl-faq { grid-row: 2; margin-top: 0; padding-top: 14px; }
+  .rl .rl-full { grid-row: 3; }
+  .rl .rl-title { font-size: 52px; margin: 0 0 var(--s1); }
+  .rl .rl-hero, .rl .rl-hero:not(.hm-hero--video) { grid-template-columns: minmax(0, 1fr); gap: var(--s2); }
+  .rl .rl-video { max-width: 260px; padding: 8px; }
+  .rl .rl-cards__list { gap: 8px; }
+  .rl .rl-card { padding: 12px var(--s1); gap: var(--s1); border-radius: 12px; }
+  .rl .rl-card__ico { width: 40px; height: 40px; padding: 9px; border-radius: 10px; }
+  .rl .rl-card__h { font-size: 22px; margin: 0 0 4px; }
+  .rl .rl-card__p { font-size: 16px; }
+  .rl .rl-season { margin-top: var(--s1); font-size: var(--fs-sm); }
 }
