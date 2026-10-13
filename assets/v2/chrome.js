@@ -63,3 +63,20 @@
     if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq);
   }
 })();
+// Preseason / Season 1 copy: elements marked data-preseason show until Season 1 starts (BDFantasyCore.SEASON_START_WEEK,
+// Mon Nov 9 in New York); elements marked data-inseason (hidden in the HTML) show from then on. Needs
+// assets/fantasy-core.js on the page; uses the ?now= test clock (BDFantasyStore.now, or the same parameter here).
+(function(){
+  function run(){
+    var C = window.BDFantasyCore;
+    if (!C || !C.seasonStarted) return;
+    var t = Date.now(), F = window.BDFantasyStore;
+    if (F && F.now) t = F.now();
+    else { var m = /[?&]now=([^&]+)/.exec(location.search || ''), x = m ? Date.parse(decodeURIComponent(m[1])) : NaN; if (isFinite(x)) t = x; }
+    var on = C.seasonStarted(t);
+    var pre = document.querySelectorAll('[data-preseason]'), ins = document.querySelectorAll('[data-inseason]'), i;
+    for (i = 0; i < pre.length; i++) pre[i].hidden = on;
+    for (i = 0; i < ins.length; i++) ins[i].hidden = !on;
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
+})();

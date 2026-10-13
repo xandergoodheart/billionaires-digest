@@ -73,12 +73,13 @@
     var out = {};
     return Promise.all(arr(wk && wk.days).map(function(d){ return dayFile(d).then(function(x){ if (x) out[d] = x; }); })).then(function(){ return out; });
   }
-  // every real week listed in the index, for season totals
+  // every week listed in the index that counts now (C.countsNow: the preseason weeks before Season 1, then only
+  // Season 1 weeks), for the running totals
   function seasonWeeks(){
     return once('season', function(){
       return F.init().then(function(){
-        var lw = C.lockedWeek(F.now());
-        var ws = arr(F.state.index && F.state.index.weeks).filter(function(w){ return w && !w.practice && w.days > 0 && w.week <= lw; });
+        var t = F.now(), lw = C.lockedWeek(t);
+        var ws = arr(F.state.index && F.state.index.weeks).filter(function(w){ return w && !w.practice && w.days > 0 && w.week <= lw && C.countsNow(w.week, t); });
         return Promise.all(ws.map(function(w){ return F.loadWeek(w.week); }));
       });
     });
@@ -232,13 +233,14 @@
     var w = F.weekPoints(D.wk, slug);
     stat(dl, 'Week pts', w == null ? '—' : K.signed(w), w == null ? '' : numCls(w), D.wk ? (D.wk.practice ? 'practice week' : fmt.weekTitle(D.wk.week)) : 'no scored week');
     var s = D.x.season;
-    if (s === undefined){ stat(dl, 'Season total', '…', '', 'loading'); stat(dl, 'Season rank', '…', '', 'loading'); }
+    var pn = C.periodName(F.now()), pl = pn === 'Preseason' ? 'preseason' : pn;   // 'Preseason' before Season 1, then 'Season 1'
+    if (s === undefined){ stat(dl, pn + ' total', '…', '', 'loading'); stat(dl, pn + ' rank', '…', '', 'loading'); }
     else {
       var tot = s && s.totals[slug];
-      stat(dl, 'Season total', tot ? K.signed(tot.total) : '—', tot ? numCls(tot.total) : '', tot ? tot.days + (tot.days === 1 ? ' scored day' : ' scored days') : 'no real-week points yet');
+      stat(dl, pn + ' total', tot ? K.signed(tot.total) : '—', tot ? numCls(tot.total) : '', tot ? tot.days + (tot.days === 1 ? ' scored day' : ' scored days') : 'no ' + pl + ' points yet');
       var pool = arr(F.state.draftWk && F.state.draftWk.draftable).map(function(p){ return p.slug; });
       var r = s ? K.seasonRank(s.totals, pool, slug) : null;
-      stat(dl, 'Season rank', r ? '#' + r.rank + ' / ' + r.of : '—', '', r ? 'by season total' : '');
+      stat(dl, pn + ' rank', r ? '#' + r.rank + ' / ' + r.of : '—', '', r ? 'by ' + pl + ' total' : '');
     }
     var sal = F.salaries()[slug];
     stat(dl, 'Draft cost', typeof sal === 'number' ? String(sal) : '—', '', typeof sal === 'number' ? 'cap, of ' + C.CAP : 'not draftable');

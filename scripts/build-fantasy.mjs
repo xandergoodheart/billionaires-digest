@@ -115,7 +115,8 @@ export function buildPool(indexPeople, profiles, quotes, ceos = [], stakeRank = 
 
 function weekLabel(id) {
   const info = core.weekInfo(id);
-  return core.isPractice(id) ? PRACTICE_LABEL : `Week of ${info.start}`;
+  if (core.isPractice(id)) return PRACTICE_LABEL;
+  return core.isPreseason(id) ? `Preseason week of ${info.start}` : `Week of ${info.start}`;
 }
 
 export function salaryMethodText(adjusted, withCeos) {
@@ -270,8 +271,11 @@ async function main() {
     const before = JSON.stringify(wk);
     if (!wk.final || wk.benchmarks?.perfect == null || wk.end >= window[0]) wk = scoreWeek(wk, dayFiles, todayNy);
     if (JSON.stringify(wk) !== before) await writeJson(path, wk);
+    // Salary history ("recent form" for the ±adjustment) keeps using preseason weeks: it is price information about
+    // the players, not anyone's score, so the Season 1 reset does not apply to it.
     if (wk.final && !wk.practice) finishedReal.push(wk);
-    weekSummaries.push({ week: wk.week, label: wk.label, practice: wk.practice, start: wk.start, end: wk.end, locksAt: wk.locksAt, days: wk.days.length, final: wk.final });
+    // label recomputed (older week files froze "Week of …" before the preseason existed); preseason: never counts in Season 1
+    weekSummaries.push({ week: wk.week, label: weekLabel(wk.week), practice: wk.practice, preseason: core.isPreseason(wk.week), start: wk.start, end: wk.end, locksAt: wk.locksAt, days: wk.days.length, final: wk.final });
   }
 
   // news in the last 7 editions (draft room column)
@@ -290,6 +294,7 @@ async function main() {
     draftWeek: core.draftWeek(now),
     practiceWeeks: weekSummaries.filter((w) => w.practice).map((w) => w.week),
     firstRealWeek: core.FIRST_REAL_WEEK,
+    seasonStartWeek: core.SEASON_START_WEEK,   // Season 1: totals, records and streaks count only weeks from here
     latestDay,
     weeks: weekSummaries,
     news, newsEditions: editions.slice(-7),

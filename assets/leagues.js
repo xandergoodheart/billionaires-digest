@@ -62,10 +62,21 @@
   }
 
   // ---------- leaderboard.html ----------
+  // The season board and the league "Season" column add up the running period, worked out on the server
+  // (supabase/migrations/0007_season1.sql): the preseason weeks until Season 1 starts (Mon Nov 9), then only Season 1
+  // weeks. The labels follow BDFantasyCore (assets/fantasy-core.js, SEASON_START_WEEK) when the page loads it.
+  var FC = w.BDFantasyCore;
+  var nowMs = w.BDFantasyStore ? w.BDFantasyStore.now() : Date.now();   // the store's ?now= test clock when loaded
+  var started = FC ? FC.seasonStarted(nowMs) : true;
+  var periodName = FC ? FC.periodName(nowMs) : 'Season';
+  var seasonNote = !FC ? 'All counted fantasy weeks added up.'
+    : (started ? FC.SEASON_NAME + ' weeks added up, from ' + startDay() + '. Preseason weeks do not count.'
+               : 'Preseason weeks added up. They do not count: everyone resets to zero when ' + FC.SEASON_NAME + ' starts ' + startDay() + '.');
+  function startDay(){ var d = FC.seasonStartDate(); return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][FC.weekday(d)] + ' ' + ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+d.slice(5, 7) - 1] + ' ' + (+d.slice(8, 10)); }
   var boards = $('boards');
   var TABS = [
     { key: 'week', label: 'This week' },
-    { key: 'season', label: 'Season' },
+    { key: 'season', label: periodName },
     { key: 'coins', label: 'Coins' }
   ];
   var tabBtns = [], currentTab = 'week';
@@ -140,12 +151,12 @@
         cols = [{ label: '#', key: 'rank' }, { label: 'Player', key: 'nickname' }, { label: 'Points', key: 'points', fmt: pts, cls: function(r){ return r.points > 0 ? 'g-up' : (r.points < 0 ? 'g-down' : ''); } }];
         caption = 'This week\'s fantasy standings';
       } else if (tab === 'season') {
-        pill('live', 'Season');
-        note = 'All fantasy weeks added up.';
-        empty = 'No finished weeks yet.';
+        pill('live', periodName);
+        note = seasonNote;
+        empty = started && FC ? 'No ' + FC.SEASON_NAME + ' scores yet. ' + seasonNote : 'No finished weeks yet.';
         valueOf = function(r){ return pts(r.points); };
         cols = [{ label: '#', key: 'rank' }, { label: 'Player', key: 'nickname' }, { label: 'Points', key: 'points', fmt: pts }, { label: 'Weeks', key: 'weeks' }];
-        caption = 'Season fantasy standings';
+        caption = periodName + ' fantasy standings';
       } else {
         pill('final', 'Play money');
         note = 'Coins in hand plus what open market positions are worth at today\'s prices. Play money only.';
@@ -323,10 +334,10 @@
         { label: '#', key: 'rank' },
         { label: 'Player', key: 'nickname' },
         { label: 'This week', key: 'week_points', fmt: pts },
-        { label: 'Season', key: 'season_points', fmt: pts }
+        { label: periodName, key: 'season_points', fmt: pts }
       ], (l ? l.name : 'League') + ' standings'));
       var wk = rows[0].week;
-      standBox.appendChild(el('p', 'gp-note', wk ? 'Fantasy week ' + wk + ' and the season so far. Ties share a rank.' : 'Scores appear once the first week locks.'));
+      standBox.appendChild(el('p', 'gp-note', wk ? 'Fantasy week ' + wk + ' and the ' + (FC ? periodName : 'season') + ' so far' + (FC ? (started ? ' (preseason weeks do not count)' : ' (it does not count: everyone resets when ' + FC.SEASON_NAME + ' starts ' + startDay() + ')') : '') + '. Ties share a rank.' : 'Scores appear once the first week locks.'));
     }).catch(function(e){ status(standBox, 'Could not load standings. ' + e.message); });
   }
 

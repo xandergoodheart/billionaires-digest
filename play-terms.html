@@ -112,7 +112,8 @@
       <p class="gm-head__dek">The short version: it's a free game with play money. Nothing you win is worth anything, and nothing here is advice.</p>
     </header>
 
-    <p class="v2-banner" id="preseason"><strong>Preseason now, Season 1 starts Monday, Nov 9.</strong> Until then every week is a preseason week: play it to learn the game, but it doesn't count. On that Monday everyone's scores, records and streaks reset to zero.</p>
+    <p class="v2-banner" id="preseason" data-preseason><strong>Preseason now, Season 1 starts Monday, Nov 9.</strong> Until then every week is a preseason week: play it to learn the game, but it doesn't count. On that Monday everyone's scores, records and streaks reset to zero.</p>
+    <p class="v2-banner" data-inseason hidden><strong>Season 1 started Monday, Nov 9.</strong> Everyone's scores, records and streaks reset to zero that day. The preseason weeks before it are kept but don't count.</p>
 
     <section class="gm-panel gm-panel--solo g-terminal" aria-label="Game status">
       <div class="gm-panel__status">
@@ -174,7 +175,7 @@
       <ul>
         <li>Coins have no cash value. They can't be bought, sold, cashed out, traded or sent to another player.</li>
         <li>There are no prizes. Leaderboards are for bragging rights.</li>
-        <li>We may reset balances, scores, leagues or markets at any time, for example to fix a bug or start a new season. Everyone's scores reset when Season 1 starts on Monday, Nov 9.</li>
+        <li>We may reset balances, scores, leagues or markets at any time, for example to fix a bug or start a new season. <span data-preseason>Everyone's scores reset when Season 1 starts on Monday, Nov 9.</span><span data-inseason hidden>Everyone's scores reset when Season 1 started on Monday, Nov 9.</span></li>
       </ul>
       <h2>Not investment advice</h2>
       <p>The fantasy league and markets are games built on public information about the world's richest people. Scores, prices and results are not predictions or recommendations to buy or sell anything.</p>
@@ -254,6 +255,7 @@
 </footer>
 <!-- v2footer:end -->
 
+<script src="assets/fantasy-core.js"></script>
 <script src="assets/v2/chrome.js"></script>
 </body>
 </html>

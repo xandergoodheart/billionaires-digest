@@ -6,7 +6,15 @@
   C.CAP = 100;
   C.PICKS = 5;
   C.CAPTAIN_MULT = 1.5;
+  // Practice weeks come before FIRST_REAL_WEEK: sample days, solo, never uploaded or scored online.
   C.FIRST_REAL_WEEK = '2026-W40';
+  // Season 1 starts this ISO week: Monday 2026-11-09 (config/launch.json "seasonStart"). This is the one place the game
+  // code keeps it: the page, the build (scripts/lib/fantasy.mjs loads this file) and the tests read it from here, and it
+  // must match isoWeek(launch.json seasonStart) (checked in scripts/lib/fantasy.test.mjs) and season_start_week() in
+  // supabase/migrations/0007_season1.sql. Weeks from FIRST_REAL_WEEK up to the week before it are the PRESEASON: played
+  // and scored like any week, kept forever, but they never count in Season 1 totals, records, streaks or XP.
+  C.SEASON_START_WEEK = '2026-W46';
+  C.SEASON_NAME = 'Season 1';
   C.TZ = 'America/New_York';
 
   function pad(n){ return (n < 10 ? '0' : '') + n; }
@@ -100,6 +108,17 @@
   };
   C.weekAdd = function(id, n){ return C.isoWeek(C.addDays(C.weekMonday(id), 7 * n)); };
   C.isPractice = function(id){ return String(id) < C.FIRST_REAL_WEEK; };
+  // ---- preseason and Season 1 ----
+  C.isSeasonWeek = function(id){ return String(id) >= C.SEASON_START_WEEK; };
+  C.isPreseason = function(id){ return !C.isPractice(id) && !C.isSeasonWeek(id); };
+  C.seasonStartDate = function(){ return C.weekMonday(C.SEASON_START_WEEK); };
+  // Season 1 has started at UTC ms `ms` (from midnight New York on its first Monday).
+  C.seasonStarted = function(ms){ return C.nyDate(ms) >= C.seasonStartDate(); };
+  // Whether week `id` counts in the running totals (records, streaks, XP, leaderboards) at `ms`: before Season 1 the
+  // preseason weeks do (shown as "Preseason"); from Season 1 only Season 1 weeks do, so everyone starts again at zero.
+  C.countsNow = function(id, ms){ return C.seasonStarted(ms) ? C.isSeasonWeek(id) : C.isPreseason(id); };
+  // Name of the running totals at `ms`: 'Preseason' or 'Season 1'.
+  C.periodName = function(ms){ return C.seasonStarted(ms) ? C.SEASON_NAME : 'Preseason'; };
   // { week, start (Mon), end (Fri), locksAt (UTC ms of Monday 09:30 New York) }
   C.weekInfo = function(id){
     var mon = C.weekMonday(id);

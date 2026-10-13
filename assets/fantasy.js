@@ -54,8 +54,8 @@
   function cls(n){ return typeof n === 'number' ? (n > 0 ? 'g-up' : (n < 0 ? 'g-down' : 'g-flat')) : 'g-flat'; }
   function dayLabel(d){ return DAYN[C.weekday(d)] + ' ' + BD.MONTHS[+d.slice(5, 7) - 1] + ' ' + (+d.slice(8, 10)); }
   function shortDate(d){ return BD.MONTHS[+d.slice(5, 7) - 1] + ' ' + (+d.slice(8, 10)); }
-  function weekName(id){ return C.isPractice(id) ? 'the practice week' : 'the week of ' + shortDate(C.weekMonday(id)); }
-  function weekTitle(id){ return C.isPractice(id) ? 'Practice week' : 'Week of ' + shortDate(C.weekMonday(id)); }
+  function weekName(id){ return C.isPractice(id) ? 'the practice week' : (C.isPreseason(id) ? 'the preseason week of ' : 'the week of ') + shortDate(C.weekMonday(id)); }
+  function weekTitle(id){ return C.isPractice(id) ? 'Practice week' : (C.isPreseason(id) ? 'Preseason week of ' : 'Week of ') + shortDate(C.weekMonday(id)); }
   function lockText(ms){
     try {
       return new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).format(new Date(ms)) + ' ET';
@@ -361,9 +361,8 @@
       chip('Streak', r.streak ? 'W' + r.streak : '—', r.streak > 0);
       if (r.best) chip('Best week', signed(r.best.points), false);
     } else {
-      var first = S.index && S.index.firstRealWeek;
-      chip('Season record', '0–0', false);
-      if (first && C.weekMonday(first) > C.nyDate(now())) chip('Season opens', dayLabel(C.weekMonday(first)), false);
+      chip(C.periodName(now()) + ' record', '0–0', false);
+      if (!C.seasonStarted(now())) chip(C.SEASON_NAME + ' starts', dayLabel(C.seasonStartDate()), false);
     }
   }
 
@@ -967,13 +966,13 @@
   var seasonSeq = 0;
   function renderSeason(){
     var box = $('seasonbox');
-    var weeks = arr(S.index && S.index.weeks).filter(function(w){ return w.final && !w.practice && store.teams[w.week]; });
+    // only weeks that count now: the preseason before Season 1, then Season 1 weeks only (C.countsNow)
+    var weeks = arr(S.index && S.index.weeks).filter(function(w){ return w.final && !w.practice && store.teams[w.week] && C.countsNow(w.week, now()); });
     var seq = ++seasonSeq;
     if (!weeks.length){
       box.innerHTML = '';
-      var first = S.index && S.index.firstRealWeek ? C.weekMonday(S.index.firstRealWeek) : null;
-      if (first && first <= C.nyDate(now())) first = null;   // only while the first real week is still ahead
-      box.appendChild(emptyState('No finished weeks yet', (first ? 'The first real week starts ' + dayLabel(first) + '. ' : '') + 'Save a lineup before the lock, and your record against the S&P 500, the Top 5 richest and the perfect team builds here week by week.', 'Build your lineup'));
+      var first = C.seasonStarted(now()) ? null : C.seasonStartDate();
+      box.appendChild(emptyState('No finished weeks yet', (first ? 'Preseason weeks do not count; ' + C.SEASON_NAME + ' starts ' + dayLabel(first) + '. ' : '') + 'Save a lineup before the lock, and your record against the S&P 500, the Top 5 richest and the perfect team builds here week by week.', 'Build your lineup'));
       renderChips();
       return;
     }
