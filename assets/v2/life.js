@@ -4,10 +4,11 @@
    - life-play.html  (#lf-game present): ?p=<slug> loads data/life/<slug>.json and runs the game: shuffled options,
      flip reveal, match meter, streak, sources, end screen with rank badge, best score, share and "Next billionaire".
    - academy.html    (#lf-academy present): Billionaires Digest Academy: schools from data/life/index.json (school blocks the
-     build validated) and the searchable glossary from data/life/glossary.json.
+     build validated) and the searchable glossary from data/life/glossary.json. Two views: the landing (school cards) and
+     one school (academy.html?school=<slug>: principles, sources in <details>, Play & learn). History API keeps Back working.
    Academy layer in the game: a "The lesson" panel after each reveal (when the decision has a valid lesson), and at the end the
    person's school, the principles you met and a 3-question quiz built only from that person's lesson/principle text.
-   2 of 3 right earns a diploma (diplomas[slug]) and soft-unlocks their Next Moves (unlocked[slug] = YYYY-MM-DD).
+   2 of 3 right earns a diploma (diplomas[slug]; unlocked[slug] = YYYY-MM-DD is still stored but no longer shown).
    Scores live only in this browser (localStorage key bd-life-v1, every access in try/catch). Nothing is sent anywhere.
    Animations run once per reveal and are skipped with prefers-reduced-motion. Game for fun: no money, no prizes. */
 (function(){
@@ -547,23 +548,11 @@
     c.appendChild(el('span', null, 'Diploma earned' + (dip && dip.date ? ' · ' + BD.fmtDate(dip.date) : '')));
     return c;
   }
-  // "Unlocked: Call X's next moves" (with diploma) or "Earn the diploma to unlock X's next moves" (soft: link still works).
-  function unlockLine(box, slug, surname, dip){
+  // Next Moves is hidden from the site: the unlock box stays empty (CSS hides .lf-unlock:empty). The diploma is the achievement.
+  function unlockLine(box){
+    if (!box) return box;
     clear(box);
-    box.className = 'lf-unlock' + (dip ? ' is-open' : '');
-    var href = 'moves.html?p=' + encodeURIComponent(slug);
-    if (dip){
-      box.appendChild(icon('trophy'));
-      var a = el('a', 'lf-link lf-unlock__a', 'Unlocked: Call ' + surname + '’s next moves');
-      a.href = href;
-      box.appendChild(a);
-    } else {
-      box.appendChild(el('span', 'lf-unlock__t', 'Earn the diploma to unlock ' + surname + '’s next moves.'));
-      var b = el('a', 'lf-link lf-unlock__peek', 'Peek at the moves anyway');
-      b.href = href;
-      b.setAttribute('aria-label', 'Peek at ' + surname + '’s next moves anyway');
-      box.appendChild(b);
-    }
+    box.className = 'lf-unlock';
     return box;
   }
 
@@ -799,7 +788,7 @@
     renderDiploma(dip);
     unlockLine($('lf-unlock'), p.slug, who, dip);
     focusTop(h);
-    say('Quiz result: ' + qScore + ' of ' + n + '. ' + (passed ? 'Diploma earned. ' + who + '’s next moves are unlocked.' : 'Not yet. You need 2 of 3.'));
+    say('Quiz result: ' + qScore + ' of ' + n + '. ' + (passed ? 'Diploma earned.' : 'Not yet. You need 2 of 3.'));
   }
 
   function renderDiploma(dip){
@@ -819,21 +808,26 @@
   // ACADEMY PAGE (academy.html)
   // =====================================================================================================
   var glossTerms = [];
+  var acSchools = [], acStore = null, acLoaded = false, acLast = null;
+  var AC_TITLE = ACADEMY_NAME + ' · Billionaires Digest';
 
   function initAcademy(){
     applyAcademyName();
-    document.title = ACADEMY_NAME + ' · Billionaire Life · Billionaires Digest';
+    document.title = AC_TITLE;
     var grid = $('ac-schools'), status = $('ac-status');
+    window.addEventListener('popstate', function(){ if (acLoaded) acRoute(true); });
     loadRoster().then(function(list){
-      var store = loadStore(), withSchool = [], without = [];
-      list.forEach(function(p){ (schoolOf(p) ? withSchool : without).push(p); });
+      var without = [];
+      acStore = loadStore();
+      acSchools = [];
+      list.forEach(function(p){ (schoolOf(p) ? acSchools : without).push(p); });
       clear(grid);
-      if (!withSchool.length){
+      if (!acSchools.length){
         status.textContent = 'The first schools are being written. Check back soon, or play the games in the meantime.';
         status.hidden = false;
       } else {
         status.hidden = true;
-        withSchool.forEach(function(p){ grid.appendChild(schoolCard(p, diplomaFor(store, p.slug))); });
+        acSchools.forEach(function(p){ grid.appendChild(schoolCard(p, diplomaFor(acStore, p.slug))); });
       }
       var soon = $('ac-soon');
       if (without.length){
@@ -848,8 +842,10 @@
         soon.appendChild(document.createTextNode('. Their games are already playable.'));
         soon.hidden = false;
       }
-      var dips = withSchool.filter(function(p){ return diplomaFor(store, p.slug); }).length;
-      $('ac-count').textContent = withSchool.length ? (withSchool.length === 1 ? '1 school open' : withSchool.length + ' schools open') + ' · your diplomas: ' + dips + ' of ' + withSchool.length : '';
+      var dips = acSchools.filter(function(p){ return diplomaFor(acStore, p.slug); }).length;
+      $('ac-count').textContent = acSchools.length ? 'Your diplomas: ' + dips + ' of ' + acSchools.length : '';
+      acLoaded = true;
+      acRoute(false);
     }).then(null, function(){
       status.textContent = 'Could not load the schools. Please reload the page.';
       status.hidden = false;
@@ -857,30 +853,128 @@
     initGlossary();
   }
 
+  // ?school=<slug> (or #school=<slug>) -> the school row, else null (landing)
+  function acCurrent(){
+    var slug = queryParam('school');
+    if (!slug){ var m = /(?:^#|&)school=([^&]*)/.exec(location.hash || ''); if (m){ try { slug = decodeURIComponent(m[1]); } catch (e) { slug = null; } } }
+    if (!validSlug(slug)) return null;
+    for (var i = 0; i < acSchools.length; i++) if (acSchools[i].slug === slug) return acSchools[i];
+    return null;
+  }
+  function acGo(slug){
+    var url = slug ? 'academy.html?school=' + encodeURIComponent(slug) : 'academy.html';
+    // fromLanding: this entry was opened from the landing in this tab, so "All schools" can simply go Back
+    try { history.pushState({ school: slug || null, fromLanding: !!slug && !acCurrent() }, '', url); } catch (e) { location.href = url; return; }
+    acRoute(true);
+  }
+  // plain left click on an in-page link -> history navigation; modified clicks open normally
+  function acLink(a, slug){
+    a.addEventListener('click', function(e){
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      acGo(slug);
+    });
+    return a;
+  }
+  function acRoute(moved){
+    var p = acCurrent(), land = $('ac-landing'), view = $('ac-school');
+    if (p){
+      renderSchool(view, p, diplomaFor(loadStore(), p.slug));
+      acLast = p.slug;
+      land.hidden = true; view.hidden = false;
+      document.title = 'School of ' + p.name + ' · ' + AC_TITLE;
+      if (moved){ window.scrollTo(0, 0); focusTop($('ac-school-h')); say('School of ' + p.name); }
+    } else {
+      view.hidden = true; clear(view); land.hidden = false;
+      document.title = AC_TITLE;
+      if (moved){
+        var card = acLast && validSlug(acLast) ? document.querySelector('[data-ac-slug="' + acLast + '"]') : null;
+        window.scrollTo(0, 0);
+        if (card){ try { card.focus({ preventScroll: true }); } catch (e) { card.focus(); } card.scrollIntoView({ block: 'center' }); }
+        else focusTop($('ac-h'));
+        say('All schools');
+      }
+    }
+  }
+
+  function dipBadge(dip){
+    var b = el('span', 'ac-dip');
+    b.appendChild(seal('lf-seal--sm'));
+    b.appendChild(el('span', null, 'Diploma earned' + (dip && dip.date ? ' · ' + BD.fmtDate(dip.date) : '')));
+    return b;
+  }
+
+  // landing card: crest, "School of <Name>", tagline, counts, diploma state. The whole card is one link.
   function schoolCard(p, dip){
-    var sc = schoolOf(p), who2 = shortName(p);
+    var sc = schoolOf(p);
     var li = el('li', 'ac-card' + (dip ? ' has-dip' : ''));
-    var head = el('div', 'ac-card__head');
-    head.appendChild(plate(p, 'ac-card__av'));
-    var ht = el('div', 'ac-card__ht');
-    var h = el('h3', 'ac-card__school', sc.name); h.id = 'ac-h-' + p.slug;
-    ht.appendChild(h);
-    ht.appendChild(el('p', 'ac-card__who', 'School of ' + p.name));
-    head.appendChild(ht);
-    var cr = crest(p.slug, 'ac-card__crest');
-    if (cr) head.appendChild(cr);
-    li.appendChild(head);
-    li.appendChild(el('p', 'ac-card__tag', sc.tagline));
-    var ul = el('ul', 'lf-princ ac-card__pr');
-    sc.principles.forEach(function(pr){ ul.appendChild(principleItem(pr)); });
-    li.appendChild(ul);
-    li.appendChild(dip ? diplomaChip(dip) : el('p', 'ac-card__nodip', 'No diploma yet'));
-    li.appendChild(unlockLine(el('p'), p.slug, who2, dip));
-    var a = el('a', 'lf-btn lf-btn--gold ac-card__play', 'Play & learn');
-    a.href = 'life-play.html?p=' + encodeURIComponent(p.slug);
-    a.setAttribute('aria-label', 'Play and learn: ' + p.name + ', ' + sc.name);
-    li.appendChild(a);
+    var a = el('a', 'ac-card__a');
+    a.href = 'academy.html?school=' + encodeURIComponent(p.slug);
+    a.setAttribute('data-ac-slug', p.slug);
+    var cr = crest(p.slug, 'ac-card__crest') || plate(p, 'ac-card__av');
+    a.appendChild(cr);
+    var body = el('span', 'ac-card__body');
+    body.appendChild(el('span', 'ac-card__school', 'School of ' + p.name));
+    body.appendChild(el('span', 'ac-card__tag', sc.tagline));
+    var meta = el('span', 'ac-card__meta');
+    meta.appendChild(el('span', 'ac-card__count', BD.plural(sc.principles.length, 'lesson', 'lessons') + ' · 3 questions'));
+    if (dip) meta.appendChild(dipBadge(dip));
+    body.appendChild(meta);
+    a.appendChild(body);
+    a.appendChild(el('span', 'ac-card__go', '→')).setAttribute('aria-hidden', 'true');
+    li.appendChild(acLink(a, p.slug));
     return li;
+  }
+
+  // school view: back link, crest + title + tagline, Play & learn + diploma state, then the principles
+  function renderSchool(box, p, dip){
+    var sc = schoolOf(p);
+    clear(box);
+    var back = el('a', 'lf-link ac-back', '← All schools');
+    back.href = 'academy.html';
+    back.addEventListener('click', function(e){
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      // opened from the landing in this tab: go Back so the history stays clean; a deep link pushes the landing
+      if (history.state && history.state.fromLanding && history.state.school === p.slug){ history.back(); return; }
+      acGo(null);
+    });
+    box.appendChild(back);
+    var head = el('header', 'ac-school__head');
+    var cr = crest(p.slug, 'ac-school__crest') || plate(p, 'ac-card__av');
+    head.appendChild(cr);
+    var ht = el('div', 'ac-school__ht');
+    var h = el('h1', 'ac-school__t', 'School of ' + p.name); h.id = 'ac-school-h'; h.tabIndex = -1;
+    ht.appendChild(h);
+    ht.appendChild(el('p', 'ac-school__name', sc.name));
+    ht.appendChild(el('p', 'ac-school__tag', sc.tagline));
+    head.appendChild(ht);
+    box.appendChild(head);
+
+    var act = el('div', 'ac-school__act');
+    var play = el('a', 'lf-btn lf-btn--gold ac-school__play', 'Play & learn');
+    play.href = 'life-play.html?p=' + encodeURIComponent(p.slug);
+    play.setAttribute('aria-label', 'Play and learn: ' + p.name + ', ' + sc.name);
+    act.appendChild(play);
+    act.appendChild(dip ? dipBadge(dip) : el('span', 'ac-school__nodip', 'No diploma yet'));
+    box.appendChild(act);
+
+    var ol = el('ol', 'ac-pr');
+    ol.setAttribute('aria-label', 'Principles');
+    sc.principles.forEach(function(pr){
+      var li = el('li', 'ac-pr__item');
+      li.appendChild(el('h2', 'ac-pr__t', pr.name));
+      li.appendChild(el('p', 'ac-pr__sum', pr.summary));
+      var ul = el('ul', 'lf-src ac-pr__src'); srcList(ul, pr.sources);
+      if (ul.firstChild){
+        var d = el('details', 'ac-pr__d');
+        d.appendChild(el('summary', null, 'Sources (' + ul.children.length + ')'));
+        d.appendChild(ul);
+        li.appendChild(d);
+      }
+      ol.appendChild(li);
+    });
+    box.appendChild(ol);
   }
 
   function initGlossary(){

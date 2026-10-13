@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Academy · Billionaire Life · Billionaires Digest</title>
+<title>Billionaires Digest Academy · Billionaires Digest</title>
 <meta name="description" content="Learn how the richest think: each billionaire's school of principles, a quiz and a glossary of money terms, all summarized from their own words and reputable sources. Education, not investment advice.">
 <meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
@@ -90,56 +90,56 @@
 
 <main id="main" class="v2-main lf-main" tabindex="-1">
   <div class="v2-wrap lf-hubwrap ac-wrap" id="lf-academy">
-    <p class="lf-play">Education, not investment advice · every principle is sourced</p>
+    <div id="ac-landing">
+      <header class="ac-head">
+        <h1 class="ac-head__t" id="ac-h"><span data-academy-name>Billionaires Digest Academy</span></h1>
+        <p class="ac-head__lead">Learn how the richest think, one 3-minute school at a time.</p>
+        <p class="ac-head__note">Education, not investment advice. Principles are summarized from their own words and reputable sources.</p>
+      </header>
 
-    <section class="lf-cab lf-hero" aria-labelledby="ac-h">
-      <div class="lf-cab__in">
-        <span class="lf-kicker">Learn</span>
-        <h1 class="lf-title" id="ac-h"><span data-academy-name>Academy</span></h1>
-        <p class="lf-sub">Learn how the richest think.</p>
-        <p class="ac-frame">Education, not investment advice. Principles are summarized from their own words and reputable sources.</p>
-      </div>
-    </section>
-
-    <section class="lf-how-strip" aria-labelledby="ac-howh">
-      <h2 class="lf-h2" id="ac-howh">How the Academy works</h2>
-      <ol class="lf-steps">
-        <li class="lf-step"><svg class="lf-ico lf-step__ico" aria-hidden="true" focusable="false"><use href="assets/v2/life-icons.svg#lf-i-founding" xlink:href="assets/v2/life-icons.svg#lf-i-founding"></use></svg><span class="lf-step__n">1</span><span class="lf-step__t"><strong>Learn the school.</strong> Play a billionaire's real decisions. After each card, "The lesson" shows the principle behind it.</span></li>
-        <li class="lf-step"><svg class="lf-ico lf-step__ico" aria-hidden="true" focusable="false"><use href="assets/v2/life-icons.svg#lf-i-match" xlink:href="assets/v2/life-icons.svg#lf-i-match"></use></svg><span class="lf-step__n">2</span><span class="lf-step__t"><strong>Pass the 3-question quiz.</strong> Get 2 of 3 right at the end of the game to earn that school's diploma.</span></li>
-        <li class="lf-step"><svg class="lf-ico lf-step__ico" aria-hidden="true" focusable="false"><use href="assets/v2/life-icons.svg#lf-i-trophy" xlink:href="assets/v2/life-icons.svg#lf-i-trophy"></use></svg><span class="lf-step__n">3</span><span class="lf-step__t"><strong>Unlock their next moves.</strong> A diploma unlocks calling that billionaire's next moves.</span></li>
+      <ol class="ac-steps" aria-label="How the Academy works">
+        <li><span class="ac-steps__n" aria-hidden="true">1</span>Read the 4 lessons</li>
+        <li><span class="ac-steps__n" aria-hidden="true">2</span>Play their real decisions</li>
+        <li><span class="ac-steps__n" aria-hidden="true">3</span>Pass the 3-question quiz for a diploma</li>
       </ol>
-    </section>
 
-    <section aria-labelledby="ac-schoolsh">
-      <h2 class="lf-h2" id="ac-schoolsh">The schools</h2>
-      <p class="lf-count" id="ac-count"></p>
-      <p class="lf-status" id="ac-status" role="status">Loading the schools…</p>
-      <ul class="ac-schools" id="ac-schools"></ul>
-      <p class="ac-soon" id="ac-soon" hidden></p>
-      <noscript><p class="lf-status">The Academy needs JavaScript.</p></noscript>
-    </section>
+      <section aria-labelledby="ac-schoolsh">
+        <div class="ac-bar">
+          <h2 class="ac-h2" id="ac-schoolsh">The schools</h2>
+          <p class="ac-count" id="ac-count"></p>
+        </div>
+        <p class="lf-status" id="ac-status" role="status">Loading the schools…</p>
+        <ul class="ac-schools" id="ac-schools"></ul>
+        <p class="ac-soon" id="ac-soon" hidden></p>
+        <noscript><p class="lf-status">The Academy needs JavaScript.</p></noscript>
+      </section>
 
-    <section class="ac-glossary" aria-labelledby="ac-glossh">
-      <h2 class="lf-h2" id="ac-glossh">Glossary</h2>
-      <p class="ac-gloss__intro">Money words from the lessons, in plain language. Each one links its source.</p>
-      <div class="ac-search">
-        <label for="ac-q">Search the glossary</label>
-        <input type="search" id="ac-q" autocomplete="off" spellcheck="false" disabled aria-describedby="ac-gstatus">
-      </div>
-      <p class="ac-gstatus" id="ac-gstatus" role="status" aria-live="polite">Loading the glossary…</p>
-      <ul class="ac-gloss" id="ac-gloss"></ul>
-    </section>
+      <details class="lf-about ac-glossary">
+        <summary>Glossary</summary>
+        <div class="ac-glossary__in">
+          <p class="ac-gloss__intro">Money words from the lessons, in plain language. Each one links its source.</p>
+          <div class="ac-search">
+            <label for="ac-q">Search the glossary</label>
+            <input type="search" id="ac-q" autocomplete="off" spellcheck="false" disabled aria-describedby="ac-gstatus">
+          </div>
+          <p class="ac-gstatus" id="ac-gstatus" role="status" aria-live="polite">Loading the glossary…</p>
+          <ul class="ac-gloss" id="ac-gloss"></ul>
+        </div>
+      </details>
 
-    <details class="lf-about">
-      <summary>About the Academy</summary>
-      <ul>
-        <li>Each school sums up a billionaire's approach in a few principles, written in our own words from their own letters, interviews and books, and from reputable reporting. Every principle links its sources.</li>
-        <li>Lessons explain what a real decision teaches. Facts come from the sources on each game card; the "watch out" line is the risk or counter-lesson.</li>
-        <li>Quiz questions only reuse the lessons and principles you have seen. No new facts.</li>
-        <li>Diplomas and unlocks are saved only in this browser. Nothing is sent to us or anyone else.</li>
-        <li>This is education about how people think, not advice to buy or sell anything.</li>
-      </ul>
-    </details>
+      <details class="lf-about">
+        <summary>About the Academy</summary>
+        <ul>
+          <li>Each school sums up a billionaire's approach in a few principles, written in our own words from their own letters, interviews and books, and from reputable reporting. Every principle links its sources.</li>
+          <li>Lessons explain what a real decision teaches. Facts come from the sources on each game card; the "watch out" line is the risk or counter-lesson.</li>
+          <li>Quiz questions only reuse the lessons and principles you have seen. No new facts.</li>
+          <li>Diplomas are saved only in this browser. Nothing is sent to us or anyone else.</li>
+          <li>This is education about how people think, not advice to buy or sell anything.</li>
+        </ul>
+      </details>
+    </div>
+
+    <article class="ac-school" id="ac-school" aria-labelledby="ac-school-h" hidden></article>
 
     <p class="lf-foot-note">Education, not investment advice. Principles are summarized from their own words and reputable sources. For information only · not financial advice.</p>
   </div>
