@@ -1,9 +1,67 @@
 {
-  "generated": "2026-10-12T19:13:02.517Z",
+  "generated": "2026-10-13T17:03:26.130Z",
   "windowDays": 90,
   "person": "Giancarlo Devasini",
   "personSlug": "giancarlo-devasini",
   "filings": [
+    {
+      "cik": "0002050373",
+      "filer": "Devasini Giancarlo",
+      "form": "4",
+      "filed": "2026-10-13",
+      "reportDate": "2026-10-07",
+      "accession": "0001104659-26-115328",
+      "url": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926115328/xslF345X06/tm2627489-1_4seq1.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926115328/0001104659-26-115328-index.htm",
+      "description": "OWNERSHIP DOCUMENT",
+      "person": "Giancarlo Devasini",
+      "personSlug": "giancarlo-devasini",
+      "form4": {
+        "issuer": "Gold.com, Inc.",
+        "ticker": "GOLD",
+        "summary": [
+          {
+            "issuer": "Gold.com, Inc.",
+            "ticker": "GOLD",
+            "securityTitle": "Common Stock",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 32118,
+            "price": 39.87,
+            "value": 1280535,
+            "direction": "up",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-10-07",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 1030,
+            "price": 39.96,
+            "value": 41159,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 301030,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-10-12",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 31088,
+            "price": 39.8667,
+            "value": 1239376,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 332118,
+            "direction": "up"
+          }
+        ]
+      }
+    },
     {
       "cik": "0002050373",
       "filer": "Devasini Giancarlo",
