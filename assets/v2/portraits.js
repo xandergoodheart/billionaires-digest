@@ -6,6 +6,15 @@
    People without a portrait fall back to the grey silhouette. */
 (function(root){
   var P = root.BDPortraits = root.BDPortraits || {};
+  P['reinhold-wuerth-family'] = { img: '/assets/portraits/real/reinhold-wuerth-family.webp' };
+  P['thomas-frist-jr-family'] = { img: '/assets/portraits/real/thomas-frist-jr-family.webp' };
+  P['idan-ofer'] = { img: '/assets/portraits/real/idan-ofer.webp' };
+  P['eyal-ofer'] = { img: '/assets/portraits/real/eyal-ofer.webp' };
+  P['alexey-mordashov-family'] = { img: '/assets/portraits/real/alexey-mordashov-family.webp' };
+  P['vagit-alekperov'] = { img: '/assets/portraits/real/vagit-alekperov.webp' };
+  P['leonid-mikhelson-family'] = { img: '/assets/portraits/real/leonid-mikhelson-family.webp' };
+  P['suleiman-kerimov-family'] = { img: '/assets/portraits/real/suleiman-kerimov-family.webp' };
+  P['vladimir-lisin'] = { img: '/assets/portraits/real/vladimir-lisin.webp' };
   P['abigail-johnson'] = { img: '/assets/portraits/real/abigail-johnson.webp' };
   P['alice-walton'] = { img: '/assets/portraits/real/alice-walton.webp' };
   P['aliko-dangote'] = { img: '/assets/portraits/real/aliko-dangote.webp' };
