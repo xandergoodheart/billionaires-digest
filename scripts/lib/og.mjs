@@ -215,7 +215,7 @@ export async function renderCardOg(opts = {}) {
 export const HOME_COPY = {
   headline: 'FANTASY SPORTS, BUT THE PLAYERS ARE BILLIONAIRES.',
   sub: 'Draft 5 billionaires & CEOs. Score on their real stock moves. Beat your friends.',
-  pills: ['Free to play', 'Play money only', 'Season 1 · Nov 9']
+  pills: ['Free to play', 'Season 1 · Nov 9']
 };
 
 function pill(label) {
