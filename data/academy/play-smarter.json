@@ -1,0 +1,185 @@
+{
+  "_note": "Billionaires Digest Academy, Play smarter track (academy.html?lesson=<slug>). Game strategy, not investment advice. Every game number here was checked against assets/fantasy-core.js, scripts/lib/fantasy.mjs, play-terms.html and config/launch.json on 2026-10-12. Examples use made-up players only. Quiz answers must be checkable from the lesson text. Option 0 of each question is the right answer (the page shuffles them).",
+  "checked": "2026-10-12",
+  "lessons": [
+    {
+      "slug": "how-you-score",
+      "title": "How you score",
+      "line": "Daily moves become points, your captain counts 1.5 times, and insider buys add a bonus.",
+      "body": [
+        { "p": "Each of your five picks earns points every trading day: Monday to Friday, when the US stock market is open. Weekends and market holidays don't score." },
+        { "ul": [
+          "Price points: the player's move that day in percent, times 100, rounded. A 1% rise is +100 points, a 1% fall is −100, and +1.23% is +123.",
+          "Captain: one of your five scores 1.5 times their points. The multiplier is applied to the captain's whole day, insider buy included, and rounded each day.",
+          "Insider buy: if the player files a Form 4 showing an open-market purchase (code P) that day, they get +25. It's the only bonus in the game."
+        ] },
+        { "p": "Your team's score for the day is your five picks added together. Preseason weeks don't count: everyone's scores reset to zero when Season 1 starts on Monday, Nov 9." }
+      ],
+      "example": {
+        "title": "Worked example: one day, made-up players",
+        "head": ["Pick", "Move that day", "Points"],
+        "rows": [
+          ["Player A (captain)", "+1.20%", "120 × 1.5 = +180"],
+          ["Player B", "−0.50%", "−50"],
+          ["Player C", "+0.30%, plus an insider buy", "30 + 25 = +55"],
+          ["Player D", "0.00%", "0"],
+          ["Player E", "+2.05%", "+205"]
+        ],
+        "total": "Team total for the day: +390"
+      },
+      "links": [{ "text": "Full game rules", "href": "play-terms.html" }],
+      "quiz": [
+        { "q": "One of your picks (not the captain) rises 0.75% in a day with no insider buy. How many points?", "options": ["+75", "+7.5", "+750"], "why": "The daily move in percent times 100: 0.75 × 100 = 75." },
+        { "q": "Your captain earns 40 points on the day. What do they add to your team?", "options": ["60", "40", "80"], "why": "The captain counts 1.5 times: 40 × 1.5 = 60." },
+        { "q": "What is the only bonus in the game?", "options": ["+25 for an insider open-market buy filed that day", "+25 for every news story about the player", "+10 for every day the player goes up"], "why": "The insider buy (+25) is the only bonus; everything else comes from the daily move." }
+      ]
+    },
+    {
+      "slug": "what-moves-a-player",
+      "title": "What moves a player",
+      "line": "Billionaires score on a weighted mix of their stocks; CEOs on their company's stock.",
+      "body": [
+        { "p": "A billionaire's daily move is a weighted mix of their disclosed holdings that trade on a US exchange (including US lines of foreign companies)." },
+        { "ul": [
+          "If every holding has an exact disclosed share count, each one counts by its value (value-weighted).",
+          "Otherwise the companies they control count for 75% together and their other stakes for 25% (controls-weighted, 75/25). Inside each group, holdings split by value when every one has a share count, and equally when not.",
+          "A CEO plays on one stock: their company's, at full weight."
+        ] },
+        { "p": "Public Stake Value is a player's disclosed US-listed shares times the latest close. It is not their net worth. It sets their rank, and the rank (plus recent form) sets their cap cost." },
+        { "p": "A stock that didn't trade that day counts as 0%. A one-day move bigger than 40% is treated as a likely data error: it is flagged and scored 0." },
+        { "h": "How to read a player card" },
+        { "ul": [
+          "On the Players list, each row shows the player's tickers and sector, Week pts, Avg/day, Cap and Stake (Public Stake Value).",
+          "On a player's page you'll find Public Stake Value and rank, Week pts, Avg pts/day, Cap cost (of 100), Sector rank, and the daily points, which are shown before the captain bonus.",
+          "The scouting report's \"Scores on\" line lists each ticker with its weight and names the method (value-weighted or controls-weighted 75/25). \"Recent form\" notes insider buys."
+        ] }
+      ],
+      "example": {
+        "title": "Worked example: a made-up billionaire, controls-weighted (75/25)",
+        "head": ["Holding", "Weight", "Move", "Share of the day"],
+        "rows": [
+          ["Company X (controls)", "75%", "+2.00%", "+1.500%"],
+          ["Company Y (stake)", "12.5%", "−1.00%", "−0.125%"],
+          ["Company Z (stake)", "12.5%", "0.00%", "0.000%"]
+        ],
+        "total": "Day move +1.375% → 137.5 rounds to +138 points"
+      },
+      "links": [{ "text": "Players list", "href": "players.html" }],
+      "quiz": [
+        { "q": "Where do a CEO's points come from?", "options": ["Their company's stock, at full weight", "The S&P 500", "Their net worth"], "why": "A CEO plays on one stock: their company's, at full weight." },
+        { "q": "What is Public Stake Value?", "options": ["Disclosed US-listed shares times the latest close", "The player's total net worth", "The player's points last week"], "why": "It's disclosed US-listed shares × latest close, and it is not a net worth." },
+        { "q": "In the controls-weighted (75/25) method, which holdings share the 75%?", "options": ["The companies the player controls", "Only their single biggest stake", "Their foreign stocks"], "why": "Controlled companies count for 75% together; other stakes for 25%." }
+      ]
+    },
+    {
+      "slug": "insider-buys",
+      "title": "Insider buys",
+      "line": "What a Form 4 is, why code P matters, and where to spot one.",
+      "body": [
+        { "p": "Company insiders (officers, directors and anyone holding more than 10% of a class of a company's shares) must report their trades to the SEC. Most trades go on a Form 4, which must be filed within two business days of the trade." },
+        { "p": "Each trade on a Form 4 has a transaction code. Code P is a purchase of shares on an exchange or from another person: an open-market buy. Other codes don't score in the game, for example S (a sale), A (a grant or award from the company), G (a gift) and M (exercising an option)." },
+        { "ul": [
+          "In the game, a Form 4 with code P filed that day adds +25 to that player.",
+          "The +25 lands on the day the form is filed, which can be a day or two after the trade.",
+          "If the player is your captain, the +25 counts 1.5 times along with the rest of their day."
+        ] },
+        { "p": "Where to look: Insider flows lists recent filings, a player's page notes insider buys under \"Recent form\", and Filings 101 explains the forms in plain language." }
+      ],
+      "links": [
+        { "text": "Insider flows", "href": "flows.html" },
+        { "text": "Filings 101", "href": "guides/filings-101/" }
+      ],
+      "sources": [
+        { "title": "Investor Bulletin: Insider Transactions and Forms 3, 4, and 5", "publisher": "U.S. Securities and Exchange Commission", "url": "https://www.sec.gov/files/forms-3-4-5.pdf" }
+      ],
+      "quiz": [
+        { "q": "Which Form 4 transaction code earns +25 in the game?", "options": ["P", "S", "G"], "why": "Code P is a purchase on an exchange or from another person; S is a sale and G is a gift." },
+        { "q": "How soon must most insider trades be reported on a Form 4?", "options": ["Within two business days", "Within 45 days", "Once a year"], "why": "The SEC says a Form 4 must be filed within two business days of the trade." },
+        { "q": "Your captain's stocks are flat (0 points) on a day they file a code P Form 4. What do they add to your team?", "options": ["+38", "+25", "+50"], "why": "+25 counts 1.5 times for a captain: 37.5, rounded to 38." }
+      ]
+    },
+    {
+      "slug": "earnings-weeks",
+      "title": "Earnings weeks",
+      "line": "Quarterly reports can bring big swings. Know when your picks' companies report.",
+      "body": [
+        { "p": "Public companies report their results every quarter. In the US they file a Form 10-Q for each of the first three quarters of their fiscal year and a Form 10-K for the full year." },
+        { "p": "Most companies announce results before the market opens or after it closes. Many report in the weeks right after a quarter ends: early to mid January, April, July and October." },
+        { "p": "Earnings season can be a busy, volatile time: a stock can jump or tumble once investors compare the results with what was expected." },
+        { "ul": [
+          "In the game, a bigger move means bigger points either way: −6% is −600, and +6% is +600.",
+          "A captain multiplies that swing by 1.5.",
+          "Before the lock, open the Calendar and check whether your picks' companies report during the week (the \"Earnings & events\" view). A report week isn't good or bad, just a bigger swing in either direction."
+        ] }
+      ],
+      "example": {
+        "title": "Worked example: a made-up CEO whose company reports after Wednesday's close",
+        "head": ["Day", "Stock move", "Points", "As captain"],
+        "rows": [
+          ["Wednesday", "+0.40%", "+40", "+60"],
+          ["Thursday", "−6.00%", "−600", "−900"]
+        ],
+        "total": "The report lands in Thursday's points, because results came out after Wednesday's close."
+      },
+      "links": [{ "text": "Calendar", "href": "calendar.html" }],
+      "sources": [
+        { "title": "Form 10-Q", "publisher": "Investor.gov (U.S. Securities and Exchange Commission)", "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/form-10-q" },
+        { "title": "What Is Earnings Season?", "publisher": "FINRA", "date": "2024-07-23", "url": "https://www.finra.org/investors/insights/earnings-season" }
+      ],
+      "quiz": [
+        { "q": "When do most companies announce their quarterly results?", "options": ["Before the market opens or after it closes", "Only at noon on Fridays", "Only once a year"], "why": "Most companies announce before the open or after the close." },
+        { "q": "A pick plays on one stock that falls 4% the day after a report. How many points (not the captain)?", "options": ["−400", "−4", "−40"], "why": "The move in percent times 100: −4 × 100 = −400." },
+        { "q": "Where on this site can you check upcoming earnings dates?", "options": ["The Calendar", "The Glossary", "The Rules page"], "why": "The Calendar lists earnings and events, each linked to its source." }
+      ]
+    },
+    {
+      "slug": "balanced-team",
+      "title": "Building a balanced team",
+      "line": "Sectors, the 100 cap and your captain: how each changes your daily swing.",
+      "body": [
+        { "p": "You pick five different players whose cap costs add up to 100 or less, and one of them is captain." },
+        { "ul": [
+          "Sectors: if several picks lean on stocks in the same sector, one bad day for that sector hits all of them at once. Spreading across sectors usually narrows your daily swing, both the losses and the gains.",
+          "Shared tickers: some players score on the same stock. Picking two of them is like doubling up on that stock.",
+          "The cap: a pricier player isn't guaranteed to score more. Cap cost comes from Public Stake Value rank and recent form, not from a forecast.",
+          "Captain: the 1.5 times multiplier applies to losses as well as gains."
+        ] }
+      ],
+      "example": {
+        "title": "Worked example: the same day for two made-up teams (one sector falls 2%)",
+        "head": ["Team", "Picks that day", "Total"],
+        "rows": [
+          ["Stacked", "A, B and C (captain) all in the falling sector: −200, −200, −300. D +50, E +30.", "−620"],
+          ["Spread", "One pick in the falling sector −200. Others +50, +45 (captain, 30 × 1.5), −20, +60.", "−65"]
+        ],
+        "total": "On a day that sector rises 2%, Stacked would come out ahead by the same logic. Spreading lowers the swing and the upside."
+      },
+      "links": [{ "text": "Draft room", "href": "draft.html" }],
+      "quiz": [
+        { "q": "Three of your picks lean on the same sector, and it falls 2% today. What happens?", "options": ["All three lose points together", "Only your captain loses points", "Nothing; sectors don't affect points"], "why": "One bad day for a sector hits every pick that leans on it." },
+        { "q": "Does a higher cap cost guarantee more points?", "options": ["No; cost comes from stake rank and recent form", "Yes, always", "Only in earnings weeks"], "why": "Cap cost comes from Public Stake Value rank and recent form, not from a forecast." },
+        { "q": "Your captain falls 1% (−100 points). What do they count for on your team?", "options": ["−150", "−100", "−50"], "why": "The 1.5 times multiplier applies to losses too: −100 × 1.5 = −150." }
+      ]
+    },
+    {
+      "slug": "timing",
+      "title": "Timing",
+      "line": "When lineups lock, how holidays work, and when the season resets.",
+      "body": [
+        { "ul": [
+          "Lineups lock every Monday at 9:30 AM New York time, when US markets open. Saving after the lock sets your team for the next week.",
+          "Joined mid-week? Your first save also enters you in the current week, scoring from the next trading day. You can do this until Friday.",
+          "Scores update once a day."
+        ] },
+        { "p": "Days the market is closed don't score. The game's calendar lists the 2026 closures still ahead: Thanksgiving (Thursday, Nov 26) and Christmas (Friday, Dec 25). Friday, Nov 27 and Thursday, Dec 24 are half days: the market closes at 1:00 PM, and those days still score." },
+        { "p": "Until Season 1 starts on Monday, Nov 9, every week is a preseason week: play it to learn the game, but it doesn't count. On that Monday everyone's scores, records and streaks reset to zero." }
+      ],
+      "links": [{ "text": "Full game rules", "href": "play-terms.html" }],
+      "quiz": [
+        { "q": "When does your lineup lock each week?", "options": ["Monday at 9:30 AM New York time", "Sunday at midnight", "Friday at 4:00 PM"], "why": "Lineups lock Monday at 9:30 AM New York time, when US markets open." },
+        { "q": "How many points do your picks score on Thanksgiving, Thursday, Nov 26?", "options": ["None; the market is closed", "Double points", "The same as Wednesday"], "why": "Days the market is closed don't score." },
+        { "q": "What happens on Monday, Nov 9?", "options": ["Season 1 starts and everyone's scores reset", "The cap rises to 120", "Captains are removed"], "why": "Season 1 starts that Monday, and scores, records and streaks reset to zero." }
+      ]
+    }
+  ]
+}

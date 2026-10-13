@@ -4,10 +4,11 @@
    - life-play.html  (#lf-game present): ?p=<slug> loads data/life/<slug>.json and runs the game: shuffled options,
      flip reveal, match meter, streak, sources, end screen with rank badge, best score, share and "Next billionaire".
    - academy.html    (#lf-academy present): Billionaires Digest Academy: schools from data/life/index.json (school blocks the
-     build validated) and the searchable glossary from data/life/glossary.json.
+     build validated) and the searchable glossary from data/life/glossary.json. Two views: the landing (school cards) and
+     one school (academy.html?school=<slug>: principles, sources in <details>, Play & learn). History API keeps Back working.
    Academy layer in the game: a "The lesson" panel after each reveal (when the decision has a valid lesson), and at the end the
    person's school, the principles you met and a 3-question quiz built only from that person's lesson/principle text.
-   2 of 3 right earns a diploma (diplomas[slug]) and soft-unlocks their Next Moves (unlocked[slug] = YYYY-MM-DD).
+   2 of 3 right earns a diploma (diplomas[slug]; unlocked[slug] = YYYY-MM-DD is still stored but no longer shown).
    Scores live only in this browser (localStorage key bd-life-v1, every access in try/catch). Nothing is sent anywhere.
    Animations run once per reveal and are skipped with prefers-reduced-motion. Game for fun: no money, no prizes. */
 (function(){
@@ -547,23 +548,11 @@
     c.appendChild(el('span', null, 'Diploma earned' + (dip && dip.date ? ' · ' + BD.fmtDate(dip.date) : '')));
     return c;
   }
-  // "Unlocked: Call X's next moves" (with diploma) or "Earn the diploma to unlock X's next moves" (soft: link still works).
-  function unlockLine(box, slug, surname, dip){
+  // Next Moves is hidden from the site: the unlock box stays empty (CSS hides .lf-unlock:empty). The diploma is the achievement.
+  function unlockLine(box){
+    if (!box) return box;
     clear(box);
-    box.className = 'lf-unlock' + (dip ? ' is-open' : '');
-    var href = 'moves.html?p=' + encodeURIComponent(slug);
-    if (dip){
-      box.appendChild(icon('trophy'));
-      var a = el('a', 'lf-link lf-unlock__a', 'Unlocked: Call ' + surname + '’s next moves');
-      a.href = href;
-      box.appendChild(a);
-    } else {
-      box.appendChild(el('span', 'lf-unlock__t', 'Earn the diploma to unlock ' + surname + '’s next moves.'));
-      var b = el('a', 'lf-link lf-unlock__peek', 'Peek at the moves anyway');
-      b.href = href;
-      b.setAttribute('aria-label', 'Peek at ' + surname + '’s next moves anyway');
-      box.appendChild(b);
-    }
+    box.className = 'lf-unlock';
     return box;
   }
 
@@ -799,7 +788,7 @@
     renderDiploma(dip);
     unlockLine($('lf-unlock'), p.slug, who, dip);
     focusTop(h);
-    say('Quiz result: ' + qScore + ' of ' + n + '. ' + (passed ? 'Diploma earned. ' + who + '’s next moves are unlocked.' : 'Not yet. You need 2 of 3.'));
+    say('Quiz result: ' + qScore + ' of ' + n + '. ' + (passed ? 'Diploma earned.' : 'Not yet. You need 2 of 3.'));
   }
 
   function renderDiploma(dip){
@@ -819,21 +808,28 @@
   // ACADEMY PAGE (academy.html)
   // =====================================================================================================
   var glossTerms = [];
+  var acSchools = [], acStore = null, acLast = null, acPending = 2, acRouted = false;
+  var acLessons = [], acLessonsBy = {};
+  var AC_TITLE = ACADEMY_NAME + ' · Billionaires Digest';
+  var PLAY_KEY = 'bd-academy-play-v1';   // Play smarter progress: { v:1, passed: { slug: { date, score, of } }, scout: 'YYYY-MM-DD' }
 
   function initAcademy(){
     applyAcademyName();
-    document.title = ACADEMY_NAME + ' · Billionaire Life · Billionaires Digest';
+    document.title = AC_TITLE;
     var grid = $('ac-schools'), status = $('ac-status');
+    window.addEventListener('popstate', function(){ if (acRouted) acRoute(true); });
     loadRoster().then(function(list){
-      var store = loadStore(), withSchool = [], without = [];
-      list.forEach(function(p){ (schoolOf(p) ? withSchool : without).push(p); });
+      var without = [];
+      acStore = loadStore();
+      acSchools = [];
+      list.forEach(function(p){ (schoolOf(p) ? acSchools : without).push(p); });
       clear(grid);
-      if (!withSchool.length){
+      if (!acSchools.length){
         status.textContent = 'The first schools are being written. Check back soon, or play the games in the meantime.';
         status.hidden = false;
       } else {
         status.hidden = true;
-        withSchool.forEach(function(p){ grid.appendChild(schoolCard(p, diplomaFor(store, p.slug))); });
+        acSchools.forEach(function(p){ grid.appendChild(schoolCard(p, diplomaFor(acStore, p.slug))); });
       }
       var soon = $('ac-soon');
       if (without.length){
@@ -848,39 +844,388 @@
         soon.appendChild(document.createTextNode('. Their games are already playable.'));
         soon.hidden = false;
       }
-      var dips = withSchool.filter(function(p){ return diplomaFor(store, p.slug); }).length;
-      $('ac-count').textContent = withSchool.length ? (withSchool.length === 1 ? '1 school open' : withSchool.length + ' schools open') + ' · your diplomas: ' + dips + ' of ' + withSchool.length : '';
+      var dips = acSchools.filter(function(p){ return diplomaFor(acStore, p.slug); }).length;
+      $('ac-count').textContent = acSchools.length ? 'Your diplomas: ' + dips + ' of ' + acSchools.length : '';
     }).then(null, function(){
       status.textContent = 'Could not load the schools. Please reload the page.';
       status.hidden = false;
-    });
+    }).then(acReady);
+    BD.getJson('data/academy/play-smarter.json').then(function(j){
+      acLessons = j && Array.isArray(j.lessons) ? j.lessons.filter(validLesson) : [];
+      acLessonsBy = {};
+      acLessons.forEach(function(l, i){ l.n = i + 1; acLessonsBy[l.slug] = l; });
+      renderTrack();
+    }).then(null, function(){
+      acLessons = []; acLessonsBy = {};
+      var st = $('ac-tstatus'); st.textContent = 'Could not load the lessons. Please reload the page.'; st.hidden = false;
+    }).then(acReady);
     initGlossary();
   }
+  // route once both the schools and the lessons have loaded (or failed)
+  function acReady(){ if (--acPending === 0){ acRouted = true; acRoute(false); } }
 
-  function schoolCard(p, dip){
-    var sc = schoolOf(p), who2 = shortName(p);
-    var li = el('li', 'ac-card' + (dip ? ' has-dip' : ''));
-    var head = el('div', 'ac-card__head');
-    head.appendChild(plate(p, 'ac-card__av'));
-    var ht = el('div', 'ac-card__ht');
-    var h = el('h3', 'ac-card__school', sc.name); h.id = 'ac-h-' + p.slug;
-    ht.appendChild(h);
-    ht.appendChild(el('p', 'ac-card__who', 'School of ' + p.name));
-    head.appendChild(ht);
-    var cr = crest(p.slug, 'ac-card__crest');
-    if (cr) head.appendChild(cr);
-    li.appendChild(head);
-    li.appendChild(el('p', 'ac-card__tag', sc.tagline));
-    var ul = el('ul', 'lf-princ ac-card__pr');
-    sc.principles.forEach(function(pr){ ul.appendChild(principleItem(pr)); });
-    li.appendChild(ul);
-    li.appendChild(dip ? diplomaChip(dip) : el('p', 'ac-card__nodip', 'No diploma yet'));
-    li.appendChild(unlockLine(el('p'), p.slug, who2, dip));
-    var a = el('a', 'lf-btn lf-btn--gold ac-card__play', 'Play & learn');
-    a.href = 'life-play.html?p=' + encodeURIComponent(p.slug);
-    a.setAttribute('aria-label', 'Play and learn: ' + p.name + ', ' + sc.name);
-    li.appendChild(a);
+  // ---------- Play smarter: lesson data + progress (localStorage PLAY_KEY, every access in try/catch) ----------
+  function validLesson(l){
+    if (!l || !validSlug(l.slug) || !nonEmpty(l.title) || !nonEmpty(l.line) || !Array.isArray(l.body) || !Array.isArray(l.quiz)) return false;
+    var qs = l.quiz.filter(function(q){ return q && nonEmpty(q.q) && nonEmpty(q.why) && Array.isArray(q.options) && q.options.length >= 2 && q.options.every(nonEmpty); });
+    if (qs.length !== 3) return false;
+    l.quiz = qs;
+    return true;
+  }
+  function playLoad(){
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem(PLAY_KEY) || 'null'); } catch (e) { s = null; }
+    if (!isMap(s) || s.v !== 1) s = { v: 1 };
+    if (!isMap(s.passed)) s.passed = {};
+    return s;
+  }
+  function playSave(s){ try { localStorage.setItem(PLAY_KEY, JSON.stringify(s)); return true; } catch (e) { return false; } }
+  function lessonPassed(s, slug){ var d = own(s.passed, slug) ? s.passed[slug] : null; return !!d && typeof d.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d.date); }
+  function passedCount(s){ return acLessons.filter(function(l){ return lessonPassed(s, l.slug); }).length; }
+  function scoutDate(s){ return typeof s.scout === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s.scout) ? s.scout : null; }
+  // a pass is never taken away by a later, weaker quiz; all lessons passed -> the Scout badge
+  function recordLesson(slug, score, of){
+    var s = playLoad(), newScout = false;
+    if (score >= 2 && !lessonPassed(s, slug)) s.passed[slug] = { date: today(), score: score, of: of };
+    if (acLessons.length && passedCount(s) === acLessons.length && !scoutDate(s)){ s.scout = today(); newScout = true; }
+    return { saved: playSave(s), newScout: newScout, store: s };
+  }
+
+  function scoutPill(date){
+    var b = el('span', 'ac-dip ac-dip--scout');
+    b.appendChild(seal('lf-seal--sm'));
+    b.appendChild(el('span', null, 'Scout badge earned' + (date ? ' · ' + BD.fmtDate(date) : '')));
+    return b;
+  }
+
+  function renderTrack(){
+    var st = $('ac-tstatus'), list = clear($('ac-lessons')), s = playLoad(), sc = $('ac-scout');
+    if (!acLessons.length){ st.textContent = 'The lessons are on their way.'; st.hidden = false; $('ac-trackcount').textContent = ''; sc.hidden = true; return; }
+    st.hidden = true;
+    acLessons.forEach(function(l){ list.appendChild(lessonCard(l, lessonPassed(s, l.slug))); });
+    $('ac-trackcount').textContent = 'Lessons passed: ' + passedCount(s) + ' of ' + acLessons.length;
+    clear(sc);
+    var sd = scoutDate(s);
+    if (sd){ sc.appendChild(scoutPill(sd)); sc.hidden = false; }
+    else { sc.textContent = 'Pass all ' + acLessons.length + ' to earn the Scout badge.'; sc.hidden = false; }
+  }
+
+  function lessonCard(l, done){
+    var li = el('li', 'ac-lcard' + (done ? ' is-done' : ''));
+    var a = el('a', 'ac-lcard__a');
+    a.href = 'academy.html?lesson=' + encodeURIComponent(l.slug);
+    a.setAttribute('data-ac-key', 'lesson:' + l.slug);
+    a.appendChild(el('span', 'ac-lcard__n', String(l.n))).setAttribute('aria-hidden', 'true');
+    var body = el('span', 'ac-lcard__body');
+    body.appendChild(el('span', 'ac-lcard__t', l.title));
+    body.appendChild(el('span', 'ac-lcard__line', l.line));
+    var meta = el('span', 'ac-lcard__meta');
+    meta.appendChild(el('span', 'ac-card__count', '2 min · 3 questions'));
+    if (done){
+      var t = el('span', 'ac-tick');
+      t.appendChild(el('span', 'ac-tick__i', '✓')).setAttribute('aria-hidden', 'true');
+      t.appendChild(el('span', null, 'Passed'));
+      meta.appendChild(t);
+    }
+    body.appendChild(meta);
+    a.appendChild(body);
+    li.appendChild(acLink(a, 'lesson', l.slug));
     return li;
+  }
+
+  // ---------- routing: ?school=<slug> | ?lesson=<slug> (or #school= / #lesson=), else the landing ----------
+  function routeParam(name){
+    var v = queryParam(name);
+    if (!v){ var m = new RegExp('(?:^#|&)' + name + '=([^&]*)').exec(location.hash || ''); if (m){ try { v = decodeURIComponent(m[1]); } catch (e) { v = null; } } }
+    return validSlug(v) ? v : null;
+  }
+  function acCurrent(){
+    var slug = routeParam('lesson');
+    if (slug && own(acLessonsBy, slug)) return { kind: 'lesson', slug: slug, l: acLessonsBy[slug] };
+    slug = routeParam('school');
+    if (slug) for (var i = 0; i < acSchools.length; i++) if (acSchools[i].slug === slug) return { kind: 'school', slug: slug, p: acSchools[i] };
+    return null;
+  }
+  function acGo(kind, slug){
+    var url = kind ? 'academy.html?' + kind + '=' + encodeURIComponent(slug) : 'academy.html';
+    // fromLanding: this entry was opened from the landing in this tab, so the back link can simply go Back
+    try { history.pushState({ kind: kind || null, slug: slug || null, fromLanding: !!kind && !acCurrent() }, '', url); } catch (e) { location.href = url; return; }
+    acRoute(true);
+  }
+  function plainClick(e){ return !(e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey); }
+  // plain left click on an in-page link -> history navigation; modified clicks open normally
+  function acLink(a, kind, slug){
+    a.addEventListener('click', function(e){ if (!plainClick(e)) return; e.preventDefault(); acGo(kind, slug); });
+    return a;
+  }
+  function acBack(label, kind, slug){
+    var back = el('a', 'lf-link ac-back', label);
+    back.href = 'academy.html';
+    back.addEventListener('click', function(e){
+      if (!plainClick(e)) return;
+      e.preventDefault();
+      var st = history.state;
+      if (st && st.fromLanding && st.kind === kind && st.slug === slug){ history.back(); return; }
+      acGo(null);
+    });
+    return back;
+  }
+  function acRoute(moved){
+    var r = acCurrent(), land = $('ac-landing'), sv = $('ac-school'), lv = $('ac-lesson');
+    sv.hidden = true; lv.hidden = true;
+    if (r){
+      var view = r.kind === 'school' ? sv : lv;
+      if (r.kind === 'school'){ clear(lv); renderSchool(sv, r.p, diplomaFor(loadStore(), r.p.slug)); document.title = 'School of ' + r.p.name + ' · ' + AC_TITLE; }
+      else { clear(sv); renderLesson(lv, r.l); document.title = r.l.title + ' · Play smarter · ' + AC_TITLE; }
+      acLast = r.kind + ':' + r.slug;
+      land.hidden = true; view.hidden = false;
+      if (moved){
+        window.scrollTo(0, 0);
+        focusTop($(r.kind === 'school' ? 'ac-school-h' : 'ac-lesson-h'));
+        say(r.kind === 'school' ? 'School of ' + r.p.name : 'Lesson ' + r.l.n + ': ' + r.l.title);
+      }
+    } else {
+      clear(sv); clear(lv); land.hidden = false;
+      document.title = AC_TITLE;
+      renderTrack();
+      if (moved){
+        var card = acLast ? document.querySelector('[data-ac-key="' + acLast + '"]') : null;
+        window.scrollTo(0, 0);
+        if (card){ try { card.focus({ preventScroll: true }); } catch (e) { card.focus(); } card.scrollIntoView({ block: 'center' }); }
+        else focusTop($('ac-h'));
+        say(ACADEMY_NAME);
+      }
+    }
+  }
+
+  // ---------- lesson view ----------
+  function renderLesson(box, l){
+    clear(box);
+    box.appendChild(acBack('← All lessons', 'lesson', l.slug));
+    var head = el('header', 'ac-lesson__head');
+    head.appendChild(el('p', 'ac-school__name', 'Play smarter · Lesson ' + l.n + ' of ' + acLessons.length));
+    var h = el('h1', 'ac-school__t', l.title); h.id = 'ac-lesson-h'; h.tabIndex = -1;
+    head.appendChild(h);
+    head.appendChild(el('p', 'ac-school__tag', l.line));
+    head.appendChild(el('p', 'ac-head__note ac-lesson__note', 'Game strategy, not investment advice.'));
+    var stat = el('p', 'ac-lesson__state'); stat.id = 'ac-lstate';
+    head.appendChild(stat);
+    box.appendChild(head);
+    lessonState(l);
+
+    var body = el('div', 'ac-lesson__body');
+    l.body.forEach(function(b){
+      if (!b) return;
+      if (nonEmpty(b.p)) body.appendChild(el('p', null, b.p));
+      else if (nonEmpty(b.h)) body.appendChild(el('h2', 'ac-lesson__h', b.h));
+      else if (Array.isArray(b.ul)){
+        var ul = el('ul', 'ac-lesson__ul');
+        b.ul.forEach(function(t){ if (nonEmpty(t)) ul.appendChild(el('li', null, t)); });
+        body.appendChild(ul);
+      }
+    });
+    box.appendChild(body);
+
+    var ex = l.example;
+    if (ex && nonEmpty(ex.title) && Array.isArray(ex.head) && Array.isArray(ex.rows)){
+      var fig = el('figure', 'ac-ex');
+      fig.appendChild(el('figcaption', 'ac-ex__t', ex.title));
+      var tb = el('table', 'ac-ex__tbl'), thead = el('thead'), tr = el('tr');
+      ex.head.forEach(function(c){ var th = el('th', null, c); th.scope = 'col'; tr.appendChild(th); });
+      thead.appendChild(tr); tb.appendChild(thead);
+      var tbody = el('tbody');
+      ex.rows.forEach(function(r){ var row = el('tr'); (r || []).forEach(function(c){ row.appendChild(el('td', null, c)); }); tbody.appendChild(row); });
+      tb.appendChild(tbody);
+      fig.appendChild(tb);
+      if (nonEmpty(ex.total)) fig.appendChild(el('p', 'ac-ex__total', ex.total));
+      box.appendChild(fig);
+    }
+
+    var links = (Array.isArray(l.links) ? l.links : []).filter(function(x){ return x && nonEmpty(x.text) && safePath(x.href); });
+    if (links.length){
+      var lp = el('p', 'ac-lesson__links');
+      lp.appendChild(el('span', 'ac-lesson__k', 'On this site: '));
+      links.forEach(function(x, i){
+        var a = el('a', 'lf-link', x.text); a.href = safePath(x.href);
+        lp.appendChild(a);
+        if (i < links.length - 1) lp.appendChild(document.createTextNode(' · '));
+      });
+      box.appendChild(lp);
+    }
+    var srcs = Array.isArray(l.sources) ? l.sources : [];
+    var sul = el('ul', 'lf-src ac-pr__src'); srcList(sul, srcs);
+    if (sul.firstChild){
+      var d = el('details', 'ac-pr__d ac-lesson__src');
+      d.appendChild(el('summary', null, 'Sources (' + sul.children.length + ')'));
+      d.appendChild(sul);
+      box.appendChild(d);
+    }
+
+    var qz = el('section', 'ac-quiz');
+    qz.setAttribute('aria-labelledby', 'ac-quiz-h');
+    var qh = el('h2', 'ac-lesson__h', 'Quiz: 3 questions'); qh.id = 'ac-quiz-h';
+    qz.appendChild(qh);
+    qz.appendChild(el('p', 'ac-quiz__how', 'Get 2 of 3 right to pass. Every answer is in the lesson above.'));
+    var stage = el('div', 'ac-quiz__stage'); stage.id = 'ac-qstage';
+    qz.appendChild(stage);
+    box.appendChild(qz);
+    lessonQuiz(l);
+  }
+  function lessonState(l){
+    var n = $('ac-lstate'); if (!n) return;
+    clear(n);
+    var s = playLoad();
+    if (lessonPassed(s, l.slug)){
+      var t = el('span', 'ac-tick');
+      t.appendChild(el('span', 'ac-tick__i', '✓')).setAttribute('aria-hidden', 'true');
+      t.appendChild(el('span', null, 'Passed' + ' · ' + BD.fmtDate(s.passed[l.slug].date)));
+      n.appendChild(t);
+    }
+    var sd = scoutDate(s);
+    if (sd) n.appendChild(scoutPill(sd));
+    n.hidden = !n.firstChild;
+  }
+  function lessonQuiz(l){
+    var stage = clear($('ac-qstage')), answered = 0, right = 0;
+    var qs = l.quiz;
+    qs.forEach(function(q, qi){
+      var wrap = el('div', 'ac-q');
+      var hq = el('p', 'lf-quiz__q ac-q__q', (qi + 1) + '. ' + q.q); hq.id = 'ac-q-' + qi; hq.tabIndex = -1;
+      wrap.appendChild(hq);
+      var grp = el('div', 'lf-quiz__opts');
+      grp.setAttribute('role', 'group'); grp.setAttribute('aria-labelledby', hq.id);
+      var fb = el('p', 'lf-quiz__fb ac-q__fb'); fb.hidden = true; fb.tabIndex = -1;
+      shuffle(q.options.map(function(o, i){ return { t: o, ok: i === 0 }; })).forEach(function(o, i){
+        var b = el('button', 'lf-opt lf-quiz__opt ac-opt');
+        b.type = 'button';
+        b.appendChild(el('span', 'lf-opt__k', String.fromCharCode(65 + i)));
+        b.appendChild(el('span', 'lf-opt__t', o.t));
+        b.setAttribute('data-ok', o.ok ? '1' : '0');
+        b.addEventListener('click', function(){
+          Array.prototype.forEach.call(grp.querySelectorAll('button'), function(x){
+            x.disabled = true;
+            if (x.getAttribute('data-ok') === '1'){ x.classList.add('is-right'); x.appendChild(el('span', 'ac-opt__tag', 'Correct answer')); }
+          });
+          b.classList.add('is-picked');
+          if (!o.ok){ b.classList.add('is-wrong'); b.appendChild(el('span', 'ac-opt__tag', 'Your answer')); }
+          if (o.ok) right++;
+          answered++;
+          clear(fb);
+          fb.className = 'lf-quiz__fb ac-q__fb ' + (o.ok ? 'is-win' : 'is-miss');
+          fb.appendChild(el('strong', null, o.ok ? 'Right. ' : 'Not quite. '));
+          if (!o.ok) fb.appendChild(document.createTextNode('The answer: ' + q.options[0] + '. '));
+          fb.appendChild(document.createTextNode(q.why));
+          fb.hidden = false;
+          say((o.ok ? 'Right. ' : 'Not quite. The answer: ' + q.options[0] + '. ') + q.why);
+          if (answered === qs.length) lessonResult(l, right, qs.length);
+          else { try { fb.focus({ preventScroll: true }); } catch (e) { fb.focus(); } }   // the disabled button drops focus; keep it on the feedback
+        });
+        grp.appendChild(b);
+      });
+      wrap.appendChild(grp);
+      wrap.appendChild(fb);
+      stage.appendChild(wrap);
+    });
+    var res = el('div', 'ac-quiz__res'); res.id = 'ac-qres'; res.hidden = true;
+    stage.appendChild(res);
+  }
+  function lessonResult(l, right, of){
+    var passed = right >= 2, rec = recordLesson(l.slug, right, of), res = clear($('ac-qres'));
+    var h = el('p', 'lf-quiz__res ' + (passed ? 'is-win' : 'is-miss'), 'Quiz: ' + right + '/' + of + (passed ? ' · passed' : ' · not yet'));
+    h.tabIndex = -1;
+    res.appendChild(h);
+    if (!passed) res.appendChild(el('p', 'ac-quiz__how', 'You need 2 of 3. Read the lesson again and retake the quiz.'));
+    if (passed && !rec.saved) res.appendChild(el('p', 'lf-bestline__warn', 'This browser is not saving, so your progress will not be kept.'));
+    if (rec.newScout){ var sc = el('p', 'ac-quiz__scout'); sc.appendChild(scoutPill(scoutDate(rec.store))); res.appendChild(sc); }
+    var row = el('div', 'ac-quiz__btns');
+    var again = el('button', 'lf-btn lf-btn--ghost', 'Retake the quiz');
+    again.type = 'button';
+    again.addEventListener('click', function(){ lessonQuiz(l); focusTop($('ac-q-0')); });
+    row.appendChild(again);
+    var next = null;
+    for (var i = 0; i < acLessons.length; i++) if (acLessons[i].slug === l.slug && acLessons[i + 1]) next = acLessons[i + 1];
+    if (next){
+      var a = el('a', 'lf-btn lf-btn--gold', 'Next lesson: ' + next.title);
+      a.href = 'academy.html?lesson=' + encodeURIComponent(next.slug);
+      row.appendChild(acLink(a, 'lesson', next.slug));
+    }
+    res.appendChild(row);
+    res.hidden = false;
+    lessonState(l);
+    focusTop(h);
+    say('Quiz result: ' + right + ' of ' + of + '. ' + (passed ? 'Passed.' : 'Not yet. You need 2 of 3.') + (rec.newScout ? ' Scout badge earned.' : ''));
+  }
+
+  function dipBadge(dip){
+    var b = el('span', 'ac-dip');
+    b.appendChild(seal('lf-seal--sm'));
+    b.appendChild(el('span', null, 'Diploma earned' + (dip && dip.date ? ' · ' + BD.fmtDate(dip.date) : '')));
+    return b;
+  }
+
+  // landing card: crest, "School of <Name>", tagline, counts, diploma state. The whole card is one link.
+  function schoolCard(p, dip){
+    var sc = schoolOf(p);
+    var li = el('li', 'ac-card' + (dip ? ' has-dip' : ''));
+    var a = el('a', 'ac-card__a');
+    a.href = 'academy.html?school=' + encodeURIComponent(p.slug);
+    a.setAttribute('data-ac-key', 'school:' + p.slug);
+    var cr = crest(p.slug, 'ac-card__crest') || plate(p, 'ac-card__av');
+    a.appendChild(cr);
+    var body = el('span', 'ac-card__body');
+    body.appendChild(el('span', 'ac-card__school', 'School of ' + p.name));
+    body.appendChild(el('span', 'ac-card__tag', sc.tagline));
+    var meta = el('span', 'ac-card__meta');
+    meta.appendChild(el('span', 'ac-card__count', BD.plural(sc.principles.length, 'lesson', 'lessons') + ' · 3 questions'));
+    if (dip) meta.appendChild(dipBadge(dip));
+    body.appendChild(meta);
+    a.appendChild(body);
+    a.appendChild(el('span', 'ac-card__go', '→')).setAttribute('aria-hidden', 'true');
+    li.appendChild(acLink(a, 'school', p.slug));
+    return li;
+  }
+
+  // school view: back link, crest + title + tagline, Play & learn + diploma state, then the principles
+  function renderSchool(box, p, dip){
+    var sc = schoolOf(p);
+    clear(box);
+    var back = acBack('← All schools', 'school', p.slug);
+    box.appendChild(back);
+    var head = el('header', 'ac-school__head');
+    var cr = crest(p.slug, 'ac-school__crest') || plate(p, 'ac-card__av');
+    head.appendChild(cr);
+    var ht = el('div', 'ac-school__ht');
+    var h = el('h1', 'ac-school__t', 'School of ' + p.name); h.id = 'ac-school-h'; h.tabIndex = -1;
+    ht.appendChild(h);
+    ht.appendChild(el('p', 'ac-school__name', sc.name));
+    ht.appendChild(el('p', 'ac-school__tag', sc.tagline));
+    head.appendChild(ht);
+    box.appendChild(head);
+
+    var act = el('div', 'ac-school__act');
+    var play = el('a', 'lf-btn lf-btn--gold ac-school__play', 'Play & learn');
+    play.href = 'life-play.html?p=' + encodeURIComponent(p.slug);
+    play.setAttribute('aria-label', 'Play and learn: ' + p.name + ', ' + sc.name);
+    act.appendChild(play);
+    act.appendChild(dip ? dipBadge(dip) : el('span', 'ac-school__nodip', 'No diploma yet'));
+    box.appendChild(act);
+
+    var ol = el('ol', 'ac-pr');
+    ol.setAttribute('aria-label', 'Principles');
+    sc.principles.forEach(function(pr){
+      var li = el('li', 'ac-pr__item');
+      li.appendChild(el('h2', 'ac-pr__t', pr.name));
+      li.appendChild(el('p', 'ac-pr__sum', pr.summary));
+      var ul = el('ul', 'lf-src ac-pr__src'); srcList(ul, pr.sources);
+      if (ul.firstChild){
+        var d = el('details', 'ac-pr__d');
+        d.appendChild(el('summary', null, 'Sources (' + ul.children.length + ')'));
+        d.appendChild(ul);
+        li.appendChild(d);
+      }
+      ol.appendChild(li);
+    });
+    box.appendChild(ol);
   }
 
   function initGlossary(){
