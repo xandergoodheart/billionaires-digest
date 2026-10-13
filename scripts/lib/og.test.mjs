@@ -60,7 +60,7 @@ test('share cards use the ESPN look: no gold/brass/bulbs, black bar, red accent,
 test('edition card shows the date, kicker, uppercase headline and sector chips', () => {
   const json = JSON.stringify(ogTree(DIGEST));
   assert.match(json, /SUNDAY, SEPTEMBER 27, 2026/);
-  assert.match(json, /LEDE OF THE DAY/);
+  assert.match(json, /TOP STORY/);
   assert.match(json, /TEST HEADLINE/);
   assert.match(json, /"children":"Finance"/);
   assert.match(json, /"children":"Media"/);

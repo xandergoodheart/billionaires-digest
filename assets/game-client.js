@@ -187,6 +187,18 @@
     });
   }
 
+  // best-effort browser event (log_event allows invite_copied / share_clicked): only when a session already exists,
+  // never signs in, never throws; resolves true when sent
+  G.logEvent = function(name, props){
+    return G.ready().then(function(){
+      if (!client) return false;
+      return client.auth.getSession().then(function(r){
+        if (!(r.data && r.data.session)) return false;
+        return client.rpc('log_event', { p_name: name, p_props: props || {} }).then(function(x){ return !(x && x.error); }, function(){ return false; });
+      }, function(){ return false; });
+    }).then(null, function(){ return false; });
+  };
+
   // ---- profile and coins ----
   G.me = function(){ return rpc('me'); };                       // null until a nickname is picked
   G.setNickname = function(nick){ return rpc('set_nickname', { p_nickname: nick }); };

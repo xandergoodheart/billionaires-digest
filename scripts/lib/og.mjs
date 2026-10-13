@@ -166,7 +166,7 @@ export function ogTree(digest) {
     h('div', { display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center' },
       h('div', { display: 'flex', alignItems: 'center' },
         h('div', { width: 12, height: 12, borderRadius: 6, backgroundColor: C.red, marginRight: 12 }),
-        h('div', { display: 'flex', fontFamily: DISPLAY, fontWeight: 800, fontSize: 24, letterSpacing: 4, color: C.redInk }, 'LEDE OF THE DAY')
+        h('div', { display: 'flex', fontFamily: DISPLAY, fontWeight: 800, fontSize: 24, letterSpacing: 4, color: C.redInk }, 'TOP STORY')
       ),
       h('div', { display: 'block', marginTop: 12, fontFamily: DISPLAY, fontWeight: 800, fontSize: fit.size, lineHeight: 1,
         letterSpacing: 0.5, color: C.text, lineClamp: 3 }, fit.text)

@@ -231,7 +231,7 @@ ${items}
       const lpHref = lp ? personHref(lp) : null;
       const av = avatar(lp || '', lp ? personSector(lp, stories) : 'Other', '100%', 22, lede.ini || (lp ? initials(lp) : '•'));
       ledeHtml = `<section class="lede"><div class="wrap">
-  <div><div class="label" style="color:var(--accent)">${esc(lede.kicker || 'Lede of the day')}</div><h1 class="serif">${esc(lede.headline)}</h1><p>${esc(lede.dek || '')}</p></div>
+  <div><div class="label" style="color:var(--accent)">${esc(lede.kicker && !/\blede\b/i.test(lede.kicker) ? lede.kicker : 'Top story')}</div><h1 class="serif">${esc(lede.headline)}</h1><p>${esc(lede.dek || '')}</p></div>
   <div><div class="portrait">${lpHref ? `<a href="${esc(lpHref)}" aria-label="${esc(lp)}" style="color:inherit;display:block">${av}</a>` : av}</div></div>
 </div></section>`;
     }

@@ -5,13 +5,14 @@
                              no team -> "You haven't drafted yet" + the week's top matchup from The Book
                              (data/book/index.json + week file)
      how to play          <- cap, picks and captain multiplier from the draft week file (BDFantasyCore as fallback)
-     today's lede         <- digest.json (the latest edition; the full edition lives at news.html)
+     top story            <- digest.json lede (headline, dek, source link, Read today's edition; full edition at news.html)
      From the Digest      <- up to 3 more stories from digest.json (hidden when there are none)
      Players to watch     <- five flip cards under the hero:
                              a mixed watch list (top scorers, earnings, insider buy, value) from BDWeekCore scores,
                              BDFantasyStore stats, data/insights/calendar.json; the back loads a 10-day chart and
                              reasons lazily (see "players to watch" below); + Draft opens draft.html?add=<slug>
-     Top Headlines        <- digest.json stories
+     Top Headlines        <- digest.json stories (5) + All news
+     Share your team      <- assets/v2/team-share.js (canvas image, made in the browser), only with a saved or drafted team of 5
      Next Moves odds      <- data/moves/markets.json (+ this browser's practice prices, bd-moves-v1)
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
    Play money only, no prizes, not financial advice. */
@@ -151,7 +152,31 @@
     }
     foot.appendChild(row);
     box.appendChild(foot);
+    var sh = shareFor(v);
+    if (sh){ row.appendChild(sh.toggle); box.appendChild(sh.panel); }
     say(teamName() + '. ' + (total == null ? 'No team points yet.' : 'Team total ' + plainTxt(total) + ' fantasy points.') + ' ' + result(v) + '.');
+  }
+
+  // ---- Share your team: only with a saved or drafted team of 5 (assets/v2/team-share.js) ----
+  function shareFor(v){
+    var picks = v.team ? arr(v.team.picks) : [];
+    if (!window.BDTeamShare || picks.length < C.PICKS) return null;
+    var pts = v.mode === 'scoring' && v.any ? v.res.bySlug || {} : null;
+    var weekId = v.mode === 'scoring' ? v.wk.week : (v.mode === 'upcoming' ? v.weekId : F.state.draftWeek);
+    var start = null;
+    if (!(v.mode === 'scoring' && v.any)){
+      var from = v.team.lateFrom || (weekId ? C.weekInfo(weekId).start : null);
+      if (from) start = F.fmt.dayLabel(from);
+    }
+    return window.BDTeamShare.build({
+      week: weekId ? F.fmt.weekTitle(weekId) : '',
+      total: v.mode === 'scoring' && v.any ? v.res.total : null,
+      startDay: start,
+      picks: picks.map(function(slug){
+        var p = F.person(slug);
+        return { name: p && p.name ? p.name : slug, captain: slug === v.team.captain, pts: pts && typeof pts[slug] === 'number' ? pts[slug] : null };
+      })
+    });
   }
 
   // The Book is hidden from the menus (scripts/lib/nav.mjs MENU_HIDDEN / BOOK_HIDDEN): no Book matchup or
@@ -216,7 +241,7 @@
     box.appendChild(row);
   }
 
-  // ---- today's lede, story grid, headlines (digest.json) ----
+  // ---- top story, story grid, headlines (digest.json) ----
   function ledeStory(d){
     var st = arr(d.stories).filter(function(s){ return s && s.headline; });
     var h = d.lede && d.lede.headline;
@@ -227,34 +252,28 @@
     var box = clear($('ledebody'));
     var lede = d && d.lede && d.lede.headline ? d.lede : null;
     var top = el('div', 'hm-lede__top');
-    top.appendChild(el('span', 'hm-lede__kick', "Today's lede"));
+    top.appendChild(el('span', 'hm-lede__kick', 'Top story'));
     if (d && d.date) top.appendChild(el('span', 'hm-lede__date', String(d.date)));
     box.appendChild(top);
     var h = el('h2', 'hm-lede__h'); h.id = 'ledeh';
     if (lede) h.appendChild(link(null, lede.headline, 'news.html')); else h.textContent = "Today's edition";
     box.appendChild(h);
-    if (!d){ box.appendChild(el('p', 'hm-lede__dek', "Today's edition could not load here. Open the news page to read it.")); box.appendChild(link('v2-btn v2-btn--light', 'Go to News', 'news.html')); return; }
+    if (!d){ box.appendChild(el('p', 'hm-lede__dek', "Today's edition could not load here. Open the news page to read it.")); box.appendChild(link('v2-btn v2-btn--primary', 'Go to News', 'news.html')); return; }
     if (lede && lede.dek) box.appendChild(el('p', 'hm-lede__dek', lede.dek));
     if (!lede) box.appendChild(el('p', 'hm-lede__dek', 'The morning edition is on the press.'));
-    var s = ledeStory(d);
-    if (s && s.move){
-      var mv = el('div', 'hm-lede__move');
-      mv.appendChild(el('span', 'hm-lede__mk', 'The move'));
-      mv.appendChild(el('p', null, firstSentences(s.move, 320)));
-      var u = BD.safeUrl(s.url);
-      if (u && s.source){
-        var src = el('p', 'hm-lede__src');
-        src.appendChild(document.createTextNode('Source: '));
-        var a = link(null, s.source, u); a.target = '_blank'; a.rel = 'noopener noreferrer';
-        a.appendChild(el('span', 'v2-sr', ' (opens in a new tab)'));
-        src.appendChild(a);
-        mv.appendChild(src);
-      }
-      box.appendChild(mv);
+    // the source of the story behind the top story (every fact links its source)
+    var s = ledeStory(d), u = s ? BD.safeUrl(s.url) : null;
+    if (u && s.source){
+      var src = el('p', 'hm-lede__src');
+      src.appendChild(document.createTextNode('Source: '));
+      var a = link(null, s.source, u); a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.appendChild(el('span', 'v2-sr', ' (opens in a new tab)'));
+      src.appendChild(a);
+      box.appendChild(src);
     }
-    box.appendChild(link('v2-btn v2-btn--light hm-lede__btn', "Read today's edition", 'news.html'));
+    box.appendChild(link('v2-btn v2-btn--primary hm-lede__btn', "Read today's edition", 'news.html'));
   }
-  // From the Digest: up to 3 of today's stories besides the lede (headline + one line); hidden when there are none
+  // From the Digest: up to 3 of today's stories besides the top story (headline + one line); hidden when there are none
   function renderStories(d){
     var ul = clear($('storygrid')), lede = d ? ledeStory(d) : null, foot = clear($('storyfoot'));
     var st = d ? arr(d.stories).filter(function(s){ return s && s.headline && s !== lede; }) : [];
@@ -284,7 +303,7 @@
     var ul = clear($('headlines'));
     var st = d ? arr(d.stories).filter(function(s){ return s && s.headline; }) : [];
     if (!st.length){ ul.appendChild(el('li', 'v2-msg', d ? 'No headlines yet.' : 'Headlines could not load right now.')); return; }
-    st.slice(0, 10).forEach(function(s){
+    st.slice(0, 5).forEach(function(s){
       var li = el('li');
       li.appendChild(link(null, s.headline, 'news.html'));
       ul.appendChild(li);

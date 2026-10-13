@@ -169,7 +169,7 @@
     </section>
 
     <div class="hm-layout">
-      <!-- center column: scoreboard, today's lede, story grid -->
+      <!-- main column: your franchise, top story, From the Digest -->
       <div class="hm-center">
         <section class="hm-board" id="hero" aria-labelledby="boardh">
           <h2 class="v2-sr" id="boardh">Your franchise</h2>
@@ -180,29 +180,19 @@
 
         <article class="hm-lede" id="lede" aria-labelledby="ledeh">
           <div id="ledebody">
-            <span class="hm-lede__kick">Today's lede</span>
+            <span class="hm-lede__kick">Top story</span>
             <h2 class="hm-lede__h" id="ledeh">Today's edition</h2>
             <p class="v2-loading">Loading today's edition…</p>
           </div>
         </article>
-
-        <section class="hm-stories" id="digestsec" aria-labelledby="storiesh">
-          <div class="hm-sec__head">
-            <h2 class="v2-h2" id="storiesh">From the Digest</h2>
-            <a class="hm-sec__more" href="news.html">All stories</a>
-          </div>
-          <ol class="hm-grid" id="storygrid"><li class="hm-story"><span class="v2-skel"></span><span class="v2-skel"></span></li></ol>
-          <p class="hm-stories__foot" id="storyfoot" hidden></p>
-        </section>
-
-        <p class="v2-play v2-play--big">Play money · no prizes · not financial advice</p>
       </div>
 
-      <!-- right rail: headlines, Next Moves odds -->
+      <!-- side column: headlines, Next Moves odds (hidden) -->
       <aside class="hm-right" aria-label="Headlines">
         <section class="v2-card hm-heads" aria-labelledby="headsh">
           <h2 class="hm-rail__h" id="headsh"><span class="hm-rail__ico" aria-hidden="true"></span>Top Headlines</h2>
           <ul class="hm-heads__list" id="headlines"><li><span class="v2-skel"></span></li><li><span class="v2-skel"></span></li></ul>
+          <a class="hm-heads__all" href="news.html">All news <span aria-hidden="true">→</span></a>
         </section>
         <section class="v2-card hm-odds" aria-labelledby="oddsh" hidden>
           <div class="hm-odds__top">
@@ -214,25 +204,19 @@
         </section>
       </aside>
 
-      <!-- left rail: quick links -->
-      <aside class="hm-left" aria-label="Quick links">
-        <nav class="v2-card hm-links" aria-labelledby="playlh">
-          <h2 class="hm-rail__h" id="playlh">Play</h2>
-          <ul class="hm-links__list">
-            <li><a href="team.html"><span class="hm-li hm-li--team" aria-hidden="true"></span>My team</a></li>
-            <li><a href="draft.html"><span class="hm-li hm-li--draft" aria-hidden="true"></span>Draft room</a></li>
-            <li><a href="leagues.html"><span class="hm-li hm-li--leagues" aria-hidden="true"></span>Leagues</a></li>
-            <li><a href="scores.html"><span class="hm-li hm-li--scores" aria-hidden="true"></span>Scores</a></li>
-          </ul>
-        </nav>
-        <nav class="v2-card hm-links" aria-labelledby="learnlh">
-          <h2 class="hm-rail__h" id="learnlh">Learn</h2>
-          <ul class="hm-links__list">
-            <li><a href="academy.html"><span class="hm-li hm-li--academy" aria-hidden="true"></span>Academy</a></li>
-            <li><a href="life.html"><span class="hm-li hm-li--life" aria-hidden="true"></span>Billionaire Life</a></li>
-          </ul>
-        </nav>
-      </aside>
+      <!-- main column, continued (after the headlines on phones) -->
+      <div class="hm-more">
+        <section class="hm-stories" id="digestsec" aria-labelledby="storiesh">
+          <div class="hm-sec__head">
+            <h2 class="v2-h2" id="storiesh">From the Digest</h2>
+            <a class="hm-sec__more" href="news.html">All stories</a>
+          </div>
+          <ol class="hm-grid" id="storygrid"><li class="hm-story"><span class="v2-skel"></span><span class="v2-skel"></span></li></ol>
+          <p class="hm-stories__foot" id="storyfoot" hidden></p>
+        </section>
+
+        <p class="v2-play v2-play--big">Play money · no prizes · not financial advice</p>
+      </div>
     </div>
   </div>
 </main>
@@ -278,6 +262,7 @@
 <script src="assets/v2/week-core.js"></script>
 <script src="assets/v2/dossier-core.js"></script>
 <script src="assets/v2/dossier.js"></script>
+<script src="assets/v2/team-share.js"></script>
 <script src="assets/v2/home.js"></script>
 <script src="assets/waitlist.js"></script>
 </body>

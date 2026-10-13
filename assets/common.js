@@ -386,13 +386,15 @@
     return art;
   };
 
-  // lede section (dark band with hero art); ed: an edition object
+  // top story section ("lede" internally; dark band with hero art); ed: an edition object
   BD.renderLede = function(ed){
     var d = ed || {};
     if (!d.lede) return null;
     var ls = el('section', 'lede'), lw = el('div', 'wrap');
     var left = el('div');
-    left.appendChild(el('div', 'label', d.lede.kicker || 'Lede of the day')).style.color = 'var(--accent)';
+    // the edition's kicker is shown as "Top story" (older editions say "Lede of the day")
+    var kick = d.lede.kicker && !/\blede\b/i.test(d.lede.kicker) ? d.lede.kicker : 'Top story';
+    left.appendChild(el('div', 'label', kick)).style.color = 'var(--accent)';
     left.appendChild(el('h1', 'serif', d.lede.headline || ''));
     left.appendChild(el('p', null, d.lede.dek || ''));
     var right = el('div');
