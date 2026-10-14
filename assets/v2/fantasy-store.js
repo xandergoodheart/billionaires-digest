@@ -392,6 +392,27 @@
       return out;
     }, function(){ ON.busy = false; emit('sync'); return { ok: false, text: '', bad: false }; });
   }
+  // Accounts (assets/v2/auth.js): after logging in to an account that already had a team for a week, this browser
+  // shows the account's team. Replaces the saved team for that week (and the working roster when it is the draft week)
+  // without syncing anything. Returns true when something changed.
+  function adoptTeam(week, team){
+    if (!week || !team || !team.picks) return false;
+    var t = { picks: arr(team.picks).slice(), captain: team.captain, savedAt: new Date(now()).toISOString() };
+    var was = store.teams[week];
+    if (was && teamSig(was) === teamSig(t)) return false;
+    if (was && was.lateFrom) t.lateFrom = was.lateFrom;
+    store.teams[week] = t;
+    if (S.loaded && week === S.draftWeek){
+      var sal = salaries();
+      S.picks = t.picks.filter(function(s){ return sal[s] != null; }).slice(0, C.PICKS);
+      S.captain = S.picks.indexOf(t.captain) >= 0 ? t.captain : (S.picks[0] || null);
+      store.draft = { picks: S.picks.slice(), captain: S.captain, week: S.draftWeek };
+    }
+    persist();
+    ON.remote[week] = teamSig(t);
+    emit('roster');
+    return true;
+  }
   function startOnline(){
     if (ON.started) return;
     ON.started = true;
@@ -422,7 +443,7 @@
     addPick: addPick, removePick: removePick, setCaptain: setCaptain, clearPicks: clearPicks, saveDraft: saveDraft, saveTeam: saveTeam,
     teamWeek: teamWeekState, matchTeam: matchTeam, weekOver: weekOver, weekPoints: weekPoints, projection: projection,
     loadWeek: loadWeek, exportTeams: exportTeams, importTeams: importTeams,
-    onlinePlaying: onlinePlaying, me: me, isSynced: isSynced, syncTeam: syncTeam, busy: function(){ return ON.busy; },
+    onlinePlaying: onlinePlaying, me: me, isSynced: isSynced, syncTeam: syncTeam, busy: function(){ return ON.busy; }, adoptTeam: adoptTeam,
     // pure helpers (tested)
     pure: { teamWeek: teamWeek, weekPoints: weekPoints, projectionFrom: projectionFrom, dayPeople: dayPeople, computeStatsFrom: computeStatsFrom, matchTeamFrom: matchTeamFrom, weekOverAt: weekOverAt, teamSig: teamSig,
             encodeTeams: function(teams){ return C.exportCode(teams); }, decodeTeams: decodeTeams, mergeTeams: mergeTeams, seasonRecord: seasonRecord, recordWeeks: recordWeeks },

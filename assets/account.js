@@ -2,7 +2,8 @@
  * Renders into #gameaccount (g-account, see assets/GAME-UI.md): "coming soon", "Play online" (guest sign-in),
  * the nickname picker, and once playing: "Online as <nickname> · <coins> coins" and the weekly top-up.
  * Exposes BDAccount: onChange(fn) -> fn(state) now and on every change; get(); refresh().
- * state = { enabled, signedIn, me }  (me = { id, nickname, coins, topup_available, ... } or null)
+ * state = { enabled, signedIn, real, email, me }  (me = { id, nickname, coins, topup_available, ... } or null; real: an
+ * account with an email, not a guest)
  */
 (function(w){
   // If game-client.js failed to load, act as if multiplayer is off.
@@ -11,7 +12,7 @@
   if (w.BD && !w.BD.game) w.BD.game = { ready: Promise.resolve(false) };
   var el = BD.el;
   var box = document.getElementById('gameaccount');
-  var state = { enabled: false, loading: true, signedIn: false, me: null };
+  var state = { enabled: false, loading: true, signedIn: false, real: false, email: '', me: null };
   var listeners = [];
   var editing = false;
   var wantFocus = false;   // move focus to the nickname box only after the player asked for it
@@ -135,7 +136,9 @@
     }
     row.appendChild(acts);
     box.appendChild(row);
-    box.appendChild(el('p', 'g-hint', 'Your guest account lives in this browser. Clearing site data signs you out for good. Coins are play money with no value.'));
+    box.appendChild(el('p', 'g-hint', state.real
+      ? 'Signed in to your account' + (state.email ? ' (' + state.email + ')' : '') + ': your team and leagues follow you to any device. Coins are play money with no value.'
+      : 'Your guest account lives in this browser. Clearing site data signs you out for good. Coins are play money with no value.'));
     if (flash) { m.textContent = flash; flash = ''; }
     box.appendChild(m);
   }
@@ -146,6 +149,9 @@
       if (!st.enabled) { state.loading = false; state.signedIn = false; state.me = null; return; }
       return BDGame.session().then(function(s){
         state.signedIn = !!s;
+        // a real account (email or Google, assets/v2/auth.js) rather than a guest (anonymous) session
+        state.real = !!(s && s.user && s.user.is_anonymous !== true && s.user.email);
+        state.email = state.real ? s.user.email : '';
         if (!s) { state.me = null; return; }
         return BDGame.me().then(function(me){ state.me = me || null; }, function(){ state.me = null; });
       });
@@ -163,7 +169,7 @@
   refresh().then(function(){
     // only when the auth state really changed (e.g. another tab), not right after our own sign-in
     BDGame.onAuth(function(ev){
-      if ((ev === 'SIGNED_OUT' && state.signedIn) || (ev === 'SIGNED_IN' && !state.signedIn)) refresh();
+      if ((ev === 'SIGNED_OUT' && state.signedIn) || (ev === 'SIGNED_IN' && !state.signedIn) || ev === 'USER_UPDATED') refresh();
     });
   });
 })(window);

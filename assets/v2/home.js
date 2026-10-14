@@ -196,6 +196,8 @@
       row.appendChild(link('v2-btn v2-btn--ghost', 'Edit your starting five', 'draft.html'));
     }
     box.appendChild(row);
+    // accounts (assets/v2/chrome.js): "Save your team everywhere: create a free account", once a team is saved
+    if ((v.mode === 'upcoming' || v.mode === 'scoring') && window.BDAuthBoot) window.BDAuthBoot.nudge(box);
     var sh = shareFor(v), was = $('hmsharecard'), friends = $('hmfriends');
     if (was) was.parentNode.removeChild(was);
     if (sh && friends){ sh.card.id = 'hmsharecard'; sh.card.className += ' hm-side-card'; friends.parentNode.insertBefore(sh.card, friends); }

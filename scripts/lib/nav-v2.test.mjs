@@ -184,7 +184,9 @@ test('Open game: Play goes to the home page ("/" absolute); the BD mark is the h
   assert.ok(rel.includes('<a class="v2-mark" href="index.html">'));
   assert.ok(/<a class="v2-top__act v2-top__act--team" href="team.html">[\s\S]*?<span>My team<\/span><\/a>/.test(rel));
   // Draft lives in the Play sub-tabs only: no separate top-bar Draft link
-  const right = rel.slice(rel.indexOf('<div class="v2-top__right">'), rel.indexOf('<button type="button" class="v2-menubtn"'));
+  const rightAll = rel.slice(rel.indexOf('<div class="v2-top__right">'), rel.indexOf('<button type="button" class="v2-menubtn"'));
+  // the account controls (hidden until an auth flag is on) are checked in their own test below
+  const right = rightAll.replace(/<button type="button" class="v2-top__join"[\s\S]*?<\/button>/, '').replace(/<div class="v2-acct"[\s\S]*?<\/div>\s*<\/div>/, '');
   assert.ok(!right.includes('draft.html') && !right.includes('v2-top__act--draft'));
   // search is a round icon button with an accessible name
   assert.ok(/<a class="v2-top__icon v2-top__search" href="people\/" aria-label="Search"><svg [^>]*aria-hidden="true"[\s\S]*?<\/svg><\/a>/.test(rel));
@@ -318,4 +320,30 @@ test('one header surface: sub-tabs render inside the sticky header, the MENU she
   // labels: no "■" glyph, and sub-tab pills keep aria-current="page"
   assert.ok(!html.includes('■'));
   assert.ok(/<li><a href="team.html" aria-current="page">My team<\/a><\/li>/.test(head));
+});
+
+test('Accounts: hidden "Create free account" and avatar menu in the top bar and the phone menu; none while gated', () => {
+  const o = renderTopbarV2('news', 'today', U);
+  const right = o.slice(o.indexOf('<div class="v2-top__right">'), o.indexOf('<button type="button" class="v2-menubtn"'));
+  // left of My team, hidden until assets/v2/chrome.js finds an auth flag on
+  const join = right.indexOf('<button type="button" class="v2-top__join" data-auth-guest data-auth-open="signup" hidden>Create free account</button>');
+  assert.ok(join > 0 && join < right.indexOf('v2-top__act--team'));
+  assert.ok(/<div class="v2-acct" data-auth-user hidden>/.test(right));
+  assert.ok(/<button type="button" class="v2-acct__btn" aria-expanded="false" aria-controls="v2-acct-menu">/.test(right));
+  const menu = right.slice(right.indexOf('id="v2-acct-menu"'));
+  for (const [href, label] of [['team.html', 'My team'], ['leagues.html', 'Leagues'], ['account.html', 'Account']]) {
+    assert.ok(menu.includes(`<a href="${href}">${label}</a>`), label);
+  }
+  assert.ok(menu.includes('data-auth-logout>Log out</button>'));
+  assert.ok(right.includes('id="v2-acct-menu" hidden'));
+  // phone MENU sheet
+  const sheet = o.slice(o.indexOf('<div class="v2-menu"'));
+  assert.ok(sheet.includes('data-auth-guest hidden><button type="button" class="v2-menu__top v2-menu__btn" data-auth-open="signup">Create free account</button>'));
+  assert.ok(sheet.includes('data-auth-open="login">Log in</button>'));
+  assert.ok(sheet.includes('data-auth-user hidden><a class="v2-menu__top" href="account.html">Account</a>'));
+  // absolute links on generated pages
+  assert.ok(renderTopbarV2('news', 'today', UA).includes('<a href="/account.html">Account</a>'));
+  // gated: no account controls
+  const g = renderTopbarV2('news', 'today', { gated: true });
+  assert.ok(!g.includes('data-auth-') && !g.includes('v2-acct'));
 });

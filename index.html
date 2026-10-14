@@ -46,6 +46,19 @@
     </nav>
     <div class="v2-top__right">
       <a class="v2-top__icon v2-top__search" href="people/" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></a>
+      <button type="button" class="v2-top__join" data-auth-guest data-auth-open="signup" hidden>Create free account</button>
+      <div class="v2-acct" data-auth-user hidden>
+        <button type="button" class="v2-acct__btn" aria-expanded="false" aria-controls="v2-acct-menu"><span class="v2-acct__av" data-auth-initials aria-hidden="true"></span><span class="v2-sr">Your account</span></button>
+        <div class="v2-acct__menu" id="v2-acct-menu" hidden>
+          <p class="v2-acct__who"><strong data-auth-nick></strong><span data-auth-email></span></p>
+          <ul class="v2-acct__list">
+            <li><a href="team.html">My team</a></li>
+            <li><a href="leagues.html">Leagues</a></li>
+            <li><a href="account.html">Account</a></li>
+            <li><button type="button" data-auth-logout>Log out</button></li>
+          </ul>
+        </div>
+      </div>
       <a class="v2-top__act v2-top__act--team" href="team.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>My team</span></a>
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
@@ -101,6 +114,8 @@
           <li><a href="guides/filings-101/">Filings 101</a></li>
         </ul></li>
       <li><a class="v2-menu__top" href="people/">Search</a></li>
+      <li class="v2-menu__acct" data-auth-guest hidden><button type="button" class="v2-menu__top v2-menu__btn" data-auth-open="signup">Create free account</button><button type="button" class="v2-menu__btn v2-menu__btn--sub" data-auth-open="login">Log in</button></li>
+      <li class="v2-menu__acct" data-auth-user hidden><a class="v2-menu__top" href="account.html">Account</a><button type="button" class="v2-menu__btn v2-menu__btn--sub" data-auth-logout>Log out</button></li>
     </ul>
   </div>
 </div>

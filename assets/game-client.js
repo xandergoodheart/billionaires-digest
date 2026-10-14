@@ -22,6 +22,29 @@
   var here = (document.currentScript && document.currentScript.src) || '';
   var CONFIG_URL = here ? here.replace(/assets\/game-client\.js(\?.*)?$/, 'config/supabase.json') : 'config/supabase.json';
 
+  // Accounts (assets/v2/auth.js): a Google sign-in, Google link or password-reset link comes back to the site with the
+  // result in the URL (#access_token=… or #error=… / ?error=…). Read it once, now, before anything rewrites the URL.
+  // Only when the URL carries a token does the client pick the session up from it (detectSessionInUrl); errors are
+  // left for auth.js to explain.
+  function readAuthUrl(){
+    var out = { token: false, type: '', error: '', code: '', desc: '' };
+    try {
+      var raw = String(w.location.hash || '').replace(/^#/, '') + '&' + String(w.location.search || '').replace(/^\?/, '');
+      raw.split('&').forEach(function(kv){
+        var i = kv.indexOf('='); if (i < 1) return;
+        var k = kv.slice(0, i), v = '';
+        try { v = decodeURIComponent(kv.slice(i + 1).replace(/\+/g, ' ')); } catch (e) { v = kv.slice(i + 1); }
+        if (k === 'access_token' && v) out.token = true;
+        else if (k === 'type') out.type = v;
+        else if (k === 'error') out.error = v;
+        else if (k === 'error_code') out.code = v;
+        else if (k === 'error_description') out.desc = v;
+      });
+    } catch (e) {}
+    return out;
+  }
+  var URL_AUTH = readAuthUrl();
+
   function withTimeout(p, ms){
     return new Promise(function(res, rej){
       var t = setTimeout(function(){ rej(new Error('timeout')); }, ms);
@@ -133,7 +156,7 @@
         if (!usable(c)) return { enabled: false, reason: 'not configured' };
         return withTimeout(loadScript(SUPABASE_JS), READY_TIMEOUT_MS).then(function(){
           client = w.supabase.createClient(String(c.url).replace(/\/+$/, ''), keyOf(c), {
-            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, storageKey: 'bd-game-auth' }
+            auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: URL_AUTH.token, storageKey: 'bd-game-auth' }
           });
           // Probe: a public read-only function. Fails when the tables/functions are not there yet.
           return withTimeout(client.rpc('current_week'), READY_TIMEOUT_MS).then(function(r){
@@ -168,7 +191,19 @@
     });
   };
   G.captchaEnabled = function(){ return !!BDT.key(cfg); };
-  G.signOut = function(){ return client ? client.auth.signOut() : Promise.resolve(); };
+  // Runs fn(captchaToken) through Turnstile when a site key is configured, else fn(undefined). parent: where the check
+  // may show if Cloudflare needs a click.
+  G.withCaptcha = function(parent, fn){
+    var site = BDT.key(cfg);
+    if (!site) return Promise.resolve().then(function(){ return fn(undefined); });
+    return BDT.run(site, parent, fn);
+  };
+  // Supabase Auth for assets/v2/auth.js (accounts). null until ready() found the backend.
+  G.authClient = function(){ return client ? client.auth : null; };
+  // What the page URL said about a sign-in redirect when this file loaded: { token, type, error, code, desc }.
+  G.urlAuth = function(){ return URL_AUTH; };
+  // Log out on this device only (other devices stay signed in).
+  G.signOut = function(){ return client ? client.auth.signOut({ scope: 'local' }) : Promise.resolve(); };
   G.onAuth = function(fn){
     if (!client) return;
     client.auth.onAuthStateChange(function(ev, session){ try { fn(ev, session); } catch(e){} });
@@ -202,6 +237,9 @@
   // ---- profile and coins ----
   G.me = function(){ return rpc('me'); };                       // null until a nickname is picked
   G.setNickname = function(nick){ return rpc('set_nickname', { p_nickname: nick }); };
+  // Accounts (0008_accounts.sql): { nickname, next_nickname_change_at, deletion_requested_at, is_anonymous }
+  G.myAccount = function(){ return rpc('my_account'); };
+  G.requestAccountDeletion = function(){ return rpc('request_account_deletion'); };
   G.claimTopup = function(){ return rpc('claim_topup'); };
   G.validName = function(s){
     s = String(s == null ? '' : s).trim();

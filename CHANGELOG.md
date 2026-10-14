@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-14 Real accounts (built, switched off)
+
+- Free accounts with Continue with Google and/or email + password, behind two public switches in `config/supabase.json` (`authGoogle`, `authPassword`, both `false`). Guests keep playing without signing up; a guest who creates an account keeps the same user id, so their team and leagues carry over.
+- New: `assets/v2/auth.js` + `auth-core.js` + `auth.css` (sign-up / log-in dialog, nickname step, team carry-over, forgot password), `account.html` + `assets/v2/account-page.js` (email, sign-in method, nickname, log out, delete my account). Top bar: "Create free account" or a round initials menu; soft "Save your team everywhere" prompt on the home roster card and in the Draft room.
+- Database: `supabase/migrations/0008_accounts.sql` (`my_account`, `request_account_deletion`, service-role `pending_account_deletions` / `delete_account_data`); `scripts/process-deletions.mjs` runs in Game sync and deletes requested accounts within 24 hours (counts-only log).
+- Privacy and Terms: Google sign-in and the self-service deletion timeline. Owner steps in `docs/OWNER-SETUP.md` section 3.
+
 ## 2026-10-12 Preseason go-live fixes
 
 - Game stays open as a preseason (Season 1 starts Mon Nov 9); front page = Play home + "save your team" email signup with referral and league invite links.
