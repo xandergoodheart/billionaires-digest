@@ -1,6 +1,8 @@
 /* Billionaires Digest multiplayer: the account bar. ES5, needs assets/common.js and assets/game-client.js.
  * Renders into #gameaccount (g-account, see assets/GAME-UI.md): "coming soon", "Play online" (guest sign-in),
  * the nickname picker, and once playing: "Online as <nickname> · <coins> coins" and the weekly top-up.
+ * "Delete my account" (any signed-in player): a confirm step, then BDGame.deleteAccount() (delete_my_account, 0008), sign-out
+ * and removal of this site's saved session/team data in this browser (bd-* keys; the light/dark choice 'bd-theme' stays).
  * Exposes BDAccount: onChange(fn) -> fn(state) now and on every change; get(); refresh().
  * state = { enabled, signedIn, me }  (me = { id, nickname, coins, topup_available, ... } or null)
  */
@@ -16,6 +18,7 @@
   var editing = false;
   var wantFocus = false;   // move focus to the nickname box only after the player asked for it
   var flash = '';          // one-off message shown after the next render (e.g. "Added 250 coins.")
+  var confirming = false;  // showing the "delete my account" confirm step
 
   function emit(){ for (var i = 0; i < listeners.length; i++) { try { listeners[i](state); } catch(e){} } }
   function fmt(n){ return Number(n || 0).toLocaleString('en-US'); }
@@ -45,8 +48,65 @@
       return;
     }
     if (!state.signedIn) return renderSignedOut();
+    if (confirming) return renderDelete();
     if (!state.me || editing) return renderNickname();
     renderPlaying();
+  }
+
+  // ---------- delete my account ----------
+  function deleteLink(){
+    var b = el('button', 'g-link', 'Delete my account'); b.type = 'button'; b.id = 'gx-delete';
+    b.addEventListener('click', function(){ confirming = true; editing = false; wantFocus = true; render(); });
+    return b;
+  }
+  // Remove what this site saved in this browser for the session and the team (keys starting 'bd-'), except the
+  // light/dark choice. Each storage call is wrapped: private windows and blocked storage throw.
+  function clearSaved(){
+    function wipe(store){
+      try {
+        var keys = [], i, k;
+        for (i = 0; i < store.length; i++) { k = store.key(i); if (k && k.indexOf('bd-') === 0 && k !== 'bd-theme') keys.push(k); }
+        for (i = 0; i < keys.length; i++) store.removeItem(keys[i]);
+      } catch (e) {}
+    }
+    try { wipe(w.localStorage); } catch (e) {}
+    try { wipe(w.sessionStorage); } catch (e) {}
+  }
+  function renderDelete(){
+    var sec = el('div', 'g-account__form');
+    sec.setAttribute('role', 'group');
+    var head = el('p', 'g-msg', null); head.id = 'gx-delete-head'; head.tabIndex = -1;
+    head.appendChild(el('strong', null, 'Delete your account?'));
+    sec.setAttribute('aria-labelledby', head.id);
+    var warn = el('p', 'g-hint', 'This permanently deletes your account, team, leagues you\'re only in alone, and email. It can\'t be undone.');
+    warn.id = 'gx-delete-warn';
+    head.setAttribute('aria-describedby', warn.id);
+    var acts = el('div', 'g-account__acts');
+    var cancel = btn('Cancel'); cancel.id = 'gx-delete-cancel';
+    var go = btn('Delete forever'); go.id = 'gx-delete-go';
+    // clearly destructive: the game kit's "down" red (assets/v2/game.css --g-down; v1 --down as fallback), readable in both themes
+    go.style.background = 'var(--g-down, var(--down))'; go.style.borderColor = 'var(--g-down, var(--down))';
+    go.style.color = 'var(--g-inv-fg, var(--bg))'; go.style.fontWeight = '700';
+    var m = msgEl();
+    cancel.addEventListener('click', function(){
+      confirming = false; render();
+      var back = document.getElementById('gx-delete'); if (back) back.focus();
+    });
+    go.addEventListener('click', function(){
+      busy(go, true, 'Deleting…'); cancel.disabled = true; m.textContent = '';
+      BDGame.deleteAccount().then(function(){
+        confirming = false; state.signedIn = false; state.me = null;   // so the sign-out event does not refresh twice
+        return Promise.resolve().then(function(){ return BDGame.signOut(); }).then(null, function(){})
+          .then(function(){ clearSaved(); flash = 'Your account was deleted.'; wantFocus = true; return refresh(); });
+      }).then(null, function(e){
+        busy(go, false, 'Delete forever'); cancel.disabled = false;
+        bad(m, (e && e.message) || 'Something went wrong. Please try again.');
+      });
+    });
+    acts.appendChild(cancel); acts.appendChild(go);
+    sec.appendChild(head); sec.appendChild(warn); sec.appendChild(acts); sec.appendChild(m);
+    box.appendChild(sec);
+    if (wantFocus) { wantFocus = false; head.focus(); }
   }
 
   function renderSignedOut(){
@@ -64,6 +124,10 @@
     });
     row.appendChild(t); row.appendChild(b);
     box.appendChild(row); box.appendChild(m);
+    if (flash) {
+      m.textContent = flash; flash = '';
+      if (wantFocus) { wantFocus = false; m.tabIndex = -1; m.focus(); }
+    }
   }
 
   function renderNickname(){
@@ -87,6 +151,7 @@
       line.appendChild(cancel);
     }
     f.appendChild(lab); f.appendChild(line); f.appendChild(hint); f.appendChild(m);
+    if (!state.me) f.appendChild(deleteLink());
     f.addEventListener('submit', function(e){
       e.preventDefault();
       var v = inp.value.trim(), problem = BDGame.validName(v);
@@ -128,6 +193,7 @@
     var nb = el('button', 'g-link', 'Change nickname'); nb.type = 'button'; nb.id = 'gx-rename';
     nb.addEventListener('click', function(){ editing = true; wantFocus = true; render(); });
     acts.appendChild(nb);
+    acts.appendChild(deleteLink());
     if (BDGame.config().linkEmail) {
       var eb = btn('Save my account with email');
       eb.disabled = true; eb.title = 'Coming soon';

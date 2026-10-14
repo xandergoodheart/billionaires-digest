@@ -203,6 +203,8 @@
   G.me = function(){ return rpc('me'); };                       // null until a nickname is picked
   G.setNickname = function(nick){ return rpc('set_nickname', { p_nickname: nick }); };
   G.claimTopup = function(){ return rpc('claim_topup'); };
+  // Permanently deletes the signed-in player's account and all their data (delete_my_account, 0008). Resolves { deleted: true }.
+  G.deleteAccount = function(){ return rpc('delete_my_account'); };
   G.validName = function(s){
     s = String(s == null ? '' : s).trim();
     if (s.length < 3 || s.length > 20) return 'Use 3 to 20 characters.';
