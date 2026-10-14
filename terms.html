@@ -40,6 +40,19 @@
     </nav>
     <div class="v2-top__right">
       <a class="v2-top__icon v2-top__search" href="people/" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></a>
+      <button type="button" class="v2-top__join" data-auth-guest data-auth-open="signup" hidden>Create free account</button>
+      <div class="v2-acct" data-auth-user hidden>
+        <button type="button" class="v2-acct__btn" aria-expanded="false" aria-controls="v2-acct-menu"><span class="v2-acct__av" data-auth-initials aria-hidden="true"></span><span class="v2-sr">Your account</span></button>
+        <div class="v2-acct__menu" id="v2-acct-menu" hidden>
+          <p class="v2-acct__who"><strong data-auth-nick></strong><span data-auth-email></span></p>
+          <ul class="v2-acct__list">
+            <li><a href="team.html">My team</a></li>
+            <li><a href="leagues.html">Leagues</a></li>
+            <li><a href="account.html">Account</a></li>
+            <li><button type="button" data-auth-logout>Log out</button></li>
+          </ul>
+        </div>
+      </div>
       <a class="v2-top__act v2-top__act--team" href="team.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>My team</span></a>
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
@@ -96,6 +109,8 @@
           <li><a href="guides/filings-101/">Filings 101</a></li>
         </ul></li>
       <li><a class="v2-menu__top" href="people/">Search</a></li>
+      <li class="v2-menu__acct" data-auth-guest hidden><button type="button" class="v2-menu__top v2-menu__btn" data-auth-open="signup">Create free account</button><button type="button" class="v2-menu__btn v2-menu__btn--sub" data-auth-open="login">Log in</button></li>
+      <li class="v2-menu__acct" data-auth-user hidden><a class="v2-menu__top" href="account.html">Account</a><button type="button" class="v2-menu__btn v2-menu__btn--sub" data-auth-logout>Log out</button></li>
     </ul>
   </div>
 </div>
@@ -105,7 +120,7 @@
 <main id="main" class="v2-main" tabindex="-1">
   <div class="v2-wrap wl-legal">
     <h1>Terms of Use</h1>
-    <p class="wl-hint">Effective October 12, 2026</p>
+    <p class="wl-hint">Effective October 13, 2026</p>
     <p>These terms cover billionairesdigest.com, run by Billionaires Digest ("we", "us"): the daily news digest, the people and company pages, the tools and the free fantasy game. By using the site, or by saving your team with your email, you agree to them. Please also read our <a href="privacy.html">Privacy Policy</a> and the <a href="play-terms.html">Game rules</a>.</p>
 
     <h2>Who can play</h2>
@@ -120,10 +135,10 @@
 
     <h2>Your account</h2>
     <ul>
-      <li>Playing online creates a guest account in your browser. If you add your email, it's attached to that account so you can sign back in.</li>
-      <li>Keep access to your email secure; anyone who can open your sign-in links can use your account.</li>
+      <li>Playing online creates a guest account in your browser. If you add your email, or create a free account with Google or an email and password, it's attached to that account so you can sign back in.</li>
+      <li>Keep your password and access to your email secure; anyone who can open your sign-in links or knows your password can use your account.</li>
       <li>One account per person.</li>
-      <li>You can stop using the site at any time and ask us to delete your account by emailing <a href="mailto:hello@billionairesdigest.com">hello@billionairesdigest.com</a>.</li>
+      <li>You can stop using the site at any time and delete your account on the Account page (it's deleted within 24 hours) or by emailing <a href="mailto:hello@billionairesdigest.com">hello@billionairesdigest.com</a>.</li>
       <li>We may suspend or close accounts, and remove nicknames or leagues, that break these terms or the game rules. We may also reset scores, leagues or seasons, for example to fix a bug or start a new season.</li>
     </ul>
 

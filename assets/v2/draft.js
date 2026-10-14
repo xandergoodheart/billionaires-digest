@@ -521,6 +521,8 @@
       if (UI.saveMsg.ok) m.appendChild(link('dr-msg__link', 'See My team', 'team.html'));
       box.appendChild(m);
     }
+    // accounts (assets/v2/chrome.js): after the first save, "Save your team everywhere: create a free account"
+    if (F.savedTeam() && window.BDAuthBoot) window.BDAuthBoot.nudge(box);
     renderSync(box);
     renderCode(box, withId ? 'side' : 'sheet');
   }

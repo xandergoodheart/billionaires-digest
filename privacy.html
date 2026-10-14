@@ -40,6 +40,19 @@
     </nav>
     <div class="v2-top__right">
       <a class="v2-top__icon v2-top__search" href="people/" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></a>
+      <button type="button" class="v2-top__join" data-auth-guest data-auth-open="signup" hidden>Create free account</button>
+      <div class="v2-acct" data-auth-user hidden>
+        <button type="button" class="v2-acct__btn" aria-expanded="false" aria-controls="v2-acct-menu"><span class="v2-acct__av" data-auth-initials aria-hidden="true"></span><span class="v2-sr">Your account</span></button>
+        <div class="v2-acct__menu" id="v2-acct-menu" hidden>
+          <p class="v2-acct__who"><strong data-auth-nick></strong><span data-auth-email></span></p>
+          <ul class="v2-acct__list">
+            <li><a href="team.html">My team</a></li>
+            <li><a href="leagues.html">Leagues</a></li>
+            <li><a href="account.html">Account</a></li>
+            <li><button type="button" data-auth-logout>Log out</button></li>
+          </ul>
+        </div>
+      </div>
       <a class="v2-top__act v2-top__act--team" href="team.html"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span>My team</span></a>
     </div>
     <button type="button" class="v2-menubtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="v2-menu">Menu</button>
@@ -96,6 +109,8 @@
           <li><a href="guides/filings-101/">Filings 101</a></li>
         </ul></li>
       <li><a class="v2-menu__top" href="people/">Search</a></li>
+      <li class="v2-menu__acct" data-auth-guest hidden><button type="button" class="v2-menu__top v2-menu__btn" data-auth-open="signup">Create free account</button><button type="button" class="v2-menu__btn v2-menu__btn--sub" data-auth-open="login">Log in</button></li>
+      <li class="v2-menu__acct" data-auth-user hidden><a class="v2-menu__top" href="account.html">Account</a><button type="button" class="v2-menu__btn v2-menu__btn--sub" data-auth-logout>Log out</button></li>
     </ul>
   </div>
 </div>
@@ -105,7 +120,7 @@
 <main id="main" class="v2-main" tabindex="-1">
   <div class="v2-wrap wl-legal">
     <h1>Privacy Policy</h1>
-    <p class="wl-hint">Effective October 12, 2026</p>
+    <p class="wl-hint">Effective October 13, 2026</p>
     <p>Billionaires Digest ("we", "us") runs billionairesdigest.com: a free news site and a free-to-play fantasy game. This page explains, in plain language, what we collect when you play or save your team, why, and what you can do about it. It goes with our <a href="terms.html">Terms</a>.</p>
 
     <h2>What we collect</h2>
@@ -117,6 +132,7 @@
       <li><strong>Where you came from</strong>: the campaign tags in the link you used (utm source, medium and campaign) and the website that sent you, if your browser shares it.</li>
       <li><strong>Basic events</strong>: that you signed up, confirmed, picked a captain, reserved or joined a league, copied or shared an invite link, and, for emails we send, that one was sent and whether you clicked it.</li>
       <li>If you play online: your guest account, nickname, picks, leagues and play-money results.</li>
+      <li><strong>If you create an account</strong>: your email address and how you sign in (Google, or email and a password; we never see your password, the sign-in service stores only a scrambled version of it). Accounts can use Google sign-in: Google shares your name, email address and profile picture with us. We only use and store the email in our game database; the sign-in service keeps the name and picture with your sign-in record until your account is deleted.</li>
     </ul>
     <p>We do not collect payment details. The game is free, with no purchases, cash-out or prizes.</p>
 
@@ -149,7 +165,7 @@
 
     <h2>How long we keep it</h2>
     <ul>
-      <li>Your account, email, picks and leagues: until you ask us to delete them.</li>
+      <li>Your account, email, picks and leagues: until you delete your account or ask us to delete them. When you delete your account on the Account page, your account and data are deleted within 24 hours.</li>
       <li>Basic events (the list above): up to 13 months.</li>
     </ul>
 
@@ -162,6 +178,7 @@
     <h2>Your choices</h2>
     <ul>
       <li><strong>Unsubscribe</strong> from The Billionaire Brief with the link at the bottom of any Brief.</li>
+      <li><strong>Delete your account</strong> yourself: log in and use "Delete my account" on the Account page. Your account, email, nickname, saved teams, scores, league memberships and events are deleted within 24 hours. Leagues you own pass to another member.</li>
       <li><strong>Ask to see or delete your data</strong> by emailing <a href="mailto:hello@billionairesdigest.com">hello@billionairesdigest.com</a> from the address you signed up with. We delete your account and email on request.</li>
     </ul>
 

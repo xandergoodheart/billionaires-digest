@@ -43,6 +43,7 @@ const V2_ACTIVE = {
   'privacy.html': ['news', null],
   'terms.html': ['news', null],
   '404.html': [null, null],
+  'account.html': [null, null],
   'unsubscribe.html': ['news', null],
   'news.html': ['news', 'today'],
   'sectors.html': ['news', 'sectors'],

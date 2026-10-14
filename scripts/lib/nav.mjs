@@ -179,6 +179,35 @@ const ICON = {
   search: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>'
 };
 
+// Accounts (assets/v2/auth.js). Everything here ships hidden; assets/v2/chrome.js shows it only when
+// config/supabase.json turns on "authGoogle" or "authPassword":
+//   data-auth-guest  shown to visitors without a real account (nobody signed in, or a guest/anonymous session)
+//   data-auth-user   shown to a signed-in real account (email or Google)
+//   data-auth-open   opens the "Create free account / Log in" dialog ("signup" or "login")
+// Top bar: a "Create free account" text button left of My team (desktop), or a round initials button with a small
+// menu (nickname, My team, Leagues, Account, Log out). Phone MENU sheet: the same choices as list rows.
+// Not rendered while GATED (the game is closed; the top bar shows only "Join the waitlist").
+function accountTop(u) {
+  return `
+      <button type="button" class="v2-top__join" data-auth-guest data-auth-open="signup" hidden>Create free account</button>
+      <div class="v2-acct" data-auth-user hidden>
+        <button type="button" class="v2-acct__btn" aria-expanded="false" aria-controls="v2-acct-menu"><span class="v2-acct__av" data-auth-initials aria-hidden="true"></span><span class="v2-sr">Your account</span></button>
+        <div class="v2-acct__menu" id="v2-acct-menu" hidden>
+          <p class="v2-acct__who"><strong data-auth-nick></strong><span data-auth-email></span></p>
+          <ul class="v2-acct__list">
+            <li><a href="${u('team.html')}">My team</a></li>
+            <li><a href="${u('leagues.html')}">Leagues</a></li>
+            <li><a href="${u('account.html')}">Account</a></li>
+            <li><button type="button" data-auth-logout>Log out</button></li>
+          </ul>
+        </div>
+      </div>`;
+}
+function accountMenu(u) {
+  return `      <li class="v2-menu__acct" data-auth-guest hidden><button type="button" class="v2-menu__top v2-menu__btn" data-auth-open="signup">Create free account</button><button type="button" class="v2-menu__btn v2-menu__btn--sub" data-auth-open="login">Log in</button></li>
+      <li class="v2-menu__acct" data-auth-user hidden><a class="v2-menu__top" href="${u('account.html')}">Account</a><button type="button" class="v2-menu__btn v2-menu__btn--sub" data-auth-logout>Log out</button></li>`;
+}
+
 // Top bar + sub-tabs + phone MENU sheet. topKey: NAV_V2 key (or null); subKey: sub-tab key of that section (or null).
 // One sticky, blurred header (<header class="v2-top">) holds the top row and, directly under it, the section's pill
 // sub-tabs (<nav class="v2-subtabs">), so both share one surface and one hairline at the bottom. The phone MENU sheet
@@ -203,7 +232,7 @@ export function renderTopbarV2(topKey, subKey, { absolute = false, gated = GATED
   const acts = gated
     ? `${search}
       <a class="v2-top__act v2-top__act--team v2-top__act--join" href="${u('index.html')}"><span>Join the waitlist</span></a>`
-    : `${search}
+    : `${search}${accountTop(u)}
       <a class="v2-top__act v2-top__act--team" href="${u('team.html')}">${ICON.team}<span>My team</span></a>`;
   let subHtml = '';
   if (sub) {
@@ -247,7 +276,7 @@ ${acts}
     <ul class="v2-menu__list">
 ${menu}
       <li><a class="v2-menu__top" href="${u('people/')}">Search</a></li>
-    </ul>
+${gated ? '' : accountMenu(u) + '\n'}    </ul>
   </div>
 </div>`;
   return out;

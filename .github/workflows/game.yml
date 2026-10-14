@@ -70,3 +70,9 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           GAME_FORCE_MARKETS: ${{ inputs.force_markets && '1' || '' }}
         run: node scripts/supabase-sync.mjs
+      - name: Delete accounts that asked to be deleted (account.html; within 24 hours)
+        if: ${{ !cancelled() }}
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/process-deletions.mjs
