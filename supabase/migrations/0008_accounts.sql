@@ -2,14 +2,16 @@
 --
 -- Accounts are Supabase Auth users with an email (Google sign-in or email + password). Guests keep playing as
 -- anonymous users; when a guest creates an account, Supabase links the email or Google identity to the SAME user id,
--- so their profile, rosters and leagues carry over. Nothing in this file changes how guests play.
+-- so their profile, rosters and leagues carry over. Nothing in this file changes how guests play. Guests can ask for
+-- deletion too (the app's Delete account button); their data is removed the same way as an account's.
 --
 -- What is here
 --   account_deletion_requests     one row per account that asked to be deleted (user_id, requested_at). RLS on; no
 --                                 direct access from the browser.
 --   my_account()                  the signed-in user's account summary for account.html: nickname, when the next
 --                                 nickname change is allowed (the 7-day rule from 0006), whether a deletion is pending
---   request_account_deletion()    signed-in, non-anonymous users only. Idempotent: asking twice keeps the first time.
+--   request_account_deletion()    any signed-in user, guests (anonymous users) included, so the app can offer in-app
+--                                 deletion. Idempotent: asking twice keeps the first time.
 --   pending_account_deletions()   service role: the requests to process (user ids, oldest first)
 --   delete_account_data(uuid)     service role: deletes the user's rosters, team scores, league memberships, owned
 --                                 leagues (handed to the longest-standing other member first; deleted only when empty),
@@ -73,9 +75,6 @@ declare
   req timestamptz;
 begin
   if uid is null then raise exception 'Please sign in first.'; end if;
-  if public.auth_is_guest() then
-    raise exception 'Guest accounts have no account to delete. Clear this site''s data in your browser instead.';
-  end if;
   insert into public.account_deletion_requests (user_id, requested_at) values (uid, public.game_now())
     on conflict (user_id) do nothing;
   select r.requested_at into req from public.account_deletion_requests r where r.user_id = uid;
