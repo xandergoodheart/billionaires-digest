@@ -14,6 +14,7 @@
   var ST = { asOf: null, value: {}, rank: {} };
   function stakeRank(s){ return ST.rank[s] || null; }
   try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; UI.kind = cleanKind(saved.kind); } } catch (e) {}
+  if (P.parseSort){ var ps = P.parseSort(UI.sort); UI.sort = P.sortId(ps.key, ps.dir); }
   // a link from a player page (players.html?sector=...) or a shared search (?q=...) wins over the kept filters
   (function(){
     var s = location.search || '', m;
@@ -129,14 +130,12 @@
   function renderPool(){
     var S = F.state, body = clear($('pool')), list = visible(), all = pool(), mine = teamSlugs();
     var wkName = S.sbWk ? fmt.weekName(S.sbWk.week) : null;
-    var ph = clear($('ptshead'));
-    ph.appendChild(document.createTextNode('Week pts'));
-    ph.title = wkName ? 'Points so far in ' + wkName : 'No scored week yet';
-    ph.appendChild(sr(wkName ? ' (points so far in ' + wkName + ')' : ' (no scored week yet)'));
-    var ah = clear($('avghead'));
-    ah.appendChild(document.createTextNode('Avg/day'));
-    ah.title = 'Average points per scored day, recent days';
-    ah.appendChild(sr(' (average points per scored day, recent days)'));
+    if (P.paintSortHeads) P.paintSortHeads($('pool').parentNode, UI.sort, {
+      pts: { title: wkName ? 'Points so far in ' + wkName : 'No scored week yet', sr: wkName ? ' (points so far in ' + wkName + ')' : ' (no scored week yet)' },
+      avg: { title: 'Average points per scored day, recent days', sr: ' (average points per scored day, recent days)' },
+      cap: { title: 'Cap cost out of ' + C.CAP, sr: ' (cap cost)' },
+      rank: { title: 'Public Stake Value: disclosed US-listed shares × latest close. Not a net worth', sr: ' (' + BD.STAKE_LABEL + ', not a net worth)' }
+    });
     if (!list.length){
       var tr0 = el('tr'), td0 = el('td'); td0.colSpan = 6;
       var e = el('div', 'v2-empty');
@@ -221,6 +220,7 @@
     var b = e.target && e.target.closest ? e.target.closest('button') : null;
     if (!b || b.disabled) return;
     var s, r;
+    if ((s = b.getAttribute('data-sort'))){ setSort(P.nextSort(UI.sort, s), s); return; }
     if ((s = b.getAttribute('data-pick'))){
       if (b.getAttribute('aria-disabled') === 'true'){ say('Cannot add ' + F.person(s).name + ': ' + b.getAttribute('data-why') + '.'); return; }
       if (F.state.picks.indexOf(s) >= 0){ r = F.removePick(s); if (r.ok) say(changeLine('Removed ' + F.person(s).name + '.')); }
@@ -235,7 +235,15 @@
   var qt = null;
   $('q').addEventListener('input', function(){ var v = this.value; clearTimeout(qt); qt = setTimeout(function(){ UI.q = v; keepFilters(); renderPool(); }, 120); });
   $('sector').addEventListener('change', function(){ UI.sector = this.value; keepFilters(); renderPool(); });
-  $('sort').addEventListener('change', function(){ UI.sort = this.value; keepFilters(); renderPool(); });
+  function setSort(id, key){
+    UI.sort = id; keepFilters(); $('sort').value = UI.sort;
+    if ($('sort').value !== UI.sort){ UI.sort = 'pts'; $('sort').value = 'pts'; }
+    renderPool();
+    if (key){ var hb = $('pool').parentNode.querySelector('button[data-sort="' + key + '"]'); if (hb) hb.focus(); }
+    var opt = $('sort').options[$('sort').selectedIndex];
+    say((opt ? opt.textContent.replace(/^Sort: /, 'Sorted by ') : 'Sorted') + '. ' + visible().length + ' players.');
+  }
+  $('sort').addEventListener('change', function(){ setSort(this.value, null); });
   if ($('kindseg')) $('kindseg').addEventListener('click', function(e){
     var b = e.target && e.target.closest ? e.target.closest('[data-kind]') : null;
     if (!b || !F.state.loaded) return;

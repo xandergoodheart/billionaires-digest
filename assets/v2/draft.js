@@ -17,12 +17,13 @@
   var $ = function(id){ return document.getElementById(id); };
   var mqPhone = window.matchMedia ? window.matchMedia('(max-width: 767px)') : { matches: false };
 
-  var UI = { q: '', sector: '', sort: 'pts', kind: '', saveMsg: null, syncMsg: null, addMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
+  var UI = { q: '', sector: '', sort: 'pts', kind: '', hide: false, saveMsg: null, syncMsg: null, addMsg: null, code: '', codeMsg: null, sheetTab: 'team' };
   // Public Stake Value rank (BD.stakeTable) for the rank sort and tie-breaks. Never a net worth.
   var ST = { rank: {} };
   function stakeRank(s){ return ST.rank[s] || null; }
-  try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; UI.kind = cleanKind(saved.kind); } } catch (e) {}
-  function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort, kind: UI.kind })); } catch (e) {} }
+  try { var saved = JSON.parse(sessionStorage.getItem(FKEY) || 'null'); if (saved){ UI.q = saved.q || ''; UI.sector = saved.sector || ''; UI.sort = saved.sort || 'pts'; UI.kind = cleanKind(saved.kind); UI.hide = saved.hide === true; } } catch (e) {}
+  if (P.parseSort){ var ps = P.parseSort(UI.sort); UI.sort = P.sortId(ps.key, ps.dir); }
+  function keepFilters(){ try { sessionStorage.setItem(FKEY, JSON.stringify({ q: UI.q, sector: UI.sector, sort: UI.sort, kind: UI.kind, hide: UI.hide })); } catch (e) {} }
   var KIND_WORDS = { '': 'all players', billionaire: 'billionaires', ceo: 'CEOs' };
   // player type helpers (BDPlayersCore has the tested versions; the fallbacks keep a cached older file working)
   function kindOf(p){ return P.kindOf ? P.kindOf(p) : (p && p.type === 'ceo' ? 'ceo' : 'billionaire'); }
@@ -72,6 +73,17 @@
   function inPool(slug){ return pool().some(function(p){ return p.slug === slug; }); }
   function dayShort(d){ return fmt.DAYN[C.weekday(d)] + ' ' + (+d.slice(8, 10)); }
   function valTxt(v){ return (v.value < 0 ? MINUS : '') + Math.abs(v.value).toFixed(2); }
+  // Why a player can't be added right now: exactly F.blockReason (the store's add rules: 5 picks, 100 cap), plus "not
+  // draftable" when there is no cap cost. Shown as "Team full" / "Over cap by N". '' when the player can be added.
+  function addWhy(slug){
+    if (F.state.picks.indexOf(slug) >= 0) return '';
+    if (sal(slug) == null) return 'Not draftable this week';
+    var why = F.blockReason(slug);
+    if (why === 'Lineup full') return 'Team full';
+    var m = /^Over by (\d+)/.exec(why || '');
+    return m ? 'Over cap by ' + m[1] : (why || '');
+  }
+  function unaffordable(slug){ var w = addWhy(slug); return w === 'Team full' || /^Over cap/.test(w); }
   var VALUE_RULE = 'Value = recent average points per day ÷ cap cost (week points ÷ cap cost when there is no recent average).';
 
   // ---- queue (watchlist): localStorage, this browser only ----
@@ -183,9 +195,20 @@
     });
     syncTabs(false);
     syncKinds();
+    syncSort();
+    $('q').value = UI.q;
+    $('hideoff').checked = UI.hide;
+  }
+  // the compact select and the column headers always show the same sort
+  function syncSort(){
     $('sort').value = UI.sort;
     if ($('sort').value !== UI.sort){ UI.sort = 'pts'; $('sort').value = 'pts'; }
-    $('q').value = UI.q;
+  }
+  function setSort(id, from){
+    UI.sort = id; keepFilters(); syncSort(); renderPool();
+    if (from && from.getAttribute('data-sort')){ var b = document.querySelector('#poolpanel button[data-sort="' + from.getAttribute('data-sort') + '"]'); if (b) b.focus(); }
+    var opt = $('sort').options[$('sort').selectedIndex];
+    say((opt ? opt.textContent.replace(/^Sort: /, 'Sorted by ') : 'Sorted') + '. ' + visible().length + ' players.');
   }
   function syncTabs(focus){
     sectorList.forEach(function(s){
@@ -234,10 +257,10 @@
 
   // ---- filters + sort ----
   function visible(){
-    var list = pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && typeOk(p) && P.matches(p, UI.q); });
-    if (UI.sort === 'value') return P.sortPlayers(list, 'avg', { avg: valNum, rank: stakeRank });
-    return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: avgOf, cap: sal, rank: stakeRank });
+    var list = filtered().filter(function(p){ return !UI.hide || !unaffordable(p.slug); });
+    return P.sortPlayers(list, UI.sort, { pts: weekPts, avg: avgOf, cap: sal, rank: stakeRank, value: valNum });
   }
+  function filtered(){ return pool().filter(function(p){ return (!UI.sector || (p.sector || 'Other') === UI.sector) && typeOk(p) && P.matches(p, UI.q); }); }
 
   // ---- recent form sparkline (same numbers as the player card chart) ----
   var sparkMax = 1;
@@ -276,14 +299,11 @@
   function renderPool(){
     var S = F.state, body = clear($('pool')), list = visible(), all = pool();
     var wkName = S.sbWk ? fmt.weekName(S.sbWk.week) : null;
-    var ph = clear($('ptshead'));
-    ph.appendChild(txt('Week pts'));
-    ph.title = wkName ? 'Points so far in ' + wkName : 'No scored week yet';
-    ph.appendChild(sr(wkName ? ' (points so far in ' + wkName + ')' : ' (no scored week yet)'));
-    var ah = clear($('avghead'));
-    ah.appendChild(txt('Avg'));
-    ah.title = 'Recent average points per scored day';
-    ah.appendChild(sr(' (recent average points per scored day)'));
+    if (P.paintSortHeads) P.paintSortHeads($('poolpanel'), UI.sort, {
+      pts: { title: wkName ? 'Points so far in ' + wkName : 'No scored week yet', sr: wkName ? ' (points so far in ' + wkName + ')' : ' (no scored week yet)' },
+      avg: { title: 'Recent average points per scored day', sr: ' (recent average points per scored day)' },
+      cap: { title: 'Cap cost out of ' + C.CAP, sr: ' (cap cost)' }
+    });
     var fh = clear($('formhead'));
     fh.appendChild(txt('Form'));
     fh.title = 'Points on each of the last ' + S.sparkDates.length + ' scored days';
@@ -291,17 +311,24 @@
     computeSparkMax();
     var anyValue = all.some(function(p){ var v = valOf(p.slug); return v && v.value > 0; });
     var top = anyValue ? DC.topValue(list.map(function(p){ return { slug: p.slug, value: valNum(p.slug) }; }), 5) : [];
+    var hiddenN = UI.hide ? filtered().length - list.length : 0;
     if (!list.length){
       var tr0 = el('tr'), td0 = el('td'); td0.colSpan = COLS;
-      var e = el('div', 'v2-empty');
-      e.appendChild(el('p', null, 'No ' + (UI.kind ? KIND_WORDS[UI.kind] : 'players') + ' match ' + (UI.q ? '"' + UI.q + '"' : 'this filter') + (UI.sector ? ' in ' + UI.sector : '') + '.'));
-      var rb = btn('v2-btn v2-btn--ghost v2-btn--sm', 'Clear search and filters'); rb.setAttribute('data-reset', '1');
+      var e = el('div', 'v2-empty'), rb;
+      if (hiddenN){
+        e.appendChild(el('p', null, spotsLeft() ? 'Every player here costs more than your ' + plainTxt(C.CAP - F.capUsed()) + ' cap left.' : 'Your team is full, so everyone else is hidden.'));
+        rb = btn('v2-btn v2-btn--ghost v2-btn--sm', 'Show all ' + hiddenN + ' players'); rb.setAttribute('data-showall', '1');
+      } else {
+        e.appendChild(el('p', null, 'No ' + (UI.kind ? KIND_WORDS[UI.kind] : 'players') + ' match ' + (UI.q ? '"' + UI.q + '"' : 'this filter') + (UI.sector ? ' in ' + UI.sector : '') + '.'));
+        rb = btn('v2-btn v2-btn--ghost v2-btn--sm', 'Clear search and filters'); rb.setAttribute('data-reset', '1');
+      }
       e.appendChild(rb);
       td0.appendChild(e); tr0.appendChild(td0); body.appendChild(tr0);
     }
     list.forEach(function(p){
-      var picked = S.picks.indexOf(p.slug) >= 0;
-      var tr = el('tr', picked ? 'is-picked' : null);
+      var picked = S.picks.indexOf(p.slug) >= 0, why = picked ? '' : addWhy(p.slug);
+      var tr = el('tr', 'dr-row' + (picked ? ' is-picked' : '') + (why ? ' is-out' : ''));
+      tr.setAttribute('data-row', p.slug);
       var tdQ = el('td', 'dr-c-q');
       tdQ.appendChild(starBtn(p));
       tr.appendChild(tdQ);
@@ -314,7 +341,14 @@
       nb.setAttribute('aria-haspopup', 'dialog');
       var ceoB = window.BDCeoBadge ? window.BDCeoBadge(p) : null;
       if (ceoB) nb.appendChild(ceoB);
-      nb.appendChild(sr(': open player dossier'));
+      nb.setAttribute('data-scout', p.slug);
+      nb.setAttribute('aria-controls', 'scout');
+      var info = svgEl('svg', { viewBox: '0 0 16 16', width: 14, height: 14, 'class': 'dr-info', 'aria-hidden': 'true', focusable: 'false' });
+      info.appendChild(svgEl('circle', { cx: 8, cy: 8, r: 6.6, fill: 'none', stroke: 'currentColor', 'stroke-width': 1.4 }));
+      info.appendChild(svgEl('path', { d: 'M8 7.2v4', stroke: 'currentColor', 'stroke-width': 1.6, 'stroke-linecap': 'round' }));
+      info.appendChild(svgEl('circle', { cx: 8, cy: 4.9, r: 0.95, fill: 'currentColor' }));
+      nb.appendChild(info);
+      nb.appendChild(sr(': open scouting report'));
       tx.appendChild(nb);
       var tk = P.tickers(p).slice(0, 2).join(' · ');
       var sub = el('span', 'v2-player__sub', (tk ? tk + ' / ' : '') + (p.sector || 'Other'));
@@ -354,12 +388,15 @@
         b.setAttribute('aria-label', p.name + ': selected. Press to remove.');
         b.appendChild(el('span', 'dr-pick__hint', 'Remove'));
       } else {
-        var why = s == null ? 'Not draftable this week' : F.blockReason(p.slug);
         b = btn('v2-btn v2-btn--secondary dr-pick' + (why ? ' is-blocked' : ''), '+ Add');
         b.setAttribute('aria-pressed', 'false');
-        if (why){ b.setAttribute('aria-disabled', 'true'); b.title = why; b.setAttribute('aria-label', 'Add ' + p.name + ': ' + why); b.setAttribute('data-why', why); }
+        if (why){
+          var wid = 'why-' + p.slug, wn = el('small', 'dr-why', why); wn.id = wid;
+          b.setAttribute('aria-disabled', 'true'); b.title = why; b.setAttribute('data-why', why);
+          b.setAttribute('aria-label', 'Add ' + p.name + (s != null ? ', cap ' + s : '')); b.setAttribute('aria-describedby', wid);
+          tdS.appendChild(wn);
+        }
         else b.setAttribute('aria-label', 'Add ' + p.name + (s != null ? ', cap ' + s : ''));
-        if (why && /^Over/.test(why)) tdS.appendChild(el('small', 'dr-why', why));
       }
       b.setAttribute('data-pick', p.slug);
       tdS.insertBefore(b, tdS.firstChild);
@@ -367,7 +404,7 @@
       body.appendChild(tr);
     });
     var method = BD.salaryMethodText(S.draftWk && S.draftWk.salaryMethod);
-    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players · Cap costs: ' + (method || 'set by Public Stake Value rank') +
+    $('poolfoot').textContent = 'Showing ' + list.length + ' of ' + all.length + ' players' + (hiddenN ? ' (' + hiddenN + ' you can\'t afford hidden)' : '') + ' · Cap costs: ' + (method || 'set by Public Stake Value rank') +
       ' · Avg = recent average points per scored day · Form = the last ' + (S.sparkDates.length || 0) + ' scored days';
     $('valuefoot').textContent = anyValue
       ? VALUE_RULE + ' The top 5 in the current view get a Value badge. Based on recent days only; not a forecast.'
@@ -392,7 +429,7 @@
   function queueAddBtn(p){
     var S = F.state, s = sal(p.slug);
     if (S.picks.indexOf(p.slug) >= 0){ var on = el('span', 'dr-q__on', 'On your team'); return on; }
-    var why = s == null ? 'Not draftable this week' : F.blockReason(p.slug);
+    var why = addWhy(p.slug);
     var b = btn('dr-qadd' + (why ? ' is-blocked' : ''), '+ Add');
     b.setAttribute('data-qpick', p.slug);
     if (why){ b.setAttribute('aria-disabled', 'true'); b.setAttribute('data-why', why); b.title = why; b.setAttribute('aria-label', 'Add ' + p.name + ': ' + why); }
@@ -597,7 +634,31 @@
     renderQueues();
     renderBar();
   }
-  function renderAll(){ renderStats(); renderPool(); renderSide(); if (cardOpen()) window.BDDossier.refresh(); }
+  function renderAll(){ renderStats(); renderPool(); renderSide(); if (cardOpen()) window.BDDossier.refresh(); if (scoutOpen()) window.BDScout.refresh(); }
+
+  // ---- scouting drawer (assets/v2/scout.js): click a pool row or its name; prev / next follow the sorted list ----
+  function scoutOpen(){ return !!(window.BDScout && window.BDScout.isOpen()); }
+  function scoutActions(slug){
+    var S = F.state, p = F.person(slug), picked = S.picks.indexOf(slug) >= 0, isC = S.captain === slug;
+    if (picked) return [
+      { key: 'pick', label: 'Remove from team', variant: 'selected', ariaLabel: 'Remove ' + p.name + ' from your team', onClick: cardPick },
+      { key: 'cap', label: isC ? 'Captain' : 'Make captain', variant: 'secondary', pressed: isC, ariaLabel: 'Make ' + p.name + ' captain', onClick: cardCap }
+    ];
+    var why = addWhy(slug), s = sal(slug);
+    return [{ key: 'pick', label: '+ Add to team', variant: 'primary', why: why,
+      note: why === 'Team full' ? 'Team full: remove someone to add ' + surname(p.name) + '.' : (why ? why + '.' : ''),
+      ariaLabel: 'Add ' + p.name + ' to your team' + (s != null ? ', cap ' + s : ''), onClick: cardPick }];
+  }
+  function openScout(slug, from){
+    if (!window.BDScout){ openCard(slug, from); return; }
+    window.BDScout.open(slug, {
+      opener: from,
+      list: function(){ return visible().map(function(p){ return p.slug; }); },
+      stats: function(s){ return { week: weekPts(s), avg: avgOf(s), cap: sal(s), stakeRank: stakeRank(s) }; },
+      actions: scoutActions,
+      restoreFocus: function(s){ return $('pool').querySelector('[data-scout="' + s + '"]'); }
+    });
+  }
 
   // ---- player card: the shared player dossier (assets/v2/dossier.js) with the Draft room's actions ----
   function cardOpen(){ return !!(window.BDDossier && window.BDDossier.isOpen()); }
@@ -610,8 +671,8 @@
     var S = F.state, p = F.person(slug), picked = S.picks.indexOf(slug) >= 0, isC = S.captain === slug, s = sal(slug), list = [];
     if (picked) list.push({ key: 'pick', label: 'Remove from team', variant: 'selected', ariaLabel: 'Remove ' + p.name + ' from your team', onClick: cardPick });
     else {
-      var why = s == null ? 'Not draftable this week' : F.blockReason(slug);
-      list.push({ key: 'pick', label: '+ Add to team', variant: 'primary', why: why, note: why === 'Lineup full' ? 'Your five is full. Remove someone first.' : (why ? why + '.' : ''),
+      var why = addWhy(slug);
+      list.push({ key: 'pick', label: '+ Add to team', variant: 'primary', why: why, note: why === 'Team full' ? 'Team full: remove someone first.' : (why ? why + '.' : ''),
         ariaLabel: why ? 'Add ' + p.name + ': ' + why : 'Add ' + p.name + ' to your team, cap ' + s, onClick: cardPick });
     }
     var capWhy = picked ? '' : 'Add ' + surname(p.name) + ' to your team first';
@@ -787,7 +848,15 @@
     var t = e.target;
     if (t === $('sheet')){ closeSheet(); return; }
     var b = t.closest ? t.closest('button') : null;
-    if (!b) return;
+    if (!b){
+      // a click anywhere else on a pool row opens the scouting drawer (links, inputs and buttons keep their own job)
+      var row = t.closest ? t.closest('#pool tr[data-row]') : null;
+      if (row && !(t.closest('a,input,label,select,textarea')) && !(window.getSelection && String(window.getSelection()).length)){
+        var nbtn = row.querySelector('[data-scout]');
+        openScout(row.getAttribute('data-row'), nbtn);
+      }
+      return;
+    }
     if (b.id === 'barbtn'){ openSheet(); return; }
     if (b.id === 'sheetclose'){ closeSheet(); return; }
     if (b.id === 'autofill'){ doAutoFill(); return; }
@@ -802,6 +871,9 @@
     var s, r;
     if ((s = b.getAttribute('data-stab'))){ showSheetTab(s, false); return; }
     if ((s = b.getAttribute('data-sector')) !== null && b.getAttribute('role') === 'tab'){ setSector(s, false); return; }
+    if ((s = b.getAttribute('data-sort'))){ setSort(P.nextSort(UI.sort, s), b); return; }
+    if (b.hasAttribute('data-showall')){ UI.hide = false; $('hideoff').checked = false; keepFilters(); renderPool(); $('hideoff').focus(); say('Showing every player, ' + visible().length + ' in this view.'); return; }
+    if ((s = b.getAttribute('data-scout'))){ openScout(s, b); return; }
     if ((s = b.getAttribute('data-card'))){ openCard(s, b); return; }
     if ((s = b.getAttribute('data-star'))){
       starToggle(s);
@@ -867,7 +939,12 @@
   });
   var qt = null;
   $('q').addEventListener('input', function(){ var v = this.value; clearTimeout(qt); qt = setTimeout(function(){ UI.q = v; keepFilters(); renderPool(); }, 120); });
-  $('sort').addEventListener('change', function(){ UI.sort = this.value; keepFilters(); renderPool(); });
+  $('sort').addEventListener('change', function(){ setSort(this.value, null); });
+  $('hideoff').addEventListener('change', function(){
+    UI.hide = this.checked; keepFilters(); renderPool();
+    var n = UI.hide ? filtered().length - visible().length : 0;
+    say(UI.hide ? 'Hiding ' + n + (n === 1 ? ' player' : ' players') + ' you can\'t afford. ' + visible().length + ' shown.' : 'Showing every player, ' + visible().length + ' in this view.');
+  });
   if ($('kindseg')) $('kindseg').addEventListener('click', function(e){
     var b = e.target && e.target.closest ? e.target.closest('[data-kind]') : null;
     if (b && F.state.loaded) setKind(b.getAttribute('data-kind'));
