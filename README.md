@@ -74,3 +74,7 @@ Settings for the game job (Settings → Secrets and variables → Actions). Anyt
 
 In the Supabase dashboard: Authentication → Sign In / Providers → turn on **Allow anonymous sign-ins**.
 Turning on CAPTCHA for sign-ins is a good idea to slow down people making many guest accounts.
+
+## License
+
+The code, writing, illustrations and data files are proprietary. Reading the site and linking to it is welcome; copying, scraping or redistributing is not. See `LICENSE`.

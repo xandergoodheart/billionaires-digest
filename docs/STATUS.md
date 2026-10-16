@@ -38,6 +38,8 @@ last_reviewed: 2026-10-03
 
 # Who is editing what
 
+- Claude: license, copyright footer line, README license note, terms copyright sentence — branch `legal-notices`, started 2026-10-15.
+
 - Claude (2026-10-12): preseason go-live fixes done on `feat/preseason` (plan `docs/PRESEASON-FIXES-PLAN.md`), PR awaiting owner; replaces PR #7. 356/356 tests. Owner setup steps in `docs/OWNER-SETUP.md`. After merge: run `node scripts/fetch-prices-repair.mjs && node scripts/build-fantasy.mjs --rebuild-days=11` on main and commit data/. Claim cleared.
 
 - Claude (2026-10-04): Waitlist launch built on branch `feat/waitlist`, PR awaiting owner review (plan `docs/WAITLIST-PLAN.md`). Claim cleared on handoff. Validation: 328/328 tests; local preview checked (landing mobile, gated draft page, news). Owner actions before/after merge are listed at the end of the plan.
