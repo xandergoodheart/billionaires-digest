@@ -1,11 +1,11 @@
 {
-  "date": "Thursday, October 15, 2026",
-  "updated": "Oct 15, 2026 · morning edition",
+  "date": "Friday, October 16, 2026",
+  "updated": "Oct 16, 2026 · morning edition",
   "lede": {
     "kicker": "Lede of the day",
-    "headline": "Samsung's profit nearly nine-folds on the AI memory boom",
-    "dek": "Samsung Electronics guided to a record operating profit for the third quarter on AI-fueled memory-chip demand, on a day that also brought a mixed bag of bank and luxury earnings and a stark warning from Broadcom's CEO about AI financing.",
-    "ini": "JL"
+    "headline": "AI debt jitters wipe billions off Oracle, Dell and SoftBank",
+    "dek": "A viral chart of CoreWeave's bond yields, plus hotter US inflation data, sent investors fleeing AI-infrastructure stocks this week — hitting Larry Ellison's Oracle, Michael Dell's company and Masayoshi Son's SoftBank in the same 48 hours.",
+    "ini": "LE"
   },
   "top10": [
     {
@@ -72,220 +72,248 @@
   "top10AsOf": "List as of Sep 24, 2026 9:15 PM ET",
   "stories": [
     {
+      "who": "Larry Ellison",
+      "sector": "AI & tech",
+      "via": "Oracle",
+      "people": [
+        "Larry Ellison"
+      ],
+      "type": "IPO / Markets",
+      "tickers": "ORCL",
+      "read": "Bearish",
+      "direction": "down",
+      "headline": "Oracle sinks 8.8% as AI debt fears spread to neoclouds",
+      "move": "Oracle shares closed down 8.8% on Oct 14, 2026, after a chart showing yields on a batch of CoreWeave's bonds briefly topping 15% went viral on social media, rattling investors in AI-infrastructure borrowers. Oracle isn't a \"neocloud\" itself, but it has borrowed heavily to fund its AI data-center buildout, which is why investors grouped it with CoreWeave. CoreWeave's own stock fell more than 15% the same day.",
+      "why": "Oracle has taken on tens of billions of dollars in debt for AI data centers tied in part to its OpenAI cloud contract, so any sign that AI borrowers are stretched raises questions about whether that spending pays off.",
+      "bear": "Oracle's contracted backlog still supports its spending plans, and a bad day for a competitor's bonds doesn't by itself change Oracle's own balance sheet.",
+      "watch": "Oracle's reported talks with Apollo and Goldman Sachs on financing for its AI data centers, which it wants completed this year.",
+      "source": "SiliconAngle",
+      "url": "https://siliconangle.com/2026/10/14/shares-of-oracle-neoclouds-drop-on-coreweave-debt-concerns/"
+    },
+    {
+      "who": "Michael Dell",
+      "sector": "AI & tech",
+      "via": "Dell Technologies",
+      "people": [
+        "Michael Dell"
+      ],
+      "type": "IPO / Markets",
+      "tickers": "DELL",
+      "read": "Bearish",
+      "direction": "down",
+      "headline": "Dell drops 11% on Barclays downgrade over AI doubts",
+      "move": "Dell Technologies shares fell 11.3% on Oct 14, 2026, far more than the S&P 500's 1.1% decline, after Barclays cut the stock to Equal Weight from Overweight. Barclays said it believes Dell's strong enterprise revenue reflects elevated memory-chip costs more than a real shift toward enterprise AI spending, and made similar downgrades to HPE and NetApp the same day.",
+      "why": "Dell's stock had run up on hopes that businesses are buying AI-ready servers in volume; Barclays' note challenges that story and questions how much of the recent growth is actually AI-driven.",
+      "bear": "Dell's revenue still grew, and one analyst's reframing of the cause doesn't change the order backlog the company has already booked.",
+      "watch": "Dell's next earnings report for concrete data on enterprise AI order volume.",
+      "source": "GuruFocus",
+      "url": "https://www.gurufocus.com/news/9123969/dell-technologies-dell-shares-plunge-over-11-after-barclays-downgrades-rating"
+    },
+    {
+      "who": "Larry Ellison",
+      "sector": "Media",
+      "via": "Skydance",
+      "people": [
+        "Larry Ellison"
+      ],
+      "type": "Other",
+      "tickers": "PSKY",
+      "read": "Dilutive",
+      "direction": "down",
+      "headline": "Skydance stock plunges 22% after warrant payout",
+      "move": "Skydance, the renamed Paramount Skydance, fell as much as 26% intraday before closing down 22.2% at $7.06 on Oct 14, 2026, after distributing about 470.7 million warrants to former Paramount Class B shareholders. Each warrant lets holders buy one Class B share for $12; full exercise could raise $5.7 billion for the company while diluting current shareholders. The warrant payout came about a week after Skydance closed its $110 billion takeover of Warner Bros. Discovery, a deal backstopped by the Lawrence J. Ellison Revocable Trust.",
+      "why": "The sell-off suggests investors think the combined company overpaid: Skydance's resulting market value of under $40 billion is less than half what Warner Bros. Discovery and Paramount were worth separately before the deal, according to Variety.",
+      "bear": "Much of the drop is a one-time mechanical dilution tied to the merger's close, not necessarily a reassessment of the combined company's underlying business.",
+      "watch": "The 12-day antitrust trial over the merger, scheduled for March 2, 2027.",
+      "source": "Fox Business",
+      "url": "https://www.foxbusiness.com/markets/skydance-shares-plunge-after-company-distributes-nearly-471m-warrants"
+    },
+    {
+      "who": "Masayoshi Son",
+      "sector": "AI & tech",
+      "via": "SoftBank Group",
+      "people": [
+        "Masayoshi Son"
+      ],
+      "type": "Other",
+      "tickers": "SFTBY",
+      "read": "Bearish",
+      "direction": "down",
+      "headline": "SoftBank sinks as Asia tech stocks sell off",
+      "move": "SoftBank Group shares fell sharply this week as part of a broader Asia tech sell-off that also hit SK Hynix, Samsung and, in the US, Nvidia, AMD and Dell. The drop followed hotter-than-expected US inflation data that revived fears the Federal Reserve will keep interest rates higher, raising the cost of financing AI infrastructure.",
+      "why": "SoftBank is a major OpenAI investor with further multibillion-dollar payments due, so worries about AI-funding costs and higher rates hit it harder than most.",
+      "bear": "SoftBank's core Arm and Vision Fund holdings haven't changed; a rate-driven, one-week move isn't the same as a shift in the value of what SoftBank actually owns.",
+      "watch": "SoftBank's next scheduled payment toward its OpenAI commitment.",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/15/sk-hynix-samsung-softbank-stocks-asia-tech-rout-ai-funding-worries.html"
+    },
+    {
       "who": "Jamie Dimon",
       "sector": "Finance",
       "via": "JPMorgan Chase",
       "people": [
         "Jamie Dimon"
       ],
-      "type": "Earnings",
+      "type": "IPO / Markets",
       "tickers": "JPM",
       "read": "Mixed",
-      "direction": "down",
-      "headline": "JPMorgan profit rises but securities losses sting",
-      "move": "JPMorgan Chase's third-quarter net income rose 6% to $15.3 billion and revenue climbed 8% to $50.2 billion, according to the bank's own SEC filing. Diluted earnings per share were $5.57, up from $5.07 a year earlier. The bank booked $658 million in investment-securities losses during the quarter, and investment banking fees rose 13% from a year ago but fell 8% from the second quarter.",
-      "why": "JPMorgan's results are a bellwether for corporate borrowing and trading activity, so a securities loss and softer sequential investment-banking fees raise questions about how long the current trading boom can keep accelerating.",
-      "bear": "Net income, revenue and per-share earnings all rose from a year ago, and investment banking fees are still up double digits year over year, so the quarter looks solid by its own numbers.",
-      "watch": "JPMorgan's updated outlook for about $107 billion in 2027 net interest income excluding markets.",
-      "source": "SEC filing (Form 8-K)",
+      "direction": "flat",
+      "headline": "JPMorgan's Q3 profit rises, but EPS trails estimates",
+      "move": "JPMorgan Chase reported third-quarter net income of $15.3 billion, or $5.57 a share, on Oct 13, 2026, up from $14.4 billion, or $5.07 a share, a year earlier, according to its SEC filing. Revenue rose about 8% to roughly $50.2 billion. The bank cut share buybacks 84% from the prior quarter and raised its full-year net-interest-income outlook to about $106.2 billion from $105.5 billion.",
+      "why": "Profit and revenue both grew, but EPS came in below Wall Street's roughly $5.85-$5.92 consensus — an unusual miss for the largest US bank even as it builds capital.",
+      "bear": "A one-quarter miss against analyst estimates doesn't change the bank's rising net-interest-income outlook or its still-large profit.",
+      "watch": "Whether the steep buyback cut signals the bank is holding capital for a deal — Dimon has said JPMorgan is \"on the lookout\" for one worth $10-20 billion.",
+      "source": "SEC EDGAR (JPMorgan Chase 8-K)",
       "url": "https://www.sec.gov/Archives/edgar/data/0000019617/000162828026065582/jpm-20261013.htm"
     },
     {
-      "who": "Jane Fraser",
-      "sector": "Finance",
-      "via": "Citigroup",
-      "people": [
-        "Jane Fraser"
-      ],
-      "type": "Earnings",
-      "tickers": "C",
-      "read": "Sell-off",
-      "direction": "down",
-      "headline": "Citigroup profit jumps 40% but shares still slide",
-      "move": "Citigroup's third-quarter net income rose 40% to $5.2 billion, or $2.85 a share, beating the roughly $2.62 analyst estimate, on revenue up 8% to $23.85 billion, the bank's earnings release showed. CEO Jane Fraser said the bank is \"continuing to invest in growth\" while preparing for an AI-driven future. Shares still fell about 5.6% that day.",
-      "why": "A profit beat that still gets sold off signals investors are more focused on the pace of trading and credit costs ahead than on the quarter that just closed.",
-      "bear": "A 40% profit jump and 15% growth in wealth management are hard to call bad news; some of the drop may reflect bank stocks giving back gains built up ahead of earnings.",
-      "watch": "Whether Citigroup can keep beating its own 11-13% near-term return target next quarter.",
-      "source": "Stocktwits",
-      "url": "https://stocktwits.com/news-articles/markets/equity/citi-ceo-jane-fraser-prepares-for-ai-driven-future-as-bank-posts-best-q3-revenue-in-a-decade/cZxBkWaRBYG"
-    },
-    {
-      "who": "Bernard Arnault & family",
-      "sector": "Luxury & retail",
-      "via": "LVMH",
-      "people": [
-        "Bernard Arnault & family"
-      ],
-      "type": "Earnings",
-      "tickers": "MC",
-      "read": "Slowdown",
-      "direction": "down",
-      "headline": "LVMH's China slump drags on fashion division",
-      "move": "LVMH's revenue for the first nine months of 2026 reached 57.1 billion euros, up 2% organically but down 2% on a reported basis, the company's own release showed. Third-quarter organic growth slowed to 1% from 3% in the prior quarter. Fashion & Leather Goods, LVMH's largest division and home to Louis Vuitton and Dior, posted a 5% organic sales drop in the quarter to 8.25 billion euros, which the company attributed to slowing demand in China. Shares fell about 1.7% on Oct. 13, the day after the report.",
-      "why": "Fashion & Leather Goods is LVMH's main profit engine, so a second straight quarter of China-driven weakness there raises doubts about how soon the luxury slowdown turns around.",
-      "bear": "The U.S., Europe and Japan all grew well in the quarter, and LVMH says it remains confident in its full-year outlook despite what it calls an uncertain environment.",
-      "watch": "LVMH's full-year 2026 results, due early 2027, for whether China demand stabilizes.",
-      "source": "Hargreaves Lansdown",
-      "url": "https://www.hl.co.uk/shares/stock-market-news/company--news/lvmh-shares-fall-as-china-woes-hits-fashion-and-leather-goods-sales"
-    },
-    {
-      "who": "Hock Tan",
-      "sector": "AI & tech",
-      "via": "Broadcom",
-      "people": [
-        "Hock Tan"
-      ],
-      "type": "Leadership",
-      "tickers": "AVGO",
-      "read": "Warning",
-      "direction": "down",
-      "headline": "Broadcom CEO says capital, not chips, now limits AI",
-      "move": "Broadcom CEO Hock Tan said at a conference in Singapore on Oct. 12 that access to capital, not chip or memory supply, is becoming the main constraint on AI buildouts. He said some AI investors \"have no clue what they are investing in\" and are setting expectations so extreme that it is \"almost like they are in a casino,\" 247wallst.com reported. Broadcom shares fell 1.88% to close at $354.73 the next trading day.",
-      "why": "Tan runs one of the AI boom's biggest chip suppliers, so a warning from him about how AI infrastructure is being financed carries more weight than the usual outside skeptic's take.",
-      "bear": "Tan also said compute demand looks likely to stay strong through 2030 and that chip and memory shortages are easing, which is a bullish read on the underlying business even as he's wary of its financing.",
-      "watch": "Broadcom's next quarterly report for whether AI infrastructure orders are still growing.",
-      "source": "24/7 Wall St.",
-      "url": "https://247wallst.com/investing/2026/10/13/broadcoms-ceo-just-compared-ai-investors-to-gamblers/"
-    },
-    {
-      "who": "Mukesh Ambani",
-      "sector": "Other",
-      "via": "Reliance Jio Platforms",
-      "people": [
-        "Mukesh Ambani"
-      ],
-      "type": "IPO / Markets",
-      "tickers": "Private",
-      "read": "Pricing",
-      "direction": "flat",
-      "headline": "Jio Platforms nears India's biggest-ever IPO",
-      "move": "Reliance's Jio Platforms filed its draft IPO prospectus with India's securities regulator SEBI on June 19, 2026 and received SEBI's approval on Aug. 28. The offering is reported at about 37,700 crore rupees (roughly $4 billion), entirely new shares, with proceeds going mainly to repay Jio debt, Angel One reported. Roadshows wrapped up in September and October, led by Akash Ambani, who called the listing \"a great responsibility\" and the Reliance group's first public share sale in nearly three decades, alongside his sister Isha Ambani.",
-      "why": "A Jio listing of this size would be India's largest IPO on record and a major test of investor appetite for its telecom-and-digital business separate from parent Reliance Industries.",
-      "bear": "The exact subscription dates, price band and listing date are still not formally confirmed by Jio or the exchanges, so the terms could still shift before launch.",
-      "watch": "Jio's expected subscription window around Oct. 21-23 and a listing near Oct. 28.",
-      "source": "Angel One",
-      "url": "https://www.angelone.in/news/ipos/from-drhp-filing-to-proposed-october-launch-key-developments-of-jio-ipo-so-far"
-    },
-    {
-      "who": "Aliko Dangote",
+      "who": "Carlos Slim Helu & family",
       "sector": "Energy",
-      "via": "Dangote Refinery",
+      "via": "Talos Energy",
       "people": [
-        "Aliko Dangote"
+        "Carlos Slim Helu & family"
       ],
-      "type": "IPO / Markets",
-      "tickers": "Private",
-      "read": "Turnaround",
-      "direction": "up",
-      "headline": "Dangote Refinery's IPO window closes after profit surge",
-      "move": "The Dangote Petroleum Refinery's \"people's IPO\" subscription window ran from Sept. 14 to Oct. 13, offering about 4.1 billion ordinary shares at 525 naira each, AllAfrica reported. The refinery posted first-half 2026 after-tax profit of roughly $1.82 billion, reversing a $476 million loss for all of 2025, as average plant utilization rose to 83.6% from about 45% at the start of the year.",
-      "why": "A successful listing would make Aliko Dangote's refinery a public company for the first time, after years of construction delays and losses.",
-      "bear": "Allotment and listing aren't finalized yet, and some of the company's own revenue and fundraising figures didn't fully reconcile in reporting, so the final outcome of the offer is still unclear.",
-      "watch": "The refinery's planned listing, expected in late November.",
-      "source": "AllAfrica",
-      "url": "https://allafrica.com/stories/202609090106.html"
+      "type": "Insider trade",
+      "tickers": "TALO · PBF",
+      "read": "Selling",
+      "direction": "down",
+      "headline": "Carlos Slim's firm sells $122M in US energy stocks",
+      "move": "Control Empresarial de Capitales, Carlos Slim's holding company, sold 6.24 million shares of Talos Energy for about $106.8 million and 170,000 shares of PBF Energy for about $15 million, in trades made Oct 8-12, 2026, according to SEC Form 4 filings signed Oct 13 by Marco Antonio Slim Domit. The firm still held about 32.4 million Talos shares and 13.3 million PBF Class A shares afterward.",
+      "why": "The sales trim two of the Slim family's independent bets on US offshore drilling and refining, even though the remaining stakes are still large.",
+      "bear": "Selling roughly 16% of the Talos stake and a small slice of PBF isn't an exit — the family remains among each company's largest shareholders.",
+      "watch": "Whether further SEC filings show the selling continuing.",
+      "source": "SEC EDGAR (Talos Energy Form 4)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126039478/xslF345X06/form4.xml"
     },
     {
-      "who": "Shiv Nadar",
-      "sector": "AI & tech",
-      "via": "HCLTech",
+      "who": "Stephen Schwarzman",
+      "sector": "Finance",
+      "via": "Blackstone",
       "people": [
-        "Shiv Nadar"
+        "Stephen Schwarzman"
       ],
-      "type": "Earnings",
-      "tickers": "HCLTECH",
-      "read": "Beat",
-      "direction": "up",
-      "headline": "HCLTech profit rises 21% on record deal bookings",
-      "move": "HCLTech reported fiscal second-quarter net profit of 5,132 crore rupees, up 21% year over year, on revenue of 35,620 crore rupees, up 11.5%, for the quarter ended Sept. 30, 2026, the company said. New deal bookings rose 27% to about $3.26 billion, a first-half record, and the board declared a 12-rupee-a-share interim dividend. Shares rallied the next trading day.",
-      "why": "Strong bookings suggest enterprise clients are still signing new IT and AI-services contracts even as some peers describe a more cautious spending environment.",
-      "bear": "HCL's software unit revenue fell 11.2% in constant currency, and the company left its full-year revenue growth guidance unchanged at a modest 2.5%-4%, so the quarter wasn't a breakout across the whole business.",
-      "watch": "Whether this quarter's record bookings convert into faster revenue growth later in the fiscal year.",
-      "source": "Free Press Journal",
-      "url": "https://www.freepressjournal.in/business/hcltech-net-profit-rises-21-to-5132-crore-in-q2-fy27-revenue-up-115"
+      "type": "Insider trade",
+      "tickers": "BMBL",
+      "read": "Selling",
+      "direction": "down",
+      "headline": "Blackstone sells $9.8M more of its Bumble stake",
+      "move": "Blackstone entities tied to Stephen Schwarzman sold 2.76 million Class A shares of Bumble on Oct 13, 2026 for about $9.8 million, at $3.54 a share, under a trading plan the firm adopted in November 2025, according to a Form 4 filing. Blackstone's remaining holdings across its various Bumble entities ranged from about 13,700 to 6.97 million shares after the sale.",
+      "why": "The sale continues Blackstone's gradual reduction of its Bumble stake, a dating-app investment whose stock sits far below its IPO price.",
+      "bear": "The sale was made under a trading plan set up nearly a year ago, not a fresh decision, and Blackstone still holds a sizeable position.",
+      "watch": "Bumble's next quarterly results for signs of a turnaround.",
+      "source": "SEC EDGAR (Bumble Form 4)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526421998/xslF345X06/ownership.xml"
     },
     {
-      "who": "Jay Y. Lee",
-      "sector": "AI & tech",
-      "via": "Samsung Electronics",
+      "who": "Giancarlo Devasini",
+      "sector": "Finance",
+      "via": "Gold.com",
       "people": [
-        "Jay Y. Lee"
+        "Giancarlo Devasini"
       ],
-      "type": "Earnings",
-      "tickers": "SSNLF",
-      "read": "Record",
+      "type": "Investment",
+      "tickers": "GOLD",
+      "read": "Buying",
       "direction": "up",
-      "headline": "Samsung guides to record profit on AI memory demand",
-      "move": "Samsung Electronics guided on Oct. 8 to third-quarter consolidated operating profit of about 107.4 trillion won, nearly nine times the 12.2 trillion won it posted a year earlier, on sales of about 195 trillion won, Hargreaves Lansdown reported. The preliminary, company-estimated figures are required under Korean disclosure rules and don't break results out by division; the detailed report with segment figures is due later this month.",
-      "why": "The jump points to how much revenue memory-chip makers are now pulling in from AI data-center demand for high-bandwidth and other advanced memory.",
-      "bear": "The guidance is preliminary with no division breakdown yet, and the reported sales figure actually came in below analysts' consensus forecast.",
-      "watch": "Samsung's detailed Q3 report, expected later this month, for the semiconductor division's actual contribution.",
-      "source": "Hargreaves Lansdown",
-      "url": "https://www.hl.co.uk/shares/stock-market-news/company--news/samsung-electronics-guides-to-huge-surge-in-q3-profits"
+      "headline": "Tether's Devasini adds to his Gold.com stake",
+      "move": "Giancarlo Devasini, through Tether-controlled entities, bought 32,118 shares of Gold.com on Oct 7 and Oct 12, 2026, for about $39.87-$39.96 a share, roughly $1.28 million total, according to a Form 4 filing signed Oct 13. The filing also shows about 3.37 million Gold.com shares already held through a separate Tether subsidiary.",
+      "why": "The purchase adds to Tether's existing position in the gold-focused company, part of a broader push by Devasini and his Bitfinex-linked partners into gold and crypto-adjacent assets.",
+      "bear": "At roughly $1.3 million, the purchase is small next to Tether's multibillion-dollar balance sheet and may not signal a bigger strategic move.",
+      "watch": "Whether Tether discloses a larger change in its Gold.com stake.",
+      "source": "SEC EDGAR (Gold.com Form 4)",
+      "url": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926115328/xslF345X06/tm2627489-1_4seq1.xml"
+    },
+    {
+      "who": "Elon Musk",
+      "sector": "Autos",
+      "via": "Tesla",
+      "people": [
+        "Elon Musk"
+      ],
+      "type": "Product launch",
+      "tickers": "TSLA",
+      "read": "Spectacle",
+      "direction": "flat",
+      "headline": "Tesla unveils 'flying' Roadster at SpaceX site",
+      "move": "Tesla unveiled its long-delayed next-generation Roadster on Oct 15, 2026, in a livestreamed event at SpaceX's test site in McGregor, Texas, with Musk, design chief Franz von Holzhausen and engineering lead Lars Moravy presenting. Tesla said the car can go from 0 to 60 mph in under one second, and the demo showed the car hovering and maneuvering off the ground using a SpaceX-derived thruster package. Musk said beforehand that the result was not \"safety optimized\" and that success wasn't guaranteed. No price was announced; prior reservations were $50,000 against an earlier $200,000-$250,000 target price, and production isn't expected before 2028.",
+      "why": "The Roadster has slipped for nearly a decade since its 2017 reveal, and a working, if limited, flying demonstration is meant to revive interest in Tesla's halo car.",
+      "bear": "The flying feature isn't approved for public roads and faces FAA restrictions, and Musk has a long history of missed Roadster delivery promises.",
+      "watch": "Whether Tesla sets a firmer production date or price at a future event.",
+      "source": "Newsweek",
+      "url": "https://www.newsweek.com/elon-musk-flying-tesla-12576772"
     }
   ],
-  "consensus": null,
+  "consensus": {
+    "headline": "AI debt jitters hit three billionaires' stocks at once",
+    "body": "Oracle, Dell and SoftBank all fell sharply within the same 48 hours this week, as investors grew nervous about the debt behind the AI data-center buildout. A viral chart of CoreWeave's bond yields spiking above 15%, plus hotter US inflation data reviving Fed rate-hike fears, were the common threads across the sell-off in Larry Ellison's, Michael Dell's and Masayoshi Son's biggest holdings.",
+    "tags": [
+      "AI & tech",
+      "debt",
+      "selloff"
+    ]
+  },
   "filings": [
     {
-      "filer": "JPMorgan Chase & Co.",
-      "form": "8-K",
-      "change": "Q3 net income $15.3B (+6%), EPS $5.57",
-      "direction": "up"
-    },
-    {
-      "filer": "Citigroup Inc.",
-      "form": "8-K",
-      "change": "Q3 net income $5.2B (+40%), EPS $2.85 beat estimate",
-      "direction": "up"
-    },
-    {
-      "filer": "LVMH",
-      "form": "other",
-      "change": "Nine-month revenue €57.1B (+2% organic); Q3 organic growth slowed to 1%",
+      "filer": "Carlos Slim Helu & family",
+      "form": "Form 4",
+      "change": "Sold 6.24M Talos Energy shares (~$106.8M)",
       "direction": "down"
     },
     {
-      "filer": "Samsung Electronics",
-      "form": "other",
-      "change": "Q3 guidance: operating profit ~₩107.4T, ~9x year earlier",
-      "direction": "up"
+      "filer": "Carlos Slim Helu & family",
+      "form": "Form 4",
+      "change": "Sold 170,000 PBF Energy shares (~$15M)",
+      "direction": "down"
     },
     {
-      "filer": "HCLTech",
-      "form": "other",
-      "change": "Q2 FY27 net profit ₹5,132cr, +21% year over year",
-      "direction": "up"
+      "filer": "Stephen Schwarzman",
+      "form": "Form 4",
+      "change": "Blackstone sold 2.76M Bumble shares (~$9.8M)",
+      "direction": "down"
     },
     {
-      "filer": "Dangote Petroleum Refinery",
-      "form": "S-1",
-      "change": "\"People's IPO\" subscription window closed Oct. 13; H1 profit ~$1.82B",
+      "filer": "Giancarlo Devasini",
+      "form": "Form 4",
+      "change": "Tether entities bought 32,118 Gold.com shares (~$1.28M)",
       "direction": "up"
     }
   ],
   "watch": [
-    "Oct. 15 (today, after the close): Interactive Brokers, founded by Thomas Peterffy, reports Q3 earnings.",
-    "Oct. 21 (expected): Jio Platforms' IPO subscription window opens, in what would be India's largest-ever offering.",
-    "Oct. 21: Tesla's Q3 2026 earnings call.",
-    "Later in October (expected): Samsung's detailed Q3 report with segment-level results.",
-    "Late November (expected): Dangote Refinery's planned stock-market listing."
+    "Skydance's 12-day antitrust trial over the Warner Bros. Discovery merger starts March 2, 2027.",
+    "Oracle's reported financing talks with Apollo and Goldman Sachs on AI data-center debt, which it wants completed this year."
   ],
   "quickHits": [
-    "Tesla delivered more than 486,000 vehicles in the third quarter, topping the company-compiled consensus, ahead of its Oct. 21 earnings call."
+    "CoreWeave, the AI-cloud operator at the center of this week's debt worries, saw its own shares fall more than 15% on Oct 14 after a chart of its bond yields went viral online."
   ],
   "memo": [
-    "Even strong earnings can mean a falling stock price when expectations run ahead of results — manage what the market expects, not just the numbers themselves.",
-    "A warning from the CEO of a major AI chip supplier that \"capital, not chips\" is now the constraint is a sign the financing terms behind AI infrastructure deals are worth watching closely.",
-    "China-dependent demand is still weighing on luxury and conglomerate earnings; plans that assume a quick China recovery look riskier right now."
+    "A good quarter doesn't protect your stock from how investors feel about your whole sector — Dell's business grew, but it still fell 11% on one analyst's doubts about enterprise AI spending.",
+    "If you're financing growth with debt, watch your peers' borrowing costs too — Oracle fell on jitters about a different company's bond yields, not its own results.",
+    "An insider selling part of a stake, even a large one, doesn't automatically mean trouble — Carlos Slim and Blackstone's sales this week left them as major shareholders, not sellers heading for the exit."
   ],
   "movers": [
     {
-      "ticker": "C",
-      "date": "2026-10-13",
-      "changePct": -5.6019,
-      "why": "Citigroup fell 5.6% after third-quarter profit beat estimates but trading trends and credit costs worried investors, Beinsure reported.",
-      "sourceName": "Beinsure",
-      "sourceUrl": "https://beinsure.com/news/citigroup-stock-price-forecast-earnings/"
+      "ticker": "ORCL",
+      "date": "2026-10-14",
+      "changePct": -8.8338,
+      "why": "Oracle fell 8.8% after a viral chart of CoreWeave's bond yields spooked AI-infrastructure investors.",
+      "sourceName": "SiliconAngle",
+      "sourceUrl": "https://siliconangle.com/2026/10/14/shares-of-oracle-neoclouds-drop-on-coreweave-debt-concerns/"
+    },
+    {
+      "ticker": "DELL",
+      "date": "2026-10-14",
+      "changePct": -11.274,
+      "why": "Dell fell 11.3% after Barclays cut it to Equal Weight, citing doubts that enterprise AI adoption justifies the rally.",
+      "sourceName": "GuruFocus",
+      "sourceUrl": "https://www.gurufocus.com/news/9123969/dell-technologies-dell-shares-plunge-over-11-after-barclays-downgrades-rating"
+    },
+    {
+      "ticker": "PSKY",
+      "date": "2026-10-14",
+      "changePct": -23.8403,
+      "why": "Skydance fell 23.8% after distributing 471 million warrants to Paramount shareholders, diluting the stock.",
+      "sourceName": "Fox Business",
+      "sourceUrl": "https://www.foxbusiness.com/markets/skydance-shares-plunge-after-company-distributes-nearly-471m-warrants"
     }
   ],
   "ledger": null
