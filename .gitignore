@@ -3,3 +3,6 @@ out/
 
 # local secrets (never commit)
 .env*
+
+# build caches (SEC downloads for scripts/build-company-about.mjs)
+.cache/

@@ -97,6 +97,13 @@
     close.addEventListener('click', function(){ api.close(); });
     prev.addEventListener('click', function(){ go(-1); });
     next.addEventListener('click', function(){ go(1); });
+    body.addEventListener('click', function(e){
+      var b = e.target.closest ? e.target.closest('[data-sc-co],[data-sc-player],[data-sc-mover]') : null;
+      if (!b || !D) return;
+      if (b.hasAttribute('data-sc-co')) toggleCompany(b.getAttribute('data-sc-co'), false);
+      else if (b.hasAttribute('data-sc-mover')){ if (D.openTk !== b.getAttribute('data-sc-mover')) toggleCompany(b.getAttribute('data-sc-mover'), true); else { var hb = ui.body.querySelector('[data-sc-co="' + D.openTk + '"]'); if (hb) hb.focus(); } }
+      else { show(b.getAttribute('data-sc-player')); ui.close.focus(); var live = document.getElementById('live'); if (live){ var t = entry().name + ', ' + ui.pos.textContent; live.textContent = ''; setTimeout(function(){ live.textContent = t; }, 30); } }
+    });
     acts.addEventListener('click', function(e){
       var b = e.target.closest ? e.target.closest('[data-sc-act]') : null;
       if (!b || !D) return;
@@ -184,25 +191,87 @@
     stat(dl, 'Stake rank', st.stakeRank ? '#' + st.stakeRank : '—', '', st.stakeRank ? BD.STAKE_LABEL : 'no US-listed stake');
     box.appendChild(dl);
   }
+  // ---- companies: each "Scores on" row expands a company card (data/companies/about.json, one open at a time) ----
+  function aboutData(){
+    return once('about', function(){
+      return Promise.all([BD.getJson('data/companies/about.json'), BD.getJson('data/companies/pages.json').then(null, function(){ return null; })])
+        .then(function(r){ return { cos: (r[0] && r[0].companies) || {}, pages: (r[1] && r[1].pages) || {} }; });
+    });
+  }
+  function holdersOf(tk){
+    return arr(F.state.draftWk && F.state.draftWk.draftable).filter(function(p){
+      return arr(p.holdings).some(function(h){ return h && h.ticker === tk; });
+    }).sort(function(a, b){ return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0); });
+  }
+  function coCard(h){
+    var card = el('div', 'sc-co'); card.id = 'sc-co-' + h.ticker.replace(/[^A-Za-z0-9]/g, '_');
+    var ab = D.x.about, e = ab && has(ab.cos, h.ticker) ? ab.cos[h.ticker] : null;
+    if (ab === undefined){ note(card, 'Loading the company card…', 'v2-loading'); return card; }
+    if (e && e.whatTheyDo) card.appendChild(el('p', 'sc-co__what', e.whatTheyDo));
+    else card.appendChild(el('p', 'sc-note', 'No company description on file yet.'));
+    var where = e ? [e.industry, e.hq].filter(Boolean).join(' · ') : '';
+    if (where) card.appendChild(el('p', 'sc-co__meta', where));
+    if (e && e.note && e.note.text){
+      var np = el('p', 'sc-co__note', e.note.text + ' ');
+      var na = ext('sc-src', 'Source', e.note.sourceUrl); if (na) np.appendChild(na);
+      card.appendChild(np);
+    }
+    if (e && e.sourceUrl){
+      var sp = el('p', 'sc-co__src', 'Source: ');
+      var sa = ext('sc-src', (e.sourceName || 'source') + ' ↗', e.sourceUrl); if (sa) sp.appendChild(sa);
+      card.appendChild(sp);
+    }
+    var who = holdersOf(h.ticker);
+    if (who.length){
+      var wp = el('div', 'sc-co__who');
+      wp.appendChild(el('span', 'sc-co__k', 'Players who score on it: '));
+      who.forEach(function(p, i){
+        if (i) wp.appendChild(txt(', '));
+        if (p.slug === D.slug){ wp.appendChild(el('span', 'sc-co__me', p.name)); return; }
+        var b = btn('sc-co__p', p.name); b.setAttribute('data-sc-player', p.slug); b.setAttribute('data-sc-key', 'pl-' + p.slug);
+        wp.appendChild(b);
+      });
+      card.appendChild(wp);
+    }
+    var slug = ab && ab.pages[h.ticker];
+    if (slug && /^[a-z0-9-]+$/.test(slug)){ var ca = el('a', 'sc-co__page', 'Company page →'); ca.href = 'companies/' + slug + '/'; ca.setAttribute('data-sc-key', 'copage'); card.appendChild(ca); }
+    return card;
+  }
   function renderHoldings(box){
     var hs = arr(entry().holdings).filter(function(h){ return h && h.ticker; }).slice().sort(function(a, b){ return (b.weight || 0) - (a.weight || 0); });
     var s = sec('Scores on');
     if (!hs.length){ note(s, 'No listed holdings in this week\'s game file.'); box.appendChild(s); return; }
     var ul = el('ul', 'sc-hold');
-    hs.slice(0, 6).forEach(function(h){
-      var li = el('li', 'sc-hold__i');
-      var top = el('div', 'sc-hold__row');
+    var shown = hs.slice(0, 6);
+    if (D.openTk && !shown.some(function(h){ return h.ticker === D.openTk; })) shown = shown.concat(hs.filter(function(h){ return h.ticker === D.openTk; }));
+    shown.forEach(function(h){
+      var li = el('li', 'sc-hold__i'), open = D.openTk === h.ticker;
+      var top = btn('sc-hold__row' + (open ? ' is-open' : ''), null);
+      top.setAttribute('aria-expanded', open ? 'true' : 'false');
+      top.setAttribute('data-sc-co', h.ticker); top.setAttribute('data-sc-key', 'co-' + h.ticker);
       top.appendChild(el('strong', 'sc-hold__tk', h.ticker));
-      if (h.name) top.appendChild(el('span', 'sc-hold__n', h.name));
+      top.appendChild(el('span', 'sc-hold__n', h.name || h.ticker));
       var w = typeof h.weight === 'number' ? h.weight : null;
       top.appendChild(el('span', 'sc-hold__w num', w == null ? '—' : (P && P.weightPct ? P.weightPct(w) : Math.round(w * 100) + '%')));
+      var chv = svgEl('svg', { viewBox: '0 0 16 16', width: 14, height: 14, 'class': 'sc-hold__chev', 'aria-hidden': 'true', focusable: 'false' });
+      chv.appendChild(svgEl('path', { d: 'M4 6l4 4 4-4', fill: 'none', stroke: 'currentColor', 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+      top.appendChild(chv);
+      top.appendChild(sr(open ? ': hide company card' : ': show what the company does'));
       li.appendChild(top);
       if (w != null){ var bar = el('span', 'sc-hold__bar'); bar.setAttribute('aria-hidden', 'true'); var f = el('span'); f.style.width = Math.max(2, Math.min(100, w * 100)) + '%'; bar.appendChild(f); li.appendChild(bar); }
+      if (open){ var card = coCard(h); top.setAttribute('aria-controls', card.id); li.appendChild(card); }
       ul.appendChild(li);
     });
     s.appendChild(ul);
-    if (hs.length > 6) note(s, 'And ' + (hs.length - 6) + ' more on the full profile.');
+    if (hs.length > shown.length) note(s, 'And ' + (hs.length - shown.length) + ' more on the full profile.');
     box.appendChild(s);
+  }
+  function toggleCompany(tk, focus){
+    D.openTk = D.openTk === tk ? null : tk;
+    if (D.openTk && D.x.about === undefined){ var token = D.seq; aboutData().then(function(v){ if (!D || D.seq !== token) return; D.x.about = v || { cos: {}, pages: {} }; renderAll(); }); }
+    renderAll();
+    var b = ui.body.querySelector('[data-sc-co="' + tk + '"]');
+    if (b){ if (focus) b.focus(); if (b.scrollIntoView && D.openTk) b.scrollIntoView({ block: 'nearest' }); }
   }
   function renderChart(box){
     var s = sec('Recent form'), win = D.x.win;
@@ -257,6 +326,9 @@
     if (mv){
       var pct = typeof mv.changePct === 'number' ? ' ' + (mv.changePct > 0 ? '+' : MINUS) + Math.abs(mv.changePct).toFixed(1) + '%' : '';
       signal(ul, 'move', 'Why ' + mv.ticker + ' moved' + pct + ', ' + dayLabel(mv.date), mv.why, ext('sc-src', mv.sourceName || 'Source', mv.sourceUrl));
+      var mb = btn('sc-co__p sc-sig__co', 'About ' + mv.ticker); mb.setAttribute('data-sc-mover', mv.ticker); mb.setAttribute('data-sc-key', 'mv-' + mv.ticker);
+      mb.setAttribute('aria-label', 'What ' + mv.ticker + ' does: open its company card');
+      ul.lastChild.appendChild(mb);
     }
     if (ul.firstChild) s.appendChild(ul);
     else if (x.cal === undefined || x.movers === undefined || x.win === undefined) note(s, 'Loading…', 'v2-loading');
@@ -307,7 +379,7 @@
     else x.filings = null;
   }
   function show(slug){
-    D.slug = slug; D.seq = ++seq; D.x = {};
+    D.slug = slug; D.seq = ++seq; D.x = {}; D.openTk = null;
     renderAll();
     ui.panel.scrollTop = 0;
     load(D.seq);
