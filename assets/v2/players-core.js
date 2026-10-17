@@ -1,4 +1,5 @@
-/* Billionaires Digest v2: pure helpers for the Players pages (players.html, player.html). ES5, no DOM.
+/* Billionaires Digest v2: pure helpers for the Players pages (players.html, player.html) and the Draft room table. ES5,
+   no DOM except paintSortHeads (browser only).
    Exposes one global: BDPlayersCore. Works on the fantasy week and day files as they are; never adds numbers of
    its own. Tested with node --test (scripts/lib/v2-players-core.test.mjs). Game only: play money, no prizes. */
 (function(root){
@@ -33,41 +34,107 @@
     return true;
   }
 
-  // Sort a copy of the pool. key: pts | avg | capdesc | capasc | rank | name.
-  // get: { pts(slug), avg(slug), cap(slug), rank(slug)? } each returning a number or null. Missing values sort last;
-  // ties fall back to rank: get.rank (the Public Stake Value rank) when given, else the entry's own rank.
-  function sortPlayers(list, key, get){
-    var rk = get && get.rank ? function(p){ var r = get.rank(p.slug); return num(r) ? r : 999; } : function(p){ return num(p.rank) ? p.rank : 999; };
-    function byRank(a, b){ return rk(a) - rk(b); }
-    function byName(a, b){ var x = String(a.name || ''), y = String(b.name || ''); return x < y ? -1 : (x > y ? 1 : byRank(a, b)); }
-    function desc(fn){
-      return function(a, b){
-        var x = fn(a.slug), y = fn(b.slug);
-        if (!num(x) && !num(y)) return byRank(a, b);
-        if (!num(x)) return 1;
-        if (!num(y)) return -1;
-        return (y - x) || byRank(a, b);
-      };
+  // ---- sorting (shared by the Draft room and Players tables: clickable column headers + the compact select) ----
+  // A sort is a column key and a direction. Keys: pts (week points), avg (avg/day), cap (cap cost),
+  // rank (Public Stake Value; "high" = the biggest stake = rank 1), value (points per cap), name.
+  // First click on a column: high to low ('desc'), except name: A to Z ('asc'). A second click flips it.
+  // Sort ids (the select values and what sessionStorage keeps): 'pts', 'pts-asc', 'avg', 'avg-asc', 'capdesc',
+  // 'capasc', 'rank', 'rank-asc', 'value', 'value-asc', 'name', 'name-desc'. Older saved ids stay valid.
+  var SORT_KEYS = ['pts', 'avg', 'cap', 'rank', 'value', 'name'];
+  function firstDir(key){ return key === 'name' ? 'asc' : 'desc'; }
+  function parseSort(id){
+    var s = String(id == null ? '' : id);
+    if (s === 'capdesc') return { key: 'cap', dir: 'desc' };
+    if (s === 'capasc') return { key: 'cap', dir: 'asc' };
+    var m = /^([a-z]+)(?:-(asc|desc))?$/.exec(s);
+    if (!m || SORT_KEYS.indexOf(m[1]) < 0 || m[1] === 'cap') return { key: 'pts', dir: 'desc' };
+    return { key: m[1], dir: m[2] || firstDir(m[1]) };
+  }
+  function sortId(key, dir){
+    if (SORT_KEYS.indexOf(key) < 0) return 'pts';
+    var d = dir === 'asc' || dir === 'desc' ? dir : firstDir(key);
+    if (key === 'cap') return d === 'asc' ? 'capasc' : 'capdesc';
+    return d === firstDir(key) ? key : key + '-' + d;
+  }
+  // The sort after clicking a column header: same column flips the direction, another column starts at its first one.
+  function nextSort(current, key){
+    var c = parseSort(current);
+    if (c.key === key) return sortId(key, c.dir === 'asc' ? 'desc' : 'asc');
+    return sortId(key, firstDir(key));
+  }
+  // What a column header shows: { active, dir, ariaSort ('ascending' | 'descending' | 'none'), arrow ('down' | 'up' |
+  // 'both'), label (words for the next click) }. For name, A to Z is 'ascending'; for rank, the biggest stake first is
+  // 'descending' (by stake, not by rank number).
+  function headerState(current, key){
+    var c = parseSort(current), on = c.key === key, next = parseSort(nextSort(current, key));
+    var words = key === 'name' ? { asc: 'A to Z', desc: 'Z to A' } : { asc: 'low to high', desc: 'high to low' };
+    return {
+      active: on, dir: on ? c.dir : null,
+      ariaSort: on ? (c.dir === 'asc' ? 'ascending' : 'descending') : 'none',
+      arrow: on ? (c.dir === 'asc' ? 'up' : 'down') : 'both',
+      label: 'Sort ' + words[next.dir]
+    };
+  }
+  // Browser only (the one DOM helper here, shared by draft.js and players.js): paint every <button data-sort="key">
+  // inside scope as a sortable column header for the current sort id: label + ▼ / ▲ arrow (↕ hint when not active),
+  // aria-sort on its <th>, and a title / screen-reader hint naming what the next click does.
+  // extra: { key: { title, sr } } for column notes (e.g. which week the points are from).
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function paintSortHeads(scope, current, extra){
+    if (!scope || typeof document === 'undefined') return;
+    var bs = scope.querySelectorAll('button[data-sort]');
+    for (var i = 0; i < bs.length; i++){
+      var b = bs[i], key = b.getAttribute('data-sort'), st = headerState(current, key), x = (extra && extra[key]) || {};
+      if (!b.hasAttribute('data-label')) b.setAttribute('data-label', b.textContent.replace(/\s+/g, ' ').trim());
+      while (b.firstChild) b.removeChild(b.firstChild);
+      var t = document.createElement('span'); t.className = 'v2-sorth__t'; t.textContent = b.getAttribute('data-label');
+      b.appendChild(t);
+      var s = document.createElement('span'); s.className = 'v2-sr';
+      s.textContent = (x.sr || '') + ', ' + st.label.toLowerCase();
+      b.appendChild(s);
+      var svg = document.createElementNS(SVGNS, 'svg');
+      svg.setAttribute('viewBox', '0 0 10 14'); svg.setAttribute('width', '10'); svg.setAttribute('height', '14');
+      svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+      svg.setAttribute('class', 'v2-sorth__i is-' + st.arrow);
+      var up = document.createElementNS(SVGNS, 'path'); up.setAttribute('d', 'M5 1.5L9 6H1z'); up.setAttribute('class', 'v2-sorth__up');
+      var dn = document.createElementNS(SVGNS, 'path'); dn.setAttribute('d', 'M5 12.5L1 8h8z'); dn.setAttribute('class', 'v2-sorth__dn');
+      svg.appendChild(up); svg.appendChild(dn);
+      b.appendChild(svg);
+      b.className = 'v2-sorth' + (st.active ? ' is-active' : '');
+      b.title = (x.title ? x.title + '. ' : '') + st.label;
+      var th = b.parentNode;
+      if (th && th.tagName === 'TH'){ if (st.active) th.setAttribute('aria-sort', st.ariaSort); else th.removeAttribute('aria-sort'); }
     }
-    function asc(fn){
-      return function(a, b){
-        var x = fn(a.slug), y = fn(b.slug);
-        if (!num(x) && !num(y)) return byRank(a, b);
-        if (!num(x)) return 1;
-        if (!num(y)) return -1;
-        return (x - y) || byRank(a, b);
-      };
+  }
+  function nameKey(p){ return norm(fold(p && p.name)); }
+  // Sort a copy of the pool by a sort id (above). get: { pts, avg, cap, rank, value } each (slug) -> number or null.
+  // Missing values always sort last, in both directions. Ties: name A to Z, then rank, then slug, so the order is
+  // stable. rank: get.rank (Public Stake Value rank) when given, else the entry's own rank.
+  function sortPlayers(list, id, get){
+    var g = get || {}, s = parseSort(id), sign = s.dir === 'asc' ? 1 : -1;
+    var rk = g.rank ? function(p){ var r = g.rank(p.slug); return num(r) ? r : null; } : function(p){ return num(p.rank) ? p.rank : null; };
+    function byRank(a, b){
+      var x = rk(a), y = rk(b);
+      if (x == null || y == null) return x == null && y == null ? 0 : (x == null ? 1 : -1);
+      return x - y;
     }
-    var g = get || {};
-    var none = function(){ return null; };
-    var cmp = {
-      pts: desc(g.pts || none),
-      avg: desc(g.avg || none),
-      capdesc: desc(g.cap || none),
-      capasc: asc(g.cap || none),
-      rank: byRank,
-      name: byName
-    }[key] || byRank;
+    function bySlug(a, b){ var x = String(a.slug || ''), y = String(b.slug || ''); return x < y ? -1 : (x > y ? 1 : 0); }
+    function byName(a, b){ var x = nameKey(a), y = nameKey(b); if (!x || !y) return !x && !y ? 0 : (!x ? 1 : -1); return x < y ? -1 : (x > y ? 1 : 0); }
+    function tie(a, b){ return byName(a, b) || byRank(a, b) || bySlug(a, b); }
+    var val;
+    if (s.key === 'name') val = null;
+    else if (s.key === 'rank') val = function(p){ var r = rk(p); return r == null ? null : -r; };  // biggest stake = rank 1 = "high"
+    else { var fn = g[s.key]; val = function(p){ var v = fn ? fn(p.slug) : null; return num(v) ? v : null; }; }
+    function cmp(a, b){
+      if (!val){
+        var x0 = nameKey(a), y0 = nameKey(b);
+        if (!x0 || !y0) return !x0 && !y0 ? (byRank(a, b) || bySlug(a, b)) : (!x0 ? 1 : -1);
+        return (x0 < y0 ? -sign : (x0 > y0 ? sign : 0)) || byRank(a, b) || bySlug(a, b);
+      }
+      var x = val(a), y = val(b);
+      if (x == null || y == null) return x == null && y == null ? tie(a, b) : (x == null ? 1 : -1);
+      return ((x - y) * sign) || tie(a, b);
+    }
     return arr(list).slice().sort(cmp);
   }
 
@@ -149,6 +216,7 @@
 
   root.BDPlayersCore = {
     tickers: tickers, matches: matches, sortPlayers: sortPlayers, sectorRank: sectorRank,
+    parseSort: parseSort, sortId: sortId, nextSort: nextSort, headerState: headerState, paintSortHeads: paintSortHeads,
     kindOf: kindOf, typeMatches: typeMatches, cleanKind: cleanKind,
     dailySeries: dailySeries, gameLog: gameLog, pct: pct, weightPct: weightPct
   };

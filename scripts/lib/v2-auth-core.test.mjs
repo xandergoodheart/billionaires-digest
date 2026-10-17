@@ -22,10 +22,10 @@ test('flags: off unless exactly true; everything off when multiplayer is disable
   assert.deepEqual(plain(A.flags({ authGoogle: true, authPassword: true })), { google: true, password: true, any: true });
   assert.deepEqual(plain(A.flags({ enabled: false, authGoogle: true, authPassword: true })), { google: false, password: false, any: false });
   assert.deepEqual(plain(A.flags(null)), { google: false, password: false, any: false });
-  // the committed config keeps both off
+  // the committed config uses real booleans (accounts went live 2026-10-14 with both on)
   const cfg = JSON.parse(readFileSync(join(ROOT, 'config', 'supabase.json'), 'utf8'));
-  assert.equal(cfg.authGoogle, false);
-  assert.equal(cfg.authPassword, false);
+  assert.equal(typeof cfg.authGoogle, 'boolean');
+  assert.equal(typeof cfg.authPassword, 'boolean');
 });
 
 test('email and password checks', () => {

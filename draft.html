@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="assets/v2/draft.css">
 <link rel="stylesheet" href="assets/v2/lucky.css">
 <link rel="stylesheet" href="assets/v2/dossier.css">
+<link rel="stylesheet" href="assets/v2/scout.css">
 </head>
 <body class="v2 v2-draftpage">
 <!-- v2topbar:start -->
@@ -175,15 +176,24 @@
           <div class="dr-filter">
             <label class="v2-sr" for="sort">Sort players</label>
             <select class="v2-select" id="sort">
-              <option value="pts">Sort: week points</option>
+              <option value="pts">Sort: week points, high to low</option>
+              <option value="pts-asc">Sort: week points, low to high</option>
               <option value="value">Sort: best value (points per cap)</option>
-              <option value="avg">Sort: recent average</option>
-              <option value="capdesc">Sort: cap, high first</option>
-              <option value="capasc">Sort: cap, low first</option>
-              <option value="rank">Sort: Public Stake Value</option>
-              <option value="name">Sort: name</option>
+              <option value="value-asc">Sort: value, low to high</option>
+              <option value="avg">Sort: avg/day, high to low</option>
+              <option value="avg-asc">Sort: avg/day, low to high</option>
+              <option value="capdesc">Sort: cap, high to low</option>
+              <option value="capasc">Sort: cap, low to high</option>
+              <option value="rank">Sort: Public Stake Value, high to low</option>
+              <option value="rank-asc">Sort: Public Stake Value, low to high</option>
+              <option value="name">Sort: name, A to Z</option>
+              <option value="name-desc">Sort: name, Z to A</option>
             </select>
           </div>
+          <label class="dr-hide" for="hideoff">
+            <input type="checkbox" id="hideoff">
+            <span class="dr-hide__t">Hide players I can't afford</span>
+          </label>
         </div>
         <div id="poolpanel" role="tabpanel" aria-labelledby="sectab-all">
         <table class="v2-table dr-table">
@@ -191,11 +201,11 @@
           <thead>
             <tr>
               <th scope="col" class="dr-th-q"><span class="v2-sr">Queue</span></th>
-              <th scope="col">Player</th>
+              <th scope="col" class="dr-th-sort" data-sortcol="name"><button type="button" class="v2-sorth" data-sort="name">Player</button></th>
               <th scope="col" class="dr-th-form" id="formhead">Form</th>
-              <th scope="col" class="n" id="ptshead">Week pts</th>
-              <th scope="col" class="n" id="avghead">Avg</th>
-              <th scope="col" class="n">Cap</th>
+              <th scope="col" class="n dr-th-sort" data-sortcol="pts"><button type="button" class="v2-sorth" data-sort="pts" id="ptshead">Week pts</button></th>
+              <th scope="col" class="n dr-th-sort" data-sortcol="avg"><button type="button" class="v2-sorth" data-sort="avg" id="avghead">Avg</button></th>
+              <th scope="col" class="n dr-th-sort" data-sortcol="cap"><button type="button" class="v2-sorth" data-sort="cap" id="caphead">Cap</button></th>
               <th scope="col" class="dr-th-status">Status</th>
             </tr>
           </thead>
@@ -293,6 +303,8 @@
 <script src="assets/v2/portraits.js"></script>
 <script src="assets/v2/dossier-core.js"></script>
 <script src="assets/v2/dossier.js"></script>
+<script src="assets/v2/scout-core.js"></script>
+<script src="assets/v2/scout.js"></script>
 <script src="assets/v2/draft.js"></script>
 <script src="assets/v2/lucky.js"></script>
 </body>
