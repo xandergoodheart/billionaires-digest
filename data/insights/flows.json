@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-16",
+  "generated": "2026-10-17",
   "inputs": {
-    "filingsGenerated": "2026-10-16T14:06:41.996Z",
-    "pricesGenerated": "2026-10-16T14:10:20.895Z",
+    "filingsGenerated": "2026-10-17T13:05:14.927Z",
+    "pricesGenerated": "2026-10-17T13:08:56.338Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 18
+    "editions": 19
   },
   "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 73 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
@@ -166,8 +166,8 @@
     }
   ],
   "last7": {
-    "from": "2026-10-10",
-    "to": "2026-10-16",
+    "from": "2026-10-11",
+    "to": "2026-10-17",
     "buy": 2702484,
     "sell": 61659118,
     "net": -58956634,
@@ -313,23 +313,6 @@
       ]
     },
     {
-      "name": "Andreas von Bechtolsheim & family",
-      "slug": "andreas-von-bechtolsheim-family",
-      "sector": "AI & tech",
-      "value": 59686334,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-09-17",
-          "filed": "2026-09-21",
-          "form": "4",
-          "issuer": "Arista Networks, Inc.",
-          "ticker": "ANET",
-          "url": "https://www.sec.gov/Archives/edgar/data/1133206/000159653226000230/xslF345X06/edgardoc.xml"
-        }
-      ]
-    },
-    {
       "name": "Charles Koch & family",
       "slug": "charles-koch-family",
       "sector": "Industrials",
@@ -441,14 +424,6 @@
           "issuer": "LENNAR CORP /NEW/",
           "ticker": "LEN",
           "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526403089/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-09-17",
-          "filed": "2026-09-21",
-          "form": "4",
-          "issuer": "LENNAR CORP /NEW/",
-          "ticker": "LEN, LEN.B",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/xslF345X06/ownership.xml"
         }
       ]
     }
@@ -458,8 +433,8 @@
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
-      "value": 595294961,
-      "count": 8,
+      "value": 382899810,
+      "count": 6,
       "filings": [
         {
           "date": "2026-10-01",
@@ -492,14 +467,6 @@
           "issuer": "LENNAR CORP /NEW/",
           "ticker": "LEN",
           "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526403089/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-09-17",
-          "filed": "2026-09-21",
-          "form": "4",
-          "issuer": "LENNAR CORP /NEW/",
-          "ticker": "LEN, LEN.B",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526397059/xslF345X06/ownership.xml"
         }
       ]
     },
