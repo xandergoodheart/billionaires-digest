@@ -1,26 +1,13 @@
 {
-  "generated": "2026-10-18",
+  "generated": "2026-10-19",
   "inputs": {
-    "filingsGenerated": "2026-10-18T13:25:08.934Z",
-    "pricesGenerated": "2026-10-18T13:28:47.487Z",
+    "filingsGenerated": "2026-10-19T16:34:42.692Z",
+    "pricesGenerated": "2026-10-19T16:38:49.934Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 20
+    "editions": 21
   },
   "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 73 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
-    {
-      "week": "2026-W31",
-      "start": "2026-07-27",
-      "end": "2026-08-02",
-      "buy": 0,
-      "sell": 0,
-      "net": 0,
-      "other": 0,
-      "buyCount": 0,
-      "sellCount": 0,
-      "otherCount": 0,
-      "unpriced": 0
-    },
     {
       "week": "2026-W32",
       "start": "2026-08-03",
@@ -163,11 +150,24 @@
       "sellCount": 2,
       "otherCount": 0,
       "unpriced": 0
+    },
+    {
+      "week": "2026-W43",
+      "start": "2026-10-19",
+      "end": "2026-10-25",
+      "buy": 0,
+      "sell": 0,
+      "net": 0,
+      "other": 0,
+      "buyCount": 0,
+      "sellCount": 0,
+      "otherCount": 0,
+      "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-10-12",
-    "to": "2026-10-18",
+    "from": "2026-10-13",
+    "to": "2026-10-19",
     "buy": 2702484,
     "sell": 61659118,
     "net": -58956634,
