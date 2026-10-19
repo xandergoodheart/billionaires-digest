@@ -27,6 +27,7 @@ last_reviewed: 2026-10-03
 - Confirm v4 starting-price formula, squad split, captain multiplier, start date and earnings-data feasibility before the rulebook is finalized.
 - Confirm scope and timing of Watch / Billionaire Night Live; no production approval is established here.
 - Decide whether and when to enable Next Moves. The migration remains in `supabase/pending/0004_moves.sql`; `supabase/pending/README.md` requires owner approval.
+- Review and merge the Brief pull request (branch `claude/great-burnell-7217d3`), then follow `docs/BRIEF-SWITCH-ON.md`.
 
 # Follow-ups
 
@@ -38,7 +39,7 @@ last_reviewed: 2026-10-03
 
 # Who is editing what
 
-- Claude (2026-10-16): The Billionaire Brief redesign + opt-in at sign-up and on the Account page, branch `claude/great-burnell-7217d3`. PLAN ONLY so far (`docs/BRIEF-REDESIGN-PLAN.md`), awaiting owner approval of the plan and mock-ups; nothing built, nothing sent, no live setting changed. Files to be touched on approval: `scripts/lib/brief.mjs`, `assets/v2/auth.js`, `assets/v2/account-page.js`, `config/launch.json`, new `supabase/migrations/0009_brief_accounts.sql`.
+- Claude (2026-10-18): The Billionaire Brief Portrait Gallery design + opt-in built on branch `claude/great-burnell-7217d3` (email `scripts/lib/brief.mjs`, portraits `assets/portraits/email/`, Create free account checkbox, Account page switch, migration `0009_brief_accounts.sql`, owner checklist `docs/BRIEF-SWITCH-ON.md`); PR awaiting owner review. `emailSignup` and `briefSignup` both `false`; nothing sent. Validation: 444/445 tests (the one failure is the existing `config/supabase.json` auth-flag test, unrelated); preview checked at 320/375 px, light and dark. Claim cleared.
 
 - Claude (2026-10-12): preseason go-live fixes done on `feat/preseason` (plan `docs/PRESEASON-FIXES-PLAN.md`), PR awaiting owner; replaces PR #7. 356/356 tests. Owner setup steps in `docs/OWNER-SETUP.md`. After merge: run `node scripts/fetch-prices-repair.mjs && node scripts/build-fantasy.mjs --rebuild-days=11` on main and commit data/. Claim cleared.
 

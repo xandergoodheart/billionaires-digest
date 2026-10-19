@@ -44,6 +44,28 @@ html.au-lock, html.au-lock body { overflow: hidden; }
 }
 .au-google:hover { border-color: var(--text); background: var(--surface-2); }
 .au-google[disabled] { cursor: progress; color: var(--text-muted); }
+/* The Billionaire Brief opt-in (create account only; shown while config/launch.json "briefSignup" is true) */
+.au-optin {
+  position: relative; display: flex; align-items: flex-start; gap: 12px;
+  min-height: var(--tap); margin: -8px 0 12px; padding: 10px 0; cursor: pointer;
+}
+.au-optin__box {
+  flex: none; appearance: none; -webkit-appearance: none; margin: 1px 0 0;
+  width: 22px; height: 22px; border: 2px solid var(--line-2); border-radius: 6px;
+  background: var(--card) no-repeat center / 14px 14px; cursor: pointer;
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.au-optin:hover .au-optin__box { border-color: var(--text); }
+.au-optin__box:checked {
+  background-color: var(--brand); border-color: var(--brand);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%23FFFFFF' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.au-optin__box:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.au-optin__text { font-size: var(--fs-md); line-height: 1.4; color: var(--text); }
+.au__desc--brief { margin-top: -10px; color: var(--text); font-weight: 600; }
+@media (forced-colors: active) { .au-optin__box { appearance: auto; -webkit-appearance: auto; } }
+@media (prefers-reduced-motion: reduce) { .au-optin__box { transition: none; } }
+
 .au-or {
   display: flex; align-items: center; gap: 12px; margin: 18px 0;
   color: var(--text-muted); font-size: var(--fs-sm); font-weight: 600;
@@ -162,6 +184,39 @@ html.au-lock, html.au-lock body { overflow: hidden; }
 .ac-confirm { margin-top: 12px; padding: 16px; border-radius: 12px; background: var(--brand-tint); }
 .ac-confirm p { margin: 0 0 12px; font-weight: 600; }
 .ac-pending { padding: 14px 16px; border-radius: 12px; background: var(--warning-tint); color: var(--text); font-weight: 600; }
+/* The Billionaire Brief on/off switch (account page; shown while config/launch.json "briefSignup" is true) */
+.ac-switch {
+  display: inline-flex; align-items: center; gap: 12px; min-height: var(--tap); margin: 0 0 0 -4px; padding: 0 10px 0 4px;
+  border: 0; border-radius: 999px; background: none; color: var(--text);
+  font-family: var(--font-body); font-weight: 700; font-size: var(--fs-md); line-height: 1.2; text-align: left; cursor: pointer;
+}
+.ac-switch:hover .ac-switch__track { border-color: var(--text); }
+.ac-switch:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.ac-switch[aria-busy="true"] { cursor: progress; }
+.ac-switch[aria-busy="true"] .ac-switch__track { opacity: .6; }
+.ac-switch__track {
+  position: relative; flex: none; width: 52px; height: 30px; border-radius: 999px;
+  border: 2px solid var(--line-2); background: var(--card);
+  transition: background-color var(--t-base) var(--ease), border-color var(--t-base) var(--ease);
+}
+.ac-switch__knob {
+  position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--line-2);
+  transition: transform var(--t-base) var(--ease), background-color var(--t-base) var(--ease);
+}
+.ac-switch[aria-checked="true"] .ac-switch__track { background: var(--brand); border-color: var(--brand); }
+.ac-switch[aria-checked="true"] .ac-switch__knob { background: #FFFFFF; transform: translateX(22px); }
+.ac-brief .ac-brief__status { margin: 8px 0 0; font-size: var(--fs-md); font-weight: 600; color: var(--text); overflow-wrap: anywhere; }
+.ac-brief > .ac-bad { margin: 6px 0 0; color: var(--negative); }
+@media (prefers-reduced-motion: reduce) {
+  .ac-switch__track, .ac-switch__knob { transition: none; }
+}
+@media (forced-colors: active) {
+  .ac-switch__track { border-color: ButtonText; }
+  .ac-switch__knob { background: ButtonText; }
+  .ac-switch[aria-checked="true"] .ac-switch__track { background: Highlight; border-color: Highlight; }
+  .ac-switch[aria-checked="true"] .ac-switch__knob { background: HighlightText; }
+}
 .ac-card { padding: 22px 24px; border-radius: 14px; background: var(--card); box-shadow: var(--shadow); }
 .ac-card p { color: var(--text-muted); max-width: 56ch; }
 .ac-card p:last-child { margin-bottom: 0; }

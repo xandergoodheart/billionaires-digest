@@ -1,8 +1,8 @@
 # Plan: The Billionaire Brief, redesigned, with opt-in at sign-up and on the Account page
 
-Status: **plan for owner review (2026-10-16). Nothing is built or live.** Mock-ups are shown separately; they are not
-part of the site. When the owner approves, the build happens on a branch from `origin/main` through a pull request,
-behind a switch that stays **off** until the owner turns it on.
+Status: **approved by the owner on 2026-10-18; being built on branch `claude/great-burnell-7217d3`.** Design: option 6,
+"The Portrait Gallery", with "The Daily Swing" (chosen from seven researched options; research notes kept outside
+the repo). Everything stays behind `briefSignup: false`; nothing is sent or switched on by the build.
 
 ## What the owner asked for
 
@@ -25,35 +25,38 @@ behind a switch that stays **off** until the owner turns it on.
   deletion already deletes waitlist rows (`0008_accounts.sql`).
 - Privacy policy already names "our email delivery provider" for confirmation emails and the Brief. No change needed.
 
-## Part A. The email, redesigned
+## Part A. The email: "The Portrait Gallery" (approved 2026-10-18)
 
-Goal: it should look like Billionaires Digest (the ESPN-style site), read well on a phone, and survive the big mail
-apps (Apple Mail / iOS Mail, Gmail app and web, Outlook).
+Top to bottom (matches the approved mock-up, built from the 18 Oct edition):
+1. Hidden preheader (lede headline).
+2. Black masthead: "THE BILLIONAIRE BRIEF" (BRIEF in red), date, "N stories · N faces", View online link.
+3. **The cover:** the lede person's painted portrait if one exists, otherwise a framed initials medallion; name plate;
+   the lede headline huge on a red band with the dek; "The move" (facts) + source link; "Our read · Opinion" box.
+4. **Face of the day:** the first story whose person has a portrait, full-width portrait, headline, the move + source,
+   then Why it matters / The other side / Our read, each labelled opinion.
+5. **The Daily Swing:** the 5 biggest estimated one-day gainers (green, UP) and 5 biggest losers (red, DOWN) from
+   `data/insights/leaderboards.json` (already built every morning from `data/prices/networth-est.json`). No. 1 in
+   each block as a large portrait tile with the estimated change and the main stock's % move; Nos. 2-5 as rows with
+   a bar sized to the move. Each row links the person's page and the filing behind the share count ("SEC filing" for
+   sec.gov links, otherwise "Filing copy (site name)"). The method line sits under both blocks with a "How we
+   estimate" link to flows.html. Never called net worth. Price day = the last trading day's close. The section is left
+   out when the leaderboards are missing, empty or more than 4 days old.
+6. **The Gallery:** the remaining stories as 2-up placard cards (stacked on phones): portrait or initials, name,
+   up/down/flat chip, company · type, the move, source link, "Read our take →" to the edition.
+7. Quick hits (linked to the full edition), the game card (place in line before Season 1 starts; after that a
+   "Play this week" button; play-money line), "Read today's full edition" button, footer.
 
-**Look** (mock-up A):
-- Black masthead bar with the red "BD" badge, "THE BILLIONAIRE BRIEF" in the site's condensed capitals, and the
-  edition date. Same colours as the site: black `#0B0B0C`, red `#D62D27`, canvas `#EDEEF0`, white cards.
-- "Your spot" card (only before Season 1 starts, 9 Nov): place in line and the personal invite link. After the season
-  starts this card is replaced by a "Play this week" button to the site. (Today the line says "#N in line" forever.)
-- Top story: a red kicker ("TOP STORY"), a big condensed headline and the short summary already in the edition.
-- Up to 5 more stories, each as its own block: a small kicker built from fields already in the edition (story type
-  and person, for example "EARNINGS · JAMIE DIMON"), headline, the factual "move" text, and "Source: …" link.
-- One red button: "Read today's full edition".
-- Footer: "For information only · not financial advice", why they get it, Unsubscribe and Manage email settings
-  (Account page) links, contact address.
-- Initials circles instead of pictures (the site's painted portraits are .webp, which Outlook does not show). No
-  photos, no logos, as the house rules require.
+**Content rules:** only text already in that day's edition, copied verbatim (including quoted words such as
+"gamblers"; the no-betting-words rule applies to wording we write, not to reported news); only stories with a source
+link; sentences quoting a raw share price are dropped; opinion always labelled.
 
-**Content rules (unchanged from today):** only text already in that day's edition; only stories with a source link;
-sentences quoting a raw share price are dropped; opinion fields ("AI read", "why", "bear") stay out of the email.
+**Images:** small JPG copies of the painted portraits in `assets/portraits/email/<slug>.jpg` (email apps do not all
+show .webp). Linked by absolute https URL. People with no painted portrait get an initials circle (never a drawing of
+a private person). Every image has alt text = the name and a background colour, so the email reads with images off.
 
-**Mail-app details:**
-- The site's fonts (Barlow, Barlow Condensed) load in Apple Mail and iOS Mail. Gmail and Outlook fall back to Arial
-  Narrow / Arial, which is designed for in the mock-up.
-- Dark mode: declares light and dark support and includes dark colours for Apple Mail. Gmail's app recolours emails
-  on its own; the dark masthead and plain backgrounds keep that readable. Outlook desktop shows the light version.
-- Layout is one column, max 600 px, tables and inline styles (the only layout every mail app agrees on).
-- The plain-text version keeps the same order.
+**Mail-app details:** tables + inline styles, max 600 px, Barlow fonts as enhancement with Impact / Arial fallbacks,
+explicit background colours for the dark bands, under Gmail's 102 KB clipping size. Plain-text version in the same
+order.
 
 ## Part B. "Send me the Brief" when creating a free account
 
@@ -111,22 +114,16 @@ A new public switch in `config/launch.json`: `"briefSignup": false`. While false
 section on the Account page, no Brief box in Save your team, and nothing new is called in the database. Merging the
 build changes nothing a visitor can see. The owner turns it on after the switch-on checklist.
 
-## Decisions for the owner
+## Owner decisions (answered 2026-10-18)
 
-1. **Email confirmation for email + password accounts.** Today Supabase's "Confirm email" is OFF
-   (`docs/OWNER-SETUP.md` 3c). With it off, Supabase marks every new address as confirmed without checking, so
-   anyone could put someone else's address on the Brief. **Required before the switch goes on:** turn "Confirm
-   email" ON (the dialog already has the "check your email" screen). Google sign-ups are already checked by Google.
-   Alternative: the Brief sends its own "confirm you want this" email first (more to build).
-2. **How often the Brief goes out.** The sender has no schedule. **Recommended:** start by hand a few mornings a
-   week, keep sign-up wording free of a promise ("free", not "daily"), decide the schedule after the first sends.
-3. **Approve the look in mock-up A**, or ask for changes before building.
-4. **Checkbox position in the dialog.** **Recommended:** above "Continue with Google" (see Part B). Alternative: as
-   in mock-up B, below the password field.
+1. **"Confirm email" ON** in Supabase before the switch goes on (required; see `docs/BRIEF-SWITCH-ON.md`).
+2. **No fixed schedule yet.** Sends stay manual; sign-up wording says "free", not "daily".
+3. **Design:** option 6, The Portrait Gallery, with The Daily Swing instead of a top-10 strip.
+4. **Checkbox position:** above "Continue with Google".
 
 ## Out of scope (possible later)
 
-- Painted portraits in the email (needs .png copies). Top-10 fortunes strip. "Coming up" calendar items (they have no
+- Top-10 fortunes strip (the owner chose The Daily Swing instead). "Coming up" calendar items (they have no
   source links in the edition, so they would break the "every fact links its source" rule as they stand).
 - Click tracking beyond the existing utm tags.
 

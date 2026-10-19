@@ -68,6 +68,7 @@ New/changed files (frontend owner only):
 - `sitemap.xml`/robots: add privacy.html; gated pages remain crawlable but say "Opens Nov 9".
 
 ## 3. Brief sender (built, OFF)
+- Superseded design (2026-10-18): see `docs/BRIEF-REDESIGN-PLAN.md`; switch-on steps in `docs/BRIEF-SWITCH-ON.md`.
 - `scripts/send-brief.mjs` — builds "The Billionaire Brief" from the latest `digest.json` (headline + 3–5 top stories with their existing source links, our own words already in the digest; no new facts), plus place-in-line line per recipient, unsubscribe link `https://billionairesdigest.com/unsubscribe.html?t=TOKEN`, physical/contact line, "not financial advice". Default `--dry-run` writes `out/brief-preview.html` and a recipient count; `--send` requires env `RESEND_API_KEY`, `BRIEF_FROM`, `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, and `--confirm-date=YYYY-MM-DD` matching today. Recipients: confirmed, not unsubscribed. Batches ≤ 50, ≤ 2 req/s, retries on 429. Logs `brief_sent`. Click tracking: links carry `?utm_source=brief&utm_medium=email&utm_campaign=<date>`.
 - `.github/workflows/brief.yml` — `workflow_dispatch` only (inputs: mode dry-run|send, confirm_date). No schedule until the owner says so.
 - Unit tests for the HTML builder (`scripts/lib/brief.test.mjs`): includes unsubscribe link, no raw prices, escapes text.
