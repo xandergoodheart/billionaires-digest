@@ -52,21 +52,96 @@ test('matches: name, sector, ticker and company words; accents folded', () => {
   assert.ok(!P.matches(POOL[0], 'ann beta'));
 });
 
-test('sortPlayers: each key, missing values last, ties by rank', () => {
+test('sortPlayers: each key, missing values last, ties by name', () => {
   const get = { pts, avg: (s) => ({ a: 2, b: 1 }[s] ?? null), cap: (s) => ({ a: 20, b: 30, c: 20, d: 7 }[s] ?? null) };
   const order = (k) => P.sortPlayers(POOL, k, get).map((p) => p.slug).join('');
-  assert.equal(order('pts'), 'badce');
-  assert.equal(order('avg'), 'abcde');
-  assert.equal(order('capdesc'), 'bcade');
-  assert.equal(order('capasc'), 'dcabe');
+  assert.equal(order('pts'), 'badce');        // a and d tie on 10: Ann before Dé by name
+  assert.equal(order('avg'), 'abcde');        // c, d, e have no avg: last, by name
+  assert.equal(order('capdesc'), 'bacde');    // a and c tie on 20: by name
+  assert.equal(order('capasc'), 'dacbe');
   assert.equal(order('rank'), 'bcade');
   assert.equal(order('name'), 'abcde');
-  assert.equal(order('nope'), 'bcade');
+  assert.equal(order('nope'), 'badce');       // unknown id = week points, high to low
   // get.rank (Public Stake Value rank) overrides the entries' own rank; missing ranks last
   const byStake = P.sortPlayers(POOL, 'rank', { rank: (s) => ({ e: 1, d: 2, a: 3 }[s] ?? null) }).map((p) => p.slug).join('');
-  assert.equal(byStake.slice(0, 3), 'eda');
+  assert.equal(byStake, 'edabc');
   // copy, not in place
   assert.equal(POOL[0].slug, 'a');
+});
+
+test('sortPlayers: both directions for every column', () => {
+  const get = { pts, avg: (s) => ({ a: 2, b: 1, c: 3 }[s] ?? null), cap: (s) => ({ a: 20, b: 30, c: 25, d: 7 }[s] ?? null), value: (s) => ({ a: 0.5, b: 0.1 }[s] ?? null) };
+  const order = (k) => P.sortPlayers(POOL, k, get).map((p) => p.slug).join('');
+  assert.equal(order('pts'), 'badce');
+  assert.equal(order('pts-asc'), 'cadbe');    // low to high; a/d tie stays A to Z; e (missing) still last
+  assert.equal(order('avg'), 'cabde');
+  assert.equal(order('avg-asc'), 'bacde');
+  assert.equal(order('capdesc'), 'bcade');
+  assert.equal(order('capasc'), 'dacbe');
+  assert.equal(order('value'), 'abcde');
+  assert.equal(order('value-asc'), 'bacde');
+  assert.equal(order('rank'), 'bcade');       // biggest stake (rank 1) first
+  assert.equal(order('rank-asc'), 'edacb');   // smallest stake first
+  assert.equal(order('name'), 'abcde');
+  assert.equal(order('name-desc'), 'edcba');
+});
+
+test('sortPlayers: ties are stable by name, then rank, then slug', () => {
+  const pool = [
+    { slug: 'z1', name: 'Zed', rank: 2 }, { slug: 'm1', name: 'Mia', rank: 9 },
+    { slug: 'a1', name: 'Ava', rank: 5 }, { slug: 'z0', name: 'Zed', rank: 1 }
+  ];
+  const all5 = () => 5;
+  for (const id of ['pts', 'pts-asc', 'capdesc', 'capasc']) {
+    assert.equal(P.sortPlayers(pool, id, { pts: all5, cap: all5 }).map((p) => p.slug).join(' '), 'a1 m1 z0 z1', id);
+  }
+  // same input order or reversed: same result
+  assert.equal(P.sortPlayers(pool.slice().reverse(), 'pts', { pts: all5 }).map((p) => p.slug).join(' '), 'a1 m1 z0 z1');
+});
+
+test('sortPlayers: missing values are last in both directions', () => {
+  const pool = [{ slug: 'x', name: 'X', rank: 1 }, { slug: 'y', name: 'Y', rank: 2 }, { slug: 'n', name: 'N', rank: 3 }, { slug: 'q', name: '', rank: 4 }];
+  const v = (s) => ({ x: 1, y: -2, q: 4 }[s] ?? null);
+  const nan = (s) => (s === 'y' ? NaN : v(s));
+  assert.equal(P.sortPlayers(pool, 'pts', { pts: v }).map((p) => p.slug).join(''), 'qxyn');
+  assert.equal(P.sortPlayers(pool, 'pts-asc', { pts: v }).map((p) => p.slug).join(''), 'yxqn');
+  assert.equal(P.sortPlayers(pool, 'pts-asc', { pts: nan }).map((p) => p.slug).at(-1), 'y');  // NaN counts as missing
+  // no name: last both ways
+  assert.equal(P.sortPlayers(pool, 'name', {}).map((p) => p.slug).join(''), 'nxyq');
+  assert.equal(P.sortPlayers(pool, 'name-desc', {}).map((p) => p.slug).join(''), 'yxnq');
+  // no stake rank: last both ways
+  const rank = (s) => ({ x: 2, y: 1 }[s] ?? null);
+  assert.equal(P.sortPlayers(pool, 'rank', { rank }).map((p) => p.slug).join('').slice(0, 2), 'yx');
+  assert.equal(P.sortPlayers(pool, 'rank-asc', { rank }).map((p) => p.slug).join('').slice(0, 2), 'xy');
+  // getter not given at all: everyone missing, order by name
+  assert.equal(P.sortPlayers(pool, 'avg', {}).map((p) => p.slug).join(''), 'nxyq');
+});
+
+test('sort ids: parse, build, header clicks and header state', () => {
+  assert.deepEqual(plain(P.parseSort('capasc')), { key: 'cap', dir: 'asc' });
+  assert.deepEqual(plain(P.parseSort('capdesc')), { key: 'cap', dir: 'desc' });
+  assert.deepEqual(plain(P.parseSort('pts-asc')), { key: 'pts', dir: 'asc' });
+  assert.deepEqual(plain(P.parseSort('name')), { key: 'name', dir: 'asc' });
+  assert.deepEqual(plain(P.parseSort('cap')), { key: 'pts', dir: 'desc' });
+  assert.deepEqual(plain(P.parseSort(null)), { key: 'pts', dir: 'desc' });
+  assert.equal(P.sortId('cap', 'desc'), 'capdesc');
+  assert.equal(P.sortId('avg', 'desc'), 'avg');
+  assert.equal(P.sortId('avg', 'asc'), 'avg-asc');
+  assert.equal(P.sortId('name', 'desc'), 'name-desc');
+  // first click high to low (name: A to Z), second click flips, third flips back
+  assert.equal(P.nextSort('pts', 'avg'), 'avg');
+  assert.equal(P.nextSort('avg', 'avg'), 'avg-asc');
+  assert.equal(P.nextSort('avg-asc', 'avg'), 'avg');
+  assert.equal(P.nextSort('pts', 'cap'), 'capdesc');
+  assert.equal(P.nextSort('capdesc', 'cap'), 'capasc');
+  assert.equal(P.nextSort('pts', 'name'), 'name');
+  assert.equal(P.nextSort('name', 'name'), 'name-desc');
+  const h = P.headerState('pts', 'pts');
+  assert.deepEqual(plain(h), { active: true, dir: 'desc', ariaSort: 'descending', arrow: 'down', label: 'Sort low to high' });
+  assert.deepEqual(plain(P.headerState('pts', 'cap')), { active: false, dir: null, ariaSort: 'none', arrow: 'both', label: 'Sort high to low' });
+  assert.equal(P.headerState('name', 'name').ariaSort, 'ascending');
+  assert.equal(P.headerState('name', 'name').label, 'Sort Z to A');
+  assert.equal(P.headerState('capasc', 'cap').arrow, 'up');
 });
 
 test('dailySeries: merges weeks, oldest first, null for days without the player', () => {

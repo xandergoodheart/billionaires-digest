@@ -669,3 +669,22 @@ html.v2-lock, html.v2-lock body { overflow: hidden; }
 
 /* Preseason / Season 1 copy swapped by assets/v2/chrome.js: hidden wins over any display rule */
 [data-preseason][hidden], [data-inseason][hidden] { display: none !important; }
+
+/* ---------- sortable column headers (BDPlayersCore.paintSortHeads: Draft room + Players) ---------- */
+.v2-table th[data-sortcol] { padding-top: 0; padding-bottom: 0; }
+.v2-sorth {
+  display: inline-flex; align-items: center; gap: 5px; min-height: 40px; margin: 0 -6px; padding: 0 6px;
+  background: none; border: 0; border-radius: 4px; cursor: pointer;
+  font: inherit; text-transform: inherit; letter-spacing: inherit; color: inherit; white-space: nowrap;
+}
+.v2-table th.n .v2-sorth { flex-direction: row-reverse; }
+.v2-sorth:hover { color: var(--text); background: var(--nav-hover); }
+.v2-sorth.is-active { color: var(--text); }
+.v2-sorth:focus-visible { outline: 3px solid var(--focus); outline-offset: -1px; }
+.v2-sorth__i { flex: none; display: block; }
+.v2-sorth__i path { fill: currentColor; transition: opacity var(--t-base) var(--ease); }
+.v2-sorth__i.is-both path { opacity: .38; }
+.v2-sorth:hover .v2-sorth__i.is-both path { opacity: .7; }
+.v2-sorth__i.is-down .v2-sorth__up, .v2-sorth__i.is-up .v2-sorth__dn { opacity: 0; }
+.v2-sorth.is-active .v2-sorth__i { color: var(--brand-ink); }
+@media (prefers-reduced-motion: reduce) { .v2-sorth__i path { transition: none; } }
