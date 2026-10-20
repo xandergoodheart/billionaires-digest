@@ -1,7 +1,96 @@
 {
-  "generated": "2026-10-19T16:34:42.692Z",
+  "generated": "2026-10-20T14:24:59.838Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0000901999",
+      "filer": "ELLISON LAWRENCE JOSEPH",
+      "form": "4",
+      "filed": "2026-10-19",
+      "reportDate": "2026-10-15",
+      "accession": "0001341439-26-000103",
+      "url": "https://www.sec.gov/Archives/edgar/data/901999/000134143926000103/xslF345X06/form4.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/901999/000134143926000103/0001341439-26-000103-index.htm",
+      "description": "PRIMARY DOCUMENT",
+      "person": "Larry Ellison",
+      "personSlug": "larry-ellison",
+      "form4": {
+        "issuer": "ORACLE CORP",
+        "ticker": "ORCL",
+        "summary": [],
+        "transactionCount": 0,
+        "transactions": []
+      }
+    },
+    {
+      "cik": "0001273693",
+      "filer": "Control Empresarial de Capitales S.A. de C.V.",
+      "form": "4",
+      "filed": "2026-10-19",
+      "reportDate": "2026-10-15",
+      "accession": "0001140361-26-040135",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040135/xslF345X06/form4.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040135/0001140361-26-040135-index.htm",
+      "description": "FORM 4",
+      "person": "Carlos Slim Helu & family",
+      "personSlug": "carlos-slim-helu-family",
+      "form4": {
+        "issuer": "TALOS ENERGY INC.",
+        "ticker": "TALO",
+        "summary": [
+          {
+            "issuer": "TALOS ENERGY INC.",
+            "ticker": "TALO",
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2752000,
+            "price": 17.19,
+            "value": 47307541,
+            "direction": "down",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-15",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 52000,
+            "price": 17.0106,
+            "value": 884551,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 29341590,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-16",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2700000,
+            "price": 17.1937,
+            "value": 46422990,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 26641590,
+            "direction": "down"
+          }
+        ]
+      }
+    },
+    {
+      "cik": "0001273087",
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "form": "SCHEDULE 13G/A",
+      "filed": "2026-10-19",
+      "accession": "0001104659-26-116971",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926116971/xslSCHEDULE_13G_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926116971/0001104659-26-116971-index.htm",
+      "person": "Israel Englander",
+      "personSlug": "israel-englander"
+    },
     {
       "cik": "0001273693",
       "filer": "Control Empresarial de Capitales S.A. de C.V.",
@@ -7066,40 +7155,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526347014/0001193125-26-347014-index.htm",
       "description": "4",
       "person": "Stephen Schwarzman",
-      "personSlug": "stephen-schwarzman",
-      "form4": {
-        "issuer": "Corebridge Financial, Inc.",
-        "ticker": "CRBG",
-        "summary": [
-          {
-            "issuer": "Corebridge Financial, Inc.",
-            "ticker": "CRBG",
-            "securityTitle": "Common stock, par value $0.01 per share",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 14500000,
-            "price": 33.87,
-            "value": 491115000,
-            "direction": "down",
-            "transactions": 1
-          }
-        ],
-        "transactionCount": 1,
-        "transactions": [
-          {
-            "securityTitle": "Common stock, par value $0.01 per share",
-            "date": "2026-08-10",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 14500000,
-            "price": 33.87,
-            "value": 491115000,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 47462123,
-            "direction": "down"
-          }
-        ]
-      }
+      "personSlug": "stephen-schwarzman"
     },
     {
       "cik": "0001273087",
@@ -7145,112 +7201,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926094887/0001104659-26-094887-index.htm",
       "description": "OWNERSHIP DOCUMENT",
       "person": "Bill Gates",
-      "personSlug": "bill-gates",
-      "form4": {
-        "issuer": "REPUBLIC SERVICES, INC.",
-        "ticker": "RSG",
-        "summary": [
-          {
-            "issuer": "REPUBLIC SERVICES, INC.",
-            "ticker": "RSG",
-            "securityTitle": "Common stock",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 501664,
-            "price": 215.57,
-            "value": 108145762,
-            "direction": "up",
-            "transactions": 7
-          }
-        ],
-        "transactionCount": 7,
-        "transactions": [
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-10",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 88102,
-            "price": 214.4323,
-            "value": 18891914,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 110892084,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-10",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 166095,
-            "price": 215.0725,
-            "value": 35722467,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111058179,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-10",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 7467,
-            "price": 216.1514,
-            "value": 1614003,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111065646,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-11",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 3200,
-            "price": 214.6723,
-            "value": 686951,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111068846,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-11",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 21038,
-            "price": 215.6815,
-            "value": 4537507,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111089884,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-11",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 211771,
-            "price": 216.3966,
-            "value": 45826524,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111301655,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-11",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 3991,
-            "price": 217.0873,
-            "value": 866395,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111305646,
-            "direction": "up"
-          }
-        ]
-      }
+      "personSlug": "bill-gates"
     },
     {
       "cik": "0001295032",
@@ -11314,17 +11265,6 @@
       "accession": "0001104659-26-085964",
       "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926085964/xslSCHEDULE_13G_X02/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926085964/0001104659-26-085964-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-07-21",
-      "accession": "0001104659-26-085473",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926085473/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926085473/0001104659-26-085473-index.htm",
       "person": "Israel Englander",
       "personSlug": "israel-englander"
     }

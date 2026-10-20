@@ -1,12 +1,12 @@
 {
-  "generated": "2026-10-19",
+  "generated": "2026-10-20",
   "inputs": {
-    "filingsGenerated": "2026-10-19T16:34:42.692Z",
-    "pricesGenerated": "2026-10-19T16:38:49.934Z",
+    "filingsGenerated": "2026-10-20T14:24:59.838Z",
+    "pricesGenerated": "2026-10-20T14:29:08.346Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 21
+    "editions": 22
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 73 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 75 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W32",
@@ -25,12 +25,12 @@
       "week": "2026-W33",
       "start": "2026-08-10",
       "end": "2026-08-16",
-      "buy": 263368517,
-      "sell": 535289769,
-      "net": -271921252,
+      "buy": 155222755,
+      "sell": 44174769,
+      "net": 111047986,
       "other": 0,
-      "buyCount": 4,
-      "sellCount": 4,
+      "buyCount": 3,
+      "sellCount": 3,
       "otherCount": 0,
       "unpriced": 0
     },
@@ -143,11 +143,11 @@
       "start": "2026-10-12",
       "end": "2026-10-18",
       "buy": 2702484,
-      "sell": 61659118,
-      "net": -58956634,
+      "sell": 108966659,
+      "net": -106264175,
       "other": 0,
       "buyCount": 1,
-      "sellCount": 2,
+      "sellCount": 3,
       "otherCount": 0,
       "unpriced": 0
     },
@@ -166,14 +166,14 @@
     }
   ],
   "last7": {
-    "from": "2026-10-13",
-    "to": "2026-10-19",
-    "buy": 2702484,
-    "sell": 61659118,
-    "net": -58956634,
+    "from": "2026-10-14",
+    "to": "2026-10-20",
+    "buy": 0,
+    "sell": 47307541,
+    "net": -47307541,
     "other": 0,
-    "buyCount": 1,
-    "sellCount": 2,
+    "buyCount": 0,
+    "sellCount": 1,
     "otherCount": 0,
     "unpriced": 0
   },
@@ -191,11 +191,11 @@
     },
     {
       "sector": "AI & tech",
-      "buy": 1380322193,
+      "buy": 1272176431,
       "sell": 391832019,
-      "net": 988490174,
+      "net": 880344412,
       "other": 9702110,
-      "buyCount": 12,
+      "buyCount": 11,
       "sellCount": 4,
       "otherCount": 5,
       "unpriced": 0
@@ -203,22 +203,22 @@
     {
       "sector": "Finance",
       "buy": 615601924,
-      "sell": 593098382,
-      "net": 22503542,
+      "sell": 101983382,
+      "net": 513618542,
       "other": 0,
       "buyCount": 14,
-      "sellCount": 7,
+      "sellCount": 6,
       "otherCount": 4,
       "unpriced": 0
     },
     {
       "sector": "Media",
       "buy": 0,
-      "sell": 320572534,
-      "net": -320572534,
+      "sell": 367880075,
+      "net": -367880075,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 13,
+      "sellCount": 14,
       "otherCount": 0,
       "unpriced": 0
     },
@@ -267,9 +267,17 @@
       "name": "Carlos Slim Helu & family",
       "slug": "carlos-slim-helu-family",
       "sector": "Media",
-      "value": 200111538,
-      "count": 6,
+      "value": 247419079,
+      "count": 7,
       "filings": [
+        {
+          "date": "2026-10-15",
+          "filed": "2026-10-19",
+          "form": "4",
+          "issuer": "TALOS ENERGY INC.",
+          "ticker": "TALO",
+          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040135/xslF345X06/form4.xml"
+        },
         {
           "date": "2026-10-13",
           "filed": "2026-10-15",
@@ -301,14 +309,6 @@
           "issuer": "TALOS ENERGY INC.",
           "ticker": "TALO",
           "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126039154/xslF345X06/form4.xml"
-        },
-        {
-          "date": "2026-10-05",
-          "filed": "2026-10-07",
-          "form": "4",
-          "issuer": "PBF Energy Inc.",
-          "ticker": "PBF",
-          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126038916/xslF345X06/form4.xml"
         }
       ]
     },
@@ -587,7 +587,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 73,
+    "form4Filings": 75,
     "form4Parsed": 58,
     "windowDays": 90
   }
