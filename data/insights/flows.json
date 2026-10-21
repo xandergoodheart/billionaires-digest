@@ -1,12 +1,12 @@
 {
-  "generated": "2026-10-20",
+  "generated": "2026-10-21",
   "inputs": {
-    "filingsGenerated": "2026-10-20T14:24:59.838Z",
-    "pricesGenerated": "2026-10-20T14:29:08.346Z",
+    "filingsGenerated": "2026-10-21T14:34:25.711Z",
+    "pricesGenerated": "2026-10-21T14:38:09.520Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 22
+    "editions": 23
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 75 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 74 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W32",
@@ -166,8 +166,8 @@
     }
   ],
   "last7": {
-    "from": "2026-10-14",
-    "to": "2026-10-20",
+    "from": "2026-10-15",
+    "to": "2026-10-21",
     "buy": 0,
     "sell": 47307541,
     "net": -47307541,
@@ -587,7 +587,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 75,
+    "form4Filings": 74,
     "form4Parsed": 58,
     "windowDays": 90
   }
