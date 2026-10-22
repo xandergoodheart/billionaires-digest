@@ -1,9 +1,55 @@
 {
-  "generated": "2026-10-21T14:34:25.711Z",
+  "generated": "2026-10-22T14:36:03.127Z",
   "windowDays": 90,
   "person": "Carlos Slim Helu & family",
   "personSlug": "carlos-slim-helu-family",
   "filings": [
+    {
+      "cik": "0001273693",
+      "filer": "Control Empresarial de Capitales S.A. de C.V.",
+      "form": "4",
+      "filed": "2026-10-21",
+      "reportDate": "2026-10-19",
+      "accession": "0001140361-26-040419",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040419/xslF345X06/form4.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040419/0001140361-26-040419-index.htm",
+      "description": "FORM 4",
+      "person": "Carlos Slim Helu & family",
+      "personSlug": "carlos-slim-helu-family",
+      "form4": {
+        "issuer": "TALOS ENERGY INC.",
+        "ticker": "TALO",
+        "summary": [
+          {
+            "issuer": "TALOS ENERGY INC.",
+            "ticker": "TALO",
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2141590,
+            "price": 18.01,
+            "value": 38562754,
+            "direction": "down",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-19",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2141590,
+            "price": 18.0066,
+            "value": 38562754,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 24500000,
+            "direction": "down"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001080910",
       "filer": "HELU CARLOS SLIM",
@@ -778,64 +824,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126032812/0001140361-26-032812-index.htm",
       "description": "FORM 4",
       "person": "Carlos Slim Helu & family",
-      "personSlug": "carlos-slim-helu-family",
-      "form4": {
-        "issuer": "PBF Energy Inc.",
-        "ticker": "PBF",
-        "summary": [
-          {
-            "issuer": "PBF Energy Inc.",
-            "ticker": "PBF",
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 370375,
-            "price": 69.27,
-            "value": 25655234,
-            "direction": "down",
-            "transactions": 3
-          }
-        ],
-        "transactionCount": 3,
-        "transactions": [
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-08-11",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 110000,
-            "price": 68.2184,
-            "value": 7504024,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 14822128,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-08-11",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 110375,
-            "price": 69.1383,
-            "value": 7631140,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 14771753,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-08-12",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 150000,
-            "price": 70.1338,
-            "value": 10520070,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 14621753,
-            "direction": "down"
-          }
-        ]
-      }
+      "personSlug": "carlos-slim-helu-family"
     },
     {
       "cik": "0001273693",
