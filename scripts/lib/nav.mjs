@@ -74,11 +74,13 @@ export function renderNav(activeKey, { absolute = false } = {}) {
 }
 
 export function renderFooter({ absolute = false } = {}) {
+  const year = new Date().getFullYear();
   const u = h => escHtml(url(h, absolute));
   return `<footer><div class="wrap">
   <span>Billionaires Digest · billionairesdigest.com</span>
   <span class="footlinks"><a href="${u('about.html')}">About</a> · <a href="${u('about.html')}#corrections">Corrections</a> · <a href="${u('about.html')}#sponsor">Sponsor the brief</a> · <a href="${u('calendar.ics')}">Calendar feed (calendar.ics)</a></span>
   <span>For information only · not financial advice</span>
+  <span>© ${year} Billionaires Digest · All rights reserved</span>
 </div></footer>`;
 }
 
@@ -293,6 +295,7 @@ export function renderBottomTabsV2(topKey, { absolute = false, gated = GATED } =
 // including generated pages (scripts/lib/pages/layout.mjs renders this with absolute links). Not while GATED or while
 // The Book is hidden (BOOK_HIDDEN): no odds.
 export function renderFooterV2({ absolute = false, gated = GATED } = {}) {
+  const year = new Date().getFullYear();
   const u = h => escHtml(url(h, absolute));
   return `<footer class="v2-foot">
   <div class="v2-wrap v2-foot__in">
@@ -309,6 +312,7 @@ export function renderFooterV2({ absolute = false, gated = GATED } = {}) {
     <div class="v2-foot__notes">
       <p>For information only · not financial advice</p>
       <p>Play money only: no purchases, cash-out or prizes.</p>
+      <p>© ${year} Billionaires Digest · All rights reserved</p>
     </div>
   </div>
 </footer>${showTicker(gated) ? `\n<script src="${u('assets/v2/ticker.js')}" defer></script>` : ''}`;
