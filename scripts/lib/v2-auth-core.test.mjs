@@ -22,10 +22,10 @@ test('flags: off unless exactly true; everything off when multiplayer is disable
   assert.deepEqual(plain(A.flags({ authGoogle: true, authPassword: true })), { google: true, password: true, any: true });
   assert.deepEqual(plain(A.flags({ enabled: false, authGoogle: true, authPassword: true })), { google: false, password: false, any: false });
   assert.deepEqual(plain(A.flags(null)), { google: false, password: false, any: false });
-  // the committed config keeps both off
+  // the committed config uses real booleans (accounts went live 2026-10-14 with both on)
   const cfg = JSON.parse(readFileSync(join(ROOT, 'config', 'supabase.json'), 'utf8'));
-  assert.equal(cfg.authGoogle, false);
-  assert.equal(cfg.authPassword, false);
+  assert.equal(typeof cfg.authGoogle, 'boolean');
+  assert.equal(typeof cfg.authPassword, 'boolean');
 });
 
 test('email and password checks', () => {
@@ -88,4 +88,44 @@ test('planCarry', () => {
   const keep = plain(A.planCarry({ weeks: ['W2'], local: { W2: t1 }, server: { W2: t2 }, sameUser: false }))[0];
   assert.deepEqual(keep.local, t1);
   assert.deepEqual(keep.server, t2);
+});
+
+test('Brief: the switch is off unless exactly true; the committed config keeps it off', () => {
+  assert.equal(A.briefOn({ briefSignup: true }), true);
+  for (const v of [false, 'true', 1, null, undefined]) assert.equal(A.briefOn({ briefSignup: v }), false);
+  assert.equal(A.briefOn(null), false);
+  assert.equal(A.briefOn({}), false);
+  const launch = JSON.parse(readFileSync(join(ROOT, 'config', 'launch.json'), 'utf8'));
+  assert.equal(launch.briefSignup, false);
+  assert.equal(launch.emailSignup, false);
+  assert.equal(typeof launch._briefSignup, 'string');
+});
+
+test('Brief: wording and the Account page status lines', () => {
+  assert.equal(A.BRIEF_LABEL, 'Email me The Billionaire Brief: the biggest billionaire moves, free. Unsubscribe any time.');
+  assert.equal(A.BRIEF_LIST_LINE, "You're on the list for The Billionaire Brief.");
+  assert.equal(A.BRIEF_CONFIRM_LINE, "We'll also start sending The Billionaire Brief once you confirm.");
+  assert.equal(A.briefStatusText({ status: 'on', email: 'name@example.com' }), 'Sending to name@example.com.');
+  assert.equal(A.briefStatusText({ status: 'waiting', email: 'name@example.com' }), "On. We'll start sending once your email is confirmed.");
+  assert.equal(A.briefStatusText({ status: 'off', email: 'name@example.com' }), "You're not getting the Brief.");
+  assert.equal(A.briefStatusText(null), "You're not getting the Brief.");
+  assert.equal(A.briefStatusText({ status: 'on' }), 'Sending to your email.');
+  assert.equal(A.briefListed({ status: 'on' }), true);
+  assert.equal(A.briefListed({ status: 'waiting' }), true);
+  assert.equal(A.briefListed({ status: 'off' }), false);
+  assert.equal(A.briefListed(null), false);
+});
+
+test('Brief: the opt-in kept for the confirmation link applies to the same address, for 3 days', () => {
+  const at = Date.parse('2026-10-18T12:00:00Z');
+  const rec = { email: 'Name@Example.com', at };
+  assert.equal(A.briefIntent(rec, 'name@example.com', at + 60000), true);
+  assert.equal(A.briefIntent(rec, ' NAME@example.com ', at + A.BRIEF_INTENT_MS), true);
+  assert.equal(A.briefIntent(rec, 'name@example.com', at + A.BRIEF_INTENT_MS + 1), false, 'too old');
+  assert.equal(A.briefIntent(rec, 'name@example.com', at - 1), false, 'from the future');
+  assert.equal(A.briefIntent(rec, 'other@example.com', at + 1), false, 'another address');
+  assert.equal(A.briefIntent(rec, '', at + 1), false);
+  for (const bad of [null, 'x', {}, { email: '', at }, { email: 'a@b.co' }, { email: 'a@b.co', at: String(at) }]) {
+    assert.equal(A.briefIntent(bad, 'a@b.co', at + 1), false);
+  }
 });

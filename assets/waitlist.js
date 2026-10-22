@@ -6,7 +6,8 @@
  *   attaches the email to that same guest user and sends the confirmation email (so the team they play with carries over)
  *   -> the link returns to /?confirmed=1 with the session in the URL (detectSessionInUrl: true on THIS client only)
  *   -> waitlist_confirm -> invite link, captain pick, league reservation.
- * The optional "Also send me The Billionaire Brief" checkbox (unticked by default) is sent as p_brief_opt_in.
+ * The optional "Also send me The Billionaire Brief" checkbox (unticked by default) is sent as p_brief_opt_in. It shows only
+ * while config/launch.json "briefSignup" is exactly true (otherwise the signup is sent with p_brief_opt_in false).
  * email_pending (that email already has a confirmation waiting): ask them to check that inbox or try tomorrow.
  * email_taken: offer a sign-in link (signInWithOtp, shouldCreateUser: false).
  * Anti-spam: with a public "turnstileSiteKey" in config/supabase.json, signInAnonymously / signInWithOtp / resend first run
@@ -35,6 +36,7 @@
   var me = null;            // waitlist_me() result
   var inviteInfo = null;    // waitlist_league_info() result for ?join=
   var timer = null;
+  var briefOn = false;      // config/launch.json "briefSignup" === true: show the Brief checkbox
 
   // ---------- small helpers ----------
   function el(tag, cls, text){ var n = d.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
@@ -341,7 +343,9 @@
     legal.appendChild(d.createTextNode('.'));
     var m = msg();
     if (note) ok(m, note);
-    f.appendChild(lab); f.appendChild(row); f.appendChild(hint); f.appendChild(opt); f.appendChild(legal); f.appendChild(m);
+    f.appendChild(lab); f.appendChild(row); f.appendChild(hint);
+    if (briefOn) f.appendChild(opt);
+    f.appendChild(legal); f.appendChild(m);
     f.addEventListener('submit', function(e){
       e.preventDefault();
       var email = String(inp.value || '').trim().toLowerCase();
@@ -353,7 +357,7 @@
       }
       inp.removeAttribute('aria-invalid');
       busy(go, true, 'Saving…'); m.textContent = ''; m.className = 'wl-msg';
-      join(email, cb.checked === true).then(function(){
+      join(email, briefOn && cb.checked === true).then(function(){
         ssSet(SS_EMAIL, email); ssSet(SS_MODE, 'confirm'); ssSet(SS_SENT, String(Date.now()));
         renderInbox(email, 'confirm');
         announce('Check your inbox to confirm ' + email + '.');
@@ -708,6 +712,7 @@
 
   launchConfig().then(function(c){
     seasonLabel(c);
+    briefOn = !!(c && c.briefSignup === true);
     if (c && c.emailSignup === true){ d.documentElement.classList.add('wl-email-on'); start(); }
     else { renderClosed(); cleanUrl(); }
   });

@@ -21,6 +21,8 @@
   // config/supabase.json sits next to assets/, so find it from this script's own URL
   var here = (document.currentScript && document.currentScript.src) || '';
   var CONFIG_URL = here ? here.replace(/assets\/game-client\.js(\?.*)?$/, 'config/supabase.json') : 'config/supabase.json';
+  var LAUNCH_URL = here ? here.replace(/assets\/game-client\.js(\?.*)?$/, 'config/launch.json') : 'config/launch.json';
+  var launchPromise = null;
 
   // Accounts (assets/v2/auth.js): a Google sign-in, Google link or password-reset link comes back to the site with the
   // result in the URL (#access_token=… or #error=… / ?error=…). Read it once, now, before anything rewrites the URL.
@@ -169,6 +171,17 @@
     return readyPromise;
   };
   G.config = function(){ return cfg || {}; };
+  // config/launch.json (public switches), read once and cached. Resolves the object, or {} when it cannot be read.
+  // Same-origin file, no Supabase call. Used by assets/v2/auth.js and account-page.js for "briefSignup".
+  G.launch = function(){
+    if (launchPromise) return launchPromise;
+    launchPromise = fetch(LAUNCH_URL, { cache: 'no-store' })
+      .then(function(r){ return r.ok ? r.json() : {}; })
+      .then(function(c){ return c && typeof c === 'object' ? c : {}; }, function(){ return {}; });
+    return launchPromise;
+  };
+  // true only when config/launch.json has "briefSignup": true (anything else, or an unreadable file: false)
+  G.briefSignupOn = function(){ return G.launch().then(function(c){ return c.briefSignup === true; }); };
   G.enabled = function(){ return !!client; };
   function need(){ if (!client) return Promise.reject(new Error('Multiplayer is coming soon.')); return null; }
 
@@ -238,8 +251,11 @@
   G.me = function(){ return rpc('me'); };                       // null until a nickname is picked
   G.setNickname = function(nick){ return rpc('set_nickname', { p_nickname: nick }); };
   // Accounts (0008_accounts.sql): { nickname, next_nickname_change_at, deletion_requested_at, is_anonymous }
+  // (+ brief: { status, email } once 0009 is applied)
   G.myAccount = function(){ return rpc('my_account'); };
   G.requestAccountDeletion = function(){ return rpc('request_account_deletion'); };
+  // The Billionaire Brief (0009_brief_accounts.sql): { status: 'off' | 'on' | 'waiting', email }. Real accounts only.
+  G.setMyBrief = function(on){ return rpc('set_my_brief', { p_on: !!on }); };
   G.claimTopup = function(){ return rpc('claim_topup'); };
   G.validName = function(s){
     s = String(s == null ? '' : s).trim();

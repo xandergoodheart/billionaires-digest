@@ -222,6 +222,38 @@ function holderBlock(c, h) {
     `<div class="fpg">${h.rows.map(r => holderEntryRow(c, r)).join('')}</div></li>`;
 }
 
+// ---- "About" (data/companies/about.json, built by scripts/build-company-about.mjs) ----
+// The about.json entry for a company page: same ticker (aliases count), else the same normalized name
+// (ADRs such as IDEXY / LVMUY have their own ticker but the same company as ITX / MC).
+export function aboutFor(c, aboutCos) {
+  const all = Object.values(aboutCos || {});
+  if (!all.length || !c) return null;
+  for (const e of all) if (c.tickerKeys && c.tickerKeys.has(tickerKey(e.ticker))) return e;
+  const cn = companyNorm(c.name);
+  if (!cn) return null;
+  for (const e of all) if (companyNorm(e.name) === cn || NAME_ALIASES[companyNorm(e.name)] === c.ticker && c.ticker) return e;
+  return null;
+}
+// { TICKER: company page slug } for every about.json ticker that has a company page (used by the Draft room drawer)
+export function aboutPageMap(list, aboutCos) {
+  const out = {};
+  for (const c of list) { const e = aboutFor(c, aboutCos); if (e && !out[e.ticker]) out[e.ticker] = c.slug; }
+  return Object.fromEntries(Object.keys(out).sort().map(k => [k, out[k]]));
+}
+function aboutHtml(e) {
+  if (!e) return '';
+  const src = safeUrl(e.sourceUrl);
+  const where = joinBits([e.industry, e.hq]);
+  const note = e.note && str(e.note.text)
+    ? `<p class="coabout-note">${esc(e.note.text)}${safeUrl(e.note.sourceUrl) ? ` <a href="${esc(safeUrl(e.note.sourceUrl))}" rel="noopener" target="_blank">source ↗</a>` : ''}</p>` : '';
+  return `<section class="ppsec" aria-labelledby="about"><h2 class="sech2 serif" id="about">About</h2>
+${e.whatTheyDo ? `<p class="coabout">${esc(e.whatTheyDo)}</p>` : ''}
+${where ? `<p class="coabout-meta">${esc(where)}</p>` : ''}
+${note}
+${src ? `<p class="pcnote">Source: <a href="${esc(src)}" rel="noopener" target="_blank">${esc(e.sourceName)} ↗</a>${e.whatTheyDo ? '. Summary in our own words.' : ''}</p>` : ''}
+</section>`;
+}
+
 // ctx: { quotes, pricesProvider, editions: [{iso, ed}], filingsBySlug: Map slug -> data, personHref, related: [company] }
 // returns { body, description, lastmods: [iso...] }
 export function renderCompany(c, ctx) {
@@ -302,6 +334,7 @@ export function renderCompany(c, ctx) {
     : 'No current holders among the world’s richest in our tracked profiles; ' + plural(c.formerHolders.length, 'former holder', 'former holders') + '.')}</p>
   ${priceHtml}
 </section>
+${aboutHtml(ctx.about)}
 <section class="ppsec" aria-labelledby="holders"><h2 class="sech2 serif" id="holders">Billionaire holders</h2>
 ${holdersHtml}
 <p class="pcnote">Each row is a sourced entry from that person’s profile. Stakes are as of the date shown, not today.</p>
@@ -368,7 +401,10 @@ export function relatedFor(c, bySlugPerson) {
     .slice(0, 8);
 }
 
-export const COMPANY_CSS = `.coholders{list-style:none;margin:0;padding:0}
+export const COMPANY_CSS = `.coabout{margin:10px 0 0;font-size:17px;line-height:1.55;max-width:62ch}
+.coabout-meta{margin:6px 0 0;color:var(--muted);font-size:14px}
+.coabout-note{margin:8px 0 0;font-size:15px}
+.coholders{list-style:none;margin:0;padding:0}
 .cohold{padding:14px 0 6px;border-bottom:1px solid var(--line)}
 .cohold:last-child{border-bottom:none}
 .cohwho{display:inline-flex;align-items:center;gap:14px;min-height:44px;color:inherit;text-decoration:none;margin-bottom:4px}

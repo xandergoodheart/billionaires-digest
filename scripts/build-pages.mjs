@@ -21,7 +21,7 @@ import { page, breadcrumb } from './lib/pages/layout.mjs';
 import {
   avatar, story, footprint, watchList, filings, listBox, consensusBox, ledgerBox, editionFilingsBox
 } from './lib/pages/render.mjs';
-import { buildCompanyIndex, renderCompany, renderCompanyIndex, relatedFor, COMPANY_CSS } from './lib/pages/companies.mjs';
+import { buildCompanyIndex, renderCompany, renderCompanyIndex, relatedFor, aboutFor, aboutPageMap, COMPANY_CSS } from './lib/pages/companies.mjs';
 import { GUIDES, renderFilings101, renderGuidesIndex, GUIDE_CSS } from './lib/pages/guides.mjs';
 import { stakeTable, fmtStake, STAKE_LABEL, STAKE_NONE, STAKE_NOTE } from './lib/data-common.mjs';
 
@@ -306,10 +306,11 @@ ${side}
   }
   const keySet = new Set(companies.list.flatMap(c => [...c.tickerKeys]));
   const companyLastmods = [];
+  const aboutCos = (await readJsonOr(P('data/companies/about.json'), null) || {}).companies || {};
   for (const c of companies.list) {
     const r = renderCompany(c, {
       quotes, pricesProvider: prices && prices.provider ? str(prices.provider) : '', editions, filingsBySlug, profiles,
-      personHref, keySet, related: relatedFor(c, companyByPerson)
+      personHref, keySet, related: relatedFor(c, companyByPerson), about: aboutFor(c, aboutCos)
     });
     const bc = breadcrumb([['Home', '/'], ['Companies', '/companies/'], [c.name, c.href]]);
     out.set(`companies/${c.slug}/index.html`, page({
@@ -381,6 +382,9 @@ ${side}
     sitemap.push(['/guides/', g.lastmod]);
     sitemap.push(['/guides/filings-101/', g.lastmod]);
   }
+
+  // ticker -> company page slug, for the Draft room's company cards (assets/v2/scout.js)
+  out.set('data/companies/pages.json', JSON.stringify({ note: 'Ticker -> companies/<slug>/ page, for tickers in data/companies/about.json. Built by scripts/build-pages.mjs.', pages: aboutPageMap(companies.list, aboutCos) }, null, 2) + '\n');
 
   // ---- write pages (only when changed) ----
   let written = 0;

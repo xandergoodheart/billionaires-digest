@@ -10,6 +10,12 @@
 //                                               SUPABASE_SERVICE_KEY, and --confirm-date must be today (New York).
 // Options: --digest=path (default digest.json)
 //
+// Inputs besides the digest (each optional; a missing file just leaves its part out): data/insights/leaderboards.json
+// and data/prices/latest.json (The Daily Swing), assets/v2/portraits.js + assets/portraits/email/*.jpg (portraits),
+// config/launch.json (season start). The dry-run preview points portrait images at the local JPGs
+// (../assets/portraits/email/, so out/brief-preview.html shows them through the local server before merge); on GitHub
+// Actions and in real sends they point at https://billionairesdigest.com/assets/portraits/email/.
+//
 // Sending: Resend batch API, up to 50 emails per request, at most 2 requests a second, retries on 429/5xx.
 // Logs one brief_sent event (date + counts) through waitlist_admin_log. Never prints email addresses, keys or the
 // email provider's response bodies (HTTP status codes only).
@@ -17,6 +23,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { briefContent, buildBrief, nyDate, chunk } from './lib/brief.mjs';
+import { loadPortraitIndex } from './lib/brief-portraits.mjs';
 import { makeRest } from './lib/supa/rest.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -36,9 +43,21 @@ function parseArgs(argv) {
   return a;
 }
 
-async function seasonLabel() {
-  try { return JSON.parse(await readFile(join(ROOT, 'config', 'launch.json'), 'utf8')).seasonStartLabel || 'Monday, Nov 9'; }
-  catch { return 'Monday, Nov 9'; }
+async function readJson(...parts) {
+  try { return JSON.parse(await readFile(join(ROOT, ...parts), 'utf8')); } catch { return null; }
+}
+
+async function loadExtras(today) {
+  let portraits = null;
+  try { portraits = await loadPortraitIndex(ROOT); }
+  catch (e) { console.log(`Warning: portraits not loaded (${e.message}); initials circles only.`); }
+  return {
+    leaderboards: await readJson('data', 'insights', 'leaderboards.json'),
+    latest: await readJson('data', 'prices', 'latest.json'),
+    launch: await readJson('config', 'launch.json'),
+    portraits,
+    today
+  };
 }
 
 async function postWithRetry(url, init, tries = 5) {
@@ -61,9 +80,11 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   const today = nyDate();
   const digest = JSON.parse(await readFile(args.digest, 'utf8'));
-  const content = briefContent(digest);
-  const label = await seasonLabel();
-  console.log(`Brief for ${content.date || '(no date)'}: ${content.stories.length} stories${content.lede ? ' + lede' : ''}.`);
+  const extras = await loadExtras(today);
+  const content = briefContent(digest, extras);
+  const label = (extras.launch && extras.launch.seasonStartLabel) || 'Monday, Nov 9';
+  console.log(`Brief for ${content.date || '(no date)'}: ${content.stories.length} stories${content.lede ? ' with a cover' : ''}, `
+    + `${content.faces} faces, Daily Swing ${content.swing ? 'included' : 'left out (leaderboards missing, empty or stale)'}.`);
   if (!content.enough) console.log('Warning: fewer than 3 stories with source links and no raw prices.');
 
   const { SUPABASE_URL, SUPABASE_SERVICE_KEY, RESEND_API_KEY, BRIEF_FROM } = process.env;
@@ -74,12 +95,13 @@ async function main() {
     if (haveDb) recipients = await makeRest({ url: SUPABASE_URL, key: SUPABASE_SERVICE_KEY }).rpc('waitlist_brief_recipients');
     const sample = recipients && recipients.length ? recipients[0]
       : { position: 1, unsub_token: '00000000-0000-0000-0000-000000000000', referral_code: 'SAMPLE23' };
-    const b = buildBrief(content, sample, { campaign: today, seasonLabel: label });
+    const assetBase = process.env.GITHUB_ACTIONS === 'true' ? undefined : '../assets/portraits/email/';
+    const b = buildBrief(content, sample, { campaign: today, seasonLabel: label, assetBase });
     const out = join(ROOT, 'out');
     await mkdir(out, { recursive: true });
     await writeFile(join(out, 'brief-preview.html'), b.html);
     await writeFile(join(out, 'brief-preview.txt'), `Subject: ${b.subject}\n\n${b.text}`);
-    console.log(`Dry run. Preview: out/brief-preview.html (subject: ${b.subject})`);
+    console.log(`Dry run. Preview: out/brief-preview.html (${(Buffer.byteLength(b.html) / 1024).toFixed(1)} KB; subject: ${b.subject})`);
     console.log(haveDb ? `Recipients (confirmed, opted in, subscribed): ${recipients.length}`
       : 'Recipients: unknown (SUPABASE_URL / SUPABASE_SERVICE_KEY not set; preview uses a sample recipient). Nothing sent.');
     return;

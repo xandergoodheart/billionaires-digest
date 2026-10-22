@@ -391,3 +391,34 @@ a.dr-news__h { color: var(--link); }
 }
 @keyframes dr-card-up { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .dr-card__panel { animation: none; } }
+
+/* ---- hide-what-you-can't-afford toggle ---- */
+.dr-filters { grid-template-columns: 1.6fr 1fr auto; align-items: center; }
+.dr-hide { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: var(--fs-sm); font-weight: 600; color: var(--text); cursor: pointer; white-space: nowrap; }
+.dr-hide input { width: 18px; height: 18px; margin: 0; accent-color: var(--brand); cursor: pointer; flex: none; }
+.dr-hide input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* ---- rows: the whole row opens the scouting drawer ---- */
+.dr-table tbody tr.dr-row { cursor: pointer; }
+.dr-info { display: inline-block; margin-left: 6px; vertical-align: -2px; color: var(--text-muted); opacity: .55; transition: opacity var(--t-base) var(--ease), color var(--t-base) var(--ease); }
+.dr-table tbody tr.dr-row:hover .dr-info, .dr-name:focus-visible .dr-info { opacity: 1; color: var(--link); }
+
+/* ---- greyed players: over the cap or the team is full (dimmed, never hidden unless the toggle is on) ---- */
+.dr-table tbody tr.is-out td.dr-c-player, .dr-table tbody tr.is-out td.dr-c-form,
+.dr-table tbody tr.is-out td.dr-c-pts, .dr-table tbody tr.is-out td.dr-c-avg, .dr-table tbody tr.is-out td.dr-c-cap { opacity: .5; transition: opacity var(--t-base) var(--ease); }
+.dr-table tbody tr.is-out:hover td.dr-c-player, .dr-table tbody tr.is-out:hover td.dr-c-form,
+.dr-table tbody tr.is-out:hover td.dr-c-pts, .dr-table tbody tr.is-out:hover td.dr-c-avg, .dr-table tbody tr.is-out:hover td.dr-c-cap { opacity: .78; }
+.dr-table tbody tr.is-out .dr-why { color: var(--text); }
+
+@media (max-width: 1100px) and (min-width: 768px) {
+  .dr-filters { grid-template-columns: 1fr 1fr; }
+  .dr-hide { grid-column: 1 / -1; }
+}
+@media (max-width: 767px) {
+  .dr-filters { grid-template-columns: minmax(0, 1fr); }
+  .dr-info { display: none; }
+  .dr-why { white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dr-info, .dr-table tbody tr.is-out td { transition: none; }
+}

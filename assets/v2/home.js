@@ -19,7 +19,7 @@
    Old links: index.html#person=<slug> is forwarded to news.html by a one-line script in the page head.
    Play money only, no prizes, not financial advice. */
 (function(){
-  var F = window.BDFantasyStore, C = window.BDFantasyCore, W = window.BDWeekCore;
+  var F = window.BDFantasyStore, C = window.BDFantasyCore, W = window.BDWeekCore, SC = window.BDScoutCore;
   var el = BD.el, arr = BD.arr;
   var MINUS = '−';
   var $ = function(id){ return document.getElementById(id); };
@@ -53,21 +53,8 @@
     var ws = String(name || '').replace(/\s*&\s*family\s*$/i, '').trim().split(/\s+/);
     return ws[ws.length - 1] || '';
   }
-  function firstSentences(t, max){
-    t = String(t || '').replace(/\s+/g, ' ').trim();
-    if (t.length <= max) return t;
-    // sentence ends: . ! ? followed by a space and a capital letter (so "$9.2" and "Sept. 25" never split)
-    var re = /[.!?]["'”’)]?\s+(?=[A-Z“"])/g, m, cut = -1;
-    while ((m = re.exec(t))){
-      var end = m.index + m[0].length;
-      if (/\b(?:Mr|Ms|Mrs|Dr|St|Inc|Co|Corp|Jr|Sr|U\.S|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)\.$/.test(t.slice(0, m.index + 1))) continue;
-      if (end > max) break;
-      cut = end;
-    }
-    if (cut > 0) return t.slice(0, cut).trim();
-    var sp = t.lastIndexOf(' ', max);
-    return t.slice(0, sp > 0 ? sp : max).trim() + '…';
-  }
+  // shared with the Draft room's scouting drawer (assets/v2/scout-core.js)
+  function firstSentences(t, max){ return SC ? SC.firstSentences(t, max) : String(t || '').slice(0, max); }
   var liveT = null;
   function say(t){ var n = $('live'); if (!n) return; n.textContent = ''; clearTimeout(liveT); liveT = setTimeout(function(){ n.textContent = t; }, 40); }
 
@@ -538,26 +525,11 @@
   // hot streak: positive on at least 4 of the last 5 trading days (the store's 5-day series)
   function hotCount(slug){ var n = 0; arr(F.stat(slug).series).forEach(function(v){ if (typeof v === 'number' && v > 0) n++; }); return n; }
   // insider buy: a scored insider-buy bonus (Form 4 code P, see scripts/lib/fantasy.mjs) on a day in the last 14 days
-  function buyDay(slug){
-    var cut = C.addDays(today(), -14), best = null, days = F.state.days || {};
-    Object.keys(days).forEach(function(d){
-      var e = days[d] && days[d].people && days[d].people[slug];
-      if (d >= cut && e && e.bonuses && e.bonuses.insiderBuy > 0 && (!best || d > best)) best = d;
-    });
-    return best;
-  }
+  function buyDay(slug){ return SC ? SC.buyDay(F.state.days || {}, slug, C.addDays(today(), -14)) : null; }
   // earnings: an exact-day "Earnings & events" calendar item for this person in the current or next scoring week
   function earnings(slug){
-    var ix = F.state.index, cur = indexWeek((F.state.sbWk && F.state.sbWk.week) || (ix && ix.currentWeek));
-    if (!CAL || !cur) return null;
-    var nxt = cur.all[cur.i + 1], from = cur.w.start, to = nxt ? nxt.end : cur.w.end, hit = null;
-    arr(CAL.events).forEach(function(e){
-      if (!e || e.type !== 'events' || e.approx || e.precision !== 'day' || !/\b(results|earnings)\b/i.test(e.title || '')) return;
-      if (e.date < from || e.date > to) return;
-      if (!arr(e.people).some(function(p){ return p && p.slug === slug; })) return;
-      if (!hit || e.date < hit.date) hit = e;
-    });
-    return hit ? { e: hit, thisWeek: hit.date <= cur.w.end } : null;
+    var ix = F.state.index;
+    return SC && CAL ? SC.earnings(CAL, ix && ix.weeks, (F.state.sbWk && F.state.sbWk.week) || (ix && ix.currentWeek), slug) : null;
   }
   function valueSet(pool, wk){
     var avgs = pool.map(function(p){ return avgOf(p.slug); }).filter(function(a){ return a != null; }).sort(function(a, b){ return b - a; });
@@ -651,25 +623,13 @@
     return box;
   }
   // newest Form 4 with a code P (open-market purchase) filed in the last 14 days; its EDGAR URL comes from the data
-  function buyFiling(data){
-    var cut = C.addDays(today(), -14), hit = null;
-    arr(data && data.filings).forEach(function(f){
-      if (!f || !f.form4 || !f.filed || f.filed < cut || !BD.safeUrl(f.url)) return;
-      if (!arr(f.form4.transactions).some(function(t){ return t && t.code === 'P'; })) return;
-      if (!hit || f.filed > hit.filed) hit = f;
-    });
-    return hit;
-  }
+  function buyFiling(data){ return SC ? SC.buyFiling(data, C.addDays(today(), -14)) : null; }
 
   // ---- the back: chart + reasons ----
   var SVGNS = 'http://www.w3.org/2000/svg';
   function svgEl(n, attrs){ var e = document.createElementNS(SVGNS, n); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
   // one bar: rounded 2px at the data end, square at the zero baseline
-  function barPath(x, w, y0, y1){
-    var r = Math.min(2, w / 2, Math.abs(y1 - y0));
-    if (y1 < y0) return 'M' + x + ',' + y0 + 'V' + (y1 + r) + 'Q' + x + ',' + y1 + ' ' + (x + r) + ',' + y1 + 'H' + (x + w - r) + 'Q' + (x + w) + ',' + y1 + ' ' + (x + w) + ',' + (y1 + r) + 'V' + y0 + 'Z';
-    return 'M' + x + ',' + y0 + 'V' + (y1 - r) + 'Q' + x + ',' + y1 + ' ' + (x + r) + ',' + y1 + 'H' + (x + w - r) + 'Q' + (x + w) + ',' + y1 + ' ' + (x + w) + ',' + (y1 - r) + 'V' + y0 + 'Z';
-  }
+  function barPath(x, w, y0, y1){ return SC ? SC.barPath(x, w, y0, y1) : ''; }
   function chart(name, rows){
     var box = el('figure', 'hm-ptw__chart');
     var W0 = 200, H = 52, pad = 2, n = rows.length, slot = W0 / Math.max(n, 1), bw = Math.max(4, slot - 4);

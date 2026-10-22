@@ -5,5 +5,7 @@
   "seasonStart": "2026-11-09",
   "seasonStartLabel": "Monday, Nov 9",
   "_emailSignup": "Email saving on the front page. false = show 'Saving by email opens shortly' and don't contact Supabase. Turn true once Resend SMTP is set up in Supabase (Auth > SMTP) so confirmation emails actually send.",
-  "emailSignup": false
+  "emailSignup": false,
+  "_briefSignup": "The Billionaire Brief sign-up. false = no Brief checkbox in the Create free account dialog, no Brief switch on the Account page, no Brief checkbox in the front-page Save your team box, and no Brief database call. Turn true only after the switch-on checklist in docs/BRIEF-SWITCH-ON.md (email sending set up, Supabase 'Confirm email' on, migration 0009 applied).",
+  "briefSignup": false
 }

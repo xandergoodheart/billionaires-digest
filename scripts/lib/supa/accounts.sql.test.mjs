@@ -1,10 +1,12 @@
 // node --test scripts/lib/supa/accounts.sql.test.mjs
 // supabase/migrations/0008_accounts.sql in PGlite, in both privilege MODES: my_account(), request_account_deletion()
-// (real accounts only, idempotent), the locked-down account_deletion_requests table, and the service-role
-// delete_account_data() that removes a user's game data (and hands owned leagues on) but leaves everyone else alone.
+// (guests and real accounts, idempotent; no session is refused), the locked-down account_deletion_requests table, and the service-role
+// delete_account_data() that removes a user's game data (and hands owned leagues on) but leaves everyone else alone,
+// and a guest deleted end to end through scripts/lib/supa/deletions.mjs.
 import { test, before, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { makeDb, rejectsWith, MODES } from './pgtest.mjs';
+import { processDeletions } from './deletions.mjs';
 
 const WEEK = { week: '2026-W43', start: '2026-10-19', end: '2026-10-23', locksAt: '2026-10-19T13:30:00Z',
   salaries: { a: 20, b: 20, c: 20, d: 20, e: 20, f: 20 }, draftable: ['a', 'b', 'c', 'd', 'e', 'f'] };
@@ -48,11 +50,23 @@ for (const mode of MODES) describe(`accounts (${mode})`, () => {
     assert.equal(a.next_nickname_change_at, null);
   });
 
-  test('request_account_deletion: real accounts only, idempotent', async () => {
+  test('request_account_deletion: guests and real accounts can ask, no session cannot; idempotent', async () => {
+    // a visitor with no session still can't
     await rejectsWith(assert, t.call(null, 'request_account_deletion'), /permission denied|sign in/);
+    // a guest (anonymous user, every app player) can ask: row created, requested_at returned, asking again keeps it
     const G = await user('acct_guest', { real: false });
-    await rejectsWith(assert, t.call(G, 'request_account_deletion'), /Guest accounts/);
     assert.equal((await t.call(G, 'my_account')).is_anonymous, true);
+    const g1 = await t.call(G, 'request_account_deletion');
+    assert.ok(g1.requested_at);
+    assert.equal(new Date(g1.requested_at).toISOString(), '2026-10-15T12:00:00.000Z');
+    await t.setNow('2026-10-15T13:00:00Z');
+    const g2 = await t.call(G, 'request_account_deletion');
+    assert.equal(g2.requested_at, g1.requested_at, 'a guest asking again keeps the first time');
+    assert.equal((await t.call(G, 'my_account')).deletion_requested_at, g1.requested_at);
+    const ng = (await t.root('select count(*)::int n from public.account_deletion_requests where user_id = $1', [G])).rows[0].n;
+    assert.equal(ng, 1);
+    await t.setNow('2026-10-15T12:00:00Z');
+    // a real account, same rules
     const B = await user('acct_bob');
     const r1 = await t.call(B, 'request_account_deletion');
     assert.ok(r1.requested_at);
@@ -119,5 +133,71 @@ for (const mode of MODES) describe(`accounts (${mode})`, () => {
     // deleting the auth user (what the admin API does) removes the request too
     await t.root('delete from auth.users where id = $1', [D]);
     assert.equal((await one('select count(*)::int n from public.account_deletion_requests where user_id = $1', [D])).n, 0);
+  });
+  test('a guest end to end: request, delete_account_data and the deletion processor; others untouched', async () => {
+    // a fresh database so only this guest's request is pending
+    const d = await makeDb({ mode });
+    await d.setNow('2026-10-15T12:00:00Z');
+    await d.admin('select public.upsert_week($1::jsonb)', [JSON.stringify(WEEK)]);
+    const mk = async (nick, real) => {
+      const id = await d.newUser();
+      await d.root('update auth.users set is_anonymous = $2, email = $3 where id = $1', [id, !real, real ? `${nick}@example.com` : null]);
+      await d.call(id, 'set_nickname', [nick]);
+      return id;
+    };
+    const G = await mk('e2e_guest', false), O = await mk('e2e_other', true), H = await mk('e2e_guest2', false);
+    const team = ['a', 'b', 'c', 'd', 'e'];
+    await d.call(G, 'save_roster', [WEEK.week, team, 'a']);
+    await d.call(O, 'save_roster', [WEEK.week, team, 'b']);
+    await d.call(H, 'save_roster', [WEEK.week, team, 'c']);
+    const shared = await d.call(G, 'create_league', ['Guest_Shared']);   // goes to O
+    await d.call(O, 'join_league', [shared.invite_code]);
+    const solo = await d.call(G, 'create_league', ['Guest_Solo']);       // deleted
+    await d.root(`insert into public.events (user_id, name) values ($1, 'invite_copied'), ($2, 'invite_copied')`, [G, O]);
+    await d.call(G, 'request_account_deletion');
+
+    // a fake Supabase that runs the processor's calls against this database (service role; the admin API delete
+    // removes the auth user)
+    const fetchImpl = async (u, opts) => {
+      const ok = (data, status = 200) => ({ ok: status < 300, status, text: async () => JSON.stringify(data) });
+      if (u.endsWith('/rest/v1/rpc/pending_account_deletions')) return ok((await d.admin('select * from public.pending_account_deletions()')).rows);
+      if (u.endsWith('/rest/v1/rpc/delete_account_data')) {
+        const { p_user } = JSON.parse(opts.body);
+        return ok((await d.admin('select public.delete_account_data($1) r', [p_user])).rows[0].r);
+      }
+      const m = /\/auth\/v1\/admin\/users\/(.+)$/.exec(u);
+      if (m && opts.method === 'DELETE') {
+        const r = await d.root('delete from auth.users where id = $1', [decodeURIComponent(m[1])]);
+        return ok({}, r.affectedRows ? 200 : 404);
+      }
+      return ok({ message: 'nope' }, 404);
+    };
+    const lines = [];
+    const r = await processDeletions({ url: 'https://x.supabase.co', key: 'sb_secret_test', fetchImpl, log: l => lines.push(l) });
+    assert.deepEqual({ pending: r.pending, done: r.done, failed: r.failed }, { pending: 1, done: 1, failed: 0 });
+    assert.equal(r.totals.rosters, 1);
+    assert.equal(r.totals.profiles, 1);
+    assert.equal(r.totals.leagues_handed_over, 1);
+    assert.equal(r.totals.leagues_deleted, 1);
+    assert.ok(!lines.join('\n').includes(G), 'no user ids in the log');
+
+    const one = async (q, p) => (await d.root(q, p)).rows[0].n;
+    // the guest is gone: auth user, request, profile, roster, events, solo league
+    assert.equal(await one('select count(*)::int n from auth.users where id = $1', [G]), 0);
+    assert.equal(await one('select count(*)::int n from public.account_deletion_requests where user_id = $1', [G]), 0);
+    assert.equal(await one('select count(*)::int n from public.profiles where id = $1', [G]), 0);
+    assert.equal(await one('select count(*)::int n from public.rosters where user_id = $1', [G]), 0);
+    assert.equal(await one('select count(*)::int n from public.events where user_id = $1', [G]), 0);
+    assert.equal(await one('select count(*)::int n from public.league_members where user_id = $1', [G]), 0);
+    assert.equal(await one('select count(*)::int n from public.leagues where id = $1', [solo.id]), 0);
+    // everyone else is untouched: the real account, the other guest who did not ask, and the handed-over league
+    assert.equal(await one('select count(*)::int n from auth.users where id in ($1, $2)', [O, H]), 2);
+    assert.equal(await one('select count(*)::int n from public.profiles where id in ($1, $2)', [O, H]), 2);
+    assert.equal(await one('select count(*)::int n from public.rosters where user_id in ($1, $2)', [O, H]), 2);
+    assert.equal(await one('select count(*)::int n from public.events where user_id = $1', [O]), 1);
+    assert.equal((await d.root('select owner from public.leagues where id = $1', [shared.id])).rows[0].owner, O);
+    // a second run has nothing to do
+    const again = await processDeletions({ url: 'https://x.supabase.co', key: 'sb_secret_test', fetchImpl, log: () => {} });
+    assert.deepEqual({ pending: again.pending, done: again.done }, { pending: 0, done: 0 });
   });
 });

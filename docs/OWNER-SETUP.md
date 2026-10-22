@@ -80,6 +80,7 @@ Supabase dashboard → your project → Authentication → **URL Configuration**
 
 1. Supabase → Authentication → Sign In / Providers → **Email**: Enable. Turn **"Confirm email" OFF** (sign-up works
    at once; no confirmation email has to be delivered). Minimum password length: 8 (the site asks for 8 too).
+   Turn "Confirm email" **ON** before switching on The Billionaire Brief (see [BRIEF-SWITCH-ON.md](BRIEF-SWITCH-ON.md)).
 2. **Password reset emails** need working email sending (Authentication → SMTP, e.g. Resend). Until that is set up,
    "Forgot password?" tells people: "Password reset by email isn't available yet. Use Continue with Google, or write
    to hello@billionairesdigest.com." Supabase's built-in email sender only allows a few emails per hour, so set up
@@ -108,3 +109,10 @@ are on; nobody loses data. You can also disable the provider in Supabase.
 deletes the person's teams, scores, league memberships, waitlist rows, events, profile and finally the sign-in record,
 within 24 hours, and logs only counts. Leagues they own pass to the longest-standing other member. It uses the existing
 `SUPABASE_SERVICE_KEY` secret; nothing new to set up.
+
+## 4. The Billionaire Brief (email newsletter)
+
+The Brief is built and switched off. Turning it on takes two public switches in `config/launch.json`: `emailSignup`
+(the front-page "Save your team" box) and `briefSignup` (the Brief choices in Create free account, on the Account page
+and in "Save your team"). Follow [BRIEF-SWITCH-ON.md](BRIEF-SWITCH-ON.md) step by step: Resend, Supabase SMTP,
+"Confirm email" ON, GitHub secrets, then the switches and the first send.
