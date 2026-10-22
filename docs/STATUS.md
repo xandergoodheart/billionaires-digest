@@ -27,6 +27,7 @@ last_reviewed: 2026-10-03
 - Confirm v4 starting-price formula, squad split, captain multiplier, start date and earnings-data feasibility before the rulebook is finalized.
 - Confirm scope and timing of Watch / Billionaire Night Live; no production approval is established here.
 - Decide whether and when to enable Next Moves. The migration remains in `supabase/pending/0004_moves.sql`; `supabase/pending/README.md` requires owner approval.
+- Review and merge the Brief pull request (branch `claude/great-burnell-7217d3`), then follow `docs/BRIEF-SWITCH-ON.md`.
 
 # Follow-ups
 
@@ -37,6 +38,8 @@ last_reviewed: 2026-10-03
 - The owner's root checkout has staged work and Claude's worktree is in use, per the handoff. Neither was modified. The older Documents/ChatGPT concept folder is not the current project.
 
 # Who is editing what
+
+- Claude (2026-10-18): The Billionaire Brief Portrait Gallery design + opt-in built on branch `claude/great-burnell-7217d3` (email `scripts/lib/brief.mjs`, portraits `assets/portraits/email/`, Create free account checkbox, Account page switch, migration `0009_brief_accounts.sql`, owner checklist `docs/BRIEF-SWITCH-ON.md`); PR awaiting owner review. `emailSignup` and `briefSignup` both `false`; nothing sent. Validation: 444/445 tests (the one failure is the existing `config/supabase.json` auth-flag test, unrelated); preview checked at 320/375 px, light and dark. Claim cleared.
 
 - Claude (2026-10-12): preseason go-live fixes done on `feat/preseason` (plan `docs/PRESEASON-FIXES-PLAN.md`), PR awaiting owner; replaces PR #7. 356/356 tests. Owner setup steps in `docs/OWNER-SETUP.md`. After merge: run `node scripts/fetch-prices-repair.mjs && node scripts/build-fantasy.mjs --rebuild-days=11` on main and commit data/. Claim cleared.
 

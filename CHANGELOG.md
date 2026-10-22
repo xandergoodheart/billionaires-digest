@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-18 The Billionaire Brief: Portrait Gallery design + opt-in (built, switched off)
+
+- New Brief email design, "The Portrait Gallery": painted-portrait cover story, Face of the day, **The Daily Swing** (5 biggest estimated one-day gainers and 5 losers in public stakes, from `data/insights/leaderboards.json`, left out when older than 4 days), a 2-up gallery of the other stories, quick hits and the game card. Text copied verbatim from the day's edition, source links on every story, opinion labelled (`scripts/lib/brief.mjs`).
+- Small JPG copies of the painted portraits for email in `assets/portraits/email/` (made by `scripts/make-email-portraits.mjs`); people without a portrait get an initials circle.
+- "Email me The Billionaire Brief" checkbox (unticked, above Continue with Google) in the Create free account dialog, and an on/off switch on the Account page, both behind a new public switch `briefSignup` in `config/launch.json`; the front-page "Save your team" Brief box follows it too.
+- Database: `supabase/migrations/0009_brief_accounts.sql` (`set_my_brief`, `my_account()` gains `brief`, recipients include account holders with a confirmed email). Applied by the daily Game sync after merge.
+- Owner checklist `docs/BRIEF-SWITCH-ON.md` (Resend, Supabase SMTP, "Confirm email" ON, GitHub secrets, switches, first send).
+- Nothing sent. `emailSignup` and `briefSignup` both stay `false`.
+
 ## 2026-10-14 Real accounts (built, switched off)
 
 - Free accounts with Continue with Google and/or email + password, behind two public switches in `config/supabase.json` (`authGoogle`, `authPassword`, both `false`). Guests keep playing without signing up; a guest who creates an account keeps the same user id, so their team and leagues carry over.

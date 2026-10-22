@@ -7,7 +7,10 @@
    - openWeeks(core, ms): the fantasy weeks a team can still be saved for (the running week while late entry is open,
      and the next week)
    - planCarry(...): what to do with this browser's teams after sign-up, linking or logging in
-   - initials(name): one or two letters for the round avatar */
+   - initials(name): one or two letters for the round avatar
+   - The Billionaire Brief: briefOn(launch) (config/launch.json "briefSignup", off unless exactly true), the sign-up
+     wording, briefStatusText(brief) for the Account page, and briefIntent(record, email, ms) for the opt-in kept in
+     this browser while an email + password account waits for its confirmation link */
 (function(root){
   var A = {};
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -122,6 +125,29 @@
       out.push({ week: w, action: 'keep', local: l, server: s });
     });
     return out;
+  };
+
+  // ---------- The Billionaire Brief ----------
+  A.BRIEF_LABEL = 'Email me The Billionaire Brief: the biggest billionaire moves, free. Unsubscribe any time.';
+  A.BRIEF_LIST_LINE = "You're on the list for The Billionaire Brief.";
+  A.BRIEF_CONFIRM_LINE = "We'll also start sending The Billionaire Brief once you confirm.";
+  A.BRIEF_INTENT_MS = 3 * 24 * 60 * 60 * 1000;   // a ticked box waits this long for the confirmation link
+  A.briefOn = function(launch){ return !!(launch && launch.briefSignup === true); };
+  // true when set_my_brief answered that the Brief is on (or on once the email is confirmed)
+  A.briefListed = function(r){ return !!(r && (r.status === 'on' || r.status === 'waiting')); };
+  // brief = my_account().brief: { status, email }
+  A.briefStatusText = function(brief){
+    var st = brief && brief.status;
+    if (st === 'on') return brief.email ? 'Sending to ' + brief.email + '.' : 'Sending to your email.';
+    if (st === 'waiting') return "On. We'll start sending once your email is confirmed.";
+    return "You're not getting the Brief.";
+  };
+  // The opt-in kept in this browser for an email + password sign-up that still has to confirm its address:
+  // record { email, at }. Applies only to the same address (any letter case), within BRIEF_INTENT_MS.
+  A.briefIntent = function(rec, email, ms){
+    if (!rec || typeof rec !== 'object' || typeof rec.email !== 'string' || !rec.email || typeof rec.at !== 'number') return false;
+    if (!(ms >= rec.at) || ms - rec.at > A.BRIEF_INTENT_MS) return false;
+    return String(email == null ? '' : email).trim().toLowerCase() === rec.email.trim().toLowerCase();
   };
 
   root.BDAuthCore = A;

@@ -14,16 +14,22 @@
      After logging in to a different account: weeks where the account has no team get this browser's team; where both
      exist, the account's team is kept and the visitor can choose "Use this browser's team instead".
    Google redirects leave the page, so the pending step is kept in sessionStorage ('bd-auth-pending') and finished by
-   BDAuth.resume() when the visitor comes back (chrome.js calls it). Game only: play money, no prizes. */
+   BDAuth.resume() when the visitor comes back (chrome.js calls it). Game only: play money, no prizes.
+   The Billionaire Brief (only while config/launch.json "briefSignup" is exactly true): an unticked checkbox at the top of
+   "Create free account". Ticked, the account is opted in after sign-up (BDGame.setMyBrief(true)): straight away, after
+   the Google trip (the choice rides along in 'bd-auth-pending'; a cancelled trip drops it), or, when an email + password
+   account must confirm its address first, after the confirmation link brings the visitor back (kept in localStorage
+   'bd-auth-brief' = { email, at } for this browser). A failed opt-in never stops the sign-up. */
 (function(w, d){
   var A = w.BDAuthCore, G = w.BDGame;
   if (!A || !G) return;
-  var PENDING = 'bd-auth-pending', NICK = 'bd-acct-nick', FKEY = 'bd-fantasy-v1';
+  var PENDING = 'bd-auth-pending', NICK = 'bd-acct-nick', FKEY = 'bd-fantasy-v1', BRIEF = 'bd-auth-brief';
   var here = (d.currentScript && d.currentScript.src) || '';
   var BASE = here ? here.replace(/assets\/v2\/auth\.js(\?.*)?$/, '') : '';
   var ui = null;          // the open dialog: { root, panel, opener, mode, email }
   var resumed = false;
   var noticeEl = null;
+  var briefFlag = null;   // config/launch.json "briefSignup" === true; null until read
 
   // ---------- small helpers ----------
   function el(tag, cls, text){ var n = d.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
@@ -52,6 +58,44 @@
   }
   function getPending(){ try { return JSON.parse(ssGet(PENDING) || 'null'); } catch (e) { return null; } }
   function setPending(p){ ssSet(PENDING, p ? JSON.stringify(p) : null); }
+
+  // ---------- The Billionaire Brief ----------
+  // Reads the switch once (cached by BDGame.launch). Never waits more than 1.5 s: unknown counts as off.
+  function briefKnown(){
+    if (briefFlag !== null) return Promise.resolve(briefFlag);
+    var read = (G.launch ? G.launch() : Promise.resolve({})).then(function(c){ briefFlag = A.briefOn(c); return briefFlag; },
+      function(){ briefFlag = false; return false; });
+    var late = new Promise(function(res){ setTimeout(function(){ res(false); }, 1500); });
+    return Promise.race([read, late]);
+  }
+  function briefRecord(){ try { return JSON.parse(lsGet(BRIEF) || 'null'); } catch (e) { return null; } }
+  // After a real sign-in: opt in when the box was ticked for this sign-in (info.brief) or for this email address while it
+  // waited for its confirmation link. Resolves true when set_my_brief answered on / waiting; never rejects.
+  function applyBrief(info, user){
+    var want = !!(info && info.brief === true), rec = briefRecord(), t = Date.now();
+    if (rec) {
+      if (A.briefIntent(rec, user && user.email, t)) { want = true; lsSet(BRIEF, null); }
+      else if (!A.briefIntent(rec, rec.email, t)) lsSet(BRIEF, null);   // too old or unreadable
+    }
+    if (!want || !G.setMyBrief) return Promise.resolve(false);
+    return G.setMyBrief(true).then(function(r){ return A.briefListed(r); }, function(){ return false; });
+  }
+  // first lines of the notice after a sign-in
+  function headLines(head, info){
+    var lines = [head];
+    if (info && info.briefListed) lines.push(A.BRIEF_LIST_LINE);
+    return lines;
+  }
+  function optIn(){
+    var id = 'au-f' + (++uid);
+    var lab = el('label', 'au-optin'); lab.htmlFor = id;
+    var cb = el('input', 'au-optin__box'); cb.type = 'checkbox'; cb.id = id; cb.name = 'brief'; cb.value = '1';
+    cb.checked = ui.brief === true;
+    cb.addEventListener('change', function(){ ui.brief = cb.checked; });
+    lab.appendChild(cb);
+    lab.appendChild(el('span', 'au-optin__text', A.BRIEF_LABEL));
+    return lab;
+  }
 
   function ready(){
     return G.ready().then(function(st){
@@ -138,8 +182,8 @@
     return box;
   }
   function weekName(id){ var C = w.BDFantasyCore; return C ? A.weekName(C, id) : 'that week'; }
-  function report(head, res){
-    var lines = [head];
+  function report(head, res, info){
+    var lines = headLines(head, info);
     if (res.saved.length) lines.push('Your team for ' + res.saved.map(weekName).join(' and ') + ' is saved to your account.');
     res.failed.forEach(function(t){ lines.push('Saved in this browser, but not to your account: ' + t); });
     var acts = [];
@@ -166,17 +210,20 @@
   }
 
   // ---------- after any successful sign-in ----------
-  // info: { sameUser, head } (head: the first line of the notice)
+  // info: { sameUser, head, brief } (head: the first line of the notice; brief: the Brief box was ticked for this sign-in)
   function afterAuth(info){
     return emitChange().then(function(){ return session(); }).then(function(s){
       var user = s && s.user;
       if (!user || user.is_anonymous) { close(); return; }
-      return G.me().then(function(me){ return me; }, function(){ return null; }).then(function(me){
+      return applyBrief(info, user).then(function(listed){
+        info.briefListed = listed;
+        return G.me().then(function(me){ return me; }, function(){ return null; });
+      }).then(function(me){
         if (me && me.nickname) {
           cacheNick(user, me.nickname);
           emitChange();
           close();
-          return carry(info).then(function(res){ emitChange(); report(info.head, res); });
+          return carry(info).then(function(res){ emitChange(); report(info.head, res, info); });
         }
         return showNickname(info, user);
       });
@@ -224,6 +271,9 @@
     opts = opts || {};
     var f = flags();
     if (!f.any && opts.mode !== 'nickname') return Promise.resolve(false);
+    return briefKnown().then(function(){ return openNow(opts); });
+  }
+  function openNow(opts){
     if (!ui) {
       var root = el('div', 'au'); root.setAttribute('data-au', '');
       var panel = el('div', 'au__panel');
@@ -236,10 +286,10 @@
       d.documentElement.classList.add('au-lock');
       d.addEventListener('keydown', onKey, true);
       d.addEventListener('focusin', onFocusIn);
-      ui = { root: root, panel: panel, opener: opts.opener || d.activeElement, mode: '', email: '' };
+      ui = { root: root, panel: panel, opener: opts.opener || d.activeElement, mode: '', email: '', brief: false };
     }
     render(opts.mode || 'signup', opts);
-    return Promise.resolve(true);
+    return true;
   }
   function head(mode, extra){
     var t = titles[mode] || titles.signup;
@@ -319,15 +369,18 @@
     ui.mode = mode;
     while (panel.firstChild) panel.removeChild(panel.firstChild);
     panel.className = 'au__panel au__panel--' + mode;
+    panel.setAttribute('aria-describedby', 'au-desc');
     if (mode === 'nickname') return renderNickname(opts);
     if (mode === 'sent' || mode === 'confirm') return renderSent(mode, opts);
     head(mode).forEach(function(n){ panel.appendChild(n); });
+    // The Billionaire Brief: create-account only, above Continue with Google, unticked unless the visitor ticks it
+    if (mode === 'signup' && briefFlag === true) panel.appendChild(optIn());
     var m = msgBox();
     if (mode !== 'forgot' && f.google) {
       var gb = button('au-google', 'Continue with Google');
       gb.addEventListener('click', function(){
         busy(gb, true, 'Opening Google…'); say(m, '');
-        google().then(null, function(e){
+        google(false, mode === 'signup' && briefFlag === true && ui.brief === true).then(null, function(e){
           busy(gb, false, 'Continue with Google');
           say(m, A.friendly(e, 'google').text);
         });
@@ -353,8 +406,9 @@
     focusFirst(opts);
   }
   function focusFirst(opts){
-    var f = focusables().filter(function(n){ return !n.classList.contains('au__close'); });
-    var inp = ui.panel.querySelector('input');
+    // first focus as before the Brief box existed: the empty email field, else the first button (never the opt-in box)
+    var f = focusables().filter(function(n){ return !n.classList.contains('au__close') && !n.classList.contains('au-optin__box'); });
+    var inp = ui.panel.querySelector('input:not([type="checkbox"])');
     var target = (opts && opts.focusEl) || (inp && !inp.value ? inp : null) || f[0] || ui.panel;
     target.focus();
   }
@@ -385,11 +439,17 @@
       say(m, '');
       if (pe || pp) { (pe ? em.input : pw.input).focus(); return; }
       ui.email = email;
+      var wantBrief = mode === 'signup' && briefFlag === true && ui.brief === true;
       busy(go, true, mode === 'signup' ? 'Creating your account…' : 'Logging in…');
       var run = mode === 'signup' ? signUpEmail(email, pass, cap) : logInEmail(email, pass, cap);
       run.then(function(r){
-        if (r && r.confirm) { render('confirm', { email: email }); return; }
-        return afterAuth({ sameUser: !!(r && r.sameUser), head: mode === 'signup' ? 'Your free account is ready.' : "You're logged in." });
+        if (r && r.confirm) {
+          // opt in once the confirmation link brings them back (this browser only)
+          if (wantBrief) lsSet(BRIEF, JSON.stringify({ email: email, at: Date.now() }));
+          render('confirm', { email: email, brief: wantBrief });
+          return;
+        }
+        return afterAuth({ sameUser: !!(r && r.sameUser), head: mode === 'signup' ? 'Your free account is ready.' : "You're logged in.", brief: wantBrief });
       }).then(null, function(err){
         if (!ui) return;
         busy(go, false, label);
@@ -439,6 +499,11 @@
       ? 'If ' + opts.email + ' has an account, a link to set a new password is on its way. It can take a few minutes; check your spam folder too.'
       : 'We sent a confirmation link to ' + opts.email + '. Open it on this device to finish creating your account.';
     head(mode, { desc: desc }).forEach(function(n){ panel.appendChild(n); });
+    if (mode === 'confirm' && opts.brief) {
+      var bl = el('p', 'au__desc au__desc--brief', A.BRIEF_CONFIRM_LINE); bl.id = 'au-desc-brief';
+      panel.appendChild(bl);
+      panel.setAttribute('aria-describedby', 'au-desc au-desc-brief');
+    }
     var row = el('div', 'au-actions');
     var ok = button('v2-btn v2-btn--primary', 'Done'); ok.addEventListener('click', close);
     row.appendChild(ok);
@@ -459,7 +524,7 @@
     form.appendChild(go);
     var later = linkBtn('Not now', function(){
       close();
-      notice([info.head || 'Your free account is ready.', 'Pick a nickname on your Account page to save your team online and join leagues.'], [
+      notice(headLines(info.head || 'Your free account is ready.', info).concat(['Pick a nickname on your Account page to save your team online and join leagues.']), [
         (function(){ var a = el('a', 'v2-btn v2-btn--sm v2-btn--ghost', 'Go to Account'); a.href = BASE + 'account.html'; return a; })()
       ]);
     });
@@ -474,7 +539,7 @@
       G.setNickname(v).then(function(){
         cacheNick(user, v);
         close();
-        return emitChange().then(function(){ return carry(info); }).then(function(res){ emitChange(); report(info.head || 'Your free account is ready.', res); });
+        return emitChange().then(function(){ return carry(info); }).then(function(res){ emitChange(); report(info.head || 'Your free account is ready.', res, info); });
       }, function(err){
         busy(go, false, 'Save nickname');
         nf.setError(err.message || 'Could not save that nickname.');
@@ -519,15 +584,16 @@
       }).then(check).then(function(){ return { sameUser: false }; });
     });
   }
-  function google(forceSignIn){
+  // brief: the Brief box was ticked; it rides along in the pending record and is applied on return
+  function google(forceSignIn, brief){
     return ready().then(function(auth){
       return session().then(function(s){
         var to = cleanUrl();
         if (!forceSignIn && s && s.user && s.user.is_anonymous) {
-          setPending({ kind: 'link', prev: s.user.id, at: Date.now() });
+          setPending({ kind: 'link', prev: s.user.id, at: Date.now(), brief: brief === true || undefined });
           return auth.linkIdentity({ provider: 'google', options: { redirectTo: to } });
         }
-        setPending({ kind: 'google', prev: s && s.user ? s.user.id : null, at: Date.now() });
+        setPending({ kind: 'google', prev: s && s.user ? s.user.id : null, at: Date.now(), brief: brief === true || undefined });
         return auth.signInWithOAuth({ provider: 'google', options: { redirectTo: to } });
       }).then(function(r){
         if (r && r.error) { setPending(null); throw r.error; }
@@ -571,7 +637,8 @@
         var extra = null;
         if (fr.kind === 'identity-taken') {
           extra = button('au-link', 'Log in with Google');
-          extra.addEventListener('click', function(){ google(true).then(null, function(e){ alertIn(A.friendly(e, 'google').text); }); });
+          // they ticked the box before this Google account turned out to have an account already: keep that choice
+          extra.addEventListener('click', function(){ google(true, !!(p && p.brief === true)).then(null, function(e){ alertIn(A.friendly(e, 'google').text); }); });
         }
         return open({ mode: fr.kind === 'identity-taken' ? 'login' : 'signup', message: fr.text, messageKind: fr.kind === 'cancel' ? 'ok' : 'bad', messageExtra: extra, opener: d.activeElement });
       }
@@ -582,7 +649,7 @@
         var created = u.created_at && (Date.now() - Date.parse(u.created_at)) < 15 * 60 * 1000;
         var same = !!(p && p.prev && p.prev === u.id);
         var headLine = p && p.kind === 'link' && same ? 'Google is linked. Your free account is ready.' : (created ? 'Your free account is ready.' : "You're logged in.");
-        return afterAuth({ sameUser: same, head: headLine });
+        return afterAuth({ sameUser: same, head: headLine, brief: !!(p && p.brief === true) });
       });
     }).then(null, function(){});
   }

@@ -3,8 +3,10 @@
    - accounts switched off (config/supabase.json authGoogle / authPassword both false): a short "not open yet" note
    - ?reset=1 (from the password-reset email): a set-new-password form (updateUser({ password }))
    - no account (nobody signed in, or a guest): Create free account / Log in
-   - a real account: email and sign-in method, nickname (with the 7-day rule), Log out, Delete my account
-     (request_account_deletion; the daily Game sync job deletes everything within 24 hours). */
+   - a real account: email and sign-in method, nickname (with the 7-day rule), The Billionaire Brief on/off switch
+     (only while config/launch.json "briefSignup" is exactly true and my_account() returns "brief", i.e. migration 0009
+     is applied; set_my_brief), Log out, Delete my account (request_account_deletion; the daily Game sync job deletes
+     everything within 24 hours). */
 (function(w, d){
   var box = d.getElementById('acct');
   if (!box) return;
@@ -128,8 +130,9 @@
     return AU.session().then(function(s){
       var u = s && s.user;
       if (!u || u.is_anonymous || !u.email) return renderGuest(!!u);
-      return G.myAccount().then(function(acc){ return acc; }, function(){ return {}; }).then(function(acc){
-        acc = acc || {};
+      var briefP = G.briefSignupOn ? G.briefSignupOn().then(null, function(){ return false; }) : Promise.resolve(false);
+      return Promise.all([G.myAccount().then(function(acc){ return acc; }, function(){ return {}; }), briefP]).then(function(rs){
+        var acc = rs[0] || {}, briefOn = rs[1] === true;
         if (acc.nickname) AU.cacheNick(u, acc.nickname);
         clear();
         if (flash) { var f = el('p', 'ac-ok', flash); f.setAttribute('role', 'status'); box.appendChild(f); }
@@ -152,6 +155,7 @@
         box.appendChild(s1);
 
         box.appendChild(nicknameSection(acc, u));
+        if (briefOn && acc.brief && typeof acc.brief === 'object') box.appendChild(briefSection(acc.brief));
 
         // log out
         var s3 = el('section', 'ac-sec'); s3.setAttribute('aria-labelledby', 'ac-h-out');
@@ -235,6 +239,53 @@
         inp.focus();
       });
     });
+    return sec;
+  }
+
+  // The Billionaire Brief: one switch. Updates in place (focus stays on the switch); reverts and explains on failure.
+  function briefSection(brief){
+    var sec = el('section', 'ac-sec ac-brief'); sec.setAttribute('aria-labelledby', 'ac-h-brief');
+    var h = el('h2', null, 'The Billionaire Brief'); h.id = 'ac-h-brief'; sec.appendChild(h);
+    sec.appendChild(el('p', null, 'A free email with the biggest billionaire moves. Unsubscribe any time.'));
+    var sw = button('ac-switch');
+    sw.setAttribute('role', 'switch'); sw.setAttribute('aria-describedby', 'ac-brief-st');
+    var track = el('span', 'ac-switch__track'); track.setAttribute('aria-hidden', 'true');
+    track.appendChild(el('span', 'ac-switch__knob'));
+    sw.appendChild(track);
+    sw.appendChild(el('span', 'ac-switch__label', 'Send me the Brief'));
+    var st = el('p', 'ac-brief__status'); st.id = 'ac-brief-st'; st.setAttribute('aria-live', 'polite');
+    var err = el('p', 'ac-bad'); err.hidden = true; err.setAttribute('role', 'alert');
+    var cur = brief;
+    function show(b){
+      cur = b;
+      sw.setAttribute('aria-checked', A.briefListed(b) ? 'true' : 'false');
+      st.textContent = A.briefStatusText(b);
+    }
+    function problem(e){
+      var m = String((e && e.message) || '');
+      if (/^email_taken$/.test(m)) return 'This address is already on the list through another sign-up, so nothing changed.';
+      if (/^email_pending$/.test(m)) return 'This address has another sign-up waiting for its confirmation link. Confirm it from your inbox, or try again tomorrow.';
+      var fr = A.friendly(e, 'brief');
+      return fr.kind === 'network' || fr.kind === 'rate' ? fr.text : 'Could not save that. Please try again.';
+    }
+    show(brief);
+    sw.addEventListener('click', function(){
+      if (sw.getAttribute('aria-busy') === 'true') return;
+      var want = sw.getAttribute('aria-checked') !== 'true';
+      err.hidden = true; err.textContent = '';
+      sw.setAttribute('aria-checked', want ? 'true' : 'false');
+      sw.setAttribute('aria-busy', 'true');
+      st.textContent = 'Saving…';
+      G.setMyBrief(want).then(function(r){
+        sw.setAttribute('aria-busy', 'false');
+        show(r && r.status ? r : { status: want ? 'on' : 'off', email: cur && cur.email });
+      }, function(e){
+        sw.setAttribute('aria-busy', 'false');
+        show(cur);
+        err.textContent = problem(e); err.hidden = false;
+      });
+    });
+    sec.appendChild(sw); sec.appendChild(st); sec.appendChild(err);
     return sec;
   }
 
