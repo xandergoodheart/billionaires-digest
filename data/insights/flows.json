@@ -1,12 +1,12 @@
 {
-  "generated": "2026-10-22",
+  "generated": "2026-10-23",
   "inputs": {
-    "filingsGenerated": "2026-10-22T14:36:03.127Z",
-    "pricesGenerated": "2026-10-22T14:39:44.502Z",
+    "filingsGenerated": "2026-10-23T14:20:28.298Z",
+    "pricesGenerated": "2026-10-23T14:24:11.920Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 24
+    "editions": 25
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 75 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 73 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W32",
@@ -90,11 +90,11 @@
       "week": "2026-W38",
       "start": "2026-09-14",
       "end": "2026-09-20",
-      "buy": 212395151,
+      "buy": 221963330,
       "sell": 1948960047,
-      "net": -1736564896,
+      "net": -1726996717,
       "other": 9702110,
-      "buyCount": 2,
+      "buyCount": 3,
       "sellCount": 3,
       "otherCount": 3,
       "unpriced": 0
@@ -166,8 +166,8 @@
     }
   ],
   "last7": {
-    "from": "2026-10-16",
-    "to": "2026-10-22",
+    "from": "2026-10-17",
+    "to": "2026-10-23",
     "buy": 0,
     "sell": 38562754,
     "net": -38562754,
@@ -191,11 +191,11 @@
     },
     {
       "sector": "AI & tech",
-      "buy": 1272176431,
+      "buy": 1281744610,
       "sell": 391832019,
-      "net": 880344412,
+      "net": 889912591,
       "other": 9702110,
-      "buyCount": 11,
+      "buyCount": 12,
       "sellCount": 4,
       "otherCount": 5,
       "unpriced": 0
@@ -296,40 +296,6 @@
       ]
     },
     {
-      "name": "Henry Samueli",
-      "slug": "henry-samueli",
-      "sector": "AI & tech",
-      "value": 250006184,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-09-23",
-          "filed": "2026-09-25",
-          "form": "4",
-          "issuer": "Broadcom Inc.",
-          "ticker": "AVGO",
-          "url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/xslF345X06/tm2626134-1_4seq1.xml"
-        }
-      ]
-    },
-    {
-      "name": "Charles Koch & family",
-      "slug": "charles-koch-family",
-      "sector": "Industrials",
-      "value": 58086415,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-09-23",
-          "filed": "2026-09-24",
-          "form": "4",
-          "issuer": "ASPEN AEROGELS INC",
-          "ticker": "ASPN",
-          "url": "https://www.sec.gov/Archives/edgar/data/2027344/000119312526401380/xslF345X06/ownership.xml"
-        }
-      ]
-    },
-    {
       "name": "Stephen Schwarzman",
       "slug": "stephen-schwarzman",
       "sector": "Finance",
@@ -359,13 +325,6 @@
           "issuer": "ARKO Petroleum Corp.",
           "ticker": "APC",
           "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-09-23",
-          "filed": "2026-09-24",
-          "form": "4",
-          "issuer": "Blackstone Private Real Estate Credit & Income Fund",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026103146/xslF345X06/ownership.xml"
         }
       ]
     },
@@ -416,14 +375,6 @@
           "issuer": "BERKSHIRE HATHAWAY INC",
           "ticker": "BRK.A",
           "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/xslF345X06/primary_doc.xml"
-        },
-        {
-          "date": "2026-09-23",
-          "filed": "2026-09-25",
-          "form": "4",
-          "issuer": "LENNAR CORP /NEW/",
-          "ticker": "LEN",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526403089/xslF345X06/ownership.xml"
         }
       ]
     }
@@ -433,8 +384,8 @@
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
-      "value": 382899810,
-      "count": 6,
+      "value": 246517020,
+      "count": 4,
       "filings": [
         {
           "date": "2026-10-01",
@@ -459,54 +410,6 @@
           "issuer": "BERKSHIRE HATHAWAY INC",
           "ticker": "BRK.A",
           "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/xslF345X06/primary_doc.xml"
-        },
-        {
-          "date": "2026-09-23",
-          "filed": "2026-09-25",
-          "form": "4",
-          "issuer": "LENNAR CORP /NEW/",
-          "ticker": "LEN",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526403089/xslF345X06/ownership.xml"
-        }
-      ]
-    },
-    {
-      "name": "Stephen Schwarzman",
-      "slug": "stephen-schwarzman",
-      "sector": "Finance",
-      "value": 5016662,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-10-13",
-          "filed": "2026-10-14",
-          "form": "4",
-          "issuer": "Bumble Inc.",
-          "ticker": "BMBL",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526421998/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-09-28",
-          "filed": "2026-09-30",
-          "form": "4",
-          "issuer": "Bumble Inc.",
-          "ticker": "BMBL",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526409256/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-09-24",
-          "filed": "2026-09-28",
-          "form": "4",
-          "issuer": "ARKO Petroleum Corp.",
-          "ticker": "APC",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-09-23",
-          "filed": "2026-09-24",
-          "form": "4",
-          "issuer": "Blackstone Private Real Estate Credit & Income Fund",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026103146/xslF345X06/ownership.xml"
         }
       ]
     },
@@ -587,7 +490,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 75,
+    "form4Filings": 73,
     "form4Parsed": 58,
     "windowDays": 90
   }

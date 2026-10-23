@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T14:39:56.018Z",
+  "generated": "2026-10-23T14:24:23.396Z",
   "source": "SEC XBRL company facts",
   "tickers": {
     "1038": {
@@ -1260,29 +1260,8 @@
       "reason": "Not a US listing; no SEC 10-Q/10-K data."
     },
     "PSKY": {
-      "available": true,
-      "name": "Skydance Corp",
-      "cik": "0002041610",
-      "currency": "USD",
-      "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=2041610&type=10-&dateb=&owner=include&count=40",
-      "revenueConcept": "RevenueFromContractWithCustomerExcludingAssessedTax",
-      "netIncomeConcept": "NetIncomeLoss",
-      "quarter": {
-        "start": "2026-04-01",
-        "end": "2026-06-30",
-        "form": "10-Q",
-        "filed": "2026-08-04",
-        "accn": "0002041610-26-000054",
-        "revenue": 6913000000,
-        "netIncome": 41000000,
-        "epsDiluted": 0.04
-      },
-      "ttm": null,
-      "revenueGrowthQ": 0.9,
-      "revenueGrowthTTM": null,
-      "netMarginQ": 0.6,
-      "netMarginTTM": null,
-      "sharesOutstanding": null
+      "available": false,
+      "reason": "Ticker not found in SEC company_tickers.json."
     },
     "QUINENCO": {
       "available": false,
@@ -1371,26 +1350,26 @@
     },
     "SPCX": {
       "available": true,
-      "name": "SPACE EXPLORATION TECHNOLOGIES CORP.",
+      "name": "Space Exploration Technologies Corp.",
       "cik": "0001181412",
       "currency": "USD",
       "secUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1181412&type=10-&dateb=&owner=include&count=40",
       "revenueConcept": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "netIncomeConcept": "NetIncomeLoss",
       "quarter": {
-        "start": "2026-04-01",
-        "end": "2026-06-30",
+        "start": "2026-07-01",
+        "end": "2026-09-30",
         "form": "10-Q",
-        "filed": "2026-08-04",
-        "accn": "0001628280-26-052535",
-        "revenue": 7814000000,
-        "netIncome": -541000000,
-        "epsDiluted": -0.09
+        "filed": "2026-10-22",
+        "accn": "0001628280-26-066880",
+        "revenue": 14575000000,
+        "netIncome": 4404000000,
+        "epsDiluted": 0.35
       },
       "ttm": null,
-      "revenueGrowthQ": 91.9,
+      "revenueGrowthQ": 161.4,
       "revenueGrowthTTM": null,
-      "netMarginQ": -6.9,
+      "netMarginQ": 30.2,
       "netMarginTTM": null,
       "sharesOutstanding": null
     },

@@ -1,9 +1,55 @@
 {
-  "generated": "2026-10-22T14:36:03.127Z",
+  "generated": "2026-10-23T14:20:28.298Z",
   "windowDays": 90,
   "person": "Michael Dell",
   "personSlug": "michael-dell",
   "filings": [
+    {
+      "cik": "0000908724",
+      "filer": "DELL MICHAEL S",
+      "form": "4",
+      "filed": "2026-10-22",
+      "reportDate": "2026-09-17",
+      "accession": "0001193125-26-429152",
+      "url": "https://www.sec.gov/Archives/edgar/data/908724/000119312526429152/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/908724/000119312526429152/0001193125-26-429152-index.htm",
+      "description": "4",
+      "person": "Michael Dell",
+      "personSlug": "michael-dell",
+      "form4": {
+        "issuer": "5C Lending Partners Corp.",
+        "ticker": "NONE",
+        "summary": [
+          {
+            "issuer": "5C Lending Partners Corp.",
+            "ticker": "NONE",
+            "securityTitle": "Common Stock",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 390857,
+            "price": 24.48,
+            "value": 9568179,
+            "direction": "up",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-09-17",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 390857,
+            "price": 24.48,
+            "value": 9568179,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 4249305,
+            "direction": "up"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001105497",
       "filer": "MSD CAPITAL, L.P.",
