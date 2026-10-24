@@ -1,9 +1,66 @@
 {
-  "generated": "2026-10-23T14:20:28.298Z",
+  "generated": "2026-10-24T13:28:35.771Z",
   "windowDays": 90,
   "person": "Stephen Schwarzman",
   "personSlug": "stephen-schwarzman",
   "filings": [
+    {
+      "cik": "0001070844",
+      "filer": "SCHWARZMAN STEPHEN A",
+      "form": "4",
+      "filed": "2026-10-23",
+      "reportDate": "2026-10-21",
+      "accession": "0001213900-26-112119",
+      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026112119/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026112119/0001213900-26-112119-index.htm",
+      "person": "Stephen Schwarzman",
+      "personSlug": "stephen-schwarzman",
+      "form4": {
+        "issuer": "Blackstone Private Real Estate Credit & Income Fund",
+        "ticker": "NONE",
+        "summary": [
+          {
+            "issuer": "Blackstone Private Real Estate Credit & Income Fund",
+            "ticker": "NONE",
+            "securityTitle": "Common Shares of Beneficial Interest",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 104054.449,
+            "price": 26.2,
+            "value": 2726227,
+            "direction": "up",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Common Shares of Beneficial Interest",
+            "date": "2026-10-21",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 76335.878,
+            "price": 26.2,
+            "value": 2000000,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 8971813.758,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common Shares of Beneficial Interest",
+            "date": "2026-10-21",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 27718.571,
+            "price": 26.2,
+            "value": 726227,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 57118.041,
+            "direction": "up"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001070844",
       "filer": "SCHWARZMAN STEPHEN A",
@@ -591,64 +648,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526349583/0001193125-26-349583-index.htm",
       "description": "4",
       "person": "Stephen Schwarzman",
-      "personSlug": "stephen-schwarzman",
-      "form4": {
-        "issuer": "Bridger Aerospace Group Holdings, Inc.",
-        "ticker": "BAER",
-        "summary": [
-          {
-            "issuer": "Bridger Aerospace Group Holdings, Inc.",
-            "ticker": "BAER",
-            "securityTitle": "Common Stock",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 2778124,
-            "price": 1.04,
-            "value": 2890638,
-            "direction": "down",
-            "transactions": 3
-          }
-        ],
-        "transactionCount": 3,
-        "transactions": [
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-08-11",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 2710374,
-            "price": 1.0405,
-            "value": 2820144,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 4825856,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-08-11",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 46817,
-            "price": 1.0405,
-            "value": 48713,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 83358,
-            "direction": "down"
-          },
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-08-11",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 20933,
-            "price": 1.0405,
-            "value": 21781,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 37272,
-            "direction": "down"
-          }
-        ]
-      }
+      "personSlug": "stephen-schwarzman"
     },
     {
       "cik": "0001070844",

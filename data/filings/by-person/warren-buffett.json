@@ -1,9 +1,51 @@
 {
-  "generated": "2026-10-23T14:20:28.298Z",
+  "generated": "2026-10-24T13:28:35.771Z",
   "windowDays": 90,
   "person": "Warren Buffett",
   "personSlug": "warren-buffett",
   "filings": [
+    {
+      "cik": "0001067983",
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "form": "4",
+      "filed": "2026-10-23",
+      "reportDate": "2026-10-21",
+      "accession": "0001728451-26-000005",
+      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000005/xslF345X06/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000005/0001728451-26-000005-index.htm",
+      "description": "PRIMARY DOCUMENT",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "BERKSHIRE HATHAWAY INC",
+        "ticker": "BRK.A",
+        "summary": [
+          {
+            "issuer": "BERKSHIRE HATHAWAY INC",
+            "ticker": "BRK.A",
+            "securityTitle": "Class B Common Stock",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 19,
+            "direction": "flat",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-10-21",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 19,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 298,
+            "direction": "flat"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001067983",
       "filer": "BERKSHIRE HATHAWAY INC",
@@ -885,64 +927,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526349574/0001193125-26-349574-index.htm",
       "description": "4",
       "person": "Warren Buffett",
-      "personSlug": "warren-buffett",
-      "form4": {
-        "issuer": "BERKSHIRE HATHAWAY INC",
-        "ticker": "BRK.B",
-        "summary": [
-          {
-            "issuer": "BERKSHIRE HATHAWAY INC",
-            "ticker": "BRK.B",
-            "securityTitle": "Class B Common Stock",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 488,
-            "price": 512.44,
-            "value": 250072,
-            "direction": "up",
-            "transactions": 3
-          }
-        ],
-        "transactionCount": 3,
-        "transactions": [
-          {
-            "securityTitle": "Class B Common Stock",
-            "date": "2026-08-12",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 45,
-            "price": 510.64,
-            "value": 22979,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 708,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Class B Common Stock",
-            "date": "2026-08-12",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 400,
-            "price": 512.52,
-            "value": 205008,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 1108,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Class B Common Stock",
-            "date": "2026-08-12",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 43,
-            "price": 513.61,
-            "value": 22085,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 1151,
-            "direction": "up"
-          }
-        ]
-      }
+      "personSlug": "warren-buffett"
     },
     {
       "cik": "0001067983",
