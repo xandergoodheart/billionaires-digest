@@ -28,9 +28,11 @@ Build today's Billionaires Digest edition and publish it.
 7. If it fails, fix only the problems it lists, using real sources, and run it again. Retry at most
    2 times. If it still fails, stop. Do not commit. The site keeps yesterday's edition.
 8. On success, run:
-   `git add digest.json archive og news.html people editions companies guides sitemap.xml robots.txt data/fantasy/movers.json && git commit -m "Morning edition YYYY-MM-DD" && git pull --rebase origin main && git push origin main`
-   (use today's date in New York time). `og/` holds the share image the publish script renders for the
-   edition. `news.html` is only changed by the publish script, which points its og:image and
+   `node scripts/safe-push.mjs --message "Morning edition YYYY-MM-DD" --rebuild "node scripts/build-pages.mjs" -- digest.json archive og news.html people editions companies guides sitemap.xml robots.txt data/fantasy/movers.json`
+   (use today's date in New York time). It commits, then fetches, rebases, rebuilds the pages and
+   pushes, retrying a few times if another job pushed at the same moment. If it exits non-zero after
+   its retries, report that in your final message and do not try any other git commands.
+   `og/` holds the share image the publish script renders for the edition. `news.html` is only changed by the publish script, which points its og:image and
    twitter:image meta tags at that image. `index.html` (the front page) has a fixed share image
    (`og/home.png`) and must not change during a daily run. If the image step printed a warning, commit anyway.
 9. Final message: how many stories were published, which stories were dropped (and why), how many

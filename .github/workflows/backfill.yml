@@ -36,8 +36,5 @@ jobs:
           git config user.name "Billionaires Digest bot"
           git config user.email "hello@billionairesdigest.com"
           mkdir -p data/prices/history
-          git add data/prices/history
-          git diff --cached --quiet && echo "No changes" && exit 0
-          git commit -m "Backfill price history (Tiingo)" || true
-          git pull --rebase origin main
-          git push
+          # Commits, then fetch/rebase/push with retries (see scripts/lib/safe-push.mjs).
+          node scripts/safe-push.mjs --message "Backfill price history (Tiingo)" -- data/prices/history
