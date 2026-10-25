@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-25 Safer morning pushes
+
+- Morning data, the morning edition and the manual backfill/backup jobs now push through `scripts/safe-push.mjs`: fetch, rebase, rebuild the generated pages from the combined inputs, push, retrying with growing waits, so two jobs pushing at once no longer lose a day's update (tests in `scripts/lib/safe-push.test.mjs`).
+
 ## 2026-10-18 The Billionaire Brief: Portrait Gallery design + opt-in (built, switched off)
 
 - New Brief email design, "The Portrait Gallery": painted-portrait cover story, Face of the day, **The Daily Swing** (5 biggest estimated one-day gainers and 5 losers in public stakes, from `data/insights/leaderboards.json`, left out when older than 4 days), a 2-up gallery of the other stories, quick hits and the game card. Text copied verbatim from the day's edition, source links on every story, opinion labelled (`scripts/lib/brief.mjs`).

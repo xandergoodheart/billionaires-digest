@@ -72,8 +72,6 @@ jobs:
           git config user.name "Billionaires Digest bot"
           git config user.email "hello@billionairesdigest.com"
           mkdir -p data/filings data/financials data/prices data/fantasy data/book data/insights data/13f data/copycat data/network data/property
-          git add data/filings data/financials data/prices data/fantasy data/book data/insights data/13f data/copycat data/network data/property calendar.ics people editions companies guides sitemap.xml robots.txt
-          git diff --cached --quiet && echo "No changes" && exit 0
-          git commit -m "Morning data $(date -u +%Y-%m-%d)"
-          git pull --rebase origin main
-          git push
+          # Commits, then fetch/rebase/rebuild pages/push with retries, so a collision with the
+          # morning edition can't lose today's data (see scripts/lib/safe-push.mjs).
+          node scripts/safe-push.mjs --message "Morning data $(date -u +%Y-%m-%d)" --rebuild "node scripts/build-pages.mjs" -- data/filings data/financials data/prices data/fantasy data/book data/insights data/13f data/copycat data/network data/property calendar.ics people editions companies guides sitemap.xml robots.txt
