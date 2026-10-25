@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-24",
+  "generated": "2026-10-25",
   "inputs": {
-    "filingsGenerated": "2026-10-24T13:28:35.771Z",
-    "pricesGenerated": "2026-10-24T13:32:13.853Z",
+    "filingsGenerated": "2026-10-25T13:49:56.511Z",
+    "pricesGenerated": "2026-10-25T13:53:35.067Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 26
+    "editions": 27
   },
   "gainers": [
     {
@@ -385,8 +385,8 @@
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
-      "transactions": 31,
-      "filingsCount": 5,
+      "transactions": 22,
+      "filingsCount": 4,
       "filings": [
         {
           "filed": "2026-10-23",
@@ -407,11 +407,6 @@
           "filed": "2026-09-29",
           "form": "4",
           "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000004/xslF345X06/primary_doc.xml"
-        },
-        {
-          "filed": "2026-09-25",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526403089/xslF345X06/ownership.xml"
         }
       ]
     },
@@ -441,20 +436,6 @@
           "filed": "2026-09-28",
           "form": "4",
           "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526405400/xslF345X06/ownership.xml"
-        }
-      ]
-    },
-    {
-      "name": "Henry Samueli",
-      "slug": "henry-samueli",
-      "sector": "AI & tech",
-      "transactions": 17,
-      "filingsCount": 1,
-      "filings": [
-        {
-          "filed": "2026-09-25",
-          "form": "4",
-          "url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/xslF345X06/tm2626134-1_4seq1.xml"
         }
       ]
     },
@@ -929,8 +910,15 @@
       "name": "Elon Musk",
       "slug": "elon-musk",
       "sector": "Aerospace",
-      "count": 33,
+      "count": 34,
       "stories": [
+        {
+          "edition": "2026-10-25",
+          "editionUrl": "editions/2026-10-25/",
+          "headline": "Tesla beats on profit and deliveries, but revenue is flat",
+          "url": "https://electrek.co/2026/10/21/tesla-tsla-q3-2026-financial-results/",
+          "source": "Electrek"
+        },
         {
           "edition": "2026-10-24",
           "editionUrl": "editions/2026-10-24/",
@@ -958,13 +946,6 @@
           "headline": "Tesla, SpaceX form committees to study a merger",
           "url": "https://www.cnbc.com/2026/10/21/spacex-spcx-stock-musk-merger-tesla.html",
           "source": "CNBC"
-        },
-        {
-          "edition": "2026-10-20",
-          "editionUrl": "editions/2026-10-20/",
-          "headline": "Tesla's new Roadster flies on SpaceX thrusters",
-          "url": "https://www.deccanherald.com/auto/elon-musks-tesla-shows-off-flying-roadster-production-to-begin-in-2028-4185188",
-          "source": "Deccan Herald"
         }
       ]
     },
@@ -1012,6 +993,49 @@
       ]
     },
     {
+      "name": "Masayoshi Son",
+      "slug": "masayoshi-son",
+      "sector": "AI & tech",
+      "count": 17,
+      "stories": [
+        {
+          "edition": "2026-10-25",
+          "editionUrl": "editions/2026-10-25/",
+          "headline": "SoftBank shares fall as AI debt worries deepen",
+          "url": "https://www.gurufocus.com/news/9136034/softbanks-market-value-halves-amid-rising-debt-concerns",
+          "source": "GuruFocus"
+        },
+        {
+          "edition": "2026-10-24",
+          "editionUrl": "editions/2026-10-24/",
+          "headline": "SoftBank shares slide as AI debt worries deepen",
+          "url": "https://www.bloomberg.com/news/articles/2026-10-22/softbank-market-value-poised-to-halve-from-peak-as-ai-fears-grow",
+          "source": "Bloomberg"
+        },
+        {
+          "edition": "2026-10-22",
+          "editionUrl": "editions/2026-10-22/",
+          "headline": "SoftBank's market value halves from its June peak",
+          "url": "https://tradingkey.com/analysis/stocks/more/262231586-japan-south-korea-stocks-kospi-nikkei-softbank-sk-hynix-samsung-kioxia-tradingkey",
+          "source": "TradingKey"
+        },
+        {
+          "edition": "2026-10-21",
+          "editionUrl": "editions/2026-10-21/",
+          "headline": "SoftBank's credit risk hits its highest since 2022",
+          "url": "https://www.bloomberg.com/news/articles/2026-10-20/softbank-group-credit-risk-hits-4-year-high-on-ai-funding-strain",
+          "source": "Bloomberg"
+        },
+        {
+          "edition": "2026-10-20",
+          "editionUrl": "editions/2026-10-20/",
+          "headline": "Jury finds Arm breached Qualcomm license, awards $2",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/14/qualcomm-says-jury-found-arm-breached-license-agreement",
+          "source": "The Star"
+        }
+      ]
+    },
+    {
       "name": "Mukesh Ambani",
       "slug": "mukesh-ambani",
       "sector": "Other",
@@ -1051,49 +1075,6 @@
           "headline": "Jio Platforms sets price band for record India IPO",
           "url": "https://inc42.com/buzz/indias-biggest-ipo-growws-q2-profit-run-more/",
           "source": "Inc42"
-        }
-      ]
-    },
-    {
-      "name": "Masayoshi Son",
-      "slug": "masayoshi-son",
-      "sector": "AI & tech",
-      "count": 16,
-      "stories": [
-        {
-          "edition": "2026-10-24",
-          "editionUrl": "editions/2026-10-24/",
-          "headline": "SoftBank shares slide as AI debt worries deepen",
-          "url": "https://www.bloomberg.com/news/articles/2026-10-22/softbank-market-value-poised-to-halve-from-peak-as-ai-fears-grow",
-          "source": "Bloomberg"
-        },
-        {
-          "edition": "2026-10-22",
-          "editionUrl": "editions/2026-10-22/",
-          "headline": "SoftBank's market value halves from its June peak",
-          "url": "https://tradingkey.com/analysis/stocks/more/262231586-japan-south-korea-stocks-kospi-nikkei-softbank-sk-hynix-samsung-kioxia-tradingkey",
-          "source": "TradingKey"
-        },
-        {
-          "edition": "2026-10-21",
-          "editionUrl": "editions/2026-10-21/",
-          "headline": "SoftBank's credit risk hits its highest since 2022",
-          "url": "https://www.bloomberg.com/news/articles/2026-10-20/softbank-group-credit-risk-hits-4-year-high-on-ai-funding-strain",
-          "source": "Bloomberg"
-        },
-        {
-          "edition": "2026-10-20",
-          "editionUrl": "editions/2026-10-20/",
-          "headline": "Jury finds Arm breached Qualcomm license, awards $2",
-          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/14/qualcomm-says-jury-found-arm-breached-license-agreement",
-          "source": "The Star"
-        },
-        {
-          "edition": "2026-10-18",
-          "editionUrl": "editions/2026-10-18/",
-          "headline": "SoftBank shares fall on report of Allied Universal talks",
-          "url": "https://www.gurufocus.com/news/9128225/softbank-sftby-shares-drop-95-amid-early-talks-to-acquire-allied-universal",
-          "source": "GuruFocus"
         }
       ]
     },
@@ -1270,6 +1251,49 @@
       ]
     },
     {
+      "name": "Aliko Dangote",
+      "slug": "aliko-dangote",
+      "sector": "Industrials",
+      "count": 7,
+      "stories": [
+        {
+          "edition": "2026-10-25",
+          "editionUrl": "editions/2026-10-25/",
+          "headline": "Dangote refinery extends IPO deadline on strong demand",
+          "url": "https://www.timeslive.co.za/news/business/2026-10-12-nigerias-dangote-refinery-extends-16bn-ipo-to-broaden-african-investor-access/",
+          "source": "TimesLIVE"
+        },
+        {
+          "edition": "2026-10-15",
+          "editionUrl": "editions/2026-10-15/",
+          "headline": "Dangote Refinery's IPO window closes after profit surge",
+          "url": "https://allafrica.com/stories/202609090106.html",
+          "source": "AllAfrica"
+        },
+        {
+          "edition": "2026-10-10",
+          "editionUrl": "editions/2026-10-10/",
+          "headline": "Dangote refinery's $1.6B IPO enters its final days",
+          "url": "https://nairametrics.com/2026/09/15/7-things-to-know-about-the-dangote-refinery-ipo/",
+          "source": "Nairametrics"
+        },
+        {
+          "edition": "2026-10-07",
+          "editionUrl": "editions/2026-10-07/",
+          "headline": "Dangote refinery cuts off fuel importers over blending",
+          "url": "https://www.billionaires.africa/2026/10/06/aliko-dangotes-refinery-cuts-off-petrol-to-importers-it-accuses-of-blending-its-fuel/",
+          "source": "Billionaires.Africa"
+        },
+        {
+          "edition": "2026-10-06",
+          "editionUrl": "editions/2026-10-06/",
+          "headline": "Dangote's $16B Kenya refinery hit by new legal challenge",
+          "url": "https://www.billionaires.africa/2026/10/03/africas-richest-man-aliko-dangote-blames-oil-firms-for-kenya-refinery-protests/",
+          "source": "Billionaires.Africa"
+        }
+      ]
+    },
+    {
       "name": "Bernard Arnault & family",
       "slug": "bernard-arnault-family",
       "sector": "Luxury & retail",
@@ -1311,55 +1335,12 @@
           "source": "GlobeNewswire"
         }
       ]
-    },
-    {
-      "name": "Ken Griffin",
-      "slug": "ken-griffin",
-      "sector": "Finance",
-      "count": 7,
-      "stories": [
-        {
-          "edition": "2026-10-22",
-          "editionUrl": "editions/2026-10-22/",
-          "headline": "Griffin calls AI 'almost certainly' a bubble",
-          "url": "https://hedgeweek.com/news/citadels-ken-griffin-warns-ai-is-almost-certainly-in-a-bubble",
-          "source": "Hedgeweek"
-        },
-        {
-          "edition": "2026-10-22",
-          "editionUrl": "editions/2026-10-22/",
-          "headline": "Griffin, Vornado close $3.3B tower deal, Citadel leases it",
-          "url": "https://www.quiverquant.com/news/Vornado+Realty+Trust%2C+Ken+Griffin+and+Rudin+Announce+350+Park+Avenue+Joint+Venture+Closing%2C+Citadel+Lease+and+%243.3+Billion+Construction+Financing",
-          "source": "QuiverQuant"
-        },
-        {
-          "edition": "2026-10-08",
-          "editionUrl": "editions/2026-10-08/",
-          "headline": "Griffin says credit-card rate caps would hurt risky borrowers",
-          "url": "https://finance.yahoo.com/economy/policy/articles/citadel-founder-says-capping-credit-194841618.html",
-          "source": "Barchart"
-        },
-        {
-          "edition": "2026-10-06",
-          "editionUrl": "editions/2026-10-06/",
-          "headline": "Ken Griffin gives $3B to build Carnegie Mellon's Miami campus",
-          "url": "https://www.nbcmiami.com/news/local/who-is-ken-griffin-hedge-fund-ceo-donating-3b-to-bring-carnegie-mellon-to-miami/3866483/",
-          "source": "NBC6 South Florida"
-        },
-        {
-          "edition": "2026-10-05",
-          "editionUrl": "editions/2026-10-05/",
-          "headline": "Griffin gives $3 billion to Carnegie Mellon, builds Miami campus",
-          "url": "https://www.cbsnews.com/pittsburgh/news/who-is-ken-griffin-billionaire-donation-3-billion-carnegie-mellon/",
-          "source": "CBS News Pittsburgh"
-        }
-      ]
     }
   ],
   "notes": {
     "movers": "Estimated; partial. Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are a large part of the person's wealth. For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's Walmart stake), the estimate is the published net worth × that stock's daily % change.",
     "mostDeals": "Counts profile deal entries dated within the last 12 months (month-only dates count if any part of the month falls in the window). 21 entries without a month-level date were not counted.",
-    "mostMoves": "Stories across 26 archived editions. 18 stories named nobody in the top-100 index."
+    "mostMoves": "Stories across 27 archived editions. 20 stories named nobody in the top-100 index."
   },
   "minCoverage": 0.25
 }

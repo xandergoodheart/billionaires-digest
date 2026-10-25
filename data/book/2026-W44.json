@@ -3,7 +3,7 @@
   "start": "2026-10-26",
   "end": "2026-10-30",
   "locksAt": "2026-10-26T13:30:00.000Z",
-  "generated": "2026-10-24T13:28:35.771Z",
+  "generated": "2026-10-25T13:49:56.511Z",
   "asOf": "2026-10-25",
   "method": "Each person's daily fantasy points are modeled as a normal distribution. The average is the bonus they tend to earn: 10 points per story over the last 20 editions (divided by 20) plus 25 points per insider-buy day (Form 4, code P) over the last 90 days (divided by 63 trading days). Price moves average zero. The spread is 100 x the daily volatility of their holdings: measured from our price history when there are at least 15 daily closes (blended with a sector default until 60), otherwise the sector default (AI & tech 2.2%, Aerospace and Autos 3.0%, Finance 1.3%, Luxury & retail 1.5%, Health and Real estate 1.6%, others 1.8%). The week is the sum of 5 days. People move together: correlation 0.6 in the same sector, 0.3 otherwise, 1.0 when they share a main holding (those pairs never meet head-to-head). Matchups, spreads and over/unders use the normal formula; top scorer and top sector use 20,000 simulated weeks (seeded, so the same data gives the same odds); the insider-buy prop uses the daily buy rate (Poisson). Two-way prices carry a 4.5% house margin (-110 both sides at 50/50), many-way prices 20%. Odds are rounded to the nearest 5 (25 above +1000, 100 above +5000). Price markets (biggest gainer and loser boards, move ladders and ranges, rank races, dollar duels) follow each person's holdings basket (the fantasy weights): its change is modeled as a normal distribution centred on zero with the same daily volatility, times the square root of the trading days for a week, with the same correlations. Dollar markets multiply by tracked stock wealth: share counts from SEC filings times the share price, or, where a family stake is not split in filings, the published net worth moved by that stock. Boards and races use 20,000 simulated outcomes (seeded); ladders, ranges and duels use the normal formula. Ladder rungs and duel lines carry a 4.5% margin each, ranges 12%, boards 20%. Measured from the opening price on the first day to the closing price on the last day; betting closes at the opening bell (9:30 AM New York). Weekly markets run from Monday's open to Friday's close (races compare tracked wealth at Friday's close), daily boards from that day's open to its close. A missing opening or closing price (market holiday or data gap) makes the market void (stake back). Stakes: up to 500 coins; 150 when the combined odds pay 6x or more (decimal 6.0, +500); 50 when they pay 21x or more (decimal 21.0, +2000). Play money only; not a forecast and not advice.",
   "limits": {
@@ -255,7 +255,7 @@
       "sigma": 203.0242,
       "vol": 2.0302,
       "closes": 23,
-      "stories": 1,
+      "stories": 0,
       "buyDays": 0,
       "basket": [
         {
@@ -271,7 +271,7 @@
       "sigma": 176.3596,
       "vol": 1.7636,
       "closes": 23,
-      "stories": 1,
+      "stories": 2,
       "buyDays": 0,
       "basket": [
         {
@@ -327,7 +327,7 @@
       "sigma": 192.2624,
       "vol": 1.9226,
       "closes": 19,
-      "stories": 1,
+      "stories": 2,
       "buyDays": 0,
       "basket": [
         {
@@ -444,7 +444,7 @@
       "sigma": 204.2258,
       "vol": 2.0423,
       "closes": 23,
-      "stories": 1,
+      "stories": 2,
       "buyDays": 0,
       "basket": [
         {
@@ -484,7 +484,7 @@
       "sigma": 181.3819,
       "vol": 1.8138,
       "closes": 22,
-      "stories": 0,
+      "stories": 1,
       "buyDays": 0,
       "basket": [
         {
@@ -756,7 +756,7 @@
       "sigma": 212.1918,
       "vol": 2.1219,
       "closes": 23,
-      "stories": 14,
+      "stories": 13,
       "buyDays": 0,
       "basket": [
         {
@@ -827,7 +827,7 @@
       "sigma": 256.6076,
       "vol": 2.5661,
       "closes": 23,
-      "stories": 9,
+      "stories": 8,
       "buyDays": 0,
       "basket": [
         {
@@ -962,7 +962,7 @@
       "sigma": 229.948,
       "vol": 2.2995,
       "closes": 19,
-      "stories": 3,
+      "stories": 4,
       "buyDays": 0,
       "basket": [
         {
@@ -1170,7 +1170,7 @@
       "sigma": 234.3329,
       "vol": 2.3433,
       "closes": 23,
-      "stories": 8,
+      "stories": 7,
       "buyDays": 1,
       "basket": [
         {
@@ -1382,7 +1382,7 @@
       "sigma": 145.358,
       "vol": 1.4536,
       "closes": 23,
-      "stories": 2,
+      "stories": 3,
       "buyDays": 3,
       "basket": [
         {
@@ -1466,7 +1466,7 @@
       "sigma": 159.3085,
       "vol": 1.5931,
       "closes": 23,
-      "stories": 1,
+      "stories": 0,
       "buyDays": 0,
       "basket": [
         {
