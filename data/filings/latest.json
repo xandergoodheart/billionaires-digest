@@ -1,7 +1,53 @@
 {
-  "generated": "2026-10-27T15:29:17.009Z",
+  "generated": "2026-10-28T16:12:13.703Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0001273693",
+      "filer": "Control Empresarial de Capitales S.A. de C.V.",
+      "form": "4",
+      "filed": "2026-10-27",
+      "reportDate": "2026-10-23",
+      "accession": "0001140361-26-040937",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040937/xslF345X06/form4.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040937/0001140361-26-040937-index.htm",
+      "description": "FORM 4",
+      "person": "Carlos Slim Helu & family",
+      "personSlug": "carlos-slim-helu-family",
+      "form4": {
+        "issuer": "TALOS ENERGY INC.",
+        "ticker": "TALO",
+        "summary": [
+          {
+            "issuer": "TALOS ENERGY INC.",
+            "ticker": "TALO",
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2500000,
+            "price": 18.33,
+            "value": 45823500,
+            "direction": "down",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-23",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 2500000,
+            "price": 18.3294,
+            "value": 45823500,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 22000000,
+            "direction": "down"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001890222",
       "filer": "J. Safra Sarasin Holding AG",
@@ -6650,112 +6696,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926097181/0001104659-26-097181-index.htm",
       "description": "OWNERSHIP DOCUMENT",
       "person": "Bill Gates",
-      "personSlug": "bill-gates",
-      "form4": {
-        "issuer": "REPUBLIC SERVICES, INC.",
-        "ticker": "RSG",
-        "summary": [
-          {
-            "issuer": "REPUBLIC SERVICES, INC.",
-            "ticker": "RSG",
-            "securityTitle": "Common stock",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 362960,
-            "price": 215.81,
-            "value": 78329177,
-            "direction": "up",
-            "transactions": 7
-          }
-        ],
-        "transactionCount": 7,
-        "transactions": [
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-12",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 4410,
-            "price": 213.7001,
-            "value": 942417,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111310056,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-12",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 26111,
-            "price": 214.6267,
-            "value": 5604118,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111336167,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-12",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 69018,
-            "price": 215.6726,
-            "value": 14885292,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111405185,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-12",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 69861,
-            "price": 216.3983,
-            "value": 15117802,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111475046,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-12",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 5100,
-            "price": 217.1771,
-            "value": 1107603,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111480146,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-13",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 157096,
-            "price": 215.6991,
-            "value": 33885466,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111637242,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-13",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 31364,
-            "price": 216.378,
-            "value": 6786480,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111668606,
-            "direction": "up"
-          }
-        ]
-      }
+      "personSlug": "bill-gates"
     },
     {
       "cik": "0001166559",
@@ -11216,39 +11157,6 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926088819/0001104659-26-088819-index.htm",
       "person": "Israel Englander",
       "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0001942670",
-      "filer": "AI Biotechnology LLC",
-      "form": "SCHEDULE 13D/A",
-      "filed": "2026-07-29",
-      "accession": "0001193125-26-323654",
-      "url": "https://www.sec.gov/Archives/edgar/data/1942670/000119312526323654/xslSCHEDULE_13D_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1942670/000119312526323654/0001193125-26-323654-index.htm",
-      "person": "Len Blavatnik",
-      "personSlug": "len-blavatnik"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-07-29",
-      "accession": "0001104659-26-088300",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926088300/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926088300/0001104659-26-088300-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0000315066",
-      "filer": "FMR LLC",
-      "form": "SCHEDULE 13D",
-      "filed": "2026-07-29",
-      "accession": "0000315066-26-001479",
-      "url": "https://www.sec.gov/Archives/edgar/data/315066/000031506626001479/xslSCHEDULE_13D_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315066/000031506626001479/0000315066-26-001479-index.htm",
-      "person": "Abigail Johnson",
-      "personSlug": "abigail-johnson"
     }
   ]
 }
