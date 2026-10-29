@@ -1,11 +1,11 @@
 {
-  "date": "Wednesday, October 28, 2026",
-  "updated": "Oct 28, 2026 · morning edition",
+  "date": "Thursday, October 29, 2026",
+  "updated": "Oct 29, 2026 · morning edition",
   "lede": {
     "kicker": "Lede of the day",
-    "headline": "SpaceX closes $40 billion in debt for Nvidia chips",
-    "dek": "Elon Musk said SpaceX has closed $40 billion in debt financing to buy Nvidia GPUs, calling the company \"investment-grade\" thanks to Starlink and rocket-launch revenue, while warning that AI \"neocloud\" firms without outside revenue face a wave of consolidation.",
-    "ini": "EM"
+    "headline": "Meta's AI chip suppliers become its investors",
+    "dek": "Meta launched a roughly $35 billion stock sale to help fund its AI buildout, and its own chip suppliers Nvidia and AMD stepped up as buyers, saying they'd put in $3 billion and $1 billion respectively alongside Broadcom.",
+    "ini": "MZ"
   },
   "top10": [
     {
@@ -72,108 +72,210 @@
   "top10AsOf": "List as of Sep 24, 2026 9:15 PM ET",
   "stories": [
     {
-      "who": "Elon Musk",
-      "sector": "Aerospace",
-      "via": "SpaceX",
+      "who": "Mark Zuckerberg",
+      "sector": "AI & tech",
+      "via": "Meta",
       "people": [
-        "Elon Musk"
+        "Mark Zuckerberg"
       ],
       "type": "Investment",
-      "tickers": "SPCX",
-      "read": "Warning sign",
+      "tickers": "META",
+      "read": "Big ask",
       "direction": "flat",
-      "headline": "SpaceX closes $40 billion in debt for Nvidia chips",
-      "move": "Musk said on X that SpaceX has closed $40 billion in debt financing to buy Nvidia GPUs, calling SpaceX \"investment-grade\" because of its Starlink and rocket-launch revenue. He said the debt is mostly callable financing for GPUs arriving in the first and second quarters of 2027 and is \"not a major factor this quarter.\" SpaceX's AI compute business brought in $7.6 billion in the third quarter, more than half of the company's $14.6 billion total revenue and more than its Starlink and rocket businesses combined.",
-      "why": "It is one of the clearest public signals yet of how much debt is being used across the industry to buy AI chips, at a time Musk himself says credit markets are tightening.",
-      "bear": "Musk framed SpaceX as unusually safe because it has large non-AI revenue from Starlink and launches; most AI infrastructure borrowers cannot make that claim.",
-      "watch": "Whether the GPUs financed by this debt arrive on schedule in the first half of 2027 and how SpaceX's AI compute revenue holds up.",
-      "source": "Crypto Briefing",
-      "url": "https://cryptobriefing.com/spacex-40-billion-debt-financing-gpus/"
+      "headline": "Meta launches $35 billion stock sale for AI buildout",
+      "move": "Meta launched public offerings totaling about $35 billion: roughly $22.5 billion of Class A common stock and about $12.5 billion of mandatory convertible preferred depositary shares, according to its SEC filing dated Oct. 26. The filing also discloses plans for a separate at-the-market program of up to $60 billion tied to a new class of shares, not expected to begin before the first quarter of 2027. Meta has guided to $135 billion to $145 billion in capital expenditures for 2026.",
+      "why": "It shows Meta turning to public equity markets, not just its own cash flow, to keep funding its AI data-center spending.",
+      "bear": "Issuing tens of billions in new stock and preferred shares dilutes existing shareholders, even if it avoids piling on more debt.",
+      "watch": "Whether Meta's planned $60 billion at-the-market program launches as planned once its new share class begins trading in 2027.",
+      "source": "SEC filing (Meta free writing prospectus)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001326801/000119312526431036/d116268dfwp.htm"
     },
     {
-      "who": "Mukesh Ambani",
-      "sector": "Other",
-      "via": "Jio Platforms",
+      "who": "Jensen Huang",
+      "sector": "AI & tech",
+      "via": "Nvidia",
       "people": [
-        "Mukesh Ambani"
+        "Jensen Huang",
+        "Mark Zuckerberg"
+      ],
+      "type": "Investment",
+      "tickers": "NVDA · META",
+      "read": "Customer financing",
+      "direction": "flat",
+      "headline": "Nvidia to invest $3 billion in Meta's stock offering",
+      "move": "Nvidia said it would invest $3 billion in Meta's stock offering, part of a combined, non-binding indication of interest from Nvidia, AMD and Broadcom to buy up to $5 billion of Meta Class A common stock, per Meta's SEC filing. Nvidia said the deal also expands its work with Meta on Muse, Meta's agentic AI model family, to improve training and inference performance.",
+      "why": "It shows one of Nvidia's biggest customers for AI chips also becoming one of its stock investors, tightening the financial ties between the two companies.",
+      "bear": "Nvidia's interest is explicitly non-binding, so the final amount it actually buys could end up smaller.",
+      "watch": "Whether Nvidia's final purchase in the offering matches the $3 billion figure once the deal closes.",
+      "source": "Stocktwits",
+      "url": "https://stocktwits.com/news-articles/markets/equity/nvidia-picks-up-3-b-stock-in-meta-s-equity-offering-will-help-improve-muse-ai-platform/cZUeGE3RBzH"
+    },
+    {
+      "who": "Lisa Su",
+      "sector": "AI & tech",
+      "via": "AMD",
+      "people": [
+        "Lisa Su",
+        "Mark Zuckerberg"
+      ],
+      "type": "Investment",
+      "tickers": "AMD · META",
+      "read": "Customer financing",
+      "direction": "up",
+      "headline": "AMD to invest $1 billion in Meta, expands Helios deal",
+      "move": "AMD said it would invest $1 billion in Meta's stock offering, part of the same non-binding $5 billion combined interest from AMD, Nvidia and Broadcom disclosed in Meta's SEC filing. AMD also said Meta has begun installing and testing its Helios rack-scale AI systems, that Meta uses AMD EPYC processors to power its Muse AI assistant and Instinct GPUs for recommendation and training work, and that Meta is an early partner for AMD's upcoming Instinct MI450 chip. AMD shares rose 5.5% on Oct. 27.",
+      "why": "It shows AMD cementing a second major AI customer relationship beyond its existing deal with OpenAI, with Meta buying both its chips and its stock.",
+      "bear": "AMD's investment commitment is non-binding, and the stock jump also rode a broader same-day rally in chip stocks.",
+      "watch": "Whether AMD's Helios systems move from testing to broad deployment at Meta, as planned.",
+      "source": "Investing.com",
+      "url": "https://www.investing.com/news/stock-market-news/amd-stock-rallies-on-expanded-meta-ai-infrastructure-deal-and-broader-chip-rally-4976452"
+    },
+    {
+      "who": "Sundar Pichai",
+      "sector": "AI & tech",
+      "via": "Alphabet",
+      "people": [
+        "Sundar Pichai"
+      ],
+      "type": "Earnings",
+      "tickers": "GOOGL",
+      "read": "Beat",
+      "direction": "up",
+      "headline": "Alphabet's cloud revenue more than doubles in Q3",
+      "move": "Alphabet reported third-quarter 2026 revenue of $127.6 billion, up 25% year over year. Google Cloud revenue rose 103% to $30.7 billion. Net income available to common stockholders was $26.2 billion, and diluted EPS was $2.12. CEO Sundar Pichai said the company had \"a strong quarter and are now on a half-trillion dollar revenue run rate.\"",
+      "why": "Cloud revenue more than doubling shows Alphabet's AI infrastructure investments converting into a fast-growing, large business line, not just a cost center.",
+      "bear": "The quarter's sheer scale means any slowdown in cloud growth going forward will be measured against a much tougher comparison.",
+      "watch": "Alphabet's capital-expenditure guidance for 2027, expected on a future earnings call.",
+      "source": "SEC filing (Alphabet 8-K)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001652044/000165204426000080/googexhibit991q32026.htm"
+    },
+    {
+      "who": "Satya Nadella",
+      "sector": "AI & tech",
+      "via": "Microsoft",
+      "people": [
+        "Satya Nadella"
+      ],
+      "type": "Earnings",
+      "tickers": "MSFT",
+      "read": "Beat",
+      "direction": "up",
+      "headline": "Microsoft's Azure revenue jumps 48% on AI demand",
+      "move": "Microsoft reported fiscal first-quarter 2027 revenue of $92.28 billion, up 19% year over year and above the $90.69 billion analysts expected. Azure cloud revenue rose more than 48% to $33.17 billion, also above the roughly $32.32 billion analysts expected. Adjusted earnings per share were $4.89, versus the $4.73 Wall Street forecast, and net income rose to $36.63 billion from $27.75 billion a year earlier.",
+      "why": "Azure's accelerating growth rate, even at its current size, suggests Microsoft's AI and cloud investments are still finding more demand rather than running into a ceiling.",
+      "bear": "Microsoft changed its reporting segments this quarter, making some of the growth figures harder to compare cleanly with prior periods.",
+      "watch": "Microsoft's guidance for fiscal second-quarter revenue of $96 billion to $97.1 billion, including 49% to 50% constant-currency Azure growth.",
+      "source": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/10/28/microsofts-stock-rises-on-solid-earnings-and-revenue-beat-with-azure-growing-48/"
+    },
+    {
+      "who": "Eyal Ofer",
+      "sector": "Other",
+      "via": "Royal Caribbean Group",
+      "people": [
+        "Eyal Ofer"
+      ],
+      "type": "Earnings",
+      "tickers": "RCL",
+      "read": "Beat and raise",
+      "direction": "up",
+      "headline": "Royal Caribbean beats on Q3, raises full-year outlook",
+      "move": "Royal Caribbean Group, where Eyal Ofer has served as a director since 1995, reported third-quarter 2026 revenue of $5.591 billion, up 9% from $5.139 billion a year earlier. Adjusted diluted EPS was $6.57, above the $5.75 reported a year earlier and ahead of the company's own guidance. The company raised its full-year 2026 adjusted EPS guidance to $17.85-$17.95. Chairman and CEO Jason Liberty said \"demand for our leading vacation experiences remains strong.\" Shares rose 5.5% on Oct. 27.",
+      "why": "A guidance raise this late in the year shows booking strength holding up into the fourth quarter, not just beating an easy prior estimate.",
+      "bear": "Cruise bookings are sensitive to fuel costs and currency swings, both of which the company flagged as factors in its own updated guidance.",
+      "watch": "Royal Caribbean's fourth-quarter adjusted EPS, guided at $3.48 to $3.58.",
+      "source": "SEC filing (Royal Caribbean 8-K)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000884887/000088488726000042/a2026q3earningsrelease.htm"
+    },
+    {
+      "who": "Mary Barra",
+      "sector": "Autos",
+      "via": "General Motors",
+      "people": [
+        "Mary Barra"
+      ],
+      "type": "Leadership",
+      "tickers": "GM",
+      "read": "Structural pop",
+      "direction": "up",
+      "headline": "GM to move its stock listing from NYSE to Nasdaq",
+      "move": "General Motors said it plans to move its stock listing from the New York Stock Exchange to the Nasdaq Global Select Market, with the switch expected next month and the ticker staying GM. The company said existing shareholders need take no action. Reuters reported the move would make GM the first legacy automaker listed on Nasdaq, and the switch makes GM eligible for possible inclusion in the Nasdaq-100 index, though eligibility alone doesn't guarantee inclusion. Shares rose about 5.5% on Oct. 27.",
+      "why": "Nasdaq-100 eligibility could bring in buying from funds that track the index, which is a real, if uncertain, source of future demand for the stock.",
+      "bear": "Eligibility doesn't guarantee inclusion, and the rally reflects a possibility, not a confirmed change in GM's fundamentals.",
+      "watch": "Whether index providers actually add GM to the Nasdaq-100 once its listing switch takes effect.",
+      "source": "24/7 Wall St.",
+      "url": "https://247wallst.com/investing/2026/10/27/general-motors-rises-5-on-nasdaq-listing-move-and-index-eligibility-tesla-gains-3-ford-edges-higher/"
+    },
+    {
+      "who": "Aliko Dangote",
+      "sector": "Energy",
+      "via": "Dangote Petroleum Refinery",
+      "people": [
+        "Aliko Dangote"
       ],
       "type": "IPO / Markets",
-      "tickers": "NSE, BSE",
-      "read": "Strong debut",
+      "tickers": "Private",
+      "read": "Oversubscribed",
       "direction": "up",
-      "headline": "Jio Platforms lists at a 21% premium in India's biggest IPO",
-      "move": "Jio Platforms, the telecom and digital-services arm of Mukesh Ambani's Reliance Industries, opened at 1,358 rupees a share on the BSE and NSE, 21.36% above its 1,119-rupee issue price. The 30,213-crore-rupee ($3.6 billion) offer, India's largest ever, had been subscribed 22.19 times, with institutional investors bidding for more than 70 times their allotted shares. The listing values Jio Platforms at about 12.5 lakh crore rupees, making it India's second most valuable company and its largest telecom firm.",
-      "why": "It is the biggest test yet of Indian retail and institutional appetite for a mega IPO, and it hands Ambani a newly public, separately valued flagship alongside Reliance's other businesses.",
-      "bear": "Foreign institutional investors had been net sellers through October, a headwind some analysts flagged ahead of the debut.",
-      "watch": "How Jio Platforms shares trade in the sessions after the debut, once the opening-day premium is tested by regular trading.",
-      "source": "The Tribune",
-      "url": "https://www.tribuneindia.com/news/business/jio-platforms-shares-list-at-rs-1358-on-bse-nse-21-36-above-issue-price/"
-    },
-    {
-      "who": "Robin Zeng",
-      "sector": "Autos",
-      "via": "CATL",
-      "people": [
-        "Robin Zeng"
-      ],
-      "type": "Earnings",
-      "tickers": "300750.SZ · 3750.HK",
-      "read": "Miss",
-      "direction": "down",
-      "headline": "CATL's profit growth cools sharply, shares tumble",
-      "move": "CATL, the world's largest battery maker, reported third-quarter net profit of 21.25 billion yuan ($3.16 billion), up 14.5% from a year earlier but down 5.8% from the prior quarter, well short of the roughly 41% growth analysts had expected. Revenue rose 58.6% to 165.2 billion yuan. Gross margin narrowed to 20.69%, its second straight quarterly decline. CATL said a reinstated consumption tax on lithium-ion batteries and a cut to export tax rebates both weighed on profit per unit. Shares fell more than 12% in both Shenzhen and Hong Kong the day after the results, with the Hong Kong stock hitting its lowest level since July 2025. Founder Robin Zeng has lost an estimated $14.9 billion since March as the stock has fallen.",
-      "why": "It shows that even the dominant player in EV batteries, with revenue still growing fast, cannot fully offset new taxes and a smaller export rebate at the margin line.",
-      "bear": "Nine-month profit is still up nearly 32% year over year, and CATL's market share and revenue growth remain far ahead of rivals.",
-      "watch": "Whether the lithium-battery consumption tax and lower export rebates continue to compress margins in the fourth quarter.",
-      "source": "CnEVPost",
-      "url": "https://cnevpost.com/2026/10/21/catl-shares-fall-profit-pressure/"
-    },
-    {
-      "who": "Thomas Frist Jr & family",
-      "sector": "Health",
-      "via": "HCA Healthcare",
-      "people": [
-        "Thomas Frist Jr & family"
-      ],
-      "type": "Earnings",
-      "tickers": "HCA",
-      "read": "Mixed",
-      "direction": "flat",
-      "headline": "HCA Healthcare's revenue rises, but uninsured patients cut into profit",
-      "move": "HCA Healthcare, the hospital chain co-founded by the Frist family, reported third-quarter revenue of $19.849 billion, up 3.6% from $19.161 billion a year earlier. Net income attributable to HCA fell 3.9% to $1.579 billion, while diluted earnings per share rose 4.5% to $7.27. The company said a shift toward uninsured patients, mainly people who lost exchange coverage, cut an estimated $400 million from pre-tax income. HCA bought back $2.970 billion of stock in the quarter and said it now expects full-year results in the upper half of the guidance it issued in July. CEO Sam Hazen said HCA is \"positioned to end the year positively.\"",
-      "why": "It is an early, concrete look at how the loss of ACA exchange subsidies and coverage is showing up in a major hospital operator's results.",
-      "bear": "Per-share earnings and full-year guidance both improved despite the coverage-related hit, and the company kept buying back stock at scale.",
-      "watch": "Whether the uninsured-patient mix keeps worsening as more people lose exchange coverage heading into 2027.",
-      "source": "SEC filing (HCA Healthcare 8-K)",
-      "url": "https://www.sec.gov/Archives/edgar/data/0000860730/000119312526432665/hca-ex99_1.htm"
+      "headline": "Dangote refinery's $1.6 billion IPO closes amid heavy demand",
+      "move": "Dangote Petroleum Refinery's share offering, worth about $1.6 billion and up to $2.1 billion with its over-allotment option, closed subscriptions Oct. 27 after Nigeria's securities regulator extended the deadline from Oct. 13 to accommodate demand. Bloomberg, citing people familiar with the matter, reported that domestic and retail demand alone had already covered the $1.6 billion target, with investors from 119 countries applying. The refinery, majority owned by Aliko Dangote, was valued at about $47 billion in the offering.",
+      "why": "An offering this oversubscribed, in Africa's largest-ever IPO, signals strong investor appetite for Dangote's refinery beyond Nigeria's own market.",
+      "bear": "Heavy reported demand comes from anonymous sources rather than final, audited allotment figures, which are not yet public.",
+      "watch": "The refinery's share allotment results and its planned listing on the Nigerian Exchange.",
+      "source": "Oil Price",
+      "url": "https://oilprice.com/Latest-Energy-News/World-News/Investors-From-119-Countries-Pile-Into-Dangotes-Record-Refinery-IPO.amp.html"
     }
   ],
-  "consensus": null,
-  "filings": [
-    {
-      "filer": "Michael Dell",
-      "form": "Form 4",
-      "change": "Bought $9.6 million more of 5C Lending Partners Corp., a private credit fund backed by his family office",
-      "direction": "up"
-    },
-    {
-      "filer": "Israel Englander / Millennium Management",
-      "form": "13G/A",
-      "change": "Disclosed a 3.6% stake in Apollo Commercial Real Estate Finance",
-      "direction": "flat"
-    }
-  ],
+  "consensus": {
+    "headline": "Nvidia and AMD climb aboard Meta's AI funding round",
+    "body": "Nvidia's Jensen Huang and AMD's Lisa Su both agreed to buy into Meta's stock offering this week, pledging $3 billion and $1 billion respectively toward Meta's AI data-center buildout, alongside Broadcom. Both are non-binding indications of interest in the same $5 billion combined pool disclosed in Meta's SEC filing.",
+    "tags": [
+      "AI & tech",
+      "AI infrastructure",
+      "Meta"
+    ]
+  },
+  "filings": [],
   "watch": [
-    "Alphabet and Microsoft report quarterly results after the market close today, Oct. 28.",
-    "Amazon reports third-quarter results Thursday, Oct. 29.",
-    "Apple reports fiscal fourth-quarter results Monday, Nov. 2.",
-    "The first GPUs financed by SpaceX's new $40 billion in debt are due to arrive in the first half of 2027."
+    "Amazon reports third-quarter results after today's close, Oct. 29.",
+    "Apple reports fiscal fourth-quarter results Monday, Nov. 2, its first earnings call under CEO John Ternus.",
+    "AMD reports third-quarter results Monday, Nov. 3.",
+    "GM's planned move of its stock listing from the NYSE to the Nasdaq, which it said would happen next month.",
+    "Dangote Petroleum Refinery's share allotment results and planned listing, following its Oct. 27 subscription close."
   ],
-  "quickHits": [],
+  "quickHits": [
+    "Samsung Electronics, where Jay Y. Lee is vice chairman, guided to preliminary third-quarter 2026 sales of about 195 trillion won (about $145 billion), with full results still to come."
+  ],
   "memo": [
-    "CATL's quarter shows that fast revenue growth doesn't protect margins once new taxes and smaller export rebates hit unit economics; watch the cost line, not just the topline.",
-    "Even SpaceX, with real Starlink and launch revenue to point to, is leaning on large amounts of debt to buy AI chips, a sign capital for AI infrastructure is getting harder to raise cheaply across the board.",
-    "HCA's results are an early read on how the loss of ACA exchange coverage can show up as a direct, quantifiable hit to a healthcare company's margins."
+    "When a company needs tens of billions for one bet, lining up its own suppliers as cornerstone investors (Meta, with Nvidia and AMD) is worth noticing as a sign of how much capital the AI buildout now requires.",
+    "A stock can move more on market-structure news than on fundamentals, as GM's Nasdaq listing switch showed; know what's actually driving a swing before reacting to it.",
+    "Royal Caribbean raising guidance this late in the year is a reminder not to assume a strong discretionary category is about to cool just because it's been strong for a while."
+  ],
+  "movers": [
+    {
+      "ticker": "AMD",
+      "date": "2026-10-27",
+      "changePct": 5.4548,
+      "why": "AMD rose 5.5% after saying it would invest $1 billion in Meta's stock offering and expand their AI chip deal.",
+      "sourceName": "Investing.com",
+      "sourceUrl": "https://www.investing.com/news/stock-market-news/amd-stock-rallies-on-expanded-meta-ai-infrastructure-deal-and-broader-chip-rally-4976452"
+    },
+    {
+      "ticker": "RCL",
+      "date": "2026-10-27",
+      "changePct": 5.4597,
+      "why": "Royal Caribbean rose 5.5% after beating Q3 earnings estimates and raising its full-year profit outlook.",
+      "sourceName": "SEC filing (Royal Caribbean 8-K)",
+      "sourceUrl": "https://www.sec.gov/Archives/edgar/data/0000884887/000088488726000042/a2026q3earningsrelease.htm"
+    },
+    {
+      "ticker": "GM",
+      "date": "2026-10-27",
+      "changePct": 5.5432,
+      "why": "GM rose 5.5% after saying it plans to switch its stock listing to the Nasdaq, opening the door to index-fund buying.",
+      "sourceName": "24/7 Wall St.",
+      "sourceUrl": "https://247wallst.com/investing/2026/10/27/general-motors-rises-5-on-nasdaq-listing-move-and-index-eligibility-tesla-gains-3-ford-edges-higher/"
+    }
   ],
   "ledger": null
 }
