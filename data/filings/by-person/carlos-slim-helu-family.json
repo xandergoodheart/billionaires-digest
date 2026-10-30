@@ -1,9 +1,67 @@
 {
-  "generated": "2026-10-29T16:19:19.323Z",
+  "generated": "2026-10-30T16:08:40.596Z",
   "windowDays": 90,
   "person": "Carlos Slim Helu & family",
   "personSlug": "carlos-slim-helu-family",
   "filings": [
+    {
+      "cik": "0001273693",
+      "filer": "Control Empresarial de Capitales S.A. de C.V.",
+      "form": "4",
+      "filed": "2026-10-29",
+      "reportDate": "2026-10-27",
+      "accession": "0001140361-26-041180",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126041180/xslF345X06/form4.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126041180/0001140361-26-041180-index.htm",
+      "description": "FORM 4",
+      "person": "Carlos Slim Helu & family",
+      "personSlug": "carlos-slim-helu-family",
+      "form4": {
+        "issuer": "TALOS ENERGY INC.",
+        "ticker": "TALO",
+        "summary": [
+          {
+            "issuer": "TALOS ENERGY INC.",
+            "ticker": "TALO",
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 1508586,
+            "price": 18.36,
+            "value": 27701560,
+            "direction": "down",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-27",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 308586,
+            "price": 18.5022,
+            "value": 5709520,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 21691414,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-28",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 1200000,
+            "price": 18.3267,
+            "value": 21992040,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 20491414,
+            "direction": "down"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001273693",
       "filer": "Control Empresarial de Capitales S.A. de C.V.",
@@ -754,40 +812,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126033741/0001140361-26-033741-index.htm",
       "description": "FORM 4",
       "person": "Carlos Slim Helu & family",
-      "personSlug": "carlos-slim-helu-family",
-      "form4": {
-        "issuer": "PBF Energy Inc.",
-        "ticker": "PBF",
-        "summary": [
-          {
-            "issuer": "PBF Energy Inc.",
-            "ticker": "PBF",
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 120000,
-            "price": 74.79,
-            "value": 8974308,
-            "direction": "down",
-            "transactions": 1
-          }
-        ],
-        "transactionCount": 1,
-        "transactions": [
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-08-17",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 120000,
-            "price": 74.7859,
-            "value": 8974308,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 14285397,
-            "direction": "down"
-          }
-        ]
-      }
+      "personSlug": "carlos-slim-helu-family"
     },
     {
       "cik": "0001273693",

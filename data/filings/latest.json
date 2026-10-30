@@ -1,7 +1,122 @@
 {
-  "generated": "2026-10-29T16:19:19.323Z",
+  "generated": "2026-10-30T16:08:40.596Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0000315090",
+      "filer": "BUFFETT WARREN E",
+      "form": "4",
+      "filed": "2026-10-29",
+      "reportDate": "2026-10-27",
+      "accession": "0001193125-26-438090",
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/0001193125-26-438090-index.htm",
+      "description": "4",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "DAVITA INC.",
+        "ticker": "DVA",
+        "summary": [
+          {
+            "issuer": "DAVITA INC.",
+            "ticker": "DVA",
+            "securityTitle": "Common Stock",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 382563,
+            "price": 180.43,
+            "value": 69026033,
+            "direction": "down",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-10-27",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 382563,
+            "price": 180.4305,
+            "value": 69026033,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 28314666,
+            "direction": "down"
+          }
+        ]
+      }
+    },
+    {
+      "cik": "0001273693",
+      "filer": "Control Empresarial de Capitales S.A. de C.V.",
+      "form": "4",
+      "filed": "2026-10-29",
+      "reportDate": "2026-10-27",
+      "accession": "0001140361-26-041180",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126041180/xslF345X06/form4.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126041180/0001140361-26-041180-index.htm",
+      "description": "FORM 4",
+      "person": "Carlos Slim Helu & family",
+      "personSlug": "carlos-slim-helu-family",
+      "form4": {
+        "issuer": "TALOS ENERGY INC.",
+        "ticker": "TALO",
+        "summary": [
+          {
+            "issuer": "TALOS ENERGY INC.",
+            "ticker": "TALO",
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 1508586,
+            "price": 18.36,
+            "value": 27701560,
+            "direction": "down",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-27",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 308586,
+            "price": 18.5022,
+            "value": 5709520,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 21691414,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Common Shares (as defined in Exhibit 99.1 hereto)",
+            "date": "2026-10-28",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 1200000,
+            "price": 18.3267,
+            "value": 21992040,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 20491414,
+            "direction": "down"
+          }
+        ]
+      }
+    },
+    {
+      "cik": "0001273087",
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "form": "SCHEDULE 13G/A",
+      "filed": "2026-10-29",
+      "accession": "0001104659-26-120275",
+      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926120275/xslSCHEDULE_13G_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926120275/0001104659-26-120275-index.htm",
+      "person": "Israel Englander",
+      "personSlug": "israel-englander"
+    },
     {
       "cik": "0002050373",
       "filer": "Devasini Giancarlo",
@@ -6435,40 +6550,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126033741/0001140361-26-033741-index.htm",
       "description": "FORM 4",
       "person": "Carlos Slim Helu & family",
-      "personSlug": "carlos-slim-helu-family",
-      "form4": {
-        "issuer": "PBF Energy Inc.",
-        "ticker": "PBF",
-        "summary": [
-          {
-            "issuer": "PBF Energy Inc.",
-            "ticker": "PBF",
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 120000,
-            "price": 74.79,
-            "value": 8974308,
-            "direction": "down",
-            "transactions": 1
-          }
-        ],
-        "transactionCount": 1,
-        "transactions": [
-          {
-            "securityTitle": "Class A Common Shares (as defined in Exhibit 99.1 hereto)",
-            "date": "2026-08-17",
-            "code": "S",
-            "codeLabel": "Open-market sale",
-            "shares": 120000,
-            "price": 74.7859,
-            "value": 8974308,
-            "acquiredDisposed": "D",
-            "sharesOwnedFollowing": 14285397,
-            "direction": "down"
-          }
-        ]
-      }
+      "personSlug": "carlos-slim-helu-family"
     },
     {
       "cik": "0001273087",
@@ -6558,88 +6640,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926098392/0001104659-26-098392-index.htm",
       "description": "OWNERSHIP DOCUMENT",
       "person": "Bill Gates",
-      "personSlug": "bill-gates",
-      "form4": {
-        "issuer": "REPUBLIC SERVICES, INC.",
-        "ticker": "RSG",
-        "summary": [
-          {
-            "issuer": "REPUBLIC SERVICES, INC.",
-            "ticker": "RSG",
-            "securityTitle": "Common stock",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 356050,
-            "price": 215.26,
-            "value": 76643506,
-            "direction": "up",
-            "transactions": 5
-          }
-        ],
-        "transactionCount": 5,
-        "transactions": [
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-14",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 49521,
-            "price": 215.2686,
-            "value": 10660316,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111718127,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-14",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 99729,
-            "price": 215.9579,
-            "value": 21537265,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111817856,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-17",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 100,
-            "price": 213,
-            "value": 21300,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111817956,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-17",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 108545,
-            "price": 214.6246,
-            "value": 23296427,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 111926501,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-17",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 98155,
-            "price": 215.2534,
-            "value": 21128197,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112024656,
-            "direction": "up"
-          }
-        ]
-      }
+      "personSlug": "bill-gates"
     },
     {
       "cik": "0002025889",
@@ -11186,40 +11187,6 @@
       "description": "FORM 4",
       "person": "Carlos Slim Helu & family",
       "personSlug": "carlos-slim-helu-family"
-    },
-    {
-      "cik": "0001890222",
-      "filer": "J. Safra Sarasin Holding AG",
-      "form": "13F-HR",
-      "filed": "2026-07-31",
-      "reportDate": "2026-06-30",
-      "accession": "0001890222-26-000004",
-      "url": "https://www.sec.gov/Archives/edgar/data/1890222/000189022226000004/xslForm13F_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1890222/000189022226000004/0001890222-26-000004-index.htm",
-      "person": "Vicky Safra & family",
-      "personSlug": "vicky-safra-family"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-07-31",
-      "accession": "0001104659-26-089323",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926089323/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926089323/0001104659-26-089323-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-07-31",
-      "accession": "0001104659-26-089283",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926089283/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926089283/0001104659-26-089283-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
     }
   ]
 }

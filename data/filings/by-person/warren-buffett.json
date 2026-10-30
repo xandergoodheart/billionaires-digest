@@ -1,9 +1,55 @@
 {
-  "generated": "2026-10-29T16:19:19.323Z",
+  "generated": "2026-10-30T16:08:40.596Z",
   "windowDays": 90,
   "person": "Warren Buffett",
   "personSlug": "warren-buffett",
   "filings": [
+    {
+      "cik": "0000315090",
+      "filer": "BUFFETT WARREN E",
+      "form": "4",
+      "filed": "2026-10-29",
+      "reportDate": "2026-10-27",
+      "accession": "0001193125-26-438090",
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/0001193125-26-438090-index.htm",
+      "description": "4",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "DAVITA INC.",
+        "ticker": "DVA",
+        "summary": [
+          {
+            "issuer": "DAVITA INC.",
+            "ticker": "DVA",
+            "securityTitle": "Common Stock",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 382563,
+            "price": 180.43,
+            "value": 69026033,
+            "direction": "down",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-10-27",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 382563,
+            "price": 180.4305,
+            "value": 69026033,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 28314666,
+            "direction": "down"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001067983",
       "filer": "BERKSHIRE HATHAWAY INC",
