@@ -1,7 +1,75 @@
 {
-  "generated": "2026-10-30T16:08:40.596Z",
+  "generated": "2026-10-31T15:27:16.339Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0001133206",
+      "filer": "BECHTOLSHEIM ANDREAS",
+      "form": "144",
+      "filed": "2026-10-30",
+      "accession": "0001958244-26-000675",
+      "url": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000675/xsl144X01/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000675/0001958244-26-000675-index.htm",
+      "person": "Andreas von Bechtolsheim & family",
+      "personSlug": "andreas-von-bechtolsheim-family",
+      "form144": {
+        "issuer": "Arista Networks, Inc.",
+        "issuerCik": "0001596532",
+        "seller": "Andreas Bechtolsheim",
+        "relationships": [
+          "10% Stockholder"
+        ],
+        "securitiesClassTitle": "Common Stock",
+        "shares": 267892,
+        "aggregateMarketValue": 45236243,
+        "approxSaleDate": "2026-10-30",
+        "noticeDate": "2026-10-30",
+        "planAdoptionDates": [
+          "2026-02-20"
+        ]
+      }
+    },
+    {
+      "cik": "0001223260",
+      "filer": "VELASCO GERMAN LARREA MOTA",
+      "form": "4",
+      "filed": "2026-10-30",
+      "reportDate": "2026-10-30",
+      "accession": "0001223260-26-000011",
+      "url": "https://www.sec.gov/Archives/edgar/data/1223260/000122326026000011/xslF345X06/form4-10302026_111055.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1223260/000122326026000011/0001223260-26-000011-index.htm",
+      "person": "Germán Larrea Mota Velasco & family",
+      "personSlug": "german-larrea-mota-velasco-family",
+      "form4": {
+        "issuer": "SOUTHERN COPPER CORP/",
+        "ticker": "SCCO",
+        "summary": [
+          {
+            "issuer": "SOUTHERN COPPER CORP/",
+            "ticker": "SCCO",
+            "securityTitle": "Common Stock",
+            "code": "A",
+            "codeLabel": "Grant or award",
+            "shares": 400,
+            "direction": "up",
+            "transactions": 1
+          }
+        ],
+        "transactionCount": 1,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-10-30",
+            "code": "A",
+            "codeLabel": "Grant or award",
+            "shares": 400,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 405326,
+            "direction": "up"
+          }
+        ]
+      }
+    },
     {
       "cik": "0000315090",
       "filer": "BUFFETT WARREN E",
@@ -6350,172 +6418,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926099249/0001104659-26-099249-index.htm",
       "description": "OWNERSHIP DOCUMENT",
       "person": "Bill Gates",
-      "personSlug": "bill-gates",
-      "form4": {
-        "issuer": "REPUBLIC SERVICES, INC.",
-        "ticker": "RSG",
-        "summary": [
-          {
-            "issuer": "REPUBLIC SERVICES, INC.",
-            "ticker": "RSG",
-            "securityTitle": "Common stock",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 378969,
-            "price": 220.08,
-            "value": 83402937,
-            "direction": "up",
-            "transactions": 12
-          }
-        ],
-        "transactionCount": 12,
-        "transactions": [
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-18",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 6190,
-            "price": 216.839,
-            "value": 1342233,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112030846,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-18",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 166858,
-            "price": 217.8728,
-            "value": 36353820,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112197704,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-18",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 27077,
-            "price": 218.3258,
-            "value": 5911608,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112224781,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 705,
-            "price": 216.6491,
-            "value": 152738,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112225486,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 1400,
-            "price": 217.5244,
-            "value": 304534,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112226886,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 2049,
-            "price": 218.6433,
-            "value": 448000,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112228935,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 2175,
-            "price": 219.4929,
-            "value": 477397,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112231110,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 4432,
-            "price": 220.8164,
-            "value": 978658,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112235542,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 39272,
-            "price": 221.4089,
-            "value": 8695170,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112274814,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 57464,
-            "price": 222.6553,
-            "value": 12794664,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112332278,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 68569,
-            "price": 223.448,
-            "value": 15321606,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112400847,
-            "direction": "up"
-          },
-          {
-            "securityTitle": "Common stock",
-            "date": "2026-08-19",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 2778,
-            "price": 224.0853,
-            "value": 622509,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 112403625,
-            "direction": "up"
-          }
-        ]
-      }
+      "personSlug": "bill-gates"
     },
     {
       "cik": "0001052192",

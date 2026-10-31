@@ -1,13 +1,40 @@
 {
-  "generated": "2026-10-30",
-  "from": "2026-10-23",
+  "generated": "2026-10-31",
+  "from": "2026-10-24",
   "inputs": {
-    "filingsGenerated": "2026-10-30T16:08:40.596Z",
-    "pricesGenerated": "2026-10-30T16:12:22.932Z",
+    "filingsGenerated": "2026-10-31T15:27:16.339Z",
+    "pricesGenerated": "2026-10-31T15:30:55.804Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 32
+    "editions": 33
   },
   "explainer": "A Form 144 is a notice an insider files with the SEC before selling restricted or control shares. It gives an approximate sale date and size. The sale may be smaller, later or not happen at all.",
-  "note": "6 Form 144 notices in the 90-day filings window; 6 parsed. Rows show approximate sale dates from 2026-10-23 on.",
-  "sales": []
+  "note": "7 Form 144 notices in the 90-day filings window; 7 parsed. Rows show approximate sale dates from 2026-10-24 on.",
+  "sales": [
+    {
+      "date": "2026-10-30",
+      "people": [
+        {
+          "name": "Andreas von Bechtolsheim & family",
+          "slug": "andreas-von-bechtolsheim-family",
+          "sector": "AI & tech"
+        }
+      ],
+      "seller": "Andreas Bechtolsheim",
+      "issuer": "Arista Networks, Inc.",
+      "ticker": "ANET",
+      "tickerSource": "Ticker from a Form 4 for the same issuer in the filings window",
+      "securitiesClassTitle": "Common Stock",
+      "shares": 267892,
+      "value": 45236243,
+      "relationships": [
+        "10% Stockholder"
+      ],
+      "plan10b51AdoptedOn": "2026-02-20",
+      "filed": "2026-10-30",
+      "form": "144",
+      "url": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000675/xsl144X01/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000675/0001958244-26-000675-index.htm",
+      "accession": "0001958244-26-000675"
+    }
+  ]
 }

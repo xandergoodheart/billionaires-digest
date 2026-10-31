@@ -1,19 +1,19 @@
 {
-  "generated": "2026-10-30",
-  "from": "2026-10-23",
-  "to": "2027-02-27",
+  "generated": "2026-10-31",
+  "from": "2026-10-24",
+  "to": "2027-02-28",
   "inputs": {
-    "filingsGenerated": "2026-10-30T16:08:40.596Z",
-    "pricesGenerated": "2026-10-30T16:12:22.932Z",
+    "filingsGenerated": "2026-10-31T15:27:16.339Z",
+    "pricesGenerated": "2026-10-31T15:30:55.804Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 32
+    "editions": 33
   },
   "types": {
     "sales": "Planned sales",
     "events": "Earnings & events",
     "deals": "Deals & votes"
   },
-  "note": "Dated items from profile watch lists and Form 144 notices, from 2026-10-23 to 2027-02-27. Items marked approximate have only a month or a hedged date. 31 watch items had no usable date (quarters, years, \"ongoing\") and are left out. Type labels come from keywords in the item text.",
+  "note": "Dated items from profile watch lists and Form 144 notices, from 2026-10-24 to 2027-02-28. Items marked approximate have only a month or a hedged date. 31 watch items had no usable date (quarters, years, \"ongoing\") and are left out. Type labels come from keywords in the item text.",
   "events": [
     {
       "date": "2026-10-01",
@@ -354,6 +354,24 @@
       ],
       "source": "https://stockanalysis.com/quote/sha/603392/",
       "sourceLabel": "Source"
+    },
+    {
+      "date": "2026-10-30",
+      "approx": false,
+      "precision": "day",
+      "when": "2026-10-30",
+      "type": "sales",
+      "title": "Planned sale: 267,892 shares of Arista Networks, Inc. (about $45.2M when filed)",
+      "note": "Approximate sale date as stated on the Form 144 notice.",
+      "people": [
+        {
+          "name": "Andreas von Bechtolsheim & family",
+          "slug": "andreas-von-bechtolsheim-family",
+          "sector": "AI & tech"
+        }
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000675/xsl144X01/primary_doc.xml",
+      "sourceLabel": "Form 144"
     },
     {
       "date": "2026-10-30",

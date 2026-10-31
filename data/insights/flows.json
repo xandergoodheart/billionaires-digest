@@ -1,12 +1,12 @@
 {
-  "generated": "2026-10-30",
+  "generated": "2026-10-31",
   "inputs": {
-    "filingsGenerated": "2026-10-30T16:08:40.596Z",
-    "pricesGenerated": "2026-10-30T16:12:22.932Z",
+    "filingsGenerated": "2026-10-31T15:27:16.339Z",
+    "pricesGenerated": "2026-10-31T15:30:55.804Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 32
+    "editions": 33
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 77 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 78 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W33",
@@ -25,11 +25,11 @@
       "week": "2026-W34",
       "start": "2026-08-17",
       "end": "2026-08-23",
-      "buy": 178712846,
+      "buy": 95309909,
       "sell": 0,
-      "net": 178712846,
+      "net": 95309909,
       "other": 0,
-      "buyCount": 3,
+      "buyCount": 2,
       "sellCount": 0,
       "otherCount": 0,
       "unpriced": 0
@@ -161,20 +161,20 @@
       "other": 0,
       "buyCount": 1,
       "sellCount": 2,
-      "otherCount": 0,
+      "otherCount": 1,
       "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-10-24",
-    "to": "2026-10-30",
+    "from": "2026-10-25",
+    "to": "2026-10-31",
     "buy": 3927258,
     "sell": 96727593,
     "net": -92800335,
     "other": 0,
     "buyCount": 1,
     "sellCount": 2,
-    "otherCount": 0,
+    "otherCount": 1,
     "unpriced": 0
   },
   "sectors": [
@@ -191,11 +191,11 @@
     },
     {
       "sector": "AI & tech",
-      "buy": 1126771927,
+      "buy": 1043368990,
       "sell": 391832019,
-      "net": 734939908,
+      "net": 651536971,
       "other": 9702110,
-      "buyCount": 10,
+      "buyCount": 9,
       "sellCount": 4,
       "otherCount": 5,
       "unpriced": 0
@@ -230,7 +230,7 @@
       "other": 0,
       "buyCount": 0,
       "sellCount": 1,
-      "otherCount": 0,
+      "otherCount": 1,
       "unpriced": 0
     },
     {
@@ -250,8 +250,8 @@
       "name": "Carlos Slim Helu & family",
       "slug": "carlos-slim-helu-family",
       "sector": "Media",
-      "value": 359506893,
-      "count": 10,
+      "value": 351306893,
+      "count": 9,
       "filings": [
         {
           "date": "2026-10-27",
@@ -317,14 +317,6 @@
           "issuer": "BERKSHIRE HATHAWAY INC",
           "ticker": "BRK.A",
           "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000005/xslF345X06/primary_doc.xml"
-        },
-        {
-          "date": "2026-10-01",
-          "filed": "2026-10-05",
-          "form": "4",
-          "issuer": "LENNAR CORP /NEW/",
-          "ticker": "LEN",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526414744/xslF345X06/ownership.xml"
         }
       ]
     },
@@ -354,39 +346,6 @@
     }
   ],
   "topBuyers30d": [
-    {
-      "name": "Warren Buffett",
-      "slug": "warren-buffett",
-      "sector": "Finance",
-      "value": 192634432,
-      "count": 2,
-      "filings": [
-        {
-          "date": "2026-10-27",
-          "filed": "2026-10-29",
-          "form": "4",
-          "issuer": "DAVITA INC.",
-          "ticker": "DVA",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-10-21",
-          "filed": "2026-10-23",
-          "form": "4",
-          "issuer": "BERKSHIRE HATHAWAY INC",
-          "ticker": "BRK.A",
-          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000005/xslF345X06/primary_doc.xml"
-        },
-        {
-          "date": "2026-10-01",
-          "filed": "2026-10-05",
-          "form": "4",
-          "issuer": "LENNAR CORP /NEW/",
-          "ticker": "LEN",
-          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526414744/xslF345X06/ownership.xml"
-        }
-      ]
-    },
     {
       "name": "Giancarlo Devasini",
       "slug": "giancarlo-devasini",
@@ -512,7 +471,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 77,
+    "form4Filings": 78,
     "form4Parsed": 58,
     "windowDays": 90
   }
