@@ -1,9 +1,79 @@
 {
-  "generated": "2026-11-03T17:13:19.347Z",
+  "generated": "2026-11-04T17:24:18.092Z",
   "windowDays": 90,
   "person": "Warren Buffett",
   "personSlug": "warren-buffett",
   "filings": [
+    {
+      "cik": "0000315090",
+      "filer": "BUFFETT WARREN E",
+      "form": "4",
+      "filed": "2026-11-03",
+      "reportDate": "2026-10-30",
+      "accession": "0001193125-26-445930",
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526445930/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526445930/0001193125-26-445930-index.htm",
+      "description": "4",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "SIRIUS XM HOLDINGS INC.",
+        "ticker": "SIRI",
+        "summary": [
+          {
+            "issuer": "SIRIUS XM HOLDINGS INC.",
+            "ticker": "SIRI",
+            "securityTitle": "Common Stock",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 924281,
+            "price": 29.1,
+            "value": 26894245,
+            "direction": "up",
+            "transactions": 3
+          }
+        ],
+        "transactionCount": 3,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-10-30",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 743965,
+            "price": 28.8913,
+            "value": 21494116,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 125551082,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-11-02",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 66968,
+            "price": 29.466,
+            "value": 1973279,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 125618050,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common Stock",
+            "date": "2026-11-03",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 113348,
+            "price": 30.233,
+            "value": 3426850,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 125731398,
+            "direction": "up"
+          }
+        ]
+      }
+    },
     {
       "cik": "0000315090",
       "filer": "BUFFETT WARREN E",

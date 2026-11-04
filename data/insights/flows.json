@@ -1,22 +1,22 @@
 {
-  "generated": "2026-11-03",
+  "generated": "2026-11-04",
   "inputs": {
-    "filingsGenerated": "2026-11-03T17:13:19.347Z",
-    "pricesGenerated": "2026-11-03T17:16:58.990Z",
+    "filingsGenerated": "2026-11-04T17:24:18.092Z",
+    "pricesGenerated": "2026-11-04T17:28:00.846Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 36
+    "editions": 37
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 58 of 74 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 75 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W34",
       "start": "2026-08-17",
       "end": "2026-08-23",
-      "buy": 95309909,
+      "buy": 7126860,
       "sell": 0,
-      "net": 95309909,
+      "net": 7126860,
       "other": 0,
-      "buyCount": 2,
+      "buyCount": 1,
       "sellCount": 0,
       "otherCount": 0,
       "unpriced": 0
@@ -142,12 +142,12 @@
       "week": "2026-W44",
       "start": "2026-10-26",
       "end": "2026-11-01",
-      "buy": 3927258,
-      "sell": 96727593,
-      "net": -92800335,
+      "buy": 30821503,
+      "sell": 142586937,
+      "net": -111765434,
       "other": 0,
-      "buyCount": 1,
-      "sellCount": 2,
+      "buyCount": 2,
+      "sellCount": 3,
       "otherCount": 1,
       "unpriced": 0
     },
@@ -166,14 +166,14 @@
     }
   ],
   "last7": {
-    "from": "2026-10-28",
-    "to": "2026-11-03",
-    "buy": 0,
-    "sell": 0,
-    "net": 0,
+    "from": "2026-10-29",
+    "to": "2026-11-04",
+    "buy": 26894245,
+    "sell": 45859344,
+    "net": -18965099,
     "other": 0,
-    "buyCount": 0,
-    "sellCount": 0,
+    "buyCount": 1,
+    "sellCount": 1,
     "otherCount": 1,
     "unpriced": 0
   },
@@ -191,22 +191,22 @@
     },
     {
       "sector": "AI & tech",
-      "buy": 1043368990,
-      "sell": 391832019,
-      "net": 651536971,
+      "buy": 955185941,
+      "sell": 437691363,
+      "net": 517494578,
       "other": 9702110,
-      "buyCount": 9,
-      "sellCount": 4,
+      "buyCount": 8,
+      "sellCount": 5,
       "otherCount": 5,
       "unpriced": 0
     },
     {
       "sector": "Finance",
-      "buy": 622005337,
+      "buy": 648899582,
       "sell": 168118777,
-      "net": 453886560,
+      "net": 480780805,
       "other": 0,
-      "buyCount": 15,
+      "buyCount": 16,
       "sellCount": 6,
       "otherCount": 5,
       "unpriced": 0
@@ -250,8 +250,8 @@
       "name": "Carlos Slim Helu & family",
       "slug": "carlos-slim-helu-family",
       "sector": "Media",
-      "value": 351306893,
-      "count": 9,
+      "value": 341211797,
+      "count": 8,
       "filings": [
         {
           "date": "2026-10-27",
@@ -303,6 +303,14 @@
       "count": 1,
       "filings": [
         {
+          "date": "2026-10-30",
+          "filed": "2026-11-03",
+          "form": "4",
+          "issuer": "SIRIUS XM HOLDINGS INC.",
+          "ticker": "SIRI",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526445930/xslF345X06/ownership.xml"
+        },
+        {
           "date": "2026-10-27",
           "filed": "2026-10-29",
           "form": "4",
@@ -317,6 +325,23 @@
           "issuer": "BERKSHIRE HATHAWAY INC",
           "ticker": "BRK.A",
           "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000005/xslF345X06/primary_doc.xml"
+        }
+      ]
+    },
+    {
+      "name": "Andreas von Bechtolsheim & family",
+      "slug": "andreas-von-bechtolsheim-family",
+      "sector": "AI & tech",
+      "value": 45859344,
+      "count": 1,
+      "filings": [
+        {
+          "date": "2026-10-30",
+          "filed": "2026-11-03",
+          "form": "4",
+          "issuer": "Arista Networks, Inc.",
+          "ticker": "ANET",
+          "url": "https://www.sec.gov/Archives/edgar/data/1133206/000159653226000256/xslF345X06/edgardoc.xml"
         }
       ]
     },
@@ -346,6 +371,39 @@
     }
   ],
   "topBuyers30d": [
+    {
+      "name": "Warren Buffett",
+      "slug": "warren-buffett",
+      "sector": "Finance",
+      "value": 26894245,
+      "count": 1,
+      "filings": [
+        {
+          "date": "2026-10-30",
+          "filed": "2026-11-03",
+          "form": "4",
+          "issuer": "SIRIUS XM HOLDINGS INC.",
+          "ticker": "SIRI",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526445930/xslF345X06/ownership.xml"
+        },
+        {
+          "date": "2026-10-27",
+          "filed": "2026-10-29",
+          "form": "4",
+          "issuer": "DAVITA INC.",
+          "ticker": "DVA",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/xslF345X06/ownership.xml"
+        },
+        {
+          "date": "2026-10-21",
+          "filed": "2026-10-23",
+          "form": "4",
+          "issuer": "BERKSHIRE HATHAWAY INC",
+          "ticker": "BRK.A",
+          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000005/xslF345X06/primary_doc.xml"
+        }
+      ]
+    },
     {
       "name": "Giancarlo Devasini",
       "slug": "giancarlo-devasini",
@@ -471,8 +529,8 @@
     }
   ],
   "coverage": {
-    "form4Filings": 74,
-    "form4Parsed": 58,
+    "form4Filings": 75,
+    "form4Parsed": 59,
     "windowDays": 90
   }
 }
