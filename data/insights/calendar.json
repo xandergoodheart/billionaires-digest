@@ -1,19 +1,19 @@
 {
-  "generated": "2026-11-05",
-  "from": "2026-10-29",
-  "to": "2027-03-05",
+  "generated": "2026-11-06",
+  "from": "2026-10-30",
+  "to": "2027-03-06",
   "inputs": {
-    "filingsGenerated": "2026-11-05T17:31:53.144Z",
-    "pricesGenerated": "2026-11-05T17:35:32.037Z",
+    "filingsGenerated": "2026-11-06T16:52:19.954Z",
+    "pricesGenerated": "2026-11-06T16:55:58.961Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 38
+    "editions": 39
   },
   "types": {
     "sales": "Planned sales",
     "events": "Earnings & events",
     "deals": "Deals & votes"
   },
-  "note": "Dated items from profile watch lists and Form 144 notices, from 2026-10-29 to 2027-03-05. Items marked approximate have only a month or a hedged date. 31 watch items had no usable date (quarters, years, \"ongoing\") and are left out. Type labels come from keywords in the item text.",
+  "note": "Dated items from profile watch lists and Form 144 notices, from 2026-10-30 to 2027-03-06. Items marked approximate have only a month or a hedged date. 31 watch items had no usable date (quarters, years, \"ongoing\") and are left out. Type labels come from keywords in the item text.",
   "events": [
     {
       "date": "2026-10-01",
@@ -836,6 +836,24 @@
       ],
       "source": "https://fortune.com/2026/08/11/google-cofounder-sergey-brin-california-wealth-tax-opposition-100-million-dollars/",
       "sourceLabel": "Source"
+    },
+    {
+      "date": "2026-11-05",
+      "approx": false,
+      "precision": "day",
+      "when": "2026-11-05",
+      "type": "sales",
+      "title": "Planned sale: 260,000 shares of Arista Networks, Inc. (about $41.4M when filed)",
+      "note": "Approximate sale date as stated on the Form 144 notice.",
+      "people": [
+        {
+          "name": "Andreas von Bechtolsheim & family",
+          "slug": "andreas-von-bechtolsheim-family",
+          "sector": "AI & tech"
+        }
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000698/xsl144X01/primary_doc.xml",
+      "sourceLabel": "Form 144"
     },
     {
       "date": "2026-11-06",
