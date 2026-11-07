@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-06",
+  "generated": "2026-11-07",
   "inputs": {
-    "filingsGenerated": "2026-11-06T16:52:19.954Z",
-    "pricesGenerated": "2026-11-06T16:55:58.961Z",
+    "filingsGenerated": "2026-11-07T15:49:24.709Z",
+    "pricesGenerated": "2026-11-07T15:53:02.377Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 39
+    "editions": 40
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 75 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 76 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W34",
@@ -26,12 +26,12 @@
       "start": "2026-08-24",
       "end": "2026-08-30",
       "buy": 245882204,
-      "sell": 116990483,
-      "net": 128891721,
+      "sell": 60780047,
+      "net": 185102157,
       "other": 0,
       "buyCount": 2,
-      "sellCount": 2,
-      "otherCount": 3,
+      "sellCount": 1,
+      "otherCount": 1,
       "unpriced": 0
     },
     {
@@ -166,8 +166,8 @@
     }
   ],
   "last7": {
-    "from": "2026-10-31",
-    "to": "2026-11-06",
+    "from": "2026-11-01",
+    "to": "2026-11-07",
     "buy": 0,
     "sell": 41788000,
     "net": -41788000,
@@ -203,12 +203,12 @@
     {
       "sector": "Finance",
       "buy": 641772722,
-      "sell": 168118777,
-      "net": 473653945,
+      "sell": 111908341,
+      "net": 529864381,
       "other": 0,
       "buyCount": 15,
-      "sellCount": 6,
-      "otherCount": 5,
+      "sellCount": 5,
+      "otherCount": 3,
       "unpriced": 0
     },
     {
@@ -250,8 +250,8 @@
       "name": "Carlos Slim Helu & family",
       "slug": "carlos-slim-helu-family",
       "sector": "Media",
-      "value": 333071189,
-      "count": 7,
+      "value": 211265292,
+      "count": 5,
       "filings": [
         {
           "date": "2026-10-27",
@@ -522,7 +522,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 75,
+    "form4Filings": 76,
     "form4Parsed": 59,
     "windowDays": 90
   }
