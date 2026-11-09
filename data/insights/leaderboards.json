@@ -1,64 +1,32 @@
 {
-  "generated": "2026-11-08",
+  "generated": "2026-11-09",
   "inputs": {
-    "filingsGenerated": "2026-11-08T16:09:41.159Z",
-    "pricesGenerated": "2026-11-08T16:13:19.491Z",
+    "filingsGenerated": "2026-11-09T19:57:03.745Z",
+    "pricesGenerated": "2026-11-09T20:01:18.711Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 41
+    "editions": 42
   },
   "gainers": [
     {
       "name": "Elon Musk",
       "slug": "elon-musk",
       "sector": "Aerospace",
-      "estDailyChange": 78522441250,
-      "coverage": 1.199,
+      "estDailyChange": 61687927852,
+      "coverage": 1.265,
       "holdings": [
         {
           "ticker": "TSLA",
           "shares": 699580882,
-          "change": 14.53,
-          "estChange": 10164910215,
+          "change": 22.67,
+          "estChange": 15859498595,
           "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926075203/0001104659-26-075203-index.htm"
         },
         {
           "ticker": "SPCX",
           "shares": 6418547515,
-          "change": 10.65,
-          "estChange": 68357531035,
+          "change": 7.14,
+          "estChange": 45828429257,
           "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm"
-        }
-      ]
-    },
-    {
-      "name": "Michael Dell",
-      "slug": "michael-dell",
-      "sector": "AI & tech",
-      "estDailyChange": 3087139886,
-      "coverage": 0.329,
-      "holdings": [
-        {
-          "ticker": "DELL",
-          "shares": 265674689,
-          "change": 11.62,
-          "estChange": 3087139886,
-          "source": "https://www.sec.gov/Archives/edgar/data/908724/000112329226000125/0001123292-26-000125-index.htm"
-        }
-      ]
-    },
-    {
-      "name": "Andreas von Bechtolsheim & family",
-      "slug": "andreas-von-bechtolsheim-family",
-      "sector": "AI & tech",
-      "estDailyChange": 2139430789,
-      "coverage": 0.76,
-      "holdings": [
-        {
-          "ticker": "ANET",
-          "shares": 183799896,
-          "change": 11.64,
-          "estChange": 2139430789,
-          "source": "https://www.sec.gov/Archives/edgar/data/1596532/000119312526158942/d66465ddef14a.htm"
         }
       ]
     },
@@ -66,38 +34,47 @@
       "name": "Mark Zuckerberg",
       "slug": "mark-zuckerberg",
       "sector": "AI & tech",
-      "estDailyChange": 1733047568,
-      "coverage": 0.783,
+      "estDailyChange": 11584414614,
+      "coverage": 0.826,
       "holdings": [
         {
           "ticker": "META",
           "shares": 341823978,
-          "change": 5.07,
-          "estChange": 1733047568,
+          "change": 33.89,
+          "estChange": 11584414614,
           "source": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm"
         }
       ]
     },
     {
-      "name": "Sergey Brin",
-      "slug": "sergey-brin",
+      "name": "Jeff Bezos",
+      "slug": "jeff-bezos",
       "sector": "AI & tech",
-      "estDailyChange": 1579817558,
-      "coverage": 0.79,
+      "estDailyChange": 8544406883,
+      "coverage": 0.69,
       "holdings": [
         {
-          "ticker": "GOOGL",
-          "shares": 358939978,
-          "change": 2.21,
-          "estChange": 793257351,
-          "source": "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html"
-        },
+          "ticker": "AMZN",
+          "shares": 950434581,
+          "change": 8.99,
+          "estChange": 8544406883,
+          "source": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm"
+        }
+      ]
+    },
+    {
+      "name": "Michael Dell",
+      "slug": "michael-dell",
+      "sector": "AI & tech",
+      "estDailyChange": 5334747755,
+      "coverage": 0.349,
+      "holdings": [
         {
-          "ticker": "GOOG",
-          "shares": 359159912,
-          "change": 2.19,
-          "estChange": 786560207,
-          "source": "https://www.sec.gov/Archives/edgar/data/1295032/000119312526345383/ownership.xml"
+          "ticker": "DELL",
+          "shares": 265674689,
+          "change": 20.08,
+          "estChange": 5334747755,
+          "source": "https://www.sec.gov/Archives/edgar/data/908724/000112329226000125/0001123292-26-000125-index.htm"
         }
       ]
     },
@@ -105,31 +82,54 @@
       "name": "Larry Ellison",
       "slug": "larry-ellison",
       "sector": "AI & tech",
-      "estDailyChange": 1083803412,
-      "coverage": 0.728,
+      "estDailyChange": 3689543530,
+      "coverage": 0.748,
       "holdings": [
         {
           "ticker": "ORCL",
           "shares": 1152982353,
-          "change": 0.94,
-          "estChange": 1083803412,
+          "change": 3.2,
+          "estChange": 3689543530,
           "source": "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm"
         }
       ]
     },
     {
-      "name": "Lakshmi Mittal",
-      "slug": "lakshmi-mittal",
-      "sector": "Industrials",
-      "estDailyChange": 190485435,
-      "coverage": 0.625,
+      "name": "Andreas von Bechtolsheim & family",
+      "slug": "andreas-von-bechtolsheim-family",
+      "sector": "AI & tech",
+      "estDailyChange": 2821328404,
+      "coverage": 0.828,
       "holdings": [
         {
-          "ticker": "MT",
-          "shares": 340152563,
-          "change": 0.56,
-          "estChange": 190485435,
-          "source": "https://www.sec.gov/Archives/edgar/data/1243429/000199937126006457/xslSCHEDULE_13D_X02/primary_doc.xml"
+          "ticker": "ANET",
+          "shares": 183799896,
+          "change": 15.35,
+          "estChange": 2821328404,
+          "source": "https://www.sec.gov/Archives/edgar/data/1596532/000119312526158942/d66465ddef14a.htm"
+        }
+      ]
+    },
+    {
+      "name": "Sergey Brin",
+      "slug": "sergey-brin",
+      "sector": "AI & tech",
+      "estDailyChange": 2710705022,
+      "coverage": 0.8,
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "shares": 358939978,
+          "change": 4.33,
+          "estChange": 1554210105,
+          "source": "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html"
+        },
+        {
+          "ticker": "GOOG",
+          "shares": 359159912,
+          "change": 3.22,
+          "estChange": 1156494917,
+          "source": "https://www.sec.gov/Archives/edgar/data/1295032/000119312526345383/ownership.xml"
         }
       ]
     },
@@ -137,31 +137,54 @@
       "name": "Henry Samueli",
       "slug": "henry-samueli",
       "sector": "AI & tech",
-      "estDailyChange": 184808669,
-      "coverage": 0.757,
+      "estDailyChange": 2261339409,
+      "coverage": 0.825,
       "holdings": [
         {
           "ticker": "AVGO",
           "shares": 85559569,
-          "change": 2.16,
-          "estChange": 184808669,
+          "change": 26.43,
+          "estChange": 2261339409,
           "source": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526085691/d49254ddef14a.htm"
         }
       ]
     },
     {
-      "name": "Eric Schmidt",
-      "slug": "eric-schmidt",
-      "sector": "AI & tech",
-      "estDailyChange": 107866971,
-      "coverage": 0.365,
+      "name": "Warren Buffett",
+      "slug": "warren-buffett",
+      "sector": "Finance",
+      "estDailyChange": 1465804860,
+      "coverage": 1.132,
       "holdings": [
         {
-          "ticker": "GOOGL",
-          "shares": 48808584,
-          "change": 2.21,
-          "estChange": 107866971,
-          "source": "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
+          "ticker": "BRK.A",
+          "shares": 188290,
+          "change": 7784.79,
+          "estChange": 1465798109,
+          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
+        },
+        {
+          "ticker": "BRK.B",
+          "shares": 1162,
+          "change": 5.81,
+          "estChange": 6751,
+          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
+        }
+      ]
+    },
+    {
+      "name": "Lakshmi Mittal",
+      "slug": "lakshmi-mittal",
+      "sector": "Industrials",
+      "estDailyChange": 1149715663,
+      "coverage": 0.659,
+      "holdings": [
+        {
+          "ticker": "MT",
+          "shares": 340152563,
+          "change": 3.38,
+          "estChange": 1149715663,
+          "source": "https://www.sec.gov/Archives/edgar/data/1243429/000199937126006457/xslSCHEDULE_13D_X02/primary_doc.xml"
         }
       ]
     }
@@ -171,13 +194,13 @@
       "name": "Rob Walton & family",
       "slug": "rob-walton-family",
       "sector": "Luxury & retail",
-      "estDailyChange": -2273700000,
+      "estDailyChange": -336468000,
       "coverage": 1,
       "holdings": [
         {
           "ticker": "WMT",
-          "change": -2.2,
-          "estChange": -2273700000,
+          "change": -0.32,
+          "estChange": -336468000,
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
         }
       ]
@@ -186,13 +209,13 @@
       "name": "Jim Walton & family",
       "slug": "jim-walton-family",
       "sector": "Luxury & retail",
-      "estDailyChange": -2218580000,
+      "estDailyChange": -328311200,
       "coverage": 1,
       "holdings": [
         {
           "ticker": "WMT",
-          "change": -2.2,
-          "estChange": -2218580000,
+          "change": -0.32,
+          "estChange": -328311200,
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
         }
       ]
@@ -201,174 +224,14 @@
       "name": "Alice Walton",
       "slug": "alice-walton",
       "sector": "Luxury & retail",
-      "estDailyChange": -2042885000,
+      "estDailyChange": -302311400,
       "coverage": 1,
       "holdings": [
         {
           "ticker": "WMT",
-          "change": -2.2,
-          "estChange": -2042885000,
+          "change": -0.32,
+          "estChange": -302311400,
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml"
-        }
-      ]
-    },
-    {
-      "name": "Jeff Bezos",
-      "slug": "jeff-bezos",
-      "sector": "AI & tech",
-      "estDailyChange": -864895469,
-      "coverage": 0.667,
-      "holdings": [
-        {
-          "ticker": "AMZN",
-          "shares": 950434581,
-          "change": -0.91,
-          "estChange": -864895469,
-          "source": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm"
-        }
-      ]
-    },
-    {
-      "name": "Bill Gates",
-      "slug": "bill-gates",
-      "sector": "AI & tech",
-      "estDailyChange": -523749721,
-      "coverage": 0.545,
-      "holdings": [
-        {
-          "ticker": "RSG",
-          "shares": 116166330,
-          "change": -2.57,
-          "estChange": -298547468,
-          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926106327/primary_doc.xml"
-        },
-        {
-          "ticker": "AN",
-          "shares": 7062629,
-          "change": -4.12,
-          "estChange": -29098031,
-          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926055650/primary_doc.xml"
-        },
-        {
-          "ticker": "FMX",
-          "shares": 27887350,
-          "change": 1.8,
-          "estChange": 50197230,
-          "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926039230/primary_doc.xml"
-        },
-        {
-          "ticker": "BRK.B",
-          "shares": 14689844,
-          "change": -1.44,
-          "estChange": -21153375,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "CAT",
-          "shares": 6353614,
-          "change": 4.99,
-          "estChange": 31704534,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "CNI",
-          "shares": 51826786,
-          "change": -2.43,
-          "estChange": -125939090,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "WM",
-          "shares": 26720744,
-          "change": -5.01,
-          "estChange": -133870927,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "DE",
-          "shares": 3557378,
-          "change": 8.34,
-          "estChange": 29668533,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "ECL",
-          "shares": 5218044,
-          "change": -5.15,
-          "estChange": -26872927,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
-        },
-        {
-          "ticker": "MXF",
-          "shares": 647198,
-          "change": 0.25,
-          "estChange": 161800,
-          "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097179/xslSCHEDULE_13G_X02/primary_doc.xml"
-        }
-      ]
-    },
-    {
-      "name": "Len Blavatnik",
-      "slug": "len-blavatnik",
-      "sector": "Media",
-      "estDailyChange": -160461578,
-      "coverage": 0.563,
-      "holdings": [
-        {
-          "ticker": "WMG",
-          "shares": 374517252,
-          "change": -0.62,
-          "estChange": -232200696,
-          "source": "https://www.sec.gov/Archives/edgar/data/1319161/000114036126001664/ny20057694x1_def14a.htm"
-        },
-        {
-          "ticker": "LYB",
-          "shares": 64435504,
-          "change": -0.91,
-          "estChange": -58636309,
-          "source": "https://www.sec.gov/Archives/edgar/data/1489393/000130817926000250/lyb014791-def14a.htm"
-        },
-        {
-          "ticker": "DOCN",
-          "shares": 18653451,
-          "change": 1.78,
-          "estChange": 33203143,
-          "source": "https://www.sec.gov/Archives/edgar/data/1508226/000119312526337970/primary_doc.xml"
-        },
-        {
-          "ticker": "CHYM",
-          "shares": 19601430,
-          "change": 1.15,
-          "estChange": 22541645,
-          "source": "https://www.sec.gov/Archives/edgar/data/1508226/000095017025102972/primary_doc.xml"
-        },
-        {
-          "ticker": "CEG",
-          "shares": 6276132,
-          "change": 10.3,
-          "estChange": 64644160,
-          "source": "https://www.sec.gov/Archives/edgar/data/1868275/000110465926001893/tm2531947-1_s3asr.htm"
-        },
-        {
-          "ticker": "COAG",
-          "shares": 4876344,
-          "change": 3.45,
-          "estChange": 16823387,
-          "source": "https://www.sec.gov/Archives/edgar/data/2114044/000119312526216973/primary_doc.xml"
-        },
-        {
-          "ticker": "TYGO",
-          "shares": 3220645,
-          "change": 0.0131,
-          "estChange": 42190,
-          "source": "https://www.sec.gov/Archives/edgar/data/1051856/000119312526245631/primary_doc.xml"
-        },
-        {
-          "ticker": "OPEN",
-          "shares": 17638714,
-          "change": -0.39,
-          "estChange": -6879098,
-          "source": "https://www.sec.gov/Archives/edgar/data/1508226/000119312525213929/primary_doc.xml"
         }
       ]
     },
@@ -376,38 +239,15 @@
       "name": "Lyndal Stephens Greth & family",
       "slug": "lyndal-stephens-greth-family",
       "sector": "Energy",
-      "estDailyChange": -40273369,
-      "coverage": 0.398,
+      "estDailyChange": -176033597,
+      "coverage": 0.392,
       "holdings": [
         {
           "ticker": "FANG",
           "shares": 64957047,
-          "change": -0.62,
-          "estChange": -40273369,
+          "change": -2.71,
+          "estChange": -176033597,
           "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126037012/primary_doc.xml"
-        }
-      ]
-    },
-    {
-      "name": "Warren Buffett",
-      "slug": "warren-buffett",
-      "sector": "Finance",
-      "estDailyChange": -16573076,
-      "coverage": 1.122,
-      "holdings": [
-        {
-          "ticker": "BRK.A",
-          "shares": 188290,
-          "change": -88.01,
-          "estChange": -16571403,
-          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
-        },
-        {
-          "ticker": "BRK.B",
-          "shares": 1162,
-          "change": -1.44,
-          "estChange": -1673,
-          "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
         }
       ]
     }
@@ -1214,8 +1054,15 @@
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
-      "count": 12,
+      "count": 13,
       "stories": [
+        {
+          "edition": "2026-11-09",
+          "editionUrl": "editions/2026-11-09/",
+          "headline": "Berkshire profit falls as cash hoard hits $377 billion",
+          "url": "https://www.insurancejournal.com/news/national/2026/11/09/891933.htm",
+          "source": "Insurance Journal"
+        },
         {
           "edition": "2026-11-05",
           "editionUrl": "editions/2026-11-05/",
@@ -1243,13 +1090,6 @@
           "headline": "Berkshire trims its DaVita stake again",
           "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/xslF345X06/ownership.xml",
           "source": "SEC EDGAR (Form 4)"
-        },
-        {
-          "edition": "2026-10-20",
-          "editionUrl": "editions/2026-10-20/",
-          "headline": "Berkshire adds $330 million to Bending Spoons stake",
-          "url": "https://pulse2.com/bending-spoons-berkshire-hathaway-invests-additional-330-million-bringing-ownership-to-4/",
-          "source": "Pulse2"
         }
       ]
     },
@@ -1386,7 +1226,7 @@
   "notes": {
     "movers": "Estimated; partial. Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are a large part of the person's wealth. For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's Walmart stake), the estimate is the published net worth × that stock's daily % change.",
     "mostDeals": "Counts profile deal entries dated within the last 12 months (month-only dates count if any part of the month falls in the window). 21 entries without a month-level date were not counted.",
-    "mostMoves": "Stories across 41 archived editions. 35 stories named nobody in the top-100 index."
+    "mostMoves": "Stories across 42 archived editions. 39 stories named nobody in the top-100 index."
   },
   "minCoverage": 0.25
 }
