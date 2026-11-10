@@ -1,24 +1,24 @@
 {
-  "generated": "2026-11-09",
+  "generated": "2026-11-10",
   "inputs": {
-    "filingsGenerated": "2026-11-09T19:57:03.745Z",
-    "pricesGenerated": "2026-11-09T20:01:18.711Z",
+    "filingsGenerated": "2026-11-10T17:12:23.225Z",
+    "pricesGenerated": "2026-11-10T17:16:34.106Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 42
+    "editions": 43
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 75 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 76 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W35",
       "start": "2026-08-24",
       "end": "2026-08-30",
-      "buy": 245882204,
+      "buy": 122370391,
       "sell": 60780047,
-      "net": 185102157,
+      "net": 61590344,
       "other": 0,
-      "buyCount": 2,
+      "buyCount": 1,
       "sellCount": 1,
-      "otherCount": 1,
+      "otherCount": 0,
       "unpriced": 0
     },
     {
@@ -143,11 +143,11 @@
       "start": "2026-11-02",
       "end": "2026-11-08",
       "buy": 0,
-      "sell": 41788000,
-      "net": -41788000,
+      "sell": 96448709,
+      "net": -96448709,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 1,
+      "sellCount": 3,
       "otherCount": 2,
       "unpriced": 0
     },
@@ -166,15 +166,15 @@
     }
   ],
   "last7": {
-    "from": "2026-11-03",
-    "to": "2026-11-09",
+    "from": "2026-11-04",
+    "to": "2026-11-10",
     "buy": 0,
-    "sell": 41788000,
-    "net": -41788000,
+    "sell": 54660709,
+    "net": -54660709,
     "other": 0,
     "buyCount": 0,
-    "sellCount": 1,
-    "otherCount": 2,
+    "sellCount": 2,
+    "otherCount": 0,
     "unpriced": 0
   },
   "sectors": [
@@ -191,13 +191,13 @@
     },
     {
       "sector": "AI & tech",
-      "buy": 828155598,
-      "sell": 437691363,
-      "net": 390464235,
+      "buy": 704643785,
+      "sell": 480707969,
+      "net": 223935816,
       "other": 9702110,
-      "buyCount": 7,
-      "sellCount": 5,
-      "otherCount": 5,
+      "buyCount": 6,
+      "sellCount": 6,
+      "otherCount": 4,
       "unpriced": 0
     },
     {
@@ -225,11 +225,11 @@
     {
       "sector": "Industrials",
       "buy": 0,
-      "sell": 99874415,
-      "net": -99874415,
+      "sell": 111518518,
+      "net": -111518518,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 2,
+      "sellCount": 3,
       "otherCount": 1,
       "unpriced": 0
     },
@@ -296,6 +296,31 @@
       ]
     },
     {
+      "name": "Andreas von Bechtolsheim & family",
+      "slug": "andreas-von-bechtolsheim-family",
+      "sector": "AI & tech",
+      "value": 88875950,
+      "count": 2,
+      "filings": [
+        {
+          "date": "2026-11-05",
+          "filed": "2026-11-09",
+          "form": "4",
+          "issuer": "Arista Networks, Inc.",
+          "ticker": "ANET",
+          "url": "https://www.sec.gov/Archives/edgar/data/1133206/000159653226000260/xslF345X06/edgardoc.xml"
+        },
+        {
+          "date": "2026-10-30",
+          "filed": "2026-11-03",
+          "form": "4",
+          "issuer": "Arista Networks, Inc.",
+          "ticker": "ANET",
+          "url": "https://www.sec.gov/Archives/edgar/data/1133206/000159653226000256/xslF345X06/edgardoc.xml"
+        }
+      ]
+    },
+    {
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
@@ -329,29 +354,20 @@
       ]
     },
     {
-      "name": "Andreas von Bechtolsheim & family",
-      "slug": "andreas-von-bechtolsheim-family",
-      "sector": "AI & tech",
-      "value": 45859344,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-10-30",
-          "filed": "2026-11-03",
-          "form": "4",
-          "issuer": "Arista Networks, Inc.",
-          "ticker": "ANET",
-          "url": "https://www.sec.gov/Archives/edgar/data/1133206/000159653226000256/xslF345X06/edgardoc.xml"
-        }
-      ]
-    },
-    {
       "name": "Charles Koch & family",
       "slug": "charles-koch-family",
       "sector": "Industrials",
-      "value": 41788000,
-      "count": 1,
+      "value": 53432103,
+      "count": 2,
       "filings": [
+        {
+          "date": "2026-11-05",
+          "filed": "2026-11-09",
+          "form": "4",
+          "issuer": "Ibotta, Inc.",
+          "ticker": "IBTA",
+          "url": "https://www.sec.gov/Archives/edgar/data/2027344/000119312526453873/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-11-03",
           "filed": "2026-11-05",
@@ -522,7 +538,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 75,
+    "form4Filings": 76,
     "form4Parsed": 59,
     "windowDays": 90
   }

@@ -1,9 +1,79 @@
 {
-  "generated": "2026-11-09T19:57:03.745Z",
+  "generated": "2026-11-10T17:12:23.225Z",
   "windowDays": 90,
   "person": "Charles Koch & family",
   "personSlug": "charles-koch-family",
   "filings": [
+    {
+      "cik": "0002027344",
+      "filer": "Koch, Inc.",
+      "form": "4",
+      "filed": "2026-11-09",
+      "reportDate": "2026-11-05",
+      "accession": "0001193125-26-453873",
+      "url": "https://www.sec.gov/Archives/edgar/data/2027344/000119312526453873/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2027344/000119312526453873/0001193125-26-453873-index.htm",
+      "description": "4",
+      "person": "Charles Koch & family",
+      "personSlug": "charles-koch-family",
+      "form4": {
+        "issuer": "Ibotta, Inc.",
+        "ticker": "IBTA",
+        "summary": [
+          {
+            "issuer": "Ibotta, Inc.",
+            "ticker": "IBTA",
+            "securityTitle": "Class A Common Stock",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 200000,
+            "price": 58.22,
+            "value": 11644103,
+            "direction": "down",
+            "transactions": 3
+          }
+        ],
+        "transactionCount": 3,
+        "transactions": [
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-11-05",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 99900,
+            "price": 57.97,
+            "value": 5791203,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 3589229,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-11-05",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 100,
+            "price": 59,
+            "value": 5900,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 3589129,
+            "direction": "down"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-11-06",
+            "code": "S",
+            "codeLabel": "Open-market sale",
+            "shares": 100000,
+            "price": 58.47,
+            "value": 5847000,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 3489129,
+            "direction": "down"
+          }
+        ]
+      }
+    },
     {
       "cik": "0002027344",
       "filer": "Koch, Inc.",
