@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-11",
+  "generated": "2026-11-12",
   "inputs": {
-    "filingsGenerated": "2026-11-11T17:21:11.741Z",
-    "pricesGenerated": "2026-11-11T17:24:53.177Z",
+    "filingsGenerated": "2026-11-12T17:41:21.492Z",
+    "pricesGenerated": "2026-11-12T17:45:07.685Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 44
+    "editions": 45
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 76 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 74 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W35",
@@ -25,13 +25,13 @@
       "week": "2026-W36",
       "start": "2026-08-31",
       "end": "2026-09-06",
-      "buy": 287736907,
+      "buy": 168632016,
       "sell": 7702151,
-      "net": 280034756,
+      "net": 160929865,
       "other": 0,
-      "buyCount": 3,
+      "buyCount": 2,
       "sellCount": 1,
-      "otherCount": 2,
+      "otherCount": 1,
       "unpriced": 0
     },
     {
@@ -156,21 +156,21 @@
       "start": "2026-11-09",
       "end": "2026-11-15",
       "buy": 0,
-      "sell": 0,
-      "net": 0,
+      "sell": 18420004,
+      "net": -18420004,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 0,
+      "sellCount": 2,
       "otherCount": 0,
       "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-11-05",
-    "to": "2026-11-11",
+    "from": "2026-11-06",
+    "to": "2026-11-12",
     "buy": 0,
-    "sell": 208621306,
-    "net": -208621306,
+    "sell": 172380601,
+    "net": -172380601,
     "other": 0,
     "buyCount": 0,
     "sellCount": 4,
@@ -191,11 +191,11 @@
     },
     {
       "sector": "AI & tech",
-      "buy": 582273394,
+      "buy": 463168503,
       "sell": 463856226,
-      "net": 118417168,
+      "net": -687723,
       "other": 9702110,
-      "buyCount": 5,
+      "buyCount": 4,
       "sellCount": 6,
       "otherCount": 4,
       "unpriced": 0
@@ -203,11 +203,11 @@
     {
       "sector": "Finance",
       "buy": 641772722,
-      "sell": 221940634,
-      "net": 419832088,
+      "sell": 228641638,
+      "net": 413131084,
       "other": 0,
       "buyCount": 15,
-      "sellCount": 6,
+      "sellCount": 7,
       "otherCount": 3,
       "unpriced": 0
     },
@@ -225,22 +225,11 @@
     {
       "sector": "Industrials",
       "buy": 0,
-      "sell": 111518518,
-      "net": -111518518,
+      "sell": 123237518,
+      "net": -123237518,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 3,
-      "otherCount": 1,
-      "unpriced": 0
-    },
-    {
-      "sector": "Real estate",
-      "buy": 0,
-      "sell": 0,
-      "net": 0,
-      "other": 0,
-      "buyCount": 0,
-      "sellCount": 0,
+      "sellCount": 4,
       "otherCount": 1,
       "unpriced": 0
     }
@@ -250,8 +239,8 @@
       "name": "Carlos Slim Helu & family",
       "slug": "carlos-slim-helu-family",
       "sector": "Media",
-      "value": 211265292,
-      "count": 5,
+      "value": 159395355,
+      "count": 4,
       "filings": [
         {
           "date": "2026-10-27",
@@ -284,14 +273,6 @@
           "issuer": "TALOS ENERGY INC.",
           "ticker": "TALO",
           "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040135/xslF345X06/form4.xml"
-        },
-        {
-          "date": "2026-10-13",
-          "filed": "2026-10-15",
-          "form": "4",
-          "issuer": "TALOS ENERGY INC.",
-          "ticker": "TALO",
-          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126039793/xslF345X06/form4.xml"
         }
       ]
     },
@@ -332,8 +313,8 @@
       "name": "Stephen Schwarzman",
       "slug": "stephen-schwarzman",
       "sector": "Finance",
-      "value": 119821474,
-      "count": 2,
+      "value": 110032293,
+      "count": 1,
       "filings": [
         {
           "date": "2026-11-06",
@@ -349,14 +330,6 @@
           "form": "4",
           "issuer": "Blackstone Private Real Estate Credit & Income Fund",
           "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026112119/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-10-13",
-          "filed": "2026-10-14",
-          "form": "4",
-          "issuer": "Bumble Inc.",
-          "ticker": "BMBL",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526421998/xslF345X06/ownership.xml"
         }
       ]
     },
@@ -397,9 +370,17 @@
       "name": "Charles Koch & family",
       "slug": "charles-koch-family",
       "sector": "Industrials",
-      "value": 53432103,
-      "count": 2,
+      "value": 65151103,
+      "count": 3,
       "filings": [
+        {
+          "date": "2026-11-09",
+          "filed": "2026-11-12",
+          "form": "4",
+          "issuer": "Ibotta, Inc.",
+          "ticker": "IBTA",
+          "url": "https://www.sec.gov/Archives/edgar/data/2027344/000119312526456680/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-11-05",
           "filed": "2026-11-09",
@@ -415,6 +396,23 @@
           "issuer": "Ibotta, Inc.",
           "ticker": "IBTA",
           "url": "https://www.sec.gov/Archives/edgar/data/2027344/000119312526450249/xslF345X06/ownership.xml"
+        }
+      ]
+    },
+    {
+      "name": "Abigail Johnson",
+      "slug": "abigail-johnson",
+      "sector": "Finance",
+      "value": 6701004,
+      "count": 1,
+      "filings": [
+        {
+          "date": "2026-11-09",
+          "filed": "2026-11-12",
+          "form": "4",
+          "issuer": "Avalyn Pharma Inc.",
+          "ticker": "AVLN",
+          "url": "https://www.sec.gov/Archives/edgar/data/315066/000119312526457571/xslF345X06/ownership.xml"
         }
       ]
     }
@@ -457,8 +455,8 @@
       "name": "Giancarlo Devasini",
       "slug": "giancarlo-devasini",
       "sector": "Finance",
-      "value": 6629742,
-      "count": 2,
+      "value": 3927258,
+      "count": 1,
       "filings": [
         {
           "date": "2026-10-26",
@@ -467,14 +465,6 @@
           "issuer": "Gold.com, Inc.",
           "ticker": "GOLD",
           "url": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926119719/xslF345X06/tm2628406-1_4seq1.xml"
-        },
-        {
-          "date": "2026-10-13",
-          "filed": "2026-10-15",
-          "form": "4",
-          "issuer": "Gold.com, Inc.",
-          "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926116094/xslF345X06/tm2627627-1_4seq1.xml"
         }
       ]
     },
@@ -482,8 +472,8 @@
       "name": "Jean-Louis van der Velde",
       "slug": "jean-louis-van-der-velde",
       "sector": "Finance",
-      "value": 6629742,
-      "count": 2,
+      "value": 3927258,
+      "count": 1,
       "filings": [
         {
           "date": "2026-10-26",
@@ -492,14 +482,6 @@
           "issuer": "Gold.com, Inc.",
           "ticker": "GOLD",
           "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926119719/xslF345X06/tm2628406-1_4seq1.xml"
-        },
-        {
-          "date": "2026-10-13",
-          "filed": "2026-10-15",
-          "form": "4",
-          "issuer": "Gold.com, Inc.",
-          "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926116094/xslF345X06/tm2627627-1_4seq1.xml"
         }
       ]
     },
@@ -507,8 +489,8 @@
       "name": "Paolo Ardoino",
       "slug": "paolo-ardoino",
       "sector": "Finance",
-      "value": 6629742,
-      "count": 2,
+      "value": 3927258,
+      "count": 1,
       "filings": [
         {
           "date": "2026-10-26",
@@ -517,14 +499,6 @@
           "issuer": "Gold.com, Inc.",
           "ticker": "GOLD",
           "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926119719/xslF345X06/tm2628406-1_4seq1.xml"
-        },
-        {
-          "date": "2026-10-13",
-          "filed": "2026-10-15",
-          "form": "4",
-          "issuer": "Gold.com, Inc.",
-          "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926116094/xslF345X06/tm2627627-1_4seq1.xml"
         }
       ]
     },
@@ -549,20 +523,12 @@
           "form": "4",
           "issuer": "Blackstone Private Real Estate Credit & Income Fund",
           "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026112119/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-10-13",
-          "filed": "2026-10-14",
-          "form": "4",
-          "issuer": "Bumble Inc.",
-          "ticker": "BMBL",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526421998/xslF345X06/ownership.xml"
         }
       ]
     }
   ],
   "coverage": {
-    "form4Filings": 76,
+    "form4Filings": 74,
     "form4Parsed": 59,
     "windowDays": 90
   }
