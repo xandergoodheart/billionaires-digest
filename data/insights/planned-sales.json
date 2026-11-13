@@ -1,41 +1,15 @@
 {
-  "generated": "2026-11-12",
-  "from": "2026-11-05",
+  "generated": "2026-11-13",
+  "from": "2026-11-06",
   "inputs": {
-    "filingsGenerated": "2026-11-12T17:41:21.492Z",
-    "pricesGenerated": "2026-11-12T17:45:07.685Z",
+    "filingsGenerated": "2026-11-13T17:18:41.898Z",
+    "pricesGenerated": "2026-11-13T17:22:27.878Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 45
+    "editions": 46
   },
   "explainer": "A Form 144 is a notice an insider files with the SEC before selling restricted or control shares. It gives an approximate sale date and size. The sale may be smaller, later or not happen at all.",
-  "note": "6 Form 144 notices in the 90-day filings window; 6 parsed. Rows show approximate sale dates from 2026-11-05 on.",
+  "note": "9 Form 144 notices in the 90-day filings window; 9 parsed. Rows show approximate sale dates from 2026-11-06 on.",
   "sales": [
-    {
-      "date": "2026-11-05",
-      "people": [
-        {
-          "name": "Andreas von Bechtolsheim & family",
-          "slug": "andreas-von-bechtolsheim-family",
-          "sector": "AI & tech"
-        }
-      ],
-      "seller": "Andreas Bechtolsheim",
-      "issuer": "Arista Networks, Inc.",
-      "ticker": "ANET",
-      "tickerSource": "Ticker from a Form 4 for the same issuer in the filings window",
-      "securitiesClassTitle": "Common Stock",
-      "shares": 260000,
-      "value": 41381600,
-      "relationships": [
-        "10% Stockholder"
-      ],
-      "plan10b51AdoptedOn": "2026-02-20",
-      "filed": "2026-11-05",
-      "form": "144",
-      "url": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000698/xsl144X01/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000698/0001958244-26-000698-index.htm",
-      "accession": "0001958244-26-000698"
-    },
     {
       "date": "2026-11-06",
       "people": [
@@ -61,6 +35,78 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000704/xsl144X01/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000704/0001958244-26-000704-index.htm",
       "accession": "0001958244-26-000704"
+    },
+    {
+      "date": "2026-11-12",
+      "people": [
+        {
+          "name": "Larry Page",
+          "slug": "larry-page",
+          "sector": "AI & tech"
+        }
+      ],
+      "seller": "The Lawrence Page Trust",
+      "issuer": "Alphabet, Inc.",
+      "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
+      "shares": 454120,
+      "value": 132621205,
+      "relationships": [
+        "Affiliate"
+      ],
+      "plan10b51AdoptedOn": "2020-11-30",
+      "filed": "2026-11-12",
+      "form": "144",
+      "url": "https://www.sec.gov/Archives/edgar/data/1983811/000196858226001137/xsl144X01/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983811/000196858226001137/0001968582-26-001137-index.htm",
+      "accession": "0001968582-26-001137"
+    },
+    {
+      "date": "2026-11-12",
+      "people": [
+        {
+          "name": "Larry Page",
+          "slug": "larry-page",
+          "sector": "AI & tech"
+        }
+      ],
+      "seller": "The Lawrence Page Trust II",
+      "issuer": "Alphabet, Inc.",
+      "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
+      "shares": 19520,
+      "value": 5700621,
+      "relationships": [
+        "Affiliate"
+      ],
+      "plan10b51AdoptedOn": "2020-11-30",
+      "filed": "2026-11-12",
+      "form": "144",
+      "url": "https://www.sec.gov/Archives/edgar/data/1983812/000196858226001138/xsl144X01/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983812/000196858226001138/0001968582-26-001138-index.htm",
+      "accession": "0001968582-26-001138"
+    },
+    {
+      "date": "2026-11-12",
+      "people": [
+        {
+          "name": "Larry Page",
+          "slug": "larry-page",
+          "sector": "AI & tech"
+        }
+      ],
+      "seller": "The Lawrence Page Trust III",
+      "issuer": "Alphabet, Inc.",
+      "securitiesClassTitle": "Class A Common Stock; Class C Capital Stock",
+      "shares": 34040,
+      "value": 9941042,
+      "relationships": [
+        "Affiliate"
+      ],
+      "plan10b51AdoptedOn": "2020-11-30",
+      "filed": "2026-11-12",
+      "form": "144",
+      "url": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226001139/xsl144X01/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226001139/0001968582-26-001139-index.htm",
+      "accession": "0001968582-26-001139"
     }
   ]
 }

@@ -1,19 +1,19 @@
 {
-  "generated": "2026-11-12",
-  "from": "2026-11-05",
-  "to": "2027-03-12",
+  "generated": "2026-11-13",
+  "from": "2026-11-06",
+  "to": "2027-03-13",
   "inputs": {
-    "filingsGenerated": "2026-11-12T17:41:21.492Z",
-    "pricesGenerated": "2026-11-12T17:45:07.685Z",
+    "filingsGenerated": "2026-11-13T17:18:41.898Z",
+    "pricesGenerated": "2026-11-13T17:22:27.878Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 45
+    "editions": 46
   },
   "types": {
     "sales": "Planned sales",
     "events": "Earnings & events",
     "deals": "Deals & votes"
   },
-  "note": "Dated items from profile watch lists and Form 144 notices, from 2026-11-05 to 2027-03-12. Items marked approximate have only a month or a hedged date. 31 watch items had no usable date (quarters, years, \"ongoing\") and are left out. Type labels come from keywords in the item text.",
+  "note": "Dated items from profile watch lists and Form 144 notices, from 2026-11-06 to 2027-03-13. Items marked approximate have only a month or a hedged date. 31 watch items had no usable date (quarters, years, \"ongoing\") and are left out. Type labels come from keywords in the item text.",
   "events": [
     {
       "date": "2026-11-01",
@@ -412,24 +412,6 @@
       "sourceLabel": "Source"
     },
     {
-      "date": "2026-11-05",
-      "approx": false,
-      "precision": "day",
-      "when": "2026-11-05",
-      "type": "sales",
-      "title": "Planned sale: 260,000 shares of Arista Networks, Inc. (about $41.4M when filed)",
-      "note": "Approximate sale date as stated on the Form 144 notice.",
-      "people": [
-        {
-          "name": "Andreas von Bechtolsheim & family",
-          "slug": "andreas-von-bechtolsheim-family",
-          "sector": "AI & tech"
-        }
-      ],
-      "source": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000698/xsl144X01/primary_doc.xml",
-      "sourceLabel": "Form 144"
-    },
-    {
       "date": "2026-11-06",
       "approx": false,
       "precision": "day",
@@ -463,6 +445,60 @@
       ],
       "source": "https://www.fastretailing.com/eng/group/news/2608071100.html",
       "sourceLabel": "Source"
+    },
+    {
+      "date": "2026-11-12",
+      "approx": false,
+      "precision": "day",
+      "when": "2026-11-12",
+      "type": "sales",
+      "title": "Planned sale: 19,520 shares of Alphabet, Inc. (about $5.7M when filed)",
+      "note": "Approximate sale date as stated on the Form 144 notice.",
+      "people": [
+        {
+          "name": "Larry Page",
+          "slug": "larry-page",
+          "sector": "AI & tech"
+        }
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1983812/000196858226001138/xsl144X01/primary_doc.xml",
+      "sourceLabel": "Form 144"
+    },
+    {
+      "date": "2026-11-12",
+      "approx": false,
+      "precision": "day",
+      "when": "2026-11-12",
+      "type": "sales",
+      "title": "Planned sale: 34,040 shares of Alphabet, Inc. (about $9.9M when filed)",
+      "note": "Approximate sale date as stated on the Form 144 notice.",
+      "people": [
+        {
+          "name": "Larry Page",
+          "slug": "larry-page",
+          "sector": "AI & tech"
+        }
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226001139/xsl144X01/primary_doc.xml",
+      "sourceLabel": "Form 144"
+    },
+    {
+      "date": "2026-11-12",
+      "approx": false,
+      "precision": "day",
+      "when": "2026-11-12",
+      "type": "sales",
+      "title": "Planned sale: 454,120 shares of Alphabet, Inc. (about $133M when filed)",
+      "note": "Approximate sale date as stated on the Form 144 notice.",
+      "people": [
+        {
+          "name": "Larry Page",
+          "slug": "larry-page",
+          "sector": "AI & tech"
+        }
+      ],
+      "source": "https://www.sec.gov/Archives/edgar/data/1983811/000196858226001137/xsl144X01/primary_doc.xml",
+      "sourceLabel": "Form 144"
     },
     {
       "date": "2026-11-14",
