@@ -3,7 +3,7 @@
   "start": "2026-11-16",
   "end": "2026-11-20",
   "locksAt": "2026-11-16T14:30:00.000Z",
-  "generated": "2026-11-14T15:56:17.216Z",
+  "generated": "2026-11-15T16:29:33.103Z",
   "asOf": "2026-11-15",
   "method": "Each person's daily fantasy points are modeled as a normal distribution. The average is the bonus they tend to earn: 10 points per story over the last 20 editions (divided by 20) plus 25 points per insider-buy day (Form 4, code P) over the last 90 days (divided by 63 trading days). Price moves average zero. The spread is 100 x the daily volatility of their holdings: measured from our price history when there are at least 15 daily closes (blended with a sector default until 60), otherwise the sector default (AI & tech 2.2%, Aerospace and Autos 3.0%, Finance 1.3%, Luxury & retail 1.5%, Health and Real estate 1.6%, others 1.8%). The week is the sum of 5 days. People move together: correlation 0.6 in the same sector, 0.3 otherwise, 1.0 when they share a main holding (those pairs never meet head-to-head). Matchups, spreads and over/unders use the normal formula; top scorer and top sector use 20,000 simulated weeks (seeded, so the same data gives the same odds); the insider-buy prop uses the daily buy rate (Poisson). Two-way prices carry a 4.5% house margin (-110 both sides at 50/50), many-way prices 20%. Odds are rounded to the nearest 5 (25 above +1000, 100 above +5000). Price markets (biggest gainer and loser boards, move ladders and ranges, rank races, dollar duels) follow each person's holdings basket (the fantasy weights): its change is modeled as a normal distribution centred on zero with the same daily volatility, times the square root of the trading days for a week, with the same correlations. Dollar markets multiply by tracked stock wealth: share counts from SEC filings times the share price, or, where a family stake is not split in filings, the published net worth moved by that stock. Boards and races use 20,000 simulated outcomes (seeded); ladders, ranges and duels use the normal formula. Ladder rungs and duel lines carry a 4.5% margin each, ranges 12%, boards 20%. Measured from the opening price on the first day to the closing price on the last day; betting closes at the opening bell (9:30 AM New York). Weekly markets run from Monday's open to Friday's close (races compare tracked wealth at Friday's close), daily boards from that day's open to its close. A missing opening or closing price (market holiday or data gap) makes the market void (stake back). Stakes: up to 500 coins; 150 when the combined odds pay 6x or more (decimal 6.0, +500); 50 when they pay 21x or more (decimal 21.0, +2000). Play money only; not a forecast and not advice.",
   "limits": {
@@ -134,12 +134,12 @@
     "bill-gates": {
       "name": "Bill Gates",
       "sector": "AI & tech",
-      "mu": 1.1905,
+      "mu": 0.7937,
       "sigma": 182.9273,
       "vol": 1.8293,
       "closes": 38,
       "stories": 1,
-      "buyDays": 3,
+      "buyDays": 2,
       "basket": [
         {
           "ticker": "MSFT",
@@ -415,7 +415,7 @@
       "sigma": 336.1169,
       "vol": 3.3612,
       "closes": 38,
-      "stories": 11,
+      "stories": 9,
       "buyDays": 0,
       "basket": [
         {
@@ -576,7 +576,7 @@
       "sigma": 291.389,
       "vol": 2.9139,
       "closes": 38,
-      "stories": 0,
+      "stories": 1,
       "buyDays": 0,
       "basket": [
         {
@@ -748,7 +748,7 @@
       "sigma": 244.0604,
       "vol": 2.4406,
       "closes": 38,
-      "stories": 10,
+      "stories": 9,
       "buyDays": 0,
       "basket": [
         {
@@ -954,7 +954,7 @@
       "sigma": 385.915,
       "vol": 3.8592,
       "closes": 34,
-      "stories": 9,
+      "stories": 10,
       "buyDays": 0,
       "basket": [
         {
@@ -1050,7 +1050,7 @@
       "sigma": 241.5251,
       "vol": 2.4153,
       "closes": 38,
-      "stories": 6,
+      "stories": 5,
       "buyDays": 0,
       "basket": [
         {
@@ -1074,7 +1074,7 @@
       "sigma": 289.8938,
       "vol": 2.8989,
       "closes": 34,
-      "stories": 2,
+      "stories": 1,
       "buyDays": 0,
       "basket": [
         {
@@ -1090,7 +1090,7 @@
       "sigma": 311.4407,
       "vol": 3.1144,
       "closes": 36,
-      "stories": 6,
+      "stories": 7,
       "buyDays": 0,
       "basket": [
         {
@@ -1158,7 +1158,7 @@
       "sigma": 324.0148,
       "vol": 3.2401,
       "closes": 38,
-      "stories": 2,
+      "stories": 3,
       "buyDays": 1,
       "basket": [
         {
@@ -1182,7 +1182,7 @@
       "sigma": 179.0686,
       "vol": 1.7907,
       "closes": 38,
-      "stories": 2,
+      "stories": 1,
       "buyDays": 0,
       "basket": [
         {
@@ -1810,7 +1810,7 @@
           "person": "bill-gates",
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5055,
+          "fairProb": 0.5037,
           "sort": 0
         },
         {
@@ -1818,17 +1818,17 @@
           "label": "Sergey Brin to win",
           "market": "ml",
           "person": "sergey-brin",
-          "americanOdds": -105,
-          "decimalOdds": 1.9524,
-          "fairProb": 0.4945,
+          "americanOdds": -110,
+          "decimalOdds": 1.9091,
+          "fairProb": 0.4963,
           "sort": 1
         },
         {
           "id": "2026-W47:h2h:bill-gates:sergey-brin:sp:bill-gates",
-          "label": "Bill Gates −5.5",
+          "label": "Bill Gates −3.5",
           "market": "spread",
           "person": "bill-gates",
-          "line": -5.5,
+          "line": -3.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
           "fairProb": 0.5004,
@@ -1836,10 +1836,10 @@
         },
         {
           "id": "2026-W47:h2h:bill-gates:sergey-brin:sp:sergey-brin",
-          "label": "Sergey Brin +5.5",
+          "label": "Sergey Brin +3.5",
           "market": "spread",
           "person": "sergey-brin",
-          "line": 5.5,
+          "line": 3.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
           "fairProb": 0.4996,
@@ -2636,110 +2636,110 @@
       },
       "selections": [
         {
-          "id": "2026-W47:ou:bill-gates:o:-338.5",
-          "label": "Over -338.5",
+          "id": "2026-W47:ou:bill-gates:o:-340.5",
+          "label": "Over -340.5",
           "market": "over",
           "person": "bill-gates",
-          "line": -338.5,
+          "line": -340.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
           "fairProb": 0.8001,
           "sort": 0
         },
         {
-          "id": "2026-W47:ou:bill-gates:u:-338.5",
-          "label": "Under -338.5",
+          "id": "2026-W47:ou:bill-gates:u:-340.5",
+          "label": "Under -340.5",
           "market": "under",
           "person": "bill-gates",
-          "line": -338.5,
+          "line": -340.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
           "fairProb": 0.1999,
           "sort": 1
         },
         {
-          "id": "2026-W47:ou:bill-gates:o:-151.5",
-          "label": "Over -151.5",
+          "id": "2026-W47:ou:bill-gates:o:-153.5",
+          "label": "Over -153.5",
           "market": "over",
           "person": "bill-gates",
-          "line": -151.5,
+          "line": -153.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
           "fairProb": 0.6499,
           "sort": 2
         },
         {
-          "id": "2026-W47:ou:bill-gates:u:-151.5",
-          "label": "Under -151.5",
+          "id": "2026-W47:ou:bill-gates:u:-153.5",
+          "label": "Under -153.5",
           "market": "under",
           "person": "bill-gates",
-          "line": -151.5,
+          "line": -153.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
           "fairProb": 0.3501,
           "sort": 3
         },
         {
-          "id": "2026-W47:ou:bill-gates:o:5.5",
-          "label": "Over 5.5",
+          "id": "2026-W47:ou:bill-gates:o:3.5",
+          "label": "Over 3.5",
           "market": "over",
           "person": "bill-gates",
-          "line": 5.5,
+          "line": 3.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.5004,
+          "fairProb": 0.5005,
           "sort": 4
         },
         {
-          "id": "2026-W47:ou:bill-gates:u:5.5",
-          "label": "Under 5.5",
+          "id": "2026-W47:ou:bill-gates:u:3.5",
+          "label": "Under 3.5",
           "market": "under",
           "person": "bill-gates",
-          "line": 5.5,
+          "line": 3.5,
           "americanOdds": -110,
           "decimalOdds": 1.9091,
-          "fairProb": 0.4996,
+          "fairProb": 0.4995,
           "sort": 5
         },
         {
-          "id": "2026-W47:ou:bill-gates:o:163.5",
-          "label": "Over 163.5",
+          "id": "2026-W47:ou:bill-gates:o:161.5",
+          "label": "Over 161.5",
           "market": "over",
           "person": "bill-gates",
-          "line": 163.5,
+          "line": 161.5,
           "americanOdds": 175,
           "decimalOdds": 2.75,
           "fairProb": 0.3501,
           "sort": 6
         },
         {
-          "id": "2026-W47:ou:bill-gates:u:163.5",
-          "label": "Under 163.5",
+          "id": "2026-W47:ou:bill-gates:u:161.5",
+          "label": "Under 161.5",
           "market": "under",
           "person": "bill-gates",
-          "line": 163.5,
+          "line": 161.5,
           "americanOdds": -210,
           "decimalOdds": 1.4762,
           "fairProb": 0.6499,
           "sort": 7
         },
         {
-          "id": "2026-W47:ou:bill-gates:o:350.5",
-          "label": "Over 350.5",
+          "id": "2026-W47:ou:bill-gates:o:348.5",
+          "label": "Over 348.5",
           "market": "over",
           "person": "bill-gates",
-          "line": 350.5,
+          "line": 348.5,
           "americanOdds": 380,
           "decimalOdds": 4.8,
           "fairProb": 0.1998,
           "sort": 8
         },
         {
-          "id": "2026-W47:ou:bill-gates:u:350.5",
-          "label": "Under 350.5",
+          "id": "2026-W47:ou:bill-gates:u:348.5",
+          "label": "Under 348.5",
           "market": "under",
           "person": "bill-gates",
-          "line": 350.5,
+          "line": 348.5,
           "americanOdds": -510,
           "decimalOdds": 1.1961,
           "fairProb": 0.8002,
@@ -4052,9 +4052,9 @@
           "jim-walton-family",
           "lukas-walton",
           "rob-walton-family",
-          "bill-gates",
           "jean-louis-van-der-velde",
           "paolo-ardoino",
+          "bill-gates",
           "mark-zuckerberg"
         ]
       },
@@ -4524,8 +4524,8 @@
           "label": "Satya Nadella",
           "market": "pick",
           "person": "satya-nadella",
-          "americanOdds": 26100,
-          "decimalOdds": 262,
+          "americanOdds": 25700,
+          "decimalOdds": 258,
           "fairProb": 0.0032,
           "sort": 46
         },
@@ -4720,16 +4720,6 @@
           "sort": 65
         },
         {
-          "id": "2026-W47:top:bill-gates",
-          "label": "Bill Gates",
-          "market": "pick",
-          "person": "bill-gates",
-          "americanOdds": 49900,
-          "decimalOdds": 500,
-          "fairProb": 0.0001,
-          "sort": 66
-        },
-        {
           "id": "2026-W47:top:jean-louis-van-der-velde",
           "label": "Jean-Louis van der Velde",
           "market": "pick",
@@ -4737,7 +4727,7 @@
           "americanOdds": 49900,
           "decimalOdds": 500,
           "fairProb": 0.0001,
-          "sort": 67
+          "sort": 66
         },
         {
           "id": "2026-W47:top:paolo-ardoino",
@@ -4747,6 +4737,16 @@
           "americanOdds": 49900,
           "decimalOdds": 500,
           "fairProb": 0.0001,
+          "sort": 67
+        },
+        {
+          "id": "2026-W47:top:bill-gates",
+          "label": "Bill Gates",
+          "market": "pick",
+          "person": "bill-gates",
+          "americanOdds": 49900,
+          "decimalOdds": 500,
+          "fairProb": 0,
           "sort": 68
         },
         {
@@ -4916,7 +4916,7 @@
         "slug": "bill-gates",
         "from": "2026-11-16",
         "to": "2026-11-20",
-        "recentBuyDays": 3
+        "recentBuyDays": 2
       },
       "selections": [
         {
@@ -4924,9 +4924,9 @@
           "label": "Yes",
           "market": "yes",
           "person": "bill-gates",
-          "americanOdds": 350,
-          "decimalOdds": 4.5,
-          "fairProb": 0.2119,
+          "americanOdds": 550,
+          "decimalOdds": 6.5,
+          "fairProb": 0.1468,
           "sort": 0
         },
         {
@@ -4934,9 +4934,9 @@
           "label": "No",
           "market": "no",
           "person": "bill-gates",
-          "americanOdds": -465,
-          "decimalOdds": 1.2151,
-          "fairProb": 0.7881,
+          "americanOdds": -825,
+          "decimalOdds": 1.1212,
+          "fairProb": 0.8532,
           "sort": 1
         }
       ],
@@ -5103,7 +5103,7 @@
           "sector": "AI & tech",
           "americanOdds": 240,
           "decimalOdds": 3.4,
-          "fairProb": 0.2448,
+          "fairProb": 0.2446,
           "sort": 0
         },
         {
@@ -5113,7 +5113,7 @@
           "sector": "Industrials",
           "americanOdds": 325,
           "decimalOdds": 4.25,
-          "fairProb": 0.1951,
+          "fairProb": 0.1952,
           "sort": 1
         },
         {
@@ -5123,7 +5123,7 @@
           "sector": "Media",
           "americanOdds": 330,
           "decimalOdds": 4.3,
-          "fairProb": 0.194,
+          "fairProb": 0.1941,
           "sort": 2
         },
         {

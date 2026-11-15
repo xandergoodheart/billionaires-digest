@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-14",
+  "generated": "2026-11-15",
   "inputs": {
-    "filingsGenerated": "2026-11-14T15:56:17.216Z",
-    "pricesGenerated": "2026-11-14T15:59:57.682Z",
+    "filingsGenerated": "2026-11-15T16:29:33.103Z",
+    "pricesGenerated": "2026-11-15T16:35:29.089Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 47
+    "editions": 48
   },
   "gainers": [
     {
@@ -946,8 +946,15 @@
       "name": "Elon Musk",
       "slug": "elon-musk",
       "sector": "Aerospace",
-      "count": 45,
+      "count": 46,
       "stories": [
+        {
+          "edition": "2026-11-15",
+          "editionUrl": "editions/2026-11-15/",
+          "headline": "Tesla to end Cybertruck production in 2027",
+          "url": "https://techcrunch.com/2026/11/09/musk-says-tesla-will-refund-some-cybertruck-deposits-defends-decision-to-end-production/",
+          "source": "TechCrunch"
+        },
         {
           "edition": "2026-11-12",
           "editionUrl": "editions/2026-11-12/",
@@ -975,13 +982,6 @@
           "headline": "Tesla opens driverless Robotaxi rides in Fort Worth",
           "url": "https://teslanorth.com/2026/11/01/tesla-robotaxi-fort-worth-launch/",
           "source": "Tesla North"
-        },
-        {
-          "edition": "2026-11-04",
-          "editionUrl": "editions/2026-11-04/",
-          "headline": "Tesla and SpaceX shares fall as Democrats sweep Congress",
-          "url": "https://www.cnbc.com/2026/11/03/stock-market-today-live-updates.html",
-          "source": "CNBC"
         }
       ]
     },
@@ -1032,8 +1032,15 @@
       "name": "Masayoshi Son",
       "slug": "masayoshi-son",
       "sector": "AI & tech",
-      "count": 23,
+      "count": 24,
       "stories": [
+        {
+          "edition": "2026-11-15",
+          "editionUrl": "editions/2026-11-15/",
+          "headline": "Arm falls on report tied to Nvidia's CEO search",
+          "url": "https://www.fool.com/investing/2026/11/13/why-arm-holdings-stock-was-pulling-back-today/",
+          "source": "The Motley Fool"
+        },
         {
           "edition": "2026-11-12",
           "editionUrl": "editions/2026-11-12/",
@@ -1061,13 +1068,6 @@
           "headline": "SoftBank slumps as Democratic sweep stokes AI regulation fears",
           "url": "https://www.euronews.com/2026/11/04/asian-stocks-and-dollar-fall-as-democrats-gain-ground-in-us-midterms",
           "source": "Euronews"
-        },
-        {
-          "edition": "2026-11-01",
-          "editionUrl": "editions/2026-11-01/",
-          "headline": "Arm falls 10% in AI selloff, hitting Son's biggest asset",
-          "url": "https://www.nbcnews.com/business/markets/tech-stocks-nasdaq-ai-boom-fears-deepen-rcna606512",
-          "source": "NBC News"
         }
       ]
     },
@@ -1290,8 +1290,15 @@
       "name": "Michael Dell",
       "slug": "michael-dell",
       "sector": "AI & tech",
-      "count": 10,
+      "count": 11,
       "stories": [
+        {
+          "edition": "2026-11-15",
+          "editionUrl": "editions/2026-11-15/",
+          "headline": "Dell falls as AI-server selloff deepens",
+          "url": "https://www.tradingview.com/news/gurufocus:37adf2c64094b:0-dell-stocks-fall-8-16-as-ai-server-selloff-deepens-before-november-24-earnings/",
+          "source": "GuruFocus"
+        },
         {
           "edition": "2026-11-06",
           "editionUrl": "editions/2026-11-06/",
@@ -1319,13 +1326,6 @@
           "headline": "Dell falls as CoreWeave's bond rout spreads AI-debt fears",
           "url": "https://investinglive.com/stocks/coreweave-bonds-trade-like-distressed-debt-as-ai-spending-outpaces-balance-sheets/",
           "source": "Investing Live"
-        },
-        {
-          "edition": "2026-10-16",
-          "editionUrl": "editions/2026-10-16/",
-          "headline": "Dell drops 11% on Barclays downgrade over AI doubts",
-          "url": "https://www.gurufocus.com/news/9123969/dell-technologies-dell-shares-plunge-over-11-after-barclays-downgrades-rating",
-          "source": "GuruFocus"
         }
       ]
     },
@@ -1376,7 +1376,7 @@
   "notes": {
     "movers": "Estimated; partial. Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are a large part of the person's wealth. For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's Walmart stake), the estimate is the published net worth × that stock's daily % change.",
     "mostDeals": "Counts profile deal entries dated within the last 12 months (month-only dates count if any part of the month falls in the window). 21 entries without a month-level date were not counted.",
-    "mostMoves": "Stories across 47 archived editions. 44 stories named nobody in the top-100 index."
+    "mostMoves": "Stories across 48 archived editions. 45 stories named nobody in the top-100 index."
   },
   "minCoverage": 0.25
 }
