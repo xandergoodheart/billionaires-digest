@@ -1,7 +1,43 @@
 {
-  "generated": "2026-11-15T16:29:33.103Z",
+  "generated": "2026-11-16T19:45:19.138Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0001997453",
+      "filer": "Chan Zuckerberg Initiative, LLC",
+      "form": "13F-HR",
+      "filed": "2026-11-16",
+      "reportDate": "2026-09-30",
+      "accession": "0001193125-26-462305",
+      "url": "https://www.sec.gov/Archives/edgar/data/1997453/000119312526462305/xslForm13F_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1997453/000119312526462305/0001193125-26-462305-index.htm",
+      "person": "Mark Zuckerberg",
+      "personSlug": "mark-zuckerberg"
+    },
+    {
+      "cik": "0001785504",
+      "filer": "Builders Vision, LLC",
+      "form": "13F-HR",
+      "filed": "2026-11-16",
+      "reportDate": "2026-09-30",
+      "accession": "0001172661-26-005292",
+      "url": "https://www.sec.gov/Archives/edgar/data/1785504/000117266126005292/xslForm13F_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1785504/000117266126005292/0001172661-26-005292-index.htm",
+      "person": "Lukas Walton",
+      "personSlug": "lukas-walton"
+    },
+    {
+      "cik": "0001065521",
+      "filer": "SOFTBANK GROUP CORP.",
+      "form": "13F-HR",
+      "filed": "2026-11-16",
+      "reportDate": "2026-09-30",
+      "accession": "0001062993-26-006050",
+      "url": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326006050/xslForm13F_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326006050/0001062993-26-006050-index.htm",
+      "person": "Masayoshi Son",
+      "personSlug": "masayoshi-son"
+    },
     {
       "cik": "0002027344",
       "filer": "Koch, Inc.",
@@ -6496,7 +6532,14 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1998523/000118518526004616/xslF345X06/ownership.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1998523/000118518526004616/0001185185-26-004616-index.htm",
       "person": "Pham Nhat Vuong",
-      "personSlug": "pham-nhat-vuong"
+      "personSlug": "pham-nhat-vuong",
+      "form4": {
+        "issuer": "VinFast Auto Ltd.",
+        "ticker": "VFS",
+        "summary": [],
+        "transactionCount": 0,
+        "transactions": []
+      }
     },
     {
       "cik": "0001273087",
@@ -7823,7 +7866,26 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1548760/000192109426001050/xsl144X01/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1548760/000192109426001050/0001921094-26-001050-index.htm",
       "person": "Mark Zuckerberg",
-      "personSlug": "mark-zuckerberg"
+      "personSlug": "mark-zuckerberg",
+      "form144": {
+        "issuer": "Meta Platforms, Inc.",
+        "issuerCik": "0001326801",
+        "seller": "Zuckerberg Mark",
+        "relationships": [
+          "Officer",
+          "Director",
+          "10% Stockholder",
+          "COB & CEO"
+        ],
+        "securitiesClassTitle": "Class A Common Shares",
+        "shares": 27474,
+        "aggregateMarketValue": 21359454,
+        "approxSaleDate": "2026-09-24",
+        "noticeDate": "2026-09-24",
+        "planAdoptionDates": [
+          "2026-01-31"
+        ]
+      }
     },
     {
       "cik": "0001070844",
@@ -8379,7 +8441,46 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/2098271/000092189526002600/0000921895-26-002600-index.htm",
       "description": "OWNERSHIP DOCUMENT",
       "person": "Changpeng Zhao",
-      "personSlug": "changpeng-zhao"
+      "personSlug": "changpeng-zhao",
+      "form4": {
+        "issuer": "CEA Industries Inc.",
+        "ticker": "BNC",
+        "summary": [
+          {
+            "issuer": "CEA Industries Inc.",
+            "ticker": "BNC",
+            "securityTitle": "Common Stock, par value $0.00001 per share",
+            "code": "X",
+            "codeLabel": "Option exercise (in the money)",
+            "shares": 7599264,
+            "direction": "up",
+            "transactions": 2
+          }
+        ],
+        "transactionCount": 2,
+        "transactions": [
+          {
+            "securityTitle": "Common Stock, par value $0.00001 per share",
+            "date": "2026-09-17",
+            "code": "X",
+            "codeLabel": "Option exercise (in the money)",
+            "shares": 2180631,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 4331112,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common Stock, par value $0.00001 per share",
+            "date": "2026-09-17",
+            "code": "X",
+            "codeLabel": "Option exercise (in the money)",
+            "shares": 5418633,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 9749745,
+            "direction": "up"
+          }
+        ]
+      }
     },
     {
       "cik": "0002098271",
@@ -8739,7 +8840,124 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/902012/000110465926107592/0001104659-26-107592-index.htm",
       "description": "OWNERSHIP DOCUMENT",
       "person": "Bill Gates",
-      "personSlug": "bill-gates"
+      "personSlug": "bill-gates",
+      "form4": {
+        "issuer": "REPUBLIC SERVICES, INC.",
+        "ticker": "RSG",
+        "summary": [
+          {
+            "issuer": "REPUBLIC SERVICES, INC.",
+            "ticker": "RSG",
+            "securityTitle": "Common stock",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 580810,
+            "price": 222.63,
+            "value": 129305617,
+            "direction": "up",
+            "transactions": 8
+          }
+        ],
+        "transactionCount": 8,
+        "transactions": [
+          {
+            "securityTitle": "Common stock",
+            "date": "2026-09-10",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 108147,
+            "price": 221.5657,
+            "value": 23961666,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 116585781,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common stock",
+            "date": "2026-09-10",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 97992,
+            "price": 222.5226,
+            "value": 21805435,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 116683773,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common stock",
+            "date": "2026-09-10",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 47819,
+            "price": 223.4373,
+            "value": 10684548,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 116731592,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common stock",
+            "date": "2026-09-10",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 2042,
+            "price": 224.1058,
+            "value": 457624,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 116733634,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common stock",
+            "date": "2026-09-11",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 7596,
+            "price": 221.5189,
+            "value": 1682658,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 116741230,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common stock",
+            "date": "2026-09-11",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 135482,
+            "price": 222.5887,
+            "value": 30156762,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 116876712,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common stock",
+            "date": "2026-09-11",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 176547,
+            "price": 223.1492,
+            "value": 39396322,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 117053259,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Common stock",
+            "date": "2026-09-11",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 5185,
+            "price": 223.8385,
+            "value": 1160603,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 117058444,
+            "direction": "up"
+          }
+        ]
+      }
     },
     {
       "cik": "0001273087",
@@ -9948,63 +10166,6 @@
       "description": "OWNERSHIP DOCUMENT",
       "person": "Bill Gates",
       "personSlug": "bill-gates"
-    },
-    {
-      "cik": "0002025889",
-      "filer": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-08-17",
-      "accession": "0001193125-26-354082",
-      "url": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526354082/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526354082/0001193125-26-354082-index.htm",
-      "person": "Giancarlo Devasini",
-      "personSlug": "giancarlo-devasini"
-    },
-    {
-      "cik": "0002025889",
-      "filer": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-08-17",
-      "accession": "0001193125-26-354082",
-      "url": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526354082/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526354082/0001193125-26-354082-index.htm",
-      "person": "Jean-Louis van der Velde",
-      "personSlug": "jean-louis-van-der-velde"
-    },
-    {
-      "cik": "0002025889",
-      "filer": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
-      "form": "SCHEDULE 13G/A",
-      "filed": "2026-08-17",
-      "accession": "0001193125-26-354082",
-      "url": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526354082/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526354082/0001193125-26-354082-index.htm",
-      "person": "Paolo Ardoino",
-      "personSlug": "paolo-ardoino"
-    },
-    {
-      "cik": "0001273693",
-      "filer": "Control Empresarial de Capitales S.A. de C.V.",
-      "form": "4",
-      "filed": "2026-08-17",
-      "reportDate": "2026-08-13",
-      "accession": "0001140361-26-033409",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126033409/xslF345X06/form4.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126033409/0001140361-26-033409-index.htm",
-      "description": "FORM 4",
-      "person": "Carlos Slim Helu & family",
-      "personSlug": "carlos-slim-helu-family"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G",
-      "filed": "2026-08-17",
-      "accession": "0001104659-26-097934",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926097934/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926097934/0001104659-26-097934-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
     }
   ]
 }

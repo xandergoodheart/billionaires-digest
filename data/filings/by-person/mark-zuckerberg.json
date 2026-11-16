@@ -1,9 +1,21 @@
 {
-  "generated": "2026-11-15T16:29:33.103Z",
+  "generated": "2026-11-16T19:45:19.138Z",
   "windowDays": 90,
   "person": "Mark Zuckerberg",
   "personSlug": "mark-zuckerberg",
   "filings": [
+    {
+      "cik": "0001997453",
+      "filer": "Chan Zuckerberg Initiative, LLC",
+      "form": "13F-HR",
+      "filed": "2026-11-16",
+      "reportDate": "2026-09-30",
+      "accession": "0001193125-26-462305",
+      "url": "https://www.sec.gov/Archives/edgar/data/1997453/000119312526462305/xslForm13F_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1997453/000119312526462305/0001193125-26-462305-index.htm",
+      "person": "Mark Zuckerberg",
+      "personSlug": "mark-zuckerberg"
+    },
     {
       "cik": "0001548760",
       "filer": "Zuckerberg Mark",
@@ -208,7 +220,26 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1548760/000192109426001050/xsl144X01/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1548760/000192109426001050/0001921094-26-001050-index.htm",
       "person": "Mark Zuckerberg",
-      "personSlug": "mark-zuckerberg"
+      "personSlug": "mark-zuckerberg",
+      "form144": {
+        "issuer": "Meta Platforms, Inc.",
+        "issuerCik": "0001326801",
+        "seller": "Zuckerberg Mark",
+        "relationships": [
+          "Officer",
+          "Director",
+          "10% Stockholder",
+          "COB & CEO"
+        ],
+        "securitiesClassTitle": "Class A Common Shares",
+        "shares": 27474,
+        "aggregateMarketValue": 21359454,
+        "approxSaleDate": "2026-09-24",
+        "noticeDate": "2026-09-24",
+        "planAdoptionDates": [
+          "2026-01-31"
+        ]
+      }
     }
   ]
 }
