@@ -1,9 +1,117 @@
 {
-  "generated": "2026-11-17T18:42:29.613Z",
+  "generated": "2026-11-18T18:17:55.927Z",
   "windowDays": 90,
   "person": "Warren Buffett",
   "personSlug": "warren-buffett",
   "filings": [
+    {
+      "cik": "0000315090",
+      "filer": "BUFFETT WARREN E",
+      "form": "SCHEDULE 13D/A",
+      "filed": "2026-11-17",
+      "accession": "0001193125-26-465884",
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465884/xslSCHEDULE_13D_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465884/0001193125-26-465884-index.htm",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett"
+    },
+    {
+      "cik": "0000315090",
+      "filer": "BUFFETT WARREN E",
+      "form": "4",
+      "filed": "2026-11-17",
+      "reportDate": "2026-11-16",
+      "accession": "0001193125-26-465872",
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465872/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465872/0001193125-26-465872-index.htm",
+      "description": "4",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "BERKSHIRE HATHAWAY INC",
+        "ticker": "BRK.A",
+        "summary": [
+          {
+            "issuer": "BERKSHIRE HATHAWAY INC",
+            "ticker": "BRK.A",
+            "securityTitle": "Class B Common Stock",
+            "code": "C",
+            "codeLabel": "Conversion",
+            "shares": 9225000,
+            "direction": "up",
+            "transactions": 1
+          },
+          {
+            "issuer": "BERKSHIRE HATHAWAY INC",
+            "ticker": "BRK.A",
+            "securityTitle": "Class B Common Stock",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 9225000,
+            "direction": "flat",
+            "transactions": 4
+          }
+        ],
+        "transactionCount": 5,
+        "transactions": [
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "C",
+            "codeLabel": "Conversion",
+            "shares": 9225000,
+            "price": 0,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 9226162,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 3690000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 5536162,
+            "direction": "flat"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 1845000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 3691162,
+            "direction": "flat"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 1845000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1846162,
+            "direction": "flat"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 1845000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1162,
+            "direction": "flat"
+          }
+        ]
+      }
+    },
     {
       "cik": "0001067983",
       "filer": "BERKSHIRE HATHAWAY INC",

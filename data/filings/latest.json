@@ -1,7 +1,115 @@
 {
-  "generated": "2026-11-17T18:42:29.613Z",
+  "generated": "2026-11-18T18:17:55.927Z",
   "windowDays": 90,
   "filings": [
+    {
+      "cik": "0000315090",
+      "filer": "BUFFETT WARREN E",
+      "form": "SCHEDULE 13D/A",
+      "filed": "2026-11-17",
+      "accession": "0001193125-26-465884",
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465884/xslSCHEDULE_13D_X02/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465884/0001193125-26-465884-index.htm",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett"
+    },
+    {
+      "cik": "0000315090",
+      "filer": "BUFFETT WARREN E",
+      "form": "4",
+      "filed": "2026-11-17",
+      "reportDate": "2026-11-16",
+      "accession": "0001193125-26-465872",
+      "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465872/xslF345X06/ownership.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465872/0001193125-26-465872-index.htm",
+      "description": "4",
+      "person": "Warren Buffett",
+      "personSlug": "warren-buffett",
+      "form4": {
+        "issuer": "BERKSHIRE HATHAWAY INC",
+        "ticker": "BRK.A",
+        "summary": [
+          {
+            "issuer": "BERKSHIRE HATHAWAY INC",
+            "ticker": "BRK.A",
+            "securityTitle": "Class B Common Stock",
+            "code": "C",
+            "codeLabel": "Conversion",
+            "shares": 9225000,
+            "direction": "up",
+            "transactions": 1
+          },
+          {
+            "issuer": "BERKSHIRE HATHAWAY INC",
+            "ticker": "BRK.A",
+            "securityTitle": "Class B Common Stock",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 9225000,
+            "direction": "flat",
+            "transactions": 4
+          }
+        ],
+        "transactionCount": 5,
+        "transactions": [
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "C",
+            "codeLabel": "Conversion",
+            "shares": 9225000,
+            "price": 0,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 9226162,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 3690000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 5536162,
+            "direction": "flat"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 1845000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 3691162,
+            "direction": "flat"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 1845000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1846162,
+            "direction": "flat"
+          },
+          {
+            "securityTitle": "Class B Common Stock",
+            "date": "2026-11-16",
+            "code": "G",
+            "codeLabel": "Gift",
+            "shares": 1845000,
+            "price": 0,
+            "acquiredDisposed": "D",
+            "sharesOwnedFollowing": 1162,
+            "direction": "flat"
+          }
+        ]
+      }
+    },
     {
       "cik": "0002027344",
       "filer": "Koch, Inc.",
@@ -9895,40 +10003,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/0001193125-26-385264-index.htm",
       "description": "4",
       "person": "Giancarlo Devasini",
-      "personSlug": "giancarlo-devasini",
-      "form4": {
-        "issuer": "Gold.com, Inc.",
-        "ticker": "GOLD",
-        "summary": [
-          {
-            "issuer": "Gold.com, Inc.",
-            "ticker": "GOLD",
-            "securityTitle": "Common Stock",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 100000,
-            "price": 39.3,
-            "value": 3930350,
-            "direction": "up",
-            "transactions": 1
-          }
-        ],
-        "transactionCount": 1,
-        "transactions": [
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-09-03",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 100000,
-            "price": 39.3035,
-            "value": 3930350,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 300000,
-            "direction": "up"
-          }
-        ]
-      }
+      "personSlug": "giancarlo-devasini"
     },
     {
       "cik": "0002025889",
@@ -9941,40 +10016,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526385264/0001193125-26-385264-index.htm",
       "description": "4",
       "person": "Jean-Louis van der Velde",
-      "personSlug": "jean-louis-van-der-velde",
-      "form4": {
-        "issuer": "Gold.com, Inc.",
-        "ticker": "GOLD",
-        "summary": [
-          {
-            "issuer": "Gold.com, Inc.",
-            "ticker": "GOLD",
-            "securityTitle": "Common Stock",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 100000,
-            "price": 39.3,
-            "value": 3930350,
-            "direction": "up",
-            "transactions": 1
-          }
-        ],
-        "transactionCount": 1,
-        "transactions": [
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-09-03",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 100000,
-            "price": 39.3035,
-            "value": 3930350,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 300000,
-            "direction": "up"
-          }
-        ]
-      }
+      "personSlug": "jean-louis-van-der-velde"
     },
     {
       "cik": "0002025889",
@@ -9987,40 +10029,7 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/2025889/000119312526385264/0001193125-26-385264-index.htm",
       "description": "4",
       "person": "Paolo Ardoino",
-      "personSlug": "paolo-ardoino",
-      "form4": {
-        "issuer": "Gold.com, Inc.",
-        "ticker": "GOLD",
-        "summary": [
-          {
-            "issuer": "Gold.com, Inc.",
-            "ticker": "GOLD",
-            "securityTitle": "Common Stock",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 100000,
-            "price": 39.3,
-            "value": 3930350,
-            "direction": "up",
-            "transactions": 1
-          }
-        ],
-        "transactionCount": 1,
-        "transactions": [
-          {
-            "securityTitle": "Common Stock",
-            "date": "2026-09-03",
-            "code": "P",
-            "codeLabel": "Open-market buy",
-            "shares": 100000,
-            "price": 39.3035,
-            "value": 3930350,
-            "acquiredDisposed": "A",
-            "sharesOwnedFollowing": 300000,
-            "direction": "up"
-          }
-        ]
-      }
+      "personSlug": "paolo-ardoino"
     },
     {
       "cik": "0002025889",
@@ -10600,74 +10609,6 @@
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1603466/000091957426005637/0000919574-26-005637-index.htm",
       "person": "Steve Cohen",
       "personSlug": "steve-cohen"
-    },
-    {
-      "cik": "0001273693",
-      "filer": "Control Empresarial de Capitales S.A. de C.V.",
-      "form": "4",
-      "filed": "2026-08-19",
-      "reportDate": "2026-08-17",
-      "accession": "0001140361-26-033741",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126033741/xslF345X06/form4.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126033741/0001140361-26-033741-index.htm",
-      "description": "FORM 4",
-      "person": "Carlos Slim Helu & family",
-      "personSlug": "carlos-slim-helu-family"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G",
-      "filed": "2026-08-19",
-      "accession": "0001104659-26-098872",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926098872/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926098872/0001104659-26-098872-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G",
-      "filed": "2026-08-19",
-      "accession": "0001104659-26-098866",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926098866/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926098866/0001104659-26-098866-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0001273087",
-      "filer": "MILLENNIUM MANAGEMENT LLC",
-      "form": "SCHEDULE 13G",
-      "filed": "2026-08-19",
-      "accession": "0001104659-26-098854",
-      "url": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926098854/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1273087/000110465926098854/0001104659-26-098854-index.htm",
-      "person": "Israel Englander",
-      "personSlug": "israel-englander"
-    },
-    {
-      "cik": "0001603466",
-      "filer": "Point72 Asset Management, L.P.",
-      "form": "SCHEDULE 13G",
-      "filed": "2026-08-19",
-      "accession": "0000919574-26-005630",
-      "url": "https://www.sec.gov/Archives/edgar/data/1603466/000091957426005630/xslSCHEDULE_13G_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1603466/000091957426005630/0000919574-26-005630-index.htm",
-      "person": "Steve Cohen",
-      "personSlug": "steve-cohen"
-    },
-    {
-      "cik": "0000315066",
-      "filer": "FMR LLC",
-      "form": "SCHEDULE 13D/A",
-      "filed": "2026-08-19",
-      "accession": "0000315066-26-002262",
-      "url": "https://www.sec.gov/Archives/edgar/data/315066/000031506626002262/xslSCHEDULE_13D_X02/primary_doc.xml",
-      "indexUrl": "https://www.sec.gov/Archives/edgar/data/315066/000031506626002262/0000315066-26-002262-index.htm",
-      "person": "Abigail Johnson",
-      "personSlug": "abigail-johnson"
     }
   ]
 }

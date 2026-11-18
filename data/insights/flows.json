@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-17",
+  "generated": "2026-11-18",
   "inputs": {
-    "filingsGenerated": "2026-11-17T18:42:29.613Z",
-    "pricesGenerated": "2026-11-17T18:46:35.601Z",
+    "filingsGenerated": "2026-11-18T18:17:55.927Z",
+    "pricesGenerated": "2026-11-18T18:21:36.826Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 50
+    "editions": 51
   },
   "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 75 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
@@ -12,11 +12,11 @@
       "week": "2026-W36",
       "start": "2026-08-31",
       "end": "2026-09-06",
-      "buy": 3930350,
+      "buy": 0,
       "sell": 0,
-      "net": 3930350,
+      "net": 0,
       "other": 0,
-      "buyCount": 1,
+      "buyCount": 0,
       "sellCount": 0,
       "otherCount": 0,
       "unpriced": 0
@@ -161,20 +161,20 @@
       "other": 0,
       "buyCount": 0,
       "sellCount": 0,
-      "otherCount": 0,
+      "otherCount": 2,
       "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-11-11",
-    "to": "2026-11-17",
+    "from": "2026-11-12",
+    "to": "2026-11-18",
     "buy": 250207,
-    "sell": 16377251,
-    "net": -16127044,
+    "sell": 0,
+    "net": 250207,
     "other": 0,
     "buyCount": 1,
-    "sellCount": 1,
-    "otherCount": 1,
+    "sellCount": 0,
+    "otherCount": 3,
     "unpriced": 0
   },
   "sectors": [
@@ -191,13 +191,13 @@
     },
     {
       "sector": "Finance",
-      "buy": 642022929,
+      "buy": 638092579,
       "sell": 228641638,
-      "net": 413381291,
+      "net": 409450941,
       "other": 0,
-      "buyCount": 16,
+      "buyCount": 15,
       "sellCount": 7,
-      "otherCount": 2,
+      "otherCount": 4,
       "unpriced": 0
     },
     {
@@ -269,39 +269,6 @@
       ]
     },
     {
-      "name": "Carlos Slim Helu & family",
-      "slug": "carlos-slim-helu-family",
-      "sector": "Media",
-      "value": 112087814,
-      "count": 3,
-      "filings": [
-        {
-          "date": "2026-10-27",
-          "filed": "2026-10-29",
-          "form": "4",
-          "issuer": "TALOS ENERGY INC.",
-          "ticker": "TALO",
-          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126041180/xslF345X06/form4.xml"
-        },
-        {
-          "date": "2026-10-23",
-          "filed": "2026-10-27",
-          "form": "4",
-          "issuer": "TALOS ENERGY INC.",
-          "ticker": "TALO",
-          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040937/xslF345X06/form4.xml"
-        },
-        {
-          "date": "2026-10-19",
-          "filed": "2026-10-21",
-          "form": "4",
-          "issuer": "TALOS ENERGY INC.",
-          "ticker": "TALO",
-          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040419/xslF345X06/form4.xml"
-        }
-      ]
-    },
-    {
       "name": "Stephen Schwarzman",
       "slug": "stephen-schwarzman",
       "sector": "Finance",
@@ -367,12 +334,45 @@
       ]
     },
     {
+      "name": "Carlos Slim Helu & family",
+      "slug": "carlos-slim-helu-family",
+      "sector": "Media",
+      "value": 73525060,
+      "count": 2,
+      "filings": [
+        {
+          "date": "2026-10-27",
+          "filed": "2026-10-29",
+          "form": "4",
+          "issuer": "TALOS ENERGY INC.",
+          "ticker": "TALO",
+          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126041180/xslF345X06/form4.xml"
+        },
+        {
+          "date": "2026-10-23",
+          "filed": "2026-10-27",
+          "form": "4",
+          "issuer": "TALOS ENERGY INC.",
+          "ticker": "TALO",
+          "url": "https://www.sec.gov/Archives/edgar/data/1273693/000114036126040937/xslF345X06/form4.xml"
+        }
+      ]
+    },
+    {
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
       "value": 69026033,
       "count": 1,
       "filings": [
+        {
+          "date": "2026-11-16",
+          "filed": "2026-11-17",
+          "form": "4",
+          "issuer": "BERKSHIRE HATHAWAY INC",
+          "ticker": "BRK.A",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465872/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-11-12",
           "filed": "2026-11-16",
@@ -433,6 +433,14 @@
       "value": 27144452,
       "count": 2,
       "filings": [
+        {
+          "date": "2026-11-16",
+          "filed": "2026-11-17",
+          "form": "4",
+          "issuer": "BERKSHIRE HATHAWAY INC",
+          "ticker": "BRK.A",
+          "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526465872/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-11-12",
           "filed": "2026-11-16",
