@@ -1,9 +1,9 @@
 {
-  "generated": "2026-11-18T18:22:02.799Z",
+  "generated": "2026-11-19T18:33:31.479Z",
   "method": "Hypothetical. Buys at the insider's reported price on their Form 4 filing, held to today's price. Ignores timing lag, fees, taxes and dividends. Not investment advice.",
   "methodDetail": "Each buy is one Form 4 filing and one security: the share-weighted average of its open-market purchase (code P) lines. The portfolio return is the simple average of every priced buy (equal dollars in each). A filing listed under more than one person counts once in the portfolio and once for each person. Buys without a US ticker or a current quote are listed but not counted. Amended filings (4/A) are not used.",
-  "pricesAsOf": "2026-11-18T18:21:36.826Z",
-  "filingsAsOf": "2026-11-18T18:17:55.927Z",
+  "pricesAsOf": "2026-11-19T18:33:15.531Z",
+  "filingsAsOf": "2026-11-19T18:29:29.184Z",
   "windowDays": 365,
   "coverage": {
     "from": "2026-07-23",
@@ -12,11 +12,11 @@
   },
   "portfolio": {
     "buys": 33,
-    "priced": 25,
+    "priced": 27,
     "invested": 2085240405,
-    "avgReturnPct": 7.95,
-    "up": 21,
-    "down": 4
+    "avgReturnPct": 5.94,
+    "up": 20,
+    "down": 7
   },
   "people": [
     {
@@ -25,7 +25,7 @@
       "buys": 12,
       "priced": 12,
       "invested": 1380322193,
-      "avgReturnPct": 14.02,
+      "avgReturnPct": 11.93,
       "up": 12,
       "down": 0
     },
@@ -33,11 +33,11 @@
       "person": "Warren Buffett",
       "personSlug": "warren-buffett",
       "buys": 11,
-      "priced": 9,
+      "priced": 11,
       "invested": 622689485,
-      "avgReturnPct": 6.47,
-      "up": 9,
-      "down": 0
+      "avgReturnPct": 2.96,
+      "up": 8,
+      "down": 3
     },
     {
       "person": "Giancarlo Devasini",
@@ -45,7 +45,7 @@
       "buys": 4,
       "priced": 4,
       "invested": 11840627,
-      "avgReturnPct": -6.95,
+      "avgReturnPct": -3.85,
       "up": 0,
       "down": 4
     },
@@ -55,7 +55,7 @@
       "buys": 4,
       "priced": 4,
       "invested": 11840627,
-      "avgReturnPct": -6.95,
+      "avgReturnPct": -3.85,
       "up": 0,
       "down": 4
     },
@@ -65,7 +65,7 @@
       "buys": 4,
       "priced": 4,
       "invested": 11840627,
-      "avgReturnPct": -6.95,
+      "avgReturnPct": -3.85,
       "up": 0,
       "down": 4
     },
@@ -113,9 +113,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": null,
-      "returnPct": null,
-      "unpricedReason": "no quote for this ticker in our price data"
+      "priceNow": 568.61,
+      "returnPct": -4.33
     },
     {
       "key": "0001193125-26-445930|Common Stock",
@@ -139,8 +138,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 32.91,
-      "returnPct": 13.1
+      "priceNow": 32.07,
+      "returnPct": 10.22
     },
     {
       "key": "0001104659-26-119719|Common Stock",
@@ -172,8 +171,8 @@
           "personSlug": "paolo-ardoino"
         }
       ],
-      "priceNow": 36.81,
-      "returnPct": -6.27
+      "priceNow": 38.04,
+      "returnPct": -3.14
     },
     {
       "key": "0001213900-26-112119|Common Shares of Beneficial Interest",
@@ -231,8 +230,8 @@
           "personSlug": "paolo-ardoino"
         }
       ],
-      "priceNow": 36.81,
-      "returnPct": -7.54
+      "priceNow": 38.04,
+      "returnPct": -4.45
     },
     {
       "key": "0001104659-26-115328|Common Stock",
@@ -264,8 +263,8 @@
           "personSlug": "paolo-ardoino"
         }
       ],
-      "priceNow": 36.81,
-      "returnPct": -7.67
+      "priceNow": 38.04,
+      "returnPct": -4.59
     },
     {
       "key": "0001193125-26-414744|Class A Common Stock",
@@ -289,8 +288,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 83.96,
-      "returnPct": 5.41
+      "priceNow": 81.04,
+      "returnPct": 1.74
     },
     {
       "key": "0001193125-26-414744|Class B Common Stock",
@@ -314,8 +313,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 83.96,
-      "returnPct": 7.19
+      "priceNow": 81.04,
+      "returnPct": 3.46
     },
     {
       "key": "0001193125-26-409451|Class A Common Stock",
@@ -339,8 +338,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 83.96,
-      "returnPct": 2.89
+      "priceNow": 81.04,
+      "returnPct": -0.69
     },
     {
       "key": "0001193125-26-409451|Class B Common Stock",
@@ -364,8 +363,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 83.96,
-      "returnPct": 4.98
+      "priceNow": 81.04,
+      "returnPct": 1.32
     },
     {
       "key": "0001193125-26-403089|Class A Common Stock",
@@ -389,8 +388,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 83.96,
-      "returnPct": 3.38
+      "priceNow": 81.04,
+      "returnPct": -0.22
     },
     {
       "key": "0001193125-26-403089|Class B Common Stock",
@@ -414,8 +413,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 83.96,
-      "returnPct": 5.53
+      "priceNow": 81.04,
+      "returnPct": 1.86
     },
     {
       "key": "0001213900-26-103146|Common Shares of Beneficial Interest",
@@ -465,8 +464,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 83.96,
-      "returnPct": 8.39
+      "priceNow": 81.04,
+      "returnPct": 4.62
     },
     {
       "key": "0001193125-26-397059|Class B Common Stock",
@@ -490,8 +489,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": 81.52,
-      "returnPct": 7.32
+      "priceNow": 78.67,
+      "returnPct": 3.57
     },
     {
       "key": "0001193125-26-429152|Common Stock",
@@ -541,8 +540,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 12.77
+      "priceNow": 246.45,
+      "returnPct": 10.7
     },
     {
       "key": "0001104659-26-106713|Common stock",
@@ -566,8 +565,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 13.39
+      "priceNow": 246.45,
+      "returnPct": 11.31
     },
     {
       "key": "0001104659-26-105908|Common stock",
@@ -591,8 +590,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 12.08
+      "priceNow": 246.45,
+      "returnPct": 10.03
     },
     {
       "key": "0001193125-26-385264|Common Stock",
@@ -624,8 +623,8 @@
           "personSlug": "paolo-ardoino"
         }
       ],
-      "priceNow": 36.81,
-      "returnPct": -6.34
+      "priceNow": 38.04,
+      "returnPct": -3.21
     },
     {
       "key": "0001104659-26-105062|Common stock",
@@ -649,8 +648,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 12.56
+      "priceNow": 246.45,
+      "returnPct": 10.49
     },
     {
       "key": "0001104659-26-104314|Common stock",
@@ -674,8 +673,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 13.33
+      "priceNow": 246.45,
+      "returnPct": 11.25
     },
     {
       "key": "0001104659-26-103265|Common stock",
@@ -699,8 +698,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 13.85
+      "priceNow": 246.45,
+      "returnPct": 11.76
     },
     {
       "key": "0001104659-26-101497|Common stock",
@@ -724,8 +723,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 12.87
+      "priceNow": 246.45,
+      "returnPct": 10.8
     },
     {
       "key": "0001104659-26-100306|Common stock",
@@ -749,8 +748,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 13.96
+      "priceNow": 246.45,
+      "returnPct": 11.87
     },
     {
       "key": "0001213900-26-093085|Common Shares of Beneficial Interest",
@@ -800,8 +799,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 14.07
+      "priceNow": 246.45,
+      "returnPct": 11.98
     },
     {
       "key": "0001104659-26-098392|Common stock",
@@ -825,8 +824,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 16.63
+      "priceNow": 246.45,
+      "returnPct": 14.49
     },
     {
       "key": "0001104659-26-097181|Common stock",
@@ -850,8 +849,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 16.33
+      "priceNow": 246.45,
+      "returnPct": 14.2
     },
     {
       "key": "0001193125-26-349574|Class B Common Stock",
@@ -875,9 +874,8 @@
           "personSlug": "warren-buffett"
         }
       ],
-      "priceNow": null,
-      "returnPct": null,
-      "unpricedReason": "no quote for this ticker in our price data"
+      "priceNow": 568.61,
+      "returnPct": 10.96
     },
     {
       "key": "0001104659-26-094887|Common stock",
@@ -901,8 +899,8 @@
           "personSlug": "bill-gates"
         }
       ],
-      "priceNow": 251.05,
-      "returnPct": 16.46
+      "priceNow": 246.45,
+      "returnPct": 14.32
     },
     {
       "key": "0001193125-26-321223|Common Stock",

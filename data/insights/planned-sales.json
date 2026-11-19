@@ -1,14 +1,14 @@
 {
-  "generated": "2026-11-18",
-  "from": "2026-11-11",
+  "generated": "2026-11-19",
+  "from": "2026-11-12",
   "inputs": {
-    "filingsGenerated": "2026-11-18T18:17:55.927Z",
-    "pricesGenerated": "2026-11-18T18:21:36.826Z",
+    "filingsGenerated": "2026-11-19T18:29:29.184Z",
+    "pricesGenerated": "2026-11-19T18:33:15.531Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
     "editions": 51
   },
   "explainer": "A Form 144 is a notice an insider files with the SEC before selling restricted or control shares. It gives an approximate sale date and size. The sale may be smaller, later or not happen at all.",
-  "note": "9 Form 144 notices in the 90-day filings window; 9 parsed. Rows show approximate sale dates from 2026-11-11 on.",
+  "note": "10 Form 144 notices in the 90-day filings window; 10 parsed. Rows show approximate sale dates from 2026-11-12 on.",
   "sales": [
     {
       "date": "2026-11-12",
@@ -81,6 +81,32 @@
       "url": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226001139/xsl144X01/primary_doc.xml",
       "indexUrl": "https://www.sec.gov/Archives/edgar/data/1983744/000196858226001139/0001968582-26-001139-index.htm",
       "accession": "0001968582-26-001139"
+    },
+    {
+      "date": "2026-11-18",
+      "people": [
+        {
+          "name": "Andreas von Bechtolsheim & family",
+          "slug": "andreas-von-bechtolsheim-family",
+          "sector": "AI & tech"
+        }
+      ],
+      "seller": "Andreas Bechtolsheim",
+      "issuer": "Arista Networks, Inc.",
+      "ticker": "ANET",
+      "tickerSource": "Ticker from a Form 4 for the same issuer in the filings window",
+      "securitiesClassTitle": "Common Stock",
+      "shares": 300000,
+      "value": 58182000,
+      "relationships": [
+        "10% Stockholder"
+      ],
+      "plan10b51AdoptedOn": "2026-02-20",
+      "filed": "2026-11-18",
+      "form": "144",
+      "url": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000733/xsl144X01/primary_doc.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1133206/000195824426000733/0001958244-26-000733-index.htm",
+      "accession": "0001958244-26-000733"
     }
   ]
 }

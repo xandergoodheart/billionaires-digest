@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-09T20:01:30.130Z",
+  "generated": "2026-11-19T18:33:30.507Z",
   "source": "SEC XBRL company facts",
   "tickers": {
     "1038": {
@@ -1516,26 +1516,27 @@
       "revenueConcept": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "netIncomeConcept": "NetIncomeLoss",
       "quarter": {
-        "start": "2026-04-01",
-        "end": "2026-06-30",
-        "form": "10-Q",
-        "filed": "2026-08-05",
-        "accn": "0001319161-26-000032",
-        "revenue": 1864000000,
-        "netIncome": 204000000,
-        "epsDiluted": null
+        "start": "2026-07-01",
+        "end": "2026-09-30",
+        "form": "10-K",
+        "filed": "2026-11-19",
+        "accn": "0001319161-26-000042",
+        "revenue": 2001000000,
+        "netIncome": 178000000,
+        "epsDiluted": null,
+        "derived": true
       },
       "ttm": {
-        "start": "2025-07-01",
-        "end": "2026-06-30",
-        "revenue": 7304000000,
-        "netIncome": 672000000,
+        "start": "2025-10-01",
+        "end": "2026-09-30",
+        "revenue": 7437000000,
+        "netIncome": 741000000,
         "epsDiluted": null
       },
-      "revenueGrowthQ": 10.4,
-      "revenueGrowthTTM": 12.9,
-      "netMarginQ": 10.9,
-      "netMarginTTM": 9.2,
+      "revenueGrowthQ": 7.1,
+      "revenueGrowthTTM": 10.9,
+      "netMarginQ": 8.9,
+      "netMarginTTM": 10,
       "sharesOutstanding": null
     },
     "WMT": {
