@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-19",
+  "generated": "2026-11-20",
   "inputs": {
-    "filingsGenerated": "2026-11-19T18:29:29.184Z",
-    "pricesGenerated": "2026-11-19T18:33:15.531Z",
+    "filingsGenerated": "2026-11-20T17:55:45.506Z",
+    "pricesGenerated": "2026-11-20T17:59:30.436Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
     "editions": 51
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 74 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 77 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W36",
@@ -25,12 +25,12 @@
       "week": "2026-W37",
       "start": "2026-09-07",
       "end": "2026-09-13",
-      "buy": 288898658,
-      "sell": 36920784,
-      "net": 251977874,
+      "buy": 0,
+      "sell": 12089970,
+      "net": -12089970,
       "other": 0,
-      "buyCount": 2,
-      "sellCount": 2,
+      "buyCount": 0,
+      "sellCount": 1,
       "otherCount": 0,
       "unpriced": 0
     },
@@ -161,20 +161,20 @@
       "other": 0,
       "buyCount": 0,
       "sellCount": 0,
-      "otherCount": 2,
+      "otherCount": 5,
       "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-11-13",
-    "to": "2026-11-19",
+    "from": "2026-11-14",
+    "to": "2026-11-20",
     "buy": 0,
     "sell": 0,
     "net": 0,
     "other": 0,
     "buyCount": 0,
     "sellCount": 0,
-    "otherCount": 2,
+    "otherCount": 5,
     "unpriced": 0
   },
   "sectors": [
@@ -197,16 +197,16 @@
       "other": 0,
       "buyCount": 15,
       "sellCount": 7,
-      "otherCount": 4,
+      "otherCount": 7,
       "unpriced": 0
     },
     {
       "sector": "AI & tech",
-      "buy": 298466837,
+      "buy": 9568179,
       "sell": 463856226,
-      "net": -165389389,
+      "net": -454288047,
       "other": 9702110,
-      "buyCount": 3,
+      "buyCount": 1,
       "sellCount": 6,
       "otherCount": 5,
       "unpriced": 0
@@ -214,11 +214,11 @@
     {
       "sector": "Media",
       "buy": 0,
-      "sell": 422007299,
-      "net": -422007299,
+      "sell": 397176485,
+      "net": -397176485,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 13,
+      "sellCount": 12,
       "otherCount": 2,
       "unpriced": 0
     },
@@ -276,19 +276,20 @@
       "count": 1,
       "filings": [
         {
+          "date": "2026-11-17",
+          "filed": "2026-11-19",
+          "form": "4",
+          "issuer": "Medline Inc.",
+          "ticker": "MDLN",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526468658/xslF345X06/ownership.xml"
+        },
+        {
           "date": "2026-11-06",
           "filed": "2026-11-10",
           "form": "4",
           "issuer": "Corebridge Financial, Inc.",
           "ticker": "CRBG",
           "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526455577/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-10-21",
-          "filed": "2026-10-23",
-          "form": "4",
-          "issuer": "Blackstone Private Real Estate Credit & Income Fund",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026112119/xslF345X06/ownership.xml"
         }
       ]
     },
@@ -366,6 +367,14 @@
       "count": 1,
       "filings": [
         {
+          "date": "2026-11-17",
+          "filed": "2026-11-19",
+          "form": "4",
+          "issuer": "BERKSHIRE HATHAWAY INC",
+          "ticker": "BRK.A",
+          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526468887/xslF345X06/ownership.xml"
+        },
+        {
           "date": "2026-11-16",
           "filed": "2026-11-17",
           "form": "4",
@@ -396,14 +405,6 @@
           "issuer": "DAVITA INC.",
           "ticker": "DVA",
           "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-10-21",
-          "filed": "2026-10-23",
-          "form": "4",
-          "issuer": "BERKSHIRE HATHAWAY INC",
-          "ticker": "BRK.A",
-          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000005/xslF345X06/primary_doc.xml"
         }
       ]
     },
@@ -434,6 +435,14 @@
       "count": 2,
       "filings": [
         {
+          "date": "2026-11-17",
+          "filed": "2026-11-19",
+          "form": "4",
+          "issuer": "BERKSHIRE HATHAWAY INC",
+          "ticker": "BRK.A",
+          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526468887/xslF345X06/ownership.xml"
+        },
+        {
           "date": "2026-11-16",
           "filed": "2026-11-17",
           "form": "4",
@@ -464,14 +473,6 @@
           "issuer": "DAVITA INC.",
           "ticker": "DVA",
           "url": "https://www.sec.gov/Archives/edgar/data/315090/000119312526438090/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-10-21",
-          "filed": "2026-10-23",
-          "form": "4",
-          "issuer": "BERKSHIRE HATHAWAY INC",
-          "ticker": "BRK.A",
-          "url": "https://www.sec.gov/Archives/edgar/data/1067983/000172845126000005/xslF345X06/primary_doc.xml"
         }
       ]
     },
@@ -525,34 +526,10 @@
           "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926119719/xslF345X06/tm2628406-1_4seq1.xml"
         }
       ]
-    },
-    {
-      "name": "Stephen Schwarzman",
-      "slug": "stephen-schwarzman",
-      "sector": "Finance",
-      "value": 2726227,
-      "count": 1,
-      "filings": [
-        {
-          "date": "2026-11-06",
-          "filed": "2026-11-10",
-          "form": "4",
-          "issuer": "Corebridge Financial, Inc.",
-          "ticker": "CRBG",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526455577/xslF345X06/ownership.xml"
-        },
-        {
-          "date": "2026-10-21",
-          "filed": "2026-10-23",
-          "form": "4",
-          "issuer": "Blackstone Private Real Estate Credit & Income Fund",
-          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026112119/xslF345X06/ownership.xml"
-        }
-      ]
     }
   ],
   "coverage": {
-    "form4Filings": 74,
+    "form4Filings": 77,
     "form4Parsed": 59,
     "windowDays": 90
   }
