@@ -1,6 +1,6 @@
 {
   "asOf": "2026-09-24T21:15-04:00",
-  "stakeAsOf": "2026-11-20",
+  "stakeAsOf": "2026-11-21",
   "source": "Built from each person's profile (data/people): companies they control or hold stakes in, plus private deals that name a company another person holds.",
   "rule": "Two people are linked when they currently hold the same company (holdings described as sold, exited or historical, and note rows, are left out). Companies match by ticker (exchange prefix removed; GOOG counted as GOOGL, BRK.A as BRK.B), otherwise by company name without corporate suffixes and notes. A private deal links two people only when its text names, word for word, a company the other person holds.",
   "viewBox": [
@@ -15,220 +15,220 @@
       "name": "Elon Musk",
       "rank": 1,
       "sector": "Aerospace",
-      "worth": 1072.14,
+      "worth": 1062.16,
       "worthText": "$1.1T",
       "r": 26,
-      "x": 576.3,
-      "y": 421.9
+      "x": 482.9,
+      "y": 314.6
     },
     {
       "slug": "jeff-bezos",
       "name": "Jeff Bezos",
       "rank": 2,
       "sector": "AI & tech",
-      "worth": 237.33,
-      "worthText": "$237.3B",
+      "worth": 234.59,
+      "worthText": "$234.6B",
       "r": 17,
-      "x": 442.3,
-      "y": 551.6
-    },
-    {
-      "slug": "sergey-brin",
-      "name": "Sergey Brin",
-      "rank": 3,
-      "sector": "AI & tech",
-      "worth": 195.33,
-      "worthText": "$195.3B",
-      "r": 16.3,
-      "x": 271.6,
-      "y": 259.6
+      "x": 437,
+      "y": 503.2
     },
     {
       "slug": "mark-zuckerberg",
       "name": "Mark Zuckerberg",
+      "rank": 3,
+      "sector": "AI & tech",
+      "worth": 191.71,
+      "worthText": "$191.7B",
+      "r": 16.2,
+      "x": 378,
+      "y": 644.8
+    },
+    {
+      "slug": "sergey-brin",
+      "name": "Sergey Brin",
       "rank": 4,
       "sector": "AI & tech",
-      "worth": 194.87,
-      "worthText": "$194.9B",
+      "worth": 190.04,
+      "worthText": "$190B",
       "r": 16.2,
-      "x": 438,
-      "y": 651.5
+      "x": 458,
+      "y": 584.9
     },
     {
       "slug": "warren-buffett",
       "name": "Warren Buffett",
       "rank": 5,
       "sector": "Finance",
-      "worth": 161.29,
-      "worthText": "$161.3B",
+      "worth": 160.99,
+      "worthText": "$161B",
       "r": 15.6,
-      "x": 390.9,
-      "y": 486.3
+      "x": 341.4,
+      "y": 474
     },
     {
       "slug": "larry-ellison",
       "name": "Larry Ellison",
       "rank": 6,
       "sector": "AI & tech",
-      "worth": 118.3,
-      "worthText": "$118.3B",
+      "worth": 116.67,
+      "worthText": "$116.7B",
       "r": 14.6,
-      "x": 654,
-      "y": 545.3
+      "x": 623.2,
+      "y": 517.4
     },
     {
       "slug": "bill-gates",
       "name": "Bill Gates",
       "rank": 8,
       "sector": "AI & tech",
-      "worth": 62.12,
-      "worthText": "$62.1B",
+      "worth": 61.48,
+      "worthText": "$61.5B",
       "r": 13.1,
-      "x": 478.4,
-      "y": 281.1
+      "x": 556.8,
+      "y": 366.1
     },
     {
       "slug": "andreas-von-bechtolsheim-family",
       "name": "Andreas von Bechtolsheim & family",
       "rank": 9,
       "sector": "AI & tech",
-      "worth": 30.82,
+      "worth": 30.81,
       "worthText": "$30.8B",
       "r": 11.9,
-      "x": 232.3,
-      "y": 543.1
+      "x": 265.6,
+      "y": 613.7
     },
     {
       "slug": "henry-samueli",
       "name": "Henry Samueli",
       "rank": 10,
       "sector": "AI & tech",
-      "worth": 26.16,
-      "worthText": "$26.2B",
+      "worth": 26.05,
+      "worthText": "$26B",
       "r": 11.7,
-      "x": 200.7,
-      "y": 466.5
+      "x": 257,
+      "y": 521.8
     },
     {
       "slug": "eric-schmidt",
       "name": "Eric Schmidt",
       "rank": 13,
       "sector": "AI & tech",
-      "worth": 13.33,
-      "worthText": "$13.3B",
+      "worth": 12.95,
+      "worthText": "$12.9B",
       "r": 10.9,
-      "x": 192.7,
-      "y": 371.2
+      "x": 189.2,
+      "y": 461.5
     },
     {
       "slug": "jensen-huang",
       "name": "Jensen Huang",
       "rank": 15,
       "sector": "AI & tech",
-      "worth": 9.51,
-      "worthText": "$9.5B",
-      "r": 10.6,
-      "x": 379.5,
-      "y": 244.7
+      "worth": 8.8,
+      "worthText": "$8.8B",
+      "r": 10.5,
+      "x": 381.2,
+      "y": 240.9
     },
     {
       "slug": "masayoshi-son",
       "name": "Masayoshi Son",
       "rank": 16,
       "sector": "AI & tech",
-      "worth": 7.44,
-      "worthText": "$7.4B",
+      "worth": 7.25,
+      "worthText": "$7.2B",
       "r": 10.4,
-      "x": 517.4,
-      "y": 190.4
+      "x": 406.3,
+      "y": 134.6
     },
     {
       "slug": "li-ka-shing",
       "name": "Li Ka-shing",
       "rank": 17,
       "sector": "Other",
-      "worth": 6.37,
+      "worth": 6.35,
       "worthText": "$6.4B",
       "r": 10.3,
-      "x": 694.5,
-      "y": 105.5
+      "x": 687.6,
+      "y": 120.3
     },
     {
       "slug": "melinda-french-gates",
       "name": "Melinda French Gates",
       "rank": 18,
       "sector": "AI & tech",
-      "worth": 2.5,
+      "worth": 2.47,
       "worthText": "$2.5B",
       "r": 9.8,
-      "x": 465.9,
-      "y": 92.9
+      "x": 596.8,
+      "y": 170
     },
     {
       "slug": "idan-ofer",
       "name": "Idan Ofer",
       "rank": 19,
       "sector": "Industrials",
-      "worth": 1.78,
+      "worth": 1.76,
       "worthText": "$1.8B",
       "r": 9.7,
-      "x": 665,
-      "y": 271.6
+      "x": 666,
+      "y": 251.3
     },
     {
       "slug": "gina-rinehart",
       "name": "Gina Rinehart",
       "rank": 21,
       "sector": "Industrials",
-      "worth": 1.27,
+      "worth": 1.26,
       "worthText": "$1.3B",
       "r": 9.6,
-      "x": 567.8,
-      "y": 257.2
+      "x": 634.4,
+      "y": 347.2
     },
     {
       "slug": "steve-ballmer",
       "name": "Steve Ballmer",
       "rank": 22,
       "sector": "AI & tech",
-      "worth": 1.21,
+      "worth": 1.19,
       "worthText": "$1.2B",
       "r": 9.6,
-      "x": 658.9,
-      "y": 410.4
+      "x": 724.8,
+      "y": 458.2
     },
     {
       "slug": "ma-huateng",
       "name": "Ma Huateng",
       "rank": 23,
       "sector": "AI & tech",
-      "worth": 1.08,
+      "worth": 1.06,
       "worthText": "$1.1B",
       "r": 9.5,
-      "x": 528,
-      "y": 340.4
+      "x": 634.3,
+      "y": 434.9
     },
     {
       "slug": "giancarlo-devasini",
       "name": "Giancarlo Devasini",
       "rank": 24,
       "sector": "Finance",
-      "worth": 0.74,
-      "worthText": "$738.2M",
+      "worth": 0.73,
+      "worthText": "$727.1M",
       "r": 9.4,
-      "x": 933.3,
-      "y": 461.5
+      "x": 945.2,
+      "y": 386.6
     },
     {
       "slug": "charles-koch-family",
       "name": "Charles Koch & family",
       "rank": 25,
       "sector": "Industrials",
-      "worth": 0.66,
-      "worthText": "$663.8M",
+      "worth": 0.65,
+      "worthText": "$654M",
       "r": 9.4,
-      "x": 276.5,
-      "y": 427.5
+      "x": 198.8,
+      "y": 338.4
     },
     {
       "slug": "peter-thiel",
@@ -236,10 +236,10 @@
       "rank": 27,
       "sector": "AI & tech",
       "worth": 0.29,
-      "worthText": "$293.6M",
+      "worthText": "$287M",
       "r": 9.3,
-      "x": 558.7,
-      "y": 525
+      "x": 535.2,
+      "y": 494.6
     },
     {
       "slug": "eduardo-saverin",
@@ -247,10 +247,10 @@
       "rank": 29,
       "sector": "AI & tech",
       "worth": 0.13,
-      "worthText": "$129.8M",
+      "worthText": "$128.7M",
       "r": 9.2,
-      "x": 311.1,
-      "y": 621.1
+      "x": 519.3,
+      "y": 656.2
     },
     {
       "slug": "alain-wertheimer",
@@ -260,8 +260,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 431.7,
-      "y": 173.7
+      "x": 498.1,
+      "y": 156.3
     },
     {
       "slug": "alice-walton",
@@ -271,8 +271,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 330.8,
-      "y": 534.1
+      "x": 263.1,
+      "y": 410.4
     },
     {
       "slug": "bernard-arnault-family",
@@ -282,8 +282,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 136.1,
-      "y": 187.9
+      "x": 214.8,
+      "y": 242.5
     },
     {
       "slug": "david-sun",
@@ -293,8 +293,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 65.9,
-      "y": 314.8
+      "x": 109.6,
+      "y": 364.7
     },
     {
       "slug": "david-tepper",
@@ -304,8 +304,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 386.8,
-      "y": 411.8
+      "x": 413.5,
+      "y": 410.4
     },
     {
       "slug": "elaine-marshall-family",
@@ -315,8 +315,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 176.9,
-      "y": 274.5
+      "x": 70.6,
+      "y": 264
     },
     {
       "slug": "francois-pinault-family",
@@ -326,8 +326,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 222.4,
-      "y": 129
+      "x": 160.6,
+      "y": 167
     },
     {
       "slug": "francoise-bettencourt-meyers-family",
@@ -337,8 +337,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 368.7,
-      "y": 54
+      "x": 324.2,
+      "y": 175.6
     },
     {
       "slug": "gautam-adani",
@@ -348,8 +348,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 793.5,
-      "y": 142.9
+      "x": 775.5,
+      "y": 159.2
     },
     {
       "slug": "gerard-wertheimer",
@@ -359,8 +359,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 556.9,
-      "y": 84.6
+      "x": 486.2,
+      "y": 60.4
     },
     {
       "slug": "gianluigi-aponte",
@@ -370,8 +370,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 745.6,
-      "y": 230.8
+      "x": 748.9,
+      "y": 255.6
     },
     {
       "slug": "greg-brockman",
@@ -381,8 +381,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 603.7,
-      "y": 339.6
+      "x": 515.8,
+      "y": 239.6
     },
     {
       "slug": "he-xiangjian-family",
@@ -392,8 +392,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 816.1,
-      "y": 283.6
+      "x": 812.6,
+      "y": 310.6
     },
     {
       "slug": "jack-ma",
@@ -403,8 +403,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 730.8,
-      "y": 340.5
+      "x": 730.7,
+      "y": 364.3
     },
     {
       "slug": "jacqueline-mars",
@@ -414,8 +414,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 731.4,
-      "y": 518.1
+      "x": 715.4,
+      "y": 558.7
     },
     {
       "slug": "jean-louis-van-der-velde",
@@ -425,8 +425,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 775,
-      "y": 428.3
+      "x": 897.8,
+      "y": 510.4
     },
     {
       "slug": "jeff-yass",
@@ -436,8 +436,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 777.9,
-      "y": 621.2
+      "x": 690.1,
+      "y": 659.6
     },
     {
       "slug": "jim-walton-family",
@@ -447,8 +447,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 526.2,
-      "y": 615.3
+      "x": 358.9,
+      "y": 551.7
     },
     {
       "slug": "john-mars",
@@ -458,8 +458,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 643.9,
-      "y": 637.6
+      "x": 594.1,
+      "y": 608.6
     },
     {
       "slug": "john-tu",
@@ -469,8 +469,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 98.4,
-      "y": 499.3
+      "x": 126.8,
+      "y": 540
     },
     {
       "slug": "julia-koch-family",
@@ -480,8 +480,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 87.3,
-      "y": 406.5
+      "x": 54,
+      "y": 437.4
     },
     {
       "slug": "larry-page",
@@ -491,8 +491,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 387.8,
-      "y": 329.3
+      "x": 339.2,
+      "y": 379.9
     },
     {
       "slug": "liang-wenfeng",
@@ -502,8 +502,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 631.7,
-      "y": 185.1
+      "x": 588.4,
+      "y": 271.4
     },
     {
       "slug": "lukas-walton",
@@ -513,8 +513,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 463.3,
-      "y": 394.5
+      "x": 397.9,
+      "y": 319.5
     },
     {
       "slug": "mackenzie-scott",
@@ -524,8 +524,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 293.7,
-      "y": 344.6
+      "x": 297.7,
+      "y": 299.5
     },
     {
       "slug": "mark-mateschitz",
@@ -535,8 +535,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 311,
-      "y": 160.6
+      "x": 282.8,
+      "y": 94.3
     },
     {
       "slug": "paolo-ardoino",
@@ -546,8 +546,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 871.2,
-      "y": 365.7
+      "x": 821.3,
+      "y": 423.1
     },
     {
       "slug": "rafaela-aponte-diamant",
@@ -557,8 +557,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 867.3,
-      "y": 189.1
+      "x": 857.1,
+      "y": 195.5
     },
     {
       "slug": "rob-walton-family",
@@ -568,8 +568,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 499.6,
-      "y": 479.7
+      "x": 491.3,
+      "y": 425.4
     },
     {
       "slug": "vinod-adani",
@@ -579,8 +579,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 925.3,
-      "y": 274
+      "x": 904.7,
+      "y": 283
     },
     {
       "slug": "zhang-yiming",
@@ -590,8 +590,8 @@
       "worth": 0,
       "worthText": "",
       "r": 9,
-      "x": 838.6,
-      "y": 501.4
+      "x": 805.6,
+      "y": 554.4
     }
   ],
   "edges": [
