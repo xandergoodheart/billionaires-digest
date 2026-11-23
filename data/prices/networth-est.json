@@ -1,73 +1,73 @@
 {
-  "generated": "2026-11-22T17:20:59.605Z",
+  "generated": "2026-11-23T21:40:36.919Z",
   "method": "Estimated from disclosed share counts × today's price change in US-listed holdings. Not a full net worth. Covers only disclosed share counts in US-listed holdings; may undercount. Shown only when these holdings are a large part of the person's wealth. For people whose holdings are shared and not split in filings (config/wealth-overrides.json, e.g. the Walton family's Walmart stake), the estimate is the published net worth × that stock's daily % change.",
   "minCoverage": 0.25,
   "people": {
     "andreas-von-bechtolsheim-family": {
-      "estDailyChange": -4038083715,
+      "estDailyChange": 1964820888,
       "partial": true,
       "holdings": [
         {
           "ticker": "ANET",
           "shares": 183799896,
-          "change": -21.97,
-          "estChange": -4038083715,
+          "change": 10.69,
+          "estChange": 1964820888,
           "shareText": "183,799,896 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1596532/000119312526158942/d66465ddef14a.htm"
         }
       ],
-      "coveredValue": 30808538568,
-      "coverage": 0.746
+      "coveredValue": 32773359456,
+      "coverage": 0.794
     },
     "bill-gates": {
-      "estDailyChange": -394508929,
+      "estDailyChange": 671165087,
       "partial": true,
       "holdings": [
         {
           "ticker": "RSG",
           "shares": 116166330,
-          "change": 0.1,
-          "estChange": 11616633,
+          "change": 1.1,
+          "estChange": 127782963,
           "shareText": "116,166,330 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926106327/primary_doc.xml"
         },
         {
           "ticker": "AN",
           "shares": 7062629,
-          "change": -0.57,
-          "estChange": -4025699,
+          "change": 4.55,
+          "estChange": 32134962,
           "shareText": "7,062,629 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926055650/primary_doc.xml"
         },
         {
           "ticker": "FMX",
           "shares": 27887350,
-          "change": -1.59,
-          "estChange": -44340886,
+          "change": -0.09,
+          "estChange": -2509861,
           "shareText": "27,887,350 ADSs",
           "source": "https://www.sec.gov/Archives/edgar/data/1052192/000110465926039230/primary_doc.xml"
         },
         {
           "ticker": "BRK.B",
           "shares": 14689844,
-          "change": -2.04,
-          "estChange": -29967282,
+          "change": 2.36,
+          "estChange": 34668032,
           "shareText": "14,689,844 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
         },
         {
           "ticker": "CAT",
           "shares": 6353614,
-          "change": -26.92,
-          "estChange": -171039289,
+          "change": 36.59,
+          "estChange": 232478736,
           "shareText": "6,353,614 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
         },
         {
           "ticker": "CNI",
           "shares": 51826786,
-          "change": -2.18,
-          "estChange": -112982393,
+          "change": 1.5,
+          "estChange": 77740179,
           "shareText": "51,826,786 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
         },
@@ -82,104 +82,104 @@
         {
           "ticker": "DE",
           "shares": 3557378,
-          "change": -15.64,
-          "estChange": -55637392,
+          "change": 23.78,
+          "estChange": 84594449,
           "shareText": "3,557,378 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
         },
         {
           "ticker": "ECL",
           "shares": 5218044,
-          "change": -2.62,
-          "estChange": -13671275,
+          "change": 11.21,
+          "estChange": 58494273,
           "shareText": "5,218,044 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097175/infotable.xml"
         },
         {
           "ticker": "MXF",
           "shares": 647198,
-          "change": -0.175,
-          "estChange": -113260,
+          "change": 0.2,
+          "estChange": 129440,
           "shareText": "647,198 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1166559/000110465926097179/xslSCHEDULE_13G_X02/primary_doc.xml"
         }
       ],
-      "coveredValue": 61481228544,
-      "coverage": 0.538
+      "coveredValue": 62152393630,
+      "coverage": 0.544
     },
     "carlos-slim-helu-family": {
-      "estDailyChange": -8276101,
+      "estDailyChange": -46681863,
       "partial": true,
       "holdings": [
         {
           "ticker": "TALO",
           "shares": 39079036,
-          "change": -0.16,
-          "estChange": -6252646,
+          "change": -0.31,
+          "estChange": -12114501,
           "shareText": "39,079,036 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126037026/xslSCHEDULE_13D_X02/primary_doc.xml"
         },
         {
           "ticker": "PBF",
           "shares": 16862128,
-          "change": -0.12,
-          "estChange": -2023455,
+          "change": -2.05,
+          "estChange": -34567362,
           "shareText": "16,862,128 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1080910/000114036126030249/xslSCHEDULE_13G_X02/primary_doc.xml"
         }
       ],
-      "coveredValue": 1619405604,
-      "coverage": 0.014
+      "coveredValue": 1572723740,
+      "coverage": 0.013
     },
     "changpeng-zhao": {
-      "estDailyChange": -3314913,
+      "estDailyChange": 1657457,
       "partial": true,
       "holdings": [
         {
           "ticker": "BNC",
           "shares": 9749745,
-          "change": -0.34,
-          "estChange": -3314913,
+          "change": 0.17,
+          "estChange": 1657457,
           "shareText": "9,749,745 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2098271/000092189526002598/xslSCHEDULE_13D_X02/primary_doc.xml"
         }
       ],
-      "coveredValue": 29834220,
+      "coveredValue": 31491676,
       "coverage": 0
     },
     "charles-koch-family": {
-      "estDailyChange": -28447823,
+      "estDailyChange": 38545340,
       "partial": true,
       "holdings": [
         {
           "ticker": "MRVL",
           "shares": 1000000,
-          "change": -16.19,
-          "estChange": -16190000,
+          "change": 22.46,
+          "estChange": 22460000,
           "shareText": "1,000,000 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/13F2026Q2KOCH.xml"
         },
         {
           "ticker": "CMP",
           "shares": 7034609,
-          "change": -0.76,
-          "estChange": -5346303,
+          "change": 1.06,
+          "estChange": 7456686,
           "shareText": "7,034,609 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/13F2026Q2KOCH.xml"
         },
         {
           "ticker": "IBTA",
           "shares": 4389129,
-          "change": -0.66,
-          "estChange": -2896825,
+          "change": 1.85,
+          "estChange": 8119889,
           "shareText": "4,389,129 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/13F2026Q2KOCH.xml"
         },
         {
           "ticker": "KBDC",
           "shares": 10485004,
-          "change": -0.11,
-          "estChange": -1153350,
+          "change": 0.18,
+          "estChange": 1887301,
           "shareText": "10,485,004 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/13F2026Q2KOCH.xml"
         },
@@ -194,8 +194,8 @@
         {
           "ticker": "SLI",
           "shares": 13480083,
-          "change": -0.09,
-          "estChange": -1213207,
+          "change": 0.02,
+          "estChange": 269602,
           "shareText": "13,480,083 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/13F2026Q2KOCH.xml"
         },
@@ -208,680 +208,680 @@
           "source": "https://www.sec.gov/Archives/edgar/data/2027344/000202734426000005/13F2026Q2KOCH.xml"
         }
       ],
-      "coveredValue": 653988101,
+      "coveredValue": 692971424,
       "coverage": 0.009
     },
     "eduardo-saverin": {
-      "estDailyChange": 1478062,
+      "estDailyChange": 3695156,
       "partial": true,
       "holdings": [
         {
           "ticker": "CARL",
           "shares": 7390311,
-          "change": 0.2,
-          "estChange": 1478062,
+          "change": 0.5,
+          "estChange": 3695156,
           "shareText": "7,390,311 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1997306/000119312525282898/primary_doc.xml"
         }
       ],
-      "coveredValue": 128739218,
+      "coveredValue": 132434373,
       "coverage": 0.003
     },
     "elon-musk": {
-      "estDailyChange": -88294362976,
+      "estDailyChange": 63418510345,
       "partial": true,
       "holdings": [
         {
           "ticker": "TSLA",
           "shares": 699580882,
-          "change": -28.59,
-          "estChange": -20001017416,
+          "change": 39.64,
+          "estChange": 27731386162,
           "shareText": "699,580,882 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926075203/0001104659-26-075203-index.htm"
         },
         {
           "ticker": "SPCX",
           "shares": 6418547515,
-          "change": -10.64,
-          "estChange": -68293345560,
+          "change": 5.56,
+          "estChange": 35687124183,
           "shareText": "6,418,547,515 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1494730/000110465926095936/0001104659-26-095936-index.htm"
         }
       ],
-      "coveredValue": 1062155247555,
-      "coverage": 1.145
+      "coveredValue": 1125573757901,
+      "coverage": 1.213
     },
     "eric-schmidt": {
-      "estDailyChange": -359719264,
+      "estDailyChange": 820472297,
       "partial": true,
       "holdings": [
         {
           "ticker": "GOOGL",
           "shares": 48808584,
-          "change": -7.37,
-          "estChange": -359719264,
+          "change": 16.81,
+          "estChange": 820472297,
           "shareText": "48,808,584 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1242463/000095017025109161/primary_doc.xml"
         }
       ],
-      "coveredValue": 12948429249,
-      "coverage": 0.34
+      "coveredValue": 13768901546,
+      "coverage": 0.361
     },
     "eyal-ofer": {
-      "estDailyChange": -286310,
+      "estDailyChange": 457581,
       "partial": true,
       "holdings": [
         {
           "ticker": "RCL",
           "shares": 42925,
-          "change": -6.67,
-          "estChange": -286310,
+          "change": 10.66,
+          "estChange": 457581,
           "shareText": "42,925 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000017/rcl-20260417.htm"
         }
       ],
-      "coveredValue": 12726404,
+      "coveredValue": 13183985,
       "coverage": 0
     },
     "german-larrea-mota-velasco-family": {
-      "estDailyChange": -3012649,
+      "estDailyChange": 3765812,
       "partial": true,
       "holdings": [
         {
           "ticker": "SCCO",
           "shares": 404926,
-          "change": -7.44,
-          "estChange": -3012649,
+          "change": 9.3,
+          "estChange": 3765812,
           "shareText": "404,926 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1223260/000122326026000009/form4-07282026_070758.xml"
         }
       ],
-      "coveredValue": 54268183,
+      "coveredValue": 58033994,
       "coverage": 0.001
     },
     "giancarlo-devasini": {
-      "estDailyChange": -60678690,
+      "estDailyChange": 2718174,
       "partial": true,
       "holdings": [
         {
           "ticker": "RUM",
           "shares": 141877369,
-          "change": -0.4,
-          "estChange": -56750948,
+          "change": -0.03,
+          "estChange": -4256321,
           "shareText": "141,877,369 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926105551/xslF345X06/tm2624697-1_4seq1.xml"
         },
         {
           "ticker": "GOLD",
           "shares": 3670787,
-          "change": -1.07,
-          "estChange": -3927742,
+          "change": 1.9,
+          "estChange": 6974495,
           "shareText": "3,670,787 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2050373/000119312526385264/xslF345X06/ownership.xml"
         }
       ],
-      "coveredValue": 727128418,
+      "coveredValue": 729846593,
       "coverage": 0.008
     },
     "gina-rinehart": {
-      "estDailyChange": -89514038,
+      "estDailyChange": 89815688,
       "partial": true,
       "holdings": [
         {
           "ticker": "MP",
           "shares": 14861212,
-          "change": -2.71,
-          "estChange": -40273885,
+          "change": 1.59,
+          "estChange": 23629327,
           "shareText": "14,861,212 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
         },
         {
           "ticker": "TECK",
           "shares": 10298293,
-          "change": -3.1,
-          "estChange": -31924708,
+          "change": 3.82,
+          "estChange": 39339479,
           "shareText": "10,298,293 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
         },
         {
           "ticker": "HBM",
           "shares": 15885729,
-          "change": -1.09,
-          "estChange": -17315445,
+          "change": 1.69,
+          "estChange": 26846882,
           "shareText": "15,885,729 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2017993/000121390026089481/infotable.xml"
         }
       ],
-      "coveredValue": 1260989345,
-      "coverage": 0.05
+      "coveredValue": 1350805033,
+      "coverage": 0.054
     },
     "henry-samueli": {
-      "estDailyChange": -3614036195,
+      "estDailyChange": 782014461,
       "partial": true,
       "holdings": [
         {
           "ticker": "AVGO",
           "shares": 85559569,
-          "change": -42.24,
-          "estChange": -3614036195,
+          "change": 9.14,
+          "estChange": 782014461,
           "shareText": "85,559,569 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526085691/d49254ddef14a.htm"
         }
       ],
-      "coveredValue": 26045188399,
-      "coverage": 0.784
+      "coveredValue": 26827202860,
+      "coverage": 0.808
     },
     "idan-ofer": {
-      "estDailyChange": -75394360,
+      "estDailyChange": 51021183,
       "partial": true,
       "holdings": [
         {
           "ticker": "KEN",
           "shares": 32497569,
-          "change": -2.32,
-          "estChange": -75394360,
+          "change": 1.57,
+          "estChange": 51021183,
           "shareText": "32,497,569 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1611005/000117891326001842/zk2634883.htm"
         }
       ],
-      "coveredValue": 1760068337,
-      "coverage": 0.056
+      "coveredValue": 1811089520,
+      "coverage": 0.057
     },
     "jeff-bezos": {
-      "estDailyChange": -10027084830,
+      "estDailyChange": 8145224359,
       "partial": true,
       "holdings": [
         {
           "ticker": "AMZN",
           "shares": 950434581,
-          "change": -10.55,
-          "estChange": -10027084830,
+          "change": 8.57,
+          "estChange": 8145224359,
           "shareText": "950,434,581 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm"
         }
       ],
-      "coveredValue": 234586263282,
-      "coverage": 0.635
+      "coveredValue": 242731487642,
+      "coverage": 0.657
     },
     "jensen-huang": {
-      "estDailyChange": -1433558620,
+      "estDailyChange": 2770378320,
       "partial": true,
       "holdings": [
         {
           "ticker": "NVDA",
           "shares": 70100666,
-          "change": -20.45,
-          "estChange": -1433558620,
+          "change": 39.52,
+          "estChange": 2770378320,
           "shareText": "70,100,666 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1197649/000119764926000012/wk-form4_1789765856.xml"
         }
       ],
-      "coveredValue": 8799736603,
-      "coverage": 0.045
+      "coveredValue": 11570114923,
+      "coverage": 0.059
     },
     "lakshmi-mittal": {
-      "estDailyChange": -1241556855,
+      "estDailyChange": 1190533971,
       "partial": true,
       "holdings": [
         {
           "ticker": "MT",
           "shares": 340152563,
-          "change": -3.65,
-          "estChange": -1241556855,
+          "change": 3.5,
+          "estChange": 1190533971,
           "shareText": "340,152,563 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1243429/000199937126006457/xslSCHEDULE_13D_X02/primary_doc.xml"
         }
       ],
-      "coveredValue": 18885270298,
-      "coverage": 0.569
+      "coveredValue": 20075804268,
+      "coverage": 0.605
     },
     "larry-ellison": {
-      "estDailyChange": -10814974471,
+      "estDailyChange": 14400749589,
       "partial": true,
       "holdings": [
         {
           "ticker": "ORCL",
           "shares": 1152982353,
-          "change": -9.38,
-          "estChange": -10814974471,
+          "change": 12.49,
+          "estChange": 14400749589,
           "shareText": "1,152,982,353 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/901999/000119312524030128/d751202dsc13ga.htm"
         }
       ],
-      "coveredValue": 116670284300,
-      "coverage": 0.634
+      "coveredValue": 131071033889,
+      "coverage": 0.712
     },
     "len-blavatnik": {
-      "estDailyChange": -466471393,
+      "estDailyChange": 294270351,
       "partial": true,
       "holdings": [
         {
           "ticker": "WMG",
           "shares": 374517252,
-          "change": -0.04,
-          "estChange": -14980690,
+          "change": 0.04,
+          "estChange": 14980690,
           "shareText": "374,517,252 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1319161/000114036126001664/ny20057694x1_def14a.htm"
         },
         {
           "ticker": "LYB",
           "shares": 64435504,
-          "change": -2.35,
-          "estChange": -151423434,
+          "change": -1.1,
+          "estChange": -70879054,
           "shareText": "64,435,504 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1489393/000130817926000250/lyb014791-def14a.htm"
         },
         {
           "ticker": "DOCN",
           "shares": 18653451,
-          "change": -10.33,
-          "estChange": -192690149,
+          "change": 12.22,
+          "estChange": 227945171,
           "shareText": "18,653,451 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1508226/000119312526337970/primary_doc.xml"
         },
         {
           "ticker": "CHYM",
           "shares": 19601430,
-          "change": -0.51,
-          "estChange": -9996729,
+          "change": 1.63,
+          "estChange": 31950331,
           "shareText": "19,601,430 Class A shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1508226/000095017025102972/primary_doc.xml"
         },
         {
           "ticker": "CEG",
           "shares": 6276132,
-          "change": -14.62,
-          "estChange": -91757050,
+          "change": 14.31,
+          "estChange": 89811449,
           "shareText": "6,276,132 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1868275/000110465926001893/tm2531947-1_s3asr.htm"
         },
         {
           "ticker": "COAG",
           "shares": 4876344,
-          "change": -0.57,
-          "estChange": -2779516,
+          "change": 0.26,
+          "estChange": 1267849,
           "shareText": "4,876,344 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/2114044/000119312526216973/primary_doc.xml"
         },
         {
           "ticker": "TYGO",
           "shares": 3220645,
-          "change": -0.0341,
-          "estChange": -109824,
+          "change": -0.0586,
+          "estChange": -188730,
           "shareText": "3,220,645 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1051856/000119312526245631/primary_doc.xml"
         },
         {
           "ticker": "OPEN",
           "shares": 17638714,
-          "change": -0.155,
-          "estChange": -2734001,
+          "change": -0.035,
+          "estChange": -617355,
           "shareText": "17,638,714 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1508226/000119312525213929/primary_doc.xml"
         }
       ],
-      "coveredValue": 19398662460,
-      "coverage": 0.562
+      "coveredValue": 19692932811,
+      "coverage": 0.571
     },
     "li-ka-shing": {
-      "estDailyChange": -28732028,
+      "estDailyChange": -128560723,
       "partial": true,
       "holdings": [
         {
           "ticker": "CVE",
           "shares": 231194699,
-          "change": -0.09,
-          "estChange": -20807523,
+          "change": -0.58,
+          "estChange": -134092925,
           "shareText": "231,194,699 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1686621/000134100423000156/sc13da1.htm"
         },
         {
           "ticker": "NXE",
           "shares": 14951897,
-          "change": -0.53,
-          "estChange": -7924505,
+          "change": 0.37,
+          "estChange": 5532202,
           "shareText": "14,951,897 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1686621/000149315224002511/formsc13da.htm"
         }
       ],
-      "coveredValue": 6354132643,
-      "coverage": 0.13
+      "coveredValue": 6225571919,
+      "coverage": 0.127
     },
     "lyndal-stephens-greth-family": {
-      "estDailyChange": -66256188,
+      "estDailyChange": -165640470,
       "partial": true,
       "holdings": [
         {
           "ticker": "FANG",
           "shares": 64957047,
-          "change": -1.02,
-          "estChange": -66256188,
+          "change": -2.55,
+          "estChange": -165640470,
           "shareText": "64,957,047 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1539838/000114036126037012/primary_doc.xml"
         }
       ],
-      "coveredValue": 11416201010,
-      "coverage": 0.391
+      "coveredValue": 11250560540,
+      "coverage": 0.385
     },
     "ma-huateng": {
-      "estDailyChange": -56473822,
+      "estDailyChange": 42572573,
       "partial": true,
       "holdings": [
         {
           "ticker": "RDDT",
           "shares": 12411829,
-          "change": -4.55,
-          "estChange": -56473822,
+          "change": 3.43,
+          "estChange": 42572573,
           "shareText": "12,411,829 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1293451/000114036125003623/primary_doc.xml"
         }
       ],
-      "coveredValue": 1059101369,
-      "coverage": 0.022
+      "coveredValue": 1101673942,
+      "coverage": 0.023
     },
     "mark-zuckerberg": {
-      "estDailyChange": -12093732342,
+      "estDailyChange": 12565449431,
       "partial": true,
       "holdings": [
         {
           "ticker": "META",
           "shares": 341823978,
-          "change": -35.38,
-          "estChange": -12093732342,
+          "change": 36.76,
+          "estChange": 12565449431,
           "shareText": "341,823,978 Class B shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026025532/meta-20260416.htm"
         }
       ],
-      "coveredValue": 191708559822,
-      "coverage": 0.72
+      "coveredValue": 204274009253,
+      "coverage": 0.767
     },
     "masayoshi-son": {
-      "estDailyChange": -448520905,
+      "estDailyChange": 795250330,
       "partial": true,
       "holdings": [
         {
           "ticker": "INTC",
           "shares": 86956522,
-          "change": -4.44,
-          "estChange": -386086958,
+          "change": 8.38,
+          "estChange": 728695654,
           "shareText": "86,956,522 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
         },
         {
           "ticker": "TMUS",
           "shares": 10000000,
-          "change": 3.07,
-          "estChange": 30700000,
+          "change": 0.76,
+          "estChange": 7600000,
           "shareText": "10,000,000 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
         },
         {
           "ticker": "KLAR",
           "shares": 15400224,
-          "change": -0.66,
-          "estChange": -10164148,
+          "change": 1.04,
+          "estChange": 16016233,
           "shareText": "15,400,224 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
         },
         {
           "ticker": "WBTN",
           "shares": 31432480,
-          "change": -0.87,
-          "estChange": -27346258,
+          "change": -0.13,
+          "estChange": -4086222,
           "shareText": "31,432,480 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
         },
         {
           "ticker": "INTR",
           "shares": 60506636,
-          "change": -0.11,
-          "estChange": -6655730,
+          "change": 0.09,
+          "estChange": 5445597,
           "shareText": "60,506,636 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
         },
         {
           "ticker": "TEM",
           "shares": 5405406,
-          "change": -5.57,
-          "estChange": -30108111,
+          "change": 3,
+          "estChange": 16216218,
           "shareText": "5,405,406 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
         },
         {
           "ticker": "TSM",
           "shares": 565000,
-          "change": -33.38,
-          "estChange": -18859700,
+          "change": 44.89,
+          "estChange": 25362850,
           "shareText": "565,000 ADS",
           "source": "https://www.sec.gov/Archives/edgar/data/1065521/000106299326004387/form13fInfoTable.xml"
         }
       ],
-      "coveredValue": 7249408278,
-      "coverage": 0.1
+      "coveredValue": 8044658608,
+      "coverage": 0.111
     },
     "melinda-french-gates": {
-      "estDailyChange": -36797718,
+      "estDailyChange": 36997431,
       "partial": true,
       "holdings": [
         {
           "ticker": "AN",
           "shares": 2808674,
-          "change": -0.57,
-          "estChange": -1600944,
+          "change": 4.55,
+          "estChange": 12779467,
           "shareText": "2,808,674 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1226523/000095014224002532/xslSCHEDULE_13G_X01/primary_doc.xml"
         },
         {
           "ticker": "CNI",
           "shares": 16145309,
-          "change": -2.18,
-          "estChange": -35196774,
+          "change": 1.5,
+          "estChange": 24217964,
           "shareText": "16,145,309 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1226523/000095014224002531/xslSCHEDULE_13G_X01/primary_doc.xml"
         }
       ],
-      "coveredValue": 2469051935,
-      "coverage": 0.072
+      "coveredValue": 2506049365,
+      "coverage": 0.073
     },
     "michael-dell": {
-      "estDailyChange": -9171090264,
+      "estDailyChange": 15114233057,
       "partial": true,
       "holdings": [
         {
           "ticker": "DELL",
           "shares": 265674689,
-          "change": -34.52,
-          "estChange": -9171090264,
+          "change": 56.89,
+          "estChange": 15114233057,
           "shareText": "265,674,689 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/908724/000112329226000125/0001123292-26-000125-index.htm"
         }
       ],
-      "coveredValue": 73862877036,
-      "coverage": 0.278
+      "coveredValue": 88977110093,
+      "coverage": 0.335
     },
     "peter-thiel": {
-      "estDailyChange": -20379796,
+      "estDailyChange": 31739683,
       "partial": true,
       "holdings": [
         {
           "ticker": "PLTR",
           "shares": 1999980,
-          "change": -10.19,
-          "estChange": -20379796,
+          "change": 15.87,
+          "estChange": 31739683,
           "shareText": "1,999,980 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1211060/000121106026000007/form4-03042026_090310.xml"
         }
       ],
-      "coveredValue": 286977130,
-      "coverage": 0.008
+      "coveredValue": 318716813,
+      "coverage": 0.009
     },
     "sergey-brin": {
-      "estDailyChange": -5166690220,
+      "estDailyChange": 11611534463,
       "partial": true,
       "holdings": [
         {
           "ticker": "GOOGL",
           "shares": 358939978,
-          "change": -7.37,
-          "estChange": -2645387638,
+          "change": 16.81,
+          "estChange": 6033781030,
           "shareText": "358,939,978 Class B shares",
           "source": "https://www.stocktitan.net/sec-filings/GOOG/schedule-13g-a-alphabet-inc-amended-passive-investment-disclosure-04bcd9a665cb.html"
         },
         {
           "ticker": "GOOG",
           "shares": 359159912,
-          "change": -7.02,
-          "estChange": -2521302582,
+          "change": 15.53,
+          "estChange": 5577753433,
           "shareText": "359,159,912 Class C shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1295032/000119312526345383/ownership.xml"
         }
       ],
-      "coveredValue": 190041403532,
-      "coverage": 0.735
+      "coveredValue": 201652937995,
+      "coverage": 0.78
     },
     "stephen-schwarzman": {
-      "estDailyChange": -19240911,
+      "estDailyChange": 22342060,
       "partial": true,
       "holdings": [
         {
           "ticker": "PJT",
           "shares": 1176706,
-          "change": -3.61,
-          "estChange": -4247909,
+          "change": 3.11,
+          "estChange": 3659556,
           "shareText": "1,176,706 Class A shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1626115/000162828026028424/pjt-20260429.htm"
         },
         {
           "ticker": "CRBG",
           "shares": 14500000,
-          "change": -1.03,
-          "estChange": -14935000,
+          "change": 1.29,
+          "estChange": 18705000,
           "shareText": "14,500,000 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526347014/xslF345X06/ownership.xml"
         },
         {
           "ticker": "BAER",
           "shares": 2710374,
-          "change": -0.0214,
-          "estChange": -58002,
+          "change": -0.0083,
+          "estChange": -22496,
           "shareText": "2,710,374 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526349583/xslF345X06/ownership.xml"
         }
       ],
-      "coveredValue": 638663321,
-      "coverage": 0.015
+      "coveredValue": 661005381,
+      "coverage": 0.016
     },
     "steve-ballmer": {
-      "estDailyChange": -5802232,
+      "estDailyChange": 52220085,
       "partial": true,
       "holdings": [
         {
           "ticker": "STGW",
           "shares": 116044633,
-          "change": -0.05,
-          "estChange": -5802232,
+          "change": 0.45,
+          "estChange": 52220085,
           "shareText": "116,044,633 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/902015/000095017025058891/primary_doc.xml"
         }
       ],
-      "coveredValue": 1192938827,
+      "coveredValue": 1245158912,
       "coverage": 0.008
     },
     "thomas-peterffy": {
-      "estDailyChange": -7374513,
+      "estDailyChange": -921814,
       "partial": true,
       "holdings": [
         {
           "ticker": "NMAX",
           "shares": 23045352,
-          "change": -0.32,
-          "estChange": -7374513,
+          "change": -0.04,
+          "estChange": -921814,
           "shareText": "23,045,352 shares",
           "source": "https://www.sec.gov/Archives/edgar/data/1391405/000089706925000721/xslSCHEDULE_13G_X01/primary_doc.xml"
         }
       ],
-      "coveredValue": 161317464,
+      "coveredValue": 160395650,
       "coverage": 0.002
     },
     "warren-buffett": {
-      "estDailyChange": -753162370,
+      "estDailyChange": 789120483,
       "partial": true,
       "holdings": [
         {
           "ticker": "BRK.A",
           "shares": 188290,
-          "change": -4000,
-          "estChange": -753160000,
+          "change": 4190.97,
+          "estChange": 789117741,
           "shareText": "188,290 Class A",
           "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
         },
         {
           "ticker": "BRK.B",
           "shares": 1162,
-          "change": -2.04,
-          "estChange": -2370,
+          "change": 2.36,
+          "estChange": 2742,
           "shareText": "1,162 Class B shares",
           "source": "https://www.sec.gov/Archives/edgar/data/315090/000119312526304838/primary_doc.xml"
         }
       ],
-      "coveredValue": 160988612340,
-      "coverage": 1.12
+      "coveredValue": 161777732824,
+      "coverage": 1.125
     },
     "alice-walton": {
-      "estDailyChange": 1797264400,
+      "estDailyChange": 1510845400,
       "partial": true,
       "method": "worth",
       "holdings": [
         {
           "ticker": "WMT",
           "basis": "worth",
-          "change": 1.91,
-          "changePct": 1.5154,
-          "estChange": 1797264400,
+          "change": 1.63,
+          "changePct": 1.2739,
+          "estChange": 1510845400,
           "shareText": "net worth × Walmart price move",
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
-          "refClose": 127.95,
-          "refDate": "2026-11-20"
+          "refClose": 129.58,
+          "refDate": "2026-11-23"
         }
       ],
       "coveredValue": 118600000000,
       "coverage": 1
     },
     "jim-walton-family": {
-      "estDailyChange": 1951835200,
+      "estDailyChange": 1640783200,
       "partial": true,
       "method": "worth",
       "holdings": [
         {
           "ticker": "WMT",
           "basis": "worth",
-          "change": 1.91,
-          "changePct": 1.5154,
-          "estChange": 1951835200,
+          "change": 1.63,
+          "changePct": 1.2739,
+          "estChange": 1640783200,
           "shareText": "net worth × Walmart price move",
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
-          "refClose": 127.95,
-          "refDate": "2026-11-20"
+          "refClose": 129.58,
+          "refDate": "2026-11-23"
         }
       ],
       "coveredValue": 128800000000,
       "coverage": 1
     },
     "rob-walton-family": {
-      "estDailyChange": 2000328000,
+      "estDailyChange": 1681548000,
       "partial": true,
       "method": "worth",
       "holdings": [
         {
           "ticker": "WMT",
           "basis": "worth",
-          "change": 1.91,
-          "changePct": 1.5154,
-          "estChange": 2000328000,
+          "change": 1.63,
+          "changePct": 1.2739,
+          "estChange": 1681548000,
           "shareText": "net worth × Walmart price move",
           "source": "https://www.sec.gov/Archives/edgar/data/1535243/000114036126007628/xslSCHEDULE_13D_X01/primary_doc.xml",
-          "refClose": 127.95,
-          "refDate": "2026-11-20"
+          "refClose": 129.58,
+          "refDate": "2026-11-23"
         }
       ],
       "coveredValue": 132000000000,

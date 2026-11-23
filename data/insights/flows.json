@@ -1,26 +1,13 @@
 {
-  "generated": "2026-11-22",
+  "generated": "2026-11-23",
   "inputs": {
-    "filingsGenerated": "2026-11-22T17:17:20.196Z",
-    "pricesGenerated": "2026-11-22T17:20:59.605Z",
+    "filingsGenerated": "2026-11-23T21:36:29.772Z",
+    "pricesGenerated": "2026-11-23T21:40:36.919Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 52
+    "editions": 53
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 78 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 77 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
-    {
-      "week": "2026-W36",
-      "start": "2026-08-31",
-      "end": "2026-09-06",
-      "buy": 0,
-      "sell": 0,
-      "net": 0,
-      "other": 0,
-      "buyCount": 0,
-      "sellCount": 0,
-      "otherCount": 0,
-      "unpriced": 0
-    },
     {
       "week": "2026-W37",
       "start": "2026-09-07",
@@ -155,26 +142,39 @@
       "week": "2026-W47",
       "start": "2026-11-16",
       "end": "2026-11-22",
-      "buy": 0,
+      "buy": 10155928,
       "sell": 56110513,
-      "net": -56110513,
+      "net": -45954585,
       "other": 0,
-      "buyCount": 0,
+      "buyCount": 1,
       "sellCount": 1,
       "otherCount": 5,
+      "unpriced": 0
+    },
+    {
+      "week": "2026-W48",
+      "start": "2026-11-23",
+      "end": "2026-11-29",
+      "buy": 0,
+      "sell": 0,
+      "net": 0,
+      "other": 0,
+      "buyCount": 0,
+      "sellCount": 0,
+      "otherCount": 0,
       "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-11-16",
-    "to": "2026-11-22",
-    "buy": 0,
+    "from": "2026-11-17",
+    "to": "2026-11-23",
+    "buy": 10155928,
     "sell": 56110513,
-    "net": -56110513,
+    "net": -45954585,
     "other": 0,
-    "buyCount": 0,
+    "buyCount": 1,
     "sellCount": 1,
-    "otherCount": 5,
+    "otherCount": 3,
     "unpriced": 0
   },
   "sectors": [
@@ -191,11 +191,11 @@
     },
     {
       "sector": "Finance",
-      "buy": 638092579,
+      "buy": 648248507,
       "sell": 228641638,
-      "net": 409450941,
+      "net": 419606869,
       "other": 0,
-      "buyCount": 15,
+      "buyCount": 16,
       "sellCount": 7,
       "otherCount": 7,
       "unpriced": 0
@@ -283,6 +283,13 @@
       "value": 110032293,
       "count": 1,
       "filings": [
+        {
+          "date": "2026-11-20",
+          "filed": "2026-11-23",
+          "form": "4",
+          "issuer": "Blackstone Private Real Estate Credit & Income Fund",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026123195/xslF345X06/ownership.xml"
+        },
         {
           "date": "2026-11-17",
           "filed": "2026-11-19",
@@ -477,6 +484,38 @@
       ]
     },
     {
+      "name": "Stephen Schwarzman",
+      "slug": "stephen-schwarzman",
+      "sector": "Finance",
+      "value": 10155928,
+      "count": 1,
+      "filings": [
+        {
+          "date": "2026-11-20",
+          "filed": "2026-11-23",
+          "form": "4",
+          "issuer": "Blackstone Private Real Estate Credit & Income Fund",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026123195/xslF345X06/ownership.xml"
+        },
+        {
+          "date": "2026-11-17",
+          "filed": "2026-11-19",
+          "form": "4",
+          "issuer": "Medline Inc.",
+          "ticker": "MDLN",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526468658/xslF345X06/ownership.xml"
+        },
+        {
+          "date": "2026-11-06",
+          "filed": "2026-11-10",
+          "form": "4",
+          "issuer": "Corebridge Financial, Inc.",
+          "ticker": "CRBG",
+          "url": "https://www.sec.gov/Archives/edgar/data/1070844/000119312526455577/xslF345X06/ownership.xml"
+        }
+      ]
+    },
+    {
       "name": "Giancarlo Devasini",
       "slug": "giancarlo-devasini",
       "sector": "Finance",
@@ -529,7 +568,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 78,
+    "form4Filings": 77,
     "form4Parsed": 59,
     "windowDays": 90
   }
