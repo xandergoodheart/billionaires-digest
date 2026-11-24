@@ -1,19 +1,19 @@
 {
-  "generated": "2026-11-23",
-  "from": "2026-11-16",
-  "to": "2027-03-23",
+  "generated": "2026-11-24",
+  "from": "2026-11-17",
+  "to": "2027-03-24",
   "inputs": {
-    "filingsGenerated": "2026-11-23T21:36:29.772Z",
-    "pricesGenerated": "2026-11-23T21:40:36.919Z",
+    "filingsGenerated": "2026-11-24T20:17:16.966Z",
+    "pricesGenerated": "2026-11-24T20:21:06.560Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 53
+    "editions": 54
   },
   "types": {
     "sales": "Planned sales",
     "events": "Earnings & events",
     "deals": "Deals & votes"
   },
-  "note": "Dated items from profile watch lists and Form 144 notices, from 2026-11-16 to 2027-03-23. Items marked approximate have only a month or a hedged date. 31 watch items had no usable date (quarters, years, \"ongoing\") and are left out. Type labels come from keywords in the item text.",
+  "note": "Dated items from profile watch lists and Form 144 notices, from 2026-11-17 to 2027-03-24. Items marked approximate have only a month or a hedged date. 31 watch items had no usable date (quarters, years, \"ongoing\") and are left out. Type labels come from keywords in the item text.",
   "events": [
     {
       "date": "2026-11-01",
@@ -409,159 +409,6 @@
         }
       ],
       "source": "https://www.sec.gov/Archives/edgar/data/1319161/000119312526398095/d171303d8k.htm",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": false,
-      "precision": "day",
-      "when": "2026-11-16",
-      "type": "events",
-      "title": "Appaloosa LP Q3 2026 13F filing (due ~45 days after quarter end)",
-      "people": [
-        {
-          "name": "David Tepper",
-          "slug": "david-tepper",
-          "sector": "Finance"
-        }
-      ],
-      "source": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001656456&type=13F&dateb=&owner=include&count=10",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": false,
-      "precision": "day",
-      "when": "2026-11-16",
-      "type": "events",
-      "title": "Berkshire Q3 2026 13F-HR (due ~45 days after quarter end): watch Lennar build, DaVita trims, Alphabet/Chubb/Delta positions",
-      "people": [
-        {
-          "name": "Warren Buffett",
-          "slug": "warren-buffett",
-          "sector": "Finance"
-        }
-      ],
-      "source": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001067983&type=13F-HR&dateb=&owner=include&count=3",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": false,
-      "precision": "day",
-      "when": "2026-11-16",
-      "type": "events",
-      "title": "Builders Vision 13F-HR for Q3 2026 (holdings to date filed as confidential)",
-      "people": [
-        {
-          "name": "Lukas Walton",
-          "slug": "lukas-walton",
-          "sector": "Luxury & retail"
-        }
-      ],
-      "source": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1785504&type=13F",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": false,
-      "precision": "day",
-      "when": "2026-11-16",
-      "type": "events",
-      "title": "Gates Foundation Trust Q3 2026 13F-HR (due ~45 days after quarter end, mid-Nov 2026)",
-      "people": [
-        {
-          "name": "Bill Gates",
-          "slug": "bill-gates",
-          "sector": "AI & tech"
-        }
-      ],
-      "source": "https://data.sec.gov/submissions/CIK0001166559.json",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": true,
-      "precision": "day",
-      "when": "by 2026-11-16",
-      "type": "events",
-      "title": "Euclidean Capital Q3 2026 13F-HR (due by mid-November 2026) — changes in biotech positions",
-      "people": [
-        {
-          "name": "Marilyn Simons & family",
-          "slug": "marilyn-simons-family",
-          "sector": "Finance"
-        }
-      ],
-      "source": "https://data.sec.gov/submissions/CIK0001825034.json",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": true,
-      "precision": "day",
-      "when": "by 2026-11-16",
-      "type": "events",
-      "title": "Hancock Prospecting Q3 2026 13F-HR (SpaceX, MP Materials, Teck, Hudbay position changes)",
-      "people": [
-        {
-          "name": "Gina Rinehart",
-          "slug": "gina-rinehart",
-          "sector": "Industrials"
-        }
-      ],
-      "source": "https://data.sec.gov/submissions/CIK0002017993.json",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": true,
-      "precision": "day",
-      "when": "by 2026-11-16",
-      "type": "events",
-      "title": "J. Safra Sarasin Holding and J.Safra Asset Management Q3 2026 13F-HR filings",
-      "people": [
-        {
-          "name": "Vicky Safra & family",
-          "slug": "vicky-safra-family",
-          "sector": "Finance"
-        }
-      ],
-      "source": "https://www.sec.gov/Archives/edgar/data/1890222/000189022226000004/primary_doc.xml",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": true,
-      "precision": "day",
-      "when": "~2026-11-16",
-      "type": "events",
-      "title": "Koch, Inc. 13F-HR for Q3 2026 (due ~mid-Nov 2026; Q2 filed 2026-08-13) - watch public-equity moves (Marvell, Compass Minerals, Getty, Ibotta)",
-      "people": [
-        {
-          "name": "Charles Koch & family",
-          "slug": "charles-koch-family",
-          "sector": "Industrials"
-        }
-      ],
-      "source": "https://www.sec.gov/cgi-bin/browse-edgar?company=koch&type=13F&action=getcompany",
-      "sourceLabel": "Source"
-    },
-    {
-      "date": "2026-11-16",
-      "approx": true,
-      "precision": "day",
-      "when": "~2026-11-16",
-      "type": "events",
-      "title": "SIG 13F-HR for Q3 2026 (due 45 days after 30 Sep, ~mid-Nov 2026); prior filing 14 Aug 2026",
-      "people": [
-        {
-          "name": "Jeff Yass",
-          "slug": "jeff-yass",
-          "sector": "Finance"
-        }
-      ],
-      "source": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001446194&type=13F-HR&dateb=&owner=include&count=10",
       "sourceLabel": "Source"
     },
     {
