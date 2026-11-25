@@ -1,7 +1,77 @@
 {
-  "generated": "2026-11-24T20:17:16.966Z",
+  "generated": "2026-11-25T19:29:44.894Z",
   "windowDays": 90,
   "person": "Peter Thiel",
   "personSlug": "peter-thiel",
-  "filings": []
+  "filings": [
+    {
+      "cik": "0001211060",
+      "filer": "THIEL PETER",
+      "form": "4",
+      "filed": "2026-11-24",
+      "reportDate": "2026-11-20",
+      "accession": "0001211060-26-000012",
+      "url": "https://www.sec.gov/Archives/edgar/data/1211060/000121106026000012/xslF345X06/form4-11252026_011156.xml",
+      "indexUrl": "https://www.sec.gov/Archives/edgar/data/1211060/000121106026000012/0001211060-26-000012-index.htm",
+      "person": "Peter Thiel",
+      "personSlug": "peter-thiel",
+      "form4": {
+        "issuer": "Palantir Technologies Inc.",
+        "ticker": "PLTR",
+        "summary": [
+          {
+            "issuer": "Palantir Technologies Inc.",
+            "ticker": "PLTR",
+            "securityTitle": "Class A Common Stock",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 850100,
+            "price": 143.81,
+            "value": 122253519,
+            "direction": "up",
+            "transactions": 3
+          }
+        ],
+        "transactionCount": 3,
+        "transactions": [
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-11-20",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 213437,
+            "price": 142.9122,
+            "value": 30502751,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 213437,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-11-20",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 341423,
+            "price": 143.6841,
+            "value": 49057056,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 554860,
+            "direction": "up"
+          },
+          {
+            "securityTitle": "Class A Common Stock",
+            "date": "2026-11-20",
+            "code": "P",
+            "codeLabel": "Open-market buy",
+            "shares": 295240,
+            "price": 144.6068,
+            "value": 42693712,
+            "acquiredDisposed": "A",
+            "sharesOwnedFollowing": 850100,
+            "direction": "up"
+          }
+        ]
+      }
+    }
+  ]
 }

@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-24",
+  "generated": "2026-11-25",
   "inputs": {
-    "filingsGenerated": "2026-11-24T20:17:16.966Z",
-    "pricesGenerated": "2026-11-24T20:21:06.560Z",
+    "filingsGenerated": "2026-11-25T19:29:44.894Z",
+    "pricesGenerated": "2026-11-25T19:33:34.284Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 54
+    "editions": 55
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 77 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 78 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W37",
@@ -26,12 +26,12 @@
       "start": "2026-09-14",
       "end": "2026-09-20",
       "buy": 221963330,
-      "sell": 1948960047,
-      "net": -1726996717,
-      "other": 9702110,
+      "sell": 59686334,
+      "net": 162276996,
+      "other": 0,
       "buyCount": 3,
-      "sellCount": 3,
-      "otherCount": 3,
+      "sellCount": 1,
+      "otherCount": 1,
       "unpriced": 0
     },
     {
@@ -142,11 +142,11 @@
       "week": "2026-W47",
       "start": "2026-11-16",
       "end": "2026-11-22",
-      "buy": 10155928,
+      "buy": 132409447,
       "sell": 56110513,
-      "net": -45954585,
+      "net": 76298934,
       "other": 0,
-      "buyCount": 1,
+      "buyCount": 2,
       "sellCount": 1,
       "otherCount": 5,
       "unpriced": 0
@@ -155,70 +155,59 @@
       "week": "2026-W48",
       "start": "2026-11-23",
       "end": "2026-11-29",
-      "buy": 0,
+      "buy": 5745855,
       "sell": 0,
-      "net": 0,
+      "net": 5745855,
       "other": 0,
-      "buyCount": 0,
+      "buyCount": 1,
       "sellCount": 0,
       "otherCount": 0,
       "unpriced": 0
     }
   ],
   "last7": {
-    "from": "2026-11-18",
-    "to": "2026-11-24",
-    "buy": 10155928,
-    "sell": 56110513,
-    "net": -45954585,
+    "from": "2026-11-19",
+    "to": "2026-11-25",
+    "buy": 138155302,
+    "sell": 0,
+    "net": 138155302,
     "other": 0,
-    "buyCount": 1,
-    "sellCount": 1,
+    "buyCount": 3,
+    "sellCount": 0,
     "otherCount": 0,
     "unpriced": 0
   },
   "sectors": [
     {
-      "sector": "Energy",
-      "buy": 0,
-      "sell": 1863694091,
-      "net": -1863694091,
-      "other": 0,
-      "buyCount": 0,
-      "sellCount": 1,
-      "otherCount": 0,
-      "unpriced": 0
-    },
-    {
       "sector": "Finance",
-      "buy": 648248507,
+      "buy": 653994362,
       "sell": 228641638,
-      "net": 419606869,
+      "net": 425352724,
       "other": 0,
-      "buyCount": 16,
+      "buyCount": 17,
       "sellCount": 7,
       "otherCount": 7,
       "unpriced": 0
     },
     {
       "sector": "AI & tech",
-      "buy": 9568179,
+      "buy": 131821698,
       "sell": 519966739,
-      "net": -510398560,
-      "other": 9702110,
-      "buyCount": 1,
+      "net": -388145041,
+      "other": 0,
+      "buyCount": 2,
       "sellCount": 7,
-      "otherCount": 5,
+      "otherCount": 3,
       "unpriced": 0
     },
     {
       "sector": "Media",
       "buy": 0,
-      "sell": 385086515,
-      "net": -385086515,
+      "sell": 359506893,
+      "net": -359506893,
       "other": 0,
       "buyCount": 0,
-      "sellCount": 11,
+      "sellCount": 10,
       "otherCount": 2,
       "unpriced": 0
     },
@@ -435,6 +424,23 @@
   ],
   "topBuyers30d": [
     {
+      "name": "Peter Thiel",
+      "slug": "peter-thiel",
+      "sector": "AI & tech",
+      "value": 122253519,
+      "count": 1,
+      "filings": [
+        {
+          "date": "2026-11-20",
+          "filed": "2026-11-24",
+          "form": "4",
+          "issuer": "Palantir Technologies Inc.",
+          "ticker": "PLTR",
+          "url": "https://www.sec.gov/Archives/edgar/data/1211060/000121106026000012/xslF345X06/form4-11252026_011156.xml"
+        }
+      ]
+    },
+    {
       "name": "Warren Buffett",
       "slug": "warren-buffett",
       "sector": "Finance",
@@ -519,16 +525,16 @@
       "name": "Giancarlo Devasini",
       "slug": "giancarlo-devasini",
       "sector": "Finance",
-      "value": 3927258,
+      "value": 5745855,
       "count": 1,
       "filings": [
         {
-          "date": "2026-10-26",
-          "filed": "2026-10-28",
+          "date": "2026-11-23",
+          "filed": "2026-11-25",
           "form": "4",
           "issuer": "Gold.com, Inc.",
           "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926119719/xslF345X06/tm2628406-1_4seq1.xml"
+          "url": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926131976/xslF345X06/tm2630527-1_4seq1.xml"
         }
       ]
     },
@@ -536,16 +542,16 @@
       "name": "Jean-Louis van der Velde",
       "slug": "jean-louis-van-der-velde",
       "sector": "Finance",
-      "value": 3927258,
+      "value": 5745855,
       "count": 1,
       "filings": [
         {
-          "date": "2026-10-26",
-          "filed": "2026-10-28",
+          "date": "2026-11-23",
+          "filed": "2026-11-25",
           "form": "4",
           "issuer": "Gold.com, Inc.",
           "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926119719/xslF345X06/tm2628406-1_4seq1.xml"
+          "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926131976/xslF345X06/tm2630527-1_4seq1.xml"
         }
       ]
     },
@@ -553,22 +559,22 @@
       "name": "Paolo Ardoino",
       "slug": "paolo-ardoino",
       "sector": "Finance",
-      "value": 3927258,
+      "value": 5745855,
       "count": 1,
       "filings": [
         {
-          "date": "2026-10-26",
-          "filed": "2026-10-28",
+          "date": "2026-11-23",
+          "filed": "2026-11-25",
           "form": "4",
           "issuer": "Gold.com, Inc.",
           "ticker": "GOLD",
-          "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926119719/xslF345X06/tm2628406-1_4seq1.xml"
+          "url": "https://www.sec.gov/Archives/edgar/data/2025889/000110465926131976/xslF345X06/tm2630527-1_4seq1.xml"
         }
       ]
     }
   ],
   "coverage": {
-    "form4Filings": 77,
+    "form4Filings": 78,
     "form4Parsed": 59,
     "windowDays": 90
   }
