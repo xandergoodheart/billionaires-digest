@@ -1,6 +1,7 @@
 {
-  "updated": "2026-11-26T10:22:43.493Z",
+  "updated": "2026-11-27T10:18:32.620Z",
   "days": [
+    "2026-11-25",
     "2026-11-24",
     "2026-11-23",
     "2026-11-20",
@@ -9,10 +10,45 @@
     "2026-11-17",
     "2026-11-16",
     "2026-11-13",
-    "2026-11-12",
-    "2026-11-11"
+    "2026-11-12"
   ],
   "movers": {
+    "SFTBY@2026-11-25": {
+      "ticker": "SFTBY",
+      "date": "2026-11-25",
+      "changePct": -6.538,
+      "why": "SoftBank fell 6.5% as AI-trade worries resurfaced, erasing gains from this week's Jensen Huang rally.",
+      "sourceName": "StockAnalysis.com",
+      "sourceUrl": "https://stockanalysis.com/news/softbank-advantest-fall-as-ai-selloff-returns/",
+      "players": [
+        "masayoshi-son"
+      ],
+      "edition": "2026-11-27"
+    },
+    "ORCL@2026-11-25": {
+      "ticker": "ORCL",
+      "date": "2026-11-25",
+      "changePct": -5.105,
+      "why": "Oracle fell 5.1% toward a 52-week low as credit-default-swap spreads on its debt hit record highs.",
+      "sourceName": "Finexus",
+      "sourceUrl": "https://api.finexus.net/api/news/earnings/129307/html",
+      "players": [
+        "larry-ellison"
+      ],
+      "edition": "2026-11-27"
+    },
+    "NVDA@2026-11-25": {
+      "ticker": "NVDA",
+      "date": "2026-11-25",
+      "changePct": -3.8937,
+      "why": "Nvidia fell 3.9% after S&P put its AA credit rating on CreditWatch negative, citing governance concerns.",
+      "sourceName": "FinanceFeeds",
+      "sourceUrl": "https://financefeeds.com/nvidia-shares-sp-creditwatch-negative/",
+      "players": [
+        "jensen-huang"
+      ],
+      "edition": "2026-11-27"
+    },
     "AMD@2026-11-24": {
       "ticker": "AMD",
       "date": "2026-11-24",
@@ -182,18 +218,6 @@
         "masayoshi-son"
       ],
       "edition": "2026-11-17"
-    },
-    "CARL@2026-11-11": {
-      "ticker": "CARL",
-      "date": "2026-11-11",
-      "changePct": 26.4446,
-      "why": "Carlsmed rose 26.4% after it said Q3 revenue grew 65% to $21.6 million and raised full-year guidance.",
-      "sourceName": "BiopharmaWatch",
-      "sourceUrl": "https://www.biopharmawatch.com/news/CARL/carlsmed-reports-q3-2026-results-and-guidance",
-      "players": [
-        "eduardo-saverin"
-      ],
-      "edition": "2026-11-13"
     }
   }
 }

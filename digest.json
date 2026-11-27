@@ -1,11 +1,11 @@
 {
-  "date": "Thursday, November 26, 2026",
-  "updated": "Nov 26, 2026 · morning edition",
+  "date": "Friday, November 27, 2026",
+  "updated": "Nov 27, 2026 · morning edition",
   "lede": {
     "kicker": "Lede of the day",
-    "headline": "SoftBank's Son explored, then dropped, $1T SK Hynix bid",
-    "dek": "Masayoshi Son asked Wall Street banks about financing a roughly $1 trillion buyout of memory-chip maker SK Hynix, The Information reported, before SoftBank said the idea is no longer under active consideration.",
-    "ini": "MS"
+    "headline": "Wall Street starts pricing AI's debt, not just its stock",
+    "dek": "S&P put Nvidia's credit rating on watch and Oracle's borrowing costs hit record highs the same day, as a two-year AI buildout collides with mounting leverage.",
+    "ini": "JH"
   },
   "top10": [
     {
@@ -72,208 +72,117 @@
   "top10AsOf": "List as of Sep 24, 2026 9:15 PM ET",
   "stories": [
     {
+      "who": "Jensen Huang",
+      "sector": "AI & tech",
+      "people": [
+        "Jensen Huang"
+      ],
+      "type": "Other",
+      "tickers": "NVDA",
+      "read": "Debt watch",
+      "direction": "down",
+      "headline": "S&P puts Nvidia's credit rating on watch",
+      "move": "S&P Global Ratings placed Nvidia's AA issuer and senior unsecured credit ratings on CreditWatch with negative implications on Nov. 25, and lowered its assessment of the company's management and governance to neutral from positive. S&P said \"recent events undermine our view of NVIDIA's M&G framework.\" Nvidia shares fell 3.9% that day, closing at $149.33, down from $155.38 the prior session, after trading as low as about $141 intraday, as part of a broader AI-stock sell-off tied to hot inflation data and rising borrowing costs across AI-linked companies.",
+      "why": "A credit-rating warning is a different kind of alarm than a stock drop: it signals that bond investors, not just equity traders, are starting to question the AI buildout's finances, right as Nvidia's board is still investigating a foreign-intelligence matter involving Jensen Huang.",
+      "bear": "S&P only put the rating on watch, not on a confirmed downgrade path, and said any cut would likely be limited to one notch, to AA-; Nvidia's revenue and cash flow remain far stronger than most AI-infrastructure peers.",
+      "watch": "S&P's follow-up decision on whether to actually downgrade Nvidia's rating, expected after further review.",
+      "source": "FinanceFeeds",
+      "url": "https://financefeeds.com/nvidia-shares-sp-creditwatch-negative/"
+    },
+    {
+      "who": "Larry Ellison",
+      "sector": "AI & tech",
+      "people": [
+        "Larry Ellison"
+      ],
+      "type": "Other",
+      "tickers": "ORCL",
+      "read": "Debt strain",
+      "direction": "down",
+      "headline": "Oracle shares near 52-week low on debt worries",
+      "move": "Oracle fell 5.1% Wednesday to close at $103.91, down from $109.50 the prior session, and traded as low as about $100 intraday, within sight of its 52-week low of $99.34 set earlier in the week. The decline came as credit-default-swap spreads on Oracle's debt hit record highs and Mizuho cut its global AI capital-spending forecasts for 2027 and 2028. Oracle carries more than $117 billion in long-term debt after a recent $20 billion capital raise; the company says its OpenAI data-center contract is fully funded.",
+      "why": "Oracle has bet heavily on building AI data-center capacity funded by debt rather than cash flow, so rising borrowing costs hit it harder than most of its AI peers, and investors are now weighing how fast that leverage is growing against the contracted revenue backing it.",
+      "bear": "Oracle says its largest AI contracts, including with OpenAI, are fully funded, and the company's backlog of signed cloud-infrastructure business remains large even if spending plans eventually get trimmed.",
+      "watch": "Oracle's next quarterly earnings report, due in early December, for an update on cash flow and the pace of its AI data-center spending.",
+      "source": "Finexus",
+      "url": "https://api.finexus.net/api/news/earnings/129307/html"
+    },
+    {
       "who": "Masayoshi Son",
       "sector": "AI & tech",
-      "via": "SK Hynix",
       "people": [
         "Masayoshi Son"
       ],
-      "type": "Investment",
-      "tickers": "SFTBY · HXSCL",
-      "read": "No deal",
-      "direction": "flat",
-      "headline": "SoftBank's Son explored, then dropped, $1T SK Hynix bid",
-      "move": "SoftBank CEO Masayoshi Son recently approached Wall Street banks about financing a roughly $1 trillion buyout of South Korean memory-chip maker SK Hynix, The Information reported Nov. 20. SK Hynix closed around 777.5 trillion won (about $577 billion) that Friday, so the figure implied roughly a 73% premium. A SoftBank spokesperson said the idea 'is no longer under active consideration.' SK Hynix said it 'knows nothing at all about the matter.'",
-      "why": "SK Hynix is one of three main suppliers of the high-bandwidth memory chips AI accelerators need, alongside Samsung and Micron, fitting Son's push to control more of the AI hardware stack after SoftBank's Ampere and OpenAI bets.",
-      "bear": "SoftBank had about 5.39 trillion yen (roughly $34.3 billion) in cash at the end of September, about 3% of the bid size, and Korean law requires government approval for any foreign takeover of SK Hynix, which a senior official said would be a tough sell politically.",
-      "watch": "Whether SoftBank revisits SK Hynix or another large AI-hardware target once financing or politics look friendlier.",
-      "source": "mlq.ai (citing The Information)",
-      "url": "https://mlq.ai/news/softbanks-masayoshi-son-explored-a-1-trillion-buyout-of-sk-hynix-before-shelving-it/"
-    },
-    {
-      "who": "Jensen Huang",
-      "sector": "AI & tech",
-      "via": "Nvidia",
-      "people": [
-        "Jensen Huang",
-        "Lisa Su"
-      ],
-      "type": "IPO / Markets",
-      "tickers": "NVDA · AMD · INTC · AVGO",
-      "read": "Pullback",
+      "type": "Other",
+      "tickers": "SFTBY",
+      "read": "Risk-off",
       "direction": "down",
-      "headline": "Chip stocks give back Monday's Jensen Huang rally",
-      "move": "Nvidia closed down 5.86% and AMD closed down 8.86% on Nov. 24, giving back part of Monday's rally that followed Nvidia's board reinstating Jensen Huang as CEO. Intel fell 8.15%, Broadcom fell 3.98% and Micron fell 11.01% the same day. The Nasdaq-100 fund QQQ closed down 1.99% and the S&P 500 fund SPY fell 0.49%, while the Dow fund DIA rose 0.79%.",
-      "why": "Chip stocks gave back part of Monday's sharp gains; UBS's Mark Haefele said the swings were not a signal that the 'structural AI investment story has broken.'",
-      "bear": "A one-day pullback after Monday's rally is itself unremarkable, but Nvidia stock is still well below where it traded before Huang's Nov. 12 resignation, showing the leadership episode left a lasting dent.",
-      "watch": "Wednesday's GDP and inflation reports, and whether chip stocks stabilize or keep giving back Monday's gains.",
-      "source": "StockTitan",
-      "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-24-2026"
+      "headline": "SoftBank slides as AI-trade jitters resurface",
+      "move": "SoftBank's US-listed shares (SFTBY) fell 6.5% Wednesday to $8.72, from $9.33 the prior session. Its Tokyo-listed stock fell as much as 16% intraday local time, erasing much of the gain from Monday's rally that followed Nvidia's board reinstating Jensen Huang as CEO. Reports tied the move to renewed doubts about AI-sector valuations following Anthropic's Nasdaq debut and a broader sell-off in Asian chip stocks.",
+      "why": "SoftBank is widely treated as a proxy for the AI trade because of its large OpenAI commitment and its stake in Arm Holdings, so swings in AI sentiment tend to hit its shares harder than most diversified conglomerates.",
+      "bear": "The Nov. 24 rally SoftBank is giving back was itself a reaction to one company-specific event (Huang's reinstatement at Nvidia), so the swing may say more about short-term trading flows than about SoftBank's underlying AI bets.",
+      "watch": "Whether SoftBank's Tokyo shares stabilize once the broader AI-stock sell-off that started Nov. 25 runs its course.",
+      "source": "StockAnalysis.com",
+      "url": "https://stockanalysis.com/news/softbank-advantest-fall-as-ai-selloff-returns/"
     },
     {
-      "who": "Peter Thiel",
-      "sector": "AI & tech",
-      "via": "Palantir",
+      "who": "Elon Musk",
+      "sector": "Aerospace",
+      "via": "SpaceX",
       "people": [
-        "Peter Thiel"
+        "Elon Musk"
       ],
-      "type": "Insider trade",
-      "tickers": "PLTR",
-      "read": "Buying",
-      "direction": "up",
-      "headline": "Peter Thiel buys $122 million more of Palantir stock",
-      "move": "Peter Thiel bought 850,100 Palantir Class A shares for about $122.3 million in three open-market purchases on Nov. 20, paying between $142.91 and $144.61 a share, according to a Form 4 filed Nov. 24. He held none of the shares directly before the purchases.",
-      "why": "The buy is Thiel's first disclosed personal purchase of Palantir stock in recent filings; it comes after he sold nearly 2 million shares under a 10b5-1 trading plan in March.",
-      "bear": "The $122 million is a small fraction of Thiel's overall Palantir exposure, most of which sits in entities like Rivendell 7 LLC and PLTR Holdings LLC, so the buy may say less about his conviction than the dollar figure suggests.",
-      "watch": "Further Form 4 filings showing whether Thiel keeps buying or returns to selling under a new 10b5-1 plan.",
-      "source": "SEC Form 4",
-      "url": "https://www.sec.gov/Archives/edgar/data/1211060/000121106026000012/xslF345X06/form4-11252026_011156.xml"
-    },
-    {
-      "who": "Stephen Schwarzman",
-      "sector": "Health",
-      "via": "Medline",
-      "people": [
-        "Stephen Schwarzman"
-      ],
-      "type": "Divestiture",
-      "tickers": "MDLN",
-      "read": "Sponsor exit",
-      "direction": "down",
-      "headline": "Blackstone-backed Medline sells $2.1B more stock",
-      "move": "Medline priced a secondary offering of 60 million Class A shares at $35.50 each on Nov. 17, worth about $2.1 billion, sold entirely by stockholders tied to Blackstone, Carlyle, Hellman & Friedman, GIC and an Abu Dhabi Investment Authority subsidiary; Medline itself gets none of the proceeds. The sale was set to close Nov. 23. A Form 4 for Stephen Schwarzman, filed Nov. 19, shows Blackstone-linked entities converting about 7.57 million Medline Class B shares into Class A shares on Nov. 17-18 to enable the sale.",
-      "why": "It's the second time this year Medline's private-equity sponsors have sold down their stake, following the company's record $6.26 billion IPO in December 2025, as the backers use strong markets to cash out of their 2021 buyout.",
-      "bear": "Repeated large secondary sales by the same sponsors can weigh on a stock even when the underlying business is healthy, since they signal insiders are steadily reducing their exposure.",
-      "watch": "Whether Blackstone, Carlyle and Hellman & Friedman sell down further once any post-offering lockup lifts.",
-      "source": "Medline Inc. (press release via Finviz)",
-      "url": "https://finviz.com/news/424400/medline-inc-announces-pricing-of-secondary-offering-of-class-a-common-stock"
-    },
-    {
-      "who": "Giancarlo Devasini",
-      "sector": "Finance",
-      "via": "Gold.com",
-      "people": [
-        "Giancarlo Devasini",
-        "Jean-Louis van der Velde",
-        "Paolo Ardoino"
-      ],
-      "type": "Insider trade",
-      "tickers": "GOLD",
-      "read": "Accumulating",
-      "direction": "up",
-      "headline": "Tether leaders add $5.7 million more to Gold.com stake",
-      "move": "Tether International, S.A. de C.V. - controlled by Tether Global Investments Fund and, ultimately, Giancarlo Devasini, Jean-Louis van der Velde and Paolo Ardoino - bought 150,000 more Gold.com shares for about $5.75 million at $38.31 each on Nov. 23, per Forms 4 filed Nov. 25. That brings its direct Gold.com stake to 650,000 shares, separate from 3,370,787 shares the group holds through another Tether entity, TPM, S.A. de C.V.",
-      "why": "Tether has been steadily adding to Gold.com, a precious-metals dealer, since a roughly $150 million PIPE deal in February, part of its broader push into gold-backed and real-world assets alongside its USDT stablecoin business.",
-      "bear": "At $5.75 million, the purchase is tiny next to Tether's existing Gold.com position, so it may be routine portfolio management rather than a fresh strategic signal.",
-      "watch": "Further Form 4 filings from Tether entities in Gold.com and its other public holdings.",
-      "source": "SEC Form 4",
-      "url": "https://www.sec.gov/Archives/edgar/data/2050373/000110465926131976/xslF345X06/tm2630527-1_4seq1.xml"
-    },
-    {
-      "who": "Stephen Schwarzman",
-      "sector": "Finance",
-      "via": "Blackstone Private Real Estate Credit & Income Fund",
-      "people": [
-        "Stephen Schwarzman"
-      ],
-      "type": "Insider trade",
+      "type": "Other",
       "tickers": "Private",
-      "read": "Buying",
+      "read": "PR push",
       "direction": "up",
-      "headline": "Schwarzman buys $10 million more of a Blackstone fund",
-      "move": "Stephen Schwarzman bought 388,224 shares of Blackstone Private Real Estate Credit & Income Fund for about $10.2 million at $26.16 each on Nov. 20, split between two purchases, according to a Form 4 filed Nov. 23.",
-      "why": "The purchase adds to Schwarzman's personal stake in one of Blackstone's retail-facing private credit vehicles, which invests in real estate debt rather than equity.",
-      "bear": "As Blackstone's chairman and CEO, Schwarzman has an obvious incentive to support demand for the firm's own funds, so a personal purchase is not necessarily a read on the broader real estate credit market.",
-      "watch": "Flows into Blackstone's non-traded real estate credit funds, a business the firm has been expanding to individual investors.",
-      "source": "SEC Form 4",
-      "url": "https://www.sec.gov/Archives/edgar/data/1070844/000121390026123195/xslF345X06/ownership.xml"
-    },
-    {
-      "who": "Warren Buffett",
-      "sector": "Finance",
-      "via": "Berkshire Hathaway",
-      "people": [
-        "Warren Buffett"
-      ],
-      "type": "IPO / Markets",
-      "tickers": "BRK.A · BRK.B",
-      "read": "Routine financing",
-      "direction": "flat",
-      "headline": "Berkshire raises ¥182 billion in new yen bonds",
-      "move": "Berkshire Hathaway issued five series of yen-denominated senior notes totaling ¥182.3 billion (roughly $1.2 billion) on Nov. 19, ranging from notes due 2029 at 2.624% to notes due 2056 at 4.571%, according to an 8-K filing. Mizuho Securities USA and Merrill Lynch International underwrote the deal under Berkshire's existing shelf registration.",
-      "why": "Berkshire regularly taps the yen bond market, where its borrowing costs are low, to fund acquisitions and operations without touching its large cash pile.",
-      "bear": "More debt, even cheap debt, adds to Berkshire's balance sheet at a time its insurance earnings have already been falling, including at GEICO.",
-      "watch": "How Berkshire deploys the proceeds, and whether it returns to the yen market again given its history of regular issuance there.",
-      "source": "SEC Form 8-K",
-      "url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526468549/d197844d8k.htm"
+      "headline": "Musk expands SpaceX share gift to kids' accounts",
+      "move": "SpaceX said Wednesday it will give one Class A share to every active \"Trump Account\" - tax-advantaged investment accounts for American children, of which the White House says nearly 70 million have been opened since the program launched in July. Musk posted on X that he will personally match the gift and \"will be donating another share of SpaceX to all kids in America every year.\" SpaceX's contribution is set to transfer next month; Musk's personal shares can't move until his lockup expires in June 2027. SpaceX stock rose 7.47% in overnight trading on the Blue Ocean alternative trading system after the announcement, having closed 1.3% higher on Wednesday.",
+      "why": "The pledge keeps SpaceX's name tied to a signature Trump administration savings program and adds to roughly $10 billion in prior SpaceX-share commitments Musk has made toward children's accounts, at a time when SpaceX's pre-IPO valuation is a frequent talking point for his net worth.",
+      "bear": "Musk's personal shares remain locked up until mid-2027 and SpaceX hasn't disclosed a total share count for the pledge, so the near-term cost to him and the eventual value to any individual child's account are both unclear.",
+      "watch": "Confirmation next month that SpaceX's one-share-per-account gift has actually transferred into Trump Accounts.",
+      "source": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/27/spacex-shares-musk-donations.html"
     }
   ],
   "consensus": null,
-  "filings": [
-    {
-      "filer": "Peter Thiel",
-      "form": "Form 4",
-      "change": "+$122.3M Palantir purchase",
-      "direction": "up"
-    },
-    {
-      "filer": "Tether (Devasini, van der Velde, Ardoino)",
-      "form": "Form 4",
-      "change": "+$5.7M Gold.com purchase",
-      "direction": "up"
-    },
-    {
-      "filer": "Stephen Schwarzman",
-      "form": "Form 4",
-      "change": "+$10.2M Blackstone REIT fund purchase",
-      "direction": "up"
-    },
-    {
-      "filer": "Medline selling stockholders (Blackstone/Carlyle/H&F)",
-      "form": "Secondary offering",
-      "change": "$2.1B Medline Class A share sale",
-      "direction": "down"
-    },
-    {
-      "filer": "Berkshire Hathaway",
-      "form": "8-K",
-      "change": "¥182.3B yen bond issuance",
-      "direction": "flat"
-    }
-  ],
+  "filings": [],
   "watch": [
-    "The Fed's December rate decision, now priced at roughly 95% odds of a hike.",
-    "Whether SoftBank revisits SK Hynix or another large AI-hardware target.",
-    "Further Blackstone, Carlyle and Hellman & Friedman share sales in Medline once any lockup lifts.",
-    "Further Peter Thiel Form 4 filings showing continued Palantir buying or a return to selling."
+    "S&P's follow-up decision on whether to downgrade Nvidia's credit rating from AA.",
+    "Oracle's next earnings report, due early December, for an update on debt and AI capex plans.",
+    "Whether SoftBank's shares stabilize once the broader AI-stock sell-off runs its course.",
+    "Confirmation that SpaceX's pledged shares have transferred into Trump Accounts next month."
   ],
-  "quickHits": [
-    "Binance founder Changpeng Zhao urged 1Password users to change their passwords after a breach exposed customer names and emails.",
-    "Len Blavatnik's AI Biotechnology LLC dropped below a 5% stake in Yarrow Bioscience (formerly VYNE Therapeutics) as of Nov. 13.",
-    "Israel Englander's Millennium Management disclosed a new 5.1% stake in Lexeo Therapeutics in a Nov. 24 filing.",
-    "Warren Buffett gifted 400 Berkshire Class B shares on Nov. 19, part of his ongoing annual charitable giving."
-  ],
+  "quickHits": [],
   "memo": [
-    "A single boardroom reversal can keep moving markets days later - Tuesday's chip pullback shows Nvidia's leadership saga still isn't fully priced in.",
-    "Private-equity owners are using strong markets to sell down stakes, as Medline's sponsors just did again; expect more sponsor-driven secondary offerings into year-end.",
-    "Rate-hike odds can flip a growth-versus-value rotation overnight, as Tuesday's chip sell-off next to record Dow levels showed."
+    "Credit markets are starting to price AI-buildout risk, not just equity markets - watch borrowing costs and credit ratings on AI-infrastructure spending, not only stock charts.",
+    "A holiday-shortened trading week didn't slow bad news for debt-heavy AI plays; don't assume quiet weeks are safe weeks for leveraged bets.",
+    "Large equity gifts timed around lockup expirations are a reminder that how and when you give away or sell equity can matter as much as how much."
   ],
   "movers": [
     {
       "ticker": "NVDA",
-      "date": "2026-11-24",
-      "changePct": -5.8588,
-      "why": "Nvidia fell 5.9% as the AI trade cooled, giving back part of Monday's rally after the board reinstated Jensen Huang as CEO.",
-      "sourceName": "StockTitan",
-      "sourceUrl": "https://www.stocktitan.net/articles/stock-market-today-live-november-24-2026"
+      "date": "2026-11-25",
+      "changePct": -3.8937,
+      "why": "Nvidia fell 3.9% after S&P put its AA credit rating on CreditWatch negative, citing governance concerns.",
+      "sourceName": "FinanceFeeds",
+      "sourceUrl": "https://financefeeds.com/nvidia-shares-sp-creditwatch-negative/"
     },
     {
-      "ticker": "AMD",
-      "date": "2026-11-24",
-      "changePct": -8.863,
-      "why": "AMD fell 8.9% as chip stocks gave back Monday's rally after Nvidia's board reinstated Jensen Huang as CEO.",
-      "sourceName": "StockTitan",
-      "sourceUrl": "https://www.stocktitan.net/articles/stock-market-today-live-november-24-2026"
+      "ticker": "ORCL",
+      "date": "2026-11-25",
+      "changePct": -5.105,
+      "why": "Oracle fell 5.1% toward a 52-week low as credit-default-swap spreads on its debt hit record highs.",
+      "sourceName": "Finexus",
+      "sourceUrl": "https://api.finexus.net/api/news/earnings/129307/html"
+    },
+    {
+      "ticker": "SFTBY",
+      "date": "2026-11-25",
+      "changePct": -6.538,
+      "why": "SoftBank fell 6.5% as AI-trade worries resurfaced, erasing gains from this week's Jensen Huang rally.",
+      "sourceName": "StockAnalysis.com",
+      "sourceUrl": "https://stockanalysis.com/news/softbank-advantest-fall-as-ai-selloff-returns/"
     }
   ],
   "ledger": null
