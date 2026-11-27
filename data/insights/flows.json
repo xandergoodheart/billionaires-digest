@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-26",
+  "generated": "2026-11-27",
   "inputs": {
-    "filingsGenerated": "2026-11-26T19:12:43.103Z",
-    "pricesGenerated": "2026-11-26T19:16:29.663Z",
+    "filingsGenerated": "2026-11-27T19:07:06.335Z",
+    "pricesGenerated": "2026-11-27T19:10:49.963Z",
     "peopleAsOf": "2026-09-24T21:15-04:00",
-    "editions": 56
+    "editions": 57
   },
-  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 78 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
+  "note": "Estimated; partial. Dollar values are shares × reported price on Form 4 filings for the tracked people (only the newest 59 of 77 Form 4s in the last 90 days are read in detail). Buys are open-market purchases (code P) and sales are open-market sales (code S). Grants, gifts, option exercises, tax withholding and other codes are counted separately as \"other\". Amendments (4/A) are skipped and identical lines filed by more than one tracked person are counted once in the totals. Weeks use the Form 4 period of report.",
   "weeks": [
     {
       "week": "2026-W37",
@@ -166,13 +166,13 @@
     }
   ],
   "last7": {
-    "from": "2026-11-20",
-    "to": "2026-11-26",
-    "buy": 138155302,
+    "from": "2026-11-21",
+    "to": "2026-11-27",
+    "buy": 5745855,
     "sell": 821598167,
-    "net": -683442865,
+    "net": -815852312,
     "other": 0,
-    "buyCount": 3,
+    "buyCount": 1,
     "sellCount": 1,
     "otherCount": 2,
     "unpriced": 0
@@ -516,7 +516,7 @@
     }
   ],
   "coverage": {
-    "form4Filings": 78,
+    "form4Filings": 77,
     "form4Parsed": 59,
     "windowDays": 90
   }
